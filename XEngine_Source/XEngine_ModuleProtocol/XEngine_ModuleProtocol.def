@@ -1,0 +1,6 @@
+LIBRARY
+
+EXPORTS
+	ModuleProtocol_GetLastError
+
+	ModuleProtocol_Packet_IPQuery
