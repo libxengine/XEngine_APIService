@@ -16,7 +16,7 @@ The purpose of development and implementation based on libXEngine is a cross-pla
 
 #### Requirements  
 support system above windows 7sp1 and linux(ubuntu20.04,centos8)  
-XEngine need V7.24 or above  
+XEngine need V7.30 or above  
 
 #### Windows
 use vs open and complie  
@@ -41,7 +41,8 @@ make FLAGS=CleanAll clear
 2.  download code
 3.  complie
 4.  install
-5.  run
+5.  uncompress /XEngine_Release/XEngine_DBFile/ipdata.rar into current dir
+6.  run
 
 ## directory struct
 - XEngine_Docment   docment directory

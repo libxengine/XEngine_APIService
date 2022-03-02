@@ -16,7 +16,7 @@ c c++ interface api service
 
 #### 版本需求
 支持WINDOWS 7SP1和LINUX(UBUNT20.04,CENTOS8)以上系统  
-XEngine版本需要V7.29或者以上版本  
+XEngine版本需要V7.30或者以上版本  
 
 #### Windows
 使用VS打开并且编译
@@ -41,7 +41,8 @@ make FLAGS=CleanAll 清理编译
 2.  下载代码
 3.  编译
 4.  安装
-5.  运行
+5.  解压/XEngine_Release/XEngine_DBFile/ipdata.rar 到当前目录
+6.  运行
 
 ## 目录结构
 - XEngine_Docment    文档目录结构  
