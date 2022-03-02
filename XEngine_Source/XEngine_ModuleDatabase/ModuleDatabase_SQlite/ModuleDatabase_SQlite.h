@@ -21,6 +21,7 @@ public:
 	BOOL ModuleDatabase_SQlite_Init(LPCTSTR lpszSQLFile);
 	BOOL ModuleDatabase_SQlite_Destory();
 	BOOL ModuleDatabase_SQlite_IPV4Query(XENGINE_IPADDRINFO* pSt_IPAddrInfo, LPCTSTR lpszIPAddr);
+	BOOL ModuleDatabase_SQlite_IPV6Query(XENGINE_IPADDRINFO* pSt_IPAddrInfo, LPCTSTR lpszIPAddr);
 private:
 	XHDATA xhSQL;
 };

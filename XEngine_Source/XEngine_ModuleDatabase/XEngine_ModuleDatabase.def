@@ -6,3 +6,4 @@ EXPORTS
 	ModuleDatabase_SQlite_Init
 	ModuleDatabase_SQlite_Destory
 	ModuleDatabase_SQlite_IPV4Query
+	ModuleDatabase_SQlite_IPV6Query

@@ -41,3 +41,7 @@ extern "C" BOOL ModuleDatabase_SQlite_IPV4Query(XENGINE_IPADDRINFO * pSt_IPAddrI
 {
 	return m_DBSQlite.ModuleDatabase_SQlite_IPV4Query(pSt_IPAddrInfo, lpszIPAddr);
 }
+extern "C" BOOL ModuleDatabase_SQlite_IPV6Query(XENGINE_IPADDRINFO * pSt_IPAddrInfo, LPCTSTR lpszIPAddr)
+{
+	return m_DBSQlite.ModuleDatabase_SQlite_IPV6Query(pSt_IPAddrInfo, lpszIPAddr);
+}
