@@ -15,7 +15,7 @@
 //////////////////////////////////////////////////////////////////////////
 extern "C" DWORD ModuleProtocol_GetLastError(int *pInt_SysError = NULL);
 /************************************************************************/
-/*                         导出的数据库操作函数                         */
+/*                         导出的协议打包函数                           */
 /************************************************************************/
 /********************************************************************
 函数名称：ModuleProtocol_Packet_IPQuery
@@ -80,3 +80,25 @@ extern "C" BOOL ModuleProtocol_Packet_IPQuery(TCHAR * ptszMsgBuffer, int* pInt_M
 备注：
 *********************************************************************/
 extern "C" BOOL ModuleProtocol_Packet_IPQuery2(TCHAR* ptszMsgBuffer, int* pInt_MsgLen, XENGINE_IPADDRINFO* pSt_IPAddrInfo, int nCode = 0);
+/************************************************************************/
+/*                         导出的协议解析函数                           */
+/************************************************************************/
+/********************************************************************
+函数名称：ModuleProtocol_Parse_IDCard
+函数功能：ID身份证号码解析
+ 参数.一：lpszMsgBuffer
+  In/Out：In
+  类型：常量字符指针
+  可空：N
+  意思：输入要解析的身份证
+ 参数.二：pSt_IDInfo
+  In/Out：Out
+  类型：数据结构指针
+  可空：N
+  意思：输出ID身份证编码信息
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+extern "C" BOOL ModuleProtocol_Parse_IDCard(LPCTSTR lpszMsgBuffer, XENGINE_IDCARDINFO* pSt_IDInfo);

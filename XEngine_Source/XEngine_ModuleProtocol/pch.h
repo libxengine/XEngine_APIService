@@ -22,6 +22,8 @@
 #include <XEngine_Include/XEngine_NetHelp/APIHelp_Define.h>
 #include <XEngine_Include/XEngine_NetHelp/APIHelp_Error.h>
 #include "../XEngine_UserProtocol.h"
+#include "ModuleProtocol_Define.h"
+#include "ModuleProtocol_Error.h"
 /********************************************************************
 //    Created:     2022/02/28  14:11:33
 //    File Name:   D:\XEngine_IPInfo\XEngine_Source\XEngine_ModuleProtocol\pch.h

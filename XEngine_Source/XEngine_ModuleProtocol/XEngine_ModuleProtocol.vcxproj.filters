@@ -19,6 +19,12 @@
     <Filter Include="源文件\ModuleProtocol_Packet">
       <UniqueIdentifier>{3d2dc46b-019d-43ad-bfd8-b3144ca2f46a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="头文件\ModuleProtocol_Parse">
+      <UniqueIdentifier>{5b37f3a0-0993-4293-a5c0-badce4297f59}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\ModuleProtocol_Parse">
+      <UniqueIdentifier>{7c173485-3304-428f-aeb2-f66f5900b793}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -36,6 +42,9 @@
     <ClInclude Include="ModuleProtocol_Error.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="ModuleProtocol_Parse\ModuleProtocol_Parse.h">
+      <Filter>头文件\ModuleProtocol_Parse</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp">
@@ -46,6 +55,9 @@
     </ClCompile>
     <ClCompile Include="ModuleProtocol_Packet\ModuleProtocol_Packet.cpp">
       <Filter>源文件\ModuleProtocol_Packet</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleProtocol_Parse\ModuleProtocol_Parse.cpp">
+      <Filter>源文件\ModuleProtocol_Parse</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

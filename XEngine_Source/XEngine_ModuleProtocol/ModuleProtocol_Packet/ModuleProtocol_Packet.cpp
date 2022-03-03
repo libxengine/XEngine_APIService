@@ -58,6 +58,12 @@ BOOL CModuleProtocol_Packet::ModuleProtocol_Packet_IPQuery(TCHAR* ptszMsgBuffer,
 {
 	ModuleProtocol_IsErrorOccur = FALSE;
 
+	if ((NULL == ptszMsgBuffer) || (NULL == pInt_MsgLen) || (NULL == pSt_IPAddrInfo))
+	{
+		ModuleProtocol_IsErrorOccur = TRUE;
+		ModuleProtocol_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PROTOCOL_PACKET_PARAMENT;
+		return FALSE;
+	}
 	Json::Value st_JsonRoot;
 	Json::Value st_JsonObject;
 	Json::StreamWriterBuilder st_JsonBuilder;
@@ -124,7 +130,12 @@ BOOL CModuleProtocol_Packet::ModuleProtocol_Packet_IPQuery2(TCHAR* ptszMsgBuffer
 {
 	ModuleProtocol_IsErrorOccur = FALSE;
 
-
+	if ((NULL == ptszMsgBuffer) || (NULL == pInt_MsgLen) || (NULL == pSt_IPAddrInfo))
+	{
+		ModuleProtocol_IsErrorOccur = TRUE;
+		ModuleProtocol_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PROTOCOL_PACKET_PARAMENT;
+		return FALSE;
+	}
 	*pInt_MsgLen = _stprintf(ptszMsgBuffer, "%d\r\n"
 		"%s\r\n"
 		"%s\r\n"
