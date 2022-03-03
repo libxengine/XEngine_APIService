@@ -73,7 +73,7 @@ BOOL XEngine_HTTPTask_Handle(RFCCOMPONENTS_HTTP_REQPARAM* pSt_HTTPParam, LPCTSTR
 		int nListCount = 0;
 		//得到URL参数个数
 		RfcComponents_HttpHelp_GetParament(pSt_HTTPParam->tszHttpUri, &pptszList, &nListCount);
-		if (nListCount < 2)
+		if (nListCount < 3)
 		{
 			st_HDRParam.nHttpCode = 404;
 			RfcComponents_HttpServer_SendMsgEx(xhHTTPPacket, tszMsgBuffer, &nMsgLen, &st_HDRParam);
@@ -92,7 +92,7 @@ BOOL XEngine_HTTPTask_Handle(RFCCOMPONENTS_HTTP_REQPARAM* pSt_HTTPParam, LPCTSTR
 		memset(tszValue, '\0', sizeof(tszValue));
 		//获得函数名
 		BaseLib_OperatorString_GetKeyValue(pptszList[0], "=", tszKey, tszValue);
-		if (0 != _tcsnicmp(lpszParamFunc1,tszKey,_tcslen(lpszParamFunc1)))
+		if (0 != _tcsnicmp(lpszParamFunc1, tszKey, _tcslen(lpszParamFunc1)))
 		{
 			st_HDRParam.nHttpCode = 406;
 			RfcComponents_HttpServer_SendMsgEx(xhHTTPPacket, tszMsgBuffer, &nMsgLen, &st_HDRParam);
@@ -116,7 +116,13 @@ BOOL XEngine_HTTPTask_Handle(RFCCOMPONENTS_HTTP_REQPARAM* pSt_HTTPParam, LPCTSTR
 				XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _T("HTTP客户端:%s,发送的URL请求参数不正确:%s"), lpszClientAddr, pSt_HTTPParam->tszHttpUri);
 				return FALSE;
 			}
-			XEngine_HTTPTask_IPInfo(lpszClientAddr, tszValue);
+			TCHAR tszGetType[64];
+
+			memset(tszKey, '\0', sizeof(tszKey));
+			memset(tszGetType, '\0', sizeof(tszGetType));
+
+			BaseLib_OperatorString_GetKeyValue(pptszList[2], "=", tszKey, tszGetType);
+			XEngine_HTTPTask_IPInfo(lpszClientAddr, tszValue, _ttoi(tszGetType));
 		}
 		BaseLib_OperatorMemory_Free((XPPPMEM)&pptszList, nListCount);
 	}

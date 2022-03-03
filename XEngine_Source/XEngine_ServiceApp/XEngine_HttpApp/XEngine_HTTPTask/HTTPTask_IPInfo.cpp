@@ -1,7 +1,7 @@
 ﻿#include "../XEngine_Hdr.h"
 
 
-BOOL XEngine_HTTPTask_IPInfo(LPCTSTR lpszClientAddr, LPCTSTR lpszIPAddr)
+BOOL XEngine_HTTPTask_IPInfo(LPCTSTR lpszClientAddr, LPCTSTR lpszIPAddr, int nType)
 {
 	int nMsgLen = 4096;
 	int nPktLen = 4096;
@@ -43,7 +43,14 @@ BOOL XEngine_HTTPTask_IPInfo(LPCTSTR lpszClientAddr, LPCTSTR lpszIPAddr)
 		}
 	}
 	//通过此函数来打包成我们要发送的数据,就是打包成一条标准的HTTP协议
-	ModuleProtocol_Packet_IPQuery(tszPktBuffer, &nPktLen, &st_IPAddrInfo);
+	if (0 == nType)
+	{
+		ModuleProtocol_Packet_IPQuery(tszPktBuffer, &nPktLen, &st_IPAddrInfo);
+	}
+	else
+	{
+		ModuleProtocol_Packet_IPQuery2(tszPktBuffer, &nPktLen, &st_IPAddrInfo);
+	}
 	RfcComponents_HttpServer_SendMsgEx(xhHTTPPacket, tszMsgBuffer, &nMsgLen, &st_HDRParam, tszPktBuffer, nPktLen);
 	//打包完毕后才能发送给客户端
 	XEngine_Network_Send(lpszClientAddr, tszMsgBuffer, nMsgLen);
