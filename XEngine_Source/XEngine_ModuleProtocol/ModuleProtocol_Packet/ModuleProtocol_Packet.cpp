@@ -57,7 +57,7 @@ CModuleProtocol_Packet::~CModuleProtocol_Packet()
 BOOL CModuleProtocol_Packet::ModuleProtocol_Packet_IPQuery(TCHAR* ptszMsgBuffer, int* pInt_MsgLen, XENGINE_IPADDRINFO* pSt_IPAddrInfo, int nCode /* = 0 */, LPCTSTR lpszMsgBuffer /* = NULL */)
 {
 	ModuleProtocol_IsErrorOccur = FALSE;
-	
+
 	Json::Value st_JsonRoot;
 	Json::Value st_JsonObject;
 	Json::StreamWriterBuilder st_JsonBuilder;
@@ -90,5 +90,51 @@ BOOL CModuleProtocol_Packet::ModuleProtocol_Packet_IPQuery(TCHAR* ptszMsgBuffer,
 
 	*pInt_MsgLen = Json::writeString(st_JsonBuilder, st_JsonRoot).length();
 	memcpy(ptszMsgBuffer, Json::writeString(st_JsonBuilder, st_JsonRoot).c_str(), *pInt_MsgLen);
+	return TRUE;
+}
+/********************************************************************
+函数名称：ModuleProtocol_Packet_IPQuery2
+函数功能：IP查询打包函数另一种方式
+ 参数.一：ptszMsgBuffer
+  In/Out：Out
+  类型：字符指针
+  可空：N
+  意思：输出打包的数据信息
+ 参数.二：pInt_MsgLen
+  In/Out：Out
+  类型：整数型指针
+  可空：N
+  意思：输出打包大小
+ 参数.三：pSt_IPAddrInfo
+  In/Out：In
+  类型：数据结构指针
+  可空：N
+  意思：输入要操作的IP地址信息
+ 参数.四：nCode
+  In/Out：In
+  类型：整数型
+  可空：Y
+  意思：输入返回的值
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+BOOL CModuleProtocol_Packet::ModuleProtocol_Packet_IPQuery2(TCHAR* ptszMsgBuffer, int* pInt_MsgLen, XENGINE_IPADDRINFO* pSt_IPAddrInfo, int nCode /* = 0 */)
+{
+	ModuleProtocol_IsErrorOccur = FALSE;
+
+
+	*pInt_MsgLen = _stprintf(ptszMsgBuffer, "%d\r\n"
+		"%s\r\n"
+		"%s\r\n"
+		"%s\r\n"
+		"%s\r\n"
+		"%s\r\n"
+		"%s\r\n"
+		"%s\r\n"
+		"%s\r\n"
+		"%s\r\n"
+		"%s", nCode, pSt_IPAddrInfo->st_IPAddrInfo.tszIPAddr, pSt_IPAddrInfo->tszIPStart, pSt_IPAddrInfo->tszIPEnd, pSt_IPAddrInfo->st_IPAddrInfo.tszIPCountry, pSt_IPAddrInfo->st_IPAddrInfo.tszIPProvince, pSt_IPAddrInfo->st_IPAddrInfo.tszIPCity, pSt_IPAddrInfo->st_IPAddrInfo.tszIPCounty, pSt_IPAddrInfo->st_IPAddrInfo.tszIPAddress, pSt_IPAddrInfo->st_IPAddrInfo.tszIPISP, pSt_IPAddrInfo->st_IPAddrInfo.tszIPTime);
 	return TRUE;
 }

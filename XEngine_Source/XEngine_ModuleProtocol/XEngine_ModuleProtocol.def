@@ -4,3 +4,4 @@ EXPORTS
 	ModuleProtocol_GetLastError
 
 	ModuleProtocol_Packet_IPQuery
+	ModuleProtocol_Packet_IPQuery2

@@ -10,10 +10,12 @@
 #ifdef _MSC_BUILD
 // 添加要在此处预编译的标头
 #include "framework.h"
+#include <tchar.h>
 #endif
 #endif //PCH_H
-#include <json/json.h>
+#include <stdio.h>
 #include <errno.h>
+#include <json/json.h>
 #include <XEngine_Include/XEngine_CommHdr.h>
 #include <XEngine_Include/XEngine_Types.h>
 #include <XEngine_Include/XEngine_ProtocolHdr.h>
