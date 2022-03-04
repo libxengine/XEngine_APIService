@@ -6,7 +6,7 @@ LOADBIN = -L ../XEngine_ThirdPart/jsoncpp
 LIB = -ljsoncpp
 LIBEX = -static-libgcc -lrt -ldl -lpthread
 LOADSO = -Wl,-rpath=./,--disable-new-dtags
-LIBINCLUDE = ModuleProtocol_Packet.o pch.o
+LIBINCLUDE = ModuleProtocol_Packet.o ModuleProtocol_Parse.o pch.o
 
 ifeq ($(RELEASE),1)
 FLAGS = -c -O2 
@@ -28,7 +28,9 @@ all:$(LIBINCLUDE)
 
 ModuleProtocol_Packet.o:./ModuleProtocol_Packet/ModuleProtocol_Packet.cpp             
 	$(CC) $(DEBUG) $(FLAGS) $(UNICODE) $(INCLUDE) ./ModuleProtocol_Packet/ModuleProtocol_Packet.cpp 
-						              
+ModuleProtocol_Parse.o:./ModuleProtocol_Parse/ModuleProtocol_Parse.cpp             
+	$(CC) $(DEBUG) $(FLAGS) $(UNICODE) $(INCLUDE) ./ModuleProtocol_Parse/ModuleProtocol_Parse.cpp 
+	
 pch.o:./pch.cpp                 		       	    
 	$(CC) $(DEBUG) $(FLAGS) $(UNICODE) $(INCLUDE) ./pch.cpp
 

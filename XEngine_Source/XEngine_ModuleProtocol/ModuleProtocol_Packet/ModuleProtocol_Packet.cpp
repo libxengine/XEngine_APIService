@@ -70,16 +70,16 @@ BOOL CModuleProtocol_Packet::ModuleProtocol_Packet_IPQuery(TCHAR* ptszMsgBuffer,
 
 	if (0 == nCode)
 	{
-		st_JsonObject["tszIPAddr"] = pSt_IPAddrInfo->st_IPAddrInfo.tszIPAddr;
+		st_JsonObject["tszIPAddr"] = pSt_IPAddrInfo->tszIPAddr;
 		st_JsonObject["tszIPStart"] = pSt_IPAddrInfo->tszIPStart;
 		st_JsonObject["tszIPEnd"] = pSt_IPAddrInfo->tszIPEnd;
-		st_JsonObject["tszIPCountry"] = pSt_IPAddrInfo->st_IPAddrInfo.tszIPCountry;
-		st_JsonObject["tszIPProvince"] = pSt_IPAddrInfo->st_IPAddrInfo.tszIPProvince;
-		st_JsonObject["tszIPCity"] = pSt_IPAddrInfo->st_IPAddrInfo.tszIPCity;
-		st_JsonObject["tszIPCounty"] = pSt_IPAddrInfo->st_IPAddrInfo.tszIPCounty;
-		st_JsonObject["tszIPAddress"] = pSt_IPAddrInfo->st_IPAddrInfo.tszIPAddress;
-		st_JsonObject["tszIPISP"] = pSt_IPAddrInfo->st_IPAddrInfo.tszIPISP;
-		st_JsonObject["tszIPTime"] = pSt_IPAddrInfo->st_IPAddrInfo.tszIPTime;
+		st_JsonObject["tszIPCountry"] = pSt_IPAddrInfo->tszIPCountry;
+		st_JsonObject["tszIPProvince"] = pSt_IPAddrInfo->tszIPProvince;
+		st_JsonObject["tszIPCity"] = pSt_IPAddrInfo->tszIPCity;
+		st_JsonObject["tszIPCounty"] = pSt_IPAddrInfo->tszIPCounty;
+		st_JsonObject["tszIPAddress"] = pSt_IPAddrInfo->tszIPAddress;
+		st_JsonObject["tszIPISP"] = pSt_IPAddrInfo->tszIPISP;
+		st_JsonObject["tszIPTime"] = pSt_IPAddrInfo->tszIPTime;
 	}
 
 	st_JsonRoot["code"] = nCode;
@@ -146,6 +146,6 @@ BOOL CModuleProtocol_Packet::ModuleProtocol_Packet_IPQuery2(TCHAR* ptszMsgBuffer
 		"%s\r\n"
 		"%s\r\n"
 		"%s\r\n"
-		"%s", nCode, pSt_IPAddrInfo->st_IPAddrInfo.tszIPAddr, pSt_IPAddrInfo->tszIPStart, pSt_IPAddrInfo->tszIPEnd, pSt_IPAddrInfo->st_IPAddrInfo.tszIPCountry, pSt_IPAddrInfo->st_IPAddrInfo.tszIPProvince, pSt_IPAddrInfo->st_IPAddrInfo.tszIPCity, pSt_IPAddrInfo->st_IPAddrInfo.tszIPCounty, pSt_IPAddrInfo->st_IPAddrInfo.tszIPAddress, pSt_IPAddrInfo->st_IPAddrInfo.tszIPISP, pSt_IPAddrInfo->st_IPAddrInfo.tszIPTime);
+		"%s", nCode, pSt_IPAddrInfo->tszIPAddr, pSt_IPAddrInfo->tszIPStart, pSt_IPAddrInfo->tszIPEnd, pSt_IPAddrInfo->tszIPCountry, pSt_IPAddrInfo->tszIPProvince, pSt_IPAddrInfo->tszIPCity, pSt_IPAddrInfo->tszIPCounty, pSt_IPAddrInfo->tszIPAddress, pSt_IPAddrInfo->tszIPISP, pSt_IPAddrInfo->tszIPTime);
 	return TRUE;
 }
