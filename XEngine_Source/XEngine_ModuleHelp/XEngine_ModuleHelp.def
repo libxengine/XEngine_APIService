@@ -1,0 +1,7 @@
+LIBRARY
+
+EXPORTS
+	ModuleHelp_GetLastError
+
+	ModuleHelp_IDCard_CheckBirth
+	ModuleHelp_IDCard_CheckSum
