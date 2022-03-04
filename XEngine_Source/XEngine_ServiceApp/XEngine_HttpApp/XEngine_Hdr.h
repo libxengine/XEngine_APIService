@@ -39,11 +39,14 @@ using namespace std;
 #include "../../XEngine_ModuleDatabase/ModuleDB_Error.h"
 #include "../../XEngine_ModuleProtocol/ModuleProtocol_Define.h"
 #include "../../XEngine_ModuleProtocol/ModuleProtocol_Error.h"
+#include "../../XEngine_ModuleHelp/ModuleHelp_Define.h"
+#include "../../XEngine_ModuleHelp/ModuleHelp_Error.h"
 //加载自己的头文件
 #include "XEngine_Configure.h"
 #include "XEngine_Network.h"
 #include "XEngine_HTTPTask.h"
 #include "XEngine_HTTPTask/HTTPTask_IPInfo.h"
+#include "XEngine_HTTPTask/HTTPTask_IDCard.h"
 /********************************************************************
 //    Created:     2022/01/20  14:42:06
 //    File Name:   D:\XEngine_ServiceApp\XEngine_Source\XEngine_ServiceApp\XEngine_HttpApp\XEngine_Hdr.h
@@ -72,20 +75,24 @@ extern XENGINE_SERVICECONFIG st_ServiceConfig;
 #pragma comment(lib,"../../x64/Debug/XEngine_ModuleConfigure.lib")
 #pragma comment(lib,"../../x64/Debug/XEngine_ModuleDatabase.lib")
 #pragma comment(lib,"../../x64/Debug/XEngine_ModuleProtocol.lib")
+#pragma comment(lib,"../../x64/Debug/XEngine_ModuleHelp.lib")
 #else
 #pragma comment(lib,"../../x64/Release/XEngine_ModuleConfigure.lib")
 #pragma comment(lib,"../../x64/Release/XEngine_ModuleDatabase.lib")
 #pragma comment(lib,"../../x64/Release/XEngine_ModuleProtocol.lib")
+#pragma comment(lib,"../../x64/Release/XEngine_ModuleHelp.lib")
 #endif
 #else
 #ifdef _DEBUG
 #pragma comment(lib,"../../Debug/XEngine_ModuleConfigure.lib")
 #pragma comment(lib,"../../Debug/XEngine_ModuleDatabase.lib")
 #pragma comment(lib,"../../Debug/XEngine_ModuleProtocol.lib")
+#pragma comment(lib,"../../Debug/XEngine_ModuleHelp.lib")
 #else
 #pragma comment(lib,"../../Release/XEngine_ModuleConfigure.lib")
 #pragma comment(lib,"../../Release/XEngine_ModuleDatabase.lib")
 #pragma comment(lib,"../../Release/XEngine_ModuleProtocol.lib")
+#pragma comment(lib,"../../Release/XEngine_ModuleHelp.lib")
 #endif
 #endif
 #pragma comment(lib,"XEngine_BaseLib/XEngine_BaseLib.lib")

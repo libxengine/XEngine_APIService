@@ -36,6 +36,9 @@
     <ClCompile Include="XEngine_HTTPTask\HTTPTask_IPInfo.cpp">
       <Filter>源文件\XEngine_HTTPTask</Filter>
     </ClCompile>
+    <ClCompile Include="XEngine_HTTPTask\HTTPTask_IDCard.cpp">
+      <Filter>源文件\XEngine_HTTPTask</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="XEngine_Configure.h">
@@ -51,6 +54,9 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="XEngine_HTTPTask\HTTPTask_IPInfo.h">
+      <Filter>头文件\XEngine_HTTPTask</Filter>
+    </ClInclude>
+    <ClInclude Include="XEngine_HTTPTask\HTTPTask_IDCard.h">
       <Filter>头文件\XEngine_HTTPTask</Filter>
     </ClInclude>
   </ItemGroup>

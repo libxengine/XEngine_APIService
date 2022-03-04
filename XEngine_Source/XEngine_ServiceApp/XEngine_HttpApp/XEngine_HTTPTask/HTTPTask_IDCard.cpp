@@ -25,18 +25,25 @@ BOOL XEngine_HTTPTask_IDCard(LPCTSTR lpszClientAddr, LPCTSTR lpszMsgBuffer, int 
 		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _T("HTTP客户端:%s,请求的身份证编号不正确:%s"), lpszClientAddr, lpszMsgBuffer);
 		return FALSE;
 	}
-	//通过此函数来打包成我们要发送的数据,就是打包成一条标准的HTTP协议
-	if (0 == nType)
+	//验证身份证是否正确
+	if (!ModuleHelp_IDCard_CheckBirth(&st_IDCardInfo))
 	{
-		ModuleProtocol_Packet_IPQuery(tszPktBuffer, &nPktLen, &st_IPAddrInfo);
+		st_HDRParam.nHttpCode = 406;
+		RfcComponents_HttpServer_SendMsgEx(xhHTTPPacket, tszMsgBuffer, &nMsgLen, &st_HDRParam);
+		XEngine_Network_Send(lpszClientAddr, tszMsgBuffer, nMsgLen);
+		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _T("HTTP客户端:%s,请求的身份证验证生日失败:%s"), lpszClientAddr, lpszMsgBuffer);
+		return FALSE;
 	}
-	else
+	if (!ModuleHelp_IDCard_CheckSum(&st_IDCardInfo))
 	{
-		ModuleProtocol_Packet_IPQuery2(tszPktBuffer, &nPktLen, &st_IPAddrInfo);
+		st_HDRParam.nHttpCode = 406;
+		RfcComponents_HttpServer_SendMsgEx(xhHTTPPacket, tszMsgBuffer, &nMsgLen, &st_HDRParam);
+		XEngine_Network_Send(lpszClientAddr, tszMsgBuffer, nMsgLen);
+		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _T("HTTP客户端:%s,请求的身份证验证校验码失败:%s"), lpszClientAddr, lpszMsgBuffer);
+		return FALSE;
 	}
 	RfcComponents_HttpServer_SendMsgEx(xhHTTPPacket, tszMsgBuffer, &nMsgLen, &st_HDRParam, tszPktBuffer, nPktLen);
-	//打包完毕后才能发送给客户端
 	XEngine_Network_Send(lpszClientAddr, tszMsgBuffer, nMsgLen);
-	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _T("HTTP客户端:%s,发送IP地址信息获取请求给服务器,查询地址:%s"), lpszClientAddr, lpszIPAddr);
+	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _T("HTTP客户端:%s,请求身份证号码验证与信息查询成功,号码:%s"), lpszClientAddr, lpszMsgBuffer);
 	return TRUE;
 }
