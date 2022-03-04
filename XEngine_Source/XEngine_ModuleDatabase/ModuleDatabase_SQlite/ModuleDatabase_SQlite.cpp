@@ -116,14 +116,14 @@ BOOL CModuleDatabase_SQlite::ModuleDatabase_SQlite_IPV4Query(XENGINE_IPADDRINFO*
 	}
 	_tcscpy(pSt_IPAddrInfo->tszIPStart, pptszResult[nRow + 1]);
 	_tcscpy(pSt_IPAddrInfo->tszIPEnd, pptszResult[nRow + 3]);
-	_tcscpy(pSt_IPAddrInfo->st_IPAddrInfo.tszIPAddr, lpszIPAddr);
-	_tcscpy(pSt_IPAddrInfo->st_IPAddrInfo.tszIPCountry, pptszResult[nRow + 5]);
-	_tcscpy(pSt_IPAddrInfo->st_IPAddrInfo.tszIPProvince, pptszResult[nRow + 6]);
-	_tcscpy(pSt_IPAddrInfo->st_IPAddrInfo.tszIPCity, pptszResult[nRow + 7]);
-	_tcscpy(pSt_IPAddrInfo->st_IPAddrInfo.tszIPCounty, pptszResult[nRow + 8]);
-	_tcscpy(pSt_IPAddrInfo->st_IPAddrInfo.tszIPAddress, pptszResult[nRow + 9]);
-	_tcscpy(pSt_IPAddrInfo->st_IPAddrInfo.tszIPISP, pptszResult[nRow + 10]);
-	_tcscpy(pSt_IPAddrInfo->st_IPAddrInfo.tszIPTime, pptszResult[nRow + 11]);
+	_tcscpy(pSt_IPAddrInfo->tszIPAddr, lpszIPAddr);
+	_tcscpy(pSt_IPAddrInfo->tszIPCountry, pptszResult[nRow + 5]);
+	_tcscpy(pSt_IPAddrInfo->tszIPProvince, pptszResult[nRow + 6]);
+	_tcscpy(pSt_IPAddrInfo->tszIPCity, pptszResult[nRow + 7]);
+	_tcscpy(pSt_IPAddrInfo->tszIPCounty, pptszResult[nRow + 8]);
+	_tcscpy(pSt_IPAddrInfo->tszIPAddress, pptszResult[nRow + 9]);
+	_tcscpy(pSt_IPAddrInfo->tszIPISP, pptszResult[nRow + 10]);
+	_tcscpy(pSt_IPAddrInfo->tszIPTime, pptszResult[nRow + 11]);
 
 	DataBase_SQLite_FreeTable(pptszResult);
 	return TRUE;
@@ -186,14 +186,14 @@ BOOL CModuleDatabase_SQlite::ModuleDatabase_SQlite_IPV6Query(XENGINE_IPADDRINFO*
 	}
 	_tcscpy(pSt_IPAddrInfo->tszIPStart, pptszResult[nRow + 1]);
 	_tcscpy(pSt_IPAddrInfo->tszIPEnd, pptszResult[nRow + 3]);
-	_tcscpy(pSt_IPAddrInfo->st_IPAddrInfo.tszIPAddr, lpszIPAddr);
-	_tcscpy(pSt_IPAddrInfo->st_IPAddrInfo.tszIPCountry, pptszResult[nRow + 5]);
-	_tcscpy(pSt_IPAddrInfo->st_IPAddrInfo.tszIPProvince, pptszResult[nRow + 6]);
-	_tcscpy(pSt_IPAddrInfo->st_IPAddrInfo.tszIPCity, pptszResult[nRow + 7]);
-	_tcscpy(pSt_IPAddrInfo->st_IPAddrInfo.tszIPCounty, pptszResult[nRow + 8]);
-	_tcscpy(pSt_IPAddrInfo->st_IPAddrInfo.tszIPAddress, pptszResult[nRow + 9]);
-	_tcscpy(pSt_IPAddrInfo->st_IPAddrInfo.tszIPISP, pptszResult[nRow + 10]);
-	_tcscpy(pSt_IPAddrInfo->st_IPAddrInfo.tszIPTime, pptszResult[nRow + 11]);
+	_tcscpy(pSt_IPAddrInfo->tszIPAddr, lpszIPAddr);
+	_tcscpy(pSt_IPAddrInfo->tszIPCountry, pptszResult[nRow + 5]);
+	_tcscpy(pSt_IPAddrInfo->tszIPProvince, pptszResult[nRow + 6]);
+	_tcscpy(pSt_IPAddrInfo->tszIPCity, pptszResult[nRow + 7]);
+	_tcscpy(pSt_IPAddrInfo->tszIPCounty, pptszResult[nRow + 8]);
+	_tcscpy(pSt_IPAddrInfo->tszIPAddress, pptszResult[nRow + 9]);
+	_tcscpy(pSt_IPAddrInfo->tszIPISP, pptszResult[nRow + 10]);
+	_tcscpy(pSt_IPAddrInfo->tszIPTime, pptszResult[nRow + 11]);
 
 	DataBase_SQLite_FreeTable(pptszResult);
 	return TRUE;

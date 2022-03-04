@@ -28,10 +28,32 @@ typedef enum
 ///////////////////////////////////////////////////////////////////////////
 #pragma pack(push)
 #pragma pack(1)
+//IP地址信息
 typedef struct  
 {
-	APIHELP_IPADDRINFO st_IPAddrInfo;
 	TCHAR tszIPStart[128];
 	TCHAR tszIPEnd[128];
+	TCHAR tszIPAddr[128];       //IP地址
+	TCHAR tszIPCountry[128];    //国家/地区
+	TCHAR tszIPProvince[128];   //省/自治区
+	TCHAR tszIPCity[128];       //市
+	TCHAR tszIPCounty[128];     //县
+	TCHAR tszIPAddress[128];    //详细地址
+	TCHAR tszIPISP[128];        //运营商
+	TCHAR tszIPTime[128];       //数据库日期
 }XENGINE_IPADDRINFO;
+//身份证校验
+typedef struct  
+{
+	TCHAR tszIDNumber[20];
+	WORD nIDProvince;           //省/自治区/直辖市
+	WORD nIDCity;               //市/区
+	WORD nIDCounty;             //县
+	WORD nBirthYear;            //出生年
+	WORD nBirthMonth;           //出生月
+	WORD nBirthDay;             //出生日
+	WORD nPoliceID;             //派出所编码
+	WORD nSex;                  //性别
+	WORD nCheck;                //校验码
+}XENGINE_IDCARDINFO;
 #pragma pack(pop)
