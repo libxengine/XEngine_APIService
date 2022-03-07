@@ -83,18 +83,9 @@ BOOL CModuleDatabase_IDCard::ModuleDatabase_IDCard_QueryRegion(XENGINE_IDREGION*
 {
 	DBModule_IsErrorOccur = FALSE;
 
-	if (!ModuleDatabase_IDCard_QueryProvincer(pSt_IDRegion, pSt_IDInfo))
-	{
-		return FALSE;
-	}
-	if (!ModuleDatabase_IDCard_QueryCity(pSt_IDRegion, pSt_IDInfo))
-	{
-		return FALSE;
-	}
-	if (!ModuleDatabase_IDCard_QueryCounty(pSt_IDRegion, pSt_IDInfo))
-	{
-		return FALSE;
-	}
+	ModuleDatabase_IDCard_QueryProvincer(pSt_IDRegion, pSt_IDInfo);
+	ModuleDatabase_IDCard_QueryCity(pSt_IDRegion, pSt_IDInfo);
+	ModuleDatabase_IDCard_QueryCounty(pSt_IDRegion, pSt_IDInfo);
 	return TRUE;
 }
 /********************************************************************
