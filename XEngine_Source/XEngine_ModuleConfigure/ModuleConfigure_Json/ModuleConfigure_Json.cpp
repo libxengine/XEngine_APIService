@@ -118,13 +118,14 @@ BOOL CModuleConfigure_Json::ModuleConfigure_Json_File(LPCTSTR lpszConfigFile, XE
 	pSt_ServerConfig->st_XLog.nMaxCount = st_JsonXLog["MaxCount"].asInt();
 	pSt_ServerConfig->st_XLog.nLogLeave = st_JsonXLog["LogLeave"].asInt();
 
-	if (st_JsonRoot["XDatabase"].empty() || (1 != st_JsonRoot["XDatabase"].size()))
+	if (st_JsonRoot["XDatabase"].empty() || (2 != st_JsonRoot["XDatabase"].size()))
 	{
 		Config_IsErrorOccur = TRUE;
 		Config_dwErrorCode = ERROR_MODULE_CONFIGURE_JSON_XDB;
 		return FALSE;
 	}
 	Json::Value st_JsonXDB = st_JsonRoot["XDatabase"];
-	_tcscpy(pSt_ServerConfig->st_XDBInfo.tszSQlite, st_JsonXDB["tszSQlite"].asCString());
+	_tcscpy(pSt_ServerConfig->st_XDBInfo.tszIPData, st_JsonXDB["tszIPData"].asCString());
+	_tcscpy(pSt_ServerConfig->st_XDBInfo.tszIDData, st_JsonXDB["tszIDData"].asCString());
 	return TRUE;
 }

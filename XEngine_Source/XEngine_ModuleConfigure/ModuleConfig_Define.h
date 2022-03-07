@@ -41,7 +41,8 @@ typedef struct tag_XEngine_ServiceConfig
 	}st_XLog;
 	struct  
 	{
-		TCHAR tszSQlite[MAX_PATH];            //数据库地址
+		TCHAR tszIPData[MAX_PATH];            //IP数据库地址
+		TCHAR tszIDData[MAX_PATH];            //ID数据库地址
 	}st_XDBInfo;
 }XENGINE_SERVICECONFIG;
 //////////////////////////////////////////////////////////////////////////
