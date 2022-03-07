@@ -88,26 +88,24 @@ BOOL CModuleHelp_IDCard::ModuleHelp_IDCard_CheckSum(XENGINE_IDCARDINFO* pSt_IDIn
 		return FALSE;
 	}
 	int nCheck = 0;
-	int nIDArray[17];
-	const int nFactor[] = { 7, 9, 10, 5,8, 4,2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2 };       //加权因子
-	const int nTable[] = { 1, 0, 10, 9, 8, 7, 6, 5, 4, 3, 2 };                         //校验值对应表
+	int nIDArray[18];
+	const int nFactor[] = { 7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2 };       //加权因子
+	const int nTable[] = { 1, 0, 10, 9, 8, 7, 6, 5, 4, 3, 2 };                           //校验值对应表
 	//转换字符为整数
-	for (int i = 0; i < 17; i++)
+	for (int i = 0; i < 18; i++)
 	{
-		nIDArray[i] = pSt_IDInfo->tszIDNumber[i] - '0';
+		nIDArray[i] = pSt_IDInfo->tszIDNumber[i] - 48;
 	}
 	//计算校验码
-	for (int j = 0; j < 17; j++)
+	for (int i = 0; i < 17; i++)
 	{
-		nCheck = nCheck + nIDArray[j] * nFactor[j];
+		nCheck += nIDArray[i] * nFactor[i];
 	}
-	 
-	if (nIDArray[17] != nTable[nCheck % 11] || (pSt_IDInfo->nCheck == 'x' && nTable[nCheck % 11] == 2))
+	if ((nIDArray[17] != nTable[nCheck % 11]) && (pSt_IDInfo->nCheck != 'x' || nTable[nCheck % 11] != 2))
 	{
 		ModuleHelp_IsErrorOccur = TRUE;
 		ModuleHelp_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_HELP_IDCARD_SUM;
 		return FALSE;
 	}
-
 	return TRUE;
 }
