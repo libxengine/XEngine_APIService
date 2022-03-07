@@ -164,14 +164,16 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="framework.h" />
-    <ClInclude Include="ModuleDatabase_SQlite\ModuleDatabase_SQlite.h" />
+    <ClInclude Include="ModuleDatabase_IDCard\ModuleDatabase_IDCard.h" />
+    <ClInclude Include="ModuleDatabase_IPInfo\ModuleDatabase_IPInfo.h" />
     <ClInclude Include="ModuleDB_Define.h" />
     <ClInclude Include="ModuleDB_Error.h" />
     <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
-    <ClCompile Include="ModuleDatabase_SQlite\ModuleDatabase_SQlite.cpp" />
+    <ClCompile Include="ModuleDatabase_IDCard\ModuleDatabase_IDCard.cpp" />
+    <ClCompile Include="ModuleDatabase_IPInfo\ModuleDatabase_IPInfo.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>

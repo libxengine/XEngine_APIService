@@ -15,10 +15,10 @@
 //////////////////////////////////////////////////////////////////////////
 extern "C" DWORD ModuleDB_GetLastError(int *pInt_SysError = NULL);
 /************************************************************************/
-/*                         导出的数据库操作函数                         */
+/*                         导出的IP地址操作函数                         */
 /************************************************************************/
 /********************************************************************
-函数名称：ModuleDatabase_SQlite_Init
+函数名称：ModuleDatabase_IPInfo_Init
 函数功能：初始化SQLITE文件系统
  参数.一：lpszSQLFile
   In/Out：In
@@ -30,18 +30,18 @@ extern "C" DWORD ModuleDB_GetLastError(int *pInt_SysError = NULL);
   意思：是否成功
 备注：
 *********************************************************************/
-extern "C" BOOL ModuleDatabase_SQlite_Init(LPCTSTR lpszSQLFile);
+extern "C" BOOL ModuleDatabase_IPInfo_Init(LPCTSTR lpszSQLFile);
 /********************************************************************
-函数名称：ModuleDatabase_SQlite_Destory
+函数名称：ModuleDatabase_IPInfo_Destory
 函数功能：销毁
 返回值
   类型：逻辑型
   意思：是否成功
 备注：
 *********************************************************************/
-extern "C" BOOL ModuleDatabase_SQlite_Destory();
+extern "C" BOOL ModuleDatabase_IPInfo_Destory();
 /********************************************************************
-函数名称：ModuleDatabase_SQlite_IPV4Query
+函数名称：ModuleDatabase_IPInfo_IPV4Query
 函数功能：查询文件信息
  参数.一：pSt_IPAddrInfo
   In/Out：Out
@@ -58,9 +58,9 @@ extern "C" BOOL ModuleDatabase_SQlite_Destory();
   意思：是否成功
 备注：
 *********************************************************************/
-extern "C" BOOL ModuleDatabase_SQlite_IPV4Query(XENGINE_IPADDRINFO* pSt_IPAddrInfo, LPCTSTR lpszIPAddr);
+extern "C" BOOL ModuleDatabase_IPInfo_IPV4Query(XENGINE_IPADDRINFO* pSt_IPAddrInfo, LPCTSTR lpszIPAddr);
 /********************************************************************
-函数名称：ModuleDatabase_SQlite_IPV6Query
+函数名称：ModuleDatabase_IPInfo_IPV6Query
 函数功能：查询IPV6地址信息
  参数.一：pSt_IPAddrInfo
   In/Out：Out
@@ -77,4 +77,49 @@ extern "C" BOOL ModuleDatabase_SQlite_IPV4Query(XENGINE_IPADDRINFO* pSt_IPAddrIn
   意思：是否成功
 备注：
 *********************************************************************/
-extern "C" BOOL ModuleDatabase_SQlite_IPV6Query(XENGINE_IPADDRINFO* pSt_IPAddrInfo, LPCTSTR lpszIPAddr);
+extern "C" BOOL ModuleDatabase_IPInfo_IPV6Query(XENGINE_IPADDRINFO* pSt_IPAddrInfo, LPCTSTR lpszIPAddr);
+/************************************************************************/
+/*                         导出的身份证地址操作函数                     */
+/************************************************************************/
+/********************************************************************
+函数名称：ModuleDatabase_IDCard_Init
+函数功能：初始化SQLITE文件系统
+ 参数.一：lpszSQLFile
+  In/Out：In
+  类型：常量字符指针
+  可空：N
+  意思：输入要操作的SQL文件
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+extern "C" BOOL ModuleDatabase_IDCard_Init(LPCTSTR lpszSQLFile);
+/********************************************************************
+函数名称：ModuleDatabase_IDCard_Destory
+函数功能：销毁
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+extern "C" BOOL ModuleDatabase_IDCard_Destory();
+/********************************************************************
+函数名称：ModuleDatabase_IDCard_QueryRegion
+函数功能：查询身份证位置信息
+ 参数.一：pSt_IDRegion
+  In/Out：Out
+  类型：数据结构指针
+  可空：N
+  意思：输出查询到的位置信息
+ 参数.二：pSt_IDInfo
+  In/Out：In
+  类型：数据结构指针
+  可空：N
+  意思：输入要查询的信息
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+extern "C" BOOL ModuleDatabase_IDCard_QueryRegion(XENGINE_IDREGION * pSt_IDRegion, XENGINE_IDCARDINFO * pSt_IDInfo);

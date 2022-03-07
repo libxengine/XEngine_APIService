@@ -6,7 +6,7 @@ LOADBIN = -L /usr/local/lib/XEngine_Release/XEngine_HelpComponents
 LIB = -lHelpComponents_DataBase
 LIBEX = -static-libgcc -lrt -ldl -lpthread
 LOADSO = -Wl,-rpath=./,--disable-new-dtags
-LIBINCLUDE = ModuleDatabase_SQlite.o pch.o
+LIBINCLUDE = ModuleDatabase_IDCard.o ModuleDatabase_IPInfo.o pch.o
 
 ifeq ($(RELEASE),1)
 FLAGS = -c -O2 
@@ -26,9 +26,11 @@ endif
 all:$(LIBINCLUDE)
 	$(CC) $(DEBUG) $(LIBINCLUDE) -o libXEngine_ModuleDatabase.so -shared -fPIC $(LOADBIN) $(LIB) $(LIBEX) $(LOADSO)
 
-ModuleDatabase_SQlite.o:./ModuleDatabase_SQlite/ModuleDatabase_SQlite.cpp             
-	$(CC) $(DEBUG) $(FLAGS) $(UNICODE) $(INCLUDE) ./ModuleDatabase_SQlite/ModuleDatabase_SQlite.cpp 
-						              
+ModuleDatabase_IDCard.o:./ModuleDatabase_IDCard/ModuleDatabase_IDCard.cpp             
+	$(CC) $(DEBUG) $(FLAGS) $(UNICODE) $(INCLUDE) ./ModuleDatabase_IDCard/ModuleDatabase_IDCard.cpp 
+ModuleDatabase_IPInfo.o:./ModuleDatabase_IPInfo/ModuleDatabase_IPInfo.cpp             
+	$(CC) $(DEBUG) $(FLAGS) $(UNICODE) $(INCLUDE) ./ModuleDatabase_IPInfo/ModuleDatabase_IPInfo.cpp 
+	
 pch.o:./pch.cpp                 		       	    
 	$(CC) $(DEBUG) $(FLAGS) $(UNICODE) $(INCLUDE) ./pch.cpp
 

@@ -22,7 +22,7 @@ BOOL XEngine_HTTPTask_IPInfo(LPCTSTR lpszClientAddr, LPCTSTR lpszIPAddr, int nTy
 
 	if (AF_INET == nIPVer)
 	{
-		if (!ModuleDatabase_SQlite_IPV4Query(&st_IPAddrInfo, lpszIPAddr))
+		if (!ModuleDatabase_IPInfo_IPV4Query(&st_IPAddrInfo, lpszIPAddr))
 		{
 			st_HDRParam.nHttpCode = 404;
 			RfcComponents_HttpServer_SendMsgEx(xhHTTPPacket, tszMsgBuffer, &nMsgLen, &st_HDRParam);
@@ -33,7 +33,7 @@ BOOL XEngine_HTTPTask_IPInfo(LPCTSTR lpszClientAddr, LPCTSTR lpszIPAddr, int nTy
 	}
 	else
 	{
-		if (!ModuleDatabase_SQlite_IPV6Query(&st_IPAddrInfo, lpszIPAddr))
+		if (!ModuleDatabase_IPInfo_IPV6Query(&st_IPAddrInfo, lpszIPAddr))
 		{
 			st_HDRParam.nHttpCode = 404;
 			RfcComponents_HttpServer_SendMsgEx(xhHTTPPacket, tszMsgBuffer, &nMsgLen, &st_HDRParam);

@@ -32,7 +32,7 @@ void ServiceApp_Stop(int signo)
 		RfcComponents_HttpServer_DestroyEx(xhHTTPPacket);
 		ManagePool_Thread_NQDestroy(xhHTTPPool);
 		//销毁数据库
-		ModuleDatabase_SQlite_Destory();
+		ModuleDatabase_IPInfo_Destory();
 		//销毁日志资源
 		HelpComponents_XLog_Destroy(xhLog);
 	}
@@ -117,7 +117,7 @@ int main(int argc, char** argv)
 	signal(SIGABRT, ServiceApp_Stop);
 	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _T("启动服务中,初始化信号量成功"));
 	//初始化数据库
-	if (!ModuleDatabase_SQlite_Init(st_ServiceConfig.st_XDBInfo.tszSQlite))
+	if (!ModuleDatabase_IPInfo_Init(st_ServiceConfig.st_XDBInfo.tszSQlite))
 	{
 		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _T("启动服务中,初始化数据库失败,错误：%lX"), ModuleDB_GetLastError());
 		goto XENGINE_SERVICEAPP_EXIT;
@@ -195,7 +195,7 @@ XENGINE_SERVICEAPP_EXIT:
 		RfcComponents_HttpServer_DestroyEx(xhHTTPPacket);
 		ManagePool_Thread_NQDestroy(xhHTTPPool);
 		//销毁数据库
-		ModuleDatabase_SQlite_Destory();
+		ModuleDatabase_IPInfo_Destory();
 		//销毁日志资源
 		HelpComponents_XLog_Destroy(xhLog);
 	}

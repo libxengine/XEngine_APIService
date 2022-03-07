@@ -56,4 +56,11 @@ typedef struct
 	WORD nSex;                  //性别
 	WORD nCheck;                //校验码
 }XENGINE_IDCARDINFO;
+//行政区域
+typedef struct
+{
+	TCHAR tszProvincer[64];     //省/自治区/直辖市
+	TCHAR tszCity[64];          //市/区     
+	TCHAR tszCounty[64];        //县
+}XENGINE_IDREGION;
 #pragma pack(pop)
