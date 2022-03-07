@@ -39,6 +39,14 @@ extern "C" BOOL ModuleProtocol_Packet_IPQuery2(TCHAR * ptszMsgBuffer, int* pInt_
 {
 	return m_ProtocolPacket.ModuleProtocol_Packet_IPQuery2(ptszMsgBuffer, pInt_MsgLen, pSt_IPAddrInfo, nCode);
 }
+extern "C" BOOL ModuleProtocol_Packet_IDQuery(TCHAR * ptszMsgBuffer, int* pInt_MsgLen, XENGINE_IDCARDINFO * pSt_IDInfo, XENGINE_IDREGION * pSt_IDRegion, int nCode, LPCTSTR lpszMsgBuffer)
+{
+	return m_ProtocolPacket.ModuleProtocol_Packet_IDQuery(ptszMsgBuffer, pInt_MsgLen, pSt_IDInfo, pSt_IDRegion, nCode, lpszMsgBuffer);
+}
+extern "C" BOOL ModuleProtocol_Packet_IDQuery2(TCHAR * ptszMsgBuffer, int* pInt_MsgLen, XENGINE_IDCARDINFO * pSt_IDInfo, XENGINE_IDREGION * pSt_IDRegion, int nCode)
+{
+	return m_ProtocolPacket.ModuleProtocol_Packet_IDQuery2(ptszMsgBuffer, pInt_MsgLen, pSt_IDInfo, pSt_IDRegion, nCode);
+}
 /************************************************************************/
 /*                         导出的协议解析函数                           */
 /************************************************************************/
