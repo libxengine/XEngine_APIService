@@ -13,6 +13,7 @@
 #include <unistd.h>
 #include <sys/wait.h>
 #include <sys/types.h>
+#include <arpa/inet.h>
 #endif
 using namespace std;
 //加载XEngine头文件
