@@ -15,7 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="APPClient_HTTPExample.cpp">
+    <ClCompile Include="APPClient_IPExample.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

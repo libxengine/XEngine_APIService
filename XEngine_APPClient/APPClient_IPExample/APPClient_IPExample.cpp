@@ -17,9 +17,9 @@
 #include <XEngine_Include/XEngine_NetHelp/APIHelp_Error.h>
 
 //需要优先配置XEngine
-//WINDOWS支持VS2022 x86 debug 编译调试
+//WINDOWS支持VS2022 x64 debug 编译调试
 //linux使用下面的命令编译
-//g++ -std=c++17 -Wall -g APPClient_HTTPExample.cpp -o APPClient_HTTPExample.exe -L /usr/local/lib/XEngine_Release/XEngine_BaseLib -L /usr/local/lib/XEngine_Release/XEngine_NetHelp -lXEngine_BaseLib -lNetHelp_APIHelp -ljsoncpp
+//g++ -std=c++17 -Wall -g APPClient_IPExample.cpp -o APPClient_IPExample.exe -L /usr/local/lib/XEngine_Release/XEngine_BaseLib -L /usr/local/lib/XEngine_Release/XEngine_NetHelp -lXEngine_BaseLib -lNetHelp_APIHelp
 
 int main()
 {
@@ -28,9 +28,9 @@ int main()
 	WSAStartup(MAKEWORD(2, 2), &st_WSAData);
 #endif
 	int nLen = 0;
-	TCHAR *ptszMsgBuffer = NULL;
-	LPCTSTR lpszUrl = _T("http://127.0.0.1:5501/ip?function=ipquery&params1=1.29.164.255");
-	
+	TCHAR* ptszMsgBuffer = NULL;
+	LPCTSTR lpszUrl = _T("http://127.0.0.1:5501/api?function=ipquery&params1=1.29.164.255&params2=0");
+
 	if (!APIHelp_HttpRequest_Get(lpszUrl, &ptszMsgBuffer, &nLen))
 	{
 		printf("发送投递失败！\n");
