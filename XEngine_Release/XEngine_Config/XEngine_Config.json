@@ -18,6 +18,7 @@
     "LogLeave": 32
   },
   "XDatabase": {
-    "tszSQlite": "./XEngine_DBFile/ipdata.db"
+    "tszIPData": "./XEngine_DBFile/ipdata.db",
+    "tszIDData": "./XEngine_DBFile/regionsid.db"
   }
 }
