@@ -33,6 +33,7 @@ void ServiceApp_Stop(int signo)
 		ManagePool_Thread_NQDestroy(xhHTTPPool);
 		//销毁数据库
 		ModuleDatabase_IPInfo_Destory();
+		ModuleDatabase_IDCard_Destory();
 		//销毁日志资源
 		HelpComponents_XLog_Destroy(xhLog);
 	}
@@ -117,12 +118,18 @@ int main(int argc, char** argv)
 	signal(SIGABRT, ServiceApp_Stop);
 	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _T("启动服务中,初始化信号量成功"));
 	//初始化数据库
-	if (!ModuleDatabase_IPInfo_Init(st_ServiceConfig.st_XDBInfo.tszSQlite))
+	if (!ModuleDatabase_IPInfo_Init(st_ServiceConfig.st_XDBInfo.tszIPData))
 	{
-		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _T("启动服务中,初始化数据库失败,错误：%lX"), ModuleDB_GetLastError());
+		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _T("启动服务中,初始化IP数据库失败,错误：%lX"), ModuleDB_GetLastError());
 		goto XENGINE_SERVICEAPP_EXIT;
 	}
-	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _T("启动服务中,初始化数据库成功,地址:%s"), st_ServiceConfig.st_XDBInfo.tszSQlite);
+	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _T("启动服务中,初始化IP数据库成功,地址:%s"), st_ServiceConfig.st_XDBInfo.tszIPData);
+	if (!ModuleDatabase_IDCard_Init(st_ServiceConfig.st_XDBInfo.tszIDData))
+	{
+		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _T("启动服务中,初始化ID数据库失败,错误：%lX"), ModuleDB_GetLastError());
+		goto XENGINE_SERVICEAPP_EXIT;
+	}
+	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _T("启动服务中,初始化ID数据库成功,地址:%s"), st_ServiceConfig.st_XDBInfo.tszIDData);
 	//启动HTTP服务相关代码
 	if (st_ServiceConfig.nHttpPort > 0)
 	{
@@ -196,6 +203,7 @@ XENGINE_SERVICEAPP_EXIT:
 		ManagePool_Thread_NQDestroy(xhHTTPPool);
 		//销毁数据库
 		ModuleDatabase_IPInfo_Destory();
+		ModuleDatabase_IDCard_Destory();
 		//销毁日志资源
 		HelpComponents_XLog_Destroy(xhLog);
 	}

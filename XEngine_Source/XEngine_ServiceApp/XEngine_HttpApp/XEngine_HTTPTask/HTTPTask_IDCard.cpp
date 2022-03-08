@@ -6,11 +6,13 @@ BOOL XEngine_HTTPTask_IDCard(LPCTSTR lpszClientAddr, LPCTSTR lpszMsgBuffer, int 
 	int nPktLen = 4096;
 	TCHAR tszMsgBuffer[4096];
 	TCHAR tszPktBuffer[4096];
+	XENGINE_IDREGION st_IDRegion;
 	XENGINE_IDCARDINFO st_IDCardInfo;
 	RFCCOMPONENTS_HTTP_HDRPARAM st_HDRParam;    //发送给客户端的参数
 
 	memset(tszMsgBuffer, '\0', sizeof(tszMsgBuffer));
 	memset(tszPktBuffer, '\0', sizeof(tszPktBuffer));
+	memset(&st_IDRegion, '\0', sizeof(XENGINE_IDREGION));
 	memset(&st_IDCardInfo, '\0', sizeof(XENGINE_IDCARDINFO));
 	memset(&st_HDRParam, '\0', sizeof(RFCCOMPONENTS_HTTP_HDRPARAM));
 
@@ -41,6 +43,15 @@ BOOL XEngine_HTTPTask_IDCard(LPCTSTR lpszClientAddr, LPCTSTR lpszMsgBuffer, int 
 		XEngine_Network_Send(lpszClientAddr, tszMsgBuffer, nMsgLen);
 		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _T("HTTP客户端:%s,请求的身份证验证校验码失败:%s"), lpszClientAddr, lpszMsgBuffer);
 		return FALSE;
+	}
+	ModuleDatabase_IDCard_QueryRegion(&st_IDRegion, &st_IDCardInfo);
+	if (0 == nType)
+	{
+		ModuleProtocol_Packet_IDQuery(tszPktBuffer, &nPktLen, &st_IDCardInfo, &st_IDRegion);
+	}
+	else
+	{
+		ModuleProtocol_Packet_IDQuery2(tszPktBuffer, &nPktLen, &st_IDCardInfo, &st_IDRegion);
 	}
 	RfcComponents_HttpServer_SendMsgEx(xhHTTPPacket, tszMsgBuffer, &nMsgLen, &st_HDRParam, tszPktBuffer, nPktLen);
 	XEngine_Network_Send(lpszClientAddr, tszMsgBuffer, nMsgLen);
