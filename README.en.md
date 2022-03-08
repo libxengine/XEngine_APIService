@@ -7,10 +7,13 @@ c c++ 接口服务器
 c c++ interface api service  
 This is an interface api service.  
 This service mainly uses HTTP/V1.1 to implement various interface services  
+This is a general information query service that does not contain any language attributes
 The purpose of development and implementation based on libXEngine is a cross-platform network storage service  
 
 ## Software feature
-1. support ip address location information query(IPV4 and IPV6)  
+1. support json and string stream methods to return the content of the query
+2. support ip address location information query(IPV4 and IPV6)
+3. support ID verification and information query
 
 ## install
 
