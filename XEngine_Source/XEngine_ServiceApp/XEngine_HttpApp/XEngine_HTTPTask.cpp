@@ -70,9 +70,12 @@ BOOL XEngine_HTTPTask_Handle(RFCCOMPONENTS_HTTP_REQPARAM* pSt_HTTPParam, LPCTSTR
 	if (0 == _tcsnicmp(lpszMethodGet, pSt_HTTPParam->tszHttpMethod, _tcslen(lpszMethodGet)))
 	{
 		TCHAR** pptszList;
+		TCHAR tszUrlName[128];
 		int nListCount = 0;
+
+		memset(tszUrlName, '\0', sizeof(tszUrlName));
 		//得到URL参数个数
-		RfcComponents_HttpHelp_GetParament(pSt_HTTPParam->tszHttpUri, &pptszList, &nListCount);
+		RfcComponents_HttpHelp_GetParament(pSt_HTTPParam->tszHttpUri, &pptszList, &nListCount, tszUrlName);
 		if (nListCount < 3)
 		{
 			st_HDRParam.nHttpCode = 404;
@@ -84,6 +87,7 @@ BOOL XEngine_HTTPTask_Handle(RFCCOMPONENTS_HTTP_REQPARAM* pSt_HTTPParam, LPCTSTR
 		}
 		TCHAR tszKey[128];
 		TCHAR tszValue[128];
+		LPCTSTR lpszFuncName = _T("api");
 		LPCTSTR lpszParamFunc1 = _T("function");
 		LPCTSTR lpszParamFunc2 = _T("params1");
 		LPCTSTR lpszParamValue1 = _T("ipquery");
@@ -91,6 +95,16 @@ BOOL XEngine_HTTPTask_Handle(RFCCOMPONENTS_HTTP_REQPARAM* pSt_HTTPParam, LPCTSTR
 
 		memset(tszKey, '\0', sizeof(tszKey));
 		memset(tszValue, '\0', sizeof(tszValue));
+
+		if (0 != _tcsnicmp(lpszFuncName, tszUrlName, _tcslen(lpszFuncName)))
+		{
+			st_HDRParam.nHttpCode = 404;
+			RfcComponents_HttpServer_SendMsgEx(xhHTTPPacket, tszMsgBuffer, &nMsgLen, &st_HDRParam);
+			XEngine_Network_Send(lpszClientAddr, tszMsgBuffer, nMsgLen);
+			BaseLib_OperatorMemory_Free((XPPPMEM)&pptszList, nListCount);
+			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _T("HTTP客户端:%s,发送的URL请求参数不正确:%s"), lpszClientAddr, pSt_HTTPParam->tszHttpUri);
+			return FALSE;
+		}
 		//获得函数名
 		BaseLib_OperatorString_GetKeyValue(pptszList[0], "=", tszKey, tszValue);
 		if (0 != _tcsnicmp(lpszParamFunc1, tszKey, _tcslen(lpszParamFunc1)))
