@@ -166,6 +166,7 @@
     <ClInclude Include="framework.h" />
     <ClInclude Include="ModuleDatabase_IDCard\ModuleDatabase_IDCard.h" />
     <ClInclude Include="ModuleDatabase_IPInfo\ModuleDatabase_IPInfo.h" />
+    <ClInclude Include="ModuleDatabase_Phone\ModuleDatabase_Phone.h" />
     <ClInclude Include="ModuleDB_Define.h" />
     <ClInclude Include="ModuleDB_Error.h" />
     <ClInclude Include="pch.h" />
@@ -174,6 +175,7 @@
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="ModuleDatabase_IDCard\ModuleDatabase_IDCard.cpp" />
     <ClCompile Include="ModuleDatabase_IPInfo\ModuleDatabase_IPInfo.cpp" />
+    <ClCompile Include="ModuleDatabase_Phone\ModuleDatabase_Phone.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>

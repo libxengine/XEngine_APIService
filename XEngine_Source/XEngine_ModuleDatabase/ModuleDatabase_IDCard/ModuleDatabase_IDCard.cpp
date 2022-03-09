@@ -113,7 +113,7 @@ BOOL CModuleDatabase_IDCard::ModuleDatabase_IDCard_QueryProvincer(XENGINE_IDREGI
     if ((NULL == pSt_IDRegion) || (NULL == pSt_IDInfo))
     {
         DBModule_IsErrorOccur = TRUE;
-        DBModule_dwErrorCode = ERROR_XENGINE_IPADDR_MODULE_DATABASE_IDCARD_QUERY_PARAMENT;
+        DBModule_dwErrorCode = ERROR_XENGINE_IPADDR_MODULE_DATABASE_IDCARD_PARAMENT;
         return FALSE;
     }
     //查询
@@ -133,7 +133,7 @@ BOOL CModuleDatabase_IDCard::ModuleDatabase_IDCard_QueryProvincer(XENGINE_IDREGI
 	if (nLine <= 0)
 	{
 		DBModule_IsErrorOccur = TRUE;
-		DBModule_dwErrorCode = ERROR_XENGINE_IPADDR_MODULE_DATABASE_IDCARD_QUERY_NOTFOUND;
+		DBModule_dwErrorCode = ERROR_XENGINE_IPADDR_MODULE_DATABASE_IDCARD_NOTFOUND;
 		return FALSE;
 	}
 	_tcscpy(pSt_IDRegion->tszProvincer, pptszResult[nRow + 1]);
@@ -166,7 +166,7 @@ BOOL CModuleDatabase_IDCard::ModuleDatabase_IDCard_QueryCity(XENGINE_IDREGION* p
 	if ((NULL == pSt_IDRegion) || (NULL == pSt_IDInfo))
 	{
 		DBModule_IsErrorOccur = TRUE;
-		DBModule_dwErrorCode = ERROR_XENGINE_IPADDR_MODULE_DATABASE_IDCARD_QUERY_PARAMENT;
+		DBModule_dwErrorCode = ERROR_XENGINE_IPADDR_MODULE_DATABASE_IDCARD_PARAMENT;
 		return FALSE;
 	}
 	//查询
@@ -186,7 +186,7 @@ BOOL CModuleDatabase_IDCard::ModuleDatabase_IDCard_QueryCity(XENGINE_IDREGION* p
 	if (nLine <= 0)
 	{
 		DBModule_IsErrorOccur = TRUE;
-		DBModule_dwErrorCode = ERROR_XENGINE_IPADDR_MODULE_DATABASE_IDCARD_QUERY_NOTFOUND;
+		DBModule_dwErrorCode = ERROR_XENGINE_IPADDR_MODULE_DATABASE_IDCARD_NOTFOUND;
 		return FALSE;
 	}
 	_tcscpy(pSt_IDRegion->tszCity, pptszResult[nRow + 1]);
@@ -219,7 +219,7 @@ BOOL CModuleDatabase_IDCard::ModuleDatabase_IDCard_QueryCounty(XENGINE_IDREGION*
 	if ((NULL == pSt_IDRegion) || (NULL == pSt_IDInfo))
 	{
 		DBModule_IsErrorOccur = TRUE;
-		DBModule_dwErrorCode = ERROR_XENGINE_IPADDR_MODULE_DATABASE_IDCARD_QUERY_PARAMENT;
+		DBModule_dwErrorCode = ERROR_XENGINE_IPADDR_MODULE_DATABASE_IDCARD_PARAMENT;
 		return FALSE;
 	}
 	//查询
@@ -239,7 +239,7 @@ BOOL CModuleDatabase_IDCard::ModuleDatabase_IDCard_QueryCounty(XENGINE_IDREGION*
 	if (nLine <= 0)
 	{
 		DBModule_IsErrorOccur = TRUE;
-		DBModule_dwErrorCode = ERROR_XENGINE_IPADDR_MODULE_DATABASE_IDCARD_QUERY_NOTFOUND;
+		DBModule_dwErrorCode = ERROR_XENGINE_IPADDR_MODULE_DATABASE_IDCARD_NOTFOUND;
 		return FALSE;
 	}
 	_tcscpy(pSt_IDRegion->tszCounty, pptszResult[nRow + 1]);

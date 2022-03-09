@@ -11,3 +11,7 @@ EXPORTS
 	ModuleDatabase_IDCard_Init
 	ModuleDatabase_IDCard_Destory
 	ModuleDatabase_IDCard_QueryRegion
+
+	ModuleDatabase_Phone_Init
+	ModuleDatabase_Phone_Destory
+	ModuleDatabase_Phone_Query

@@ -123,3 +123,48 @@ extern "C" BOOL ModuleDatabase_IDCard_Destory();
 备注：
 *********************************************************************/
 extern "C" BOOL ModuleDatabase_IDCard_QueryRegion(XENGINE_IDREGION * pSt_IDRegion, XENGINE_IDCARDINFO * pSt_IDInfo);
+/************************************************************************/
+/*                         导出的电话号码信息函数                       */
+/************************************************************************/
+/********************************************************************
+函数名称：ModuleDatabase_Phone_Init
+函数功能：初始化电话信息查询数据库
+ 参数.一：lpszSQLFile
+  In/Out：In
+  类型：常量字符指针
+  可空：N
+  意思：输入要操作的SQL文件
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+extern "C" BOOL ModuleDatabase_Phone_Init(LPCTSTR lpszSQLFile);
+/********************************************************************
+函数名称：ModuleDatabase_Phone_Destory
+函数功能：销毁
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+extern "C" BOOL ModuleDatabase_Phone_Destory();
+/********************************************************************
+函数名称：ModuleDatabase_Phone_Query
+函数功能：查询电话号码信息
+ 参数.一：lpszPhoneNumber
+  In/Out：In
+  类型：常量字符指针
+  可空：N
+  意思：输入要查询的电话号码
+ 参数.二：pSt_PhoneInfo
+  In/Out：Out
+  类型：数据结构指针
+  可空：N
+  意思：输出电话信息
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+extern "C" BOOL ModuleDatabase_Phone_Query(LPCTSTR lpszPhoneNumber, XENGINE_PHONEINFO * pSt_PhoneInfo);
