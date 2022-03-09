@@ -5,15 +5,16 @@
 ## 介绍
 c c++ 接口服务器  
 c c++ interface api service  
-这是一个接口API服务.  
+这是一个信息查询的API接口服务,目前市面上的信息查询服务都需要收费,而我们这个信息查询服务属于免费开源的.  
 这个服务主要使用HTTP/V1.1实现各种接口服务.  
-这是一个不包含任何语言属性的通用信息查询服务  
+这是一个不包含任何语言属性的通用信息查询服务.  
 基于libXEngine开发并实现的一套简洁高性能跨平台接口服务  
 
 ## 软件特性
 1. 支持JSON和字符串流方式返回查询的内容
 2. 支持IP地址位置信息查询(IPV4和IPV6)
 3. 支持身份证校验与信息查询
+4. 支持手机号信息归属查询
 
 ## 安装教程
 
@@ -62,7 +63,42 @@ make FLAGS=CleanAll 清理编译
 ## 测试服务器
 地址:app.xyry.org 或者 159.75.200.173  
 端口:HTTP业务端口 5501  
-
+####测试接口
+手机信息查询  
+接口:http://127.0.0.1:5501/api?function=phonequery&params1=13699439999&params2=0  
+```json
+{
+    "code":0,
+    "data":{
+        "nAreaCode":28,
+        "nPhoneNumber":13699435573,
+        "nZipCode":610000,
+        "tszCity":"成都",
+        "tszProvincer":"四川"
+    },
+    "msg":"success"
+}
+```
+IP地址查询  
+接口;http://127.0.0.1:5501/api?function=ipquery&params1=1.29.164.255&params2=0  
+```json
+{
+    "code":0,
+    "data":{
+        "tszIPAddr":"1.29.164.255",
+        "tszIPAddress":"内蒙古通辽市霍林郭勒市",
+        "tszIPCity":"通辽市",
+        "tszIPCountry":"中国",
+        "tszIPCounty":"霍林郭勒市",
+        "tszIPEnd":"1.29.164.255",
+        "tszIPISP":"联通",
+        "tszIPProvince":"内蒙古",
+        "tszIPStart":"1.29.164.0",
+        "tszIPTime":"2021-11-03 07:33:50"
+    },
+    "msg":"success"
+}
+```
 ## 参与贡献
 
 1.  Fork 本仓库
