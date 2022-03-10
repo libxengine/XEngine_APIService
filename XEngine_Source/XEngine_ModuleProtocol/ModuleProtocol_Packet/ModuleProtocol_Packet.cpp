@@ -336,7 +336,7 @@ BOOL CModuleProtocol_Packet::ModuleProtocol_Packet_PhoneQuery(TCHAR* ptszMsgBuff
 
 	if (0 == nCode)
 	{
-		st_JsonObject["nPhoneNumber"] = pSt_PhoneInfo->nPhoneNumber;
+		st_JsonObject["nPhoneNumber"] = (Json::Value::Int64)pSt_PhoneInfo->nPhoneNumber;
 		st_JsonObject["tszProvincer"] = pSt_PhoneInfo->tszProvincer;
 		st_JsonObject["tszCity"] = pSt_PhoneInfo->tszCity;
 		st_JsonObject["nZipCode"] = pSt_PhoneInfo->nZipCode;
