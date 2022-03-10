@@ -7,5 +7,7 @@ EXPORTS
 	ModuleProtocol_Packet_IPQuery2
 	ModuleProtocol_Packet_IDQuery
 	ModuleProtocol_Packet_IDQuery2
+	ModuleProtocol_Packet_PhoneQuery
+	ModuleProtocol_Packet_PhoneQuery2
 
 	ModuleProtocol_Parse_IDCard

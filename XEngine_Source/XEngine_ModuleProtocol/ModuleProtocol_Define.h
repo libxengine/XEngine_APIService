@@ -153,6 +153,69 @@ extern "C" BOOL ModuleProtocol_Packet_IDQuery(TCHAR* ptszMsgBuffer, int* pInt_Ms
 备注：
 *********************************************************************/
 extern "C" BOOL ModuleProtocol_Packet_IDQuery2(TCHAR* ptszMsgBuffer, int* pInt_MsgLen, XENGINE_IDCARDINFO* pSt_IDInfo, XENGINE_IDREGION* pSt_IDRegion, int nCode = 0);
+/********************************************************************
+函数名称：ModuleProtocol_Packet_PhoneQuery
+函数功能：电话信息查询打包为JSON的封包函数
+ 参数.一：ptszMsgBuffer
+  In/Out：Out
+  类型：字符指针
+  可空：N
+  意思：输出打包的数据信息
+ 参数.二：pInt_MsgLen
+  In/Out：Out
+  类型：整数型指针
+  可空：N
+  意思：输出打包大小
+ 参数.三：pSt_PhoneInfo
+  In/Out：In
+  类型：数据结构指针
+  可空：N
+  意思：输入要打包的信息
+ 参数.四：nCode
+  In/Out：In
+  类型：整数型
+  可空：Y
+  意思：输入返回的值
+ 参数.五：lpszMsgBuffer
+  In/Out：In
+  类型：常量字符指针
+  可空：Y
+  意思：输入操作结果
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+extern "C" BOOL ModuleProtocol_Packet_PhoneQuery(TCHAR* ptszMsgBuffer, int* pInt_MsgLen, XENGINE_PHONEINFO* pSt_PhoneInfo, int nCode = 0, LPCTSTR lpszMsgBuffer = NULL);
+/********************************************************************
+函数名称：ModuleProtocol_Packet_PhoneQuery2
+函数功能：电话查询打包为字符串流函数
+ 参数.一：ptszMsgBuffer
+  In/Out：Out
+  类型：字符指针
+  可空：N
+  意思：输出打包的数据信息
+ 参数.二：pInt_MsgLen
+  In/Out：Out
+  类型：整数型指针
+  可空：N
+  意思：输出打包大小
+ 参数.三：pSt_PhoneInfo
+  In/Out：In
+  类型：数据结构指针
+  可空：N
+  意思：输入要打包的信息
+ 参数.四：nCode
+  In/Out：In
+  类型：整数型
+  可空：Y
+  意思：输入返回的值
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+extern "C" BOOL ModuleProtocol_Packet_PhoneQuery2(TCHAR* ptszMsgBuffer, int* pInt_MsgLen, XENGINE_PHONEINFO* pSt_PhoneInfo, int nCode = 0);
 /************************************************************************/
 /*                         导出的协议解析函数                           */
 /************************************************************************/
