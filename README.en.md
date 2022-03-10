@@ -5,7 +5,7 @@ This repository has a development and master branch. If you want to use it, plea
 ## Introduction
 c c++ 接口服务器  
 c c++ interface api service  
-This is an interface api service.  
+This is an api interface for information query service,At present, the information search service on the market need to charge, and our information search service is free and open source.  
 This service mainly uses HTTP/V1.1 to implement various interface services  
 This is a general information query service that does not contain any language attributes
 The purpose of development and implementation based on libXEngine is a cross-platform network storage service  
@@ -14,6 +14,7 @@ The purpose of development and implementation based on libXEngine is a cross-pla
 1. support json and string stream methods to return the content of the query
 2. support ip address location information query(IPV4 and IPV6)
 3. support ID verification and information query
+4. support phone number information query
 
 ## install
 
@@ -60,8 +61,63 @@ make FLAGS=CleanAll clear
 You can refer to the document under the docment directory. It contains API protocol and service description.  
 
 ## Test Service
-Address:app.xyry.org or 159.75.200.173  
-Port:HTTP Center Port 5501  
+Address:app.xyry.org,Port:5501  
+#### example
+phone information query  
+api:http://app.xyry.org:5501/api?function=phonequery&params1=13699439999&params2=0  
+```json
+{
+    "code":0,
+    "data":{
+        "nAreaCode":28,
+        "nPhoneNumber":13699439999,
+        "nZipCode":610000,
+        "tszCity":"成都",
+        "tszProvincer":"四川"
+    },
+    "msg":"success"
+}
+```
+ip address information  
+api;http://app.xyry.org:5501/api?function=ipquery&params1=1.29.164.255&params2=0  
+```json
+{
+    "code":0,
+    "data":{
+        "tszIPAddr":"1.29.164.255",
+        "tszIPAddress":"内蒙古通辽市霍林郭勒市",
+        "tszIPCity":"通辽市",
+        "tszIPCountry":"中国",
+        "tszIPCounty":"霍林郭勒市",
+        "tszIPEnd":"1.29.164.255",
+        "tszIPISP":"联通",
+        "tszIPProvince":"内蒙古",
+        "tszIPStart":"1.29.164.0",
+        "tszIPTime":"2021-11-03 07:33:50"
+    },
+    "msg":"success"
+}
+```
+id information query  
+api;http://app.xyry.org:5501/api?function=idquery&params1=511025198800000000&params2=0  
+```json
+{
+    "code":0,
+    "data":{
+        "nBirthDay":00,
+        "nBirthMonth":00,
+        "nBirthYear":1988,
+        "nCheck":2,
+        "nPoliceID":87,
+        "nSex":1,
+        "tszCity":"内江市",
+        "tszCounty":"资中县",
+        "tszIDNumber":"511025198800000000",
+        "tszProvincer":"四川省"
+    },
+    "msg":"success"
+}
+```
 
 ## Participate in contribution
 

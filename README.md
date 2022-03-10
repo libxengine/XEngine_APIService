@@ -61,17 +61,16 @@ make FLAGS=CleanAll 清理编译
 你可以参考docment目录下的文档.里面包含了API协议和服务说明.
 
 ## 测试服务器
-地址:app.xyry.org 或者 159.75.200.173  
-端口:HTTP业务端口 5501  
-####测试接口
+地址:app.xyry.org,端口:5501  
+#### 测试接口示例
 手机信息查询  
-接口:http://127.0.0.1:5501/api?function=phonequery&params1=13699439999&params2=0  
+接口:http://app.xyry.org:5501/api?function=phonequery&params1=13699439999&params2=0  
 ```json
 {
     "code":0,
     "data":{
         "nAreaCode":28,
-        "nPhoneNumber":13699435573,
+        "nPhoneNumber":13699439999,
         "nZipCode":610000,
         "tszCity":"成都",
         "tszProvincer":"四川"
@@ -80,7 +79,7 @@ make FLAGS=CleanAll 清理编译
 }
 ```
 IP地址查询  
-接口;http://127.0.0.1:5501/api?function=ipquery&params1=1.29.164.255&params2=0  
+接口;http://app.xyry.org:5501/api?function=ipquery&params1=1.29.164.255&params2=0  
 ```json
 {
     "code":0,
@@ -95,6 +94,26 @@ IP地址查询
         "tszIPProvince":"内蒙古",
         "tszIPStart":"1.29.164.0",
         "tszIPTime":"2021-11-03 07:33:50"
+    },
+    "msg":"success"
+}
+```
+身份证查询  
+接口;http://app.xyry.org:5501/api?function=idquery&params1=511025198800000000&params2=0  
+```json
+{
+    "code":0,
+    "data":{
+        "nBirthDay":00,
+        "nBirthMonth":00,
+        "nBirthYear":1988,
+        "nCheck":2,
+        "nPoliceID":87,
+        "nSex":1,
+        "tszCity":"内江市",
+        "tszCounty":"资中县",
+        "tszIDNumber":"511025198800000000",
+        "tszProvincer":"四川省"
     },
     "msg":"success"
 }
