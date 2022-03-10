@@ -7,6 +7,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "APPClient_IPExample", "APPC
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "APPClient_IDExample", "APPClient_IDExample\APPClient_IDExample.vcxproj", "{355B24D9-9049-4086-A35A-596EEDBA0A9C}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "APPClient_PhoneExample", "APPClient_PhoneExample\APPClient_PhoneExample.vcxproj", "{2EA578AA-4F40-48E1-87BC-9A04295C9A34}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -31,6 +33,14 @@ Global
 		{355B24D9-9049-4086-A35A-596EEDBA0A9C}.Release|x64.Build.0 = Release|x64
 		{355B24D9-9049-4086-A35A-596EEDBA0A9C}.Release|x86.ActiveCfg = Release|Win32
 		{355B24D9-9049-4086-A35A-596EEDBA0A9C}.Release|x86.Build.0 = Release|Win32
+		{2EA578AA-4F40-48E1-87BC-9A04295C9A34}.Debug|x64.ActiveCfg = Debug|x64
+		{2EA578AA-4F40-48E1-87BC-9A04295C9A34}.Debug|x64.Build.0 = Debug|x64
+		{2EA578AA-4F40-48E1-87BC-9A04295C9A34}.Debug|x86.ActiveCfg = Debug|Win32
+		{2EA578AA-4F40-48E1-87BC-9A04295C9A34}.Debug|x86.Build.0 = Debug|Win32
+		{2EA578AA-4F40-48E1-87BC-9A04295C9A34}.Release|x64.ActiveCfg = Release|x64
+		{2EA578AA-4F40-48E1-87BC-9A04295C9A34}.Release|x64.Build.0 = Release|x64
+		{2EA578AA-4F40-48E1-87BC-9A04295C9A34}.Release|x86.ActiveCfg = Release|Win32
+		{2EA578AA-4F40-48E1-87BC-9A04295C9A34}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
