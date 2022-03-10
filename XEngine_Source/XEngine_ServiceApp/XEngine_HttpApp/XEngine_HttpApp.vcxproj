@@ -158,6 +158,7 @@
     <ClCompile Include="XEngine_HTTPTask.cpp" />
     <ClCompile Include="XEngine_HTTPTask\HTTPTask_IDCard.cpp" />
     <ClCompile Include="XEngine_HTTPTask\HTTPTask_IPInfo.cpp" />
+    <ClCompile Include="XEngine_HTTPTask\HTTPTask_Phone.cpp" />
     <ClCompile Include="XEngine_Network.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -166,6 +167,7 @@
     <ClInclude Include="XEngine_HTTPTask.h" />
     <ClInclude Include="XEngine_HTTPTask\HTTPTask_IDCard.h" />
     <ClInclude Include="XEngine_HTTPTask\HTTPTask_IPInfo.h" />
+    <ClInclude Include="XEngine_HTTPTask\HTTPTask_Phone.h" />
     <ClInclude Include="XEngine_Network.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

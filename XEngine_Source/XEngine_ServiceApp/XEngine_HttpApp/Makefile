@@ -5,7 +5,7 @@ LOADBIN = -L /usr/local/lib/XEngine_Release/XEngine_BaseLib -L /usr/local/lib/XE
 LIB = -lXEngine_BaseLib -lXEngine_Algorithm -lXEngine_Core -lXEngine_ManagePool -lHelpComponents_XLog -lRfcComponents_HttpServer -ljsoncpp -lXEngine_ModuleConfigure -lXEngine_ModuleDatabase -lXEngine_ModuleProtocol -lXEngine_ModuleHelp
 LIBEX = -static-libgcc -ldl -lrt -lpthread
 LOADSO = -Wl,-rpath=./,--disable-new-dtags
-LIBINCLUDE = XEngine_Configure.o XEngine_Network.o XEngine_HTTPTask.o HTTPTask_IPInfo.o HTTPTask_IDCard.o XEngine_HttpApp.o
+LIBINCLUDE = XEngine_Configure.o XEngine_Network.o XEngine_HTTPTask.o HTTPTask_IPInfo.o HTTPTask_IDCard.o HTTPTask_Phone.o XEngine_HttpApp.o
 
 ifeq ($(RELEASE),1)
 FLAGS = -c -O2 
@@ -35,6 +35,8 @@ HTTPTask_IPInfo.o:./XEngine_HTTPTask/HTTPTask_IPInfo.cpp
 	$(CC) $(DEBUG) $(FLAGS) $(UNICODE) ./XEngine_HTTPTask/HTTPTask_IPInfo.cpp
 HTTPTask_IDCard.o:./XEngine_HTTPTask/HTTPTask_IDCard.cpp
 	$(CC) $(DEBUG) $(FLAGS) $(UNICODE) ./XEngine_HTTPTask/HTTPTask_IDCard.cpp
+HTTPTask_Phone.o:./XEngine_HTTPTask/HTTPTask_Phone.cpp
+	$(CC) $(DEBUG) $(FLAGS) $(UNICODE) ./XEngine_HTTPTask/HTTPTask_Phone.cpp
 
 XEngine_HttpApp.o:./XEngine_HttpApp.cpp             
 	$(CC) $(DEBUG) $(FLAGS) $(UNICODE) ./XEngine_HttpApp.cpp   

@@ -18,6 +18,16 @@ typedef enum
 	//用户消息
 	ENUM_XENGINE_COMMUNICATION_PROTOCOL_TYPE_MSG = ENUM_XENGINE_COMMUNICATION_PROTOCOL_TYPE_USER + 1
 }ENUM_XENGINE_COMMUNICATION_PROTOCOL_TYPE_CUSTOM;
+typedef enum
+{
+	ENUM_XENGINE_APISERVICE_PHONE_TYPE_UNKNOWN = 0,	    // 未知，查找失败
+	ENUM_XENGINE_APISERVICE_PHONE_TYPE_CMCC,			// 中国移动
+	ENUM_XENGINE_APISERVICE_PHONE_TYPE_CUCC,			// 中国联通
+	ENUM_XENGINE_APISERVICE_PHONE_TYPE_CTCC,			// 中国电信
+	ENUM_XENGINE_APISERVICE_PHONE_TYPE_CTCC_V,			// 电信虚拟运营商
+	ENUM_XENGINE_APISERVICE_PHONE_TYPE_CUCC_V,			// 联通虚拟运营商
+	ENUM_XENGINE_APISERVICE_PHONE_TYPE_CMCC_V			// 移动虚拟运营商
+}ENUM_XENGINE_APISERVICE_PHONE_TYPE;
 //////////////////////////////////////////////////////////////////////////
 //                          子协议定义:unOperatorCode
 //////////////////////////////////////////////////////////////////////////
@@ -63,4 +73,14 @@ typedef struct
 	TCHAR tszCity[64];          //市/区     
 	TCHAR tszCounty[64];        //县
 }XENGINE_IDREGION;
+//行政区域
+typedef struct
+{
+	TCHAR tszProvincer[64];     //省/自治区/直辖市
+	TCHAR tszCity[64];          //市/区     
+	__int64x nPhoneNumber;      //电话号码
+	int nZipCode;               //邮编
+	int nAreaCode;              //区号
+	ENUM_XENGINE_APISERVICE_PHONE_TYPE enPhoneType;  //电话号码类型
+}XENGINE_PHONEINFO;
 #pragma pack(pop)
