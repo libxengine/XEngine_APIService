@@ -6,6 +6,8 @@
 #include <signal.h>
 #include <errno.h>
 #include <thread>
+#include <string>
+#include <list>
 #ifdef _WINDOWS
 #include <Windows.h>
 #include <tchar.h>

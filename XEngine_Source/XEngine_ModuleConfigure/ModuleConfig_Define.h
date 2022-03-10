@@ -45,6 +45,10 @@ typedef struct tag_XEngine_ServiceConfig
 		TCHAR tszIDData[MAX_PATH];            //ID数据库地址
 		TCHAR tszPhoneData[MAX_PATH];         //电话号码数据库地址
 	}st_XDBInfo;
+	struct  
+	{
+		list<string>* pStl_ListVer;
+	}st_XVer;
 }XENGINE_SERVICECONFIG;
 //////////////////////////////////////////////////////////////////////////
 //                        导出函数定义

@@ -17,6 +17,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include <memory>
+#include <string>
+#include <list>
 #include <json/json.h>
 using namespace std;
 #include <XEngine_Include/XEngine_CommHdr.h>

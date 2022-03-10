@@ -128,5 +128,18 @@ BOOL CModuleConfigure_Json::ModuleConfigure_Json_File(LPCTSTR lpszConfigFile, XE
 	_tcscpy(pSt_ServerConfig->st_XDBInfo.tszIPData, st_JsonXDB["tszIPData"].asCString());
 	_tcscpy(pSt_ServerConfig->st_XDBInfo.tszIDData, st_JsonXDB["tszIDData"].asCString());
 	_tcscpy(pSt_ServerConfig->st_XDBInfo.tszPhoneData, st_JsonXDB["tszPhoneData"].asCString());
+
+	if (st_JsonRoot["XVer"].empty())
+	{
+		Config_IsErrorOccur = TRUE;
+		Config_dwErrorCode = ERROR_MODULE_CONFIGURE_JSON_XVER;
+		return FALSE;
+	}
+	pSt_ServerConfig->st_XVer.pStl_ListVer = new list<string>;
+	Json::Value st_JsonXVer = st_JsonRoot["XVer"];
+	for (unsigned int i = 0; i < st_JsonXVer.size(); i++)
+	{
+		pSt_ServerConfig->st_XVer.pStl_ListVer->push_back(st_JsonXVer[i].asCString());
+	}
 	return TRUE;
 }

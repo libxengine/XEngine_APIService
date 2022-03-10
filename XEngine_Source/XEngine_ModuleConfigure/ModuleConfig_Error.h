@@ -17,3 +17,4 @@
 #define ERROR_MODULE_CONFIGURE_JSON_XTIME 0xA0005                    //读取XTIME配置失败
 #define ERROR_MODULE_CONFIGURE_JSON_XLOG 0xA0006                     //读取XLOG配置失败
 #define ERROR_MODULE_CONFIGURE_JSON_XDB 0xA0007                      //数据库配置错误
+#define ERROR_MODULE_CONFIGURE_JSON_XVER 0xA0008                     //版本配置文件读取错误
