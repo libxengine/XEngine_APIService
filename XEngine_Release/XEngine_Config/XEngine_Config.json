@@ -1,0 +1,28 @@
+{
+  "tszIPAddr":"192.168.1.8",
+  "bDeamon":0,
+  "nHttpPort":5501,
+  "XMax":{
+      "nMaxClient":10000,
+      "nMaxQueue":10000,
+      "nIOThread":2,
+      "nHttpThread":2
+  },
+  "XTime":{
+      "nTimeCheck":3,
+      "nHttpTimeOut":5
+  },
+  "XLog":{
+      "MaxSize":1024000,
+      "MaxCount":10,
+      "LogLeave":32
+  },
+  "XDatabase":{
+      "tszIPData":"./XEngine_DBFile/ipdata.db",
+      "tszIDData":"./XEngine_DBFile/regionsid.db",
+      "tszPhoneData":"./XEngine_DBFile/phone.dat"
+  },
+  "XVer":[
+      "1.0.0.1001 Build20220311"
+  ]
+}
