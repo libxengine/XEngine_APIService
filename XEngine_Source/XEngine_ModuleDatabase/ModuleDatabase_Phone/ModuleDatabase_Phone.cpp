@@ -46,6 +46,12 @@ BOOL CModuleDatabase_Phone::ModuleDatabase_Phone_Init(LPCTSTR lpszSQLFile)
 	}
 	//打开数据库
 	FILE* pSt_File = _tfopen(lpszSQLFile, _T("rb"));
+	if (NULL == pSt_File)
+	{
+		DBModule_IsErrorOccur = TRUE;
+		DBModule_dwErrorCode = ERROR_XENGINE_IPADDR_MODULE_DATABASE_PHONE_NOTFOUND;
+		return FALSE;
+	}
 	//申请内存
 	ptszMsgBuffer = (TCHAR*)malloc(XENGINE_APISERVICE_DATABASE_PHONE_BUFFER_SIZE);
 	if (NULL == ptszMsgBuffer)
