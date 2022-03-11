@@ -15,6 +15,22 @@ The purpose of development and implementation based on libXEngine is a cross-pla
 2. support ip address location information query(IPV4 and IPV6)
 3. support ID verification and information query
 4. support phone number information query
+5. Weather forecast (planned)
+6. Lunar calendar conversion (planning)
+7. News headlines (planned)
+8. Standard height and weight (planned)
+9. Zodiac Constellation (planned)
+10. Password generator (planned)
+11. World Time Zones (planned)
+12. Oil price inquiry (planned)
+13. Administrative zip code (planned)
+14. Bank card verification (planned)
+15. Exchange rate calculation (planned)
+16. QR code generation (planned)
+17. Simplified and Traditional Conversion (planned)
+18. Oil price inquiry (planned)
+19. Twenty-four solar terms (planned)
+20. Xinhua Dictionary (planned)
 
 ## install
 
@@ -120,6 +136,7 @@ api;http://app.xyry.org:5501/api?function=idquery&params1=511025198800000000&par
 ```
 
 ## Participate in contribution
+I hope you will submit more code to participate in the contribution  
 
 1. Fork this code
 2. Create new Feat_xxx branch
