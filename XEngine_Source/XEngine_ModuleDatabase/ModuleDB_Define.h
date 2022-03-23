@@ -197,19 +197,14 @@ extern "C" BOOL ModuleDatabase_Bank_Destory();
 /********************************************************************
 函数名称：ModuleDatabase_Bank_Query
 函数功能：通过银行缩写获得银行名称
- 参数.一：lpszMsgBuffer
-  In/Out：In
-  类型：常量字符指针
+ 参数.一：pSt_BankInfo
+  In/Out：In/Out
+  类型：数据结构指针
   可空：N
-  意思：输入要查询的内容
- 参数.二：ptszMsgBuffer
-  In/Out：Out
-  类型：字符指针
-  可空：N
-  意思：输出查询到的内容
+  意思：输入要查询的名称,输出银行名称
 返回值
   类型：逻辑型
   意思：是否成功
 备注：
 *********************************************************************/
-extern "C" BOOL ModuleDatabase_Bank_Query(LPCTSTR lpszMsgBuffer, TCHAR* ptszMsgBuffer);
+extern "C" BOOL ModuleDatabase_Bank_Query(XENGINE_BANKINFO * pSt_BankInfo);

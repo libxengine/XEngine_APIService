@@ -20,7 +20,7 @@ public:
 public:
 	BOOL ModuleDatabase_Bank_Init(LPCTSTR lpszSQLFile);
 	BOOL ModuleDatabase_Bank_Destory();
-	BOOL ModuleDatabase_Bank_Query(LPCTSTR lpszMsgBuffer, TCHAR* ptszMsgBuffer);
+	BOOL ModuleDatabase_Bank_Query(XENGINE_BANKINFO* pSt_BankInfo);
 protected:
 private:
 	XHDATA xhSQL;

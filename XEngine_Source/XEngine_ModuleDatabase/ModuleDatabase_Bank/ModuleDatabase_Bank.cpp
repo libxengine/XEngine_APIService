@@ -64,26 +64,21 @@ BOOL CModuleDatabase_Bank::ModuleDatabase_Bank_Destory()
 /********************************************************************
 函数名称：ModuleDatabase_Bank_Query
 函数功能：通过银行缩写获得银行名称
- 参数.一：lpszMsgBuffer
-  In/Out：In
-  类型：常量字符指针
+ 参数.一：pSt_BankInfo
+  In/Out：In/Out
+  类型：数据结构指针
   可空：N
-  意思：输入要查询的内容
- 参数.二：ptszMsgBuffer
-  In/Out：Out
-  类型：字符指针
-  可空：N
-  意思：输出查询到的内容
+  意思：输入要查询的名称,输出银行名称
 返回值
   类型：逻辑型
   意思：是否成功
 备注：
 *********************************************************************/
-BOOL CModuleDatabase_Bank::ModuleDatabase_Bank_Query(LPCTSTR lpszMsgBuffer, TCHAR* ptszMsgBuffer)
+BOOL CModuleDatabase_Bank::ModuleDatabase_Bank_Query(XENGINE_BANKINFO* pSt_BankInfo)
 {
     DBModule_IsErrorOccur = FALSE;
 
-    if ((NULL == lpszMsgBuffer) || (NULL == ptszMsgBuffer))
+    if (NULL == pSt_BankInfo)
     {
         DBModule_IsErrorOccur = TRUE;
         DBModule_dwErrorCode = ERROR_XENGINE_IPADDR_MODULE_DATABASE_BANK_PARAMENT;
@@ -96,7 +91,7 @@ BOOL CModuleDatabase_Bank::ModuleDatabase_Bank_Query(LPCTSTR lpszMsgBuffer, TCHA
     TCHAR tszSQLStatement[1024];
 
     memset(tszSQLStatement, '\0', sizeof(tszSQLStatement));
-	_stprintf(tszSQLStatement, _T("SELECT * FROM `BankCard` WHERE tszBankAbridge = '%s'"), lpszMsgBuffer);
+	_stprintf(tszSQLStatement, _T("SELECT * FROM `BankCard` WHERE tszBankAbridge = '%s'"), pSt_BankInfo->tszBankAbridge);
 	if (!DataBase_SQLite_GetTable(xhSQL, tszSQLStatement, &pptszResult, &nLine, &nRow))
 	{
 		DBModule_IsErrorOccur = TRUE;
@@ -109,7 +104,7 @@ BOOL CModuleDatabase_Bank::ModuleDatabase_Bank_Query(LPCTSTR lpszMsgBuffer, TCHA
 		DBModule_dwErrorCode = ERROR_XENGINE_IPADDR_MODULE_DATABASE_BANK_NOTFOUND;
 		return FALSE;
 	}
-	_tcscpy(ptszMsgBuffer, pptszResult[nRow + 1]);
+	_tcscpy(pSt_BankInfo->tszBankName, pptszResult[nRow + 1]);
 
 	DataBase_SQLite_FreeTable(pptszResult);
 	return TRUE;

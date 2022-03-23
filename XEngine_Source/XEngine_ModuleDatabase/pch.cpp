@@ -92,7 +92,7 @@ extern "C" BOOL ModuleDatabase_Bank_Destory()
 {
 	return m_Bank.ModuleDatabase_Bank_Destory();
 }
-extern "C" BOOL ModuleDatabase_Bank_Query(LPCTSTR lpszMsgBuffer, TCHAR * ptszMsgBuffer)
+extern "C" BOOL ModuleDatabase_Bank_Query(XENGINE_BANKINFO * pSt_BankInfo)
 {
-	return m_Bank.ModuleDatabase_Bank_Query(lpszMsgBuffer, ptszMsgBuffer);
+	return m_Bank.ModuleDatabase_Bank_Query(pSt_BankInfo);
 }
