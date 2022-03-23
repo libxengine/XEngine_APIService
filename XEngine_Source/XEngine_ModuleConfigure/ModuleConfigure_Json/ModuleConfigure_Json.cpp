@@ -118,7 +118,7 @@ BOOL CModuleConfigure_Json::ModuleConfigure_Json_File(LPCTSTR lpszConfigFile, XE
 	pSt_ServerConfig->st_XLog.nMaxCount = st_JsonXLog["MaxCount"].asInt();
 	pSt_ServerConfig->st_XLog.nLogLeave = st_JsonXLog["LogLeave"].asInt();
 
-	if (st_JsonRoot["XDatabase"].empty() || (3 != st_JsonRoot["XDatabase"].size()))
+	if (st_JsonRoot["XDatabase"].empty() || (4 != st_JsonRoot["XDatabase"].size()))
 	{
 		Config_IsErrorOccur = TRUE;
 		Config_dwErrorCode = ERROR_MODULE_CONFIGURE_JSON_XDB;
@@ -128,6 +128,7 @@ BOOL CModuleConfigure_Json::ModuleConfigure_Json_File(LPCTSTR lpszConfigFile, XE
 	_tcscpy(pSt_ServerConfig->st_XDBInfo.tszIPData, st_JsonXDB["tszIPData"].asCString());
 	_tcscpy(pSt_ServerConfig->st_XDBInfo.tszIDData, st_JsonXDB["tszIDData"].asCString());
 	_tcscpy(pSt_ServerConfig->st_XDBInfo.tszPhoneData, st_JsonXDB["tszPhoneData"].asCString());
+	_tcscpy(pSt_ServerConfig->st_XDBInfo.tszBankNumber, st_JsonXDB["tszBankNumber"].asCString());
 
 	if (st_JsonRoot["XVer"].empty())
 	{
