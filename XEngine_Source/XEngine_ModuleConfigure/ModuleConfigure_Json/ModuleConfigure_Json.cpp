@@ -128,7 +128,7 @@ BOOL CModuleConfigure_Json::ModuleConfigure_Json_File(LPCTSTR lpszConfigFile, XE
 	_tcscpy(pSt_ServerConfig->st_XDBInfo.tszIPData, st_JsonXDB["tszIPData"].asCString());
 	_tcscpy(pSt_ServerConfig->st_XDBInfo.tszIDData, st_JsonXDB["tszIDData"].asCString());
 	_tcscpy(pSt_ServerConfig->st_XDBInfo.tszPhoneData, st_JsonXDB["tszPhoneData"].asCString());
-	_tcscpy(pSt_ServerConfig->st_XDBInfo.tszBankNumber, st_JsonXDB["tszBankNumber"].asCString());
+	_tcscpy(pSt_ServerConfig->st_XDBInfo.tszBankData, st_JsonXDB["tszBankData"].asCString());
 
 	if (st_JsonRoot["XVer"].empty())
 	{

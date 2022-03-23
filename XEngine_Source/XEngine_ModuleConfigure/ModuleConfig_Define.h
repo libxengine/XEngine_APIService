@@ -44,7 +44,7 @@ typedef struct tag_XEngine_ServiceConfig
 		TCHAR tszIPData[MAX_PATH];            //IP数据库地址
 		TCHAR tszIDData[MAX_PATH];            //ID数据库地址
 		TCHAR tszPhoneData[MAX_PATH];         //电话号码数据库地址
-		TCHAR tszBankNumber[MAX_PATH];        //银行卡号
+		TCHAR tszBankData[MAX_PATH];          //银行卡数据库地址
 	}st_XDBInfo;
 	struct  
 	{
