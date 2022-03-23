@@ -31,6 +31,12 @@
     <Filter Include="源文件\ModuleDatabase_Phone">
       <UniqueIdentifier>{213c5e28-4b0f-4314-9d6f-cbc412594ca4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="头文件\ModuleDatabase_Bank">
+      <UniqueIdentifier>{8bef1d18-25d0-4e83-b5ed-ace7892f30b1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\ModuleDatabase_Bank">
+      <UniqueIdentifier>{d795f584-6d94-4d87-85a9-b6787ccd8783}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -54,6 +60,9 @@
     <ClInclude Include="ModuleDatabase_Phone\ModuleDatabase_Phone.h">
       <Filter>头文件\ModuleDatabase_Phone</Filter>
     </ClInclude>
+    <ClInclude Include="ModuleDatabase_Bank\ModuleDatabase_Bank.h">
+      <Filter>头文件\ModuleDatabase_Bank</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp">
@@ -70,6 +79,9 @@
     </ClCompile>
     <ClCompile Include="ModuleDatabase_Phone\ModuleDatabase_Phone.cpp">
       <Filter>源文件\ModuleDatabase_Phone</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleDatabase_Bank\ModuleDatabase_Bank.cpp">
+      <Filter>源文件\ModuleDatabase_Bank</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

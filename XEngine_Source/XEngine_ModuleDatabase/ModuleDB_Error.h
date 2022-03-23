@@ -26,3 +26,8 @@
 #define ERROR_XENGINE_IPADDR_MODULE_DATABASE_PHONE_PARAMENT 0xB2001      //初始化失败.参数错误
 #define ERROR_XENGINE_IPADDR_MODULE_DATABASE_PHONE_MALLOC 0xB2002        //申请内存失败
 #define ERROR_XENGINE_IPADDR_MODULE_DATABASE_PHONE_NOTFOUND 0xB1002      //没有找到
+//////////////////////////////////////////////////////////////////////////
+//                        导出的银行卡数据库错误
+//////////////////////////////////////////////////////////////////////////
+#define ERROR_XENGINE_IPADDR_MODULE_DATABASE_BANK_PARAMENT 0xB2001       //参数错误
+#define ERROR_XENGINE_IPADDR_MODULE_DATABASE_BANK_NOTFOUND 0xB2002       //没有找到
