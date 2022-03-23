@@ -55,10 +55,22 @@ extern "C" BOOL ModuleProtocol_Packet_PhoneQuery2(TCHAR * ptszMsgBuffer, int* pI
 {
 	return m_ProtocolPacket.ModuleProtocol_Packet_PhoneQuery2(ptszMsgBuffer, pInt_MsgLen, pSt_PhoneInfo, nCode);
 }
+extern "C" BOOL ModuleProtocol_Packet_BankQuery(TCHAR * ptszMsgBuffer, int* pInt_MsgLen, XENGINE_BANKINFO * pSt_BankInfo, int nCode, LPCTSTR lpszMsgBuffer)
+{
+	return m_ProtocolPacket.ModuleProtocol_Packet_BankQuery(ptszMsgBuffer, pInt_MsgLen, pSt_BankInfo, nCode, lpszMsgBuffer);
+}
+extern "C" BOOL ModuleProtocol_Packet_BankQuery2(TCHAR * ptszMsgBuffer, int* pInt_MsgLen, XENGINE_BANKINFO * pSt_BankInfo, int nCode)
+{
+	return m_ProtocolPacket.ModuleProtocol_Packet_BankQuery2(ptszMsgBuffer, pInt_MsgLen, pSt_BankInfo, nCode);
+}
 /************************************************************************/
 /*                         导出的协议解析函数                           */
 /************************************************************************/
 extern "C" BOOL ModuleProtocol_Parse_IDCard(LPCTSTR lpszMsgBuffer, XENGINE_IDCARDINFO * pSt_IDInfo)
 {
 	return m_ProtocolParse.ModuleProtocol_Parse_IDCard(lpszMsgBuffer, pSt_IDInfo);
+}
+extern "C" BOOL ModuleProtocol_Parse_Bank(LPCTSTR lpszMsgBuffer, int nMsgLen, XENGINE_BANKINFO * pSt_BankInfo)
+{
+	return m_ProtocolParse.ModuleProtocol_Parse_Bank(lpszMsgBuffer, nMsgLen, pSt_BankInfo);
 }

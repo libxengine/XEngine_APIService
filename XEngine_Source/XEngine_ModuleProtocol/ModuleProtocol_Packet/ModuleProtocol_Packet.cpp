@@ -405,3 +405,119 @@ BOOL CModuleProtocol_Packet::ModuleProtocol_Packet_PhoneQuery2(TCHAR* ptszMsgBuf
 		"%d", nCode, pSt_PhoneInfo->nPhoneNumber, pSt_PhoneInfo->tszProvincer, pSt_PhoneInfo->tszCity, pSt_PhoneInfo->nZipCode, pSt_PhoneInfo->nAreaCode);
 	return TRUE;
 }
+/********************************************************************
+函数名称：ModuleProtocol_Packet_BankQuery
+函数功能：银行卡信息查询打包为JSON
+ 参数.一：ptszMsgBuffer
+  In/Out：Out
+  类型：字符指针
+  可空：N
+  意思：输出打包的数据信息
+ 参数.二：pInt_MsgLen
+  In/Out：Out
+  类型：整数型指针
+  可空：N
+  意思：输出打包大小
+ 参数.三：pSt_BankInfo
+  In/Out：In
+  类型：数据结构指针
+  可空：N
+  意思：输入要打包的数据
+ 参数.四：nCode
+  In/Out：In
+  类型：整数型
+  可空：Y
+  意思：输入返回的值
+ 参数.五：lpszMsgBuffer
+  In/Out：In
+  类型：常量字符指针
+  可空：Y
+  意思：输入操作结果
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+BOOL CModuleProtocol_Packet::ModuleProtocol_Packet_BankQuery(TCHAR* ptszMsgBuffer, int* pInt_MsgLen, XENGINE_BANKINFO* pSt_BankInfo, int nCode /* = 0 */, LPCTSTR lpszMsgBuffer /* = NULL */)
+{
+	ModuleProtocol_IsErrorOccur = FALSE;
+
+	if ((NULL == ptszMsgBuffer) || (NULL == pInt_MsgLen))
+	{
+		ModuleProtocol_IsErrorOccur = TRUE;
+		ModuleProtocol_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PROTOCOL_PACKET_PARAMENT;
+		return FALSE;
+	}
+	Json::Value st_JsonRoot;
+	Json::Value st_JsonObject;
+	Json::StreamWriterBuilder st_JsonBuilder;
+
+	if (0 == nCode)
+	{
+		st_JsonObject["tszBankNumber"] = pSt_BankInfo->tszBankNumber;
+		st_JsonObject["tszBankName"] = pSt_BankInfo->tszBankName;
+		st_JsonObject["tszBankAbridge"] = pSt_BankInfo->tszBankAbridge;
+		st_JsonObject["enBankType"] = pSt_BankInfo->eBankType;
+	}
+
+	st_JsonRoot["code"] = nCode;
+	if (NULL == lpszMsgBuffer)
+	{
+		st_JsonRoot["msg"] = "success";
+	}
+	else
+	{
+		st_JsonRoot["msg"] = lpszMsgBuffer;
+	}
+	st_JsonRoot["data"] = st_JsonObject;
+	st_JsonBuilder["emitUTF8"] = true;
+
+	*pInt_MsgLen = Json::writeString(st_JsonBuilder, st_JsonRoot).length();
+	memcpy(ptszMsgBuffer, Json::writeString(st_JsonBuilder, st_JsonRoot).c_str(), *pInt_MsgLen);
+	return TRUE;
+}
+/********************************************************************
+函数名称：ModuleProtocol_Packet_BankQuery2
+函数功能：银行卡信息查询打包为字节流
+ 参数.一：ptszMsgBuffer
+  In/Out：Out
+  类型：字符指针
+  可空：N
+  意思：输出打包的数据信息
+ 参数.二：pInt_MsgLen
+  In/Out：Out
+  类型：整数型指针
+  可空：N
+  意思：输出打包大小
+ 参数.三：pSt_PhoneInfo
+  In/Out：In
+  类型：数据结构指针
+  可空：N
+  意思：输入要打包的信息
+ 参数.四：nCode
+  In/Out：In
+  类型：整数型
+  可空：Y
+  意思：输入返回的值
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+BOOL CModuleProtocol_Packet::ModuleProtocol_Packet_BankQuery2(TCHAR* ptszMsgBuffer, int* pInt_MsgLen, XENGINE_BANKINFO* pSt_BankInfo, int nCode /* = 0 */)
+{
+	ModuleProtocol_IsErrorOccur = FALSE;
+
+	if ((NULL == ptszMsgBuffer) || (NULL == pInt_MsgLen))
+	{
+		ModuleProtocol_IsErrorOccur = TRUE;
+		ModuleProtocol_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PROTOCOL_PACKET_PARAMENT;
+		return FALSE;
+	}
+	*pInt_MsgLen = _stprintf(ptszMsgBuffer, "%d\r\n"
+		"%s\r\n"
+		"%s\r\n"
+		"%s\r\n"
+		"%d", nCode, pSt_BankInfo->tszBankNumber, pSt_BankInfo->tszBankName, pSt_BankInfo->tszBankAbridge, pSt_BankInfo->eBankType);
+	return TRUE;
+}
