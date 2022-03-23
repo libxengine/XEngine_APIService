@@ -93,6 +93,7 @@ BOOL XEngine_HTTPTask_Handle(RFCCOMPONENTS_HTTP_REQPARAM* pSt_HTTPParam, LPCTSTR
 		LPCTSTR lpszParamValue1 = _T("ipquery");
 		LPCTSTR lpszParamValue2 = _T("idquery");
 		LPCTSTR lpszParamValue3 = _T("phonequery");
+		LPCTSTR lpszParamValue4 = _T("bankquery");
 
 		memset(tszKey, '\0', sizeof(tszKey));
 		memset(tszValue, '\0', sizeof(tszValue));
@@ -185,6 +186,29 @@ BOOL XEngine_HTTPTask_Handle(RFCCOMPONENTS_HTTP_REQPARAM* pSt_HTTPParam, LPCTSTR
 
 			BaseLib_OperatorString_GetKeyValue(pptszList[2], "=", tszKey, tszGetType);
 			XEngine_HTTPTask_PhoneInfo(lpszClientAddr, tszValue, _ttoi(tszGetType));
+		}
+		else if (0 == _tcsnicmp(lpszParamValue4, tszValue, _tcslen(lpszParamValue4)))
+		{
+			//是不是银行卡信息
+			memset(tszKey, '\0', sizeof(tszKey));
+			memset(tszValue, '\0', sizeof(tszValue));
+			BaseLib_OperatorString_GetKeyValue(pptszList[1], "=", tszKey, tszValue);
+			if (0 != _tcsnicmp(lpszParamFunc2, tszKey, _tcslen(lpszParamFunc2)))
+			{
+				st_HDRParam.nHttpCode = 404;
+				RfcComponents_HttpServer_SendMsgEx(xhHTTPPacket, tszMsgBuffer, &nMsgLen, &st_HDRParam);
+				XEngine_Network_Send(lpszClientAddr, tszMsgBuffer, nMsgLen);
+				BaseLib_OperatorMemory_Free((XPPPMEM)&pptszList, nListCount);
+				XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _T("HTTP客户端:%s,发送的URL请求参数不正确:%s"), lpszClientAddr, pSt_HTTPParam->tszHttpUri);
+				return FALSE;
+			}
+			TCHAR tszGetType[64];
+
+			memset(tszKey, '\0', sizeof(tszKey));
+			memset(tszGetType, '\0', sizeof(tszGetType));
+
+			BaseLib_OperatorString_GetKeyValue(pptszList[2], "=", tszKey, tszGetType);
+			XEngine_HTTPTask_BankInfo(lpszClientAddr, tszValue, _ttoi(tszGetType));
 		}
 		BaseLib_OperatorMemory_Free((XPPPMEM)&pptszList, nListCount);
 	}

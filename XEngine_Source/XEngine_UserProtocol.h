@@ -18,6 +18,7 @@ typedef enum
 	//用户消息
 	ENUM_XENGINE_COMMUNICATION_PROTOCOL_TYPE_MSG = ENUM_XENGINE_COMMUNICATION_PROTOCOL_TYPE_USER + 1
 }ENUM_XENGINE_COMMUNICATION_PROTOCOL_TYPE_CUSTOM;
+//电话号码类型
 typedef enum
 {
 	ENUM_XENGINE_APISERVICE_PHONE_TYPE_UNKNOWN = 0,	    // 未知，查找失败
@@ -28,6 +29,14 @@ typedef enum
 	ENUM_XENGINE_APISERVICE_PHONE_TYPE_CUCC_V,			// 联通虚拟运营商
 	ENUM_XENGINE_APISERVICE_PHONE_TYPE_CMCC_V			// 移动虚拟运营商
 }ENUM_XENGINE_APISERVICE_PHONE_TYPE;
+//银行卡类型
+typedef enum
+{
+	ENUM_XENGINE_APISERVICE_BANK_TYPE_UNKNOWN = 0,	    // 未知，查找失败
+	ENUM_XENGINE_APISERVICE_BANK_TYPE_BC,               // 银行卡
+	ENUM_XENGINE_APISERVICE_BANK_TYPE_DC,			    // 存蓄卡
+	ENUM_XENGINE_APISERVICE_BANK_TYPE_CC			    // 信用卡
+}ENUM_XENGINE_APISERVICE_BANK_TYPE;
 //////////////////////////////////////////////////////////////////////////
 //                          子协议定义:unOperatorCode
 //////////////////////////////////////////////////////////////////////////
@@ -83,4 +92,12 @@ typedef struct
 	int nAreaCode;              //区号
 	ENUM_XENGINE_APISERVICE_PHONE_TYPE enPhoneType;  //电话号码类型
 }XENGINE_PHONEINFO;
+//银行卡
+typedef struct
+{
+	TCHAR tszBankNumber[MAX_PATH];       //银行卡号
+	TCHAR tszBankName[MAX_PATH];         //银行卡名称
+	TCHAR tszBankAbridge[MAX_PATH];      //银行卡缩写
+	ENUM_XENGINE_APISERVICE_BANK_TYPE eBankType;
+}XENGINE_BANKINFO;
 #pragma pack(pop)

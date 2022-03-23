@@ -51,6 +51,7 @@ using namespace std;
 #include "XEngine_HTTPTask/HTTPTask_IPInfo.h"
 #include "XEngine_HTTPTask/HTTPTask_IDCard.h"
 #include "XEngine_HTTPTask/HTTPTask_Phone.h"
+#include "XEngine_HTTPTask/HTTPTask_Bank.h"
 /********************************************************************
 //    Created:     2022/01/20  14:42:06
 //    File Name:   D:\XEngine_ServiceApp\XEngine_Source\XEngine_ServiceApp\XEngine_HttpApp\XEngine_Hdr.h
@@ -104,5 +105,6 @@ extern XENGINE_SERVICECONFIG st_ServiceConfig;
 #pragma comment(lib,"XEngine_Core/XEngine_ManagePool.lib")
 #pragma comment(lib,"XEngine_HelpComponents/HelpComponents_XLog.lib")
 #pragma comment(lib,"XEngine_RfcComponents/RfcComponents_HttpServer.lib")
+#pragma comment(lib,"XEngine_NetHelp/NetHelp_APIHelp.lib")
 #pragma comment(lib,"Ws2_32.lib")
 #endif
