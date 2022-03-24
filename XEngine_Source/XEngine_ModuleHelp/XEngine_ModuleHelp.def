@@ -6,4 +6,4 @@ EXPORTS
 	ModuleHelp_IDCard_CheckBirth
 	ModuleHelp_IDCard_CheckSum
 
-	ModuleHelp_Charset_Convert
+	ModuleHelp_Language_ConvertZh

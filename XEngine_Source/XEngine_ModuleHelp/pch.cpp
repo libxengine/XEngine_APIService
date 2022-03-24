@@ -1,6 +1,6 @@
 ﻿#include "pch.h"
 #include "ModuleHelp_IDCard/ModuleHelp_IDCard.h"
-#include "ModuleHelp_Charset/ModuleHelp_Charset.h"
+#include "ModuleHelp_Language/ModuleHelp_Language.h"
 /********************************************************************
 //    Created:     2022/03/04  13:37:38
 //    File Name:   D:\XEngine_APIService\XEngine_Source\XEngine_ModuleHelp\pch.cpp
@@ -16,7 +16,7 @@ BOOL ModuleHelp_IsErrorOccur = FALSE;
 DWORD ModuleHelp_dwErrorCode = 0;
 //////////////////////////////////////////////////////////////////////////
 CModuleHelp_IDCard m_IDCard;
-CModuleHelp_Charset m_Charset;
+CModuleHelp_Language m_Language;
 //////////////////////////////////////////////////////////////////////////
 ///                        导出的函数
 //////////////////////////////////////////////////////////////////////////
@@ -40,9 +40,9 @@ extern "C" BOOL ModuleHelp_IDCard_CheckSum(XENGINE_IDCARDINFO * pSt_IDInfo)
 	return m_IDCard.ModuleHelp_IDCard_CheckSum(pSt_IDInfo);
 }
 /************************************************************************/
-/*                         导出的文字转换帮助函数                       */
+/*                         导出的语言转换帮助函数                       */
 /************************************************************************/
-extern "C" BOOL ModuleHelp_Charset_Convert(LPCTSTR lpszJsonFile, LPCTSTR lpszSourceStr, TCHAR * ptszDestStr)
+extern "C" BOOL ModuleHelp_Language_ConvertZh(LPCTSTR lpszJsonFile, LPCTSTR lpszSourceStr, TCHAR * ptszDestStr)
 {
-	return m_Charset.ModuleHelp_Charset_Convert(lpszJsonFile, lpszSourceStr, ptszDestStr);
+	return m_Language.ModuleHelp_Language_ConvertZh(lpszJsonFile, lpszSourceStr, ptszDestStr);
 }

@@ -17,6 +17,6 @@
 #define ERROR_XENGINE_APISERVICE_MODULE_HELP_IDCARD_FMT 0xD0002          //格式错误
 #define ERROR_XENGINE_APISERVICE_MODULE_HELP_IDCARD_SUM 0xD0003          //校验码错误
 //////////////////////////////////////////////////////////////////////////
-//                        导出的文字转换错误
+//                        导出的语言转换错误
 //////////////////////////////////////////////////////////////////////////
-#define ERROR_XENGINE_APISERVICE_MODULE_HELP_CHARSET_PARAMENT 0xD1001    //参数错误
+#define ERROR_XENGINE_APISERVICE_MODULE_HELP_LANGUAGE_PARAMENT 0xD1001   //参数错误

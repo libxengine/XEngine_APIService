@@ -1,20 +1,20 @@
 ﻿#include "pch.h"
-#include "ModuleHelp_Charset.h"
+#include "ModuleHelp_Language.h"
 /********************************************************************
-//    Created:     2022/03/23  13:57:16
-//    File Name:   D:\XEngine_APIService\XEngine_Source\XEngine_ModuleHelp\ModuleHelp_Charset\ModuleHelp_Charset.cpp
-//    File Path:   D:\XEngine_APIService\XEngine_Source\XEngine_ModuleHelp\ModuleHelp_Charset
-//    File Base:   ModuleHelp_Charset
+//    Created:     2022/03/24  10:27:34
+//    File Name:   D:\XEngine_APIService\XEngine_Source\XEngine_ModuleHelp\ModuleHelp_Language\ModuleHelp_Language.cpp
+//    File Path:   D:\XEngine_APIService\XEngine_Source\XEngine_ModuleHelp\ModuleHelp_Language
+//    File Base:   ModuleHelp_Language
 //    File Ext:    cpp
 //    Project:     XEngine(网络通信引擎)
 //    Author:      qyt
-//    Purpose:     字符集转换
+//    Purpose:     语言转换
 //    History:
 *********************************************************************/
-CModuleHelp_Charset::CModuleHelp_Charset()
+CModuleHelp_Language::CModuleHelp_Language()
 {
 }
-CModuleHelp_Charset::~CModuleHelp_Charset()
+CModuleHelp_Language::~CModuleHelp_Language()
 {
 
 }
@@ -22,8 +22,8 @@ CModuleHelp_Charset::~CModuleHelp_Charset()
 //                             公有函数
 //////////////////////////////////////////////////////////////////////////
 /********************************************************************
-函数名称：ModuleHelp_Charset_Convert
-函数功能：字体转换
+函数名称：ModuleHelp_Language_ConvertZh
+函数功能：中文语言转换
  参数.一：lpszJsonFile
   In/Out：In
   类型：常量字符指针
@@ -44,18 +44,19 @@ CModuleHelp_Charset::~CModuleHelp_Charset()
   意思：是否成功
 备注：
 *********************************************************************/
-BOOL CModuleHelp_Charset::ModuleHelp_Charset_Convert(LPCTSTR lpszJsonFile, LPCTSTR lpszSourceStr, TCHAR* ptszDestStr)
+BOOL CModuleHelp_Language::ModuleHelp_Language_ConvertZh(LPCTSTR lpszJsonFile, LPCTSTR lpszSourceStr, TCHAR* ptszDestStr)
 {
 	ModuleHelp_IsErrorOccur = FALSE;
 
 	if ((NULL == lpszJsonFile) || (NULL == lpszSourceStr) || (NULL == ptszDestStr))
 	{
 		ModuleHelp_IsErrorOccur = TRUE;
-		ModuleHelp_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_HELP_CHARSET_PARAMENT;
+		ModuleHelp_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_HELP_LANGUAGE_PARAMENT;
 		return FALSE;
 	}
-	opencc::SimpleConverter m_Converter(lpszJsonFile);
-	m_Converter.Convert(lpszSourceStr, ptszDestStr);
+	opencc_t m_OPencc = opencc_open(lpszJsonFile);
+	opencc_convert_utf8_to_buffer(m_OPencc, lpszSourceStr, strlen(lpszSourceStr), ptszDestStr);
+	opencc_close(m_OPencc);
 
 	return TRUE;
 }

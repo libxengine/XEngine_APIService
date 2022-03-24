@@ -6,7 +6,7 @@ LOADBIN = -L ../XEngine_ThirdPart/opencc/ubuntu
 LIB = -lopencc
 LIBEX = -static-libgcc -lrt -ldl -lpthread
 LOADSO = -Wl,-rpath=./,--disable-new-dtags
-LIBINCLUDE = ModuleHelp_IDCard.o ModuleHelp_Charset.o pch.o
+LIBINCLUDE = ModuleHelp_IDCard.o ModuleHelp_Language.o pch.o
 
 ifeq ($(RELEASE),1)
 FLAGS = -c -O2 
@@ -28,8 +28,8 @@ all:$(LIBINCLUDE)
 
 ModuleHelp_IDCard.o:./ModuleHelp_IDCard/ModuleHelp_IDCard.cpp             
 	$(CC) $(DEBUG) $(FLAGS) $(UNICODE) $(INCLUDE) ./ModuleHelp_IDCard/ModuleHelp_IDCard.cpp 
-ModuleHelp_Charset.o:./ModuleHelp_Charset/ModuleHelp_Charset.cpp             
-	$(CC) $(DEBUG) $(FLAGS) $(UNICODE) $(INCLUDE) ./ModuleHelp_Charset/ModuleHelp_Charset.cpp 
+ModuleHelp_Language.o:./ModuleHelp_Language/ModuleHelp_Language.cpp             
+	$(CC) $(DEBUG) $(FLAGS) $(UNICODE) $(INCLUDE) ./ModuleHelp_Language/ModuleHelp_Language.cpp 
 
 pch.o:./pch.cpp                 		       	    
 	$(CC) $(DEBUG) $(FLAGS) $(UNICODE) $(INCLUDE) ./pch.cpp

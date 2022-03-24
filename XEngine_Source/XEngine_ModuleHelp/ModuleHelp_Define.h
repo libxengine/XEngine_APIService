@@ -46,11 +46,11 @@ extern "C" BOOL ModuleHelp_IDCard_CheckBirth(XENGINE_IDCARDINFO* pSt_IDInfo);
 *********************************************************************/
 extern "C" BOOL ModuleHelp_IDCard_CheckSum(XENGINE_IDCARDINFO* pSt_IDInfo);
 /************************************************************************/
-/*                         导出的文字转换帮助函数                       */
+/*                         导出的语言转换帮助函数                       */
 /************************************************************************/
 /********************************************************************
-函数名称：ModuleHelp_Charset_Convert
-函数功能：字体转换
+函数名称：ModuleHelp_Language_ConvertZh
+函数功能：中文语言转换函数
  参数.一：lpszJsonFile
   In/Out：In
   类型：常量字符指针
@@ -71,4 +71,4 @@ extern "C" BOOL ModuleHelp_IDCard_CheckSum(XENGINE_IDCARDINFO* pSt_IDInfo);
   意思：是否成功
 备注：
 *********************************************************************/
-extern "C" BOOL ModuleHelp_Charset_Convert(LPCTSTR lpszJsonFile, LPCTSTR lpszSourceStr, TCHAR* ptszDestStr);
+extern "C" BOOL ModuleHelp_Language_ConvertZh(LPCTSTR lpszJsonFile, LPCTSTR lpszSourceStr, TCHAR* ptszDestStr);
