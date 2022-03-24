@@ -160,27 +160,26 @@ BOOL CModuleProtocol_Parse::ModuleProtocol_Parse_Bank(LPCTSTR lpszMsgBuffer, int
 		return FALSE;
 	}
 	//{"messages":[{"errorCodes":"CARD_BIN_NOT_MATCH","name":"cardNo"}],"validated":false,"stat":"ok","key":"62215546546546"}
-	//{"cardType":"DC","bank":"CMB","key":"6214832830123123123"messages":[],"validated":true,"stat":"ok"}
+	//{"cardType":"DC","bank":"CMB","key":"62215546546546"messages":[],"validated":true,"stat":"ok"}
 	if (!st_JsonRoot["validated"].asBool())
 	{
 		ModuleProtocol_IsErrorOccur = TRUE;
 		ModuleProtocol_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PROTOCOL_PARSE_VALIDATE;
 		return FALSE;
 	}
-	LPCTSTR lpszTypeBC = _T("BC");
 	LPCTSTR lpszTypeDC = _T("DC");
 	LPCTSTR lpszTypeCC = _T("CC");
 	if (0 == _tcsncmp(lpszTypeDC, st_JsonRoot["cardType"].asCString(), _tcslen(lpszTypeDC)))
 	{
-		pSt_BankInfo->eBankType = ENUM_XENGINE_APISERVICE_BANK_TYPE_DC;
+		pSt_BankInfo->enBankType = ENUM_XENGINE_APISERVICE_BANK_TYPE_DC;
 	}
 	else if (0 == _tcsncmp(lpszTypeCC, st_JsonRoot["cardType"].asCString(), _tcslen(lpszTypeCC)))
 	{
-		pSt_BankInfo->eBankType = ENUM_XENGINE_APISERVICE_BANK_TYPE_CC;
+		pSt_BankInfo->enBankType = ENUM_XENGINE_APISERVICE_BANK_TYPE_CC;
 	}
 	else
 	{
-		pSt_BankInfo->eBankType = ENUM_XENGINE_APISERVICE_BANK_TYPE_BC;
+		pSt_BankInfo->enBankType = ENUM_XENGINE_APISERVICE_BANK_TYPE_BC;
 	}
 	_tcscpy(pSt_BankInfo->tszBankAbridge, st_JsonRoot["bank"].asCString());
 	return TRUE;

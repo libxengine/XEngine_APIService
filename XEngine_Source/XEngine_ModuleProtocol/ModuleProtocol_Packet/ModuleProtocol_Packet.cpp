@@ -457,7 +457,7 @@ BOOL CModuleProtocol_Packet::ModuleProtocol_Packet_BankQuery(TCHAR* ptszMsgBuffe
 		st_JsonObject["tszBankNumber"] = pSt_BankInfo->tszBankNumber;
 		st_JsonObject["tszBankName"] = pSt_BankInfo->tszBankName;
 		st_JsonObject["tszBankAbridge"] = pSt_BankInfo->tszBankAbridge;
-		st_JsonObject["enBankType"] = pSt_BankInfo->eBankType;
+		st_JsonObject["enBankType"] = pSt_BankInfo->enBankType;
 	}
 
 	st_JsonRoot["code"] = nCode;
@@ -518,6 +518,120 @@ BOOL CModuleProtocol_Packet::ModuleProtocol_Packet_BankQuery2(TCHAR* ptszMsgBuff
 		"%s\r\n"
 		"%s\r\n"
 		"%s\r\n"
-		"%d", nCode, pSt_BankInfo->tszBankNumber, pSt_BankInfo->tszBankName, pSt_BankInfo->tszBankAbridge, pSt_BankInfo->eBankType);
+		"%d", nCode, pSt_BankInfo->tszBankNumber, pSt_BankInfo->tszBankName, pSt_BankInfo->tszBankAbridge, pSt_BankInfo->enBankType);
+	return TRUE;
+}
+/********************************************************************
+函数名称：ModuleProtocol_Packet_LanguageQuery
+函数功能：语言打包为JSON
+ 参数.一：ptszMsgBuffer
+  In/Out：Out
+  类型：字符指针
+  可空：N
+  意思：输出打包的数据信息
+ 参数.二：pInt_MsgLen
+  In/Out：Out
+  类型：整数型指针
+  可空：N
+  意思：输出打包大小
+ 参数.三：pSt_LanguageInfo
+  In/Out：In
+  类型：数据结构指针
+  可空：N
+  意思：输入要打包的数据
+ 参数.四：nCode
+  In/Out：In
+  类型：整数型
+  可空：Y
+  意思：输入返回的值
+ 参数.五：lpszMsgBuffer
+  In/Out：In
+  类型：常量字符指针
+  可空：Y
+  意思：输入操作结果
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+BOOL CModuleProtocol_Packet::ModuleProtocol_Packet_LanguageQuery(TCHAR* ptszMsgBuffer, int* pInt_MsgLen, XENGINE_LANGUAGEINFO* pSt_LanguageInfo, int nCode /* = 0 */, LPCTSTR lpszMsgBuffer /* = NULL */)
+{
+	ModuleProtocol_IsErrorOccur = FALSE;
+
+	if ((NULL == ptszMsgBuffer) || (NULL == pInt_MsgLen))
+	{
+		ModuleProtocol_IsErrorOccur = TRUE;
+		ModuleProtocol_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PROTOCOL_PACKET_PARAMENT;
+		return FALSE;
+	}
+	Json::Value st_JsonRoot;
+	Json::Value st_JsonObject;
+	Json::StreamWriterBuilder st_JsonBuilder;
+
+	if (0 == nCode)
+	{
+		st_JsonObject["tszSourceStr"] = pSt_LanguageInfo->tszSourceStr;
+		st_JsonObject["tszDestStr"] = pSt_LanguageInfo->tszDestStr;
+		st_JsonObject["enLanguageType"] = pSt_LanguageInfo->enLanguageType;
+	}
+
+	st_JsonRoot["code"] = nCode;
+	if (NULL == lpszMsgBuffer)
+	{
+		st_JsonRoot["msg"] = "success";
+	}
+	else
+	{
+		st_JsonRoot["msg"] = lpszMsgBuffer;
+	}
+	st_JsonRoot["data"] = st_JsonObject;
+	st_JsonBuilder["emitUTF8"] = true;
+
+	*pInt_MsgLen = Json::writeString(st_JsonBuilder, st_JsonRoot).length();
+	memcpy(ptszMsgBuffer, Json::writeString(st_JsonBuilder, st_JsonRoot).c_str(), *pInt_MsgLen);
+	return TRUE;
+}
+/********************************************************************
+函数名称：ModuleProtocol_Packet_LanguageQuery2
+函数功能：语言打包为字节流
+ 参数.一：ptszMsgBuffer
+  In/Out：Out
+  类型：字符指针
+  可空：N
+  意思：输出打包的数据信息
+ 参数.二：pInt_MsgLen
+  In/Out：Out
+  类型：整数型指针
+  可空：N
+  意思：输出打包大小
+ 参数.三：pSt_PhoneInfo
+  In/Out：In
+  类型：数据结构指针
+  可空：N
+  意思：输入要打包的信息
+ 参数.四：nCode
+  In/Out：In
+  类型：整数型
+  可空：Y
+  意思：输入返回的值
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+BOOL CModuleProtocol_Packet::ModuleProtocol_Packet_LanguageQuery2(TCHAR* ptszMsgBuffer, int* pInt_MsgLen, XENGINE_LANGUAGEINFO* pSt_LanguageInfo, int nCode /* = 0 */)
+{
+	ModuleProtocol_IsErrorOccur = FALSE;
+
+	if ((NULL == ptszMsgBuffer) || (NULL == pInt_MsgLen))
+	{
+		ModuleProtocol_IsErrorOccur = TRUE;
+		ModuleProtocol_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PROTOCOL_PACKET_PARAMENT;
+		return FALSE;
+	}
+	*pInt_MsgLen = _stprintf(ptszMsgBuffer, "%d\r\n"
+		"%s\r\n"
+		"%s\r\n"
+		"%d", nCode, pSt_LanguageInfo->tszSourceStr, pSt_LanguageInfo->tszDestStr, pSt_LanguageInfo->enLanguageType);
 	return TRUE;
 }

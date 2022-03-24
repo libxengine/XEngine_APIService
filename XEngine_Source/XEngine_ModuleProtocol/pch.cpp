@@ -63,6 +63,14 @@ extern "C" BOOL ModuleProtocol_Packet_BankQuery2(TCHAR * ptszMsgBuffer, int* pIn
 {
 	return m_ProtocolPacket.ModuleProtocol_Packet_BankQuery2(ptszMsgBuffer, pInt_MsgLen, pSt_BankInfo, nCode);
 }
+extern "C" BOOL ModuleProtocol_Packet_LanguageQuery(TCHAR * ptszMsgBuffer, int* pInt_MsgLen, XENGINE_LANGUAGEINFO * pSt_LanguageInfo, int nCode, LPCTSTR lpszMsgBuffer)
+{
+	return m_ProtocolPacket.ModuleProtocol_Packet_LanguageQuery(ptszMsgBuffer, pInt_MsgLen, pSt_LanguageInfo, nCode, lpszMsgBuffer);
+}
+extern "C" BOOL ModuleProtocol_Packet_LanguageQuery2(TCHAR * ptszMsgBuffer, int* pInt_MsgLen, XENGINE_LANGUAGEINFO * pSt_LanguageInfo, int nCode)
+{
+	return m_ProtocolPacket.ModuleProtocol_Packet_LanguageQuery2(ptszMsgBuffer, pInt_MsgLen, pSt_LanguageInfo, nCode);
+}
 /************************************************************************/
 /*                         导出的协议解析函数                           */
 /************************************************************************/

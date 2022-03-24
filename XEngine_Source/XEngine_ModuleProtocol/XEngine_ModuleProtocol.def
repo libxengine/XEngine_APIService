@@ -11,6 +11,8 @@ EXPORTS
 	ModuleProtocol_Packet_PhoneQuery2
 	ModuleProtocol_Packet_BankQuery
 	ModuleProtocol_Packet_BankQuery2
+	ModuleProtocol_Packet_LanguageQuery
+	ModuleProtocol_Packet_LanguageQuery2
 
 	ModuleProtocol_Parse_IDCard
 	ModuleProtocol_Parse_Bank
