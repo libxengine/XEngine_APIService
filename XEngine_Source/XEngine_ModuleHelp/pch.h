@@ -13,6 +13,7 @@
 #endif
 #endif //PCH_H
 #include <errno.h>
+#include <opencc/opencc.h>
 #include <XEngine_Include/XEngine_CommHdr.h>
 #include <XEngine_Include/XEngine_Types.h>
 #include <XEngine_Include/XEngine_ProtocolHdr.h>
@@ -32,3 +33,11 @@
 *********************************************************************/
 extern BOOL ModuleHelp_IsErrorOccur;
 extern DWORD ModuleHelp_dwErrorCode;
+
+#ifdef _MSC_BUILD
+#ifdef _WIN64
+#pragma comment(lib,"../XEngine_ThirdPart/opencc/libx64/opencc")
+#else
+#pragma comment(lib,"../XEngine_ThirdPart/opencc/libx86/opencc")
+#endif
+#endif

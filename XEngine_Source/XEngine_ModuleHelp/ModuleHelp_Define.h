@@ -45,3 +45,30 @@ extern "C" BOOL ModuleHelp_IDCard_CheckBirth(XENGINE_IDCARDINFO* pSt_IDInfo);
 备注：
 *********************************************************************/
 extern "C" BOOL ModuleHelp_IDCard_CheckSum(XENGINE_IDCARDINFO* pSt_IDInfo);
+/************************************************************************/
+/*                         导出的文字转换帮助函数                       */
+/************************************************************************/
+/********************************************************************
+函数名称：ModuleHelp_Charset_Convert
+函数功能：字体转换
+ 参数.一：lpszJsonFile
+  In/Out：In
+  类型：常量字符指针
+  可空：N
+  意思：输入转换的配置文件
+ 参数.一：lpszSourceStr
+  In/Out：In
+  类型：常量字符指针
+  可空：N
+  意思：输入要转换的字符串
+ 参数.一：ptszDestStr
+  In/Out：Out
+  类型：字符指针
+  可空：N
+  意思：输出转换后的字符串
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+extern "C" BOOL ModuleHelp_Charset_Convert(LPCTSTR lpszJsonFile, LPCTSTR lpszSourceStr, TCHAR* ptszDestStr);
