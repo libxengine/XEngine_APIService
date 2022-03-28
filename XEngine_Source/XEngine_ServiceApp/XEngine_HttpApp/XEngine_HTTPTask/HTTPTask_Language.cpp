@@ -32,6 +32,50 @@ BOOL XEngine_HTTPTask_Language(LPCTSTR lpszClientAddr, LPCTSTR lpszMsgBuffer, in
 	{
 		ModuleHelp_Language_ConvertZh(st_OPenccConfig.tszFiles2tw, st_LanguageInfo.tszSourceStr, st_LanguageInfo.tszDestStr);
 	}
+	else if (ENUM_XENGINE_APISERVICE_LANGUAGE_TYPE_TW2S == nConvertType)
+	{
+		ModuleHelp_Language_ConvertZh(st_OPenccConfig.tszFiletw2s, st_LanguageInfo.tszSourceStr, st_LanguageInfo.tszDestStr);
+	}
+	else if (ENUM_XENGINE_APISERVICE_LANGUAGE_TYPE_S2HK == nConvertType)
+	{
+		ModuleHelp_Language_ConvertZh(st_OPenccConfig.tszFiles2hk, st_LanguageInfo.tszSourceStr, st_LanguageInfo.tszDestStr);
+	}
+	else if (ENUM_XENGINE_APISERVICE_LANGUAGE_TYPE_HK2S == nConvertType)
+	{
+		ModuleHelp_Language_ConvertZh(st_OPenccConfig.tszFilehk2s, st_LanguageInfo.tszSourceStr, st_LanguageInfo.tszDestStr);
+	}
+	else if (ENUM_XENGINE_APISERVICE_LANGUAGE_TYPE_S2TWP == nConvertType)
+	{
+		ModuleHelp_Language_ConvertZh(st_OPenccConfig.tszFiles2twp, st_LanguageInfo.tszSourceStr, st_LanguageInfo.tszDestStr);
+	}
+	else if (ENUM_XENGINE_APISERVICE_LANGUAGE_TYPE_TW2SP == nConvertType)
+	{
+		ModuleHelp_Language_ConvertZh(st_OPenccConfig.tszFiletw2sp, st_LanguageInfo.tszSourceStr, st_LanguageInfo.tszDestStr);
+	}
+	else if (ENUM_XENGINE_APISERVICE_LANGUAGE_TYPE_T2TW == nConvertType)
+	{
+		ModuleHelp_Language_ConvertZh(st_OPenccConfig.tszFilet2tw, st_LanguageInfo.tszSourceStr, st_LanguageInfo.tszDestStr);
+	}
+	else if (ENUM_XENGINE_APISERVICE_LANGUAGE_TYPE_HK2T == nConvertType)
+	{
+		ModuleHelp_Language_ConvertZh(st_OPenccConfig.tszFilehk2t, st_LanguageInfo.tszSourceStr, st_LanguageInfo.tszDestStr);
+	}
+	else if (ENUM_XENGINE_APISERVICE_LANGUAGE_TYPE_T2HK == nConvertType)
+	{
+		ModuleHelp_Language_ConvertZh(st_OPenccConfig.tszFilet2hk, st_LanguageInfo.tszSourceStr, st_LanguageInfo.tszDestStr);
+	}
+	else if (ENUM_XENGINE_APISERVICE_LANGUAGE_TYPE_T2JP == nConvertType)
+	{
+		ModuleHelp_Language_ConvertZh(st_OPenccConfig.tszFilet2jp, st_LanguageInfo.tszSourceStr, st_LanguageInfo.tszDestStr);
+	}
+	else if (ENUM_XENGINE_APISERVICE_LANGUAGE_TYPE_JP2T == nConvertType)
+	{
+		ModuleHelp_Language_ConvertZh(st_OPenccConfig.tszFilejp2t, st_LanguageInfo.tszSourceStr, st_LanguageInfo.tszDestStr);
+	}
+	else if (ENUM_XENGINE_APISERVICE_LANGUAGE_TYPE_TW2T == nConvertType)
+	{
+		ModuleHelp_Language_ConvertZh(st_OPenccConfig.tszFiletw2t, st_LanguageInfo.tszSourceStr, st_LanguageInfo.tszDestStr);
+	}
 	//打包发送
 	if (0 == nReplyType)
 	{

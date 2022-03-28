@@ -19,6 +19,7 @@ XNETHANDLE xhHTTPPool = 0;
 XHANDLE xhHTTPPacket = NULL;
 //配置文件
 XENGINE_SERVICECONFIG st_ServiceConfig;
+XENGINE_OPENCCCONFIG st_OPenccConfig;
 
 void ServiceApp_Stop(int signo)
 {
@@ -90,6 +91,7 @@ int main(int argc, char** argv)
 
 	memset(&st_XLogConfig, '\0', sizeof(HELPCOMPONENTS_XLOG_CONFIGURE));
 	memset(&st_ServiceConfig, '\0', sizeof(XENGINE_SERVICECONFIG));
+	memset(&st_OPenccConfig, '\0', sizeof(XENGINE_OPENCCCONFIG));
 
 	st_XLogConfig.XLog_MaxBackupFile = 10;
 	st_XLogConfig.XLog_MaxSize = 1024000;
@@ -119,6 +121,14 @@ int main(int argc, char** argv)
 	signal(SIGTERM, ServiceApp_Stop);
 	signal(SIGABRT, ServiceApp_Stop);
 	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _T("启动服务中,初始化信号量成功"));
+
+	//初始化OPENCC配置
+	if (!ModuleConfigure_Json_OPenccFile(_T("./XEngine_Config/XEngine_OPenccConfig.json"), &st_OPenccConfig))
+	{
+		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _T("启动服务中,初始化OPenCC配置文件失败,错误：%lX"), ModuleConfigure_GetLastError());
+		goto XENGINE_SERVICEAPP_EXIT;
+	}
+	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _T("启动服务中,初始化OPenCC配置文件成功"));
 	//初始化数据库
 	if (!ModuleDatabase_IPInfo_Init(st_ServiceConfig.st_XDBInfo.tszIPData))
 	{
