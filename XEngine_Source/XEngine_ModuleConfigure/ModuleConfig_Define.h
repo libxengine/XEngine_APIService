@@ -57,6 +57,17 @@ typedef struct
 	TCHAR tszFiles2t[MAX_PATH];
 	TCHAR tszFilet2s[MAX_PATH];
 	TCHAR tszFiles2tw[MAX_PATH];
+	TCHAR tszFiletw2s[MAX_PATH];
+	TCHAR tszFiles2hk[MAX_PATH];
+	TCHAR tszFilehk2s[MAX_PATH];
+	TCHAR tszFiles2twp[MAX_PATH];
+	TCHAR tszFiletw2sp[MAX_PATH];
+	TCHAR tszFilet2tw[MAX_PATH];
+	TCHAR tszFilehk2t[MAX_PATH];
+	TCHAR tszFilet2hk[MAX_PATH];
+	TCHAR tszFilet2jp[MAX_PATH];
+	TCHAR tszFilejp2t[MAX_PATH];
+	TCHAR tszFiletw2t[MAX_PATH];
 }XENGINE_OPENCCCONFIG;
 //////////////////////////////////////////////////////////////////////////
 //                        导出函数定义

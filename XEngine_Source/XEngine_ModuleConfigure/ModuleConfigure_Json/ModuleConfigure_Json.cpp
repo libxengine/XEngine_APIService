@@ -206,6 +206,16 @@ BOOL CModuleConfigure_Json::ModuleConfigure_Json_OPenccFile(LPCTSTR lpszConfigFi
 	_tcscpy(pSt_OPenccConfig->tszFiles2t, st_JsonRoot["tszFiles2t"].asCString());
 	_tcscpy(pSt_OPenccConfig->tszFilet2s, st_JsonRoot["tszFilet2s"].asCString());
 	_tcscpy(pSt_OPenccConfig->tszFiles2tw, st_JsonRoot["tszFiles2tw"].asCString());
-
+	_tcscpy(pSt_OPenccConfig->tszFiletw2s, st_JsonRoot["tszFiletw2s"].asCString());
+	_tcscpy(pSt_OPenccConfig->tszFiles2hk, st_JsonRoot["tszFiles2hk"].asCString());
+	_tcscpy(pSt_OPenccConfig->tszFilehk2s, st_JsonRoot["tszFilehk2s"].asCString());
+	_tcscpy(pSt_OPenccConfig->tszFiles2twp, st_JsonRoot["tszFiles2twp"].asCString());
+	_tcscpy(pSt_OPenccConfig->tszFiletw2sp, st_JsonRoot["tszFiletw2sp"].asCString());
+	_tcscpy(pSt_OPenccConfig->tszFilet2tw, st_JsonRoot["tszFilet2tw"].asCString());
+	_tcscpy(pSt_OPenccConfig->tszFilehk2t, st_JsonRoot["tszFilehk2t"].asCString());
+	_tcscpy(pSt_OPenccConfig->tszFilet2hk, st_JsonRoot["tszFilet2hk"].asCString());
+	_tcscpy(pSt_OPenccConfig->tszFilet2jp, st_JsonRoot["tszFilet2jp"].asCString());
+	_tcscpy(pSt_OPenccConfig->tszFilejp2t, st_JsonRoot["tszFilejp2t"].asCString());
+	_tcscpy(pSt_OPenccConfig->tszFiletw2t, st_JsonRoot["tszFiletw2t"].asCString());
 	return TRUE;
 }
