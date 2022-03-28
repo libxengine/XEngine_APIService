@@ -12,6 +12,7 @@
 #include "framework.h"
 #endif
 #endif //PCH_H
+#include <string.h>
 #include <errno.h>
 #include <opencc/opencc.h>
 #include <XEngine_Include/XEngine_CommHdr.h>

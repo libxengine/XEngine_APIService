@@ -37,6 +37,25 @@ typedef enum
 	ENUM_XENGINE_APISERVICE_BANK_TYPE_DC,			    // 存蓄卡
 	ENUM_XENGINE_APISERVICE_BANK_TYPE_CC			    // 信用卡
 }ENUM_XENGINE_APISERVICE_BANK_TYPE;
+//语言转换类型
+typedef enum
+{
+	ENUM_XENGINE_APISERVICE_LANGUAGE_TYPE_UNKNOWN = 0,	    // 未知
+	ENUM_XENGINE_APISERVICE_LANGUAGE_TYPE_S2T,              // 简体到繁体
+	ENUM_XENGINE_APISERVICE_LANGUAGE_TYPE_T2S,			    // 繁体到简体
+	ENUM_XENGINE_APISERVICE_LANGUAGE_TYPE_S2TW,			    // 简体到台繁
+	ENUM_XENGINE_APISERVICE_LANGUAGE_TYPE_TW2S,			    // 台繁到简体
+	ENUM_XENGINE_APISERVICE_LANGUAGE_TYPE_S2HK,			    // 简体到港繁
+	ENUM_XENGINE_APISERVICE_LANGUAGE_TYPE_HK2S,			    // 港繁到简体
+	ENUM_XENGINE_APISERVICE_LANGUAGE_TYPE_S2TWP,			// 简体（简到台正体标准）
+	ENUM_XENGINE_APISERVICE_LANGUAGE_TYPE_TW2SP,			// 繁体（台到简标准）
+	ENUM_XENGINE_APISERVICE_LANGUAGE_TYPE_T2TW,			    // 繁体（OpenCC 标准）台正体
+	ENUM_XENGINE_APISERVICE_LANGUAGE_TYPE_HK2T,			    // 港繁到繁体（OpenCC）
+	ENUM_XENGINE_APISERVICE_LANGUAGE_TYPE_T2HK,			    // 繁体（OpenCC）到港繁
+	ENUM_XENGINE_APISERVICE_LANGUAGE_TYPE_T2JP,			    // 繁体（OpenCC 标准，旧字体）到日文新字体
+	ENUM_XENGINE_APISERVICE_LANGUAGE_TYPE_JP2T,			    // 日文新字体到繁体（OpenCC 标准，旧字体）
+	ENUM_XENGINE_APISERVICE_LANGUAGE_TYPE_TW2T			    // 台繁到繁体（OpenCC 标准）
+}ENUM_XENGINE_APISERVICE_LANGUAGE_TYPE;
 //////////////////////////////////////////////////////////////////////////
 //                          子协议定义:unOperatorCode
 //////////////////////////////////////////////////////////////////////////
@@ -98,6 +117,13 @@ typedef struct
 	TCHAR tszBankNumber[MAX_PATH];       //银行卡号
 	TCHAR tszBankName[MAX_PATH];         //银行卡名称
 	TCHAR tszBankAbridge[MAX_PATH];      //银行卡缩写
-	ENUM_XENGINE_APISERVICE_BANK_TYPE eBankType;
+	ENUM_XENGINE_APISERVICE_BANK_TYPE enBankType;
 }XENGINE_BANKINFO;
+//语言转换
+typedef struct
+{
+	TCHAR tszSourceStr[1024];                                //原始字符串
+	TCHAR tszDestStr[1024];                                  //转换字符串
+	ENUM_XENGINE_APISERVICE_LANGUAGE_TYPE enLanguageType;    //语言转换类型
+}XENGINE_LANGUAGEINFO;
 #pragma pack(pop)
