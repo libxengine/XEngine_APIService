@@ -45,7 +45,9 @@ typedef struct
 		TCHAR tszIDData[MAX_PATH];            //ID数据库地址
 		TCHAR tszPhoneData[MAX_PATH];         //电话号码数据库地址
 		TCHAR tszBankData[MAX_PATH];          //银行卡数据库地址
-	}st_XDBInfo;
+		TCHAR tszBankUrl[MAX_PATH];           //银行卡验证地址
+		TCHAR tszTranslationUrl[MAX_PATH];    //翻译接口
+	}st_XApi;
 	struct  
 	{
 		list<string>* pStl_ListVer;

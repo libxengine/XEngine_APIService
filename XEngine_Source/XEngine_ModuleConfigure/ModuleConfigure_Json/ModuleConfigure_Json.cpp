@@ -118,17 +118,19 @@ BOOL CModuleConfigure_Json::ModuleConfigure_Json_File(LPCTSTR lpszConfigFile, XE
 	pSt_ServerConfig->st_XLog.nMaxCount = st_JsonXLog["MaxCount"].asInt();
 	pSt_ServerConfig->st_XLog.nLogLeave = st_JsonXLog["LogLeave"].asInt();
 
-	if (st_JsonRoot["XDatabase"].empty() || (4 != st_JsonRoot["XDatabase"].size()))
+	if (st_JsonRoot["XApi"].empty() || (6 != st_JsonRoot["XApi"].size()))
 	{
 		Config_IsErrorOccur = TRUE;
 		Config_dwErrorCode = ERROR_MODULE_CONFIGURE_JSON_XDB;
 		return FALSE;
 	}
-	Json::Value st_JsonXDB = st_JsonRoot["XDatabase"];
-	_tcscpy(pSt_ServerConfig->st_XDBInfo.tszIPData, st_JsonXDB["tszIPData"].asCString());
-	_tcscpy(pSt_ServerConfig->st_XDBInfo.tszIDData, st_JsonXDB["tszIDData"].asCString());
-	_tcscpy(pSt_ServerConfig->st_XDBInfo.tszPhoneData, st_JsonXDB["tszPhoneData"].asCString());
-	_tcscpy(pSt_ServerConfig->st_XDBInfo.tszBankData, st_JsonXDB["tszBankData"].asCString());
+	Json::Value st_JsonXApi = st_JsonRoot["XApi"];
+	_tcscpy(pSt_ServerConfig->st_XApi.tszIPData, st_JsonXApi["tszIPData"].asCString());
+	_tcscpy(pSt_ServerConfig->st_XApi.tszIDData, st_JsonXApi["tszIDData"].asCString());
+	_tcscpy(pSt_ServerConfig->st_XApi.tszPhoneData, st_JsonXApi["tszPhoneData"].asCString());
+	_tcscpy(pSt_ServerConfig->st_XApi.tszBankData, st_JsonXApi["tszBankData"].asCString());
+	_tcscpy(pSt_ServerConfig->st_XApi.tszBankUrl, st_JsonXApi["tszBankUrl"].asCString());
+	_tcscpy(pSt_ServerConfig->st_XApi.tszTranslationUrl, st_JsonXApi["tszTranslationUrl"].asCString());
 
 	if (st_JsonRoot["XVer"].empty())
 	{
