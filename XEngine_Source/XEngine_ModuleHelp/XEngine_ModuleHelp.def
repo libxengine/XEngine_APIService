@@ -7,3 +7,4 @@ EXPORTS
 	ModuleHelp_IDCard_CheckSum
 
 	ModuleHelp_Language_ConvertZh
+	ModuleHelp_Translation_Convert

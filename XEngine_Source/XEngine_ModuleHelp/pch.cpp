@@ -46,3 +46,7 @@ extern "C" BOOL ModuleHelp_Language_ConvertZh(LPCTSTR lpszJsonFile, LPCTSTR lpsz
 {
 	return m_Language.ModuleHelp_Language_ConvertZh(lpszJsonFile, lpszSourceStr, ptszDestStr);
 }
+extern "C" BOOL ModuleHelp_Translation_Convert(ENUM_XENGINE_APISERVICE_TRANSLATION_TYPE enTranslationType, TCHAR * ptszTranslationType)
+{
+	return m_Language.ModuleHelp_Translation_Convert(enTranslationType, ptszTranslationType);
+}

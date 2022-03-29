@@ -20,3 +20,5 @@
 //                        导出的语言转换错误
 //////////////////////////////////////////////////////////////////////////
 #define ERROR_XENGINE_APISERVICE_MODULE_HELP_LANGUAGE_PARAMENT 0xD1001   //参数错误
+#define ERROR_XENGINE_APISERVICE_MODULE_HELP_LANGUAGE_FAILED 0xD1002     //处理失败
+#define ERROR_XENGINE_APISERVICE_MODULE_HELP_LANGUAGE_NOTSUPPORT 0xD1003 //不支持的类型
