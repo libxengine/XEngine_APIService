@@ -572,7 +572,7 @@ BOOL CModuleProtocol_Packet::ModuleProtocol_Packet_LanguageQuery(TCHAR* ptszMsgB
 	{
 		st_JsonObject["tszSourceStr"] = pSt_LanguageInfo->tszSourceStr;
 		st_JsonObject["tszDestStr"] = pSt_LanguageInfo->tszDestStr;
-		st_JsonObject["enLanguageType"] = pSt_LanguageInfo->enLanguageType;
+		st_JsonObject["enType"] = pSt_LanguageInfo->enType;
 	}
 
 	st_JsonRoot["code"] = nCode;
@@ -632,6 +632,6 @@ BOOL CModuleProtocol_Packet::ModuleProtocol_Packet_LanguageQuery2(TCHAR* ptszMsg
 	*pInt_MsgLen = _stprintf(ptszMsgBuffer, "%d\r\n"
 		"%s\r\n"
 		"%s\r\n"
-		"%d", nCode, pSt_LanguageInfo->tszSourceStr, pSt_LanguageInfo->tszDestStr, pSt_LanguageInfo->enLanguageType);
+		"%d", nCode, pSt_LanguageInfo->tszSourceStr, pSt_LanguageInfo->tszDestStr, pSt_LanguageInfo->enType);
 	return TRUE;
 }

@@ -16,3 +16,4 @@ EXPORTS
 
 	ModuleProtocol_Parse_IDCard
 	ModuleProtocol_Parse_Bank
+	ModuleProtocol_Parse_Translation
