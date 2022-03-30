@@ -19,7 +19,7 @@
 //需要优先配置XEngine
 //WINDOWS支持VS2022 x64 debug 编译调试
 //linux使用下面的命令编译
-//g++ -std=c++17 -Wall -g APPClient_PhoneExample.cpp -o APPClient_PhoneExample.exe -L /usr/local/lib/XEngine_Release/XEngine_BaseLib -L /usr/local/lib/XEngine_Release/XEngine_NetHelp -lXEngine_BaseLib -lNetHelp_APIHelp
+//g++ -std=c++17 -Wall -g APPClient_TranslationExample.cpp -o APPClient_TranslationExample.exe -L /usr/local/lib/XEngine_Release/XEngine_BaseLib -L /usr/local/lib/XEngine_Release/XEngine_NetHelp -lXEngine_BaseLib -lNetHelp_APIHelp
 
 int main()
 {
@@ -29,7 +29,7 @@ int main()
 #endif
 	int nLen = 0;
 	TCHAR* ptszMsgBuffer = NULL;
-	LPCTSTR lpszUrl = _T("http://127.0.0.1:5501/api?function=phone&params1=13699438888&params2=0");
+	LPCTSTR lpszUrl = _T("http://127.0.0.1:5501/api?function=translation&params1=中国&params2=0&param3=0");
 
 	if (!APIHelp_HttpRequest_Get(lpszUrl, &ptszMsgBuffer, &nLen))
 	{
