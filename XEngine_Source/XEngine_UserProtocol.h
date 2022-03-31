@@ -56,6 +56,23 @@ typedef enum
 	ENUM_XENGINE_APISERVICE_LANGUAGE_TYPE_JP2T,			    // 日文新字体到繁体（OpenCC 标准，旧字体）
 	ENUM_XENGINE_APISERVICE_LANGUAGE_TYPE_TW2T			    // 台繁到繁体（OpenCC 标准）
 }ENUM_XENGINE_APISERVICE_LANGUAGE_TYPE;
+//翻译接口
+typedef enum 
+{
+	ENUM_XENGINE_APISERVICE_TRANSLATION_TYPE_AUTO = 0,
+	ENUM_XENGINE_APISERVICE_TRANSLATION_TYPE_ZH_CN2EN,      //中文　»　英语
+	ENUM_XENGINE_APISERVICE_TRANSLATION_TYPE_ZH_CN2JA,      //中文　»　日语
+	ENUM_XENGINE_APISERVICE_TRANSLATION_TYPE_ZH_CN2KR,      //中文　»　韩语
+	ENUM_XENGINE_APISERVICE_TRANSLATION_TYPE_ZH_CN2FR,      //中文　»　法语
+	ENUM_XENGINE_APISERVICE_TRANSLATION_TYPE_ZH_CN2RU,      //中文　»　俄语
+	ENUM_XENGINE_APISERVICE_TRANSLATION_TYPE_ZH_CN2SP,      //中文　»　西语
+	ENUM_XENGINE_APISERVICE_TRANSLATION_TYPE_EN2ZH_CN,      //英语　»　中文
+	ENUM_XENGINE_APISERVICE_TRANSLATION_TYPE_JA2ZH_CN,      //日语　»　中文
+	ENUM_XENGINE_APISERVICE_TRANSLATION_TYPE_KR2ZH_CN,      //韩语　»　中文
+	ENUM_XENGINE_APISERVICE_TRANSLATION_TYPE_FR2ZH_CN,      //法语　»　中文
+	ENUM_XENGINE_APISERVICE_TRANSLATION_TYPE_RU2ZH_CN,      //俄语　»　中文
+	ENUM_XENGINE_APISERVICE_TRANSLATION_TYPE_SP2ZH_CN       //西语　»　中文
+}ENUM_XENGINE_APISERVICE_TRANSLATION_TYPE;
 //////////////////////////////////////////////////////////////////////////
 //                          子协议定义:unOperatorCode
 //////////////////////////////////////////////////////////////////////////
@@ -124,6 +141,6 @@ typedef struct
 {
 	TCHAR tszSourceStr[1024];                                //原始字符串
 	TCHAR tszDestStr[1024];                                  //转换字符串
-	ENUM_XENGINE_APISERVICE_LANGUAGE_TYPE enLanguageType;    //语言转换类型
+	int enType;                                              //简繁为ENUM_XENGINE_APISERVICE_LANGUAGE_TYPE 翻译为ENUM_XENGINE_APISERVICE_TRANSLATION_TYPE
 }XENGINE_LANGUAGEINFO;
 #pragma pack(pop)

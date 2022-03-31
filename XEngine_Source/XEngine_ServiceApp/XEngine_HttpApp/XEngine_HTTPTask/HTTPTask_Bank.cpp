@@ -23,7 +23,7 @@ BOOL XEngine_HTTPTask_BankInfo(LPCTSTR lpszClientAddr, LPCTSTR lpszBankNumber, i
 	st_HDRParam.bIsClose = TRUE; //收到回复后就关闭
 
 	_tcscpy(st_BankInfo.tszBankNumber, lpszBankNumber);
-	_stprintf(tszUrlBuffer, _T("https://ccdcapi.alipay.com/validateAndCacheCardInfo.json?cardNo=%s&cardBinCheck=true"), lpszBankNumber);
+	_stprintf(tszUrlBuffer, st_ServiceConfig.st_XApi.tszBankUrl, lpszBankNumber);
 	APIHelp_HttpRequest_Get(tszUrlBuffer, &ptszBodyBuffer, &nBLen);
 	//解析JSON信息
 	if (!ModuleProtocol_Parse_Bank(ptszBodyBuffer, nBLen, &st_BankInfo))
