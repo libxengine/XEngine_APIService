@@ -2,8 +2,8 @@ author by:qyt 486179@qq.com
 
 ## 贡献准则(Contribution Guidelines)
 
-XEngine_APIService是一个尝试由社区驱动，为了构建一套全能的API信息查询服务器的生态系统-你的共享价值将不可估量!
-XEngine_APIService is an attempt to be driven by the community, in order to build an all-round API information query server ystem - your shared value will be immeasurable!
+此服务是一个尝试由社区驱动，你的共享价值将不可估量!
+the service is an attempt to be driven by the community, your shared value will be immeasurable!
 
 ## 提交代码(Submit code)
 

@@ -1,0 +1,31 @@
+XEngine_APIService V1.1.0.1001
+
+添加:银行卡查询验证功能
+添加:简繁转换功能
+添加:翻译功能(词典)
+
+added:bank card number query function
+added:language convert
+added:translation function
+======================================================================================
+XEngine_APIService V1.0.0.1001
+
+增加:支持HTTP模式JSON和字符串流方式返回查询的内容
+增加:支持IP地址位置信息查询(IPV4和IPV6)
+增加:支持身份证校验与信息查询
+增加:支持手机号信息归属查询
+增加:JSON配置文件处理模块
+增加:数据库配置模块
+增加:协议模块
+增加:JSONCPP模块
+增加:函数处理帮助模块
+
+Added: Support HTTP mode JSON and string stream mode to return the content of the query
+Added: Support IP address location information query (IPV4 and IPV6)
+Added: support ID card verification and information query
+Added: Support mobile phone number information attribution query
+Added: JSON configuration file processing module
+Added: database configuration module
+Added: Protocol module
+Added: JSONCPP module
+Added: function handling helper module
