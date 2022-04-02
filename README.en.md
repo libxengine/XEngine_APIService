@@ -24,13 +24,13 @@ The purpose of development and implementation based on libXEngine is a cross-pla
 11. World Time Zones (planned)
 12. Oil price inquiry (planned)
 13. Administrative zip code (planned)
-14. Bank card verification (planned)
+14. Bank card verification
 15. Exchange rate calculation (planned)
 16. QR code generation (planned)
-17. Simplified and Traditional Conversion (planned)
+17. Simplified and Traditional Conversion
 18. Oil price inquiry (planned)
 19. Twenty-four solar terms (planned)
-20. Xinhua Dictionary (planned)
+20. Xinhua Dictionary
 
 ## install
 
@@ -80,7 +80,7 @@ You can refer to the document under the docment directory. It contains API proto
 Address:app.xyry.org,Port:5501  
 #### example
 phone information query  
-api:http://app.xyry.org:5501/api?function=phonequery&params1=13699439999&params2=0  
+api:http://app.xyry.org:5501/api?function=phone&params1=13699439999&params2=0  
 ```json
 {
     "code":0,
@@ -95,7 +95,7 @@ api:http://app.xyry.org:5501/api?function=phonequery&params1=13699439999&params2
 }
 ```
 ip address information  
-api;http://app.xyry.org:5501/api?function=ipquery&params1=1.29.164.255&params2=0  
+api:http://app.xyry.org:5501/api?function=ip&params1=1.29.164.255&params2=0  
 ```json
 {
     "code":0,
@@ -115,7 +115,7 @@ api;http://app.xyry.org:5501/api?function=ipquery&params1=1.29.164.255&params2=0
 }
 ```
 id information query  
-api;http://app.xyry.org:5501/api?function=idquery&params1=511025198800000000&params2=0  
+api:http://app.xyry.org:5501/api?function=id&params1=511025198800000000&params2=0  
 ```json
 {
     "code":0,
@@ -134,7 +134,46 @@ api;http://app.xyry.org:5501/api?function=idquery&params1=511025198800000000&par
     "msg":"success"
 }
 ```
-
+bank card ver
+api:http://app.xyry.org:5501/api?function=bank&params1=6214832830000000&params2=0
+```json
+{
+    "code":0,
+    "data":{
+        "enBankType":2,
+        "tszBankAbridge":"CMB",
+        "tszBankName":"招商银行",
+        "tszBankNumber":"6214832830000000"
+    },
+    "msg":"success"
+}
+```
+language
+api:http://app.xyry.org:5501/api?function=language&params1=简体到繁体&params2=0&params3=1
+```json
+{
+    "code":0,
+    "data":{
+        "enType":1,
+        "tszDestStr":"簡體到繁體",
+        "tszSourceStr":"简体到繁体"
+    },
+    "msg":"success"
+}
+```
+translation
+api:http://app.xyry.org:5501/api?function=translation&params1=中国&params2=0&params3=0
+```json
+{
+    "code":0,
+    "data":{
+        "enType":0,
+        "tszDestStr":"China",
+        "tszSourceStr":"中国"
+    },
+    "msg":"success"
+}
+```
 ## Participate in contribution
 I hope you will submit more code to participate in the contribution  
 
