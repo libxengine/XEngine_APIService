@@ -10,9 +10,12 @@
 #ifdef _MSC_BUILD
 // 添加要在此处预编译的标头
 #include "framework.h"
+#include <tchar.h>
 #endif
 #endif //PCH_H
+#include <string.h>
 #include <errno.h>
+#include <opencc/opencc.h>
 #include <XEngine_Include/XEngine_CommHdr.h>
 #include <XEngine_Include/XEngine_Types.h>
 #include <XEngine_Include/XEngine_ProtocolHdr.h>
@@ -32,3 +35,11 @@
 *********************************************************************/
 extern BOOL ModuleHelp_IsErrorOccur;
 extern DWORD ModuleHelp_dwErrorCode;
+
+#ifdef _MSC_BUILD
+#ifdef _WIN64
+#pragma comment(lib,"../XEngine_ThirdPart/opencc/libx64/opencc")
+#else
+#pragma comment(lib,"../XEngine_ThirdPart/opencc/libx86/opencc")
+#endif
+#endif

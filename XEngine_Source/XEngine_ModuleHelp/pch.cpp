@@ -1,5 +1,6 @@
 ﻿#include "pch.h"
 #include "ModuleHelp_IDCard/ModuleHelp_IDCard.h"
+#include "ModuleHelp_Language/ModuleHelp_Language.h"
 /********************************************************************
 //    Created:     2022/03/04  13:37:38
 //    File Name:   D:\XEngine_APIService\XEngine_Source\XEngine_ModuleHelp\pch.cpp
@@ -15,6 +16,7 @@ BOOL ModuleHelp_IsErrorOccur = FALSE;
 DWORD ModuleHelp_dwErrorCode = 0;
 //////////////////////////////////////////////////////////////////////////
 CModuleHelp_IDCard m_IDCard;
+CModuleHelp_Language m_Language;
 //////////////////////////////////////////////////////////////////////////
 ///                        导出的函数
 //////////////////////////////////////////////////////////////////////////
@@ -36,4 +38,15 @@ extern "C" BOOL ModuleHelp_IDCard_CheckBirth(XENGINE_IDCARDINFO * pSt_IDInfo)
 extern "C" BOOL ModuleHelp_IDCard_CheckSum(XENGINE_IDCARDINFO * pSt_IDInfo)
 {
 	return m_IDCard.ModuleHelp_IDCard_CheckSum(pSt_IDInfo);
+}
+/************************************************************************/
+/*                         导出的语言转换帮助函数                       */
+/************************************************************************/
+extern "C" BOOL ModuleHelp_Language_ConvertZh(LPCTSTR lpszJsonFile, LPCTSTR lpszSourceStr, TCHAR * ptszDestStr)
+{
+	return m_Language.ModuleHelp_Language_ConvertZh(lpszJsonFile, lpszSourceStr, ptszDestStr);
+}
+extern "C" BOOL ModuleHelp_Translation_Convert(ENUM_XENGINE_APISERVICE_TRANSLATION_TYPE enTranslationType, TCHAR * ptszTranslationType)
+{
+	return m_Language.ModuleHelp_Translation_Convert(enTranslationType, ptszTranslationType);
 }

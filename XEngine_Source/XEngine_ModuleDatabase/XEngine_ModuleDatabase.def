@@ -15,3 +15,7 @@ EXPORTS
 	ModuleDatabase_Phone_Init
 	ModuleDatabase_Phone_Destory
 	ModuleDatabase_Phone_Query
+
+	ModuleDatabase_Bank_Init
+	ModuleDatabase_Bank_Destory
+	ModuleDatabase_Bank_Query

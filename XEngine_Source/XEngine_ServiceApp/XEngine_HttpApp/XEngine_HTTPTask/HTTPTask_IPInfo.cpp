@@ -24,8 +24,15 @@ BOOL XEngine_HTTPTask_IPInfo(LPCTSTR lpszClientAddr, LPCTSTR lpszIPAddr, int nTy
 	{
 		if (!ModuleDatabase_IPInfo_IPV4Query(&st_IPAddrInfo, lpszIPAddr))
 		{
-			st_HDRParam.nHttpCode = 404;
-			RfcComponents_HttpServer_SendMsgEx(xhHTTPPacket, tszMsgBuffer, &nMsgLen, &st_HDRParam);
+			if (0 == nType)
+			{
+				ModuleProtocol_Packet_IPQuery(tszPktBuffer, &nPktLen, NULL, 1001, _T("ip is incorrent"));
+			}
+			else
+			{
+				ModuleProtocol_Packet_IPQuery2(tszPktBuffer, &nPktLen, NULL, 1001);
+			}
+			RfcComponents_HttpServer_SendMsgEx(xhHTTPPacket, tszMsgBuffer, &nMsgLen, &st_HDRParam, tszPktBuffer, nPktLen);
 			XEngine_Network_Send(lpszClientAddr, tszMsgBuffer, nMsgLen);
 			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _T("HTTP客户端:%s,请求的IP地址不正确:%s"), lpszClientAddr, lpszIPAddr);
 			return FALSE;
@@ -35,8 +42,15 @@ BOOL XEngine_HTTPTask_IPInfo(LPCTSTR lpszClientAddr, LPCTSTR lpszIPAddr, int nTy
 	{
 		if (!ModuleDatabase_IPInfo_IPV6Query(&st_IPAddrInfo, lpszIPAddr))
 		{
-			st_HDRParam.nHttpCode = 404;
-			RfcComponents_HttpServer_SendMsgEx(xhHTTPPacket, tszMsgBuffer, &nMsgLen, &st_HDRParam);
+			if (0 == nType)
+			{
+				ModuleProtocol_Packet_IPQuery(tszPktBuffer, &nPktLen, NULL, 1010, _T("not found"));
+			}
+			else
+			{
+				ModuleProtocol_Packet_IPQuery2(tszPktBuffer, &nPktLen, NULL, 1010);
+			}
+			RfcComponents_HttpServer_SendMsgEx(xhHTTPPacket, tszMsgBuffer, &nMsgLen, &st_HDRParam, tszPktBuffer, nPktLen);
 			XEngine_Network_Send(lpszClientAddr, tszMsgBuffer, nMsgLen);
 			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _T("HTTP客户端:%s,请求的IP地址不正确:%s"), lpszClientAddr, lpszIPAddr);
 			return FALSE;

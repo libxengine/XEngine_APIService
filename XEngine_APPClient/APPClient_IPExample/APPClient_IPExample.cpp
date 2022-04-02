@@ -29,7 +29,7 @@ int main()
 #endif
 	int nLen = 0;
 	TCHAR* ptszMsgBuffer = NULL;
-	LPCTSTR lpszUrl = _T("http://127.0.0.1:5501/api?function=ipquery&params1=1.29.164.255&params2=0");
+	LPCTSTR lpszUrl = _T("http://127.0.0.1:5501/api?function=ip&params1=1.29.164.255&params2=0");
 
 	if (!APIHelp_HttpRequest_Get(lpszUrl, &ptszMsgBuffer, &nLen))
 	{

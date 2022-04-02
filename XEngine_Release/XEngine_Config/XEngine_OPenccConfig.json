@@ -1,0 +1,16 @@
+{
+    "tszFiles2t":"./XEngine_Config/opencc/s2t.json",
+    "tszFilet2s":"./XEngine_Config/opencc/t2s.json",
+    "tszFiles2tw":"./XEngine_Config/opencc/s2tw.json",
+    "tszFiletw2s":"./XEngine_Config/opencc/tw2s.json",
+    "tszFiles2hk":"./XEngine_Config/opencc/s2hk.json",
+    "tszFilehk2s":"./XEngine_Config/opencc/hk2s.json",
+    "tszFiles2twp":"./XEngine_Config/opencc/s2twp.json",
+    "tszFiletw2sp":"./XEngine_Config/opencc/tw2sp.json",
+    "tszFilet2tw":"./XEngine_Config/opencc/t2tw.json",
+    "tszFilehk2t":"./XEngine_Config/opencc/hk2t.json",
+    "tszFilet2hk":"./XEngine_Config/opencc/t2hk.json",
+    "tszFilet2jp":"./XEngine_Config/opencc/t2jp.json",
+    "tszFilejp2t":"./XEngine_Config/opencc/jp2t.json",
+    "tszFiletw2t":"./XEngine_Config/opencc/tw2t.json"
+}

@@ -2,6 +2,7 @@
 #include "ModuleDatabase_IDCard/ModuleDatabase_IDCard.h"
 #include "ModuleDatabase_IPInfo/ModuleDatabase_IPInfo.h"
 #include "ModuleDatabase_Phone/ModuleDatabase_Phone.h"
+#include "ModuleDatabase_Bank/ModuleDatabase_Bank.h"
 /********************************************************************
 //    Created:     2022/02/28  13:26:15
 //    File Name:   D:\XEngine_IPInfo\XEngine_Source\XEngine_ModuleDatabase\pch.cpp
@@ -19,6 +20,7 @@ BOOL DBModule_dwErrorCode = 0;
 CModuleDatabase_IPInfo m_IPAddr;
 CModuleDatabase_IDCard m_IDCard;
 CModuleDatabase_Phone m_Phone;
+CModuleDatabase_Bank m_Bank;
 //////////////////////////////////////////////////////////////////////////
 ///                        导出的函数
 //////////////////////////////////////////////////////////////////////////
@@ -78,4 +80,19 @@ extern "C" BOOL ModuleDatabase_Phone_Destory()
 extern "C" BOOL ModuleDatabase_Phone_Query(LPCTSTR lpszPhoneNumber, XENGINE_PHONEINFO * pSt_PhoneInfo)
 {
 	return m_Phone.ModuleDatabase_Phone_Query(lpszPhoneNumber, pSt_PhoneInfo);
+}
+/************************************************************************/
+/*                         导出的银行卡信息函数                         */
+/************************************************************************/
+extern "C" BOOL ModuleDatabase_Bank_Init(LPCTSTR lpszSQLFile)
+{
+	return m_Bank.ModuleDatabase_Bank_Init(lpszSQLFile);
+}
+extern "C" BOOL ModuleDatabase_Bank_Destory()
+{
+	return m_Bank.ModuleDatabase_Bank_Destory();
+}
+extern "C" BOOL ModuleDatabase_Bank_Query(XENGINE_BANKINFO * pSt_BankInfo)
+{
+	return m_Bank.ModuleDatabase_Bank_Query(pSt_BankInfo);
 }

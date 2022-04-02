@@ -28,6 +28,8 @@ using namespace std;
 #include <XEngine_Include/XEngine_Core/NetCore_Error.h>
 #include <XEngine_Include/XEngine_Core/ManagePool_Define.h>
 #include <XEngine_Include/XEngine_Core/ManagePool_Error.h>
+#include <XEngine_Include/XEngine_Core/OPenSsl_Define.h>
+#include <XEngine_Include/XEngine_Core/OPenSsl_Error.h>
 #include <XEngine_Include/XEngine_HelpComponents/XLog_Define.h>
 #include <XEngine_Include/XEngine_HelpComponents/XLog_Error.h>
 #include <XEngine_Include/XEngine_RfcComponents/HttpServer_Define.h>
@@ -51,6 +53,9 @@ using namespace std;
 #include "XEngine_HTTPTask/HTTPTask_IPInfo.h"
 #include "XEngine_HTTPTask/HTTPTask_IDCard.h"
 #include "XEngine_HTTPTask/HTTPTask_Phone.h"
+#include "XEngine_HTTPTask/HTTPTask_Bank.h"
+#include "XEngine_HTTPTask/HTTPTask_Language.h"
+#include "XEngine_HTTPTask/HTTPTask_Translation.h"
 /********************************************************************
 //    Created:     2022/01/20  14:42:06
 //    File Name:   D:\XEngine_ServiceApp\XEngine_Source\XEngine_ServiceApp\XEngine_HttpApp\XEngine_Hdr.h
@@ -71,6 +76,7 @@ extern XNETHANDLE xhHTTPPool;
 extern XHANDLE xhHTTPPacket;
 //配置文件
 extern XENGINE_SERVICECONFIG st_ServiceConfig;
+extern XENGINE_OPENCCCONFIG st_OPenccConfig;
 
 //连接库
 #ifdef _WINDOWS
@@ -102,7 +108,9 @@ extern XENGINE_SERVICECONFIG st_ServiceConfig;
 #pragma comment(lib,"XEngine_BaseLib/XEngine_BaseLib.lib")
 #pragma comment(lib,"XEngine_Core/XEngine_Core.lib")
 #pragma comment(lib,"XEngine_Core/XEngine_ManagePool.lib")
+#pragma comment(lib,"XEngine_Core/XEngine_OPenSsl.lib")
 #pragma comment(lib,"XEngine_HelpComponents/HelpComponents_XLog.lib")
 #pragma comment(lib,"XEngine_RfcComponents/RfcComponents_HttpServer.lib")
+#pragma comment(lib,"XEngine_NetHelp/NetHelp_APIHelp.lib")
 #pragma comment(lib,"Ws2_32.lib")
 #endif

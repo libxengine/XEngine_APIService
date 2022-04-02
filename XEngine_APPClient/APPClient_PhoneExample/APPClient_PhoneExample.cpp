@@ -29,7 +29,7 @@ int main()
 #endif
 	int nLen = 0;
 	TCHAR* ptszMsgBuffer = NULL;
-	LPCTSTR lpszUrl = _T("http://127.0.0.1:5501/api?function=phonequery&params1=13699438888&params2=0");
+	LPCTSTR lpszUrl = _T("http://127.0.0.1:5501/api?function=phone&params1=13699438888&params2=0");
 
 	if (!APIHelp_HttpRequest_Get(lpszUrl, &ptszMsgBuffer, &nLen))
 	{

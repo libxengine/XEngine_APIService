@@ -13,7 +13,7 @@
 //////////////////////////////////////////////////////////////////////////
 //                        导出的数据结构
 //////////////////////////////////////////////////////////////////////////
-typedef struct tag_XEngine_ServiceConfig
+typedef struct 
 {
 	TCHAR tszIPAddr[128];                     //本机IP地址,根据需要配置
 	BOOL bDeamon;                             //是否以守护进程启动,LINUX有效
@@ -44,12 +44,33 @@ typedef struct tag_XEngine_ServiceConfig
 		TCHAR tszIPData[MAX_PATH];            //IP数据库地址
 		TCHAR tszIDData[MAX_PATH];            //ID数据库地址
 		TCHAR tszPhoneData[MAX_PATH];         //电话号码数据库地址
-	}st_XDBInfo;
+		TCHAR tszBankData[MAX_PATH];          //银行卡数据库地址
+		TCHAR tszBankUrl[MAX_PATH];           //银行卡验证地址
+		TCHAR tszTranslationUrl[MAX_PATH];    //翻译接口
+	}st_XApi;
 	struct  
 	{
 		list<string>* pStl_ListVer;
 	}st_XVer;
 }XENGINE_SERVICECONFIG;
+//OPENCC语言转换配置文件
+typedef struct 
+{
+	TCHAR tszFiles2t[MAX_PATH];
+	TCHAR tszFilet2s[MAX_PATH];
+	TCHAR tszFiles2tw[MAX_PATH];
+	TCHAR tszFiletw2s[MAX_PATH];
+	TCHAR tszFiles2hk[MAX_PATH];
+	TCHAR tszFilehk2s[MAX_PATH];
+	TCHAR tszFiles2twp[MAX_PATH];
+	TCHAR tszFiletw2sp[MAX_PATH];
+	TCHAR tszFilet2tw[MAX_PATH];
+	TCHAR tszFilehk2t[MAX_PATH];
+	TCHAR tszFilet2hk[MAX_PATH];
+	TCHAR tszFilet2jp[MAX_PATH];
+	TCHAR tszFilejp2t[MAX_PATH];
+	TCHAR tszFiletw2t[MAX_PATH];
+}XENGINE_OPENCCCONFIG;
 //////////////////////////////////////////////////////////////////////////
 //                        导出函数定义
 //////////////////////////////////////////////////////////////////////////
@@ -76,3 +97,22 @@ extern "C" DWORD ModuleConfigure_GetLastError(int* pInt_ErrorCode = NULL);
 备注：
 *********************************************************************/
 extern "C" BOOL ModuleConfigure_Json_File(LPCTSTR lpszConfigFile, XENGINE_SERVICECONFIG* pSt_ServerConfig);
+/********************************************************************
+函数名称：ModuleConfigure_Json_OPenccFile
+函数功能：读取JSON配置文件
+ 参数.一：lpszConfigFile
+  In/Out：In
+  类型：常量字符指针
+  可空：N
+  意思：输入要读取的配置文件
+ 参数.二：pSt_OPenccConfig
+  In/Out：Out
+  类型：数据结构指针
+  可空：N
+  意思：输出OPENCC配置信息
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+extern "C" BOOL ModuleConfigure_Json_OPenccFile(LPCTSTR lpszConfigFile, XENGINE_OPENCCCONFIG* pSt_OPenccConfig);

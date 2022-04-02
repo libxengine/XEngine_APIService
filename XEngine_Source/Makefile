@@ -13,13 +13,15 @@ MODULE_HELP_PATH = ./XEngine_ModuleHelp
 APP_CENTER_PATH = ./XEngine_ServiceApp/XEngine_CenterApp
 APP_HTTP_PATH = ./XEngine_ServiceApp/XEngine_HttpApp
 
-XENGINE_MODULES = libjsoncpp.so                                   \
+XENGINE_MODULES = libjsoncpp.so libopencc.so                                  \
                   libXEngine_ModuleConfigure.so libXEngine_ModuleDatabase.so libXEngine_ModuleProtocol.so libXEngine_ModuleHelp.so                \
 		   XEngine_HttpApp.exe
 
 .PHONY:MakeAll 
 MakeAll:$(XENGINE_MODULES)
 
+libopencc.so:
+	cp -rf ./XEngine_ThirdPart/opencc/ubuntu/libopencc.so ../XEngine_Release/libopencc.so
 libjsoncpp.so:
 	make -C $(THIRDPART_MODULE_JSONCPP) $(FLAGS)
 

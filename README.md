@@ -24,13 +24,13 @@ c c++ interface api service
 11. 世界时区(计划中)
 12. 油价查询(计划中)
 13. 行政邮编(计划中)
-14. 银行卡验证(计划中)
+14. 银行卡验证
 15. 汇率计算(计划中)
 16. 二维码生成(计划中)
-17. 简繁转换(计划中)
+17. 简繁转换
 18. 油价查询(计划中)
 19. 二十四节气(计划中)
-20. 新华词典(计划中)
+20. 新华词典
 
 ## 安装教程
 
@@ -80,7 +80,7 @@ make FLAGS=CleanAll 清理编译
 地址:app.xyry.org,端口:5501  
 #### 测试接口示例
 手机信息查询  
-接口:http://app.xyry.org:5501/api?function=phonequery&params1=13699439999&params2=0  
+接口:http://app.xyry.org:5501/api?function=phone&params1=13699439999&params2=0  
 ```json
 {
     "code":0,
@@ -95,7 +95,7 @@ make FLAGS=CleanAll 清理编译
 }
 ```
 IP地址查询  
-接口;http://app.xyry.org:5501/api?function=ipquery&params1=1.29.164.255&params2=0  
+接口:http://app.xyry.org:5501/api?function=ip&params1=1.29.164.255&params2=0  
 ```json
 {
     "code":0,
@@ -115,7 +115,7 @@ IP地址查询
 }
 ```
 身份证查询  
-接口;http://app.xyry.org:5501/api?function=idquery&params1=511025198800000000&params2=0  
+接口:http://app.xyry.org:5501/api?function=id&params1=511025198800000000&params2=0  
 ```json
 {
     "code":0,
@@ -130,6 +130,46 @@ IP地址查询
         "tszCounty":"资中县",
         "tszIDNumber":"511025198800000000",
         "tszProvincer":"四川省"
+    },
+    "msg":"success"
+}
+```
+银行卡验证
+接口:http://app.xyry.org:5501/api?function=bank&params1=6214832830000000&params2=0
+```json
+{
+    "code":0,
+    "data":{
+        "enBankType":2,
+        "tszBankAbridge":"CMB",
+        "tszBankName":"招商银行",
+        "tszBankNumber":"6214832830000000"
+    },
+    "msg":"success"
+}
+```
+语言转换
+接口:http://app.xyry.org:5501/api?function=language&params1=简体到繁体&params2=0&params3=1
+```json
+{
+    "code":0,
+    "data":{
+        "enType":1,
+        "tszDestStr":"簡體到繁體",
+        "tszSourceStr":"简体到繁体"
+    },
+    "msg":"success"
+}
+```
+翻译
+接口:http://app.xyry.org:5501/api?function=translation&params1=中国&params2=0&params3=0
+```json
+{
+    "code":0,
+    "data":{
+        "enType":0,
+        "tszDestStr":"China",
+        "tszSourceStr":"中国"
     },
     "msg":"success"
 }
