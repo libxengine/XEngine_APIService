@@ -10,7 +10,7 @@ LIB = -lXEngine_BaseLib -lXEngine_Algorithm -lXEngine_Core -lXEngine_ManagePool 
 LIBEX = -static-libgcc -ldl -lrt -lpthread
 LOADSO = -Wl,-rpath=./,--disable-new-dtags
 LIBINCLUDE = XEngine_Configure.o XEngine_Network.o XEngine_HTTPTask.o XEngine_HttpApp.o        \
-             HTTPTask_IPInfo.o HTTPTask_IDCard.o HTTPTask_Phone.o HTTPTask_Bank.o HTTPTask_Language.o
+             HTTPTask_IPInfo.o HTTPTask_IDCard.o HTTPTask_Phone.o HTTPTask_Bank.o HTTPTask_Language.o HTTPTask_Translation.o
 
 ifeq ($(RELEASE),1)
 FLAGS = -c -O2 
@@ -46,6 +46,8 @@ HTTPTask_Bank.o:./XEngine_HTTPTask/HTTPTask_Bank.cpp
 	$(CC) $(DEBUG) $(FLAGS) $(UNICODE) ./XEngine_HTTPTask/HTTPTask_Bank.cpp
 HTTPTask_Language.o:./XEngine_HTTPTask/HTTPTask_Language.cpp
 	$(CC) $(DEBUG) $(FLAGS) $(UNICODE) ./XEngine_HTTPTask/HTTPTask_Language.cpp
+HTTPTask_Translation.o:./XEngine_HTTPTask/HTTPTask_Translation.cpp
+	$(CC) $(DEBUG) $(FLAGS) $(UNICODE) ./XEngine_HTTPTask/HTTPTask_Translation.cpp
 
 XEngine_HttpApp.o:./XEngine_HttpApp.cpp             
 	$(CC) $(DEBUG) $(FLAGS) $(UNICODE) ./XEngine_HttpApp.cpp   

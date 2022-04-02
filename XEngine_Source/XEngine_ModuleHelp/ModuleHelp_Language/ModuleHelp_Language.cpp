@@ -61,7 +61,7 @@ BOOL CModuleHelp_Language::ModuleHelp_Language_ConvertZh(LPCTSTR lpszJsonFile, L
 		ModuleHelp_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_HELP_LANGUAGE_FAILED;
 		return FALSE;
 	}
-	if (-1 == opencc_convert_utf8_to_buffer(m_OPencc, lpszSourceStr, strlen(lpszSourceStr), ptszDestStr))
+	if ((size_t)-1 == opencc_convert_utf8_to_buffer(m_OPencc, lpszSourceStr, strlen(lpszSourceStr), ptszDestStr))
 	{
 		ModuleHelp_IsErrorOccur = TRUE;
 		ModuleHelp_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_HELP_LANGUAGE_NOTSUPPORT;
