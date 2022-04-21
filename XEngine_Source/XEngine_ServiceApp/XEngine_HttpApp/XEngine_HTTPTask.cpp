@@ -120,6 +120,12 @@ BOOL XEngine_HTTPTask_Handle(RFCCOMPONENTS_HTTP_REQPARAM* pSt_HTTPParam, LPCTSTR
 			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _T("HTTP客户端:%s,发送的URL请求参数不正确:%s"), lpszClientAddr, pSt_HTTPParam->tszHttpUri);
 			return FALSE;
 		}
+		//首先处理插件
+		if (ModulePlugin_Loader_Find(tszValue))
+		{
+			XEngine_PluginTask_Handle(tszValue, lpszClientAddr, lpszRVBuffer, nRVLen, &pptszList, nListCount);
+			return TRUE;
+		}
 		//是不是ip查询
 		if (0 == _tcsnicmp(lpszParamValue1, tszValue, _tcslen(lpszParamValue1)))
 		{

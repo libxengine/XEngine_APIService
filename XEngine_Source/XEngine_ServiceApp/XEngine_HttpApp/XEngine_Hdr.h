@@ -36,6 +36,9 @@ using namespace std;
 #include <XEngine_Include/XEngine_RfcComponents/HttpServer_Error.h>
 #include <XEngine_Include/XEngine_NetHelp/APIHelp_Define.h>
 #include <XEngine_Include/XEngine_NetHelp/APIHelp_Error.h>
+#include <XEngine_Include/XEngine_SystemSdk/ProcFile_Define.h>
+#include <XEngine_Include/XEngine_SystemSdk/SystemApi_Define.h>
+#include <XEngine_Include/XEngine_SystemSdk/SystemApi_Error.h>
 //加载项目相关头文件
 #include "../../XEngine_UserProtocol.h"
 #include "../../XEngine_ModuleConfigure/ModuleConfig_Define.h"
@@ -46,10 +49,13 @@ using namespace std;
 #include "../../XEngine_ModuleProtocol/ModuleProtocol_Error.h"
 #include "../../XEngine_ModuleHelp/ModuleHelp_Define.h"
 #include "../../XEngine_ModuleHelp/ModuleHelp_Error.h"
+#include "../../XEngine_ModulePlugin/ModulePlugin_Define.h"
+#include "../../XEngine_ModulePlugin/ModulePlugin_Error.h"
 //加载自己的头文件
 #include "XEngine_Configure.h"
 #include "XEngine_Network.h"
 #include "XEngine_HTTPTask.h"
+#include "XEngine_PluginTask.h"
 #include "XEngine_HTTPTask/HTTPTask_IPInfo.h"
 #include "XEngine_HTTPTask/HTTPTask_IDCard.h"
 #include "XEngine_HTTPTask/HTTPTask_Phone.h"
@@ -77,7 +83,7 @@ extern XHANDLE xhHTTPPacket;
 //配置文件
 extern XENGINE_SERVICECONFIG st_ServiceConfig;
 extern XENGINE_OPENCCCONFIG st_OPenccConfig;
-
+extern XENGINE_PLUGINCONFIG st_PluginConfig;
 //连接库
 #ifdef _WINDOWS
 #ifdef _WIN64
@@ -86,11 +92,13 @@ extern XENGINE_OPENCCCONFIG st_OPenccConfig;
 #pragma comment(lib,"../../x64/Debug/XEngine_ModuleDatabase.lib")
 #pragma comment(lib,"../../x64/Debug/XEngine_ModuleProtocol.lib")
 #pragma comment(lib,"../../x64/Debug/XEngine_ModuleHelp.lib")
+#pragma comment(lib,"../../x64/Debug/XEngine_ModulePlugin.lib")
 #else
 #pragma comment(lib,"../../x64/Release/XEngine_ModuleConfigure.lib")
 #pragma comment(lib,"../../x64/Release/XEngine_ModuleDatabase.lib")
 #pragma comment(lib,"../../x64/Release/XEngine_ModuleProtocol.lib")
 #pragma comment(lib,"../../x64/Release/XEngine_ModuleHelp.lib")
+#pragma comment(lib,"../../x64/Release/XEngine_ModulePlugin.lib")
 #endif
 #else
 #ifdef _DEBUG
@@ -98,11 +106,13 @@ extern XENGINE_OPENCCCONFIG st_OPenccConfig;
 #pragma comment(lib,"../../Debug/XEngine_ModuleDatabase.lib")
 #pragma comment(lib,"../../Debug/XEngine_ModuleProtocol.lib")
 #pragma comment(lib,"../../Debug/XEngine_ModuleHelp.lib")
+#pragma comment(lib,"../../Debug/XEngine_ModulePlugin.lib")
 #else
 #pragma comment(lib,"../../Release/XEngine_ModuleConfigure.lib")
 #pragma comment(lib,"../../Release/XEngine_ModuleDatabase.lib")
 #pragma comment(lib,"../../Release/XEngine_ModuleProtocol.lib")
 #pragma comment(lib,"../../Release/XEngine_ModuleHelp.lib")
+#pragma comment(lib,"../../Release/XEngine_ModulePlugin.lib")
 #endif
 #endif
 #pragma comment(lib,"XEngine_BaseLib/XEngine_BaseLib.lib")
@@ -112,5 +122,6 @@ extern XENGINE_OPENCCCONFIG st_OPenccConfig;
 #pragma comment(lib,"XEngine_HelpComponents/HelpComponents_XLog.lib")
 #pragma comment(lib,"XEngine_RfcComponents/RfcComponents_HttpServer.lib")
 #pragma comment(lib,"XEngine_NetHelp/NetHelp_APIHelp.lib")
+#pragma comment(lib,"XEngine_SystemSdk/XEngine_SystemApi")
 #pragma comment(lib,"Ws2_32.lib")
 #endif
