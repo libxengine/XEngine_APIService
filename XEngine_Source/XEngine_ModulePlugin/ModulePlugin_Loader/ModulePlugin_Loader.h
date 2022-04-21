@@ -24,6 +24,7 @@ public:
 	~CModulePlugin_Loader();
 public:
 	BOOL ModulePlugin_Loader_Insert(LPCTSTR lpszModuleMethod, LPCTSTR lpszModuleName);
+	BOOL ModulePlugin_Loader_Find(LPCTSTR lpszMethodName);
 	BOOL ModulePlugin_Loader_Exec(LPCTSTR lpszMethodName, LPVOID lAParam, LPVOID lBParam);
 	BOOL ModulePlugin_Loader_Destory();
 protected:

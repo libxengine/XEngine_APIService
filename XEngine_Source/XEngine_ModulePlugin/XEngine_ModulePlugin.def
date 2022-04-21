@@ -9,5 +9,6 @@ EXPORTS
 	ModulePlugin_Core_Destroy
 
 	ModulePlugin_Loader_Insert
+	ModulePlugin_Loader_Find
 	ModulePlugin_Loader_Exec
 	ModulePlugin_Loader_Destory

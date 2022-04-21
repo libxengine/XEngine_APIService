@@ -54,6 +54,10 @@ extern "C" BOOL ModulePlugin_Loader_Insert(LPCTSTR lpszModuleMethod, LPCTSTR lps
 {
 	return m_PluginLoader.ModulePlugin_Loader_Insert(lpszModuleMethod, lpszModuleName);
 }
+extern "C" BOOL ModulePlugin_Loader_Find(LPCTSTR lpszMethodName)
+{
+	return m_PluginLoader.ModulePlugin_Loader_Find(lpszMethodName);
+}
 extern "C" BOOL ModulePlugin_Loader_Exec(LPCTSTR lpszMethodName, LPVOID lAParam, LPVOID lBParam)
 {
 	return m_PluginLoader.ModulePlugin_Loader_Exec(lpszMethodName, lAParam, lBParam);

@@ -65,6 +65,41 @@ BOOL CModulePlugin_Loader::ModulePlugin_Loader_Insert(LPCTSTR lpszModuleMethod, 
     return TRUE;
 }
 /********************************************************************
+函数名称：ModulePlugin_Loader_Find
+函数功能：查找方法是否注册
+ 参数.一：lpszMethodName
+  In/Out：In
+  类型：常量字符指针
+  可空：N
+  意思：输入要执行的方法
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+BOOL CModulePlugin_Loader::ModulePlugin_Loader_Find(LPCTSTR lpszMethodName)
+{
+	ModulePlugin_IsErrorOccur = FALSE;
+
+	if (NULL == lpszMethodName)
+	{
+		ModulePlugin_IsErrorOccur = TRUE;
+		ModulePlugin_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PLUGIN_PARAMENT;
+		return FALSE;
+	}
+	st_Locker.lock_shared();
+	unordered_map<string, PLUGINCORE_LOADER>::const_iterator stl_MapIterator = stl_MapLoader.find(lpszMethodName);
+	if (stl_MapIterator == stl_MapLoader.end())
+	{
+		ModulePlugin_IsErrorOccur = TRUE;
+		ModulePlugin_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PLUGIN_NOTFOUND;
+		st_Locker.unlock_shared();
+		return FALSE;
+	}
+	st_Locker.unlock_shared();
+	return TRUE;
+}
+/********************************************************************
 函数名称：ModulePlugin_Loader_Exec
 函数功能：执行一次插件
  参数.一：lpszMethodName

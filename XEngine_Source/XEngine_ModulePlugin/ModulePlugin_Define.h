@@ -106,6 +106,20 @@ extern "C" BOOL ModulePlugin_Core_Destroy();
 *********************************************************************/
 extern "C" BOOL ModulePlugin_Loader_Insert(LPCTSTR lpszModuleMethod, LPCTSTR lpszModuleName);
 /********************************************************************
+函数名称：ModulePlugin_Loader_Find
+函数功能：查找方法是否注册
+ 参数.一：lpszMethodName
+  In/Out：In
+  类型：常量字符指针
+  可空：N
+  意思：输入要执行的方法
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+extern "C" BOOL ModulePlugin_Loader_Find(LPCTSTR lpszMethodName);
+/********************************************************************
 函数名称：ModulePlugin_Loader_Exec
 函数功能：执行一次插件
  参数.一：lpszMethodName
