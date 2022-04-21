@@ -107,22 +107,37 @@ BOOL CModulePlugin_Loader::ModulePlugin_Loader_Find(LPCTSTR lpszMethodName)
   类型：常量字符指针
   可空：N
   意思：输入要执行的方法
- 参数.二：lAParam
-  In/Out：In/Out
-  类型：无类型指针
-  可空：Y
-  意思：自定义参数
- 参数.三：lAParam
-  In/Out：In/Out
-  类型：无类型指针
-  可空：Y
-  意思：自定义参数
+ 参数.二：pppHDRList
+  In/Out：In
+  类型：三级指针
+  可空：N
+  意思：HTTP请求的URL参数列表
+ 参数.三：nListCount
+  In/Out：In
+  类型：整数型
+  可空：N
+  意思：输入列表个数
+ 参数.四：pInt_HTTPCode
+  In/Out：Out
+  类型：整数型指针
+  可空：N
+  意思：输出返回的HTTPCODE值
+ 参数.五：ptszMsgBuffer
+  In/Out：Out
+  类型：字符指针
+  可空：N
+  意思：输出负载的内容
+ 参数.六：pInt_MsgLen
+  In/Out：Out
+  类型：整数型指针
+  可空：N
+  意思：输出内容大小
 返回值
   类型：逻辑型
   意思：是否成功
 备注：
 *********************************************************************/
-BOOL CModulePlugin_Loader::ModulePlugin_Loader_Exec(LPCTSTR lpszMethodName, LPVOID lAParam, LPVOID lBParam)
+BOOL CModulePlugin_Loader::ModulePlugin_Loader_Exec(LPCTSTR lpszMethodName, TCHAR*** pppHDRList, int nListCount, int* pInt_HTTPCode, TCHAR* ptszMsgBuffer, int* pInt_MsgLen)
 {
 	ModulePlugin_IsErrorOccur = FALSE;
 
@@ -141,7 +156,7 @@ BOOL CModulePlugin_Loader::ModulePlugin_Loader_Exec(LPCTSTR lpszMethodName, LPVO
 		st_Locker.unlock_shared();
 		return FALSE;
 	}
-	if (!ModulePlugin_Core_Exec(stl_MapIterator->second.xhToken, lAParam, lBParam))
+	if (!ModulePlugin_Core_Exec(stl_MapIterator->second.xhToken, pppHDRList, nListCount, pInt_HTTPCode, ptszMsgBuffer, pInt_MsgLen))
 	{
 		ModulePlugin_IsErrorOccur = TRUE;
 		ModulePlugin_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PLUGIN_EXECTION;

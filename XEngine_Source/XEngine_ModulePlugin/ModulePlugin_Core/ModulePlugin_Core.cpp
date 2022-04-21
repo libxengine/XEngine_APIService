@@ -84,67 +84,63 @@ BOOL CModulePlugin_Core::ModulePlugin_Core_Push(XNETHANDLE* pxhModule, LPCTSTR l
 }
 /********************************************************************
 函数名称：ModulePlugin_Core_Exec
-函数功能：执行插件功能
+函数功能：执行一次
  参数.一：xhModule
   In/Out：In
-  类型：插件句柄
-  可空：Y
-  意思：要执行的插件句柄，为空执行全部
- 参数.二：lPAaram
-  In/Out：In/Out
-  类型：无类型指针
-  可空：Y
-  意思：可作为输入输出参数
- 参数.三：lPBaram
-  In/Out：In/Out
-  类型：无类型指针
-  可空：Y
-  意思：可作为输入输出参数
+  类型：句柄
+  可空：N
+  意思：输入模块句柄
+ 参数.二：pppHDRList
+  In/Out：In
+  类型：三级指针
+  可空：N
+  意思：HTTP请求的URL参数列表
+ 参数.三：nListCount
+  In/Out：In
+  类型：整数型
+  可空：N
+  意思：输入列表个数
+ 参数.四：pInt_HTTPCode
+  In/Out：Out
+  类型：整数型指针
+  可空：N
+  意思：输出返回的HTTPCODE值
+ 参数.五：ptszMsgBuffer
+  In/Out：Out
+  类型：字符指针
+  可空：N
+  意思：输出负载的内容
+ 参数.六：pInt_MsgLen
+  In/Out：Out
+  类型：整数型指针
+  可空：N
+  意思：输出内容大小
 返回值
   类型：逻辑型
-  意思：是否执行成功
-备注：参数要么传递NULL，要么传递值，由用户来判断参数是否可用
+  意思：是否成功
+备注：
 *********************************************************************/
-BOOL CModulePlugin_Core::ModulePlugin_Core_Exec(XNETHANDLE xhModule, LPVOID lPAaram, LPVOID lPBaram)
+BOOL CModulePlugin_Core::ModulePlugin_Core_Exec(XNETHANDLE xhModule, TCHAR*** pppHDRList, int nListCount, int* pInt_HTTPCode, TCHAR* ptszMsgBuffer, int* pInt_MsgLen)
 {
     ModulePlugin_IsErrorOccur = FALSE;
 
     st_csStl.lock_shared();
-    //判断是否是全部执行
-    if (0 == xhModule)
-    {
-        //全部执行一遍
-        unordered_map<XNETHANDLE, PLUGINCORE_FRAMEWORK>::const_iterator stl_MapIterator = stl_MapFrameWork.begin();
-        for (; stl_MapIterator != stl_MapFrameWork.end(); stl_MapIterator++)
-        {
-            if (!stl_MapIterator->second.fpCall_PluginCore_Call(lPAaram, lPBaram))
-            {
-                ModulePlugin_IsErrorOccur = TRUE;
-                ModulePlugin_dwErrorCode = stl_MapIterator->second.fpCall_PluginCore_GetLastError();
-                st_csStl.unlock_shared();
-                return FALSE;
-            }
-        }
-    }
-    else
-    {
-        //执行指定插件函数
-        unordered_map<XNETHANDLE, PLUGINCORE_FRAMEWORK>::const_iterator stl_MapIterator = stl_MapFrameWork.find(xhModule);
-        if (stl_MapIterator == stl_MapFrameWork.end())
-        {
-            ModulePlugin_IsErrorOccur = TRUE;
-            ModulePlugin_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PLUGIN_NOTFOUND;
-            st_csStl.unlock_shared();
-            return FALSE;
-        }
-        if (!stl_MapIterator->second.fpCall_PluginCore_Call(lPAaram, lPBaram))
-        {
-            ModulePlugin_IsErrorOccur = TRUE;
-            ModulePlugin_dwErrorCode = stl_MapIterator->second.fpCall_PluginCore_GetLastError();
-            st_csStl.unlock_shared();
-            return FALSE;
-        }
-    }
+	//执行指定插件函数
+	unordered_map<XNETHANDLE, PLUGINCORE_FRAMEWORK>::const_iterator stl_MapIterator = stl_MapFrameWork.find(xhModule);
+	if (stl_MapIterator == stl_MapFrameWork.end())
+	{
+		ModulePlugin_IsErrorOccur = TRUE;
+		ModulePlugin_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PLUGIN_NOTFOUND;
+		st_csStl.unlock_shared();
+		return FALSE;
+	}
+    if (!stl_MapIterator->second.fpCall_PluginCore_Call(pppHDRList, nListCount, pInt_HTTPCode, ptszMsgBuffer, pInt_MsgLen))
+	{
+		ModulePlugin_IsErrorOccur = TRUE;
+		ModulePlugin_dwErrorCode = stl_MapIterator->second.fpCall_PluginCore_GetLastError();
+		st_csStl.unlock_shared();
+		return FALSE;
+	}
     st_csStl.unlock_shared();
 
     return TRUE;

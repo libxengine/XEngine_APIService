@@ -1,4 +1,4 @@
-LIBRARY
+﻿LIBRARY
 
 EXPORTS
 	ModulePlugin_GetLastError

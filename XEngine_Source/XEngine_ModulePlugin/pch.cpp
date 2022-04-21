@@ -39,9 +39,9 @@ extern "C" BOOL ModulePlugin_Core_Push(XNETHANDLE * pxhModule, LPCTSTR lpszPlugi
 {
 	return m_PluginCore.ModulePlugin_Core_Push(pxhModule, lpszPluginFile, lParam);
 }
-extern "C" BOOL ModulePlugin_Core_Exec(XNETHANDLE xhModule, LPVOID lPAaram, LPVOID lPBaram)
+extern "C" BOOL ModulePlugin_Core_Exec(XNETHANDLE xhModule, TCHAR * **pppHDRList, int nListCount, int* pInt_HTTPCode, TCHAR * ptszMsgBuffer, int* pInt_MsgLen)
 {
-	return m_PluginCore.ModulePlugin_Core_Exec(xhModule, lPAaram, lPBaram);
+	return m_PluginCore.ModulePlugin_Core_Exec(xhModule, pppHDRList, nListCount, pInt_HTTPCode, ptszMsgBuffer, pInt_MsgLen);
 }
 extern "C" BOOL ModulePlugin_Core_Destroy()
 {
@@ -58,9 +58,9 @@ extern "C" BOOL ModulePlugin_Loader_Find(LPCTSTR lpszMethodName)
 {
 	return m_PluginLoader.ModulePlugin_Loader_Find(lpszMethodName);
 }
-extern "C" BOOL ModulePlugin_Loader_Exec(LPCTSTR lpszMethodName, LPVOID lAParam, LPVOID lBParam)
+extern "C" BOOL ModulePlugin_Loader_Exec(LPCTSTR lpszMethodName, TCHAR * **pppHDRList, int nListCount, int* pInt_HTTPCode, TCHAR * ptszMsgBuffer, int* pInt_MsgLen)
 {
-	return m_PluginLoader.ModulePlugin_Loader_Exec(lpszMethodName, lAParam, lBParam);
+	return m_PluginLoader.ModulePlugin_Loader_Exec(lpszMethodName, pppHDRList, nListCount, pInt_HTTPCode, ptszMsgBuffer, pInt_MsgLen);
 }
 extern "C" BOOL ModulePlugin_Loader_Destory()
 {

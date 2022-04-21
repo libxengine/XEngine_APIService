@@ -25,7 +25,7 @@ public:
 public:
 	BOOL ModulePlugin_Loader_Insert(LPCTSTR lpszModuleMethod, LPCTSTR lpszModuleName);
 	BOOL ModulePlugin_Loader_Find(LPCTSTR lpszMethodName);
-	BOOL ModulePlugin_Loader_Exec(LPCTSTR lpszMethodName, LPVOID lAParam, LPVOID lBParam);
+	BOOL ModulePlugin_Loader_Exec(LPCTSTR lpszMethodName, TCHAR*** pppHDRList, int nListCount, int* pInt_HTTPCode, TCHAR* ptszMsgBuffer, int* pInt_MsgLen);
 	BOOL ModulePlugin_Loader_Destory();
 protected:
 private:

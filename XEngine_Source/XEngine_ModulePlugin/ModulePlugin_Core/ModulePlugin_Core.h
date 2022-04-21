@@ -12,7 +12,7 @@
 *********************************************************************/
 typedef BOOL(*FPCall_PluginCore_Init)(LPVOID lParam);
 typedef BOOL(*FPCall_PluginCore_UnInit)();
-typedef BOOL(*FPCall_PluginCore_Call)(LPVOID lPAaram, LPVOID lPBaram);
+typedef BOOL(*FPCall_PluginCore_Call)(TCHAR*** pppHDRList, int nListCount, int* pInt_HTTPCode, TCHAR* ptszMsgBuffer, int* pInt_MsgLen);
 typedef DWORD(*FPCall_PluginCore_GetLastError)();
 
 typedef struct 
@@ -22,7 +22,7 @@ typedef struct
 
 	BOOL(*fpCall_PluginCore_Init)(LPVOID lParam);
 	BOOL(*fpCall_PluginCore_UnInit)();
-	BOOL(*fpCall_PluginCore_Call)(LPVOID lPAaram, LPVOID lPBaram);
+	BOOL(*fpCall_PluginCore_Call)(TCHAR*** pppHDRList, int nListCount, int* pInt_HTTPCode, TCHAR* ptszMsgBuffer, int* pInt_MsgLen);
 	DWORD(*fpCall_PluginCore_GetLastError)();
 }PLUGINCORE_FRAMEWORK, * LPPLUGINCORE_FRAMEWORK;
 
@@ -34,7 +34,7 @@ public:
 public:
 	BOOL ModulePlugin_Core_Init();
 	BOOL ModulePlugin_Core_Push(XNETHANDLE* pxhModule, LPCTSTR lpszPluginFile, LPVOID lParam = NULL);
-	BOOL ModulePlugin_Core_Exec(XNETHANDLE xhModule = 0, LPVOID lPAaram = NULL, LPVOID lPBaram = NULL);
+	BOOL ModulePlugin_Core_Exec(XNETHANDLE xhModule, TCHAR*** pppHDRList, int nListCount, int* pInt_HTTPCode, TCHAR* ptszMsgBuffer, int* pInt_MsgLen);
 	BOOL ModulePlugin_Core_Destroy();
 protected:
 	BOOL ModulePlugin_Core_Add(XNETHANDLE xhNet, LPCTSTR lpszPluginFile, LPVOID lParam = NULL);
