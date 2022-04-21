@@ -305,14 +305,15 @@ BOOL CModuleConfigure_Json::ModuleConfigure_Json_PluginFile(LPCTSTR lpszConfigFi
 		return FALSE;
 	}
 	//解析列表
+	Json::Value st_JsonArray = st_JsonRoot["PluginArray"];
 	for (int i = 0; i < st_JsonRoot["PluginCount"].asInt(); i++)
 	{
 		XENGINE_PLUGININFO st_PluginInfo;
 		memset(&st_PluginInfo, '\0', sizeof(XENGINE_PLUGININFO));
 
-		st_PluginInfo.bEnable = st_JsonRoot["PluginArray"][i].asBool();
-		_tcscpy(st_PluginInfo.tszPluginName, st_JsonRoot["PluginName"][i].asCString());
-		_tcscpy(st_PluginInfo.tszPluginMethod, st_JsonRoot["PluginMethod"][i].asCString());
+		st_PluginInfo.bEnable = st_JsonArray[i]["PluginEnable"].asBool();
+		_tcscpy(st_PluginInfo.tszPluginName, st_JsonArray[i]["PluginName"].asCString());
+		_tcscpy(st_PluginInfo.tszPluginMethod, st_JsonArray[i]["PluginMethod"].asCString());
 		pSt_PluginConfig->pStl_ListPlugin->push_back(st_PluginInfo);
 	}
 	return TRUE;
