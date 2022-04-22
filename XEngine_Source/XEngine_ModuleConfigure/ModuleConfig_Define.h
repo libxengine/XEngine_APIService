@@ -81,7 +81,7 @@ typedef struct
 {
 	BOOL bEnable;
 	TCHAR tszPluginMethod[MAX_PATH];
-	TCHAR tszPluginName[MAX_PATH];
+	TCHAR tszPluginFile[MAX_PATH];
 }XENGINE_PLUGININFO;
 typedef struct
 {
