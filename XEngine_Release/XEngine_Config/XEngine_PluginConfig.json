@@ -1,0 +1,14 @@
+{
+    "PluginArray":[
+        {
+            "PluginEnable":true,
+            "PluginMethod":"zodiac",
+            "PluginFile":"./XEngine_Plugin/ModulePlugin_Zodiac.dll"
+        },
+        {
+            "PluginEnable":true,
+            "PluginMethod":"pass",
+            "PluginFile":"./XEngine_Plugin/ModulePlugin_Password.dll"
+        }
+    ]
+}
