@@ -10,11 +10,17 @@ MODULE_CONFIGURE_PATH = ./XEngine_ModuleConfigure
 MODULE_DATABASE_PATH = ./XEngine_ModuleDatabase
 MODULE_PROTOCOL_PATH = ./XEngine_ModuleProtocol
 MODULE_HELP_PATH = ./XEngine_ModuleHelp
+MODULE_PLUGIN_PATH = ./XEngine_ModulePlugin
+
+PLUGIN_MODULE_ZODIAC = ./XEngine_PluginModule/ModulePlugin_Zodiac
+PLUGIN_MODULE_PASSWORD = ./XEngine_PluginModule/ModulePlugin_Password
+
 APP_CENTER_PATH = ./XEngine_ServiceApp/XEngine_CenterApp
 APP_HTTP_PATH = ./XEngine_ServiceApp/XEngine_HttpApp
 
 XENGINE_MODULES = libjsoncpp.so libopencc.so                                  \
-                  libXEngine_ModuleConfigure.so libXEngine_ModuleDatabase.so libXEngine_ModuleProtocol.so libXEngine_ModuleHelp.so                \
+                  libXEngine_ModuleConfigure.so libXEngine_ModuleDatabase.so libXEngine_ModuleProtocol.so libXEngine_ModuleHelp.so libXEngine_ModulePlugin.so  \
+				  libModulePlugin_Zodiac.so libModulePlugin_Password.so \
 		   XEngine_HttpApp.exe
 
 .PHONY:MakeAll 
@@ -33,6 +39,13 @@ libXEngine_ModuleProtocol.so:
 	make -C $(MODULE_PROTOCOL_PATH) $(FLAGS)
 libXEngine_ModuleHelp.so:
 	make -C $(MODULE_HELP_PATH) $(FLAGS)
+libXEngine_ModulePlugin.so:
+	make -C $(MODULE_PLUGIN_PATH) $(FLAGS)
+
+libModulePlugin_Zodiac.so:
+	make -C $(PLUGIN_MODULE_ZODIAC) $(FLAGS)
+libModulePlugin_Password.so:
+	make -C $(PLUGIN_MODULE_PASSWORD) $(FLAGS)
 
 XEngine_HttpApp.exe:
 	make -C $(APP_HTTP_PATH) $(FLAGS)
