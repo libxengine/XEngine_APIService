@@ -25,7 +25,12 @@
         "tszBankUrl":"https://ccdcapi.alipay.com/validateAndCacheCardInfo.json?cardNo=%s&cardBinCheck=true",
         "tszTranslationUrl":"http://fanyi.youdao.com/translate?&doctype=json&type=%s&i=%s"
     },
+    "XPlugin":{
+        "bEnable":true,
+        "tszPluginFile":"./XEngine_Config/XEngine_PluginConfig.json"
+    },
     "XVer":[
+        "2.1.0.1001 Build20220429",
         "1.1.0.1001 Build20220402",
         "1.0.0.1001 Build20220311"
     ]
