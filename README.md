@@ -8,7 +8,9 @@ c c++ interface api service
 这是一个信息查询的API接口服务,目前市面上的信息查询服务都需要收费,而我们这个信息查询服务属于免费开源的.  
 这个服务主要使用HTTP/V1.1实现各种接口服务.  
 这是一个不包含任何语言属性的通用信息查询服务.  
+你可以使用此代码实现自己的信息查询服务,支持查询任何信息  
 基于libXEngine开发并实现的一套简洁高性能跨平台接口服务  
+并且支持模块插件  
 
 ## 软件特性
 1. 支持JSON和字符串流方式返回查询的内容
@@ -19,14 +21,14 @@ c c++ interface api service
 6. 农历公历转换(计划中)
 7. 新闻头条(计划中)
 8. 标准身高体重(计划中)
-9. 生肖星座(计划中)
-10. 密码生成器(计划中)
+9. 生肖星座
+10. 密码生成器
 11. 世界时区(计划中)
 12. 油价查询(计划中)
 13. 行政邮编(计划中)
 14. 银行卡验证
 15. 汇率计算(计划中)
-16. 二维码生成(计划中)
+16. 二维码生成解析(计划中)
 17. 简繁转换
 18. 油价查询(计划中)
 19. 二十四节气(计划中)
@@ -55,6 +57,10 @@ make 编译
 make FLAGS=InstallAll 安装库程序  
 make FLAGS=CleanAll 清理编译  
 
+#### 插件使用
+你可以参考XEngine_PluginModule 下面的项目来编写插件  
+编写好的插件需要通过JSON配置才能启用  
+
 #### 使用说明
 
 1.  切换到MASTER分支
@@ -72,13 +78,13 @@ make FLAGS=CleanAll 清理编译
 
 ## 当前任务
 
-
 ## 其他问题  
 你可以参考docment目录下的文档.里面包含了API协议和服务说明.
 
 ## 测试服务器
 地址:app.xyry.org,端口:5501  
 #### 测试接口示例
+更多内容请参考文档  
 手机信息查询  
 接口:http://app.xyry.org:5501/api?function=phone&params1=13699439999&params2=0  
 ```json
@@ -134,7 +140,7 @@ IP地址查询
     "msg":"success"
 }
 ```
-银行卡验证
+银行卡验证  
 接口:http://app.xyry.org:5501/api?function=bank&params1=6214832830000000&params2=0
 ```json
 {
@@ -148,7 +154,7 @@ IP地址查询
     "msg":"success"
 }
 ```
-语言转换
+语言转换  
 接口:http://app.xyry.org:5501/api?function=language&params1=简体到繁体&params2=0&params3=1
 ```json
 {
@@ -161,7 +167,7 @@ IP地址查询
     "msg":"success"
 }
 ```
-翻译
+翻译  
 接口:http://app.xyry.org:5501/api?function=translation&params1=中国&params2=0&params3=0
 ```json
 {

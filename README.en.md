@@ -8,7 +8,9 @@ c c++ interface api service
 This is an api interface for information query service,At present, the information search service on the market need to charge, and our information search service is free and open source.  
 This service mainly uses HTTP/V1.1 to implement various interface services  
 This is a general information query service that does not contain any language attributes
+You can use this code to implement your own information query service, which supports querying any information  
 The purpose of development and implementation based on libXEngine is a cross-platform network storage service  
+and support plugin module
 
 ## Software feature
 1. support json and string stream methods to return the content of the query
@@ -19,14 +21,14 @@ The purpose of development and implementation based on libXEngine is a cross-pla
 6. Lunar calendar conversion (planning)
 7. News headlines (planned)
 8. Standard height and weight (planned)
-9. Zodiac Constellation (planned)
-10. Password generator (planned)
+9. Zodiac Constellation
+10. Password generator
 11. World Time Zones (planned)
 12. Oil price inquiry (planned)
 13. Administrative zip code (planned)
 14. Bank card verification
 15. Exchange rate calculation (planned)
-16. QR code generation (planned)
+16. QR code generation and parse (planned)
 17. Simplified and Traditional Conversion
 18. Oil price inquiry (planned)
 19. Twenty-four solar terms (planned)
@@ -70,6 +72,10 @@ make FLAGS=CleanAll clear
 - XEngine_Source    code    directory  
 - XEngine_APPClient client  code dir  
 
+## Plugin description
+You can refer to the project under XEngine_PluginModule to write the plugin  
+The written plugin needs to be configured via JSON to be enabled  
+
 ## now task
 
 
@@ -79,6 +85,7 @@ You can refer to the document under the docment directory. It contains API proto
 ## Test Service
 Address:app.xyry.org,Port:5501  
 #### example
+For more information please refer to the documentation  
 phone information query  
 api:http://app.xyry.org:5501/api?function=phone&params1=13699439999&params2=0  
 ```json
@@ -134,7 +141,7 @@ api:http://app.xyry.org:5501/api?function=id&params1=511025198800000000&params2=
     "msg":"success"
 }
 ```
-bank card ver
+bank card ver  
 api:http://app.xyry.org:5501/api?function=bank&params1=6214832830000000&params2=0
 ```json
 {
@@ -148,7 +155,7 @@ api:http://app.xyry.org:5501/api?function=bank&params1=6214832830000000&params2=
     "msg":"success"
 }
 ```
-language
+language  
 api:http://app.xyry.org:5501/api?function=language&params1=简体到繁体&params2=0&params3=1
 ```json
 {
@@ -161,7 +168,7 @@ api:http://app.xyry.org:5501/api?function=language&params1=简体到繁体&param
     "msg":"success"
 }
 ```
-translation
+translation  
 api:http://app.xyry.org:5501/api?function=translation&params1=中国&params2=0&params3=0
 ```json
 {
