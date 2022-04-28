@@ -76,7 +76,7 @@ BOOL XEngine_HTTPTask_Handle(RFCCOMPONENTS_HTTP_REQPARAM* pSt_HTTPParam, LPCTSTR
 		memset(tszUrlName, '\0', sizeof(tszUrlName));
 		//得到URL参数个数
 		RfcComponents_HttpHelp_GetParament(pSt_HTTPParam->tszHttpUri, &pptszList, &nListCount, tszUrlName);
-		if (nListCount < 3)
+		if (nListCount < 1)
 		{
 			st_HDRParam.nHttpCode = 404;
 			RfcComponents_HttpServer_SendMsgEx(xhHTTPPacket, tszMsgBuffer, &nMsgLen, &st_HDRParam);
