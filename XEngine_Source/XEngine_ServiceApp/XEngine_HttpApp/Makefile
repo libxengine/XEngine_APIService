@@ -2,14 +2,14 @@ CC = g++ -Wall
 RELEASE = 0
 UNICODE = 0  
 LOADBIN = -L /usr/local/lib/XEngine_Release/XEngine_BaseLib -L /usr/local/lib/XEngine_Release/XEngine_Core -L /usr/local/lib/XEngine_Release/XEngine_HelpComponents -L /usr/local/lib/XEngine_Release/XEngine_RfcComponents -L /usr/local/lib/XEngine_Release/XEngine_NetHelp  \
-          -L ../../XEngine_ModuleConfigure -L ../../XEngine_ModuleDatabase -L ../../XEngine_ModuleProtocol -L ../../XEngine_ModuleHelp \
+          -L ../../XEngine_ModuleConfigure -L ../../XEngine_ModuleDatabase -L ../../XEngine_ModuleProtocol -L ../../XEngine_ModuleHelp -L ../../XEngine_ModulePlugin   \
 		  -L ../../XEngine_ThirdPart/jsoncpp -L ../../XEngine_ThirdPart/opencc/ubuntu
 LIB = -lXEngine_BaseLib -lXEngine_Algorithm -lXEngine_Core -lXEngine_ManagePool -lXEngine_OPenSsl -lHelpComponents_XLog -lRfcComponents_HttpServer -lNetHelp_APIHelp \
-	  -lXEngine_ModuleConfigure -lXEngine_ModuleDatabase -lXEngine_ModuleProtocol -lXEngine_ModuleHelp                           \
+	  -lXEngine_ModuleConfigure -lXEngine_ModuleDatabase -lXEngine_ModuleProtocol -lXEngine_ModuleHelp -lXEngine_ModulePlugin                          \
 	  -ljsoncpp -lopencc 
 LIBEX = -static-libgcc -ldl -lrt -lpthread
 LOADSO = -Wl,-rpath=./,--disable-new-dtags
-LIBINCLUDE = XEngine_Configure.o XEngine_Network.o XEngine_HTTPTask.o XEngine_HttpApp.o        \
+LIBINCLUDE = XEngine_Configure.o XEngine_Network.o XEngine_HTTPTask.o XEngine_PluginTask.o XEngine_HttpApp.o        \
              HTTPTask_IPInfo.o HTTPTask_IDCard.o HTTPTask_Phone.o HTTPTask_Bank.o HTTPTask_Language.o HTTPTask_Translation.o
 
 ifeq ($(RELEASE),1)
@@ -35,6 +35,8 @@ XEngine_Network.o:./XEngine_Network.cpp
 	$(CC) $(DEBUG) $(FLAGS) $(UNICODE) ./XEngine_Network.cpp 
 XEngine_HTTPTask.o:./XEngine_HTTPTask.cpp
 	$(CC) $(DEBUG) $(FLAGS) $(UNICODE) ./XEngine_HTTPTask.cpp
+XEngine_PluginTask.o:./XEngine_PluginTask.cpp
+	$(CC) $(DEBUG) $(FLAGS) $(UNICODE) ./XEngine_PluginTask.cpp
 
 HTTPTask_IPInfo.o:./XEngine_HTTPTask/HTTPTask_IPInfo.cpp
 	$(CC) $(DEBUG) $(FLAGS) $(UNICODE) ./XEngine_HTTPTask/HTTPTask_IPInfo.cpp

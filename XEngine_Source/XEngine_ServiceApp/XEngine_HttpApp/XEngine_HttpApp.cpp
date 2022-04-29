@@ -20,6 +20,7 @@ XHANDLE xhHTTPPacket = NULL;
 //配置文件
 XENGINE_SERVICECONFIG st_ServiceConfig;
 XENGINE_OPENCCCONFIG st_OPenccConfig;
+XENGINE_PLUGINCONFIG st_PluginConfig;
 
 void ServiceApp_Stop(int signo)
 {
@@ -39,6 +40,7 @@ void ServiceApp_Stop(int signo)
 		ModuleDatabase_Bank_Destory();
 		//销毁日志资源
 		HelpComponents_XLog_Destroy(xhLog);
+		ModulePlugin_Core_Destroy();
 	}
 #ifdef _WINDOWS
 	WSACleanup();
@@ -92,6 +94,7 @@ int main(int argc, char** argv)
 	memset(&st_XLogConfig, '\0', sizeof(HELPCOMPONENTS_XLOG_CONFIGURE));
 	memset(&st_ServiceConfig, '\0', sizeof(XENGINE_SERVICECONFIG));
 	memset(&st_OPenccConfig, '\0', sizeof(XENGINE_OPENCCCONFIG));
+	memset(&st_PluginConfig, '\0', sizeof(XENGINE_PLUGINCONFIG));
 
 	st_XLogConfig.XLog_MaxBackupFile = 10;
 	st_XLogConfig.XLog_MaxSize = 1024000;
@@ -129,6 +132,20 @@ int main(int argc, char** argv)
 		goto XENGINE_SERVICEAPP_EXIT;
 	}
 	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _T("启动服务中,初始化OPenCC配置文件成功"));
+	//初始化插件配置
+	if (st_ServiceConfig.st_XPlugin.bEnable)
+	{
+		if (!ModuleConfigure_Json_PluginFile(st_ServiceConfig.st_XPlugin.tszPluginFile, &st_PluginConfig))
+		{
+			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _T("启动服务中,初始化插件配置文件失败,错误：%lX"), ModuleConfigure_GetLastError());
+			goto XENGINE_SERVICEAPP_EXIT;
+		}
+		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _T("启动服务中,初始化插件配置文件成功"));
+	}
+	else
+	{
+		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_WARN, _T("启动服务中,插件系统被禁用"));
+	}
 	//初始化数据库
 	if (!ModuleDatabase_IPInfo_Init(st_ServiceConfig.st_XApi.tszIPData))
 	{
@@ -209,12 +226,43 @@ int main(int argc, char** argv)
 	{
 		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_WARN, _T("启动服务中,HTTP消息服务没有被启用"));
 	}
+	//启动插件
+	if (!ModulePlugin_Core_Init())
+	{
+		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _T("启动服务中,初始化插件系统失败,错误：%lX"), ModulePlugin_GetLastError());
+		goto XENGINE_SERVICEAPP_EXIT;
+	}
+	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _T("启动服务中,初始化插件系统成功"));
+	//加载插件
+	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _T("启动服务中,开始加载插件,总共:%d 插件"), st_PluginConfig.pStl_ListPlugin->size());
+	{
+		list<XENGINE_PLUGININFO>::const_iterator stl_ListIterator = st_PluginConfig.pStl_ListPlugin->begin();
+		for (int i = 1; stl_ListIterator != st_PluginConfig.pStl_ListPlugin->end(); stl_ListIterator++, i++)
+		{
+			if (stl_ListIterator->bEnable)
+			{
+				if (ModulePlugin_Loader_Insert(stl_ListIterator->tszPluginMethod, stl_ListIterator->tszPluginFile))
+				{
+					XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _T("启动服务中,加载插件中,当前第:%d 个加载成功,方法:%s,路径:%s"), i, stl_ListIterator->tszPluginMethod, stl_ListIterator->tszPluginFile);
+				}
+				else
+				{
+					XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _T("启动服务中,加载插件中,当前第:%d 个加载失败,方法:%s,路径:%s,错误:%ld"), i, stl_ListIterator->tszPluginMethod, stl_ListIterator->tszPluginFile, ModulePlugin_GetLastError());
+				}
+			}
+			else
+			{
+				XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_WARN, _T("启动服务中,加载插件中,当前第:%d 个加载失败,因为没有启用,方法:%s,路径:%s"), i, stl_ListIterator->tszPluginMethod, stl_ListIterator->tszPluginFile);
+			}
+		}
+	}
 
 	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _T("所有服务成功启动，服务运行中，发行版本次数:%d,当前版本：%s。。。"), st_ServiceConfig.st_XVer.pStl_ListVer->size(), st_ServiceConfig.st_XVer.pStl_ListVer->front().c_str());
 	while (bIsRun)
 	{
 		std::this_thread::sleep_for(std::chrono::seconds(1));
 	}
+
 XENGINE_SERVICEAPP_EXIT:
 	if (bIsRun)
 	{
@@ -232,6 +280,7 @@ XENGINE_SERVICEAPP_EXIT:
 		ModuleDatabase_Bank_Destory();
 		//销毁日志资源
 		HelpComponents_XLog_Destroy(xhLog);
+		ModulePlugin_Core_Destroy();
 	}
 #ifdef _WINDOWS
 	WSACleanup();
