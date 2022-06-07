@@ -88,14 +88,14 @@ BOOL XEngine_HTTPTask_Handle(RFCCOMPONENTS_HTTP_REQPARAM* pSt_HTTPParam, LPCTSTR
 		TCHAR tszKey[128];
 		TCHAR tszValue[128];
 		LPCTSTR lpszFuncName = _T("api");
-		LPCTSTR lpszParamFunc1 = _T("function");
-		LPCTSTR lpszParamFunc2 = _T("params1");
-		LPCTSTR lpszParamValue1 = _T("ip");
-		LPCTSTR lpszParamValue2 = _T("id");
-		LPCTSTR lpszParamValue3 = _T("phone");
-		LPCTSTR lpszParamValue4 = _T("bank");
-		LPCTSTR lpszParamValue5 = _T("language");
-		LPCTSTR lpszParamValue6 = _T("translation");
+		LPCTSTR lpszParamFuncKey = _T("function");
+		LPCTSTR lpszParamName = _T("params1");
+		LPCTSTR lpszParamIPAddr = _T("ip");
+		LPCTSTR lpszParamIDCard = _T("id");
+		LPCTSTR lpszParamPhone = _T("phone");
+		LPCTSTR lpszParamBank = _T("bank");
+		LPCTSTR lpszParamLanguage = _T("language");
+		LPCTSTR lpszParamTranslation = _T("translation");
 
 		memset(tszKey, '\0', sizeof(tszKey));
 		memset(tszValue, '\0', sizeof(tszValue));
@@ -111,7 +111,7 @@ BOOL XEngine_HTTPTask_Handle(RFCCOMPONENTS_HTTP_REQPARAM* pSt_HTTPParam, LPCTSTR
 		}
 		//获得函数名
 		BaseLib_OperatorString_GetKeyValue(pptszList[0], "=", tszKey, tszValue);
-		if (0 != _tcsnicmp(lpszParamFunc1, tszKey, _tcslen(lpszParamFunc1)))
+		if (0 != _tcsnicmp(lpszParamFuncKey, tszKey, _tcslen(lpszParamFuncKey)))
 		{
 			st_HDRParam.nHttpCode = 404;
 			RfcComponents_HttpServer_SendMsgEx(xhHTTPPacket, tszMsgBuffer, &nMsgLen, &st_HDRParam);
@@ -127,7 +127,7 @@ BOOL XEngine_HTTPTask_Handle(RFCCOMPONENTS_HTTP_REQPARAM* pSt_HTTPParam, LPCTSTR
 			return TRUE;
 		}
 		//是不是ip查询
-		if (0 == _tcsnicmp(lpszParamValue1, tszValue, _tcslen(lpszParamValue1)))
+		if (0 == _tcsnicmp(lpszParamIPAddr, tszValue, _tcslen(lpszParamIPAddr)))
 		{
 			memset(tszKey, '\0', sizeof(tszKey));
 			memset(tszValue, '\0', sizeof(tszValue));
@@ -149,7 +149,7 @@ BOOL XEngine_HTTPTask_Handle(RFCCOMPONENTS_HTTP_REQPARAM* pSt_HTTPParam, LPCTSTR
 			BaseLib_OperatorString_GetKeyValue(pptszList[2], "=", tszKey, tszGetType);
 			XEngine_HTTPTask_IPInfo(lpszClientAddr, tszValue, _ttoi(tszGetType));
 		}
-		else if (0 == _tcsnicmp(lpszParamValue2, tszValue, _tcslen(lpszParamValue2)))
+		else if (0 == _tcsnicmp(lpszParamIDCard, tszValue, _tcslen(lpszParamIDCard)))
 		{
 			//是不是身份证查询
 			memset(tszKey, '\0', sizeof(tszKey));
@@ -172,7 +172,7 @@ BOOL XEngine_HTTPTask_Handle(RFCCOMPONENTS_HTTP_REQPARAM* pSt_HTTPParam, LPCTSTR
 			BaseLib_OperatorString_GetKeyValue(pptszList[2], "=", tszKey, tszGetType);
 			XEngine_HTTPTask_IDCard(lpszClientAddr, tszValue, _ttoi(tszGetType));
 		}
-		else if (0 == _tcsnicmp(lpszParamValue3, tszValue, _tcslen(lpszParamValue3)))
+		else if (0 == _tcsnicmp(lpszParamPhone, tszValue, _tcslen(lpszParamPhone)))
 		{
 			//是不是电话号码查询
 			memset(tszKey, '\0', sizeof(tszKey));
@@ -195,7 +195,7 @@ BOOL XEngine_HTTPTask_Handle(RFCCOMPONENTS_HTTP_REQPARAM* pSt_HTTPParam, LPCTSTR
 			BaseLib_OperatorString_GetKeyValue(pptszList[2], "=", tszKey, tszGetType);
 			XEngine_HTTPTask_PhoneInfo(lpszClientAddr, tszValue, _ttoi(tszGetType));
 		}
-		else if (0 == _tcsnicmp(lpszParamValue4, tszValue, _tcslen(lpszParamValue4)))
+		else if (0 == _tcsnicmp(lpszParamBank, tszValue, _tcslen(lpszParamBank)))
 		{
 			//是不是银行卡信息
 			memset(tszKey, '\0', sizeof(tszKey));
@@ -218,7 +218,7 @@ BOOL XEngine_HTTPTask_Handle(RFCCOMPONENTS_HTTP_REQPARAM* pSt_HTTPParam, LPCTSTR
 			BaseLib_OperatorString_GetKeyValue(pptszList[2], "=", tszKey, tszGetType);
 			XEngine_HTTPTask_BankInfo(lpszClientAddr, tszValue, _ttoi(tszGetType));
 		}
-		else if (0 == _tcsnicmp(lpszParamValue5, tszValue, _tcslen(lpszParamValue5)))
+		else if (0 == _tcsnicmp(lpszParamLanguage, tszValue, _tcslen(lpszParamLanguage)))
 		{
 			//是不是语言转换
 			TCHAR tszCvtType[64];
@@ -245,7 +245,7 @@ BOOL XEngine_HTTPTask_Handle(RFCCOMPONENTS_HTTP_REQPARAM* pSt_HTTPParam, LPCTSTR
 			BaseLib_OperatorString_GetKeyValue(pptszList[3], "=", tszKey, tszCvtType);
 			XEngine_HTTPTask_Language(lpszClientAddr, tszValue, _ttoi(tszGetType), _ttoi(tszCvtType));
 		}
-		else if (0 == _tcsnicmp(lpszParamValue6, tszValue, _tcslen(lpszParamValue6)))
+		else if (0 == _tcsnicmp(lpszParamTranslation, tszValue, _tcslen(lpszParamTranslation)))
 		{
 			//是不是翻译
 			TCHAR tszCvtType[64];
