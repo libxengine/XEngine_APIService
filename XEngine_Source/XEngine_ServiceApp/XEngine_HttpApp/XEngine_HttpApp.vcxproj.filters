@@ -54,9 +54,6 @@
     <ClCompile Include="XEngine_PluginTask.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="XEngine_HTTPTask\HTTPTask_Forward.cpp">
-      <Filter>源文件\XEngine_HTTPTask</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="XEngine_Configure.h">
@@ -91,9 +88,6 @@
     </ClInclude>
     <ClInclude Include="XEngine_PluginTask.h">
       <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="XEngine_HTTPTask\HTTPTask_Forward.h">
-      <Filter>头文件\XEngine_HTTPTask</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

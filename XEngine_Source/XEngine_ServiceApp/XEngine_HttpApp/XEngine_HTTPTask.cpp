@@ -273,36 +273,6 @@ BOOL XEngine_HTTPTask_Handle(RFCCOMPONENTS_HTTP_REQPARAM* pSt_HTTPParam, LPCTSTR
 			BaseLib_OperatorString_GetKeyValue(pptszList[3], "=", tszKey, tszCvtType);
 			XEngine_HTTPTask_Translation(lpszClientAddr, tszValue, _ttoi(tszGetType), _ttoi(tszCvtType));;
 		}
-		else if (0 == _tcsnicmp(lpszParamForward, tszValue, _tcslen(lpszParamForward)))
-		{
-			//数据转发接口
-			TCHAR tszSrcAddr[128];
-			TCHAR tszDstAddr[128];
-
-			memset(tszKey, '\0', sizeof(tszKey));
-			memset(tszValue, '\0', sizeof(tszValue));
-			memset(tszSrcAddr, '\0', sizeof(tszSrcAddr));
-			memset(tszDstAddr, '\0', sizeof(tszDstAddr));
-
-			BaseLib_OperatorString_GetKeyValue(pptszList[1], "=", tszKey, tszValue);
-			if (0 != _tcsnicmp(lpszParamName, tszKey, _tcslen(lpszParamName)))
-			{
-				st_HDRParam.nHttpCode = 404;
-				RfcComponents_HttpServer_SendMsgEx(xhHTTPPacket, tszMsgBuffer, &nMsgLen, &st_HDRParam);
-				XEngine_Network_Send(lpszClientAddr, tszMsgBuffer, nMsgLen);
-				BaseLib_OperatorMemory_Free((XPPPMEM)&pptszList, nListCount);
-				XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _T("HTTP客户端:%s,发送的URL请求参数不正确:%s"), lpszClientAddr, pSt_HTTPParam->tszHttpUri);
-				return FALSE;
-			}
-			//类型0为获取列表,1为注册,2为转发请求,3为心跳
-			int nType = _ttoi(tszValue);
-			if (1 == nType)
-			{
-				BaseLib_OperatorString_GetKeyValue(pptszList[2], "=", tszKey, tszSrcAddr);
-				BaseLib_OperatorString_GetKeyValue(pptszList[3], "=", tszKey, tszDstAddr);
-			}
-			XEngine_HTTPTask_Forward(lpszClientAddr, nType, tszSrcAddr, tszDstAddr);
-		}
 		BaseLib_OperatorMemory_Free((XPPPMEM)&pptszList, nListCount);
 	}
 	else
