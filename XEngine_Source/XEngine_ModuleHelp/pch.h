@@ -15,10 +15,15 @@
 #endif //PCH_H
 #include <string.h>
 #include <errno.h>
+#include <shared_mutex>
+#include <unordered_map>
 #include <opencc/opencc.h>
+using namespace std;
 #include <XEngine_Include/XEngine_CommHdr.h>
 #include <XEngine_Include/XEngine_Types.h>
 #include <XEngine_Include/XEngine_ProtocolHdr.h>
+#include <XEngine_Include/XEngine_BaseLib/BaseLib_Define.h>
+#include <XEngine_Include/XEngine_BaseLib/BaseLib_Error.h>
 #include "../XEngine_UserProtocol.h"
 #include "ModuleHelp_Define.h"
 #include "ModuleHelp_Error.h"
@@ -37,6 +42,7 @@ extern BOOL ModuleHelp_IsErrorOccur;
 extern DWORD ModuleHelp_dwErrorCode;
 
 #ifdef _MSC_BUILD
+#pragma comment(lib,"XEngine_BaseLib/XEngine_BaseLib")
 #ifdef _WIN64
 #pragma comment(lib,"../XEngine_ThirdPart/opencc/libx64/opencc")
 #else

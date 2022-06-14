@@ -8,3 +8,11 @@ EXPORTS
 
 	ModuleHelp_Language_ConvertZh
 	ModuleHelp_Translation_Convert
+
+	ModuleHelp_P2PClient_Add
+	ModuleHelp_P2PClient_Get
+	ModuleHelp_P2PClient_GetLan
+	ModuleHelp_P2PClient_GetLList
+	ModuleHelp_P2PClient_GetWList
+	ModuleHelp_P2PClient_Delete
+	ModuleHelp_P2PClient_DelAll

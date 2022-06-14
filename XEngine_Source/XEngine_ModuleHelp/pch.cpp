@@ -1,6 +1,7 @@
 ﻿#include "pch.h"
 #include "ModuleHelp_IDCard/ModuleHelp_IDCard.h"
 #include "ModuleHelp_Language/ModuleHelp_Language.h"
+#include "ModuleHelp_P2PClient/ModuleHelp_P2PClient.h"
 /********************************************************************
 //    Created:     2022/03/04  13:37:38
 //    File Name:   D:\XEngine_APIService\XEngine_Source\XEngine_ModuleHelp\pch.cpp
@@ -17,6 +18,7 @@ DWORD ModuleHelp_dwErrorCode = 0;
 //////////////////////////////////////////////////////////////////////////
 CModuleHelp_IDCard m_IDCard;
 CModuleHelp_Language m_Language;
+CModuleHelp_P2PClient m_P2PClient;
 //////////////////////////////////////////////////////////////////////////
 ///                        导出的函数
 //////////////////////////////////////////////////////////////////////////
@@ -49,4 +51,35 @@ extern "C" BOOL ModuleHelp_Language_ConvertZh(LPCTSTR lpszJsonFile, LPCTSTR lpsz
 extern "C" BOOL ModuleHelp_Translation_Convert(ENUM_XENGINE_APISERVICE_TRANSLATION_TYPE enTranslationType, TCHAR * ptszTranslationType)
 {
 	return m_Language.ModuleHelp_Translation_Convert(enTranslationType, ptszTranslationType);
+}
+/************************************************************************/
+/*                         导出的P2P客户端帮助函数                      */
+/************************************************************************/
+extern "C" BOOL ModuleHelp_P2PClient_Add(XENGINE_P2XP_PEERINFO * pSt_PeerInfo)
+{
+	return m_P2PClient.ModuleHelp_P2PClient_Add(pSt_PeerInfo);
+}
+extern "C" BOOL ModuleHelp_P2PClient_Get(XENGINE_P2XPPEER_PROTOCOL * pSt_P2PProtocol, XENGINE_P2XP_PEERINFO * pSt_PeerInfo /* = NULL */)
+{
+	return m_P2PClient.ModuleHelp_P2PClient_Get(pSt_P2PProtocol, pSt_PeerInfo);
+}
+extern "C" BOOL ModuleHelp_P2PClient_GetLan(XENGINE_P2XPPEER_PROTOCOL * pSt_P2PProtocol, XENGINE_P2XPPEER_PROTOCOL * **pppSt_P2XPClient, int* pInt_ListCount)
+{
+	return m_P2PClient.ModuleHelp_P2PClient_GetLan(pSt_P2PProtocol, pppSt_P2XPClient, pInt_ListCount);
+}
+extern "C" BOOL ModuleHelp_P2PClient_GetLList(LPCTSTR lpszPubAddr, TCHAR * **pppszP2XPClient, int* pInt_ListCount)
+{
+	return m_P2PClient.ModuleHelp_P2PClient_GetLList(lpszPubAddr, pppszP2XPClient, pInt_ListCount);
+}
+extern "C" BOOL ModuleHelp_P2PClient_GetWList(TCHAR * **pppszP2XPClient, int* pInt_ListCount)
+{
+	return m_P2PClient.ModuleHelp_P2PClient_GetWList(pppszP2XPClient, pInt_ListCount);
+}
+extern "C" BOOL ModuleHelp_P2PClient_Delete(XENGINE_P2XPPEER_PROTOCOL * pSt_P2PProtocol)
+{
+	return m_P2PClient.ModuleHelp_P2PClient_Delete(pSt_P2PProtocol);
+}
+extern "C" BOOL ModuleHelp_P2PClient_DelAll()
+{
+	return m_P2PClient.ModuleHelp_P2PClient_DelAll();
 }
