@@ -86,3 +86,19 @@ extern "C" BOOL ModuleProtocol_Parse_Translation(LPCTSTR lpszMsgBuffer, int nMsg
 {
 	return m_ProtocolParse.ModuleProtocol_Parse_Translation(lpszMsgBuffer, nMsgLen, pSt_LanguageInfo);
 }
+extern "C" BOOL ModuleProtocol_Parse_P2PLogin(LPCTSTR lpszMsgBuffer, int nMsgLen, XENGINE_P2XPPEER_PROTOCOL * pSt_P2XPPeer)
+{
+	return m_P2XPParse.ModuleProtocol_Parse_P2PLogin(lpszMsgBuffer, nMsgLen, pSt_P2XPPeer);
+}
+extern "C" BOOL ModuleProtocol_Parse_P2PList(LPCTSTR lpszMsgBuffer, int nMsgLen, TCHAR * ptszPubAddr, TCHAR * ptszPriAddr)
+{
+	return m_P2XPParse.ModuleProtocol_Parse_P2PList(lpszMsgBuffer, nMsgLen, ptszPubAddr, ptszPriAddr);
+}
+extern "C" BOOL ModuleProtocol_Parse_P2PUser(LPCTSTR lpszMsgBuffer, int nMsgLen, TCHAR * ptszUserName)
+{
+	return m_P2XPParse.ModuleProtocol_Parse_P2PUser(lpszMsgBuffer, nMsgLen, ptszUserName);
+}
+extern "C" BOOL ModuleProtocol_Parse_P2PConnect(LPCTSTR lpszMsgBuffer, int nMsgLen, XENGINE_P2XPIO_PROTOCOL * pSt_IOProtocol)
+{
+	return m_P2XPParse.ModuleProtocol_Parse_P2PConnect(lpszMsgBuffer, nMsgLen, pSt_IOProtocol);
+}
