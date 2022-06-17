@@ -57,7 +57,7 @@ XHTHREAD CALLBACK XEngine_HTTPTask_Thread(LPVOID lParam)
 BOOL XEngine_HTTPTask_Handle(RFCCOMPONENTS_HTTP_REQPARAM* pSt_HTTPParam, LPCTSTR lpszClientAddr, LPCTSTR lpszRVBuffer, int nRVLen)
 {
 	int nMsgLen = 4096;
-	//LPCTSTR lpszMethodPost = _T("POST");
+	LPCTSTR lpszMethodPost = _T("POST");
 	LPCTSTR lpszMethodGet = _T("GET");
 	TCHAR tszMsgBuffer[4096];
 	RFCCOMPONENTS_HTTP_HDRPARAM st_HDRParam;    //发送给客户端的参数
@@ -67,66 +67,88 @@ BOOL XEngine_HTTPTask_Handle(RFCCOMPONENTS_HTTP_REQPARAM* pSt_HTTPParam, LPCTSTR
 
 	st_HDRParam.nHttpCode = 200; //HTTP CODE码
 	st_HDRParam.bIsClose = TRUE; //收到回复后就关闭
-	if (0 == _tcsnicmp(lpszMethodGet, pSt_HTTPParam->tszHttpMethod, _tcslen(lpszMethodGet)))
+
+	TCHAR** pptszList;
+	TCHAR tszUrlName[128];
+	int nListCount = 0;
+
+	memset(tszUrlName, '\0', sizeof(tszUrlName));
+	//得到URL参数个数
+	RfcComponents_HttpHelp_GetParament(pSt_HTTPParam->tszHttpUri, &pptszList, &nListCount, tszUrlName);
+	if (nListCount < 1)
 	{
-		TCHAR** pptszList;
-		TCHAR tszUrlName[128];
-		int nListCount = 0;
+		st_HDRParam.nHttpCode = 404;
+		RfcComponents_HttpServer_SendMsgEx(xhHTTPPacket, tszMsgBuffer, &nMsgLen, &st_HDRParam);
+		XEngine_Network_Send(lpszClientAddr, tszMsgBuffer, nMsgLen);
+		BaseLib_OperatorMemory_Free((XPPPMEM)&pptszList, nListCount);
+		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _T("HTTP客户端:%s,发送的URL请求参数不正确:%s"), lpszClientAddr, pSt_HTTPParam->tszHttpUri);
+		return FALSE;
+	}
+	TCHAR tszKey[128];
+	TCHAR tszValue[128];
+	LPCTSTR lpszFuncName = _T("api");
+	LPCTSTR lpszParamFuncKey = _T("function");
+	LPCTSTR lpszParamName = _T("params1");
+	LPCTSTR lpszParamIPAddr = _T("ip");
+	LPCTSTR lpszParamIDCard = _T("id");
+	LPCTSTR lpszParamPhone = _T("phone");
+	LPCTSTR lpszParamBank = _T("bank");
+	LPCTSTR lpszParamLanguage = _T("language");
+	LPCTSTR lpszParamTranslation = _T("translation");
+	LPCTSTR lpszParamForward = _T("forward");
+	LPCTSTR lpszParamP2PClient = _T("p2p");
 
-		memset(tszUrlName, '\0', sizeof(tszUrlName));
-		//得到URL参数个数
-		RfcComponents_HttpHelp_GetParament(pSt_HTTPParam->tszHttpUri, &pptszList, &nListCount, tszUrlName);
-		if (nListCount < 1)
-		{
-			st_HDRParam.nHttpCode = 404;
-			RfcComponents_HttpServer_SendMsgEx(xhHTTPPacket, tszMsgBuffer, &nMsgLen, &st_HDRParam);
-			XEngine_Network_Send(lpszClientAddr, tszMsgBuffer, nMsgLen);
-			BaseLib_OperatorMemory_Free((XPPPMEM)&pptszList, nListCount);
-			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _T("HTTP客户端:%s,发送的URL请求参数不正确:%s"), lpszClientAddr, pSt_HTTPParam->tszHttpUri);
-			return FALSE;
-		}
-		TCHAR tszKey[128];
-		TCHAR tszValue[128];
-		LPCTSTR lpszFuncName = _T("api");
-		LPCTSTR lpszParamFuncKey = _T("function");
-		LPCTSTR lpszParamName = _T("params1");
-		LPCTSTR lpszParamIPAddr = _T("ip");
-		LPCTSTR lpszParamIDCard = _T("id");
-		LPCTSTR lpszParamPhone = _T("phone");
-		LPCTSTR lpszParamBank = _T("bank");
-		LPCTSTR lpszParamLanguage = _T("language");
-		LPCTSTR lpszParamTranslation = _T("translation");
-		LPCTSTR lpszParamForward = _T("forward");
+	memset(tszKey, '\0', sizeof(tszKey));
+	memset(tszValue, '\0', sizeof(tszValue));
 
-		memset(tszKey, '\0', sizeof(tszKey));
-		memset(tszValue, '\0', sizeof(tszValue));
-
-		if (0 != _tcsnicmp(lpszFuncName, tszUrlName, _tcslen(lpszFuncName)))
+	if (0 != _tcsnicmp(lpszFuncName, tszUrlName, _tcslen(lpszFuncName)))
+	{
+		st_HDRParam.nHttpCode = 404;
+		RfcComponents_HttpServer_SendMsgEx(xhHTTPPacket, tszMsgBuffer, &nMsgLen, &st_HDRParam);
+		XEngine_Network_Send(lpszClientAddr, tszMsgBuffer, nMsgLen);
+		BaseLib_OperatorMemory_Free((XPPPMEM)&pptszList, nListCount);
+		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _T("HTTP客户端:%s,发送的URL请求参数不正确:%s"), lpszClientAddr, pSt_HTTPParam->tszHttpUri);
+		return FALSE;
+	}
+	//获得函数名
+	BaseLib_OperatorString_GetKeyValue(pptszList[0], "=", tszKey, tszValue);
+	if (0 != _tcsnicmp(lpszParamFuncKey, tszKey, _tcslen(lpszParamFuncKey)))
+	{
+		st_HDRParam.nHttpCode = 404;
+		RfcComponents_HttpServer_SendMsgEx(xhHTTPPacket, tszMsgBuffer, &nMsgLen, &st_HDRParam);
+		XEngine_Network_Send(lpszClientAddr, tszMsgBuffer, nMsgLen);
+		BaseLib_OperatorMemory_Free((XPPPMEM)&pptszList, nListCount);
+		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _T("HTTP客户端:%s,发送的URL请求参数不正确:%s"), lpszClientAddr, pSt_HTTPParam->tszHttpUri);
+		return FALSE;
+	}
+	//首先处理插件
+	if (ModulePlugin_Loader_Find(tszValue))
+	{
+		XEngine_PluginTask_Handle(tszValue, lpszClientAddr, lpszRVBuffer, nRVLen, &pptszList, nListCount);
+		return TRUE;
+	}
+	if (0 == _tcsnicmp(lpszMethodPost, pSt_HTTPParam->tszHttpMethod, _tcslen(lpszMethodPost)))
+	{
+		if (0 == _tcsnicmp(lpszParamP2PClient, tszValue, _tcslen(lpszParamP2PClient)))
 		{
-			st_HDRParam.nHttpCode = 404;
-			RfcComponents_HttpServer_SendMsgEx(xhHTTPPacket, tszMsgBuffer, &nMsgLen, &st_HDRParam);
-			XEngine_Network_Send(lpszClientAddr, tszMsgBuffer, nMsgLen);
-			BaseLib_OperatorMemory_Free((XPPPMEM)&pptszList, nListCount);
-			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _T("HTTP客户端:%s,发送的URL请求参数不正确:%s"), lpszClientAddr, pSt_HTTPParam->tszHttpUri);
-			return FALSE;
+			//是不是P2P
+			memset(tszKey, '\0', sizeof(tszKey));
+			memset(tszValue, '\0', sizeof(tszValue));
+			BaseLib_OperatorString_GetKeyValue(pptszList[1], "=", tszKey, tszValue);
+			if (0 != _tcsnicmp(lpszParamName, tszKey, _tcslen(lpszParamName)))
+			{
+				st_HDRParam.nHttpCode = 404;
+				RfcComponents_HttpServer_SendMsgEx(xhHTTPPacket, tszMsgBuffer, &nMsgLen, &st_HDRParam);
+				XEngine_Network_Send(lpszClientAddr, tszMsgBuffer, nMsgLen);
+				BaseLib_OperatorMemory_Free((XPPPMEM)&pptszList, nListCount);
+				XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _T("HTTP客户端:%s,发送的URL请求参数不正确:%s"), lpszClientAddr, pSt_HTTPParam->tszHttpUri);
+				return FALSE;
+			}
+			XEngine_HTTPTask_P2PClient(lpszClientAddr, lpszRVBuffer, nRVLen, _ttoi(tszValue));
 		}
-		//获得函数名
-		BaseLib_OperatorString_GetKeyValue(pptszList[0], "=", tszKey, tszValue);
-		if (0 != _tcsnicmp(lpszParamFuncKey, tszKey, _tcslen(lpszParamFuncKey)))
-		{
-			st_HDRParam.nHttpCode = 404;
-			RfcComponents_HttpServer_SendMsgEx(xhHTTPPacket, tszMsgBuffer, &nMsgLen, &st_HDRParam);
-			XEngine_Network_Send(lpszClientAddr, tszMsgBuffer, nMsgLen);
-			BaseLib_OperatorMemory_Free((XPPPMEM)&pptszList, nListCount);
-			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _T("HTTP客户端:%s,发送的URL请求参数不正确:%s"), lpszClientAddr, pSt_HTTPParam->tszHttpUri);
-			return FALSE;
-		}
-		//首先处理插件
-		if (ModulePlugin_Loader_Find(tszValue))
-		{
-			XEngine_PluginTask_Handle(tszValue, lpszClientAddr, lpszRVBuffer, nRVLen, &pptszList, nListCount);
-			return TRUE;
-		}
+	}
+	else if (0 == _tcsnicmp(lpszMethodGet, pSt_HTTPParam->tszHttpMethod, _tcslen(lpszMethodGet)))
+	{
 		//是不是ip查询
 		if (0 == _tcsnicmp(lpszParamIPAddr, tszValue, _tcslen(lpszParamIPAddr)))
 		{
@@ -271,7 +293,7 @@ BOOL XEngine_HTTPTask_Handle(RFCCOMPONENTS_HTTP_REQPARAM* pSt_HTTPParam, LPCTSTR
 
 			BaseLib_OperatorString_GetKeyValue(pptszList[2], "=", tszKey, tszGetType);
 			BaseLib_OperatorString_GetKeyValue(pptszList[3], "=", tszKey, tszCvtType);
-			XEngine_HTTPTask_Translation(lpszClientAddr, tszValue, _ttoi(tszGetType), _ttoi(tszCvtType));;
+			XEngine_HTTPTask_Translation(lpszClientAddr, tszValue, _ttoi(tszGetType), _ttoi(tszCvtType));
 		}
 		BaseLib_OperatorMemory_Free((XPPPMEM)&pptszList, nListCount);
 	}
