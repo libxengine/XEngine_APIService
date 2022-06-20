@@ -55,6 +55,14 @@ extern "C" BOOL ModuleHelp_Translation_Convert(ENUM_XENGINE_APISERVICE_TRANSLATI
 /************************************************************************/
 /*                         导出的P2P客户端帮助函数                      */
 /************************************************************************/
+extern "C" BOOL ModuleHelp_P2PClient_Init(int nTimeout, CALLBACK_APISERVICE_MODULE_HELP_P2PCLIENT fpCall_P2PClient, LPVOID lParam)
+{
+	return m_P2PClient.ModuleHelp_P2PClient_Init(nTimeout, fpCall_P2PClient, lParam);
+}
+extern "C" BOOL ModuleHelp_P2PClient_Destory()
+{
+	return m_P2PClient.ModuleHelp_P2PClient_Destory();
+}
 extern "C" BOOL ModuleHelp_P2PClient_Add(XENGINE_P2XP_PEERINFO * pSt_PeerInfo)
 {
 	return m_P2PClient.ModuleHelp_P2PClient_Add(pSt_PeerInfo);
