@@ -97,7 +97,7 @@ BOOL CModuleConfigure_Json::ModuleConfigure_Json_File(LPCTSTR lpszConfigFile, XE
 	pSt_ServerConfig->st_XMax.nIOThread = st_JsonXMax["nIOThread"].asInt();
 	pSt_ServerConfig->st_XMax.nHTTPThread = st_JsonXMax["nHttpThread"].asInt();
 
-	if (st_JsonRoot["XTime"].empty() || (2 != st_JsonRoot["XTime"].size()))
+	if (st_JsonRoot["XTime"].empty() || (3 != st_JsonRoot["XTime"].size()))
 	{
 		Config_IsErrorOccur = TRUE;
 		Config_dwErrorCode = ERROR_MODULE_CONFIGURE_JSON_XTIME;
@@ -106,6 +106,7 @@ BOOL CModuleConfigure_Json::ModuleConfigure_Json_File(LPCTSTR lpszConfigFile, XE
 	Json::Value st_JsonXTime = st_JsonRoot["XTime"];
 	pSt_ServerConfig->st_XTime.nTimeCheck = st_JsonXTime["nTimeCheck"].asInt();
 	pSt_ServerConfig->st_XTime.nHTTPTimeOut = st_JsonXTime["nHttpTimeOut"].asInt();
+	pSt_ServerConfig->st_XTime.nP2PTimeOut = st_JsonXTime["nP2PTimeOut"].asInt();
 
 	if (st_JsonRoot["XLog"].empty() || (3 != st_JsonRoot["XLog"].size()))
 	{
