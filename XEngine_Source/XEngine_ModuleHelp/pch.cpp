@@ -91,3 +91,7 @@ extern "C" BOOL ModuleHelp_P2PClient_DelAll()
 {
 	return m_P2PClient.ModuleHelp_P2PClient_DelAll();
 }
+extern "C" BOOL ModuleHelp_P2PClient_Heart(XENGINE_P2XPPEER_PROTOCOL * pSt_P2PProtocol)
+{
+	return m_P2PClient.ModuleHelp_P2PClient_Heart(pSt_P2PProtocol);
+}

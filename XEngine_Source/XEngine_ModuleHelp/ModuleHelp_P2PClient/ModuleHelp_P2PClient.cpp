@@ -512,6 +512,69 @@ BOOL CModuleHelp_P2PClient::ModuleHelp_P2PClient_DelAll()
 
     return TRUE;
 }
+/********************************************************************
+函数名称：ModuleHelp_P2PClient_Heart
+函数功能：触发一次心跳
+ 参数.一：pSt_P2PProtocol
+  In/Out：In
+  类型：数据结构指针
+  可空：N
+  意思：要操作的节点地址
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+BOOL CModuleHelp_P2PClient::ModuleHelp_P2PClient_Heart(XENGINE_P2XPPEER_PROTOCOL* pSt_P2PProtocol)
+{
+	ModuleHelp_IsErrorOccur = FALSE;
+
+	if (NULL == pSt_P2PProtocol)
+	{
+		ModuleHelp_IsErrorOccur = TRUE;
+		ModuleHelp_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_HELP_P2P_PARAMENT;
+		return FALSE;
+	}
+	//查找元素
+	st_Locker.lock_shared();
+	unordered_map<string, unordered_map<string, unordered_map<string, XENGINE_P2XP_PEERINFO> > >::iterator stl_MapPubIterator = stl_MapClients.find(pSt_P2PProtocol->tszPublicAddr);
+	if (stl_MapPubIterator == stl_MapClients.end())
+	{
+		ModuleHelp_IsErrorOccur = TRUE;
+		ModuleHelp_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_HELP_P2P_NOTFOUND;
+		st_Locker.unlock_shared();
+		return FALSE;
+	}
+	//转换地址
+	XENGINE_LIBADDR st_LibAddr;
+	TCHAR tszPrivateAddr[64];
+
+	memset(tszPrivateAddr, '\0', sizeof(tszPrivateAddr));
+	memset(&st_LibAddr, '\0', sizeof(XENGINE_LIBADDR));
+	//获取私有网络的路由地址
+	BaseLib_OperatorIPAddr_IsIPV4Addr(pSt_P2PProtocol->tszPrivateAddr, &st_LibAddr);
+	_stprintf_s(tszPrivateAddr, _T("%d.%d.%d"), st_LibAddr.nIPAddr1, st_LibAddr.nIPAddr2, st_LibAddr.nIPAddr3);
+
+	unordered_map<string, unordered_map<string, XENGINE_P2XP_PEERINFO> >::iterator stl_MapPriIterator = stl_MapPubIterator->second.find(tszPrivateAddr);
+	if (stl_MapPriIterator == stl_MapPubIterator->second.end())
+	{
+		ModuleHelp_IsErrorOccur = TRUE;
+		ModuleHelp_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_HELP_P2P_NOTFOUND;
+		st_Locker.unlock_shared();
+		return FALSE;
+	}
+	unordered_map<string, XENGINE_P2XP_PEERINFO>::iterator stl_MapConnIterator = stl_MapPriIterator->second.find(pSt_P2PProtocol->tszConnectAddr);
+	if (stl_MapConnIterator == stl_MapPriIterator->second.end())
+	{
+		ModuleHelp_IsErrorOccur = TRUE;
+		ModuleHelp_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_HELP_P2P_NOTFOUND;
+		st_Locker.unlock_shared();
+		return FALSE;
+	}
+    stl_MapConnIterator->second.st_PeerTimer.dwUserTime = time(NULL);
+	st_Locker.unlock_shared();
+	return TRUE;
+}
 //////////////////////////////////////////////////////////////////////////
 //                          保护函数
 //////////////////////////////////////////////////////////////////////////

@@ -20,11 +20,12 @@ public:
 	BOOL ModuleHelp_P2PClient_Destory();
 	BOOL ModuleHelp_P2PClient_Add(XENGINE_P2XP_PEERINFO* pSt_PeerInfo);
 	BOOL ModuleHelp_P2PClient_Get(XENGINE_P2XPPEER_PROTOCOL* pSt_P2PProtocol, XENGINE_P2XP_PEERINFO* pSt_PeerInfo = NULL);
-	BOOL ModuleHelp_P2PClient_GetLan(XENGINE_P2XPPEER_PROTOCOL* pSt_P2PProtocol, XENGINE_P2XPPEER_PROTOCOL*** pppSt_P2XPClient, int* pInt_ListCount);      
+	BOOL ModuleHelp_P2PClient_GetLan(XENGINE_P2XPPEER_PROTOCOL* pSt_P2PProtocol, XENGINE_P2XPPEER_PROTOCOL*** pppSt_P2XPClient, int* pInt_ListCount);
 	BOOL ModuleHelp_P2PClient_GetLList(LPCTSTR lpszPubAddr, TCHAR*** pppszP2XPClient, int* pInt_ListCount);
-	BOOL ModuleHelp_P2PClient_GetWList(TCHAR*** pppszP2XPClient, int* pInt_ListCount); 
+	BOOL ModuleHelp_P2PClient_GetWList(TCHAR*** pppszP2XPClient, int* pInt_ListCount);
 	BOOL ModuleHelp_P2PClient_Delete(XENGINE_P2XPPEER_PROTOCOL* pSt_P2PProtocol);
-	BOOL ModuleHelp_P2PClient_DelAll();     
+	BOOL ModuleHelp_P2PClient_DelAll();
+	BOOL ModuleHelp_P2PClient_Heart(XENGINE_P2XPPEER_PROTOCOL* pSt_P2PProtocol);
 protected:
 	static XHTHREAD CALLBACK ModuleHelp_P2PClient_Thread(LPVOID lParam);
 private:

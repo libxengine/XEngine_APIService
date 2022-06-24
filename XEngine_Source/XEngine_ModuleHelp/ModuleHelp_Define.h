@@ -273,3 +273,17 @@ extern "C" BOOL ModuleHelp_P2PClient_Delete(XENGINE_P2XPPEER_PROTOCOL * pSt_P2PP
 备注：
 *********************************************************************/
 extern "C" BOOL ModuleHelp_P2PClient_DelAll();
+/********************************************************************
+函数名称：ModuleHelp_P2PClient_Heart
+函数功能：触发一次心跳
+ 参数.一：pSt_P2PProtocol
+  In/Out：In
+  类型：数据结构指针
+  可空：N
+  意思：要操作的节点地址
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+extern "C" BOOL ModuleHelp_P2PClient_Heart(XENGINE_P2XPPEER_PROTOCOL* pSt_P2PProtocol);
