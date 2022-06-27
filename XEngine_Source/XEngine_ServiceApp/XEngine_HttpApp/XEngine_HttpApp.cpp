@@ -38,6 +38,8 @@ void ServiceApp_Stop(int signo)
 		ModuleDatabase_IDCard_Destory();
 		ModuleDatabase_Phone_Destory();
 		ModuleDatabase_Bank_Destory();
+		//销毁其他
+		ModuleHelp_P2PClient_Destory();
 		//销毁日志资源
 		HelpComponents_XLog_Destroy(xhLog);
 		ModulePlugin_Core_Destroy();
@@ -226,6 +228,14 @@ int main(int argc, char** argv)
 	{
 		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_WARN, _T("启动服务中,HTTP消息服务没有被启用"));
 	}
+	//初始化P2P
+	if (!ModuleHelp_P2PClient_Init(st_ServiceConfig.st_XTime.nP2PTimeOut, XEngine_HTTPTask_P2PCallback))
+	{
+		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _T("启动服务中,启动P2P客户端管理器失败,错误：%lX"), ModuleHelp_GetLastError());
+		goto XENGINE_SERVICEAPP_EXIT;
+	}
+	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _T("启动服务中,启动P2P客户端管理器成功,超时时间设置:%d 秒"), st_ServiceConfig.st_XTime.nP2PTimeOut);
+
 	//启动插件
 	if (!ModulePlugin_Core_Init())
 	{
@@ -278,6 +288,8 @@ XENGINE_SERVICEAPP_EXIT:
 		ModuleDatabase_IDCard_Destory();
 		ModuleDatabase_Phone_Destory();
 		ModuleDatabase_Bank_Destory();
+		//销毁其他
+		ModuleHelp_P2PClient_Destory();
 		//销毁日志资源
 		HelpComponents_XLog_Destroy(xhLog);
 		ModulePlugin_Core_Destroy();

@@ -1,5 +1,9 @@
 ﻿#include "../XEngine_Hdr.h"
 
+void CALLBACK XEngine_HTTPTask_P2PCallback(XENGINE_P2XPPEER_PROTOCOL* pSt_P2PProtocol, LPVOID lParam)
+{
+	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_WARN, _T("HTTP客户端:公网:%s,私网:%s,连接:%s P2P离开"), pSt_P2PProtocol->tszPublicAddr, pSt_P2PProtocol->tszPrivateAddr, pSt_P2PProtocol->tszConnectAddr);
+}
 BOOL XEngine_HTTPTask_P2PClient(LPCTSTR lpszClientAddr, LPCTSTR lpszMsgBuffer, int nMsgLen, int unOperatorCode)
 {
 	int nSDLen = 4096;
