@@ -95,7 +95,6 @@ BOOL XEngine_HTTPTask_Handle(RFCCOMPONENTS_HTTP_REQPARAM* pSt_HTTPParam, LPCTSTR
 	LPCTSTR lpszParamBank = _T("bank");
 	LPCTSTR lpszParamLanguage = _T("language");
 	LPCTSTR lpszParamTranslation = _T("translation");
-	LPCTSTR lpszParamForward = _T("forward");
 	LPCTSTR lpszParamP2PClient = _T("p2p");
 
 	memset(tszKey, '\0', sizeof(tszKey));

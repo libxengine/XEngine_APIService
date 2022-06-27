@@ -15,6 +15,8 @@
 #endif //PCH_H
 #include <string.h>
 #include <errno.h>
+#include <thread>
+#include <list>
 #include <shared_mutex>
 #include <unordered_map>
 #include <opencc/opencc.h>
