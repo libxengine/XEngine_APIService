@@ -10,7 +10,8 @@
     },
     "XTime":{
         "nTimeCheck":3,
-        "nHttpTimeOut":5
+        "nHttpTimeOut":5,
+        "nP2PTimeOut":60
     },
     "XLog":{
         "MaxSize":1024000,
@@ -30,6 +31,7 @@
         "tszPluginFile":"./XEngine_Config/XEngine_PluginConfig.json"
     },
     "XVer":[
+        "2.2.0.1001 Build20220701",
         "2.1.0.1001 Build20220429",
         "1.1.0.1001 Build20220402",
         "1.0.0.1001 Build20220311"
