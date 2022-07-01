@@ -62,6 +62,7 @@ using namespace std;
 #include "XEngine_HTTPTask/HTTPTask_Bank.h"
 #include "XEngine_HTTPTask/HTTPTask_Language.h"
 #include "XEngine_HTTPTask/HTTPTask_Translation.h"
+#include "XEngine_HTTPTask/HTTPTask_P2PClient.h"
 /********************************************************************
 //    Created:     2022/01/20  14:42:06
 //    File Name:   D:\XEngine_ServiceApp\XEngine_Source\XEngine_ServiceApp\XEngine_HttpApp\XEngine_Hdr.h

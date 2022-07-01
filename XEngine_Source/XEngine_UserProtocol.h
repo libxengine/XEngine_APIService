@@ -78,6 +78,15 @@ typedef enum
 //////////////////////////////////////////////////////////////////////////
 #define XENGINE_COMMUNICATION_PROTOCOL_OPERATOR_CODE_MSG_TEXTREQ 0x0001   //发送消息
 #define XENGINE_COMMUNICATION_PROTOCOL_OPERATOR_CODE_MSG_TEXTREP 0x0002   //回复消息
+//P2XP协议
+#define XENGINE_COMMUNICATION_PROTOCOL_OPERATOR_CODE_P2XP_REQLOGIN 0x6001        //登录
+#define XENGINE_COMMUNICATION_PROTOCOL_OPERATOR_CODE_P2XP_REPLOGIN 0x6002
+#define XENGINE_COMMUNICATION_PROTOCOL_OPERATOR_CODE_P2XP_REQLANLIST 0x6003      //同步列表协议,同步本地局域网IP中的客户端
+#define XENGINE_COMMUNICATION_PROTOCOL_OPERATOR_CODE_P2XP_REPLANLIST 0x6004      //同步列表回复确认协议
+#define XENGINE_COMMUNICATION_PROTOCOL_OPERATOR_CODE_P2XP_REQCONNECT 0x6005      //请求用户连接到网络服务
+#define XENGINE_COMMUNICATION_PROTOCOL_OPERATOR_CODE_P2XP_REPCONNECT 0x6006      //确认连接协议
+#define XENGINE_COMMUNICATION_PROTOCOL_OPERATOR_CODE_P2XP_REQUSERQUERY 0x6007    //用户查询
+#define XENGINE_COMMUNICATION_PROTOCOL_OPERATOR_CODE_P2XP_REPUSERQUERY 0x6008    //用户查询确认
 ///////////////////////////////////////////////////////////////////////////
 //                          导出的数据结构
 ///////////////////////////////////////////////////////////////////////////
@@ -143,4 +152,23 @@ typedef struct
 	TCHAR tszDestStr[1024];                                  //转换字符串
 	int enType;                                              //简繁为ENUM_XENGINE_APISERVICE_LANGUAGE_TYPE 翻译为ENUM_XENGINE_APISERVICE_TRANSLATION_TYPE
 }XENGINE_LANGUAGEINFO;
+//连接信息
+typedef struct
+{
+	CHAR tszUserName[64];                                                 //用户信息
+	CHAR tszPrivateAddr[32];                                              //私有本地地址，内网地址
+	CHAR tszPublicAddr[32];                                               //外网地址
+	CHAR tszConnectAddr[32];                                              //链接地址
+	WORD dwConnectType;                                                   //连接类型
+	WORD dwPeerType;                                                      //节点类型
+}XENGINE_P2XPPEER_PROTOCOL, * LPXENGINE_P2XPPEER_PROTOCOL;
+//P2XP通道连接命令
+typedef struct tag_XEngine_P2XPIO_Protocol
+{
+	CHAR tszSourceUser[32];                                               //请求连接的用户
+	CHAR tszDestUser[32];                                                 //要连接的用户
+	CHAR tszConnectAddr[32];                                              //连接的IP地址
+	int nDestPort;                                                        //要连接的端口
+	BOOL bIsTcp;                                                          //连接类型TCP,否则为UDP
+}XENGINE_P2XPIO_PROTOCOL, * LPXENGINE_P2XPIO_PROTOCOL;
 #pragma pack(pop)

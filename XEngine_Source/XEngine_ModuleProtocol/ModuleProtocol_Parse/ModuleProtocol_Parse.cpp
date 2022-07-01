@@ -241,3 +241,73 @@ BOOL CModuleProtocol_Parse::ModuleProtocol_Parse_Translation(LPCTSTR lpszMsgBuff
 	_tcscpy(pSt_LanguageInfo->tszDestStr, st_JsonTranslation[0][0]["tgt"].asCString());
 	return TRUE;
 }
+/********************************************************************
+函数名称：ModuleProtocol_Parse_P2PClient
+函数功能：P2P客户端请求解析函数
+ 参数.一：lpszMsgBuffer
+  In/Out：In
+  类型：常量字符指针
+  可空：N
+  意思：输入要解析的缓冲区
+ 参数.二：nMsgLen
+  In/Out：In
+  类型：整数型
+  可空：N
+  意思：输入缓冲区大小
+ 参数.三：pSt_P2XPPeer
+  In/Out：In
+  类型：数据结构指针
+  可空：N
+  意思：输出解析后的节点信息
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+BOOL CModuleProtocol_Parse::ModuleProtocol_Parse_P2PClient(LPCTSTR lpszMsgBuffer, int nMsgLen, XENGINE_P2XPPEER_PROTOCOL* pSt_P2XPPeer)
+{
+	ModuleProtocol_IsErrorOccur = FALSE;
+
+	if ((NULL == lpszMsgBuffer) || (NULL == pSt_P2XPPeer))
+	{
+		ModuleProtocol_IsErrorOccur = TRUE;
+		ModuleProtocol_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PROTOCOL_PARSE_PARAMENT;
+		return FALSE;
+	}
+	Json::Value st_JsonRoot;
+	Json::CharReaderBuilder st_JsonBuild;
+	Json::CharReader* pSt_JsonReader(st_JsonBuild.newCharReader());
+
+	JSONCPP_STRING st_JsonError;
+	//解析JSON
+	if (!pSt_JsonReader->parse(lpszMsgBuffer, lpszMsgBuffer + nMsgLen, &st_JsonRoot, &st_JsonError))
+	{
+		ModuleProtocol_IsErrorOccur = TRUE;
+		ModuleProtocol_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PROTOCOL_PARSE_JSON;
+		return FALSE;
+	}
+	delete pSt_JsonReader;
+	pSt_JsonReader = NULL;
+
+	if (!st_JsonRoot["tszUserName"].isNull())
+	{
+		_tcscpy(pSt_P2XPPeer->tszUserName, st_JsonRoot["tszUserName"].asCString());
+	}
+	if (!st_JsonRoot["tszPrivateAddr"].isNull())
+	{
+		_tcscpy(pSt_P2XPPeer->tszPrivateAddr, st_JsonRoot["tszPrivateAddr"].asCString());
+	}
+	if (!st_JsonRoot["tszPublicAddr"].isNull())
+	{
+		_tcscpy(pSt_P2XPPeer->tszPublicAddr, st_JsonRoot["tszPublicAddr"].asCString());
+	}
+	if (!st_JsonRoot["dwConnectType"].isNull())
+	{
+		pSt_P2XPPeer->dwConnectType = st_JsonRoot["dwConnectType"].asInt();
+	}
+	if (!st_JsonRoot["dwPeerType"].isNull())
+	{
+		pSt_P2XPPeer->dwPeerType = st_JsonRoot["dwPeerType"].asInt();
+	}
+	return TRUE;
+}

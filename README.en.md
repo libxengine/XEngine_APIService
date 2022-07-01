@@ -1,6 +1,7 @@
 [中文](README.md) ||  [English](README.en.md)  
 # XEngine_APIService
 This repository has a development and master branch. If you want to use it, please use the master branch  
+As long as the repository is not in suspended state, we will maintain and develop it all the time, please use it with confidence  
 
 ## Introduction
 c c++ 接口服务器  
@@ -30,9 +31,11 @@ and support plugin module
 15. Exchange rate calculation (planned)
 16. QR code generation and parse (planned)
 17. Simplified and Traditional Conversion
-18. Oil price inquiry (planned)
-19. Twenty-four solar terms (planned)
-20. Xinhua Dictionary
+18. Twenty-four solar terms (planned)
+19. Xinhua Dictionary
+20. Metering Conversion
+21. CDKey Creator (planned)
+22. Distributed lock (planned)
 
 ## install
 

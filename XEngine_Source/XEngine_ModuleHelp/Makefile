@@ -2,11 +2,11 @@ CC = g++ -Wall -std=c++17 -fPIC
 RELEASE = 0
 UNICODE = 0
 INCLUDE = -I ./ -I ../XEngine_ThirdPart/opencc/include
-LOADBIN = -L ../XEngine_ThirdPart/opencc/ubuntu
-LIB = -lopencc
+LOADBIN = -L /usr/local/lib/XEngine_Release/XEngine_BaseLib -L ../XEngine_ThirdPart/opencc/ubuntu
+LIB = -lXEngine_BaseLib -lopencc
 LIBEX = -static-libgcc -lrt -ldl -lpthread
 LOADSO = -Wl,-rpath=./,--disable-new-dtags
-LIBINCLUDE = ModuleHelp_IDCard.o ModuleHelp_Language.o pch.o
+LIBINCLUDE = ModuleHelp_IDCard.o ModuleHelp_Language.o ModuleHelp_P2PClient.o pch.o
 
 ifeq ($(RELEASE),1)
 FLAGS = -c -O2 
@@ -30,6 +30,8 @@ ModuleHelp_IDCard.o:./ModuleHelp_IDCard/ModuleHelp_IDCard.cpp
 	$(CC) $(DEBUG) $(FLAGS) $(UNICODE) $(INCLUDE) ./ModuleHelp_IDCard/ModuleHelp_IDCard.cpp 
 ModuleHelp_Language.o:./ModuleHelp_Language/ModuleHelp_Language.cpp             
 	$(CC) $(DEBUG) $(FLAGS) $(UNICODE) $(INCLUDE) ./ModuleHelp_Language/ModuleHelp_Language.cpp 
+ModuleHelp_P2PClient.o:./ModuleHelp_P2PClient/ModuleHelp_P2PClient.cpp             
+	$(CC) $(DEBUG) $(FLAGS) $(UNICODE) $(INCLUDE) ./ModuleHelp_P2PClient/ModuleHelp_P2PClient.cpp
 
 pch.o:./pch.cpp                 		       	    
 	$(CC) $(DEBUG) $(FLAGS) $(UNICODE) $(INCLUDE) ./pch.cpp

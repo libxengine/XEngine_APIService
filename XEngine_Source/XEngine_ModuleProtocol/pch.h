@@ -15,12 +15,15 @@
 #endif //PCH_H
 #include <stdio.h>
 #include <errno.h>
+#include <list>
+#include <unordered_map>
 #include <json/json.h>
 #include <XEngine_Include/XEngine_CommHdr.h>
 #include <XEngine_Include/XEngine_Types.h>
 #include <XEngine_Include/XEngine_ProtocolHdr.h>
-#include <XEngine_Include/XEngine_NetHelp/APIHelp_Define.h>
-#include <XEngine_Include/XEngine_NetHelp/APIHelp_Error.h>
+#include <XEngine_Include/XEngine_BaseLib/BaseLib_Define.h>
+#include <XEngine_Include/XEngine_BaseLib/BaseLib_Error.h>
+using namespace std;
 #include "../XEngine_UserProtocol.h"
 #include "ModuleProtocol_Define.h"
 #include "ModuleProtocol_Error.h"
@@ -39,6 +42,7 @@ extern BOOL ModuleProtocol_IsErrorOccur;
 extern DWORD ModuleProtocol_dwErrorCode;
 
 #ifdef _MSC_BUILD
+#pragma comment(lib,"XEngine_BaseLib/XEngine_BaseLib")
 #ifdef _DEBUG
 #ifdef _WIN64
 #pragma comment(lib,"../x64/Debug/jsoncpp")

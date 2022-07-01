@@ -25,6 +25,12 @@
     <Filter Include="源文件\ModuleHelp_Language">
       <UniqueIdentifier>{47b05cf6-fe24-43df-8860-e291baa7ffbb}</UniqueIdentifier>
     </Filter>
+    <Filter Include="头文件\ModuleHelp_P2PClient">
+      <UniqueIdentifier>{65195020-af5e-4083-804d-288f2ce618ec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\ModuleHelp_P2PClient">
+      <UniqueIdentifier>{2b552f75-e436-45a8-ba71-e398eeb4a68a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -45,6 +51,9 @@
     <ClInclude Include="ModuleHelp_Language\ModuleHelp_Language.h">
       <Filter>头文件\ModuleHelp_Language</Filter>
     </ClInclude>
+    <ClInclude Include="ModuleHelp_P2PClient\ModuleHelp_P2PClient.h">
+      <Filter>头文件\ModuleHelp_P2PClient</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp">
@@ -58,6 +67,9 @@
     </ClCompile>
     <ClCompile Include="ModuleHelp_Language\ModuleHelp_Language.cpp">
       <Filter>源文件\ModuleHelp_Language</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleHelp_P2PClient\ModuleHelp_P2PClient.cpp">
+      <Filter>源文件\ModuleHelp_P2PClient</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

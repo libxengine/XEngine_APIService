@@ -1,3 +1,15 @@
+XEngine_APIService V2.2.0.1001
+
+添加:为p2p处理增加post方法
+添加:p2p协议模块解析和打包支持
+添加:帮助模块的p2p客户端
+修改:http参数名
+
+added:post with p2pclient
+added:p2p protocol parse and packet
+added:p2p client for help module
+modify:parament name
+======================================================================================
 XEngine_APIService V2.1.0.1001
 
 添加:插件系统支持

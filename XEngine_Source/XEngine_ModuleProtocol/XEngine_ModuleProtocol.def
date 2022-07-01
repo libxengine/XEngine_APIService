@@ -13,7 +13,13 @@ EXPORTS
 	ModuleProtocol_Packet_BankQuery2
 	ModuleProtocol_Packet_LanguageQuery
 	ModuleProtocol_Packet_LanguageQuery2
+	ModuleProtocol_Packet_P2PCommon
+	ModuleProtocol_Packet_P2PLan
+	ModuleProtocol_Packet_P2PWLan
+	ModuleProtocol_Packet_P2PUser
+	ModuleProtocol_Packet_P2PConnect
 
 	ModuleProtocol_Parse_IDCard
 	ModuleProtocol_Parse_Bank
 	ModuleProtocol_Parse_Translation
+	ModuleProtocol_Parse_P2PClient
