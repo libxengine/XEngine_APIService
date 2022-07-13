@@ -1,19 +1,30 @@
 CC = g++ -Wall -std=c++17 -fPIC
+SHAREFLAG = -shared
+SHAREDLL = so
 RELEASE = 0
 UNICODE = 0
-INCLUDE = -I ./ -I ../XEngine_ThirdPart/opencc/include
-LOADBIN = -L /usr/local/lib/XEngine_Release/XEngine_BaseLib -L ../XEngine_ThirdPart/opencc/ubuntu
+INCLUDE = -I ./
+LOADBIN = -L /usr/local/lib/XEngine_Release/XEngine_BaseLib 
 LIB = -lXEngine_BaseLib -lopencc
-LIBEX = -static-libgcc -lrt -ldl -lpthread
+LIBEX = -ldl -lpthread
 LOADSO = -Wl,-rpath=./,--disable-new-dtags
 LIBINCLUDE = ModuleHelp_IDCard.o ModuleHelp_Language.o ModuleHelp_P2PClient.o pch.o
+
+ifeq ($(shell uname),Darwin)
+	SHAREDLL = dylib
+	SHAREFLAG = -dynamiclib
+	LOADSO = 
+else
+	SHAREDLL = so
+	SHAREFLAG = -shared
+endif
 
 ifeq ($(RELEASE),1)
 FLAGS = -c -O2 
 DEBUG = 
 else
-FLAGS = -c -lc_p
-DEBUG = -g -pg 
+FLAGS = -c 
+DEBUG = -g 
 endif
 
 ifeq ($(UNICODE),1)
@@ -24,7 +35,7 @@ endif
 
 
 all:$(LIBINCLUDE)
-	$(CC) $(DEBUG) $(LIBINCLUDE) -o libXEngine_ModuleHelp.so -shared -fPIC $(LOADBIN) $(LIB) $(LIBEX) $(LOADSO)
+	$(CC) $(DEBUG) $(LIBINCLUDE) -o libXEngine_ModuleHelp.$(SHAREDLL) $(SHAREFLAG) -fPIC $(LOADBIN) $(LIB) $(LIBEX) $(LOADSO)
 
 ModuleHelp_IDCard.o:./ModuleHelp_IDCard/ModuleHelp_IDCard.cpp             
 	$(CC) $(DEBUG) $(FLAGS) $(UNICODE) $(INCLUDE) ./ModuleHelp_IDCard/ModuleHelp_IDCard.cpp 
@@ -38,12 +49,12 @@ pch.o:./pch.cpp
 
 
 InstallAll:InstallSo 
-InstallSo:./libXEngine_ModuleHelp.so
-	cp ./libXEngine_ModuleHelp.so ../../XEngine_Release/libXEngine_ModuleHelp.so
+InstallSo:./libXEngine_ModuleHelp.$(SHAREDLL)
+	cp ./libXEngine_ModuleHelp.$(SHAREDLL) ../../XEngine_Release/libXEngine_ModuleHelp.$(SHAREDLL)
 
 
 CleanAll:CleanObj CleanMk
 CleanObj:                                               
 	rm *.o
 CleanMk:                             
-	rm *.so                        
+	rm *.$(SHAREDLL)                        

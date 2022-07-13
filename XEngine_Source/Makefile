@@ -18,10 +18,15 @@ PLUGIN_MODULE_PASSWORD = ./XEngine_PluginModule/ModulePlugin_Password
 APP_CENTER_PATH = ./XEngine_ServiceApp/XEngine_CenterApp
 APP_HTTP_PATH = ./XEngine_ServiceApp/XEngine_HttpApp
 
-XENGINE_MODULES = libjsoncpp.so libopencc.so                                  \
+XENGINE_MODULES = libjsoncpp.so            \
                   libXEngine_ModuleConfigure.so libXEngine_ModuleDatabase.so libXEngine_ModuleProtocol.so libXEngine_ModuleHelp.so libXEngine_ModulePlugin.so  \
 				  libModulePlugin_Zodiac.so libModulePlugin_Password.so \
 		   XEngine_HttpApp.exe
+
+ifeq ($(shell uname),Darwin)
+else
+XENGINE_MODULES += libopencc.so
+endif
 
 .PHONY:MakeAll 
 MakeAll:$(XENGINE_MODULES)
