@@ -77,10 +77,10 @@ using namespace std;
 extern BOOL bIsRun;
 extern XLOG xhLog;
 //HTTP服务器
-extern XNETHANDLE xhHTTPSocket;
-extern XNETHANDLE xhHTTPHeart;
-extern XNETHANDLE xhHTTPPool;
+extern XHANDLE xhHTTPSocket;
+extern XHANDLE xhHTTPHeart;
 extern XHANDLE xhHTTPPacket;
+extern XNETHANDLE xhHTTPPool;
 //配置文件
 extern XENGINE_SERVICECONFIG st_ServiceConfig;
 extern XENGINE_OPENCCCONFIG st_OPenccConfig;
