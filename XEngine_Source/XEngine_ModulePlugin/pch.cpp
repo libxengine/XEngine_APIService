@@ -39,7 +39,7 @@ extern "C" BOOL ModulePlugin_Core_Push(XNETHANDLE * pxhModule, LPCTSTR lpszPlugi
 {
 	return m_PluginCore.ModulePlugin_Core_Push(pxhModule, lpszPluginFile, lParam);
 }
-extern "C" BOOL ModulePlugin_Core_Exec(XNETHANDLE xhModule, TCHAR * **pppHDRList, int nListCount, int* pInt_HTTPCode, TCHAR * ptszMsgBuffer, int* pInt_MsgLen)
+extern "C" BOOL ModulePlugin_Core_Exec(XNETHANDLE xhModule, TCHAR * **pppHDRList, int nListCount, int* pInt_HTTPCode, TCHAR * ptszMsgBuffer, int* pInt_MsgLen, LPCTSTR lpszMsgBufer, int nMsgLen)
 {
 	return m_PluginCore.ModulePlugin_Core_Exec(xhModule, pppHDRList, nListCount, pInt_HTTPCode, ptszMsgBuffer, pInt_MsgLen);
 }

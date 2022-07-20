@@ -115,12 +115,22 @@ BOOL CModulePlugin_Core::ModulePlugin_Core_Push(XNETHANDLE* pxhModule, LPCTSTR l
   类型：整数型指针
   可空：N
   意思：输出内容大小
+ 参数.七：lpszMsgBufer
+  In/Out：Out
+  类型：常量字符指针
+  可空：Y
+  意思：输入负载内容
+ 参数.八：nMsgLen
+  In/Out：Out
+  类型：整数型指针
+  可空：Y
+  意思：输入负载大小
 返回值
   类型：逻辑型
   意思：是否成功
 备注：
 *********************************************************************/
-BOOL CModulePlugin_Core::ModulePlugin_Core_Exec(XNETHANDLE xhModule, TCHAR*** pppHDRList, int nListCount, int* pInt_HTTPCode, TCHAR* ptszMsgBuffer, int* pInt_MsgLen)
+BOOL CModulePlugin_Core::ModulePlugin_Core_Exec(XNETHANDLE xhModule, TCHAR*** pppHDRList, int nListCount, int* pInt_HTTPCode, TCHAR* ptszMsgBuffer, int* pInt_MsgLen, LPCTSTR lpszMsgBufer /* = NULL */, int nMsgLen /* = 0 */)
 {
     ModulePlugin_IsErrorOccur = FALSE;
 
@@ -134,7 +144,7 @@ BOOL CModulePlugin_Core::ModulePlugin_Core_Exec(XNETHANDLE xhModule, TCHAR*** pp
 		st_csStl.unlock_shared();
 		return FALSE;
 	}
-    if (!stl_MapIterator->second.fpCall_PluginCore_Call(pppHDRList, nListCount, pInt_HTTPCode, ptszMsgBuffer, pInt_MsgLen))
+    if (!stl_MapIterator->second.fpCall_PluginCore_Call(pppHDRList, nListCount, pInt_HTTPCode, ptszMsgBuffer, pInt_MsgLen, lpszMsgBufer, nMsgLen))
 	{
 		ModulePlugin_IsErrorOccur = TRUE;
 		ModulePlugin_dwErrorCode = stl_MapIterator->second.fpCall_PluginCore_GetLastError();
