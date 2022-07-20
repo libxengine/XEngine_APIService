@@ -32,6 +32,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ModulePlugin_Zodiac", "XEng
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ModulePlugin_Password", "XEngine_PluginModule\ModulePlugin_Password\ModulePlugin_Password.vcxproj", "{201B6D13-82A7-49E9-9736-D6B3BFE05B30}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ModulePlugin_Timezone", "XEngine_PluginModule\ModulePlugin_Timezone\ModulePlugin_Timezone.vcxproj", "{37B8E91F-EC52-41F0-B21D-441D4270C05F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -112,6 +114,14 @@ Global
 		{201B6D13-82A7-49E9-9736-D6B3BFE05B30}.Release|x64.Build.0 = Release|x64
 		{201B6D13-82A7-49E9-9736-D6B3BFE05B30}.Release|x86.ActiveCfg = Release|Win32
 		{201B6D13-82A7-49E9-9736-D6B3BFE05B30}.Release|x86.Build.0 = Release|Win32
+		{37B8E91F-EC52-41F0-B21D-441D4270C05F}.Debug|x64.ActiveCfg = Debug|x64
+		{37B8E91F-EC52-41F0-B21D-441D4270C05F}.Debug|x64.Build.0 = Debug|x64
+		{37B8E91F-EC52-41F0-B21D-441D4270C05F}.Debug|x86.ActiveCfg = Debug|Win32
+		{37B8E91F-EC52-41F0-B21D-441D4270C05F}.Debug|x86.Build.0 = Debug|Win32
+		{37B8E91F-EC52-41F0-B21D-441D4270C05F}.Release|x64.ActiveCfg = Release|x64
+		{37B8E91F-EC52-41F0-B21D-441D4270C05F}.Release|x64.Build.0 = Release|x64
+		{37B8E91F-EC52-41F0-B21D-441D4270C05F}.Release|x86.ActiveCfg = Release|Win32
+		{37B8E91F-EC52-41F0-B21D-441D4270C05F}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -121,6 +131,7 @@ Global
 		{F1736B3F-03A2-4FC7-B045-A12BA8D724FB} = {1F64BA84-8754-4FD3-87F8-9102F124EBC1}
 		{32BB166A-3D3D-45EF-8BED-2E0471274159} = {D0473C03-9464-4C44-818A-AE212680CD05}
 		{201B6D13-82A7-49E9-9736-D6B3BFE05B30} = {D0473C03-9464-4C44-818A-AE212680CD05}
+		{37B8E91F-EC52-41F0-B21D-441D4270C05F} = {D0473C03-9464-4C44-818A-AE212680CD05}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {9B202F91-A601-429E-BB0F-880DDEE096FE}
