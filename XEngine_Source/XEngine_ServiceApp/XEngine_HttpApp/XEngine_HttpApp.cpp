@@ -39,10 +39,10 @@ void ServiceApp_Stop(int signo)
 		ModuleDatabase_Phone_Destory();
 		ModuleDatabase_Bank_Destory();
 		//销毁其他
+		ModulePlugin_Core_Destroy();
 		ModuleHelp_P2PClient_Destory();
 		//销毁日志资源
 		HelpComponents_XLog_Destroy(xhLog);
-		ModulePlugin_Core_Destroy();
 	}
 #ifdef _WINDOWS
 	WSACleanup();
@@ -270,7 +270,7 @@ int main(int argc, char** argv)
 	}
 
 	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _T("所有服务成功启动，服务运行中，发行版本次数:%d,当前版本：%s。。。"), st_ServiceConfig.st_XVer.pStl_ListVer->size(), st_ServiceConfig.st_XVer.pStl_ListVer->front().c_str());
-	while (bIsRun)
+	while (TRUE)
 	{
 		std::this_thread::sleep_for(std::chrono::seconds(1));
 	}
@@ -291,10 +291,10 @@ XENGINE_SERVICEAPP_EXIT:
 		ModuleDatabase_Phone_Destory();
 		ModuleDatabase_Bank_Destory();
 		//销毁其他
+		ModulePlugin_Core_Destroy();
 		ModuleHelp_P2PClient_Destory();
 		//销毁日志资源
 		HelpComponents_XLog_Destroy(xhLog);
-		ModulePlugin_Core_Destroy();
 	}
 #ifdef _WINDOWS
 	WSACleanup();
