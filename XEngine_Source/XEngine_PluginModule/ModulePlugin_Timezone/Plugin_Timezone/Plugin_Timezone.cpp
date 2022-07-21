@@ -543,17 +543,22 @@ BOOL CPlugin_Timezone::PluginCore_Call(TCHAR*** pppHDRList, int nListCount, int*
 	memset(tszParamTime, '\0', sizeof(tszParamTime));
 
 	BaseLib_OperatorString_GetKeyValue((*pppHDRList)[1], "=", tszKeyName, tszParamType);
-	if (1 == _ttoi(tszParamType))
+	if (0 == _ttoi(tszParamType))
+	{
+		//如果是统计
+		Plugin_Timezone_Count(ptszMsgBuffer, pInt_MsgLen);
+	}
+	else if (1 == _ttoi(tszParamType))
 	{
 		//如果是列举
-		Plugin_Timezone_List(ptszMsgBuffer, pInt_MsgLen);
+		BaseLib_OperatorString_GetKeyValue((*pppHDRList)[2], "=", tszKeyName, tszParamCvt);
+		Plugin_Timezone_List(tszParamCvt, ptszMsgBuffer, pInt_MsgLen);
 	}
 	else if (2 == _ttoi(tszParamType))
 	{
 		//如果是转换
 		BaseLib_OperatorString_GetKeyValue((*pppHDRList)[2], "=", tszKeyName, tszParamCvt);
 		BaseLib_OperatorString_GetKeyValue((*pppHDRList)[3], "=", tszKeyName, tszParamTime);
-		
 		if (!Plugin_Timezone_Convert(tszParamCvt, tszParamTime, ptszMsgBuffer, pInt_MsgLen))
 		{
 			*pInt_HTTPCode = 404;
@@ -567,7 +572,7 @@ BOOL CPlugin_Timezone::PluginCore_Call(TCHAR*** pppHDRList, int nListCount, int*
 //////////////////////////////////////////////////////////////////////////
 //                       保护函数
 //////////////////////////////////////////////////////////////////////////
-BOOL CPlugin_Timezone::Plugin_Timezone_List(TCHAR* ptszMsgBufer, int* pInt_Len)
+BOOL CPlugin_Timezone::Plugin_Timezone_Count(TCHAR* ptszMsgBufer, int* pInt_Len)
 {
 	Timezone_IsErrorOccur = FALSE;
 
@@ -575,16 +580,43 @@ BOOL CPlugin_Timezone::Plugin_Timezone_List(TCHAR* ptszMsgBufer, int* pInt_Len)
 	Json::Value st_JsonObject;
 	Json::StreamWriterBuilder st_JsonBuilder;
 
+	st_JsonObject["Count"] = stl_MapTimezone.size();
+	st_JsonRoot["data"] = st_JsonObject;
+	st_JsonRoot["code"] = 0;
+	st_JsonRoot["msg"] = "success";
+	st_JsonBuilder["emitUTF8"] = true;
+
+	*pInt_Len = Json::writeString(st_JsonBuilder, st_JsonRoot).length();
+	memcpy(ptszMsgBufer, Json::writeString(st_JsonBuilder, st_JsonRoot).c_str(), *pInt_Len);
+	return TRUE;
+}
+BOOL CPlugin_Timezone::Plugin_Timezone_List(LPCTSTR lpszConvert, TCHAR* ptszMsgBufer, int* pInt_Len)
+{
+	Timezone_IsErrorOccur = FALSE;
+
+	int nPosStart = 0;
+	int nPosEnd = 0;
+	Json::Value st_JsonRoot;
+	Json::Value st_JsonObject;
+	Json::StreamWriterBuilder st_JsonBuilder;
+
+	_stscanf(lpszConvert, _T("%d-%d"), &nPosStart, &nPosEnd);
+
 	unordered_map<string, MODULEPLUGIN_TIMEZONE>::const_iterator stl_MapIterator = stl_MapTimezone.cbegin();
-	for (; stl_MapIterator != stl_MapTimezone.cend(); stl_MapIterator++)
+	for (int i = 0; stl_MapIterator != stl_MapTimezone.cend(); stl_MapIterator++, i++)
 	{
-		Json::Value st_JsonArray;
-		st_JsonArray["tszTimeZone"] = stl_MapIterator->first.c_str();
-		st_JsonArray["tszTimeCountry"] = stl_MapIterator->second.tszTimeCountry;
-		st_JsonObject.append(st_JsonArray);
+		if ((nPosEnd >= i) && (nPosStart <= i))
+		{
+			Json::Value st_JsonArray;
+			st_JsonArray["tszTimeZone"] = stl_MapIterator->first.c_str();
+			st_JsonArray["tszTimeCountry"] = stl_MapIterator->second.tszTimeCountry;
+			st_JsonObject.append(st_JsonArray);
+		}
 	}
 	st_JsonRoot["Array"] = st_JsonObject;
-	st_JsonRoot["Count"] = st_JsonObject.size();
+	st_JsonRoot["Count"] = nPosEnd - nPosStart;
+	st_JsonRoot["nPosStat"] = nPosStart;
+	st_JsonRoot["nPosEnd"] = nPosEnd;
 	st_JsonRoot["code"] = 0;
 	st_JsonRoot["msg"] = "success";
 	st_JsonBuilder["emitUTF8"] = true;
@@ -601,17 +633,26 @@ BOOL CPlugin_Timezone::Plugin_Timezone_Convert(LPCTSTR lpszConvert, LPCTSTR lpsz
 	Json::Value st_JsonObject;
 	Json::StreamWriterBuilder st_JsonBuilder;
 
-	unordered_map<string, MODULEPLUGIN_TIMEZONE>::iterator stl_MapIterator = stl_MapTimezone.find(lpszConvert);
+	unordered_map<string, MODULEPLUGIN_TIMEZONE>::const_iterator stl_MapIterator = stl_MapTimezone.find(lpszConvert);
 	if (stl_MapIterator == stl_MapTimezone.end())
 	{
 		return FALSE;
 	}
+	TCHAR tszTimeStr[64];
 	XENGINE_LIBTIMER st_TimeStart;
+	XENGINE_LIBTIMER st_TimeEnd;
+
+	memset(tszTimeStr, '\0', sizeof(tszTimeStr));
 	memset(&st_TimeStart, '\0', sizeof(XENGINE_LIBTIMER));
+	memset(&st_TimeEnd, '\0', sizeof(XENGINE_LIBTIMER));
 
-	BaseLib_OperatorTime_StrToTime(lpszConvert, &st_TimeStart);
-	BaseLib_OperatorTimeSpan_CalForStu(&st_TimeStart, &stl_MapIterator->second.st_TimeZone);
+	st_TimeEnd = stl_MapIterator->second.st_TimeZone;
 
+	_stscanf(lpszTimeStr, _T("%04d-%02d-%02d_%02d:%02d:%02d"), &st_TimeStart.wYear, &st_TimeStart.wMonth, &st_TimeStart.wDay, &st_TimeStart.wHour, &st_TimeStart.wMinute, &st_TimeStart.wSecond);
+	BaseLib_OperatorTimeSpan_CalForStu(&st_TimeStart, &st_TimeEnd);
+	_stprintf(tszTimeStr, _T("%04d-%02d-%02d %02d:%02d:%02d"), st_TimeEnd.wYear, st_TimeEnd.wMonth, st_TimeEnd.wDay, st_TimeEnd.wHour, st_TimeEnd.wMinute, st_TimeEnd.wSecond);
+
+	st_JsonObject["tszTimeStr"] = tszTimeStr;
 	st_JsonObject["tszTimeZone"] = stl_MapIterator->first.c_str();
 	st_JsonObject["tszTimeCountry"] = stl_MapIterator->second.tszTimeCountry;
 	st_JsonRoot["data"] = st_JsonObject;

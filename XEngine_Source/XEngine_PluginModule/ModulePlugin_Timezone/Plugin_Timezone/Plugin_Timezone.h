@@ -27,7 +27,8 @@ public:
 	BOOL PluginCore_UnInit();
 	BOOL PluginCore_Call(TCHAR*** pppHDRList, int nListCount, int* pInt_HTTPCode, TCHAR* ptszMsgBuffer, int* pInt_MsgLen, LPCTSTR lpszMsgBuffer, int nMsgLen);
 protected:
-	BOOL Plugin_Timezone_List(TCHAR* ptszMsgBufer, int* pInt_Len);
+	BOOL Plugin_Timezone_Count(TCHAR* ptszMsgBufer, int* pInt_Len);
+	BOOL Plugin_Timezone_List(LPCTSTR lpszConvert, TCHAR* ptszMsgBufer, int* pInt_Len);
 	BOOL Plugin_Timezone_Convert(LPCTSTR lpszConvert, LPCTSTR lpszTimeStr, TCHAR* ptszMsgBufer, int* pInt_Len);
 private:
 	unordered_map<string, MODULEPLUGIN_TIMEZONE> stl_MapTimezone;
