@@ -14,25 +14,20 @@ MODULE_PLUGIN_PATH = ./XEngine_ModulePlugin
 
 PLUGIN_MODULE_ZODIAC = ./XEngine_PluginModule/ModulePlugin_Zodiac
 PLUGIN_MODULE_PASSWORD = ./XEngine_PluginModule/ModulePlugin_Password
+PLUGIN_MODULE_TIMEZONE = ./XEngine_PluginModule/ModulePlugin_Timezone
+PLUGIN_MODULE_BMINDEX = ./XEngine_PluginModule/ModulePlugin_BMIndex
 
 APP_CENTER_PATH = ./XEngine_ServiceApp/XEngine_CenterApp
 APP_HTTP_PATH = ./XEngine_ServiceApp/XEngine_HttpApp
 
 XENGINE_MODULES = libjsoncpp.so            \
                   libXEngine_ModuleConfigure.so libXEngine_ModuleDatabase.so libXEngine_ModuleProtocol.so libXEngine_ModuleHelp.so libXEngine_ModulePlugin.so  \
-				  libModulePlugin_Zodiac.so libModulePlugin_Password.so \
-		   XEngine_HttpApp.exe
-
-ifeq ($(shell uname),Darwin)
-else
-XENGINE_MODULES += libopencc.so
-endif
+				  libModulePlugin_Zodiac.so libModulePlugin_Password.so libModulePlugin_Timezone.so libModulePlugin_BMIndex.so\
+		   		  XEngine_HttpApp.exe
 
 .PHONY:MakeAll 
 MakeAll:$(XENGINE_MODULES)
 
-libopencc.so:
-	cp -rf ./XEngine_ThirdPart/opencc/ubuntu/libopencc.so ../XEngine_Release/libopencc.so
 libjsoncpp.so:
 	make -C $(THIRDPART_MODULE_JSONCPP) $(FLAGS)
 
@@ -51,6 +46,10 @@ libModulePlugin_Zodiac.so:
 	make -C $(PLUGIN_MODULE_ZODIAC) $(FLAGS)
 libModulePlugin_Password.so:
 	make -C $(PLUGIN_MODULE_PASSWORD) $(FLAGS)
+libModulePlugin_Timezone.so:
+	make -C $(PLUGIN_MODULE_TIMEZONE) $(FLAGS)
+libModulePlugin_BMIndex.so:
+	make -C $(PLUGIN_MODULE_BMINDEX) $(FLAGS)
 
 XEngine_HttpApp.exe:
 	make -C $(APP_HTTP_PATH) $(FLAGS)
