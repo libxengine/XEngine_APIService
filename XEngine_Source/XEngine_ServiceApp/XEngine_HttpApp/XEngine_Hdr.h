@@ -86,6 +86,7 @@ extern XNETHANDLE xhHTTPPool;
 extern XENGINE_SERVICECONFIG st_ServiceConfig;
 extern XENGINE_OPENCCCONFIG st_OPenccConfig;
 extern XENGINE_PLUGINCONFIG st_PluginConfig;
+extern XENGINE_OPTIONLIST st_OPtionList;
 //连接库
 #ifdef _WINDOWS
 #ifdef _WIN64

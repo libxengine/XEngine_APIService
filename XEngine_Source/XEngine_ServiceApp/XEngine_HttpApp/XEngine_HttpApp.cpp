@@ -21,6 +21,7 @@ XNETHANDLE xhHTTPPool = 0;
 XENGINE_SERVICECONFIG st_ServiceConfig;
 XENGINE_OPENCCCONFIG st_OPenccConfig;
 XENGINE_PLUGINCONFIG st_PluginConfig;
+XENGINE_OPTIONLIST st_OPtionList;
 
 void ServiceApp_Stop(int signo)
 {
@@ -244,9 +245,8 @@ int main(int argc, char** argv)
 		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _T("启动服务中,初始化插件系统失败,错误：%lX"), ModulePlugin_GetLastError());
 		goto XENGINE_SERVICEAPP_EXIT;
 	}
-	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _T("启动服务中,初始化插件系统成功"));
 	//加载插件
-	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _T("启动服务中,开始加载插件,总共:%d 插件"), st_PluginConfig.pStl_ListPlugin->size());
+	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _T("启动服务中,初始化插件系统成功,开始加载插件"));
 	{
 		list<XENGINE_PLUGININFO>::const_iterator stl_ListIterator = st_PluginConfig.pStl_ListPlugin->begin();
 		for (int i = 1; stl_ListIterator != st_PluginConfig.pStl_ListPlugin->end(); stl_ListIterator++, i++)
@@ -268,6 +268,8 @@ int main(int argc, char** argv)
 			}
 		}
 	}
+	//展示能力
+	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _T("启动服务中,加载的基本查询服务总:%d 个,插件:%d 个"), st_OPtionList.stl_ListBase.size(), st_OPtionList.stl_ListPlug.size());
 
 	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _T("所有服务成功启动，服务运行中，XEngine版本:%s,发行版本次数:%d,当前版本：%s。。。"), BaseLib_OperatorVer_XGetStr(), st_ServiceConfig.st_XVer.pStl_ListVer->size(), st_ServiceConfig.st_XVer.pStl_ListVer->front().c_str());
 	while (TRUE)
