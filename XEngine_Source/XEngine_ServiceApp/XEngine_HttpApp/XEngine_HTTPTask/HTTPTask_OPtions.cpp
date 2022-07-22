@@ -21,6 +21,10 @@ BOOL XEngine_HTTPTask_OPTions(LPCTSTR lpszClientAddr)
 	FILE* pSt_File = _tfopen(lpszOPFile, _T("rb"));
 	if (NULL == pSt_File)
 	{
+		st_HDRParam.nHttpCode = 404;
+		RfcComponents_HttpServer_SendMsgEx(xhHTTPPacket, tszMsgBuffer, &nMsgLen, &st_HDRParam, tszPktBuffer, nPktLen);
+		XEngine_Network_Send(lpszClientAddr, tszMsgBuffer, nMsgLen);
+		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _T("HTTP客户端:%s,查询服务器能力失败,没有找到配置文件"), lpszClientAddr);
 		return FALSE;
 	}
 	nPktLen = fread(tszPktBuffer, 1, nPktLen, pSt_File);
@@ -28,6 +32,6 @@ BOOL XEngine_HTTPTask_OPTions(LPCTSTR lpszClientAddr)
 	//打包发送
 	RfcComponents_HttpServer_SendMsgEx(xhHTTPPacket, tszMsgBuffer, &nMsgLen, &st_HDRParam, tszPktBuffer, nPktLen);
 	XEngine_Network_Send(lpszClientAddr, tszMsgBuffer, nMsgLen);
-	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _T("HTTP客户端:%s,发送银行卡信息获取请求给服务器"), lpszClientAddr);
+	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _T("HTTP客户端:%s,查询服务器能力成功"), lpszClientAddr);
 	return TRUE;
 }
