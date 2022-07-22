@@ -8,7 +8,7 @@ LOADBIN = -L ../XEngine_ThirdPart/jsoncpp
 LIB = -ljsoncpp
 LIBEX = -ldl -lpthread
 LOADSO = -Wl,-rpath=./,--disable-new-dtags
-LIBINCLUDE = ModuleConfigure_Json.o pch.o
+LIBINCLUDE = ModuleConfigure_Json.o ModuleConfigure_File.o pch.o
 
 ifeq ($(shell uname),Darwin)
 	SHAREDLL = dylib
@@ -39,7 +39,9 @@ all:$(LIBINCLUDE)
 
 ModuleConfigure_Json.o:./ModuleConfigure_Json/ModuleConfigure_Json.cpp             
 	$(CC) $(DEBUG) $(FLAGS) $(UNICODE) $(INCLUDE) ./ModuleConfigure_Json/ModuleConfigure_Json.cpp 
-						              
+ModuleConfigure_File.o:./ModuleConfigure_File/ModuleConfigure_File.cpp             
+	$(CC) $(DEBUG) $(FLAGS) $(UNICODE) $(INCLUDE) ./ModuleConfigure_File/ModuleConfigure_File.cpp 
+
 pch.o:./pch.cpp                 		       	    
 	$(CC) $(DEBUG) $(FLAGS) $(UNICODE) $(INCLUDE) ./pch.cpp
 

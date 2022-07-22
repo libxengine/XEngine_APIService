@@ -19,6 +19,12 @@
     <Filter Include="源文件\ModuleConfigure_Json">
       <UniqueIdentifier>{865425d8-f7eb-4fb9-bcd1-8bb631209b4e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="头文件\ModuleConfigure_File">
+      <UniqueIdentifier>{6976af83-32b2-4404-a20e-2f619e57daad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\ModuleConfigure_File">
+      <UniqueIdentifier>{6b6efe12-6349-4581-a649-d81c086fb267}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -36,6 +42,9 @@
     <ClInclude Include="ModuleConfig_Error.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="ModuleConfigure_File\ModuleConfigure_File.h">
+      <Filter>头文件\ModuleConfigure_File</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp">
@@ -46,6 +55,9 @@
     </ClCompile>
     <ClCompile Include="ModuleConfigure_Json\ModuleConfigure_Json.cpp">
       <Filter>源文件\ModuleConfigure_Json</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleConfigure_File\ModuleConfigure_File.cpp">
+      <Filter>源文件\ModuleConfigure_File</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
