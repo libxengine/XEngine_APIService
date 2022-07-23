@@ -19,7 +19,7 @@ public:
 public:
 	BOOL PluginCore_Init(LPVOID lParam);
 	BOOL PluginCore_UnInit();
-	BOOL PluginCore_Call(TCHAR*** pppHDRList, int nListCount, int* pInt_HTTPCode, TCHAR* ptszMsgBuffer, int* pInt_MsgLen);
+	BOOL PluginCore_Call(TCHAR*** pppHDRList, int nListCount, int* pInt_HTTPCode, TCHAR* ptszMsgBuffer, int* pInt_MsgLen, LPCTSTR lpszMsgBuffer, int nMsgLen);
 protected:
 	BOOL Plugin_Password_Creator(LPCTSTR lpszPassType, LPCTSTR lpszLength, TCHAR* ptszPassStr);
 private:

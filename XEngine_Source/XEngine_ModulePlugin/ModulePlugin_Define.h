@@ -83,12 +83,22 @@ extern "C" BOOL ModulePlugin_Core_Push(XNETHANDLE * pxhNet, LPCSTR lpszPluginFil
   类型：整数型指针
   可空：N
   意思：输出内容大小
+ 参数.七：lpszMsgBufer
+  In/Out：Out
+  类型：常量字符指针
+  可空：Y
+  意思：输入负载内容
+ 参数.八：nMsgLen
+  In/Out：Out
+  类型：整数型指针
+  可空：Y
+  意思：输入负载大小
 返回值
   类型：逻辑型
   意思：是否成功
 备注：
 *********************************************************************/
-extern "C" BOOL ModulePlugin_Core_Exec(XNETHANDLE xhModule, TCHAR * **pppHDRList, int nListCount, int* pInt_HTTPCode, TCHAR * ptszMsgBuffer, int* pInt_MsgLen);
+extern "C" BOOL ModulePlugin_Core_Exec(XNETHANDLE xhModule, TCHAR * **pppHDRList, int nListCount, int* pInt_HTTPCode, TCHAR * ptszMsgBuffer, int* pInt_MsgLen, LPCTSTR lpszMsgBufer = NULL, int nMsgLen = 0);
 /********************************************************************
 函数名称：ModulePlugin_Core_Destroy
 函数功能：销毁插件核心并且清理资源

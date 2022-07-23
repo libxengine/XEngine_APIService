@@ -13,6 +13,10 @@ You can use this code to implement your own information query service, which sup
 The purpose of development and implementation based on libXEngine is a cross-platform network storage service  
 and support plugin module
 
+#### Why choose us
+
+Support privatization deployment, free, safe, open source, controllable
+
 ## Software feature
 1. support json and string stream methods to return the content of the query
 2. support ip address location information query(IPV4 and IPV6)
@@ -21,10 +25,10 @@ and support plugin module
 5. Weather forecast (planned)
 6. Lunar calendar conversion (planning)
 7. News headlines (planned)
-8. Standard height and weight (planned)
+8. Standard height and weight
 9. Zodiac Constellation
 10. Password generator
-11. World Time Zones (planned)
+11. World Time Zones
 12. Oil price inquiry (planned)
 13. Administrative zip code (planned)
 14. Bank card verification
@@ -39,20 +43,30 @@ and support plugin module
 
 ## install
 
-#### Requirements  
-support system above windows 7sp1 and linux(ubuntu20.04,centos8)  
-XEngine need V7.30 or above  
+#### XEngine Evn
+you must install XEngine,need V7.38 or above,install XEngine can be refer to xengine Readme docment  
+GITEE:https://gitee.com/xyry/libxengine  
+GITHUB:https://github.com/libxengine/xengine
+
+##### fast to deployment 
+git clone https://gitee.com/xyry/libxengine.git or git clone https://github.com/libxengine/xengine.git  
+window Exection XEngine_WINEnv.bat   
+Linux Exection:sudo ./XEngine_LINEnv.sh -i 3  
+Macos Exection:./XEngine_LINEnv.sh -i 3
 
 #### Windows
-use vs open and complie  
-You need to configure the environment in the following way, otherwise you may need to set the library directory in the project yourself  
-
-##### XEngine
-download xengine through git.read xengine project readme file to configure your env  
+use vs open and compile,suport windows 7sp1 and above  
+Just Run it
 
 #### Linux
-Linux use Makefile to complie  
-supproted ubuntu x64 or centos x64  
+install opencc,ubuntu:sudo apt install libopencc-dev,centos:compile by self  
+use makefile compile,UBUNTU20.04 x64 or CENTOS8 x64  
+Run it on the terminal
+
+#### Macos
+install opencc:brew install opencc  
+use makefile compile,mac 12 and above  
+Run it on the terminal
 
 ##### complie
 execute command in XEngine_Source path  
@@ -79,8 +93,10 @@ make FLAGS=CleanAll clear
 You can refer to the project under XEngine_PluginModule to write the plugin  
 The written plugin needs to be configured via JSON to be enabled  
 
-## now task
+## Test Server
+Address:app.xyry.org,Port:5501  
 
+## now task
 
 ## other problems   
 You can refer to the document under the docment directory. It contains API protocol and service description.  

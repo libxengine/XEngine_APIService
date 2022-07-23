@@ -13,14 +13,15 @@
 BOOL bIsRun = FALSE;
 XLOG xhLog = NULL;
 //HTTP服务器
-XNETHANDLE xhHTTPSocket = 0;
-XNETHANDLE xhHTTPHeart = 0;
-XNETHANDLE xhHTTPPool = 0;
+XHANDLE xhHTTPSocket = NULL;
+XHANDLE xhHTTPHeart = NULL;
 XHANDLE xhHTTPPacket = NULL;
+XNETHANDLE xhHTTPPool = 0;
 //配置文件
 XENGINE_SERVICECONFIG st_ServiceConfig;
 XENGINE_OPENCCCONFIG st_OPenccConfig;
 XENGINE_PLUGINCONFIG st_PluginConfig;
+XENGINE_OPTIONLIST st_OPtionList;
 
 void ServiceApp_Stop(int signo)
 {
@@ -39,10 +40,10 @@ void ServiceApp_Stop(int signo)
 		ModuleDatabase_Phone_Destory();
 		ModuleDatabase_Bank_Destory();
 		//销毁其他
+		ModulePlugin_Core_Destroy();
 		ModuleHelp_P2PClient_Destory();
 		//销毁日志资源
 		HelpComponents_XLog_Destroy(xhLog);
-		ModulePlugin_Core_Destroy();
 	}
 #ifdef _WINDOWS
 	WSACleanup();
@@ -187,19 +188,21 @@ int main(int argc, char** argv)
 		//启动心跳
 		if (st_ServiceConfig.st_XTime.nHTTPTimeOut > 0)
 		{
-			if (!SocketOpt_HeartBeat_InitEx(&xhHTTPHeart, st_ServiceConfig.st_XTime.nHTTPTimeOut, st_ServiceConfig.st_XTime.nTimeCheck, Network_Callback_HTTPHeart))
+			xhHTTPHeart = SocketOpt_HeartBeat_InitEx(st_ServiceConfig.st_XTime.nHTTPTimeOut, st_ServiceConfig.st_XTime.nTimeCheck, Network_Callback_HTTPHeart);
+			if (NULL == xhHTTPHeart)
 			{
 				XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _T("启动服务中,初始化HTTP心跳服务失败,错误：%lX"), NetCore_GetLastError());
 				goto XENGINE_SERVICEAPP_EXIT;
 			}
-			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _T("启动服务中,初始化HTTP心跳服务成功,句柄:%llu,时间:%d,次数:%d"), xhHTTPHeart, st_ServiceConfig.st_XTime.nHTTPTimeOut, st_ServiceConfig.st_XTime.nTimeCheck);
+			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _T("启动服务中,初始化HTTP心跳服务成功,时间:%d,次数:%d"), st_ServiceConfig.st_XTime.nHTTPTimeOut, st_ServiceConfig.st_XTime.nTimeCheck);
 		}
 		else
 		{
 			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_WARN, _T("启动服务中,HTTP心跳服务被设置为不启用"));
 		}
 		//网络
-		if (!NetCore_TCPXCore_StartEx(&xhHTTPSocket, st_ServiceConfig.nHttpPort, st_ServiceConfig.st_XMax.nMaxClient, st_ServiceConfig.st_XMax.nIOThread))
+		xhHTTPSocket = NetCore_TCPXCore_StartEx(st_ServiceConfig.nHttpPort, st_ServiceConfig.st_XMax.nMaxClient, st_ServiceConfig.st_XMax.nIOThread);
+		if (NULL == xhHTTPSocket)
 		{
 			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _T("启动服务中,启动HTTP网络服务器失败,错误：%lX"), NetCore_GetLastError());
 			goto XENGINE_SERVICEAPP_EXIT;
@@ -242,9 +245,8 @@ int main(int argc, char** argv)
 		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _T("启动服务中,初始化插件系统失败,错误：%lX"), ModulePlugin_GetLastError());
 		goto XENGINE_SERVICEAPP_EXIT;
 	}
-	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _T("启动服务中,初始化插件系统成功"));
 	//加载插件
-	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _T("启动服务中,开始加载插件,总共:%d 插件"), st_PluginConfig.pStl_ListPlugin->size());
+	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _T("启动服务中,初始化插件系统成功,开始加载插件"));
 	{
 		list<XENGINE_PLUGININFO>::const_iterator stl_ListIterator = st_PluginConfig.pStl_ListPlugin->begin();
 		for (int i = 1; stl_ListIterator != st_PluginConfig.pStl_ListPlugin->end(); stl_ListIterator++, i++)
@@ -266,9 +268,11 @@ int main(int argc, char** argv)
 			}
 		}
 	}
+	//展示能力
+	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _T("启动服务中,加载的基本查询服务总:%d 个,插件:%d 个"), st_OPtionList.stl_ListBase.size(), st_OPtionList.stl_ListPlug.size());
 
-	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _T("所有服务成功启动，服务运行中，发行版本次数:%d,当前版本：%s。。。"), st_ServiceConfig.st_XVer.pStl_ListVer->size(), st_ServiceConfig.st_XVer.pStl_ListVer->front().c_str());
-	while (bIsRun)
+	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _T("所有服务成功启动，服务运行中，XEngine版本:%s,发行版本次数:%d,当前版本：%s。。。"), BaseLib_OperatorVer_XGetStr(), st_ServiceConfig.st_XVer.pStl_ListVer->size(), st_ServiceConfig.st_XVer.pStl_ListVer->front().c_str());
+	while (TRUE)
 	{
 		std::this_thread::sleep_for(std::chrono::seconds(1));
 	}
@@ -289,10 +293,10 @@ XENGINE_SERVICEAPP_EXIT:
 		ModuleDatabase_Phone_Destory();
 		ModuleDatabase_Bank_Destory();
 		//销毁其他
+		ModulePlugin_Core_Destroy();
 		ModuleHelp_P2PClient_Destory();
 		//销毁日志资源
 		HelpComponents_XLog_Destroy(xhLog);
-		ModulePlugin_Core_Destroy();
 	}
 #ifdef _WINDOWS
 	WSACleanup();

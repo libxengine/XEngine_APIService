@@ -63,6 +63,7 @@ using namespace std;
 #include "XEngine_HTTPTask/HTTPTask_Language.h"
 #include "XEngine_HTTPTask/HTTPTask_Translation.h"
 #include "XEngine_HTTPTask/HTTPTask_P2PClient.h"
+#include "XEngine_HTTPTask/HTTPTask_OPtions.h"
 /********************************************************************
 //    Created:     2022/01/20  14:42:06
 //    File Name:   D:\XEngine_ServiceApp\XEngine_Source\XEngine_ServiceApp\XEngine_HttpApp\XEngine_Hdr.h
@@ -77,14 +78,15 @@ using namespace std;
 extern BOOL bIsRun;
 extern XLOG xhLog;
 //HTTP服务器
-extern XNETHANDLE xhHTTPSocket;
-extern XNETHANDLE xhHTTPHeart;
-extern XNETHANDLE xhHTTPPool;
+extern XHANDLE xhHTTPSocket;
+extern XHANDLE xhHTTPHeart;
 extern XHANDLE xhHTTPPacket;
+extern XNETHANDLE xhHTTPPool;
 //配置文件
 extern XENGINE_SERVICECONFIG st_ServiceConfig;
 extern XENGINE_OPENCCCONFIG st_OPenccConfig;
 extern XENGINE_PLUGINCONFIG st_PluginConfig;
+extern XENGINE_OPTIONLIST st_OPtionList;
 //连接库
 #ifdef _WINDOWS
 #ifdef _WIN64

@@ -13,6 +13,10 @@ c c++ interface api service
 基于libXEngine开发并实现的一套简洁高性能跨平台接口服务  
 并且支持模块插件  
 
+#### 为什么选择我们
+支持私有化部署,免费,安全.开源,可控
+
+
 ## 软件特性
 1. 支持JSON和字符串流方式返回查询的内容
 2. 支持IP地址位置信息查询(IPV4和IPV6)
@@ -21,10 +25,10 @@ c c++ interface api service
 5. 天气预报(计划中)
 6. 农历公历转换(计划中)
 7. 新闻头条(计划中)
-8. 标准身高体重(计划中)
+8. 标准身高体重
 9. 生肖星座
 10. 密码生成器
-11. 世界时区(计划中)
+11. 世界时区
 12. 油价查询(计划中)
 13. 行政邮编(计划中)
 14. 银行卡验证
@@ -39,20 +43,30 @@ c c++ interface api service
 
 ## 安装教程
 
-#### 版本需求
-支持WINDOWS 7SP1和LINUX(UBUNT20.04,CENTOS8)以上系统  
-XEngine版本需要V7.30或者以上版本  
+#### XEngine环境
+必须安装XEngine,版本需要V7.38或者以上版本,安装XEngine可以参考其Readme文档  
+GITEE:https://gitee.com/xyry/libxengine  
+GITHUB:https://github.com/libxengine/xengine
+
+###### 快速部署
+git clone https://gitee.com/xyry/libxengine.git 或者 git clone https://github.com/libxengine/xengine.git  
+window执行XEngine_WINEnv.bat 脚本.  
+Linux执行:sudo ./XEngine_LINEnv.sh -i 3  
+macos执行:./XEngine_LINEnv.sh -i 3  
 
 #### Windows
-使用VS打开并且编译
-你需要按照下面的方式配置环境,不然你可能需要自己在项目中设置库目录
-
-##### XEngine环境
-XEngine通过GIT下载,参考XEngine项目的readme配置环境  
+使用VS打开并且编译,支持WINDOWS 7SP1以上系统  
+直接运行即可
 
 #### Linux
-Linux使用Makefile编译  
-UBUNTU20.04 x64或者CENTOS8 x64均可  
+安装opencc,ubuntu:sudo apt install libopencc-dev,centos:需要自己编译  
+Linux使用Makefile编译,UBUNTU20.04 x64或者CENTOS8 x64  
+在控制台运行
+
+#### Macos
+安装opencc,执行命令:brew install opencc  
+使用makefile编译,控制台运行,需要mac 12以及以上版本  
+在控制台运行
 
 ##### 编译命令
 在XEngine_Source目录下执行命令  
@@ -86,6 +100,7 @@ make FLAGS=CleanAll 清理编译
 
 ## 测试服务器
 地址:app.xyry.org,端口:5501  
+
 #### 测试接口示例
 更多内容请参考文档  
 手机信息查询  

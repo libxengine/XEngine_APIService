@@ -1,19 +1,30 @@
 CC = g++ -Wall -std=c++17 -fPIC
+SHAREFLAG = -shared
+SHAREDLL = so
 RELEASE = 0
 UNICODE = 0
 INCLUDE = -I ./ 
-LOADBIN = -L /usr/local/lib/XEngine_Release/XEngine_HelpComponents
-LIB = -lHelpComponents_DataBase
-LIBEX = -static-libgcc -lrt -ldl -lpthread
+LOADBIN = -L /usr/local/lib/XEngine_Release/XEngine_BaseLib -L /usr/local/lib/XEngine_Release/XEngine_HelpComponents
+LIB = -lXEngine_BaseLib -lHelpComponents_DataBase
+LIBEX = -ldl -lpthread
 LOADSO = -Wl,-rpath=./,--disable-new-dtags
 LIBINCLUDE = ModuleDatabase_IDCard.o ModuleDatabase_IPInfo.o ModuleDatabase_Phone.o ModuleDatabase_Bank.o pch.o
+
+ifeq ($(shell uname),Darwin)
+	SHAREDLL = dylib
+	SHAREFLAG = -dynamiclib
+	LOADSO = 
+else
+	SHAREDLL = so
+	SHAREFLAG = -shared
+endif
 
 ifeq ($(RELEASE),1)
 FLAGS = -c -O2 
 DEBUG = 
 else
-FLAGS = -c -lc_p
-DEBUG = -g -pg 
+FLAGS = -c 
+DEBUG = -g 
 endif
 
 ifeq ($(UNICODE),1)
@@ -24,7 +35,7 @@ endif
 
 
 all:$(LIBINCLUDE)
-	$(CC) $(DEBUG) $(LIBINCLUDE) -o libXEngine_ModuleDatabase.so -shared -fPIC $(LOADBIN) $(LIB) $(LIBEX) $(LOADSO)
+	$(CC) $(DEBUG) $(LIBINCLUDE) -o libXEngine_ModuleDatabase.$(SHAREDLL) $(SHAREFLAG) -fPIC $(LOADBIN) $(LIB) $(LIBEX) $(LOADSO)
 
 ModuleDatabase_IDCard.o:./ModuleDatabase_IDCard/ModuleDatabase_IDCard.cpp             
 	$(CC) $(DEBUG) $(FLAGS) $(UNICODE) $(INCLUDE) ./ModuleDatabase_IDCard/ModuleDatabase_IDCard.cpp 
@@ -40,12 +51,12 @@ pch.o:./pch.cpp
 
 
 InstallAll:InstallSo 
-InstallSo:./libXEngine_ModuleDatabase.so
-	cp ./libXEngine_ModuleDatabase.so ../../XEngine_Release/libXEngine_ModuleDatabase.so
+InstallSo:./libXEngine_ModuleDatabase.$(SHAREDLL)
+	cp ./libXEngine_ModuleDatabase.$(SHAREDLL) ../../XEngine_Release/libXEngine_ModuleDatabase.$(SHAREDLL)
 
 
 CleanAll:CleanObj CleanMk
 CleanObj:                                               
 	rm *.o
 CleanMk:                             
-	rm *.so                        
+	rm *.$(SHAREDLL)                        

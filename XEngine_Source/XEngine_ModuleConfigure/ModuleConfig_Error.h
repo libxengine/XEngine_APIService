@@ -20,3 +20,9 @@
 #define ERROR_MODULE_CONFIGURE_JSON_XPLUGIN 0xA0008                  //插件配置错误
 #define ERROR_MODULE_CONFIGURE_JSON_XVER 0xA0009                     //版本配置文件读取错误
 #define ERROR_MODULE_CONFIGURE_JSON_MALLOC 0xA000A                   //申请内存失败
+//////////////////////////////////////////////////////////////////////////
+#define ERROR_MODULE_CONFIGURE_FILE_PARAMENT 0xA1001                 //参数错误
+#define ERROR_MODULE_CONFIGURE_FILE_OPENFILE 0xA1002                 //打开文件失败
+#define ERROR_MODULE_CONFIGURE_FILE_PARSE 0xA1003                    //解析错误
+#define ERROR_MODULE_CONFIGURE_FILE_BASE 0xA1004                     //基础信息不存在
+#define ERROR_MODULE_CONFIGURE_JSON_PLUGIN 0xA1005                   //插件信息不存在

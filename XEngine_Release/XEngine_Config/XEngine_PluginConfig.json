@@ -9,6 +9,16 @@
             "PluginEnable":true,
             "PluginMethod":"pass",
             "PluginFile":"./XEngine_Plugin/ModulePlugin_Password.dll"
+        },
+        {
+            "PluginEnable":true,
+            "PluginMethod":"timezone",
+            "PluginFile":"./XEngine_Plugin/ModulePlugin_Timezone.dll"
+        },
+        {
+            "PluginEnable":true,
+            "PluginMethod":"bmindex",
+            "PluginFile":"./XEngine_Plugin/ModulePlugin_BMIndex.dll"
         }
     ]
 }

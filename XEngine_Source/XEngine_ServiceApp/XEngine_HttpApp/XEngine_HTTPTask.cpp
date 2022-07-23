@@ -89,6 +89,7 @@ BOOL XEngine_HTTPTask_Handle(RFCCOMPONENTS_HTTP_REQPARAM* pSt_HTTPParam, LPCTSTR
 	LPCTSTR lpszFuncName = _T("api");
 	LPCTSTR lpszParamFuncKey = _T("function");
 	LPCTSTR lpszParamName = _T("params1");
+	LPCTSTR lpszParamOPtions = _T("options");
 	LPCTSTR lpszParamIPAddr = _T("ip");
 	LPCTSTR lpszParamIDCard = _T("id");
 	LPCTSTR lpszParamPhone = _T("phone");
@@ -148,9 +149,14 @@ BOOL XEngine_HTTPTask_Handle(RFCCOMPONENTS_HTTP_REQPARAM* pSt_HTTPParam, LPCTSTR
 	}
 	else if (0 == _tcsnicmp(lpszMethodGet, pSt_HTTPParam->tszHttpMethod, _tcslen(lpszMethodGet)))
 	{
-		//是不是ip查询
-		if (0 == _tcsnicmp(lpszParamIPAddr, tszValue, _tcslen(lpszParamIPAddr)))
+		if (0 == _tcsnicmp(lpszParamOPtions, tszValue, _tcslen(lpszParamOPtions)))
 		{
+			//HTTP能力查询
+			XEngine_HTTPTask_OPTions(lpszClientAddr);
+		}
+		else if (0 == _tcsnicmp(lpszParamIPAddr, tszValue, _tcslen(lpszParamIPAddr)))
+		{
+			//是不是ip查询
 			memset(tszKey, '\0', sizeof(tszKey));
 			memset(tszValue, '\0', sizeof(tszValue));
 			BaseLib_OperatorString_GetKeyValue(pptszList[1], "=", tszKey, tszValue);
