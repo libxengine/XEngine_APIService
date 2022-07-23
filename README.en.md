@@ -13,6 +13,10 @@ You can use this code to implement your own information query service, which sup
 The purpose of development and implementation based on libXEngine is a cross-platform network storage service  
 and support plugin module
 
+#### Why choose us
+
+Support privatization deployment, free, safe, open source, controllable
+
 ## Software feature
 1. support json and string stream methods to return the content of the query
 2. support ip address location information query(IPV4 and IPV6)
@@ -21,10 +25,10 @@ and support plugin module
 5. Weather forecast (planned)
 6. Lunar calendar conversion (planning)
 7. News headlines (planned)
-8. Standard height and weight (planned)
+8. Standard height and weight
 9. Zodiac Constellation
 10. Password generator
-11. World Time Zones (planned)
+11. World Time Zones
 12. Oil price inquiry (planned)
 13. Administrative zip code (planned)
 14. Bank card verification

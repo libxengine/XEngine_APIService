@@ -1,3 +1,27 @@
+XEngine_APIService V2.3.0.1001
+
+添加:服务器能力查询接口函数
+添加:bmi模块
+添加:时区插件
+更新:支持XENGINE V7.38版本了
+修改:支持MACOS系统了
+修改:插件支持负载内容参数了
+修改:现在打印xengine版本了
+修正:程序退出时候崩溃
+修正:构建错误
+删除:libopencc的linux模块,需要自己安装
+
+added:server option supported
+added:bmi module
+added:timezone plugin module
+update:match xengine v7.38
+modify:support macos now
+modify:plugin support payload parament
+modify:printf xengine version now
+fixed:app exist crashed.
+fixed:build error
+delete:libopencc for linux module,install byself
+======================================================================================
 XEngine_APIService V2.2.0.1001
 
 添加:为p2p处理增加post方法
