@@ -97,6 +97,7 @@ BOOL XEngine_HTTPTask_Handle(RFCCOMPONENTS_HTTP_REQPARAM* pSt_HTTPParam, LPCTSTR
 	LPCTSTR lpszParamLanguage = _T("language");
 	LPCTSTR lpszParamTranslation = _T("translation");
 	LPCTSTR lpszParamP2PClient = _T("p2p");
+	LPCTSTR lpszParamCDKey = _T("cdkey");
 
 	memset(tszKey, '\0', sizeof(tszKey));
 	memset(tszValue, '\0', sizeof(tszValue));
@@ -300,11 +301,11 @@ BOOL XEngine_HTTPTask_Handle(RFCCOMPONENTS_HTTP_REQPARAM* pSt_HTTPParam, LPCTSTR
 			BaseLib_OperatorString_GetKeyValue(pptszList[3], "=", tszKey, tszCvtType);
 			XEngine_HTTPTask_Translation(lpszClientAddr, tszValue, _ttoi(tszGetType), _ttoi(tszCvtType));
 		}
-		BaseLib_OperatorMemory_Free((XPPPMEM)&pptszList, nListCount);
 	}
 	else
 	{
 		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_WARN, _T("HTTP客户端:%s,协议错误"), lpszClientAddr);
 	}
+	BaseLib_OperatorMemory_Free((XPPPMEM)&pptszList, nListCount);
 	return TRUE;
 }
