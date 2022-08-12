@@ -10,7 +10,7 @@ LIB = -lXEngine_BaseLib -lXEngine_Algorithm -lXEngine_Core -lXEngine_ManagePool 
 LIBEX = -ldl -lpthread
 LOADSO = -Wl,-rpath=./,--disable-new-dtags
 LIBINCLUDE = XEngine_Configure.o XEngine_Network.o XEngine_HTTPTask.o XEngine_PluginTask.o XEngine_HttpApp.o        \
-             HTTPTask_IPInfo.o HTTPTask_IDCard.o HTTPTask_Phone.o HTTPTask_Bank.o HTTPTask_Language.o HTTPTask_Translation.o HTTPTask_P2PClient.o HTTPTask_OPtions.o
+             HTTPTask_IPInfo.o HTTPTask_IDCard.o HTTPTask_Phone.o HTTPTask_Bank.o HTTPTask_Language.o HTTPTask_Translation.o HTTPTask_P2PClient.o HTTPTask_OPtions.o HTTPTask_CDKey.o
 
 ifeq ($(shell uname),Darwin)
 	LOADSO = 
@@ -31,7 +31,7 @@ UNICODE =
 endif
 
 all:$(LIBINCLUDE)
-	$(CC) $(DEBUG) $(LIBINCLUDE) -o XEngine_HttpApp $(LOADBIN) $(LIB) $(LIBEX) $(LOADSO)
+	$(CC) $(DEBUG) $(LIBINCLUDE) -o XEngine_APIServiceApp $(LOADBIN) $(LIB) $(LIBEX) $(LOADSO)
   
 XEngine_Configure.o:./XEngine_Configure.cpp
 	$(CC) $(DEBUG) $(FLAGS) $(UNICODE) ./XEngine_Configure.cpp
@@ -58,18 +58,20 @@ HTTPTask_P2PClient.o:./XEngine_HTTPTask/HTTPTask_P2PClient.cpp
 	$(CC) $(DEBUG) $(FLAGS) $(UNICODE) ./XEngine_HTTPTask/HTTPTask_P2PClient.cpp
 HTTPTask_OPtions.o:./XEngine_HTTPTask/HTTPTask_OPtions.cpp
 	$(CC) $(DEBUG) $(FLAGS) $(UNICODE) ./XEngine_HTTPTask/HTTPTask_OPtions.cpp
+HTTPTask_CDKey.o:./XEngine_HTTPTask/HTTPTask_CDKey.cpp
+	$(CC) $(DEBUG) $(FLAGS) $(UNICODE) ./XEngine_HTTPTask/HTTPTask_CDKey.cpp
 
 XEngine_HttpApp.o:./XEngine_HttpApp.cpp             
 	$(CC) $(DEBUG) $(FLAGS) $(UNICODE) ./XEngine_HttpApp.cpp   
 
 
 InstallAll:InstallApp
-InstallApp:./XEngine_HttpApp
-	cp -f ./XEngine_HttpApp ../../../XEngine_Release/XEngine_HttpApp
+InstallApp:./XEngine_APIServiceApp
+	cp -f ./XEngine_APIServiceApp ../../../XEngine_Release/XEngine_APIServiceApp
 
 CleanAll:CleanObj CleanMk
 CleanObj:                                              
 	rm *.o
 CleanMk:                                  
-	rm XEngine_HttpApp     
+	rm XEngine_APIServiceApp     
 	       

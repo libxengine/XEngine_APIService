@@ -1,6 +1,6 @@
 ﻿#include "../XEngine_Hdr.h"
 
-BOOL XEngine_HTTPTask_CDKey(LPCTSTR lpszClientAddr, LPCTSTR lpszMsgBuffer, int nMsgLen, int unOperatorCode)
+BOOL XEngine_HTTPTask_CDKey(LPCTSTR lpszClientAddr, LPCTSTR lpszMsgBuffer, int nMsgLen, int unOperatorCode, LPCTSTR lpszPass)
 {
 	int nSDLen = 4096;
 	int nRVLen = 4096;
@@ -28,8 +28,23 @@ BOOL XEngine_HTTPTask_CDKey(LPCTSTR lpszClientAddr, LPCTSTR lpszMsgBuffer, int n
 			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_WARN, _T("客户端:%s,请求创建CDKEY协议失败,服务器内部错误：%lX"), lpszClientAddr, Authorize_GetLastError());
 			return FALSE;
 		}
-		RfcComponents_HttpServer_SendMsgEx(xhHTTPPacket, tszSDBuffer, &nSDLen, &st_HDRParam, tszRVBuffer, nRVLen);
+		if (NULL == lpszPass)
+		{
+			RfcComponents_HttpServer_SendMsgEx(xhHTTPPacket, tszSDBuffer, &nSDLen, &st_HDRParam, tszRVBuffer, nRVLen);
+		}
+		else
+		{
+			UCHAR tszCodecBuffer[4096];
+			memset(tszCodecBuffer, '\0', sizeof(tszCodecBuffer));
+
+			OPenSsl_XCrypto_Encoder(tszRVBuffer, &nMsgLen, tszCodecBuffer, lpszPass);
+			RfcComponents_HttpServer_SendMsgEx(xhHTTPPacket, tszSDBuffer, &nSDLen, &st_HDRParam, (LPCTSTR)tszCodecBuffer, nMsgLen);
+		}
 		XEngine_Network_Send(lpszClientAddr, tszSDBuffer, nSDLen);
+		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_WARN, _T("客户端:%s,请求创建CDKEY成功,APP名:%s,APP版本:%s"), lpszClientAddr, st_Authorize.st_AuthAppInfo.tszAppName, st_Authorize.st_AuthAppInfo.tszAppVer);
+	}
+	else if (1 == unOperatorCode)
+	{
 	}
 	else
 	{
