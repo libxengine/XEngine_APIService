@@ -518,7 +518,7 @@ extern "C" BOOL ModuleProtocol_Parse_IDCard(LPCTSTR lpszMsgBuffer, XENGINE_IDCAR
   可空：N
   意思：输入解析大小
  参数.三：pSt_BankInfo
-  In/Out：In
+  In/Out：Out
   类型：数据结构指针
   可空：N
   意思：输出解析好的内容
@@ -542,7 +542,7 @@ extern "C" BOOL ModuleProtocol_Parse_Bank(LPCTSTR lpszMsgBuffer, int nMsgLen, XE
   可空：N
   意思：输入解析大小
  参数.三：pSt_LanguageInfo
-  In/Out：In
+  In/Out：Out
   类型：数据结构指针
   可空：N
   意思：输出解析好的内容
@@ -566,7 +566,7 @@ extern "C" BOOL ModuleProtocol_Parse_Translation(LPCTSTR lpszMsgBuffer, int nMsg
   可空：N
   意思：输入缓冲区大小
  参数.三：pSt_P2XPPeer
-  In/Out：In
+  In/Out：Out
   类型：数据结构指针
   可空：N
   意思：输出解析后的节点信息
@@ -576,3 +576,27 @@ extern "C" BOOL ModuleProtocol_Parse_Translation(LPCTSTR lpszMsgBuffer, int nMsg
 备注：
 *********************************************************************/
 extern "C" BOOL ModuleProtocol_Parse_P2PClient(LPCTSTR lpszMsgBuffer, int nMsgLen, XENGINE_P2XPPEER_PROTOCOL * pSt_P2XPPeer);
+/********************************************************************
+函数名称：ModuleProtocol_Parse_CDKey
+函数功能：解析CDKEY
+ 参数.一：lpszMsgBuffer
+  In/Out：In
+  类型：常量字符指针
+  可空：N
+  意思：输入要解析的缓冲区
+ 参数.二：nMsgLen
+  In/Out：In
+  类型：整数型
+  可空：N
+  意思：输入缓冲区大小
+ 参数.三：pSt_Authorize
+  In/Out：Out
+  类型：数据结构指针
+  可空：N
+  意思：输出解析后的信息
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+extern "C" BOOL ModuleProtocol_Parse_CDKey(LPCTSTR lpszMsgBuffer, int nMsgLen, XENGINE_AUTHORIZE_LOCAL* pSt_Authorize);

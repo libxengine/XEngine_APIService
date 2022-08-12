@@ -23,3 +23,4 @@ EXPORTS
 	ModuleProtocol_Parse_Bank
 	ModuleProtocol_Parse_Translation
 	ModuleProtocol_Parse_P2PClient
+	ModuleProtocol_Parse_CDKey
