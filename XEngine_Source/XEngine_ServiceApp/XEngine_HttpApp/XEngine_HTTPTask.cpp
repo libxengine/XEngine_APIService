@@ -163,7 +163,7 @@ BOOL XEngine_HTTPTask_Handle(RFCCOMPONENTS_HTTP_REQPARAM* pSt_HTTPParam, LPCTSTR
 				return FALSE;
 			}
 			int nOPType = _ttoi(tszValue);
-			if (2 == nListCount)
+			if (3 == nListCount)
 			{
 				memset(tszKey, '\0', sizeof(tszKey));
 				memset(tszValue, '\0', sizeof(tszValue));
