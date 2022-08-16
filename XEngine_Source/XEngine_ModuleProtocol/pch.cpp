@@ -75,6 +75,10 @@ extern "C" BOOL ModuleProtocol_Packet_LanguageQuery2(TCHAR * ptszMsgBuffer, int*
 {
 	return m_ProtocolPacket.ModuleProtocol_Packet_LanguageQuery2(ptszMsgBuffer, pInt_MsgLen, pSt_LanguageInfo, nCode);
 }
+extern "C" BOOL ModuleProtocol_Packet_Locker(TCHAR * ptszMsgBuffer, int* pInt_MsgLen, XNETHANDLE xhToken, int nCode, LPCTSTR lpszMsgBuffer)
+{
+	return m_ProtocolPacket.ModuleProtocol_Packet_Locker(ptszMsgBuffer, pInt_MsgLen, xhToken, nCode, lpszMsgBuffer);
+}
 extern "C" BOOL ModuleProtocol_Packet_P2PLan(TCHAR * ptszMsgBuffer, int* pInt_MsgLen, XENGINE_P2XPPEER_PROTOCOL * **pppSt_ListClients, int nListCount)
 {
 	return m_ProtocolPacket.ModuleProtocol_Packet_P2PLan(ptszMsgBuffer, pInt_MsgLen, pppSt_ListClients, nListCount);

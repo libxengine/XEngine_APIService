@@ -372,6 +372,40 @@ extern "C" BOOL ModuleProtocol_Packet_LanguageQuery(TCHAR* ptszMsgBuffer, int* p
 *********************************************************************/
 extern "C" BOOL ModuleProtocol_Packet_LanguageQuery2(TCHAR* ptszMsgBuffer, int* pInt_MsgLen, XENGINE_LANGUAGEINFO* pSt_LanguageInfo, int nCode = 0);
 /********************************************************************
+函数名称：ModuleProtocol_Packet_Locker
+函数功能：分布式锁协议打包函数
+ 参数.一：ptszMsgBuffer
+  In/Out：Out
+  类型：字符指针
+  可空：N
+  意思：输出打包的数据信息
+ 参数.二：pInt_MsgLen
+  In/Out：Out
+  类型：整数型指针
+  可空：N
+  意思：输出打包大小
+ 参数.三：xhToken
+  In/Out：In
+  类型：句柄
+  可空：N
+  意思：输入要打包的数据
+ 参数.四：nCode
+  In/Out：In
+  类型：整数型
+  可空：Y
+  意思：输入返回的值
+ 参数.五：lpszMsgBuffer
+  In/Out：In
+  类型：常量字符指针
+  可空：Y
+  意思：输入操作结果
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+extern "C" BOOL ModuleProtocol_Packet_Locker(TCHAR* ptszMsgBuffer, int* pInt_MsgLen, XNETHANDLE xhToken, int nCode = 0, LPCTSTR lpszMsgBuffer = NULL);
+/********************************************************************
 函数名称：ModuleProtocol_Packet_P2PLan
 函数功能：响应同步局域网地址列表
  参数.一：ptszMsgBuffer
