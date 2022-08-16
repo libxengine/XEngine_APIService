@@ -25,11 +25,20 @@
 //////////////////////////////////////////////////////////////////////////
 //                        节点管理器错误
 //////////////////////////////////////////////////////////////////////////
-#define ERROR_XENGINE_APISERVICE_MODULE_HELP_P2P_ISEXIST 0xB0E0001       //用户已经存在
-#define ERROR_XENGINE_APISERVICE_MODULE_HELP_P2P_MALLOC 0xB0E0002        //申请内存失败
-#define ERROR_XENGINE_APISERVICE_MODULE_HELP_P2P_PARAMENT 0xB0E0003      //获取用户信息失败,参数错误
-#define ERROR_XENGINE_APISERVICE_MODULE_HELP_P2P_NOTFOUND 0xB0E0004      //没有找到用户
-#define ERROR_XENGINE_APISERVICE_MODULE_HELP_P2P_NOTPUBADDRR 0xB0E0005   //公网IP地址没有找到
-#define ERROR_XENGINE_APISERVICE_MODULE_HELP_P2P_NOTPRIADDR 0xB0E0006    //私有网络IP地址没有找到
-#define ERROR_XENGINE_APISERVICE_MODULE_HELP_P2P_NOLIST 0xB0E0007        //没有数据存在
-#define ERROR_XENGINE_APISERVICE_MODULE_HELP_P2P_THREAD 0xB0E0008        //创建线程失败
+#define ERROR_XENGINE_APISERVICE_MODULE_HELP_P2P_ISEXIST 0xD2001         //用户已经存在
+#define ERROR_XENGINE_APISERVICE_MODULE_HELP_P2P_MALLOC 0xD2002          //申请内存失败
+#define ERROR_XENGINE_APISERVICE_MODULE_HELP_P2P_PARAMENT 0xD2003        //获取用户信息失败,参数错误
+#define ERROR_XENGINE_APISERVICE_MODULE_HELP_P2P_NOTFOUND 0xD2004        //没有找到用户
+#define ERROR_XENGINE_APISERVICE_MODULE_HELP_P2P_NOTPUBADDRR 0xD2005     //公网IP地址没有找到
+#define ERROR_XENGINE_APISERVICE_MODULE_HELP_P2P_NOTPRIADDR 0xD2006      //私有网络IP地址没有找到
+#define ERROR_XENGINE_APISERVICE_MODULE_HELP_P2P_NOLIST 0xD2007          //没有数据存在
+#define ERROR_XENGINE_APISERVICE_MODULE_HELP_P2P_THREAD 0xD2008          //创建线程失败
+//////////////////////////////////////////////////////////////////////////
+//                        分布式锁错误
+//////////////////////////////////////////////////////////////////////////
+#define ERROR_XENGINE_APISERVICE_MODULE_HELP_LOCK_PARAMENT 0xD3001       //参数错误
+#define ERROR_XENGINE_APISERVICE_MODULE_HELP_LOCK_MALLOC 0xD3002         //申请内存失败
+#define ERROR_XENGINE_APISERVICE_MODULE_HELP_LOCK_EXIST 0xD3003          //已经存在
+#define ERROR_XENGINE_APISERVICE_MODULE_HELP_LOCK_NOTFOUND 0xD3004       //没有找到锁
+#define ERROR_XENGINE_APISERVICE_MODULE_HELP_LOCK_LOCKED 0xD3005         //已锁定
+#define ERROR_XENGINE_APISERVICE_MODULE_HELP_LOCK_STATUS 0xD3006         //解锁状态错误

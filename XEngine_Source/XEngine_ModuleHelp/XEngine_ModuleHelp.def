@@ -19,3 +19,11 @@ EXPORTS
 	ModuleHelp_P2PClient_Delete
 	ModuleHelp_P2PClient_DelAll
 	ModuleHelp_P2PClient_Heart
+
+	ModuleHelp_Locker_Create
+	ModuleHelp_Locker_OPen
+	ModuleHelp_Locker_ReadLock
+	ModuleHelp_Locker_ReadUNLock
+	ModuleHelp_Locker_WriteLock
+	ModuleHelp_Locker_WriteUNLock
+	ModuleHelp_Locker_Close
