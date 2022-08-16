@@ -18,6 +18,35 @@ extern "C" DWORD ModuleProtocol_GetLastError(int *pInt_SysError = NULL);
 /*                         导出的协议打包函数                           */
 /************************************************************************/
 /********************************************************************
+函数名称：ModuleProtocol_Packet_Common
+函数功能：公用协议打包函数
+ 参数.一：ptszMsgBuffer
+  In/Out：Out
+  类型：字符指针
+  可空：N
+  意思：输出打好包的缓冲区
+ 参数.二：pInt_MsgLen
+  In/Out：Out
+  类型：整数型指针
+  可空：N
+  意思：输出缓冲区大小
+ 参数.三：nCode
+  In/Out：In
+  类型：整数型
+  可空：Y
+  意思：输入返回的值
+ 参数.四：lpszMsgBuffer
+  In/Out：In
+  类型：常量字符指针
+  可空：Y
+  意思：输入要打包的后续内容
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+extern "C" BOOL ModuleProtocol_Packet_Common(TCHAR * ptszMsgBuffer, int* pInt_MsgLen, int nCode = 0, LPCTSTR lpszMsgBuffer = NULL);
+/********************************************************************
 函数名称：ModuleProtocol_Packet_IPQuery
 函数功能：IP地址查询打包协议
  参数.一：ptszMsgBuffer
@@ -342,35 +371,6 @@ extern "C" BOOL ModuleProtocol_Packet_LanguageQuery(TCHAR* ptszMsgBuffer, int* p
 备注：
 *********************************************************************/
 extern "C" BOOL ModuleProtocol_Packet_LanguageQuery2(TCHAR* ptszMsgBuffer, int* pInt_MsgLen, XENGINE_LANGUAGEINFO* pSt_LanguageInfo, int nCode = 0);
-/********************************************************************
-函数名称：ModuleProtocol_Packet_P2PCommon
-函数功能：P2XP公用协议打包函数
- 参数.一：ptszMsgBuffer
-  In/Out：Out
-  类型：字符指针
-  可空：N
-  意思：输出打好包的缓冲区
- 参数.二：pInt_MsgLen
-  In/Out：Out
-  类型：整数型指针
-  可空：N
-  意思：输出缓冲区大小
- 参数.三：nCode
-  In/Out：In
-  类型：整数型
-  可空：Y
-  意思：输入返回的值
- 参数.四：lpszMsgBuffer
-  In/Out：In
-  类型：常量字符指针
-  可空：Y
-  意思：输入要打包的后续内容
-返回值
-  类型：逻辑型
-  意思：是否成功
-备注：
-*********************************************************************/
-extern "C" BOOL ModuleProtocol_Packet_P2PCommon(TCHAR* ptszMsgBuffer, int* pInt_MsgLen, int nCode = 0, LPCTSTR lpszMsgBuffer = NULL);
 /********************************************************************
 函数名称：ModuleProtocol_Packet_P2PLan
 函数功能：响应同步局域网地址列表

@@ -22,6 +22,55 @@ CModuleProtocol_Packet::~CModuleProtocol_Packet()
 //                             公有函数
 //////////////////////////////////////////////////////////////////////////
 /********************************************************************
+函数名称：ModuleProtocol_Packet_Common
+函数功能：公用协议打包函数
+ 参数.一：ptszMsgBuffer
+  In/Out：Out
+  类型：字符指针
+  可空：N
+  意思：输出打好包的缓冲区
+ 参数.二：pInt_MsgLen
+  In/Out：Out
+  类型：整数型指针
+  可空：N
+  意思：输出缓冲区大小
+ 参数.三：nCode
+  In/Out：In
+  类型：整数型
+  可空：Y
+  意思：输入返回的值
+ 参数.四：lpszMsgBuffer
+  In/Out：In
+  类型：常量字符指针
+  可空：Y
+  意思：输入要打包的后续内容
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+BOOL CModuleProtocol_Packet::ModuleProtocol_Packet_Common(TCHAR* ptszMsgBuffer, int* pInt_MsgLen, int nCode /* = 0 */, LPCTSTR lpszMsgBuffer /* = NULL */)
+{
+	ModuleProtocol_IsErrorOccur = FALSE;
+
+	if ((NULL == ptszMsgBuffer) || (NULL == pInt_MsgLen))
+	{
+		ModuleProtocol_IsErrorOccur = TRUE;
+		ModuleProtocol_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PROTOCOL_PACKET_PARAMENT;
+		return FALSE;
+	}
+	Json::Value st_JsonRoot;
+
+	st_JsonRoot["code"] = 0;
+	if (NULL != lpszMsgBuffer)
+	{
+		st_JsonRoot["msg"] = lpszMsgBuffer;
+	}
+	*pInt_MsgLen = st_JsonRoot.toStyledString().length();
+	memcpy(ptszMsgBuffer, st_JsonRoot.toStyledString().c_str(), *pInt_MsgLen);
+	return TRUE;
+}
+/********************************************************************
 函数名称：ModuleProtocol_Packet_IPQuery
 函数功能：IP地址查询打包协议
  参数.一：ptszMsgBuffer
@@ -636,55 +685,6 @@ BOOL CModuleProtocol_Packet::ModuleProtocol_Packet_LanguageQuery2(TCHAR* ptszMsg
 	return TRUE;
 }
 /********************************************************************
-函数名称：ModuleProtocol_Packet_P2PCommon
-函数功能：P2XP公用协议打包函数
- 参数.一：ptszMsgBuffer
-  In/Out：Out
-  类型：字符指针
-  可空：N
-  意思：输出打好包的缓冲区
- 参数.二：pInt_MsgLen
-  In/Out：Out
-  类型：整数型指针
-  可空：N
-  意思：输出缓冲区大小
- 参数.三：nCode
-  In/Out：In
-  类型：整数型
-  可空：Y
-  意思：输入返回的值
- 参数.四：lpszMsgBuffer
-  In/Out：In
-  类型：常量字符指针
-  可空：Y
-  意思：输入要打包的后续内容
-返回值
-  类型：逻辑型
-  意思：是否成功
-备注：
-*********************************************************************/
-BOOL CModuleProtocol_Packet::ModuleProtocol_Packet_P2PCommon(TCHAR* ptszMsgBuffer, int* pInt_MsgLen, int nCode /* = 0 */, LPCTSTR lpszMsgBuffer /* = NULL */)
-{
-	ModuleProtocol_IsErrorOccur = FALSE;
-
-	if ((NULL == ptszMsgBuffer) || (NULL == pInt_MsgLen))
-	{
-		ModuleProtocol_IsErrorOccur = TRUE;
-		ModuleProtocol_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PROTOCOL_PACKET_PARAMENT;
-		return FALSE;
-	}
-	Json::Value st_JsonRoot;
-
-	st_JsonRoot["nCode"] = 0;
-	if (NULL != lpszMsgBuffer)
-	{
-		st_JsonRoot["lpszMsgBuffer"] = lpszMsgBuffer;
-	}
-	*pInt_MsgLen = st_JsonRoot.toStyledString().length();
-	memcpy(ptszMsgBuffer, st_JsonRoot.toStyledString().c_str(), *pInt_MsgLen);
-	return TRUE;
-}
-/********************************************************************
 函数名称：ModuleProtocol_Packet_P2PLan
 函数功能：响应同步局域网地址列表
  参数.一：ptszMsgBuffer
@@ -731,8 +731,8 @@ BOOL CModuleProtocol_Packet::ModuleProtocol_Packet_P2PLan(TCHAR* ptszMsgBuffer, 
 		st_JsonObject["ClientAddr"] = (*pppSt_ListClients)[i]->tszPrivateAddr;
 		st_JsonArray.append(st_JsonObject);
 	}
-	st_JsonRoot["nCode"] = 0;
-	st_JsonRoot["lpszMsgBuffer"] = "sucess";
+	st_JsonRoot["code"] = 0;
+	st_JsonRoot["msg"] = "sucess";
 	st_JsonRoot["ClientArray"] = st_JsonArray;
 	st_JsonRoot["ClientCount"] = nListCount;
 
@@ -824,8 +824,8 @@ BOOL CModuleProtocol_Packet::ModuleProtocol_Packet_P2PWLan(TCHAR* ptszMsgBuffer,
 		st_JsonArray["tszLANAddr"] = stl_MapIterator->first.c_str();
 		st_JsonArray["tszLANList"] = st_JsonList;
 	}
-	st_JsonRoot["nCode"] = 0;
-	st_JsonRoot["lpszMsgBuffer"] = "sucess";
+	st_JsonRoot["code"] = 0;
+	st_JsonRoot["msg"] = "sucess";
 	st_JsonRoot["ClientArray"] = st_JsonArray;
 	st_JsonRoot["ClientCount"] = nCount;
 
@@ -876,7 +876,7 @@ BOOL CModuleProtocol_Packet::ModuleProtocol_Packet_P2PUser(TCHAR* ptszMsgBuffer,
 	Json::StreamWriterBuilder st_JsonBuilder;
 
 	st_JsonRoot["Code"] = 0;
-	st_JsonRoot["lpszMsgBuffer"] = "sucess";
+	st_JsonRoot["msg"] = "sucess";
 	st_JsonRoot["dwConnectType"] = (Json::Value::UInt)pSt_PeerInfo->dwConnectType;
 	st_JsonRoot["dwPeerType"] = pSt_PeerInfo->dwPeerType;
 	st_JsonRoot["tszConnectAddr"] = pSt_PeerInfo->tszConnectAddr;
