@@ -161,6 +161,7 @@
     <ClCompile Include="XEngine_HTTPTask\HTTPTask_IDCard.cpp" />
     <ClCompile Include="XEngine_HTTPTask\HTTPTask_IPInfo.cpp" />
     <ClCompile Include="XEngine_HTTPTask\HTTPTask_Language.cpp" />
+    <ClCompile Include="XEngine_HTTPTask\HTTPTask_Locker.cpp" />
     <ClCompile Include="XEngine_HTTPTask\HTTPTask_OPtions.cpp" />
     <ClCompile Include="XEngine_HTTPTask\HTTPTask_P2PClient.cpp" />
     <ClCompile Include="XEngine_HTTPTask\HTTPTask_Phone.cpp" />
@@ -177,6 +178,7 @@
     <ClInclude Include="XEngine_HTTPTask\HTTPTask_IDCard.h" />
     <ClInclude Include="XEngine_HTTPTask\HTTPTask_IPInfo.h" />
     <ClInclude Include="XEngine_HTTPTask\HTTPTask_Language.h" />
+    <ClInclude Include="XEngine_HTTPTask\HTTPTask_Locker.h" />
     <ClInclude Include="XEngine_HTTPTask\HTTPTask_OPtions.h" />
     <ClInclude Include="XEngine_HTTPTask\HTTPTask_P2PClient.h" />
     <ClInclude Include="XEngine_HTTPTask\HTTPTask_Phone.h" />

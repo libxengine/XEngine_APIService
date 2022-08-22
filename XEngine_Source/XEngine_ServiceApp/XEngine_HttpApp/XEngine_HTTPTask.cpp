@@ -89,6 +89,7 @@ BOOL XEngine_HTTPTask_Handle(RFCCOMPONENTS_HTTP_REQPARAM* pSt_HTTPParam, LPCTSTR
 	LPCTSTR lpszFuncName = _T("api");
 	LPCTSTR lpszParamFuncKey = _T("function");
 	LPCTSTR lpszParamName = _T("params1");
+	//get
 	LPCTSTR lpszParamOPtions = _T("options");
 	LPCTSTR lpszParamIPAddr = _T("ip");
 	LPCTSTR lpszParamIDCard = _T("id");
@@ -96,6 +97,8 @@ BOOL XEngine_HTTPTask_Handle(RFCCOMPONENTS_HTTP_REQPARAM* pSt_HTTPParam, LPCTSTR
 	LPCTSTR lpszParamBank = _T("bank");
 	LPCTSTR lpszParamLanguage = _T("language");
 	LPCTSTR lpszParamTranslation = _T("translation");
+	LPCTSTR lpszParamLocker = _T("lock");
+	//post
 	LPCTSTR lpszParamP2PClient = _T("p2p");
 	LPCTSTR lpszParamCDKey = _T("cdkey");
 
@@ -328,6 +331,31 @@ BOOL XEngine_HTTPTask_Handle(RFCCOMPONENTS_HTTP_REQPARAM* pSt_HTTPParam, LPCTSTR
 			BaseLib_OperatorString_GetKeyValue(pptszList[2], "=", tszKey, tszGetType);
 			BaseLib_OperatorString_GetKeyValue(pptszList[3], "=", tszKey, tszCvtType);
 			XEngine_HTTPTask_Translation(lpszClientAddr, tszValue, _ttoi(tszGetType), _ttoi(tszCvtType));
+		}
+		else if (0 == _tcsnicmp(lpszParamLocker, tszValue, _tcslen(lpszParamLocker)))
+		{
+			//是不是分布式锁
+			TCHAR tszLockToken[128];
+			TCHAR tszLockType[64];
+			
+			memset(tszKey, '\0', sizeof(tszKey));
+			memset(tszValue, '\0', sizeof(tszValue));
+			memset(tszLockToken, '\0', sizeof(tszLockToken));
+			memset(tszLockType, '\0', sizeof(tszLockType));
+
+			BaseLib_OperatorString_GetKeyValue(pptszList[1], "=", tszKey, tszLockType);
+			if (0 != _tcsnicmp(lpszParamName, tszKey, _tcslen(lpszParamName)))
+			{
+				st_HDRParam.nHttpCode = 404;
+				RfcComponents_HttpServer_SendMsgEx(xhHTTPPacket, tszMsgBuffer, &nMsgLen, &st_HDRParam);
+				XEngine_Network_Send(lpszClientAddr, tszMsgBuffer, nMsgLen);
+				BaseLib_OperatorMemory_Free((XPPPMEM)&pptszList, nListCount);
+				XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _T("HTTP客户端:%s,发送的URL请求参数不正确:%s"), lpszClientAddr, pSt_HTTPParam->tszHttpUri);
+				return FALSE;
+			}
+			memset(tszKey, '\0', sizeof(tszKey));
+			BaseLib_OperatorString_GetKeyValue(pptszList[2], "=", tszKey, tszLockToken);
+			XEngine_HTTPTask_Locker(lpszClientAddr, _ttoi64(tszLockToken), (ENUM_XENGINE_APISERVICE_LOCKER_TYPE)_ttoi(tszLockType));
 		}
 	}
 	else

@@ -25,7 +25,7 @@ BOOL XEngine_HTTPTask_P2PClient(LPCTSTR lpszClientAddr, LPCTSTR lpszMsgBuffer, i
 
 		if (!ModuleProtocol_Parse_P2PClient(lpszMsgBuffer, nMsgLen, &st_ClientPeer.st_PeerAddr))
 		{
-			ModuleProtocol_Packet_P2PCommon(tszRVBuffer, &nRVLen, 400, "协议错误");
+			ModuleProtocol_Packet_Common(tszRVBuffer, &nRVLen, 400, "协议错误");
 			RfcComponents_HttpServer_SendMsgEx(xhHTTPPacket, tszSDBuffer, &nSDLen, &st_HDRParam, tszRVBuffer, nRVLen);
 			XEngine_Network_Send(lpszClientAddr, tszSDBuffer, nSDLen);
 			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _T("HTTP客户端:%s,处理登录错误,解析协议失败,错误码:%lX"), lpszClientAddr, ModuleProtocol_GetLastError());
@@ -46,13 +46,13 @@ BOOL XEngine_HTTPTask_P2PClient(LPCTSTR lpszClientAddr, LPCTSTR lpszMsgBuffer, i
 		_tcscpy(st_ClientPeer.st_PeerAddr.tszConnectAddr, lpszClientAddr);
 		if (!ModuleHelp_P2PClient_Add(&st_ClientPeer))
 		{
-			ModuleProtocol_Packet_P2PCommon(tszRVBuffer, &nRVLen, 500, "内部错误");
+			ModuleProtocol_Packet_Common(tszRVBuffer, &nRVLen, 500, "内部错误");
 			RfcComponents_HttpServer_SendMsgEx(xhHTTPPacket, tszSDBuffer, &nSDLen, &st_HDRParam, tszRVBuffer, nRVLen);
 			XEngine_Network_Send(lpszClientAddr, tszSDBuffer, nSDLen);
 			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _T("HTTP客户端:%s,处理登录错误,设置用户信息失败,错误码:%lX"), lpszClientAddr, ModuleHelp_GetLastError());
 			return FALSE;
 		}
-		ModuleProtocol_Packet_P2PCommon(tszRVBuffer, &nRVLen);
+		ModuleProtocol_Packet_Common(tszRVBuffer, &nRVLen);
 		RfcComponents_HttpServer_SendMsgEx(xhHTTPPacket, tszSDBuffer, &nSDLen, &st_HDRParam, tszRVBuffer, nRVLen);
 		XEngine_Network_Send(lpszClientAddr, tszSDBuffer, nSDLen);
 		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _T("HTTP客户端:%s,处理用户登录请求成功,用户名:%s"), lpszClientAddr, st_ClientPeer.st_PeerAddr.tszUserName);
@@ -64,7 +64,7 @@ BOOL XEngine_HTTPTask_P2PClient(LPCTSTR lpszClientAddr, LPCTSTR lpszMsgBuffer, i
 
 		if (!ModuleProtocol_Parse_P2PClient(lpszMsgBuffer, nMsgLen, &st_P2PProtocol))
 		{
-			ModuleProtocol_Packet_P2PCommon(tszRVBuffer, &nRVLen, 400, "协议错误");
+			ModuleProtocol_Packet_Common(tszRVBuffer, &nRVLen, 400, "协议错误");
 			RfcComponents_HttpServer_SendMsgEx(xhHTTPPacket, tszSDBuffer, &nSDLen, &st_HDRParam, tszRVBuffer, nRVLen);
 			XEngine_Network_Send(lpszClientAddr, tszSDBuffer, nSDLen);
 			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _T("HTTP客户端:%s,列表请求失败,协议解析错误,错误码:%lX"), lpszClientAddr, ModuleProtocol_GetLastError());
@@ -77,7 +77,7 @@ BOOL XEngine_HTTPTask_P2PClient(LPCTSTR lpszClientAddr, LPCTSTR lpszMsgBuffer, i
 			XENGINE_P2XPPEER_PROTOCOL** ppSt_ListClients;
 			if (!ModuleHelp_P2PClient_GetLan(&st_P2PProtocol, &ppSt_ListClients, &nListCount))
 			{
-				ModuleProtocol_Packet_P2PCommon(tszRVBuffer, &nRVLen, 500, "内部错误");
+				ModuleProtocol_Packet_Common(tszRVBuffer, &nRVLen, 500, "内部错误");
 				RfcComponents_HttpServer_SendMsgEx(xhHTTPPacket, tszSDBuffer, &nSDLen, &st_HDRParam, tszRVBuffer, nRVLen);
 				XEngine_Network_Send(lpszClientAddr, tszSDBuffer, nSDLen);
 				XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _T("HTTP客户端:%s,列表请求失败,请求同步局域网列表失败,公有地址:%s,私有地址:%s,错误码:%lX"), lpszClientAddr, st_P2PProtocol.tszPublicAddr, st_P2PProtocol.tszPrivateAddr, ModuleHelp_GetLastError());

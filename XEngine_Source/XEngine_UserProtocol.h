@@ -73,6 +73,17 @@ typedef enum
 	ENUM_XENGINE_APISERVICE_TRANSLATION_TYPE_RU2ZH_CN,      //俄语　»　中文
 	ENUM_XENGINE_APISERVICE_TRANSLATION_TYPE_SP2ZH_CN       //西语　»　中文
 }ENUM_XENGINE_APISERVICE_TRANSLATION_TYPE;
+//分布式锁状态
+typedef enum
+{
+	ENUM_XENGINE_APISERVICE_LOCKER_TYPE_CREATE = 0,         //创建
+	ENUM_XENGINE_APISERVICE_LOCKER_TYPE_OPEN = 1,           //打开
+	ENUM_XENGINE_APISERVICE_LOCKER_TYPE_CLOSE = 2,          //关闭,打开和创建后必须调用
+	ENUM_XENGINE_APISERVICE_LOCKER_TYPE_READ = 3,           //读加锁
+	ENUM_XENGINE_APISERVICE_LOCKER_TYPE_UNREAD = 4,         //读解锁
+	ENUM_XENGINE_APISERVICE_LOCKER_TYPE_WRITE = 5,          //写加锁
+	ENUM_XENGINE_APISERVICE_LOCKER_TYPE_UNWRITE= 6          //写解锁
+}ENUM_XENGINE_APISERVICE_LOCKER_TYPE;
 //////////////////////////////////////////////////////////////////////////
 //                          子协议定义:unOperatorCode
 //////////////////////////////////////////////////////////////////////////
