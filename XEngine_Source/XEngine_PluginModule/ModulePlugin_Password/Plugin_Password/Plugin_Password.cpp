@@ -113,8 +113,23 @@ BOOL CPlugin_Password::Plugin_Password_Creator(LPCTSTR lpszPassType, LPCTSTR lps
 	TCHAR tszPassBuffer[MAX_PATH];
 
 	memset(tszPassBuffer, '\0', MAX_PATH);
-	BaseLib_OperatorHandle_CreateStr(tszPassBuffer, nLen);
-
-	_tcscpy(ptszPassStr, tszPassBuffer);
+	if (0 == nType)
+	{
+		BaseLib_OperatorHandle_CreateStr(tszPassBuffer, nLen);
+	}
+	else if (1 == nType)
+	{
+		for (int i = 0; i < nLen; i++)
+		{
+			_stprintf(&tszPassBuffer[i], _T("%d"), rand() % 9);
+		}
+	}
+	else if (2 == nType)
+	{
+		for (int i = 0; i < nLen; i++)
+		{
+			_stprintf(&tszPassBuffer[i], _T("%c"), (rand() % 26) + 65);
+		}
+	}
 	return TRUE;
 }
