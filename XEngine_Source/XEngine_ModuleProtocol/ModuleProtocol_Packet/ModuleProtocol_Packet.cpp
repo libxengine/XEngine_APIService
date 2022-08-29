@@ -731,7 +731,7 @@ BOOL CModuleProtocol_Packet::ModuleProtocol_Packet_Locker(TCHAR* ptszMsgBuffer, 
 	Json::Value st_JsonObject;
 	Json::StreamWriterBuilder st_JsonBuilder;
 
-	st_JsonObject["xhToken"] = xhToken;
+	st_JsonObject["xhToken"] = (Json::Value::UInt64)xhToken;
 
 	st_JsonRoot["code"] = nCode;
 	if (NULL == lpszMsgBuffer)

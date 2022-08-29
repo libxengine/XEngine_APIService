@@ -17,6 +17,7 @@
 #include <errno.h>
 #include <thread>
 #include <list>
+#include <atomic>
 #include <shared_mutex>
 #include <unordered_map>
 #include <opencc/opencc.h>

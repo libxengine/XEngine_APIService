@@ -45,7 +45,7 @@ BOOL XEngine_HTTPTask_CDKey(LPCTSTR lpszClientAddr, LPCTSTR lpszMsgBuffer, int n
 			memset(&st_LibTime, '\0', sizeof(XENGINE_LIBTIMER));
 
 			BaseLib_OperatorTime_StrToTime(st_Authorize.st_AuthRegInfo.tszLeftTime, &st_LibTime);
-			Authorize_Local_BuildKeyTime(&st_Authorize, NULL, &st_LibTime);
+			Authorize_Local_BuildKeyTime(&st_Authorize, 0, &st_LibTime);
 		}
 		else
 		{
