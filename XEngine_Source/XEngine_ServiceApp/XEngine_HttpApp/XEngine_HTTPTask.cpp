@@ -339,22 +339,11 @@ BOOL XEngine_HTTPTask_Handle(RFCCOMPONENTS_HTTP_REQPARAM* pSt_HTTPParam, LPCTSTR
 			TCHAR tszLockType[64];
 			
 			memset(tszKey, '\0', sizeof(tszKey));
-			memset(tszValue, '\0', sizeof(tszValue));
 			memset(tszLockToken, '\0', sizeof(tszLockToken));
 			memset(tszLockType, '\0', sizeof(tszLockType));
 
-			BaseLib_OperatorString_GetKeyValue(pptszList[1], "=", tszKey, tszLockType);
-			if (0 != _tcsnicmp(lpszParamName, tszKey, _tcslen(lpszParamName)))
-			{
-				st_HDRParam.nHttpCode = 404;
-				RfcComponents_HttpServer_SendMsgEx(xhHTTPPacket, tszMsgBuffer, &nMsgLen, &st_HDRParam);
-				XEngine_Network_Send(lpszClientAddr, tszMsgBuffer, nMsgLen);
-				BaseLib_OperatorMemory_Free((XPPPMEM)&pptszList, nListCount);
-				XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _T("HTTP客户端:%s,发送的URL请求参数不正确:%s"), lpszClientAddr, pSt_HTTPParam->tszHttpUri);
-				return FALSE;
-			}
-			memset(tszKey, '\0', sizeof(tszKey));
-			BaseLib_OperatorString_GetKeyValue(pptszList[2], "=", tszKey, tszLockToken);
+			BaseLib_OperatorString_GetKeyValue(pptszList[1], "=", tszKey, tszLockToken);
+			BaseLib_OperatorString_GetKeyValue(pptszList[2], "=", tszKey, tszLockType);
 			XEngine_HTTPTask_Locker(lpszClientAddr, _ttoi64(tszLockToken), (ENUM_XENGINE_APISERVICE_LOCKER_TYPE)_ttoi(tszLockType));
 		}
 	}
