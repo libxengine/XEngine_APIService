@@ -38,8 +38,8 @@ c c++ interface api service
 18. 二十四节气(计划中)
 19. 新华词典
 20. 计量转换(计划中)
-21. CDKey创建支持(计划中)
-22. 分布式锁API(计划中)
+21. CDKey创建支持
+22. 分布式锁API
 
 ## 安装教程
 
@@ -194,6 +194,40 @@ IP地址查询
         "enType":0,
         "tszDestStr":"China",
         "tszSourceStr":"中国"
+    },
+    "msg":"success"
+}
+```
+CDKey授权  
+接口:http://app.xyry.org:5501/api?function=cdkey&params1=0
+```json
+{
+    "tszAddr":"服务器地址",
+    "nPort":5000,
+    "st_AuthAppInfo":{
+        "tszAppName":"自定义名称",
+        "tszAppVer":"自定义版本"
+    },
+    "st_AuthRegInfo":{
+        "tszHardware":"硬件吗",
+        "enSerialType":1,
+        "enRegType":1,
+        "enHWType":1
+    },
+    "st_AuthUserInfo":{
+        "tszUserName":"注册的用户名",
+        "tszUserContact":"联系方式",
+        "tszCustom":"自定义,可选参数"
+    }
+}
+```
+分布式锁  
+接口:http://app.xyry.org:5501/api?function=lock&params1=1000154321&params2=1
+```json
+{
+    "code":0,
+    "data":{
+        "xhToken":1000154321
     },
     "msg":"success"
 }
