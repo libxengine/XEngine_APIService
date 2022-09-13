@@ -168,6 +168,7 @@
     <ClInclude Include="ModuleHelp_Error.h" />
     <ClInclude Include="ModuleHelp_IDCard\ModuleHelp_IDCard.h" />
     <ClInclude Include="ModuleHelp_Language\ModuleHelp_Language.h" />
+    <ClInclude Include="ModuleHelp_Locker\ModuleHelp_Locker.h" />
     <ClInclude Include="ModuleHelp_P2PClient\ModuleHelp_P2PClient.h" />
     <ClInclude Include="pch.h" />
   </ItemGroup>
@@ -175,6 +176,7 @@
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="ModuleHelp_IDCard\ModuleHelp_IDCard.cpp" />
     <ClCompile Include="ModuleHelp_Language\ModuleHelp_Language.cpp" />
+    <ClCompile Include="ModuleHelp_Locker\ModuleHelp_Locker.cpp" />
     <ClCompile Include="ModuleHelp_P2PClient\ModuleHelp_P2PClient.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

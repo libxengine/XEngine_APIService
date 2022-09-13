@@ -1,3 +1,21 @@
+XEngine_APIService V2.4.0.1001
+
+添加:分布式锁
+添加:cdkey授权功能支持
+修改:插件文件名支持自适应了
+修改:linux和macos的程序名称
+修改:p2pcomm函数为comm公用函数
+修改:密码函数类型支持整数和字母了
+修复:提交方法没有释放头列表内存的问题
+
+added:Distributed lock
+added:cdkey create function
+modify:plugin file name was support adaptive
+modify:linux and macos app name
+modify:p2pcomm function to comm
+modify:Password types support int and words
+fixed:post method does not free header list memory
+======================================================================================
 XEngine_APIService V2.3.0.1001
 
 添加:服务器能力查询接口函数

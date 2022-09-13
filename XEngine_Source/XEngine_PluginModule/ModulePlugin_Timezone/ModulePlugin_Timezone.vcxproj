@@ -24,6 +24,7 @@
     <ProjectGuid>{37b8e91f-ec52-41f0-b21d-441d4270c05f}</ProjectGuid>
     <RootNamespace>ModulePluginTimezone</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <ProjectName>libModulePlugin_Timezone</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">

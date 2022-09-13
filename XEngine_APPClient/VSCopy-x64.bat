@@ -1,4 +1,5 @@
 copy /y "%XEngine_Lib64%\XEngine_BaseLib\XEngine_BaseLib.dll" "./"
+copy /y "%XEngine_Lib64%\XEngine_Core\XEngine_OPenSsl.dll" "./"
 copy /y "%XEngine_Lib64%\XEngine_NetHelp\NetHelp_APIHelp.dll" "./"
 
 copy /y "%XEngine_Lib64%\XEngine_HelpComponents\zlib1.dll" "./"

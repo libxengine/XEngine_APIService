@@ -18,6 +18,35 @@ extern "C" DWORD ModuleProtocol_GetLastError(int *pInt_SysError = NULL);
 /*                         导出的协议打包函数                           */
 /************************************************************************/
 /********************************************************************
+函数名称：ModuleProtocol_Packet_Common
+函数功能：公用协议打包函数
+ 参数.一：ptszMsgBuffer
+  In/Out：Out
+  类型：字符指针
+  可空：N
+  意思：输出打好包的缓冲区
+ 参数.二：pInt_MsgLen
+  In/Out：Out
+  类型：整数型指针
+  可空：N
+  意思：输出缓冲区大小
+ 参数.三：nCode
+  In/Out：In
+  类型：整数型
+  可空：Y
+  意思：输入返回的值
+ 参数.四：lpszMsgBuffer
+  In/Out：In
+  类型：常量字符指针
+  可空：Y
+  意思：输入要打包的后续内容
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+extern "C" BOOL ModuleProtocol_Packet_Common(TCHAR * ptszMsgBuffer, int* pInt_MsgLen, int nCode = 0, LPCTSTR lpszMsgBuffer = NULL);
+/********************************************************************
 函数名称：ModuleProtocol_Packet_IPQuery
 函数功能：IP地址查询打包协议
  参数.一：ptszMsgBuffer
@@ -343,34 +372,39 @@ extern "C" BOOL ModuleProtocol_Packet_LanguageQuery(TCHAR* ptszMsgBuffer, int* p
 *********************************************************************/
 extern "C" BOOL ModuleProtocol_Packet_LanguageQuery2(TCHAR* ptszMsgBuffer, int* pInt_MsgLen, XENGINE_LANGUAGEINFO* pSt_LanguageInfo, int nCode = 0);
 /********************************************************************
-函数名称：ModuleProtocol_Packet_P2PCommon
-函数功能：P2XP公用协议打包函数
+函数名称：ModuleProtocol_Packet_Locker
+函数功能：分布式锁协议打包函数
  参数.一：ptszMsgBuffer
   In/Out：Out
   类型：字符指针
   可空：N
-  意思：输出打好包的缓冲区
+  意思：输出打包的数据信息
  参数.二：pInt_MsgLen
   In/Out：Out
   类型：整数型指针
   可空：N
-  意思：输出缓冲区大小
- 参数.三：nCode
+  意思：输出打包大小
+ 参数.三：xhToken
+  In/Out：In
+  类型：句柄
+  可空：N
+  意思：输入要打包的数据
+ 参数.四：nCode
   In/Out：In
   类型：整数型
   可空：Y
   意思：输入返回的值
- 参数.四：lpszMsgBuffer
+ 参数.五：lpszMsgBuffer
   In/Out：In
   类型：常量字符指针
   可空：Y
-  意思：输入要打包的后续内容
+  意思：输入操作结果
 返回值
   类型：逻辑型
   意思：是否成功
 备注：
 *********************************************************************/
-extern "C" BOOL ModuleProtocol_Packet_P2PCommon(TCHAR* ptszMsgBuffer, int* pInt_MsgLen, int nCode = 0, LPCTSTR lpszMsgBuffer = NULL);
+extern "C" BOOL ModuleProtocol_Packet_Locker(TCHAR* ptszMsgBuffer, int* pInt_MsgLen, XNETHANDLE xhToken, int nCode = 0, LPCTSTR lpszMsgBuffer = NULL);
 /********************************************************************
 函数名称：ModuleProtocol_Packet_P2PLan
 函数功能：响应同步局域网地址列表
@@ -518,7 +552,7 @@ extern "C" BOOL ModuleProtocol_Parse_IDCard(LPCTSTR lpszMsgBuffer, XENGINE_IDCAR
   可空：N
   意思：输入解析大小
  参数.三：pSt_BankInfo
-  In/Out：In
+  In/Out：Out
   类型：数据结构指针
   可空：N
   意思：输出解析好的内容
@@ -542,7 +576,7 @@ extern "C" BOOL ModuleProtocol_Parse_Bank(LPCTSTR lpszMsgBuffer, int nMsgLen, XE
   可空：N
   意思：输入解析大小
  参数.三：pSt_LanguageInfo
-  In/Out：In
+  In/Out：Out
   类型：数据结构指针
   可空：N
   意思：输出解析好的内容
@@ -566,7 +600,7 @@ extern "C" BOOL ModuleProtocol_Parse_Translation(LPCTSTR lpszMsgBuffer, int nMsg
   可空：N
   意思：输入缓冲区大小
  参数.三：pSt_P2XPPeer
-  In/Out：In
+  In/Out：Out
   类型：数据结构指针
   可空：N
   意思：输出解析后的节点信息
@@ -576,3 +610,27 @@ extern "C" BOOL ModuleProtocol_Parse_Translation(LPCTSTR lpszMsgBuffer, int nMsg
 备注：
 *********************************************************************/
 extern "C" BOOL ModuleProtocol_Parse_P2PClient(LPCTSTR lpszMsgBuffer, int nMsgLen, XENGINE_P2XPPEER_PROTOCOL * pSt_P2XPPeer);
+/********************************************************************
+函数名称：ModuleProtocol_Parse_CDKey
+函数功能：解析CDKEY
+ 参数.一：lpszMsgBuffer
+  In/Out：In
+  类型：常量字符指针
+  可空：N
+  意思：输入要解析的缓冲区
+ 参数.二：nMsgLen
+  In/Out：In
+  类型：整数型
+  可空：N
+  意思：输入缓冲区大小
+ 参数.三：pSt_Authorize
+  In/Out：Out
+  类型：数据结构指针
+  可空：N
+  意思：输出解析后的信息
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+extern "C" BOOL ModuleProtocol_Parse_CDKey(LPCTSTR lpszMsgBuffer, int nMsgLen, XENGINE_AUTHORIZE_LOCAL* pSt_Authorize);

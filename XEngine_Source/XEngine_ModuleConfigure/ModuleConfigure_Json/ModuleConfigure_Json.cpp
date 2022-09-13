@@ -314,6 +314,13 @@ BOOL CModuleConfigure_Json::ModuleConfigure_Json_PluginFile(LPCTSTR lpszConfigFi
 
 		st_PluginInfo.bEnable = st_JsonArray[i]["PluginEnable"].asBool();
 		_tcscpy(st_PluginInfo.tszPluginFile, st_JsonArray[i]["PluginFile"].asCString());
+#ifdef _MSC_BUILD
+		_tcscat(st_PluginInfo.tszPluginFile, ".dll");
+#elif __linux__
+		_tcscat(st_PluginInfo.tszPluginFile, ".so");
+#else
+		_tcscat(st_PluginInfo.tszPluginFile, ".dylib");
+#endif
 		_tcscpy(st_PluginInfo.tszPluginMethod, st_JsonArray[i]["PluginMethod"].asCString());
 		pSt_PluginConfig->pStl_ListPlugin->push_back(st_PluginInfo);
 	}

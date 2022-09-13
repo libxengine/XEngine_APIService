@@ -3,22 +3,22 @@
         {
             "PluginEnable":true,
             "PluginMethod":"zodiac",
-            "PluginFile":"./XEngine_Plugin/ModulePlugin_Zodiac.dll"
+            "PluginFile":"./XEngine_Plugin/libModulePlugin_Zodiac"
         },
         {
             "PluginEnable":true,
             "PluginMethod":"pass",
-            "PluginFile":"./XEngine_Plugin/ModulePlugin_Password.dll"
+            "PluginFile":"./XEngine_Plugin/libModulePlugin_Password"
         },
         {
             "PluginEnable":true,
             "PluginMethod":"timezone",
-            "PluginFile":"./XEngine_Plugin/ModulePlugin_Timezone.dll"
+            "PluginFile":"./XEngine_Plugin/libModulePlugin_Timezone"
         },
         {
             "PluginEnable":true,
             "PluginMethod":"bmindex",
-            "PluginFile":"./XEngine_Plugin/ModulePlugin_BMIndex.dll"
+            "PluginFile":"./XEngine_Plugin/libModulePlugin_BMIndex"
         }
     ]
 }

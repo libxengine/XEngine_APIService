@@ -31,6 +31,12 @@
     <Filter Include="源文件\ModuleHelp_P2PClient">
       <UniqueIdentifier>{2b552f75-e436-45a8-ba71-e398eeb4a68a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="源文件\ModuleHelp_Locker">
+      <UniqueIdentifier>{7c721149-87d5-433c-82da-04316a6c638f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\ModuleHelp_Locker">
+      <UniqueIdentifier>{7e3b001c-b07c-4457-ab32-54b6d25ccbae}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -54,6 +60,9 @@
     <ClInclude Include="ModuleHelp_P2PClient\ModuleHelp_P2PClient.h">
       <Filter>头文件\ModuleHelp_P2PClient</Filter>
     </ClInclude>
+    <ClInclude Include="ModuleHelp_Locker\ModuleHelp_Locker.h">
+      <Filter>头文件\ModuleHelp_Locker</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp">
@@ -70,6 +79,9 @@
     </ClCompile>
     <ClCompile Include="ModuleHelp_P2PClient\ModuleHelp_P2PClient.cpp">
       <Filter>源文件\ModuleHelp_P2PClient</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleHelp_Locker\ModuleHelp_Locker.cpp">
+      <Filter>源文件\ModuleHelp_Locker</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

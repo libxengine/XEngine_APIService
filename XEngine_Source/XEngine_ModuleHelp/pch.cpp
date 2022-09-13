@@ -2,6 +2,7 @@
 #include "ModuleHelp_IDCard/ModuleHelp_IDCard.h"
 #include "ModuleHelp_Language/ModuleHelp_Language.h"
 #include "ModuleHelp_P2PClient/ModuleHelp_P2PClient.h"
+#include "ModuleHelp_Locker/ModuleHelp_Locker.h"
 /********************************************************************
 //    Created:     2022/03/04  13:37:38
 //    File Name:   D:\XEngine_APIService\XEngine_Source\XEngine_ModuleHelp\pch.cpp
@@ -19,6 +20,7 @@ DWORD ModuleHelp_dwErrorCode = 0;
 CModuleHelp_IDCard m_IDCard;
 CModuleHelp_Language m_Language;
 CModuleHelp_P2PClient m_P2PClient;
+CModuleHelp_Locker m_Locker;
 //////////////////////////////////////////////////////////////////////////
 ///                        导出的函数
 //////////////////////////////////////////////////////////////////////////
@@ -94,4 +96,35 @@ extern "C" BOOL ModuleHelp_P2PClient_DelAll()
 extern "C" BOOL ModuleHelp_P2PClient_Heart(XENGINE_P2XPPEER_PROTOCOL * pSt_P2PProtocol)
 {
 	return m_P2PClient.ModuleHelp_P2PClient_Heart(pSt_P2PProtocol);
+}
+/************************************************************************/
+/*                       分布式锁导出函数                               */
+/************************************************************************/
+extern "C" BOOL ModuleHelp_Locker_Create(XNETHANDLE * pxhToken)
+{
+	return m_Locker.ModuleHelp_Locker_Create(pxhToken);
+}
+extern "C" BOOL ModuleHelp_Locker_OPen(XNETHANDLE xhToken)
+{
+	return m_Locker.ModuleHelp_Locker_OPen(xhToken);
+}
+extern "C" BOOL ModuleHelp_Locker_ReadLock(XNETHANDLE xhToken)
+{
+	return m_Locker.ModuleHelp_Locker_ReadLock(xhToken);
+}
+extern "C" BOOL ModuleHelp_Locker_ReadUNLock(XNETHANDLE xhToken)
+{
+	return m_Locker.ModuleHelp_Locker_ReadUNLock(xhToken);
+}
+extern "C" BOOL ModuleHelp_Locker_WriteLock(XNETHANDLE xhToken)
+{
+	return m_Locker.ModuleHelp_Locker_WriteLock(xhToken);
+}
+extern "C" BOOL ModuleHelp_Locker_WriteUNLock(XNETHANDLE xhToken)
+{
+	return m_Locker.ModuleHelp_Locker_WriteUNLock(xhToken);
+}
+extern "C" BOOL ModuleHelp_Locker_Close(XNETHANDLE xhToken)
+{
+	return m_Locker.ModuleHelp_Locker_Close(xhToken);
 }

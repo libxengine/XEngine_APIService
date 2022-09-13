@@ -24,6 +24,7 @@
     <ProjectGuid>{32bb166a-3d3d-45ef-8bed-2e0471274159}</ProjectGuid>
     <RootNamespace>ModulePluginZodiac</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <ProjectName>libModulePlugin_Zodiac</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">

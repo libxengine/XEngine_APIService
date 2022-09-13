@@ -4,13 +4,13 @@ UNICODE = 0
 LOADBIN = -L /usr/local/lib/XEngine_Release/XEngine_BaseLib -L /usr/local/lib/XEngine_Release/XEngine_Core -L /usr/local/lib/XEngine_Release/XEngine_HelpComponents -L /usr/local/lib/XEngine_Release/XEngine_RfcComponents -L /usr/local/lib/XEngine_Release/XEngine_NetHelp  \
           -L ../../XEngine_ModuleConfigure -L ../../XEngine_ModuleDatabase -L ../../XEngine_ModuleProtocol -L ../../XEngine_ModuleHelp -L ../../XEngine_ModulePlugin   \
 		  -L ../../XEngine_ThirdPart/jsoncpp
-LIB = -lXEngine_BaseLib -lXEngine_Algorithm -lXEngine_Core -lXEngine_ManagePool -lXEngine_OPenSsl -lHelpComponents_XLog -lRfcComponents_HttpServer -lNetHelp_APIHelp \
+LIB = -lXEngine_BaseLib -lXEngine_Algorithm -lXEngine_Core -lXEngine_ManagePool -lXEngine_OPenSsl -lHelpComponents_XLog -lHelpComponents_Authorize -lRfcComponents_HttpServer -lNetHelp_APIHelp \
 	  -lXEngine_ModuleConfigure -lXEngine_ModuleDatabase -lXEngine_ModuleProtocol -lXEngine_ModuleHelp -lXEngine_ModulePlugin                          \
 	  -ljsoncpp
 LIBEX = -ldl -lpthread
 LOADSO = -Wl,-rpath=./,--disable-new-dtags
 LIBINCLUDE = XEngine_Configure.o XEngine_Network.o XEngine_HTTPTask.o XEngine_PluginTask.o XEngine_HttpApp.o        \
-             HTTPTask_IPInfo.o HTTPTask_IDCard.o HTTPTask_Phone.o HTTPTask_Bank.o HTTPTask_Language.o HTTPTask_Translation.o HTTPTask_P2PClient.o HTTPTask_OPtions.o
+             HTTPTask_IPInfo.o HTTPTask_IDCard.o HTTPTask_Phone.o HTTPTask_Bank.o HTTPTask_Language.o HTTPTask_Translation.o HTTPTask_P2PClient.o HTTPTask_OPtions.o HTTPTask_CDKey.o HTTPTask_Locker.o
 
 ifeq ($(shell uname),Darwin)
 	LOADSO = 
@@ -31,7 +31,7 @@ UNICODE =
 endif
 
 all:$(LIBINCLUDE)
-	$(CC) $(DEBUG) $(LIBINCLUDE) -o XEngine_HttpApp $(LOADBIN) $(LIB) $(LIBEX) $(LOADSO)
+	$(CC) $(DEBUG) $(LIBINCLUDE) -o XEngine_APIServiceApp $(LOADBIN) $(LIB) $(LIBEX) $(LOADSO)
   
 XEngine_Configure.o:./XEngine_Configure.cpp
 	$(CC) $(DEBUG) $(FLAGS) $(UNICODE) ./XEngine_Configure.cpp
@@ -58,18 +58,22 @@ HTTPTask_P2PClient.o:./XEngine_HTTPTask/HTTPTask_P2PClient.cpp
 	$(CC) $(DEBUG) $(FLAGS) $(UNICODE) ./XEngine_HTTPTask/HTTPTask_P2PClient.cpp
 HTTPTask_OPtions.o:./XEngine_HTTPTask/HTTPTask_OPtions.cpp
 	$(CC) $(DEBUG) $(FLAGS) $(UNICODE) ./XEngine_HTTPTask/HTTPTask_OPtions.cpp
+HTTPTask_CDKey.o:./XEngine_HTTPTask/HTTPTask_CDKey.cpp
+	$(CC) $(DEBUG) $(FLAGS) $(UNICODE) ./XEngine_HTTPTask/HTTPTask_CDKey.cpp
+HTTPTask_Locker.o:./XEngine_HTTPTask/HTTPTask_Locker.cpp
+	$(CC) $(DEBUG) $(FLAGS) $(UNICODE) ./XEngine_HTTPTask/HTTPTask_Locker.cpp
 
 XEngine_HttpApp.o:./XEngine_HttpApp.cpp             
 	$(CC) $(DEBUG) $(FLAGS) $(UNICODE) ./XEngine_HttpApp.cpp   
 
 
 InstallAll:InstallApp
-InstallApp:./XEngine_HttpApp
-	cp -f ./XEngine_HttpApp ../../../XEngine_Release/XEngine_HttpApp
+InstallApp:./XEngine_APIServiceApp
+	cp -f ./XEngine_APIServiceApp ../../../XEngine_Release/XEngine_APIServiceApp
 
 CleanAll:CleanObj CleanMk
 CleanObj:                                              
 	rm *.o
 CleanMk:                                  
-	rm XEngine_HttpApp     
+	rm XEngine_APIServiceApp     
 	       

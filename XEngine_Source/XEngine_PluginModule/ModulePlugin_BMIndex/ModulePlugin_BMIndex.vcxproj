@@ -24,6 +24,7 @@
     <ProjectGuid>{bbc4b2b4-1143-45df-8890-47ce26a61d0e}</ProjectGuid>
     <RootNamespace>ModulePluginBMIndex</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <ProjectName>libModulePlugin_BMIndex</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
