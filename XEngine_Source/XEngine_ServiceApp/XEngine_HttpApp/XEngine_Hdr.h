@@ -85,7 +85,7 @@ extern XLOG xhLog;
 extern XHANDLE xhHTTPSocket;
 extern XHANDLE xhHTTPHeart;
 extern XHANDLE xhHTTPPacket;
-extern XNETHANDLE xhHTTPPool;
+extern XHANDLE xhHTTPPool;
 //配置文件
 extern XENGINE_SERVICECONFIG st_ServiceConfig;
 extern XENGINE_OPENCCCONFIG st_OPenccConfig;

@@ -42,7 +42,7 @@ BOOL XEngine_HTTPTask_Translation(LPCTSTR lpszClientAddr, LPCTSTR lpszMsgBuffer,
 		return FALSE;
 	}
 	_stprintf(tszUrlBuffer, st_ServiceConfig.st_XApi.tszTranslationUrl, tszTypeBuffer, lpszMsgBuffer);
-	APIHelp_HttpRequest_Get(tszUrlBuffer, &ptszBodyBuffer, &nBLen);
+	APIHelp_HttpRequest_Custom(_T("GET"), tszUrlBuffer, NULL, NULL, &ptszBodyBuffer, &nBLen);
 	//解析数据
 	if (!ModuleProtocol_Parse_Translation(ptszBodyBuffer, nBLen, &st_LanguageInfo))
 	{
