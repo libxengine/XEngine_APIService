@@ -66,6 +66,9 @@
     <ClCompile Include="XEngine_HTTPTask\HTTPTask_Locker.cpp">
       <Filter>源文件\XEngine_HTTPTask</Filter>
     </ClCompile>
+    <ClCompile Include="XEngine_HTTPTask\HTTPTask_PostCode.cpp">
+      <Filter>源文件\XEngine_HTTPTask</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="XEngine_Configure.h">
@@ -111,6 +114,9 @@
       <Filter>头文件\XEngine_HTTPTask</Filter>
     </ClInclude>
     <ClInclude Include="XEngine_HTTPTask\HTTPTask_Locker.h">
+      <Filter>头文件\XEngine_HTTPTask</Filter>
+    </ClInclude>
+    <ClInclude Include="XEngine_HTTPTask\HTTPTask_PostCode.h">
       <Filter>头文件\XEngine_HTTPTask</Filter>
     </ClInclude>
   </ItemGroup>

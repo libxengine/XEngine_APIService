@@ -148,57 +148,6 @@ BOOL CModuleProtocol_Packet::ModuleProtocol_Packet_IPQuery(TCHAR* ptszMsgBuffer,
 	return TRUE;
 }
 /********************************************************************
-函数名称：ModuleProtocol_Packet_IPQuery2
-函数功能：IP查询打包函数另一种方式
- 参数.一：ptszMsgBuffer
-  In/Out：Out
-  类型：字符指针
-  可空：N
-  意思：输出打包的数据信息
- 参数.二：pInt_MsgLen
-  In/Out：Out
-  类型：整数型指针
-  可空：N
-  意思：输出打包大小
- 参数.三：pSt_IPAddrInfo
-  In/Out：In
-  类型：数据结构指针
-  可空：N
-  意思：输入要操作的IP地址信息
- 参数.四：nCode
-  In/Out：In
-  类型：整数型
-  可空：Y
-  意思：输入返回的值
-返回值
-  类型：逻辑型
-  意思：是否成功
-备注：
-*********************************************************************/
-BOOL CModuleProtocol_Packet::ModuleProtocol_Packet_IPQuery2(TCHAR* ptszMsgBuffer, int* pInt_MsgLen, XENGINE_IPADDRINFO* pSt_IPAddrInfo, int nCode /* = 0 */)
-{
-	ModuleProtocol_IsErrorOccur = FALSE;
-
-	if ((NULL == ptszMsgBuffer) || (NULL == pInt_MsgLen) || (NULL == pSt_IPAddrInfo))
-	{
-		ModuleProtocol_IsErrorOccur = TRUE;
-		ModuleProtocol_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PROTOCOL_PACKET_PARAMENT;
-		return FALSE;
-	}
-	*pInt_MsgLen = _stprintf(ptszMsgBuffer, "%d\r\n"
-		"%s\r\n"
-		"%s\r\n"
-		"%s\r\n"
-		"%s\r\n"
-		"%s\r\n"
-		"%s\r\n"
-		"%s\r\n"
-		"%s\r\n"
-		"%s\r\n"
-		"%s", nCode, pSt_IPAddrInfo->tszIPAddr, pSt_IPAddrInfo->tszIPStart, pSt_IPAddrInfo->tszIPEnd, pSt_IPAddrInfo->tszIPCountry, pSt_IPAddrInfo->tszIPProvince, pSt_IPAddrInfo->tszIPCity, pSt_IPAddrInfo->tszIPCounty, pSt_IPAddrInfo->tszIPAddress, pSt_IPAddrInfo->tszIPISP, pSt_IPAddrInfo->tszIPTime);
-	return TRUE;
-}
-/********************************************************************
 函数名称：ModuleProtocol_Packet_IDQuery
 函数功能：ID查询打包为JSON的封包函数
  参数.一：ptszMsgBuffer
@@ -282,61 +231,6 @@ BOOL CModuleProtocol_Packet::ModuleProtocol_Packet_IDQuery(TCHAR* ptszMsgBuffer,
 	return TRUE;
 }
 /********************************************************************
-函数名称：ModuleProtocol_Packet_IDQuery2
-函数功能：ID查询打包为字符串流函数
- 参数.一：ptszMsgBuffer
-  In/Out：Out
-  类型：字符指针
-  可空：N
-  意思：输出打包的数据信息
- 参数.二：pInt_MsgLen
-  In/Out：Out
-  类型：整数型指针
-  可空：N
-  意思：输出打包大小
- 参数.三：pSt_IDInfo
-  In/Out：In
-  类型：数据结构指针
-  可空：N
-  意思：输入要打包的ID信息
- 参数.四：pSt_IDRegion
-  In/Out：In
-  类型：数据结构指针
-  可空：N
-  意思：输入ID地址信息
- 参数.五：nCode
-  In/Out：In
-  类型：整数型
-  可空：Y
-  意思：输入返回的值
-返回值
-  类型：逻辑型
-  意思：是否成功
-备注：
-*********************************************************************/
-BOOL CModuleProtocol_Packet::ModuleProtocol_Packet_IDQuery2(TCHAR* ptszMsgBuffer, int* pInt_MsgLen, XENGINE_IDCARDINFO* pSt_IDInfo, XENGINE_IDREGION* pSt_IDRegion, int nCode /* = 0 */)
-{
-	ModuleProtocol_IsErrorOccur = FALSE;
-
-	if ((NULL == ptszMsgBuffer) || (NULL == pInt_MsgLen))
-	{
-		ModuleProtocol_IsErrorOccur = TRUE;
-		ModuleProtocol_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PROTOCOL_PACKET_PARAMENT;
-		return FALSE;
-	}
-	*pInt_MsgLen = _stprintf(ptszMsgBuffer, "%d\r\n"
-		"%s\r\n"
-		"%d\r\n"
-		"%d\r\n"
-		"%d\r\n"
-		"%d\r\n"
-		"%d\r\n"
-		"%s\r\n"
-		"%s\r\n"
-		"%s", nCode, pSt_IDInfo->tszIDNumber, pSt_IDInfo->nBirthYear, pSt_IDInfo->nBirthMonth, pSt_IDInfo->nBirthDay, pSt_IDInfo->nPoliceID, pSt_IDInfo->nSex / 2 == 0 ? 0 : 1, pSt_IDRegion->tszProvincer, pSt_IDRegion->tszCity, pSt_IDRegion->tszCounty);
-	return TRUE;
-}
-/********************************************************************
 函数名称：ModuleProtocol_Packet_PhoneQuery
 函数功能：电话信息查询打包为JSON的封包函数
  参数.一：ptszMsgBuffer
@@ -406,52 +300,6 @@ BOOL CModuleProtocol_Packet::ModuleProtocol_Packet_PhoneQuery(TCHAR* ptszMsgBuff
 
 	*pInt_MsgLen = Json::writeString(st_JsonBuilder, st_JsonRoot).length();
 	memcpy(ptszMsgBuffer, Json::writeString(st_JsonBuilder, st_JsonRoot).c_str(), *pInt_MsgLen);
-	return TRUE;
-}
-/********************************************************************
-函数名称：ModuleProtocol_Packet_PhoneQuery2
-函数功能：电话查询打包为字符串流函数
- 参数.一：ptszMsgBuffer
-  In/Out：Out
-  类型：字符指针
-  可空：N
-  意思：输出打包的数据信息
- 参数.二：pInt_MsgLen
-  In/Out：Out
-  类型：整数型指针
-  可空：N
-  意思：输出打包大小
- 参数.三：pSt_PhoneInfo
-  In/Out：In
-  类型：数据结构指针
-  可空：N
-  意思：输入要打包的信息
- 参数.四：nCode
-  In/Out：In
-  类型：整数型
-  可空：Y
-  意思：输入返回的值
-返回值
-  类型：逻辑型
-  意思：是否成功
-备注：
-*********************************************************************/
-BOOL CModuleProtocol_Packet::ModuleProtocol_Packet_PhoneQuery2(TCHAR* ptszMsgBuffer, int* pInt_MsgLen, XENGINE_PHONEINFO* pSt_PhoneInfo, int nCode /* = 0 */)
-{
-	ModuleProtocol_IsErrorOccur = FALSE;
-
-	if ((NULL == ptszMsgBuffer) || (NULL == pInt_MsgLen))
-	{
-		ModuleProtocol_IsErrorOccur = TRUE;
-		ModuleProtocol_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PROTOCOL_PACKET_PARAMENT;
-		return FALSE;
-	}
-	*pInt_MsgLen = _stprintf(ptszMsgBuffer, "%d\r\n"
-		"%lld\r\n"
-		"%s\r\n"
-		"%s\r\n"
-		"%d\r\n"
-		"%d", nCode, pSt_PhoneInfo->nPhoneNumber, pSt_PhoneInfo->tszProvincer, pSt_PhoneInfo->tszCity, pSt_PhoneInfo->nZipCode, pSt_PhoneInfo->nAreaCode);
 	return TRUE;
 }
 /********************************************************************
@@ -526,51 +374,6 @@ BOOL CModuleProtocol_Packet::ModuleProtocol_Packet_BankQuery(TCHAR* ptszMsgBuffe
 	return TRUE;
 }
 /********************************************************************
-函数名称：ModuleProtocol_Packet_BankQuery2
-函数功能：银行卡信息查询打包为字节流
- 参数.一：ptszMsgBuffer
-  In/Out：Out
-  类型：字符指针
-  可空：N
-  意思：输出打包的数据信息
- 参数.二：pInt_MsgLen
-  In/Out：Out
-  类型：整数型指针
-  可空：N
-  意思：输出打包大小
- 参数.三：pSt_PhoneInfo
-  In/Out：In
-  类型：数据结构指针
-  可空：N
-  意思：输入要打包的信息
- 参数.四：nCode
-  In/Out：In
-  类型：整数型
-  可空：Y
-  意思：输入返回的值
-返回值
-  类型：逻辑型
-  意思：是否成功
-备注：
-*********************************************************************/
-BOOL CModuleProtocol_Packet::ModuleProtocol_Packet_BankQuery2(TCHAR* ptszMsgBuffer, int* pInt_MsgLen, XENGINE_BANKINFO* pSt_BankInfo, int nCode /* = 0 */)
-{
-	ModuleProtocol_IsErrorOccur = FALSE;
-
-	if ((NULL == ptszMsgBuffer) || (NULL == pInt_MsgLen))
-	{
-		ModuleProtocol_IsErrorOccur = TRUE;
-		ModuleProtocol_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PROTOCOL_PACKET_PARAMENT;
-		return FALSE;
-	}
-	*pInt_MsgLen = _stprintf(ptszMsgBuffer, "%d\r\n"
-		"%s\r\n"
-		"%s\r\n"
-		"%s\r\n"
-		"%d", nCode, pSt_BankInfo->tszBankNumber, pSt_BankInfo->tszBankName, pSt_BankInfo->tszBankAbridge, pSt_BankInfo->enBankType);
-	return TRUE;
-}
-/********************************************************************
 函数名称：ModuleProtocol_Packet_LanguageQuery
 函数功能：语言打包为JSON
  参数.一：ptszMsgBuffer
@@ -638,50 +441,6 @@ BOOL CModuleProtocol_Packet::ModuleProtocol_Packet_LanguageQuery(TCHAR* ptszMsgB
 
 	*pInt_MsgLen = Json::writeString(st_JsonBuilder, st_JsonRoot).length();
 	memcpy(ptszMsgBuffer, Json::writeString(st_JsonBuilder, st_JsonRoot).c_str(), *pInt_MsgLen);
-	return TRUE;
-}
-/********************************************************************
-函数名称：ModuleProtocol_Packet_LanguageQuery2
-函数功能：语言打包为字节流
- 参数.一：ptszMsgBuffer
-  In/Out：Out
-  类型：字符指针
-  可空：N
-  意思：输出打包的数据信息
- 参数.二：pInt_MsgLen
-  In/Out：Out
-  类型：整数型指针
-  可空：N
-  意思：输出打包大小
- 参数.三：pSt_PhoneInfo
-  In/Out：In
-  类型：数据结构指针
-  可空：N
-  意思：输入要打包的信息
- 参数.四：nCode
-  In/Out：In
-  类型：整数型
-  可空：Y
-  意思：输入返回的值
-返回值
-  类型：逻辑型
-  意思：是否成功
-备注：
-*********************************************************************/
-BOOL CModuleProtocol_Packet::ModuleProtocol_Packet_LanguageQuery2(TCHAR* ptszMsgBuffer, int* pInt_MsgLen, XENGINE_LANGUAGEINFO* pSt_LanguageInfo, int nCode /* = 0 */)
-{
-	ModuleProtocol_IsErrorOccur = FALSE;
-
-	if ((NULL == ptszMsgBuffer) || (NULL == pInt_MsgLen))
-	{
-		ModuleProtocol_IsErrorOccur = TRUE;
-		ModuleProtocol_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PROTOCOL_PACKET_PARAMENT;
-		return FALSE;
-	}
-	*pInt_MsgLen = _stprintf(ptszMsgBuffer, "%d\r\n"
-		"%s\r\n"
-		"%s\r\n"
-		"%d", nCode, pSt_LanguageInfo->tszSourceStr, pSt_LanguageInfo->tszDestStr, pSt_LanguageInfo->enType);
 	return TRUE;
 }
 /********************************************************************
