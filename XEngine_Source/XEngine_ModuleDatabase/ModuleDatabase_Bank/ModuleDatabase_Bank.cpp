@@ -81,7 +81,7 @@ BOOL CModuleDatabase_Bank::ModuleDatabase_Bank_Query(XENGINE_BANKINFO* pSt_BankI
     if (NULL == pSt_BankInfo)
     {
         DBModule_IsErrorOccur = TRUE;
-        DBModule_dwErrorCode = ERROR_XENGINE_IPADDR_MODULE_DATABASE_BANK_PARAMENT;
+        DBModule_dwErrorCode = ERROR_APISERVICE_MODULE_DATABASE_BANK_PARAMENT;
         return FALSE;
     }
     //查询
@@ -101,7 +101,7 @@ BOOL CModuleDatabase_Bank::ModuleDatabase_Bank_Query(XENGINE_BANKINFO* pSt_BankI
 	if (nLine <= 0)
 	{
 		DBModule_IsErrorOccur = TRUE;
-		DBModule_dwErrorCode = ERROR_XENGINE_IPADDR_MODULE_DATABASE_BANK_NOTFOUND;
+		DBModule_dwErrorCode = ERROR_APISERVICE_MODULE_DATABASE_BANK_NOTFOUND;
 		return FALSE;
 	}
 	_tcscpy(pSt_BankInfo->tszBankName, pptszResult[nRow + 1]);

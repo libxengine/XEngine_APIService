@@ -41,7 +41,7 @@ BOOL CModuleDatabase_Phone::ModuleDatabase_Phone_Init(LPCTSTR lpszSQLFile)
 	if (NULL == lpszSQLFile)
 	{
 		DBModule_IsErrorOccur = TRUE;
-		DBModule_dwErrorCode = ERROR_XENGINE_IPADDR_MODULE_DATABASE_PHONE_PARAMENT;
+		DBModule_dwErrorCode = ERROR_APISERVICE_MODULE_DATABASE_PHONE_PARAMENT;
 		return FALSE;
 	}
 	//打开数据库
@@ -49,7 +49,7 @@ BOOL CModuleDatabase_Phone::ModuleDatabase_Phone_Init(LPCTSTR lpszSQLFile)
 	if (NULL == pSt_File)
 	{
 		DBModule_IsErrorOccur = TRUE;
-		DBModule_dwErrorCode = ERROR_XENGINE_IPADDR_MODULE_DATABASE_PHONE_NOTFOUND;
+		DBModule_dwErrorCode = ERROR_APISERVICE_MODULE_DATABASE_PHONE_NOTFOUND;
 		return FALSE;
 	}
 	//申请内存
@@ -57,7 +57,7 @@ BOOL CModuleDatabase_Phone::ModuleDatabase_Phone_Init(LPCTSTR lpszSQLFile)
 	if (NULL == ptszMsgBuffer)
 	{
 		DBModule_IsErrorOccur = TRUE;
-		DBModule_dwErrorCode = ERROR_XENGINE_IPADDR_MODULE_DATABASE_PHONE_MALLOC;
+		DBModule_dwErrorCode = ERROR_APISERVICE_MODULE_DATABASE_PHONE_MALLOC;
 		return FALSE;
 	}
 	memset(ptszMsgBuffer, '\0', XENGINE_APISERVICE_DATABASE_PHONE_BUFFER_SIZE);
@@ -117,7 +117,7 @@ BOOL CModuleDatabase_Phone::ModuleDatabase_Phone_Query(LPCTSTR lpszPhoneNumber, 
 	if ((NULL == lpszPhoneNumber) || (NULL == pSt_PhoneInfo))
 	{
 		DBModule_IsErrorOccur = TRUE;
-		DBModule_dwErrorCode = ERROR_XENGINE_IPADDR_MODULE_DATABASE_PHONE_PARAMENT;
+		DBModule_dwErrorCode = ERROR_APISERVICE_MODULE_DATABASE_PHONE_PARAMENT;
 		return FALSE;
 	}
 	size_t nPLen = _tcslen(lpszPhoneNumber);
@@ -219,7 +219,7 @@ BOOL CModuleDatabase_Phone::ModuleDatabase_Phone_Convert(LPCTSTR lpszPhoneInfo, 
 	if (NULL == ptszTokStr)
 	{
 		DBModule_IsErrorOccur = TRUE;
-		DBModule_dwErrorCode = ERROR_XENGINE_IPADDR_MODULE_DATABASE_PHONE_NOTFOUND;
+		DBModule_dwErrorCode = ERROR_APISERVICE_MODULE_DATABASE_PHONE_NOTFOUND;
 		return FALSE;
 	}
 	_tcscpy(pSt_PhoneInfo->tszProvincer, ptszTokStr);
@@ -228,7 +228,7 @@ BOOL CModuleDatabase_Phone::ModuleDatabase_Phone_Convert(LPCTSTR lpszPhoneInfo, 
 	if (NULL == ptszTokStr)
 	{
 		DBModule_IsErrorOccur = TRUE;
-		DBModule_dwErrorCode = ERROR_XENGINE_IPADDR_MODULE_DATABASE_PHONE_NOTFOUND;
+		DBModule_dwErrorCode = ERROR_APISERVICE_MODULE_DATABASE_PHONE_NOTFOUND;
 		return FALSE;
 	}
 	_tcscpy(pSt_PhoneInfo->tszCity, ptszTokStr);
@@ -237,7 +237,7 @@ BOOL CModuleDatabase_Phone::ModuleDatabase_Phone_Convert(LPCTSTR lpszPhoneInfo, 
 	if (NULL == ptszTokStr)
 	{
 		DBModule_IsErrorOccur = TRUE;
-		DBModule_dwErrorCode = ERROR_XENGINE_IPADDR_MODULE_DATABASE_PHONE_NOTFOUND;
+		DBModule_dwErrorCode = ERROR_APISERVICE_MODULE_DATABASE_PHONE_NOTFOUND;
 		return FALSE;
 	}
 	pSt_PhoneInfo->nZipCode = _ttoi(ptszTokStr);
@@ -246,7 +246,7 @@ BOOL CModuleDatabase_Phone::ModuleDatabase_Phone_Convert(LPCTSTR lpszPhoneInfo, 
 	if (NULL == ptszTokStr)
 	{
 		DBModule_IsErrorOccur = TRUE;
-		DBModule_dwErrorCode = ERROR_XENGINE_IPADDR_MODULE_DATABASE_PHONE_NOTFOUND;
+		DBModule_dwErrorCode = ERROR_APISERVICE_MODULE_DATABASE_PHONE_NOTFOUND;
 		return FALSE;
 	}
 	pSt_PhoneInfo->nAreaCode = _ttoi(ptszTokStr);
