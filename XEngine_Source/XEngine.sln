@@ -28,13 +28,15 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "XEngine_ModulePlugin", "XEn
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "XEngine_PluginModule", "XEngine_PluginModule", "{D0473C03-9464-4C44-818A-AE212680CD05}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ModulePlugin_Zodiac", "XEngine_PluginModule\ModulePlugin_Zodiac\ModulePlugin_Zodiac.vcxproj", "{32BB166A-3D3D-45EF-8BED-2E0471274159}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libModulePlugin_Zodiac", "XEngine_PluginModule\ModulePlugin_Zodiac\ModulePlugin_Zodiac.vcxproj", "{32BB166A-3D3D-45EF-8BED-2E0471274159}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ModulePlugin_Password", "XEngine_PluginModule\ModulePlugin_Password\ModulePlugin_Password.vcxproj", "{201B6D13-82A7-49E9-9736-D6B3BFE05B30}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libModulePlugin_Password", "XEngine_PluginModule\ModulePlugin_Password\ModulePlugin_Password.vcxproj", "{201B6D13-82A7-49E9-9736-D6B3BFE05B30}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ModulePlugin_Timezone", "XEngine_PluginModule\ModulePlugin_Timezone\ModulePlugin_Timezone.vcxproj", "{37B8E91F-EC52-41F0-B21D-441D4270C05F}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libModulePlugin_Timezone", "XEngine_PluginModule\ModulePlugin_Timezone\ModulePlugin_Timezone.vcxproj", "{37B8E91F-EC52-41F0-B21D-441D4270C05F}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ModulePlugin_BMIndex", "XEngine_PluginModule\ModulePlugin_BMIndex\ModulePlugin_BMIndex.vcxproj", "{BBC4B2B4-1143-45DF-8890-47CE26A61D0E}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libModulePlugin_BMIndex", "XEngine_PluginModule\ModulePlugin_BMIndex\ModulePlugin_BMIndex.vcxproj", "{BBC4B2B4-1143-45DF-8890-47CE26A61D0E}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libModulePlugin_Meter", "XEngine_PluginModule\ModulePlugin_Meter\ModulePlugin_Meter.vcxproj", "{6F111577-DAF8-4294-B516-0077C22D7613}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -132,6 +134,14 @@ Global
 		{BBC4B2B4-1143-45DF-8890-47CE26A61D0E}.Release|x64.Build.0 = Release|x64
 		{BBC4B2B4-1143-45DF-8890-47CE26A61D0E}.Release|x86.ActiveCfg = Release|Win32
 		{BBC4B2B4-1143-45DF-8890-47CE26A61D0E}.Release|x86.Build.0 = Release|Win32
+		{6F111577-DAF8-4294-B516-0077C22D7613}.Debug|x64.ActiveCfg = Debug|x64
+		{6F111577-DAF8-4294-B516-0077C22D7613}.Debug|x64.Build.0 = Debug|x64
+		{6F111577-DAF8-4294-B516-0077C22D7613}.Debug|x86.ActiveCfg = Debug|Win32
+		{6F111577-DAF8-4294-B516-0077C22D7613}.Debug|x86.Build.0 = Debug|Win32
+		{6F111577-DAF8-4294-B516-0077C22D7613}.Release|x64.ActiveCfg = Release|x64
+		{6F111577-DAF8-4294-B516-0077C22D7613}.Release|x64.Build.0 = Release|x64
+		{6F111577-DAF8-4294-B516-0077C22D7613}.Release|x86.ActiveCfg = Release|Win32
+		{6F111577-DAF8-4294-B516-0077C22D7613}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -143,6 +153,7 @@ Global
 		{201B6D13-82A7-49E9-9736-D6B3BFE05B30} = {D0473C03-9464-4C44-818A-AE212680CD05}
 		{37B8E91F-EC52-41F0-B21D-441D4270C05F} = {D0473C03-9464-4C44-818A-AE212680CD05}
 		{BBC4B2B4-1143-45DF-8890-47CE26A61D0E} = {D0473C03-9464-4C44-818A-AE212680CD05}
+		{6F111577-DAF8-4294-B516-0077C22D7613} = {D0473C03-9464-4C44-818A-AE212680CD05}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {9B202F91-A601-429E-BB0F-880DDEE096FE}

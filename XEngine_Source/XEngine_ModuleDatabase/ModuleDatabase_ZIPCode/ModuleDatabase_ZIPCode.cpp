@@ -115,7 +115,6 @@ BOOL CModuleDatabase_ZIPCode::ModuleDatabase_ZIPCode_QueryZIPCode(XENGINE_ZIPINF
 	}
 	else if (2 == pSt_ZIPInfo->nLevel)
 	{
-		int nParentID = 0;
 		_tcscpy(pSt_ZIPInfo->tszCity, pptszResult[nFliedValue + 2]);
 		ModuleDatabase_ZIPCode_QueryParentByID(_ttoi(pptszResult[nFliedValue + 1]), pSt_ZIPInfo->tszProvincer);
 	}

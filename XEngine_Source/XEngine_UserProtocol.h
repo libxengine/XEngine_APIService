@@ -182,4 +182,17 @@ typedef struct tag_XEngine_P2XPIO_Protocol
 	int nDestPort;                                                        //要连接的端口
 	BOOL bIsTcp;                                                          //连接类型TCP,否则为UDP
 }XENGINE_P2XPIO_PROTOCOL, * LPXENGINE_P2XPIO_PROTOCOL;
+//邮编信息
+typedef struct
+{
+	TCHAR tszProvincer[64];     //省/自治区/直辖市
+	TCHAR tszCity[64];          //市/区     
+	TCHAR tszCounty[64];        //县
+	TCHAR tszPinYin[64];        //拼音
+	double dlLng;               //经度
+	double dlLat;               //纬度
+	int nZipCode;               //邮编
+	int nAreaCode;              //区号
+	int nLevel;                 //行政级别
+}XENGINE_ZIPINFO;
 #pragma pack(pop)
