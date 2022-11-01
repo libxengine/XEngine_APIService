@@ -509,6 +509,82 @@ BOOL CModuleProtocol_Packet::ModuleProtocol_Packet_Locker(TCHAR* ptszMsgBuffer, 
 	return TRUE;
 }
 /********************************************************************
+函数名称：ModuleProtocol_Packet_ZIPCode
+函数功能：打包行政邮编信息协议
+ 参数.一：ptszMsgBuffer
+  In/Out：Out
+  类型：字符指针
+  可空：N
+  意思：输出打包的数据信息
+ 参数.二：pInt_MsgLen
+  In/Out：Out
+  类型：整数型指针
+  可空：N
+  意思：输出打包大小
+ 参数.三：pSt_ZIPInfo
+  In/Out：In
+  类型：数据结构指针
+  可空：N
+  意思：输入要打包的数据
+ 参数.四：nCode
+  In/Out：In
+  类型：整数型
+  可空：Y
+  意思：输入返回的值
+ 参数.五：lpszMsgBuffer
+  In/Out：In
+  类型：常量字符指针
+  可空：Y
+  意思：输入操作结果
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+BOOL CModuleProtocol_Packet::ModuleProtocol_Packet_ZIPCode(TCHAR* ptszMsgBuffer, int* pInt_MsgLen, XENGINE_ZIPINFO* pSt_ZIPInfo, int nCode /* = 0 */, LPCTSTR lpszMsgBuffer /* = NULL */)
+{
+	ModuleProtocol_IsErrorOccur = FALSE;
+
+	if ((NULL == ptszMsgBuffer) || (NULL == pInt_MsgLen))
+	{
+		ModuleProtocol_IsErrorOccur = TRUE;
+		ModuleProtocol_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PROTOCOL_PACKET_PARAMENT;
+		return FALSE;
+	}
+	Json::Value st_JsonRoot;
+	Json::Value st_JsonObject;
+	Json::StreamWriterBuilder st_JsonBuilder;
+
+	if (0 == nCode)
+	{
+		st_JsonObject["dlLat"] = pSt_ZIPInfo->dlLat;
+		st_JsonObject["dlLng"] = pSt_ZIPInfo->dlLng;
+		st_JsonObject["nAreaCode"] = pSt_ZIPInfo->nAreaCode;
+		st_JsonObject["nLevel"] = pSt_ZIPInfo->nLevel;
+		st_JsonObject["nZipCode"] = pSt_ZIPInfo->nZipCode;
+		st_JsonObject["tszCity"] = pSt_ZIPInfo->tszCity;
+		st_JsonObject["tszCounty"] = pSt_ZIPInfo->tszCounty;
+		st_JsonObject["tszPinYin"] = pSt_ZIPInfo->tszPinYin;
+		st_JsonObject["tszProvincer"] = pSt_ZIPInfo->tszProvincer;
+	}
+
+	st_JsonRoot["code"] = nCode;
+	if (NULL == lpszMsgBuffer)
+	{
+		st_JsonRoot["msg"] = "success";
+	}
+	else
+	{
+		st_JsonRoot["msg"] = lpszMsgBuffer;
+	}
+	st_JsonRoot["data"] = st_JsonObject;
+	st_JsonBuilder["emitUTF8"] = true;
+
+	*pInt_MsgLen = Json::writeString(st_JsonBuilder, st_JsonRoot).length();
+	memcpy(ptszMsgBuffer, Json::writeString(st_JsonBuilder, st_JsonRoot).c_str(), *pInt_MsgLen);
+	return TRUE;
+}
+/********************************************************************
 函数名称：ModuleProtocol_Packet_P2PLan
 函数功能：响应同步局域网地址列表
  参数.一：ptszMsgBuffer

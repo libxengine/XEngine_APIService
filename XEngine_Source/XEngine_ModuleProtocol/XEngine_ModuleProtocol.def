@@ -10,6 +10,7 @@ EXPORTS
 	ModuleProtocol_Packet_BankQuery
 	ModuleProtocol_Packet_LanguageQuery
 	ModuleProtocol_Packet_Locker
+	ModuleProtocol_Packet_ZIPCode
 	ModuleProtocol_Packet_P2PLan
 	ModuleProtocol_Packet_P2PWLan
 	ModuleProtocol_Packet_P2PUser
@@ -20,3 +21,4 @@ EXPORTS
 	ModuleProtocol_Parse_Translation
 	ModuleProtocol_Parse_P2PClient
 	ModuleProtocol_Parse_CDKey
+	ModuleProtocol_Parse_ZIPCode
