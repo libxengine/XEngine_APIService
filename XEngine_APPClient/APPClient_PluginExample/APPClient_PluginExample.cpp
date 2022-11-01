@@ -30,7 +30,7 @@ int main()
 	int nLen = 0;
 	TCHAR* ptszMsgBuffer = NULL;
 	LPCTSTR lpszPassUrl = _T("http://127.0.0.1:5501/api?function=pass&params1=1&params2=4");
-	if (!APIHelp_HttpRequest_Get(lpszPassUrl, &ptszMsgBuffer, &nLen))
+	if (!APIHelp_HttpRequest_Custom(_T("GET"), lpszPassUrl, NULL, NULL, &ptszMsgBuffer, &nLen))
 	{
 		printf("发送投递失败！\n");
 		return 0;
@@ -39,7 +39,7 @@ int main()
 	BaseLib_OperatorMemory_FreeCStyle((XPPMEM)&ptszMsgBuffer);
 
 	LPCTSTR lpszZodiacUrl = _T("http://127.0.0.1:5501/api?function=zodiac&params1=19880121");
-	if (!APIHelp_HttpRequest_Get(lpszZodiacUrl, &ptszMsgBuffer, &nLen))
+	if (!APIHelp_HttpRequest_Custom(_T("GET"), lpszZodiacUrl, NULL, NULL, &ptszMsgBuffer, &nLen))
 	{
 		printf("发送投递失败！\n");
 		return 0;
@@ -48,7 +48,7 @@ int main()
 	BaseLib_OperatorMemory_FreeCStyle((XPPMEM)&ptszMsgBuffer);
 
 	LPCTSTR lpszTimeUrl = _T("http://127.0.0.1:5501/api?function=timezone&params1=1&params2=1-20");
-	if (!APIHelp_HttpRequest_Get(lpszTimeUrl, &ptszMsgBuffer, &nLen))
+	if (!APIHelp_HttpRequest_Custom(_T("GET"), lpszTimeUrl, NULL, NULL, &ptszMsgBuffer, &nLen))
 	{
 		printf("发送投递失败！\n");
 		return 0;
@@ -57,7 +57,7 @@ int main()
 	BaseLib_OperatorMemory_FreeCStyle((XPPMEM)&ptszMsgBuffer);
 
 	LPCTSTR lpszBmiUrl = _T("http://127.0.0.1:5501/api?function=bmindex&params1=1.78&params2=62");
-	if (!APIHelp_HttpRequest_Get(lpszBmiUrl, &ptszMsgBuffer, &nLen))
+	if (!APIHelp_HttpRequest_Custom(_T("GET"), lpszBmiUrl, NULL, NULL, &ptszMsgBuffer, &nLen))
 	{
 		printf("发送投递失败！\n");
 		return 0;
