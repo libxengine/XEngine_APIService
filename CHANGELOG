@@ -1,3 +1,17 @@
+XEngine_APIService V2.5.0.1001
+
+添加:zipcode查询功能
+添加:计量转换插件
+修改:数据库模块错误定义
+更新:匹配XEngine V7.42版本
+删除:所有回复类型1模式,现在只有返回JSON了
+
+added:zipcode query
+added:meter convert plugin
+modify:error code define for db module
+update:match xengine v7.42
+delete:reply type 1 functions for bank and id and ip and language and phone and translation
+======================================================================================
 XEngine_APIService V2.4.0.1001
 
 添加:分布式锁
