@@ -1,6 +1,6 @@
 ﻿#include "../XEngine_Hdr.h"
 
-BOOL XEngine_HTTPTask_Translation(LPCTSTR lpszClientAddr, LPCTSTR lpszMsgBuffer, int nReplyType, int nConvertType)
+BOOL XEngine_HTTPTask_Translation(LPCTSTR lpszClientAddr, LPCTSTR lpszMsgBuffer, int nConvertType)
 {
 	int nMsgLen = 4096;
 	int nPktLen = 4096;
@@ -27,14 +27,7 @@ BOOL XEngine_HTTPTask_Translation(LPCTSTR lpszClientAddr, LPCTSTR lpszMsgBuffer,
 	//转换类型
 	if (!ModuleHelp_Translation_Convert((ENUM_XENGINE_APISERVICE_TRANSLATION_TYPE)nConvertType, tszTypeBuffer))
 	{
-		if (0 == nReplyType)
-		{
-			ModuleProtocol_Packet_LanguageQuery(tszPktBuffer, &nPktLen, NULL, 1001, _T("type not support"));
-		}
-		else
-		{
-			ModuleProtocol_Packet_LanguageQuery2(tszPktBuffer, &nPktLen, NULL, 1001);
-		}
+		ModuleProtocol_Packet_LanguageQuery(tszPktBuffer, &nPktLen, NULL, 1001, _T("type not support"));
 		BaseLib_OperatorMemory_FreeCStyle((XPPMEM)&ptszBodyBuffer);
 		RfcComponents_HttpServer_SendMsgEx(xhHTTPPacket, tszMsgBuffer, &nMsgLen, &st_HDRParam, tszPktBuffer, nPktLen);
 		XEngine_Network_Send(lpszClientAddr, tszMsgBuffer, nMsgLen);
@@ -42,18 +35,11 @@ BOOL XEngine_HTTPTask_Translation(LPCTSTR lpszClientAddr, LPCTSTR lpszMsgBuffer,
 		return FALSE;
 	}
 	_stprintf(tszUrlBuffer, st_ServiceConfig.st_XApi.tszTranslationUrl, tszTypeBuffer, lpszMsgBuffer);
-	APIHelp_HttpRequest_Get(tszUrlBuffer, &ptszBodyBuffer, &nBLen);
+	APIHelp_HttpRequest_Custom(_T("GET"), tszUrlBuffer, NULL, NULL, &ptszBodyBuffer, &nBLen);
 	//解析数据
 	if (!ModuleProtocol_Parse_Translation(ptszBodyBuffer, nBLen, &st_LanguageInfo))
 	{
-		if (0 == nReplyType)
-		{
-			ModuleProtocol_Packet_LanguageQuery(tszPktBuffer, &nPktLen, NULL, 1002, _T("translation failed"));
-		}
-		else
-		{
-			ModuleProtocol_Packet_LanguageQuery2(tszPktBuffer, &nPktLen, NULL, 1002);
-		}
+		ModuleProtocol_Packet_LanguageQuery(tszPktBuffer, &nPktLen, NULL, 1002, _T("translation failed"));
 		BaseLib_OperatorMemory_FreeCStyle((XPPMEM)&ptszBodyBuffer);
 		RfcComponents_HttpServer_SendMsgEx(xhHTTPPacket, tszMsgBuffer, &nMsgLen, &st_HDRParam, tszPktBuffer, nPktLen);
 		XEngine_Network_Send(lpszClientAddr, tszMsgBuffer, nMsgLen);
@@ -61,14 +47,7 @@ BOOL XEngine_HTTPTask_Translation(LPCTSTR lpszClientAddr, LPCTSTR lpszMsgBuffer,
 		return FALSE;
 	}
 	//打包发送
-	if (0 == nReplyType)
-	{
-		ModuleProtocol_Packet_LanguageQuery(tszPktBuffer, &nPktLen, &st_LanguageInfo);
-	}
-	else
-	{
-		ModuleProtocol_Packet_LanguageQuery2(tszPktBuffer, &nPktLen, &st_LanguageInfo);
-	}
+	ModuleProtocol_Packet_LanguageQuery(tszPktBuffer, &nPktLen, &st_LanguageInfo);
 	RfcComponents_HttpServer_SendMsgEx(xhHTTPPacket, tszMsgBuffer, &nMsgLen, &st_HDRParam, tszPktBuffer, nPktLen);
 	XEngine_Network_Send(lpszClientAddr, tszMsgBuffer, nMsgLen);
 	BaseLib_OperatorMemory_FreeCStyle((XPPMEM)&ptszBodyBuffer);

@@ -18,7 +18,7 @@ and support plugin module
 Support privatization deployment, free, safe, open source, controllable
 
 ## Software feature
-1. support json and string stream methods to return the content of the query
+1. permission verication
 2. support ip address location information query(IPV4 and IPV6)
 3. support ID verification and information query
 4. support phone number information query
@@ -30,7 +30,7 @@ Support privatization deployment, free, safe, open source, controllable
 10. Password generator
 11. World Time Zones
 12. Oil price inquiry (planned)
-13. Administrative zip code (planned)
+13. Administrative zip code
 14. Bank card verification
 15. Exchange rate calculation (planned)
 16. QR code generation and parse (planned)
@@ -40,6 +40,8 @@ Support privatization deployment, free, safe, open source, controllable
 20. Metering Conversion
 21. CDKey Creator
 22. Distributed lock
+23. short url creator
+24. local system time
 
 ## install
 
@@ -59,7 +61,8 @@ use vs open and compile,suport windows 7sp1 and above
 Just Run it
 
 #### Linux
-install opencc,ubuntu:sudo apt install libopencc-dev,centos:compile by self  
+install opencc,ubuntu:sudo apt install libopencc-dev  
+centos:compile by self  
 use makefile compile,UBUNTU20.04 x64 or CENTOS8 x64  
 Run it on the terminal
 
@@ -106,7 +109,7 @@ Address:app.xyry.org,Port:5501
 #### example
 For more information please refer to the documentation  
 phone information query  
-api:http://app.xyry.org:5501/api?function=phone&params1=13699439999&params2=0  
+api:http://app.xyry.org:5501/api?function=phone&params1=13699439999
 ```json
 {
     "code":0,
@@ -121,7 +124,7 @@ api:http://app.xyry.org:5501/api?function=phone&params1=13699439999&params2=0
 }
 ```
 ip address information  
-api:http://app.xyry.org:5501/api?function=ip&params1=1.29.164.255&params2=0  
+api:http://app.xyry.org:5501/api?function=ip&params1=1.29.164.255
 ```json
 {
     "code":0,
@@ -141,7 +144,7 @@ api:http://app.xyry.org:5501/api?function=ip&params1=1.29.164.255&params2=0
 }
 ```
 id information query  
-api:http://app.xyry.org:5501/api?function=id&params1=511025198800000000&params2=0  
+api:http://app.xyry.org:5501/api?function=id&params1=511025198800000000
 ```json
 {
     "code":0,
@@ -161,7 +164,7 @@ api:http://app.xyry.org:5501/api?function=id&params1=511025198800000000&params2=
 }
 ```
 bank card ver  
-api:http://app.xyry.org:5501/api?function=bank&params1=6214832830000000&params2=0
+api:http://app.xyry.org:5501/api?function=bank&params1=6214832830000000
 ```json
 {
     "code":0,
@@ -175,7 +178,7 @@ api:http://app.xyry.org:5501/api?function=bank&params1=6214832830000000&params2=
 }
 ```
 language  
-api:http://app.xyry.org:5501/api?function=language&params1=简体到繁体&params2=0&params3=1
+api:http://app.xyry.org:5501/api?function=language&params1=简体到繁体&params2=1
 ```json
 {
     "code":0,
@@ -188,7 +191,7 @@ api:http://app.xyry.org:5501/api?function=language&params1=简体到繁体&param
 }
 ```
 translation  
-api:http://app.xyry.org:5501/api?function=translation&params1=中国&params2=0&params3=0
+api:http://app.xyry.org:5501/api?function=translation&params1=中国&params2=0
 ```json
 {
     "code":0,

@@ -63,7 +63,7 @@ int main()
 
 	TCHAR* ptszCreateBuffer = NULL;
 	TCHAR* ptszAuthBuffer = NULL;
-	if (!APIHelp_HttpRequest_Post(lpszCreateUrl, st_JsonRoot.toStyledString().c_str(), &nCode, &ptszCreateBuffer, &nLen))
+	if (!APIHelp_HttpRequest_Custom(_T("POST"), lpszCreateUrl, st_JsonRoot.toStyledString().c_str(), &nCode, &ptszCreateBuffer, &nLen))
 	{
 		printf("发送投递失败！\n");
 		return 0;
@@ -77,7 +77,7 @@ int main()
 	BaseLib_OperatorMemory_FreeCStyle((XPPMEM)&ptszCreateBuffer);
 
 	LPCTSTR lpszAuthUrl = _T("http://127.0.0.1:5501/api?function=cdkey&params1=1&params2=123123");
-	if (!APIHelp_HttpRequest_Post(lpszAuthUrl, tszMsgBuffer, &nCode, &ptszAuthBuffer, &nLen))
+	if (!APIHelp_HttpRequest_Custom(_T("POST"), lpszAuthUrl, tszMsgBuffer, &nCode, &ptszAuthBuffer, &nLen))
 	{
 		printf("发送投递失败！\n");
 		return 0;

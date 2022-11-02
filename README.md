@@ -18,7 +18,7 @@ c c++ interface api service
 
 
 ## 软件特性
-1. 支持JSON和字符串流方式返回查询的内容
+1. 权限验证
 2. 支持IP地址位置信息查询(IPV4和IPV6)
 3. 支持身份证校验与信息查询
 4. 支持手机号信息归属查询
@@ -30,16 +30,18 @@ c c++ interface api service
 10. 密码生成器
 11. 世界时区
 12. 油价查询(计划中)
-13. 行政邮编(计划中)
+13. 行政邮编
 14. 银行卡验证
 15. 汇率计算(计划中)
 16. 二维码生成解析(计划中)
 17. 简繁转换
 18. 二十四节气(计划中)
 19. 新华词典
-20. 计量转换(计划中)
+20. 计量转换
 21. CDKey创建支持
 22. 分布式锁API
+23. 短连接生成
+24. 本地标准时间
 
 ## 安装教程
 
@@ -59,7 +61,8 @@ macos执行:./XEngine_LINEnv.sh -i 3
 直接运行即可
 
 #### Linux
-安装opencc,ubuntu:sudo apt install libopencc-dev,centos:需要自己编译  
+安装opencc,ubuntu:sudo apt install libopencc-dev  
+centos:需要自己编译  
 Linux使用Makefile编译,UBUNTU20.04 x64或者CENTOS8 x64  
 在控制台运行
 
@@ -104,7 +107,7 @@ make FLAGS=CleanAll 清理编译
 #### 测试接口示例
 更多内容请参考文档  
 手机信息查询  
-接口:http://app.xyry.org:5501/api?function=phone&params1=13699439999&params2=0  
+接口:http://app.xyry.org:5501/api?function=phone&params1=13699439999
 ```json
 {
     "code":0,
@@ -119,7 +122,7 @@ make FLAGS=CleanAll 清理编译
 }
 ```
 IP地址查询  
-接口:http://app.xyry.org:5501/api?function=ip&params1=1.29.164.255&params2=0  
+接口:http://app.xyry.org:5501/api?function=ip&params1=1.29.164.255
 ```json
 {
     "code":0,
@@ -139,7 +142,7 @@ IP地址查询
 }
 ```
 身份证查询  
-接口:http://app.xyry.org:5501/api?function=id&params1=511025198800000000&params2=0  
+接口:http://app.xyry.org:5501/api?function=id&params1=511025198800000000
 ```json
 {
     "code":0,
@@ -159,7 +162,7 @@ IP地址查询
 }
 ```
 银行卡验证  
-接口:http://app.xyry.org:5501/api?function=bank&params1=6214832830000000&params2=0
+接口:http://app.xyry.org:5501/api?function=bank&params1=6214832830000000
 ```json
 {
     "code":0,
@@ -173,7 +176,7 @@ IP地址查询
 }
 ```
 语言转换  
-接口:http://app.xyry.org:5501/api?function=language&params1=简体到繁体&params2=0&params3=1
+接口:http://app.xyry.org:5501/api?function=language&params1=简体到繁体&params2=1
 ```json
 {
     "code":0,
@@ -186,7 +189,7 @@ IP地址查询
 }
 ```
 翻译  
-接口:http://app.xyry.org:5501/api?function=translation&params1=中国&params2=0&params3=0
+接口:http://app.xyry.org:5501/api?function=translation&params1=中国&params2=0
 ```json
 {
     "code":0,

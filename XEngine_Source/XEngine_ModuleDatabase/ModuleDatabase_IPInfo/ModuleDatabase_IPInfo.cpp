@@ -86,7 +86,7 @@ BOOL CModuleDatabase_IPInfo::ModuleDatabase_IPInfo_IPV4Query(XENGINE_IPADDRINFO*
     if ((NULL == pSt_IPAddrInfo) && (NULL == lpszIPAddr))
     {
         DBModule_IsErrorOccur = TRUE;
-        DBModule_dwErrorCode = ERROR_XENGINE_IPADDR_MODULE_DATABASE_IPINFO_PARAMENT;
+        DBModule_dwErrorCode = ERROR_APISERVICE_MODULE_DATABASE_IPINFO_PARAMENT;
         return FALSE;
     }
     //查询
@@ -111,7 +111,7 @@ BOOL CModuleDatabase_IPInfo::ModuleDatabase_IPInfo_IPV4Query(XENGINE_IPADDRINFO*
 	if (nLine <= 0)
 	{
 		DBModule_IsErrorOccur = TRUE;
-		DBModule_dwErrorCode = ERROR_XENGINE_IPADDR_MODULE_DATABASE_IPINFO_NOTFOUND;
+		DBModule_dwErrorCode = ERROR_APISERVICE_MODULE_DATABASE_IPINFO_NOTFOUND;
 		return FALSE;
 	}
 	_tcscpy(pSt_IPAddrInfo->tszIPStart, pptszResult[nRow + 1]);
@@ -153,7 +153,7 @@ BOOL CModuleDatabase_IPInfo::ModuleDatabase_IPInfo_IPV6Query(XENGINE_IPADDRINFO*
 	if ((NULL == pSt_IPAddrInfo) && (NULL == lpszIPAddr))
 	{
 		DBModule_IsErrorOccur = TRUE;
-		DBModule_dwErrorCode = ERROR_XENGINE_IPADDR_MODULE_DATABASE_IPINFO_PARAMENT;
+		DBModule_dwErrorCode = ERROR_APISERVICE_MODULE_DATABASE_IPINFO_PARAMENT;
 		return FALSE;
 	}
 	//查询
@@ -181,7 +181,7 @@ BOOL CModuleDatabase_IPInfo::ModuleDatabase_IPInfo_IPV6Query(XENGINE_IPADDRINFO*
 	if (nLine <= 0)
 	{
 		DBModule_IsErrorOccur = TRUE;
-		DBModule_dwErrorCode = ERROR_XENGINE_IPADDR_MODULE_DATABASE_IPINFO_NOTFOUND;
+		DBModule_dwErrorCode = ERROR_APISERVICE_MODULE_DATABASE_IPINFO_NOTFOUND;
 		return FALSE;
 	}
 	_tcscpy(pSt_IPAddrInfo->tszIPStart, pptszResult[nRow + 1]);

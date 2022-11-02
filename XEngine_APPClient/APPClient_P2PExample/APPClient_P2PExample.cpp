@@ -67,7 +67,7 @@ int APPClient_P2XPLogin()
 	int nMsgLen = 0;
 	int nHTTPCode = 0;
 	TCHAR* ptszMsgBuffer = NULL;
-	if (!APIHelp_HttpRequest_Post(lpszAddr, st_JsonRoot.toStyledString().c_str(), &nHTTPCode, &ptszMsgBuffer, &nMsgLen))
+	if (!APIHelp_HttpRequest_Custom(_T("POST"), lpszAddr, st_JsonRoot.toStyledString().c_str(), &nHTTPCode, &ptszMsgBuffer, &nMsgLen))
 	{
 		return -1;
 	}
@@ -88,7 +88,7 @@ int APPClient_P2XPList()
 	int nMsgLen = 0;
 	int nHTTPCode = 0;
 	TCHAR* ptszMsgBuffer = NULL;
-	if (!APIHelp_HttpRequest_Post(lpszAddr, st_JsonRoot.toStyledString().c_str(), &nHTTPCode, &ptszMsgBuffer, &nMsgLen))
+	if (!APIHelp_HttpRequest_Custom(_T("POST"), lpszAddr, st_JsonRoot.toStyledString().c_str(), &nHTTPCode, &ptszMsgBuffer, &nMsgLen))
 	{
 		return -1;
 	}
@@ -109,7 +109,7 @@ int APPClient_P2XPGetUser()
 	int nMsgLen = 0;
 	int nHTTPCode = 0;
 	TCHAR* ptszMsgBuffer = NULL;
-	if (!APIHelp_HttpRequest_Post(lpszAddr, st_JsonRoot.toStyledString().c_str(), &nHTTPCode, &ptszMsgBuffer, &nMsgLen))
+	if (!APIHelp_HttpRequest_Custom(_T("POST"), lpszAddr, st_JsonRoot.toStyledString().c_str(), &nHTTPCode, &ptszMsgBuffer, &nMsgLen))
 	{
 		return -1;
 	}
@@ -130,7 +130,7 @@ int APPClient_P2XPConnect()
 	int nMsgLen = 0;
 	int nHTTPCode = 0;
 	TCHAR* ptszMsgBuffer = NULL;
-	if (!APIHelp_HttpRequest_Post(lpszAddr, st_JsonRoot.toStyledString().c_str(), &nHTTPCode, &ptszMsgBuffer, &nMsgLen))
+	if (!APIHelp_HttpRequest_Custom(_T("POST"), lpszAddr, st_JsonRoot.toStyledString().c_str(), &nHTTPCode, &ptszMsgBuffer, &nMsgLen))
 	{
 		return -1;
 	}

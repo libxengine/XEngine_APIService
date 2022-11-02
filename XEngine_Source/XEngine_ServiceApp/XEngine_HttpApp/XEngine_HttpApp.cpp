@@ -16,7 +16,7 @@ XLOG xhLog = NULL;
 XHANDLE xhHTTPSocket = NULL;
 XHANDLE xhHTTPHeart = NULL;
 XHANDLE xhHTTPPacket = NULL;
-XNETHANDLE xhHTTPPool = 0;
+XHANDLE xhHTTPPool = 0;
 //配置文件
 XENGINE_SERVICECONFIG st_ServiceConfig;
 XENGINE_OPENCCCONFIG st_OPenccConfig;
@@ -39,6 +39,7 @@ void ServiceApp_Stop(int signo)
 		ModuleDatabase_IDCard_Destory();
 		ModuleDatabase_Phone_Destory();
 		ModuleDatabase_Bank_Destory();
+		ModuleDatabase_ZIPCode_Destory();
 		//销毁其他
 		ModulePlugin_Core_Destroy();
 		ModuleHelp_P2PClient_Destory();
@@ -174,6 +175,13 @@ int main(int argc, char** argv)
 		goto XENGINE_SERVICEAPP_EXIT;
 	}
 	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _T("启动服务中,初始化银行卡数据库成功,地址:%s"), st_ServiceConfig.st_XApi.tszBankData);
+
+	if (!ModuleDatabase_ZIPCode_Init(st_ServiceConfig.st_XApi.tszZIPCodeData))
+	{
+		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _T("启动服务中,初始化行政邮编信息数据库失败,错误：%lX"), ModuleDB_GetLastError());
+		goto XENGINE_SERVICEAPP_EXIT;
+	}
+	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _T("启动服务中,初始化行政邮编信息数据库成功,地址:%s"), st_ServiceConfig.st_XApi.tszZIPCodeData);
 	//启动HTTP服务相关代码
 	if (st_ServiceConfig.nHttpPort > 0)
 	{
@@ -220,7 +228,8 @@ int main(int argc, char** argv)
 			ppSt_ListHTTPParam[i]->lParam = pInt_Pos;
 			ppSt_ListHTTPParam[i]->fpCall_ThreadsTask = XEngine_HTTPTask_Thread;
 		}
-		if (!ManagePool_Thread_NQCreate(&xhHTTPPool, &ppSt_ListHTTPParam, st_ServiceConfig.st_XMax.nHTTPThread))
+		xhHTTPPool = ManagePool_Thread_NQCreate(&ppSt_ListHTTPParam, st_ServiceConfig.st_XMax.nHTTPThread);
+		if (NULL == xhHTTPPool)
 		{
 			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _T("启动服务中,启动HTTP线程池服务失败,错误：%lX"), ManagePool_GetLastError());
 			goto XENGINE_SERVICEAPP_EXIT;
@@ -292,6 +301,7 @@ XENGINE_SERVICEAPP_EXIT:
 		ModuleDatabase_IDCard_Destory();
 		ModuleDatabase_Phone_Destory();
 		ModuleDatabase_Bank_Destory();
+		ModuleDatabase_ZIPCode_Destory();
 		//销毁其他
 		ModulePlugin_Core_Destroy();
 		ModuleHelp_P2PClient_Destory();

@@ -81,35 +81,6 @@ extern "C" BOOL ModuleProtocol_Packet_Common(TCHAR * ptszMsgBuffer, int* pInt_Ms
 *********************************************************************/
 extern "C" BOOL ModuleProtocol_Packet_IPQuery(TCHAR * ptszMsgBuffer, int* pInt_MsgLen, XENGINE_IPADDRINFO * pSt_IPAddrInfo, int nCode = 0, LPCTSTR lpszMsgBuffer = NULL);
 /********************************************************************
-函数名称：ModuleProtocol_Packet_IPQuery2
-函数功能：IP查询打包函数另一种方式
- 参数.一：ptszMsgBuffer
-  In/Out：Out
-  类型：字符指针
-  可空：N
-  意思：输出打包的数据信息
- 参数.二：pInt_MsgLen
-  In/Out：Out
-  类型：整数型指针
-  可空：N
-  意思：输出打包大小
- 参数.三：pSt_IPAddrInfo
-  In/Out：In
-  类型：数据结构指针
-  可空：N
-  意思：输入要操作的IP地址信息
- 参数.四：nCode
-  In/Out：In
-  类型：整数型
-  可空：Y
-  意思：输入返回的值
-返回值
-  类型：逻辑型
-  意思：是否成功
-备注：
-*********************************************************************/
-extern "C" BOOL ModuleProtocol_Packet_IPQuery2(TCHAR* ptszMsgBuffer, int* pInt_MsgLen, XENGINE_IPADDRINFO* pSt_IPAddrInfo, int nCode = 0);
-/********************************************************************
 函数名称：ModuleProtocol_Packet_IDQuery
 函数功能：ID查询打包为JSON的封包函数
  参数.一：ptszMsgBuffer
@@ -149,40 +120,6 @@ extern "C" BOOL ModuleProtocol_Packet_IPQuery2(TCHAR* ptszMsgBuffer, int* pInt_M
 *********************************************************************/
 extern "C" BOOL ModuleProtocol_Packet_IDQuery(TCHAR* ptszMsgBuffer, int* pInt_MsgLen, XENGINE_IDCARDINFO* pSt_IDInfo, XENGINE_IDREGION* pSt_IDRegion, int nCode = 0, LPCTSTR lpszMsgBuffer = NULL);
 /********************************************************************
-函数名称：ModuleProtocol_Packet_IDQuery2
-函数功能：ID查询打包为字符串流函数
- 参数.一：ptszMsgBuffer
-  In/Out：Out
-  类型：字符指针
-  可空：N
-  意思：输出打包的数据信息
- 参数.二：pInt_MsgLen
-  In/Out：Out
-  类型：整数型指针
-  可空：N
-  意思：输出打包大小
- 参数.三：pSt_IDInfo
-  In/Out：In
-  类型：数据结构指针
-  可空：N
-  意思：输入要打包的ID信息
- 参数.四：pSt_IDRegion
-  In/Out：In
-  类型：数据结构指针
-  可空：N
-  意思：输入ID地址信息
- 参数.五：nCode
-  In/Out：In
-  类型：整数型
-  可空：Y
-  意思：输入返回的值
-返回值
-  类型：逻辑型
-  意思：是否成功
-备注：
-*********************************************************************/
-extern "C" BOOL ModuleProtocol_Packet_IDQuery2(TCHAR* ptszMsgBuffer, int* pInt_MsgLen, XENGINE_IDCARDINFO* pSt_IDInfo, XENGINE_IDREGION* pSt_IDRegion, int nCode = 0);
-/********************************************************************
 函数名称：ModuleProtocol_Packet_PhoneQuery
 函数功能：电话信息查询打包为JSON的封包函数
  参数.一：ptszMsgBuffer
@@ -216,35 +153,6 @@ extern "C" BOOL ModuleProtocol_Packet_IDQuery2(TCHAR* ptszMsgBuffer, int* pInt_M
 备注：
 *********************************************************************/
 extern "C" BOOL ModuleProtocol_Packet_PhoneQuery(TCHAR* ptszMsgBuffer, int* pInt_MsgLen, XENGINE_PHONEINFO* pSt_PhoneInfo, int nCode = 0, LPCTSTR lpszMsgBuffer = NULL);
-/********************************************************************
-函数名称：ModuleProtocol_Packet_PhoneQuery2
-函数功能：电话查询打包为字符串流函数
- 参数.一：ptszMsgBuffer
-  In/Out：Out
-  类型：字符指针
-  可空：N
-  意思：输出打包的数据信息
- 参数.二：pInt_MsgLen
-  In/Out：Out
-  类型：整数型指针
-  可空：N
-  意思：输出打包大小
- 参数.三：pSt_PhoneInfo
-  In/Out：In
-  类型：数据结构指针
-  可空：N
-  意思：输入要打包的信息
- 参数.四：nCode
-  In/Out：In
-  类型：整数型
-  可空：Y
-  意思：输入返回的值
-返回值
-  类型：逻辑型
-  意思：是否成功
-备注：
-*********************************************************************/
-extern "C" BOOL ModuleProtocol_Packet_PhoneQuery2(TCHAR* ptszMsgBuffer, int* pInt_MsgLen, XENGINE_PHONEINFO* pSt_PhoneInfo, int nCode = 0);
 /********************************************************************
 函数名称：ModuleProtocol_Packet_BankQuery
 函数功能：银行卡信息查询打包为JSON
@@ -280,35 +188,6 @@ extern "C" BOOL ModuleProtocol_Packet_PhoneQuery2(TCHAR* ptszMsgBuffer, int* pIn
 *********************************************************************/
 extern "C" BOOL ModuleProtocol_Packet_BankQuery(TCHAR* ptszMsgBuffer, int* pInt_MsgLen, XENGINE_BANKINFO* pSt_BankInfo, int nCode = 0, LPCTSTR lpszMsgBuffer = NULL);
 /********************************************************************
-函数名称：ModuleProtocol_Packet_BankQuery2
-函数功能：银行卡信息查询打包为字节流
- 参数.一：ptszMsgBuffer
-  In/Out：Out
-  类型：字符指针
-  可空：N
-  意思：输出打包的数据信息
- 参数.二：pInt_MsgLen
-  In/Out：Out
-  类型：整数型指针
-  可空：N
-  意思：输出打包大小
- 参数.三：pSt_PhoneInfo
-  In/Out：In
-  类型：数据结构指针
-  可空：N
-  意思：输入要打包的信息
- 参数.四：nCode
-  In/Out：In
-  类型：整数型
-  可空：Y
-  意思：输入返回的值
-返回值
-  类型：逻辑型
-  意思：是否成功
-备注：
-*********************************************************************/
-extern "C" BOOL ModuleProtocol_Packet_BankQuery2(TCHAR* ptszMsgBuffer, int* pInt_MsgLen, XENGINE_BANKINFO* pSt_BankInfo, int nCode = 0);
-/********************************************************************
 函数名称：ModuleProtocol_Packet_LanguageQuery
 函数功能：语言打包为JSON
  参数.一：ptszMsgBuffer
@@ -343,35 +222,6 @@ extern "C" BOOL ModuleProtocol_Packet_BankQuery2(TCHAR* ptszMsgBuffer, int* pInt
 *********************************************************************/
 extern "C" BOOL ModuleProtocol_Packet_LanguageQuery(TCHAR* ptszMsgBuffer, int* pInt_MsgLen, XENGINE_LANGUAGEINFO* pSt_LanguageInfo, int nCode = 0, LPCTSTR lpszMsgBuffer = NULL);
 /********************************************************************
-函数名称：ModuleProtocol_Packet_LanguageQuery2
-函数功能：语言打包为字节流
- 参数.一：ptszMsgBuffer
-  In/Out：Out
-  类型：字符指针
-  可空：N
-  意思：输出打包的数据信息
- 参数.二：pInt_MsgLen
-  In/Out：Out
-  类型：整数型指针
-  可空：N
-  意思：输出打包大小
- 参数.三：pSt_PhoneInfo
-  In/Out：In
-  类型：数据结构指针
-  可空：N
-  意思：输入要打包的信息
- 参数.四：nCode
-  In/Out：In
-  类型：整数型
-  可空：Y
-  意思：输入返回的值
-返回值
-  类型：逻辑型
-  意思：是否成功
-备注：
-*********************************************************************/
-extern "C" BOOL ModuleProtocol_Packet_LanguageQuery2(TCHAR* ptszMsgBuffer, int* pInt_MsgLen, XENGINE_LANGUAGEINFO* pSt_LanguageInfo, int nCode = 0);
-/********************************************************************
 函数名称：ModuleProtocol_Packet_Locker
 函数功能：分布式锁协议打包函数
  参数.一：ptszMsgBuffer
@@ -405,6 +255,40 @@ extern "C" BOOL ModuleProtocol_Packet_LanguageQuery2(TCHAR* ptszMsgBuffer, int* 
 备注：
 *********************************************************************/
 extern "C" BOOL ModuleProtocol_Packet_Locker(TCHAR* ptszMsgBuffer, int* pInt_MsgLen, XNETHANDLE xhToken, int nCode = 0, LPCTSTR lpszMsgBuffer = NULL);
+/********************************************************************
+函数名称：ModuleProtocol_Packet_ZIPCode
+函数功能：打包行政邮编信息协议
+ 参数.一：ptszMsgBuffer
+  In/Out：Out
+  类型：字符指针
+  可空：N
+  意思：输出打包的数据信息
+ 参数.二：pInt_MsgLen
+  In/Out：Out
+  类型：整数型指针
+  可空：N
+  意思：输出打包大小
+ 参数.三：pSt_ZIPInfo
+  In/Out：In
+  类型：数据结构指针
+  可空：N
+  意思：输入要打包的数据
+ 参数.四：nCode
+  In/Out：In
+  类型：整数型
+  可空：Y
+  意思：输入返回的值
+ 参数.五：lpszMsgBuffer
+  In/Out：In
+  类型：常量字符指针
+  可空：Y
+  意思：输入操作结果
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+extern "C" BOOL ModuleProtocol_Packet_ZIPCode(TCHAR* ptszMsgBuffer, int* pInt_MsgLen, XENGINE_ZIPINFO* pSt_ZIPInfo, int nCode = 0, LPCTSTR lpszMsgBuffer = NULL);
 /********************************************************************
 函数名称：ModuleProtocol_Packet_P2PLan
 函数功能：响应同步局域网地址列表
@@ -634,3 +518,27 @@ extern "C" BOOL ModuleProtocol_Parse_P2PClient(LPCTSTR lpszMsgBuffer, int nMsgLe
 备注：
 *********************************************************************/
 extern "C" BOOL ModuleProtocol_Parse_CDKey(LPCTSTR lpszMsgBuffer, int nMsgLen, XENGINE_AUTHORIZE_LOCAL* pSt_Authorize);
+/********************************************************************
+函数名称：ModuleProtocol_Parse_ZIPCode
+函数功能：解析邮政地址信息
+ 参数.一：lpszMsgBuffer
+  In/Out：In
+  类型：常量字符指针
+  可空：N
+  意思：输入要解析的缓冲区
+ 参数.二：nMsgLen
+  In/Out：In
+  类型：整数型
+  可空：N
+  意思：输入缓冲区大小
+ 参数.三：pSt_ZIPInfo
+  In/Out：Out
+  类型：数据结构指针
+  可空：N
+  意思：输出解析后的信息
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+extern "C" BOOL ModuleProtocol_Parse_ZIPCode(LPCTSTR lpszMsgBuffer, int nMsgLen, XENGINE_ZIPINFO* pSt_ZIPInfo);

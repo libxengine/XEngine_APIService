@@ -1,6 +1,6 @@
 ﻿#include "../XEngine_Hdr.h"
 
-BOOL XEngine_HTTPTask_IDCard(LPCTSTR lpszClientAddr, LPCTSTR lpszMsgBuffer, int nType)
+BOOL XEngine_HTTPTask_IDCard(LPCTSTR lpszClientAddr, LPCTSTR lpszMsgBuffer)
 {
 	int nMsgLen = 4096;
 	int nPktLen = 4096;
@@ -21,14 +21,7 @@ BOOL XEngine_HTTPTask_IDCard(LPCTSTR lpszClientAddr, LPCTSTR lpszMsgBuffer, int 
 
 	if (!ModuleProtocol_Parse_IDCard(lpszMsgBuffer, &st_IDCardInfo))
 	{
-		if (0 == nType)
-		{
-			ModuleProtocol_Packet_IDQuery(tszPktBuffer, &nPktLen, NULL, NULL, 1001, _T("idnumber is incorrent"));
-		}
-		else
-		{
-			ModuleProtocol_Packet_IDQuery2(tszPktBuffer, &nPktLen, NULL, NULL, 1001);
-		}
+		ModuleProtocol_Packet_IDQuery(tszPktBuffer, &nPktLen, NULL, NULL, 1001, _T("idnumber is incorrent"));
 		RfcComponents_HttpServer_SendMsgEx(xhHTTPPacket, tszMsgBuffer, &nMsgLen, &st_HDRParam, tszPktBuffer, nPktLen);
 		XEngine_Network_Send(lpszClientAddr, tszMsgBuffer, nMsgLen);
 		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _T("HTTP客户端:%s,请求的身份证编号不正确:%s"), lpszClientAddr, lpszMsgBuffer);
@@ -37,14 +30,7 @@ BOOL XEngine_HTTPTask_IDCard(LPCTSTR lpszClientAddr, LPCTSTR lpszMsgBuffer, int 
 	//验证身份证是否正确
 	if (!ModuleHelp_IDCard_CheckBirth(&st_IDCardInfo))
 	{
-		if (0 == nType)
-		{
-			ModuleProtocol_Packet_IDQuery(tszPktBuffer, &nPktLen, NULL, NULL, 1002, _T("idnumber is incorrent"));
-		}
-		else
-		{
-			ModuleProtocol_Packet_IDQuery2(tszPktBuffer, &nPktLen, NULL, NULL, 1002);
-		}
+		ModuleProtocol_Packet_IDQuery(tszPktBuffer, &nPktLen, NULL, NULL, 1002, _T("idnumber is incorrent"));
 		RfcComponents_HttpServer_SendMsgEx(xhHTTPPacket, tszMsgBuffer, &nMsgLen, &st_HDRParam, tszPktBuffer, nPktLen);
 		XEngine_Network_Send(lpszClientAddr, tszMsgBuffer, nMsgLen);
 		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _T("HTTP客户端:%s,请求的身份证验证生日失败:%s"), lpszClientAddr, lpszMsgBuffer);
@@ -52,28 +38,14 @@ BOOL XEngine_HTTPTask_IDCard(LPCTSTR lpszClientAddr, LPCTSTR lpszMsgBuffer, int 
 	}
 	if (!ModuleHelp_IDCard_CheckSum(&st_IDCardInfo))
 	{
-		if (0 == nType)
-		{
-			ModuleProtocol_Packet_IDQuery(tszPktBuffer, &nPktLen, NULL, NULL, 1010, _T("not found"));
-		}
-		else
-		{
-			ModuleProtocol_Packet_IDQuery2(tszPktBuffer, &nPktLen, NULL, NULL, 1010);
-		}
+		ModuleProtocol_Packet_IDQuery(tszPktBuffer, &nPktLen, NULL, NULL, 1010, _T("not found"));
 		RfcComponents_HttpServer_SendMsgEx(xhHTTPPacket, tszMsgBuffer, &nMsgLen, &st_HDRParam, tszPktBuffer, nPktLen);
 		XEngine_Network_Send(lpszClientAddr, tszMsgBuffer, nMsgLen);
 		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _T("HTTP客户端:%s,请求的身份证验证校验码失败:%s"), lpszClientAddr, lpszMsgBuffer);
 		return FALSE;
 	}
 	ModuleDatabase_IDCard_QueryRegion(&st_IDRegion, &st_IDCardInfo);
-	if (0 == nType)
-	{
-		ModuleProtocol_Packet_IDQuery(tszPktBuffer, &nPktLen, &st_IDCardInfo, &st_IDRegion);
-	}
-	else
-	{
-		ModuleProtocol_Packet_IDQuery2(tszPktBuffer, &nPktLen, &st_IDCardInfo, &st_IDRegion);
-	}
+	ModuleProtocol_Packet_IDQuery(tszPktBuffer, &nPktLen, &st_IDCardInfo, &st_IDRegion);
 	RfcComponents_HttpServer_SendMsgEx(xhHTTPPacket, tszMsgBuffer, &nMsgLen, &st_HDRParam, tszPktBuffer, nPktLen);
 	XEngine_Network_Send(lpszClientAddr, tszMsgBuffer, nMsgLen);
 	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _T("HTTP客户端:%s,请求身份证号码验证与信息查询成功,号码:%s"), lpszClientAddr, lpszMsgBuffer);

@@ -444,3 +444,67 @@ BOOL CModuleProtocol_Parse::ModuleProtocol_Parse_CDKey(LPCTSTR lpszMsgBuffer, in
 	}
 	return TRUE;
 }
+/********************************************************************
+函数名称：ModuleProtocol_Parse_ZIPCode
+函数功能：解析邮政地址信息
+ 参数.一：lpszMsgBuffer
+  In/Out：In
+  类型：常量字符指针
+  可空：N
+  意思：输入要解析的缓冲区
+ 参数.二：nMsgLen
+  In/Out：In
+  类型：整数型
+  可空：N
+  意思：输入缓冲区大小
+ 参数.三：pSt_ZIPInfo
+  In/Out：Out
+  类型：数据结构指针
+  可空：N
+  意思：输出解析后的信息
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+BOOL CModuleProtocol_Parse::ModuleProtocol_Parse_ZIPCode(LPCTSTR lpszMsgBuffer, int nMsgLen, XENGINE_ZIPINFO* pSt_ZIPInfo)
+{
+	ModuleProtocol_IsErrorOccur = FALSE;
+
+	if ((NULL == lpszMsgBuffer) || (NULL == pSt_ZIPInfo))
+	{
+		ModuleProtocol_IsErrorOccur = TRUE;
+		ModuleProtocol_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PROTOCOL_PARSE_PARAMENT;
+		return FALSE;
+	}
+	Json::Value st_JsonRoot;
+	JSONCPP_STRING st_JsonError;
+	Json::CharReaderBuilder st_ReaderBuilder;
+	//解析JSON
+	std::unique_ptr<Json::CharReader> const pSt_JsonReader(st_ReaderBuilder.newCharReader());
+	if (!pSt_JsonReader->parse(lpszMsgBuffer, lpszMsgBuffer + nMsgLen, &st_JsonRoot, &st_JsonError))
+	{
+		ModuleProtocol_IsErrorOccur = TRUE;
+		ModuleProtocol_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PROTOCOL_PARSE_PARAMENT;
+		return FALSE;
+	}
+
+	if (!st_JsonRoot["tszProvincer"].isNull())
+	{
+		_tcscpy(pSt_ZIPInfo->tszProvincer, st_JsonRoot["tszProvincer"].asCString());
+	}
+	if (!st_JsonRoot["tszCity"].isNull())
+	{
+		_tcscpy(pSt_ZIPInfo->tszCity, st_JsonRoot["tszCity"].asCString());
+	}
+	if (!st_JsonRoot["tszCounty"].isNull())
+	{
+		_tcscpy(pSt_ZIPInfo->tszCounty, st_JsonRoot["tszCounty"].asCString());
+	}
+
+	if (!st_JsonRoot["nZipCode"].isNull())
+	{
+		pSt_ZIPInfo->nZipCode = st_JsonRoot["nZipCode"].asInt();
+	}
+	return TRUE;
+}

@@ -19,6 +19,11 @@
             "PluginEnable":true,
             "PluginMethod":"bmindex",
             "PluginFile":"./XEngine_Plugin/libModulePlugin_BMIndex"
+        },
+        {
+            "PluginEnable":true,
+            "PluginMethod":"meter",
+            "PluginFile":"./XEngine_Plugin/libModulePlugin_Meter"
         }
     ]
 }

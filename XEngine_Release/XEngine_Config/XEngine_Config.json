@@ -23,6 +23,7 @@
         "tszIDData":"./XEngine_DBFile/regionsid.db",
         "tszPhoneData":"./XEngine_DBFile/phone.dat",
         "tszBankData":"./XEngine_DBFile/bankinfo.db",
+        "tszZIPCodeData":"./XEngine_DBFile/zipcode.db",
         "tszBankUrl":"https://ccdcapi.alipay.com/validateAndCacheCardInfo.json?cardNo=%s&cardBinCheck=true",
         "tszTranslationUrl":"http://fanyi.youdao.com/translate?&doctype=json&type=%s&i=%s"
     },
@@ -31,7 +32,8 @@
         "tszPluginFile":"./XEngine_Config/XEngine_PluginConfig.json"
     },
     "XVer":[
-        "2.4.0.1001 Build20220913",
+        "2.5.0.1001 Build20221102",
+        "2.4.0.1001 Build20220902",
         "2.3.0.1001 Build20220723",
         "2.2.0.1001 Build20220701",
         "2.1.0.1001 Build20220429",

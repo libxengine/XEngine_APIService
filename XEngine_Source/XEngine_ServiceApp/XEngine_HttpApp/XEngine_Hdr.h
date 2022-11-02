@@ -68,6 +68,7 @@ using namespace std;
 #include "XEngine_HTTPTask/HTTPTask_OPtions.h"
 #include "XEngine_HTTPTask/HTTPTask_P2PClient.h"
 #include "XEngine_HTTPTask/HTTPTask_CDKey.h"
+#include "XEngine_HTTPTask/HTTPTask_PostCode.h"
 /********************************************************************
 //    Created:     2022/01/20  14:42:06
 //    File Name:   D:\XEngine_ServiceApp\XEngine_Source\XEngine_ServiceApp\XEngine_HttpApp\XEngine_Hdr.h
@@ -85,7 +86,7 @@ extern XLOG xhLog;
 extern XHANDLE xhHTTPSocket;
 extern XHANDLE xhHTTPHeart;
 extern XHANDLE xhHTTPPacket;
-extern XNETHANDLE xhHTTPPool;
+extern XHANDLE xhHTTPPool;
 //配置文件
 extern XENGINE_SERVICECONFIG st_ServiceConfig;
 extern XENGINE_OPENCCCONFIG st_OPenccConfig;

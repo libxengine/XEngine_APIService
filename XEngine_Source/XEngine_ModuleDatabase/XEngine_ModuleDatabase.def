@@ -19,3 +19,8 @@ EXPORTS
 	ModuleDatabase_Bank_Init
 	ModuleDatabase_Bank_Destory
 	ModuleDatabase_Bank_Query
+
+	ModuleDatabase_ZIPCode_Init
+	ModuleDatabase_ZIPCode_Destory
+	ModuleDatabase_ZIPCode_QueryZIPCode
+	ModuleDatabase_ZIPCode_QueryName

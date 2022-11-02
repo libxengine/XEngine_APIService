@@ -1,84 +1,94 @@
 {
-    "OPTionBase":[
-        {
-            "OPTionEnable":true,
-            "OPTionMethod":"ip",
-            "OPTionNote":"IP地址信息查询",
-            "OPTionExample":"http://%s/api?function=ip¶ms1=1.29.164.255¶ms2=0"
-        },
-        {
-            "OPTionEnable":true,
-            "OPTionMethod":"id",
-            "OPTionNote":"身份证信息查询",
-            "OPTionExample":"http://%s/api?function=id¶ms1=511025191101018792¶ms2=0"
-        },
-        {
-            "OPTionEnable":true,
-            "OPTionMethod":"phone",
-            "OPTionNote":"电话号码查询",
-            "OPTionExample":"http://%s/api?function=phone¶ms1=13699428888¶ms2=0"
-        },
-        {
-            "OPTionEnable":true,
-            "OPTionMethod":"bank",
-            "OPTionNote":"银行卡验证",
-            "OPTionExample":"http://%s/api?function=bank¶ms1=6214000000¶ms2=0"
-        },
-        {
-            "OPTionEnable":true,
-            "OPTionMethod":"language",
-            "OPTionNote":"语言转换",
-            "OPTionExample":"http://%s/api?function=language¶ms1=繁体到简体¶ms2=0¶ms3=1"
-        },
-        {
-            "OPTionEnable":true,
-            "OPTionMethod":"translation",
-            "OPTionNote":"翻译",
-            "OPTionExample":"http://%s/api?function=translation¶ms1=中国¶ms2=0¶ms3=0"
-        },
-        {
-            "OPTionEnable":true,
-            "OPTionMethod":"p2p",
-            "OPTionNote":"p2p网络",
-            "OPTionExample":"参考文档"
-        },
-        {
-            "OPTionEnable":true,
-            "OPTionMethod":"lock",
-            "OPTionNote":"分布式锁",
-            "OPTionExample":"http://%s/api?function=lock¶ms1=token¶ms2=0"
-        },
-        {
-            "OPTionEnable":true,
-            "OPTionMethod":"cdkey",
-            "OPTionNote":"cdkey创建器",
-            "OPTionExample":"http://%s/api?function=cdkey¶ms1=0"
-        }
-    ],
-    "OPTionPlugin":[
-        {
-            "OPTionEnable":true,
-            "OPTionMethod":"zodiac",
-            "OPTionNote":"生肖星座",
-            "OPTionExample":"http://%s/api?function=zodiac¶ms1=19880121"
-        },
-        {
-            "OPTionEnable":true,
-            "OPTionMethod":"pass",
-            "OPTionNote":"密码",
-            "OPTionExample":"http://%s/api?function=pass¶ms1=1¶ms2=4"
-        },
-        {
-            "OPTionEnable":true,
-            "OPTionMethod":"timezone",
-            "OPTionNote":"时区转换",
-            "OPTionExample":"http://%s/api?function=timezone¶ms1=0"
-        },
-        {
-            "OPTionEnable":true,
-            "OPTionMethod":"bmindex",
-            "OPTionNote":"体脂标准",
-            "OPTionExample":"http://%s/api?function=bmindex¶ms1=高(米))¶m2=体重(千克)"
-        }
-    ]
+	"OPTionBase": [{
+			"OPTionEnable": true,
+			"OPTionMethod": "ip",
+			"OPTionNote": "IP地址信息查询",
+			"OPTionExample": "http://%s/api?function=ip&params1=1.29.164.255&params2=0"
+		},
+		{
+			"OPTionEnable": true,
+			"OPTionMethod": "id",
+			"OPTionNote": "身份证信息查询",
+			"OPTionExample": "http://%s/api?function=id&params1=511025191101018792&params2=0"
+		},
+		{
+			"OPTionEnable": true,
+			"OPTionMethod": "phone",
+			"OPTionNote": "电话号码查询",
+			"OPTionExample": "http://%s/api?function=phone&params1=13699428888&params2=0"
+		},
+		{
+			"OPTionEnable": true,
+			"OPTionMethod": "bank",
+			"OPTionNote": "银行卡验证",
+			"OPTionExample": "http://%s/api?function=bank&params1=6214000000&params2=0"
+		},
+		{
+			"OPTionEnable": true,
+			"OPTionMethod": "language",
+			"OPTionNote": "语言转换",
+			"OPTionExample": "http://%s/api?function=language&params1=繁体到简体&params2=0&params3=1"
+		},
+		{
+			"OPTionEnable": true,
+			"OPTionMethod": "translation",
+			"OPTionNote": "翻译",
+			"OPTionExample": "http://%s/api?function=translation&params1=中国&params2=0&params3=0"
+		},
+		{
+			"OPTionEnable": true,
+			"OPTionMethod": "lock",
+			"OPTionNote": "分布式锁",
+			"OPTionExample": "http://%s/api?function=lock&params1=0&params2=12319824824"
+		},
+		{
+			"OPTionEnable": true,
+			"OPTionMethod": "p2p",
+			"OPTionNote": "p2p网络",
+			"OPTionExample": "参考文档"
+		},
+		{
+			"OPTionEnable": true,
+			"OPTionMethod": "cdkey",
+			"OPTionNote": "cdkey授权生成",
+			"OPTionExample": "参考文档"
+		},
+		{
+			"OPTionEnable": true,
+			"OPTionMethod": "zipcode",
+			"OPTionNote": "行政邮编信息",
+			"OPTionExample": "参考文档"
+		}
+	],
+	"OPTionPlugin": [{
+			"OPTionEnable": true,
+			"OPTionMethod": "zodiac",
+			"OPTionNote": "生肖星座",
+			"OPTionExample": "http://%s/api?function=zodiac&params1=19880121"
+		},
+		{
+			"OPTionEnable": true,
+			"OPTionMethod": "pass",
+			"OPTionNote": "密码",
+			"OPTionExample": "http://%s/api?function=pass&params1=1&params2=4"
+		},
+		{
+			"OPTionEnable": true,
+			"OPTionMethod": "timezone",
+			"OPTionNote": "时区转换",
+			"OPTionExample": "http://%s/api?function=timezone&params1=0"
+		},
+		{
+			"OPTionEnable": true,
+			"OPTionMethod": "bmindex",
+			"OPTionNote": "体脂标准",
+			"OPTionExample": "http://%s/api?function=bmindex&params1=高(米))&param2=体重(千克)"
+		},
+		{
+			"OPTionEnable": true,
+			"OPTionMethod": "meter",
+			"OPTionNote": "计量转换",
+			"OPTionExample": "http://%s/api?function=meter&type=0&source=1&value=100"
+		}
+	]
 }

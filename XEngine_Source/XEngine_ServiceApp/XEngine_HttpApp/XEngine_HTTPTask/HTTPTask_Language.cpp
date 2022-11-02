@@ -1,7 +1,7 @@
 ﻿#include "../XEngine_Hdr.h"
 
 
-BOOL XEngine_HTTPTask_Language(LPCTSTR lpszClientAddr, LPCTSTR lpszMsgBuffer, int nReplyType, int nConvertType)
+BOOL XEngine_HTTPTask_Language(LPCTSTR lpszClientAddr, LPCTSTR lpszMsgBuffer, int nConvertType)
 {
 	int nMsgLen = 4096;
 	int nPktLen = 4096;
@@ -77,14 +77,7 @@ BOOL XEngine_HTTPTask_Language(LPCTSTR lpszClientAddr, LPCTSTR lpszMsgBuffer, in
 		ModuleHelp_Language_ConvertZh(st_OPenccConfig.tszFiletw2t, st_LanguageInfo.tszSourceStr, st_LanguageInfo.tszDestStr);
 	}
 	//打包发送
-	if (0 == nReplyType)
-	{
-		ModuleProtocol_Packet_LanguageQuery(tszPktBuffer, &nPktLen, &st_LanguageInfo);
-	}
-	else
-	{
-		ModuleProtocol_Packet_LanguageQuery2(tszPktBuffer, &nPktLen, &st_LanguageInfo);
-	}
+	ModuleProtocol_Packet_LanguageQuery(tszPktBuffer, &nPktLen, &st_LanguageInfo);
 	RfcComponents_HttpServer_SendMsgEx(xhHTTPPacket, tszMsgBuffer, &nMsgLen, &st_HDRParam, tszPktBuffer, nPktLen);
 	XEngine_Network_Send(lpszClientAddr, tszMsgBuffer, nMsgLen);
 	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _T("HTTP客户端:%s,请求语言转换成功,原始语言:%s,目标语言:%s"), lpszClientAddr, st_LanguageInfo.tszSourceStr, st_LanguageInfo.tszDestStr);

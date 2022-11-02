@@ -31,7 +31,7 @@ int main()
 	TCHAR* ptszMsgBuffer = NULL;
 	LPCTSTR lpszUrl = _T("http://127.0.0.1:5501/api?function=language&params1=简体&params2=0&param3=1");
 
-	if (!APIHelp_HttpRequest_Get(lpszUrl, &ptszMsgBuffer, &nLen))
+	if (!APIHelp_HttpRequest_Custom(_T("GET"), lpszUrl, NULL, NULL, &ptszMsgBuffer, &nLen))
 	{
 		printf("发送投递失败！\n");
 		return 0;
