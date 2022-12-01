@@ -134,7 +134,7 @@ BOOL CModuleConfigure_Json::ModuleConfigure_Json_File(LPCTSTR lpszConfigFile, XE
 	_tcscpy(pSt_ServerConfig->st_XApi.tszBankUrl, st_JsonXApi["tszBankUrl"].asCString());
 	_tcscpy(pSt_ServerConfig->st_XApi.tszTranslationUrl, st_JsonXApi["tszTranslationUrl"].asCString());
 
-	if (st_JsonRoot["XPlugin"].empty() || (2 != st_JsonRoot["XPlugin"].size()))
+	if (st_JsonRoot["XPlugin"].empty() || (3 != st_JsonRoot["XPlugin"].size()))
 	{
 		Config_IsErrorOccur = TRUE;
 		Config_dwErrorCode = ERROR_MODULE_CONFIGURE_JSON_XPLUGIN;
@@ -142,7 +142,8 @@ BOOL CModuleConfigure_Json::ModuleConfigure_Json_File(LPCTSTR lpszConfigFile, XE
 	}
 	Json::Value st_JsonXPlugin = st_JsonRoot["XPlugin"];
 	pSt_ServerConfig->st_XPlugin.bEnable = st_JsonXPlugin["bEnable"].asBool();
-	_tcscpy(pSt_ServerConfig->st_XPlugin.tszPluginFile, st_JsonXPlugin["tszPluginFile"].asCString());
+	_tcscpy(pSt_ServerConfig->st_XPlugin.tszPluginLib, st_JsonXPlugin["tszPluginLib"].asCString());
+	_tcscpy(pSt_ServerConfig->st_XPlugin.tszPluginLua, st_JsonXPlugin["tszPluginLua"].asCString());
 
 	if (st_JsonRoot["XVer"].empty())
 	{
@@ -315,13 +316,18 @@ BOOL CModuleConfigure_Json::ModuleConfigure_Json_PluginFile(LPCTSTR lpszConfigFi
 
 		st_PluginInfo.bEnable = st_JsonArray[i]["PluginEnable"].asBool();
 		_tcscpy(st_PluginInfo.tszPluginFile, st_JsonArray[i]["PluginFile"].asCString());
+
+		if (NULL == _tcsstr(st_PluginInfo.tszPluginFile,_T(".")))
+		{
 #ifdef _MSC_BUILD
-		_tcscat(st_PluginInfo.tszPluginFile, ".dll");
+			_tcscat(st_PluginInfo.tszPluginFile, ".dll");
 #elif __linux__
-		_tcscat(st_PluginInfo.tszPluginFile, ".so");
+			_tcscat(st_PluginInfo.tszPluginFile, ".so");
 #else
-		_tcscat(st_PluginInfo.tszPluginFile, ".dylib");
+			_tcscat(st_PluginInfo.tszPluginFile, ".dylib");
 #endif
+		}
+
 		_tcscpy(st_PluginInfo.tszPluginMethod, st_JsonArray[i]["PluginMethod"].asCString());
 		pSt_PluginConfig->pStl_ListPlugin->push_back(st_PluginInfo);
 	}

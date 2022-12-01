@@ -50,7 +50,8 @@ typedef struct
 	struct  
 	{
 		BOOL bEnable;                         //是否启用
-		TCHAR tszPluginFile[MAX_PATH];        //配置文件地址
+		TCHAR tszPluginLib[MAX_PATH];         //配置文件地址
+		TCHAR tszPluginLua[MAX_PATH];         //配置文件地址
 	}st_XPlugin;
 	struct  
 	{
