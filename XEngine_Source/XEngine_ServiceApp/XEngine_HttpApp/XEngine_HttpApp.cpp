@@ -20,7 +20,8 @@ XHANDLE xhHTTPPool = 0;
 //配置文件
 XENGINE_SERVICECONFIG st_ServiceConfig;
 XENGINE_OPENCCCONFIG st_OPenccConfig;
-XENGINE_PLUGINCONFIG st_PluginConfig;
+XENGINE_PLUGINCONFIG st_PluginLibConfig;
+XENGINE_PLUGINCONFIG st_PluginLuaConfig;
 XENGINE_OPTIONLIST st_OPtionList;
 
 void ServiceApp_Stop(int signo)
@@ -41,7 +42,8 @@ void ServiceApp_Stop(int signo)
 		ModuleDatabase_Bank_Destory();
 		ModuleDatabase_ZIPCode_Destory();
 		//销毁其他
-		ModulePlugin_Core_Destroy();
+		ModulePlugin_LibCore_Destroy();
+		ModulePlugin_LuaCore_Destroy();
 		ModuleHelp_P2PClient_Destory();
 		//销毁日志资源
 		HelpComponents_XLog_Destroy(xhLog);
@@ -98,7 +100,8 @@ int main(int argc, char** argv)
 	memset(&st_XLogConfig, '\0', sizeof(HELPCOMPONENTS_XLOG_CONFIGURE));
 	memset(&st_ServiceConfig, '\0', sizeof(XENGINE_SERVICECONFIG));
 	memset(&st_OPenccConfig, '\0', sizeof(XENGINE_OPENCCCONFIG));
-	memset(&st_PluginConfig, '\0', sizeof(XENGINE_PLUGINCONFIG));
+	memset(&st_PluginLibConfig, '\0', sizeof(XENGINE_PLUGINCONFIG));
+	memset(&st_PluginLuaConfig, '\0', sizeof(XENGINE_PLUGINCONFIG));
 
 	st_XLogConfig.XLog_MaxBackupFile = 10;
 	st_XLogConfig.XLog_MaxSize = 1024000;
@@ -139,12 +142,18 @@ int main(int argc, char** argv)
 	//初始化插件配置
 	if (st_ServiceConfig.st_XPlugin.bEnable)
 	{
-		if (!ModuleConfigure_Json_PluginFile(st_ServiceConfig.st_XPlugin.tszPluginFile, &st_PluginConfig))
+		if (!ModuleConfigure_Json_PluginFile(st_ServiceConfig.st_XPlugin.tszPluginLib, &st_PluginLibConfig))
 		{
-			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _T("启动服务中,初始化插件配置文件失败,错误：%lX"), ModuleConfigure_GetLastError());
+			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _T("启动服务中,初始化Lib插件配置文件失败,错误：%lX"), ModuleConfigure_GetLastError());
 			goto XENGINE_SERVICEAPP_EXIT;
 		}
-		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _T("启动服务中,初始化插件配置文件成功"));
+		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _T("启动服务中,初始化Lib插件配置文件成功"));
+		if (!ModuleConfigure_Json_PluginFile(st_ServiceConfig.st_XPlugin.tszPluginLua, &st_PluginLuaConfig))
+		{
+			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _T("启动服务中,初始化Lua插件配置文件失败,错误：%lX"), ModuleConfigure_GetLastError());
+			goto XENGINE_SERVICEAPP_EXIT;
+		}
+		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _T("启动服务中,初始化Lua插件配置文件成功"));
 	}
 	else
 	{
@@ -249,31 +258,58 @@ int main(int argc, char** argv)
 	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _T("启动服务中,启动P2P客户端管理器成功,超时时间设置:%d 秒"), st_ServiceConfig.st_XTime.nP2PTimeOut);
 
 	//启动插件
-	if (!ModulePlugin_Core_Init())
+	if (!ModulePlugin_LibCore_Init())
 	{
-		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _T("启动服务中,初始化插件系统失败,错误：%lX"), ModulePlugin_GetLastError());
+		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _T("启动服务中,初始化Lib插件系统失败,错误：%lX"), ModulePlugin_GetLastError());
 		goto XENGINE_SERVICEAPP_EXIT;
 	}
 	//加载插件
-	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _T("启动服务中,初始化插件系统成功,开始加载插件"));
+	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _T("启动服务中,初始化Lib插件系统成功,开始加载插件"));
 	{
-		list<XENGINE_PLUGININFO>::const_iterator stl_ListIterator = st_PluginConfig.pStl_ListPlugin->begin();
-		for (int i = 1; stl_ListIterator != st_PluginConfig.pStl_ListPlugin->end(); stl_ListIterator++, i++)
+		list<XENGINE_PLUGININFO>::const_iterator stl_ListIterator = st_PluginLibConfig.pStl_ListPlugin->begin();
+		for (int i = 1; stl_ListIterator != st_PluginLibConfig.pStl_ListPlugin->end(); stl_ListIterator++, i++)
 		{
 			if (stl_ListIterator->bEnable)
 			{
-				if (ModulePlugin_Loader_Insert(stl_ListIterator->tszPluginMethod, stl_ListIterator->tszPluginFile))
+				if (ModulePlugin_Loader_Insert(stl_ListIterator->tszPluginMethod, stl_ListIterator->tszPluginFile, 0))
 				{
-					XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _T("启动服务中,加载插件中,当前第:%d 个加载成功,方法:%s,路径:%s"), i, stl_ListIterator->tszPluginMethod, stl_ListIterator->tszPluginFile);
+					XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _T("启动服务中,加载Lib模块插件中,当前第:%d 个加载成功,方法:%s,路径:%s"), i, stl_ListIterator->tszPluginMethod, stl_ListIterator->tszPluginFile);
 				}
 				else
 				{
-					XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _T("启动服务中,加载插件中,当前第:%d 个加载失败,方法:%s,路径:%s,错误:%ld"), i, stl_ListIterator->tszPluginMethod, stl_ListIterator->tszPluginFile, ModulePlugin_GetLastError());
+					XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _T("启动服务中,加载Lib模块插件中,当前第:%d 个加载失败,方法:%s,路径:%s,错误:%ld"), i, stl_ListIterator->tszPluginMethod, stl_ListIterator->tszPluginFile, ModulePlugin_GetLastError());
 				}
 			}
 			else
 			{
-				XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_WARN, _T("启动服务中,加载插件中,当前第:%d 个加载失败,因为没有启用,方法:%s,路径:%s"), i, stl_ListIterator->tszPluginMethod, stl_ListIterator->tszPluginFile);
+				XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_WARN, _T("启动服务中,加载Lib模块插件中,当前第:%d 个加载失败,因为没有启用,方法:%s,路径:%s"), i, stl_ListIterator->tszPluginMethod, stl_ListIterator->tszPluginFile);
+			}
+		}
+	}
+	if (!ModulePlugin_LuaCore_Init())
+	{
+		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _T("启动服务中,初始化LUA插件系统失败,错误：%lX"), ModulePlugin_GetLastError());
+		goto XENGINE_SERVICEAPP_EXIT;
+	}
+	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _T("启动服务中,初始化LUA插件系统成功,开始加载插件"));
+	{
+		list<XENGINE_PLUGININFO>::const_iterator stl_ListIterator = st_PluginLuaConfig.pStl_ListPlugin->begin();
+		for (int i = 1; stl_ListIterator != st_PluginLuaConfig.pStl_ListPlugin->end(); stl_ListIterator++, i++)
+		{
+			if (stl_ListIterator->bEnable)
+			{
+				if (ModulePlugin_Loader_Insert(stl_ListIterator->tszPluginMethod, stl_ListIterator->tszPluginFile, 1))
+				{
+					XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _T("启动服务中,加载LUA模块插件中,当前第:%d 个加载成功,方法:%s,路径:%s"), i, stl_ListIterator->tszPluginMethod, stl_ListIterator->tszPluginFile);
+				}
+				else
+				{
+					XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _T("启动服务中,加载LUA模块插件中,当前第:%d 个加载失败,方法:%s,路径:%s,错误:%ld"), i, stl_ListIterator->tszPluginMethod, stl_ListIterator->tszPluginFile, ModulePlugin_GetLastError());
+				}
+			}
+			else
+			{
+				XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_WARN, _T("启动服务中,加载LUA模块插件中,当前第:%d 个加载失败,因为没有启用,方法:%s,路径:%s"), i, stl_ListIterator->tszPluginMethod, stl_ListIterator->tszPluginFile);
 			}
 		}
 	}
@@ -303,7 +339,8 @@ XENGINE_SERVICEAPP_EXIT:
 		ModuleDatabase_Bank_Destory();
 		ModuleDatabase_ZIPCode_Destory();
 		//销毁其他
-		ModulePlugin_Core_Destroy();
+		ModulePlugin_LibCore_Destroy();
+		ModulePlugin_LuaCore_Destroy();
 		ModuleHelp_P2PClient_Destory();
 		//销毁日志资源
 		HelpComponents_XLog_Destroy(xhLog);
