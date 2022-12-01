@@ -1,35 +1,35 @@
 ﻿#include "pch.h"
-#include "ModulePlugin_Core.h"
+#include "ModulePlugin_LuaCore.h"
 /********************************************************************
-//    Created:     2022/04/20  16:14:03
-//    File Name:   D:\XEngine_APIService\XEngine_Source\XEngine_ModulePlugin\ModulePlugin_Core\ModulePlugin_Core.cpp
-//    File Path:   D:\XEngine_APIService\XEngine_Source\XEngine_ModulePlugin\ModulePlugin_Core
-//    File Base:   ModulePlugin_Core
+//    Created:     2022/11/30  16:18:24
+//    File Name:   D:\XEngine_APIService\XEngine_Source\XEngine_ModulePlugin\ModulePlugin_LuaCore\ModulePlugin_LuaCore.cpp
+//    File Path:   D:\XEngine_APIService\XEngine_Source\XEngine_ModulePlugin\ModulePlugin_LuaCore
+//    File Base:   ModulePlugin_LuaCore
 //    File Ext:    cpp
 //    Project:     XEngine(网络通信引擎)
 //    Author:      qyt
-//    Purpose:     插件核心架构实现
+//    Purpose:     LUA脚本你插件
 //    History:
 *********************************************************************/
-CModulePlugin_Core::CModulePlugin_Core()
+CModulePlugin_LuaCore::CModulePlugin_LuaCore()
 {
     bIsInit = FALSE;
 }
-CModulePlugin_Core::~CModulePlugin_Core()
+CModulePlugin_LuaCore::~CModulePlugin_LuaCore()
 {
 }
 //////////////////////////////////////////////////////////////////////////
 //                       公有函数
 //////////////////////////////////////////////////////////////////////////
 /********************************************************************
-函数名称：ModulePlugin_Core_Init
+函数名称：ModulePlugin_LuaCore_Init
 函数功能：初始化插件核心系统
 返回值
   类型：逻辑型
   意思：是否成功初始化
 备注：
 *********************************************************************/
-BOOL CModulePlugin_Core::ModulePlugin_Core_Init()
+BOOL CModulePlugin_LuaCore::ModulePlugin_LuaCore_Init()
 {
     ModulePlugin_IsErrorOccur = FALSE;
     //判断是否初始化
@@ -44,7 +44,7 @@ BOOL CModulePlugin_Core::ModulePlugin_Core_Init()
     return TRUE;
 }
 /********************************************************************
-函数名称：ModulePlugin_Core_Push
+函数名称：ModulePlugin_LuaCore_Push
 函数功能：添加一个标准的插件到插件框架中
  参数.一：pxhModule
   In/Out：Out
@@ -66,7 +66,7 @@ BOOL CModulePlugin_Core::ModulePlugin_Core_Init()
   意思：是否成功添加
 备注：
 *********************************************************************/
-BOOL CModulePlugin_Core::ModulePlugin_Core_Push(XNETHANDLE* pxhModule, LPCTSTR lpszPluginFile, LPVOID lParam)
+BOOL CModulePlugin_LuaCore::ModulePlugin_LuaCore_Push(XNETHANDLE* pxhModule, LPCTSTR lpszPluginFile, LPVOID lParam)
 {
     ModulePlugin_IsErrorOccur = FALSE;
 
@@ -76,14 +76,14 @@ BOOL CModulePlugin_Core::ModulePlugin_Core_Push(XNETHANDLE* pxhModule, LPCTSTR l
         ModulePlugin_dwErrorCode = BaseLib_GetLastError();
         return FALSE;
     }
-    if (!ModulePlugin_Core_Add(*pxhModule, lpszPluginFile, lParam))
+    if (!ModulePlugin_LuaCore_Add(*pxhModule, lpszPluginFile, lParam))
     {
         return FALSE;
     }
     return TRUE;
 }
 /********************************************************************
-函数名称：ModulePlugin_Core_Exec
+函数名称：ModulePlugin_LuaCore_Exec
 函数功能：执行一次
  参数.一：xhModule
   In/Out：In
@@ -130,13 +130,13 @@ BOOL CModulePlugin_Core::ModulePlugin_Core_Push(XNETHANDLE* pxhModule, LPCTSTR l
   意思：是否成功
 备注：
 *********************************************************************/
-BOOL CModulePlugin_Core::ModulePlugin_Core_Exec(XNETHANDLE xhModule, TCHAR*** pppHDRList, int nListCount, int* pInt_HTTPCode, TCHAR* ptszMsgBuffer, int* pInt_MsgLen, LPCTSTR lpszMsgBufer /* = NULL */, int nMsgLen /* = 0 */)
+BOOL CModulePlugin_LuaCore::ModulePlugin_LuaCore_Exec(XNETHANDLE xhModule, TCHAR*** pppHDRList, int nListCount, int* pInt_HTTPCode, TCHAR* ptszMsgBuffer, int* pInt_MsgLen, LPCTSTR lpszMsgBufer /* = NULL */, int nMsgLen /* = 0 */)
 {
     ModulePlugin_IsErrorOccur = FALSE;
 
     st_csStl.lock_shared();
 	//执行指定插件函数
-	unordered_map<XNETHANDLE, PLUGINCORE_FRAMEWORK>::const_iterator stl_MapIterator = stl_MapFrameWork.find(xhModule);
+	unordered_map<XNETHANDLE, PLUGINCORE_LUAFRAMEWORK>::const_iterator stl_MapIterator = stl_MapFrameWork.find(xhModule);
 	if (stl_MapIterator == stl_MapFrameWork.end())
 	{
 		ModulePlugin_IsErrorOccur = TRUE;
@@ -144,26 +144,74 @@ BOOL CModulePlugin_Core::ModulePlugin_Core_Exec(XNETHANDLE xhModule, TCHAR*** pp
 		st_csStl.unlock_shared();
 		return FALSE;
 	}
-    if (!stl_MapIterator->second.fpCall_PluginCore_Call(pppHDRList, nListCount, pInt_HTTPCode, ptszMsgBuffer, pInt_MsgLen, lpszMsgBufer, nMsgLen))
+
+	if (0 == lua_getglobal(stl_MapIterator->second.pSt_LuaState, "PluginCore_Call1"))
 	{
-		ModulePlugin_IsErrorOccur = TRUE;
-		ModulePlugin_dwErrorCode = stl_MapIterator->second.fpCall_PluginCore_GetLastError();
-		st_csStl.unlock_shared();
 		return FALSE;
 	}
+
+    lua_pushstring(stl_MapIterator->second.pSt_LuaState, "1");
+    lua_pushstring(stl_MapIterator->second.pSt_LuaState, "2");
+    lua_pushinteger(stl_MapIterator->second.pSt_LuaState, 3);
+    int nRet = lua_pcall(stl_MapIterator->second.pSt_LuaState, 3, 0, 0);
+
+    lua_getglobal(stl_MapIterator->second.pSt_LuaState, "pInt_HTTPCode");
+    *pInt_HTTPCode = lua_tonumber(stl_MapIterator->second.pSt_LuaState, -1);
+    lua_pop(stl_MapIterator->second.pSt_LuaState, -1);
+
+    lua_getglobal(stl_MapIterator->second.pSt_LuaState, "pInt_MsgLen");
+    *pInt_MsgLen = lua_tonumber(stl_MapIterator->second.pSt_LuaState, -1);
+    lua_pop(stl_MapIterator->second.pSt_LuaState, -1);
+
+	lua_getglobal(stl_MapIterator->second.pSt_LuaState, "ptszMsgBuffer");
+	LPCTSTR lpszStr = lua_tostring(stl_MapIterator->second.pSt_LuaState, -1);
+	lua_pop(stl_MapIterator->second.pSt_LuaState, -1);
+    /*
+	lua_newtable(stl_MapIterator->second.pSt_LuaState);
+	for (int i = 0; i < nListCount; i++)
+	{
+		TCHAR tszStrKey[64];
+		TCHAR tszStrValue[64];
+
+		memset(tszStrKey, '\0', sizeof(tszStrKey));
+		memset(tszStrValue, '\0', sizeof(tszStrValue));
+		BaseLib_OperatorString_GetKeyValue((*pppHDRList)[i], "=", tszStrKey, tszStrValue);
+
+		lua_pushstring(stl_MapIterator->second.pSt_LuaState, tszStrKey);
+		lua_pushstring(stl_MapIterator->second.pSt_LuaState, tszStrValue);
+		lua_settable(stl_MapIterator->second.pSt_LuaState, -3);
+	}
+	lua_pushnumber(stl_MapIterator->second.pSt_LuaState, nListCount);
+
+    int nRet = 0;
+	if (NULL == lpszMsgBufer)
+	{
+		lua_pushstring(stl_MapIterator->second.pSt_LuaState, "");
+        lua_pushinteger(stl_MapIterator->second.pSt_LuaState, 0);
+
+        nRet = lua_pcall(stl_MapIterator->second.pSt_LuaState, 7, 1, 0);
+	}
+    else
+	{
+		lua_pushstring(stl_MapIterator->second.pSt_LuaState, lpszMsgBufer);
+		lua_pushinteger(stl_MapIterator->second.pSt_LuaState, nMsgLen);
+
+        nRet = lua_pcall(stl_MapIterator->second.pSt_LuaState, 7, 1, 0);
+	}
+	*/
     st_csStl.unlock_shared();
 
     return TRUE;
 }
 /********************************************************************
-函数名称：ModulePlugin_Core_Destroy
+函数名称：ModulePlugin_LuaCore_Destroy
 函数功能：销毁插件核心并且清理资源
 返回值
   类型：逻辑型
   意思：是否成功销毁
 备注：
 *********************************************************************/
-BOOL CModulePlugin_Core::ModulePlugin_Core_Destroy()
+BOOL CModulePlugin_LuaCore::ModulePlugin_LuaCore_Destroy()
 {
     ModulePlugin_IsErrorOccur = FALSE;
 
@@ -175,25 +223,24 @@ BOOL CModulePlugin_Core::ModulePlugin_Core_Destroy()
     bIsInit = FALSE;
     //清理STL元素空间
     st_csStl.lock();
-    unordered_map<XNETHANDLE, PLUGINCORE_FRAMEWORK>::iterator stl_MapIterator = stl_MapFrameWork.begin();
+    unordered_map<XNETHANDLE, PLUGINCORE_LUAFRAMEWORK>::iterator stl_MapIterator = stl_MapFrameWork.begin();
     for (; stl_MapIterator != stl_MapFrameWork.end(); stl_MapIterator++)
     {
-        stl_MapIterator->second.fpCall_PluginCore_UnInit();
-#ifdef _MSC_BUILD
-        FreeLibrary(stl_MapIterator->second.mhFile);
-#else
-        dlclose(stl_MapIterator->second.mhFile);
-#endif
+        lua_getglobal(stl_MapIterator->second.pSt_LuaState, "PluginCore_UnInit");
+		lua_pcall(stl_MapIterator->second.pSt_LuaState, 0, 0, 0);
+
+        lua_close(stl_MapIterator->second.pSt_LuaState);
     }
     stl_MapFrameWork.clear();
     st_csStl.unlock();
+
     return TRUE;
 }
 //////////////////////////////////////////////////////////////////////////
 //                       保护函数
 //////////////////////////////////////////////////////////////////////////
 /********************************************************************
-函数名称：ModulePlugin_Core_Add
+函数名称：ModulePlugin_LuaCore_Add
 函数功能：添加一个指定模块到插件核心系统当中
  参数.一：xhNet
   In/Out：In
@@ -215,7 +262,7 @@ BOOL CModulePlugin_Core::ModulePlugin_Core_Destroy()
   意思：是否成功执行
 备注：
 *********************************************************************/
-BOOL CModulePlugin_Core::ModulePlugin_Core_Add(XNETHANDLE xhNet, LPCTSTR lpszPluginFile, LPVOID lParam)
+BOOL CModulePlugin_LuaCore::ModulePlugin_LuaCore_Add(XNETHANDLE xhNet, LPCTSTR lpszPluginFile, LPVOID lParam)
 {
     ModulePlugin_IsErrorOccur = FALSE;
 
@@ -225,103 +272,53 @@ BOOL CModulePlugin_Core::ModulePlugin_Core_Add(XNETHANDLE xhNet, LPCTSTR lpszPlu
         ModulePlugin_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PLUGIN_PARAMENT;
         return FALSE;
     }
-    PLUGINCORE_FRAMEWORK st_FrameWork;
-    st_FrameWork.mhFile = 0;
-    memset(st_FrameWork.tszModuleFile, '\0', sizeof(st_FrameWork.tszModuleFile));
-    //打开一个模块
-#ifdef _MSC_BUILD
-    st_FrameWork.mhFile = LoadLibrary(lpszPluginFile);
-#else
-    st_FrameWork.mhFile = dlopen(lpszPluginFile, RTLD_LAZY);
-#endif
-    if (NULL == st_FrameWork.mhFile)
-    {
-        ModulePlugin_IsErrorOccur = TRUE;
-        ModulePlugin_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PLUGIN_OPENDL;
-        return FALSE;
-    }
-    //开始查找模块中的函数
-#ifdef _MSC_BUILD
-    st_FrameWork.fpCall_PluginCore_Init = (FPCall_PluginCore_Init)GetProcAddress(st_FrameWork.mhFile, "PluginCore_Init");
-#else
-    * (void**)(&st_FrameWork.fpCall_PluginCore_Init) = dlsym(st_FrameWork.mhFile, _T("PluginCore_Init"));
-#endif
-    if (NULL == st_FrameWork.fpCall_PluginCore_Init)
-    {
-#ifdef _MSC_BUILD
-        FreeLibrary(st_FrameWork.mhFile);
-#else
-        dlclose(st_FrameWork.mhFile);
-#endif
-        ModulePlugin_IsErrorOccur = TRUE;
-        ModulePlugin_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PLUGIN_FPINIT;
-        return FALSE;
-    }
-#ifdef _MSC_BUILD
-    st_FrameWork.fpCall_PluginCore_UnInit = (FPCall_PluginCore_UnInit)GetProcAddress(st_FrameWork.mhFile, "PluginCore_UnInit");
-#else
-    * (void**)(&st_FrameWork.fpCall_PluginCore_UnInit) = dlsym(st_FrameWork.mhFile, _T("PluginCore_UnInit"));
-#endif
-    if (NULL == st_FrameWork.fpCall_PluginCore_UnInit)
-    {
-#ifdef _MSC_BUILD
-        FreeLibrary(st_FrameWork.mhFile);
-#else
-        dlclose(st_FrameWork.mhFile);
-#endif
-        ModulePlugin_IsErrorOccur = TRUE;
-        ModulePlugin_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PLUGIN_FPUNINIT;
-        return FALSE;
-    }
-#ifdef _MSC_BUILD
-    st_FrameWork.fpCall_PluginCore_Call = (FPCall_PluginCore_Call)GetProcAddress(st_FrameWork.mhFile, "PluginCore_Call");
-#else
-    * (void**)(&st_FrameWork.fpCall_PluginCore_Call) = dlsym(st_FrameWork.mhFile, _T("PluginCore_Call"));
-#endif
-    if (NULL == st_FrameWork.fpCall_PluginCore_Call)
-    {
-#ifdef _MSC_BUILD
-        FreeLibrary(st_FrameWork.mhFile);
-#else
-        dlclose(st_FrameWork.mhFile);
-#endif
-        ModulePlugin_IsErrorOccur = TRUE;
-        ModulePlugin_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PLUGIN_FPCALL;
-        return FALSE;
-    }
-#ifdef _MSC_BUILD
-    st_FrameWork.fpCall_PluginCore_GetLastError = (FPCall_PluginCore_GetLastError)GetProcAddress(st_FrameWork.mhFile, _T("PluginCore_GetLastError"));
-#else
-    * (void**)(&st_FrameWork.fpCall_PluginCore_GetLastError) = dlsym(st_FrameWork.mhFile, _T("PluginCore_GetLastError"));
-#endif
-    if (NULL == st_FrameWork.fpCall_PluginCore_GetLastError)
-    {
-#ifdef _MSC_BUILD
-        FreeLibrary(st_FrameWork.mhFile);
-#else
-        dlclose(st_FrameWork.mhFile);
-#endif
-        ModulePlugin_IsErrorOccur = TRUE;
-        ModulePlugin_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PLUGIN_FPERROR;
-        return FALSE;
-    }
-    //初始化内部模块
-    if (!st_FrameWork.fpCall_PluginCore_Init(lParam))
-    {
-#ifdef _MSC_BUILD
-        FreeLibrary(st_FrameWork.mhFile);
-#else
-        dlclose(st_FrameWork.mhFile);
-#endif
-        ModulePlugin_IsErrorOccur = TRUE;
-        ModulePlugin_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PLUGIN_INIT;
-        return FALSE;
-    }
-    _tcscpy(st_FrameWork.tszModuleFile, lpszPluginFile);
+    PLUGINCORE_LUAFRAMEWORK st_LuaCore;
+    memset(&st_LuaCore, '\0', sizeof(PLUGINCORE_LUAFRAMEWORK));
 
-    //添加模块属性到STL函数中
+    st_LuaCore.pSt_LuaState = luaL_newstate();
+    _tcscpy(st_LuaCore.tszModuleFile, lpszPluginFile);
+
+    if (NULL == st_LuaCore.pSt_LuaState)
+	{
+		return FALSE;
+	}
+	luaL_openlibs(st_LuaCore.pSt_LuaState);
+
+    if (0 != luaL_loadfile(st_LuaCore.pSt_LuaState, lpszPluginFile))
+    {
+        return FALSE;
+    }
+    if (0 != lua_pcall(st_LuaCore.pSt_LuaState, 0, 0, 0))
+    {
+        return FALSE;
+    }
+
+    if (0 == lua_getglobal(st_LuaCore.pSt_LuaState, "PluginCore_Init"))
+    {
+        return FALSE;
+    }
+    if (NULL == lParam)
+    {
+		if (LUA_OK != lua_pcall(st_LuaCore.pSt_LuaState, 0, 1, 0))
+		{
+			return FALSE;
+		}
+    }
+    else
+    {
+		lua_pushlightuserdata(st_LuaCore.pSt_LuaState, lParam);
+		if (LUA_OK != lua_pcall(st_LuaCore.pSt_LuaState, 1, 1, 0))
+		{
+			return FALSE;
+		}
+    }
+    if (!lua_toboolean(st_LuaCore.pSt_LuaState, -1))
+    {
+        return FALSE;
+    }
+
     st_csStl.lock();
-    stl_MapFrameWork.insert(make_pair(xhNet, st_FrameWork));
+    stl_MapFrameWork.insert(make_pair(xhNet, st_LuaCore));
     st_csStl.unlock();
     return TRUE;
 }
