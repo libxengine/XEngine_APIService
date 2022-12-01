@@ -74,8 +74,8 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <IncludePath>$(XEngine_Include);../../XEngine_ThirdPart/jsoncpp;$(IncludePath)</IncludePath>
     <LibraryPath>$(XEngine_Lib32);$(LibraryPath)</LibraryPath>
-    <OutDir>$(SolutionDir)$(Configuration)\XEngine_Plugin\</OutDir>
-    <IntDir>$(Configuration)\XEngine_Plugin\</IntDir>
+    <OutDir>$(SolutionDir)$(Configuration)\XEngine_LibPlugin\</OutDir>
+    <IntDir>$(Configuration)\XEngine_LibPlugin\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <IncludePath>$(XEngine_Include);../../XEngine_ThirdPart/jsoncpp;$(IncludePath)</IncludePath>

@@ -72,10 +72,10 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <OutDir>$(SolutionDir)$(Configuration)\XEngine_Plugin\</OutDir>
+    <OutDir>$(SolutionDir)$(Configuration)\XEngine_LibPlugin\</OutDir>
     <IncludePath>../../XEngine_ThirdPart/jsoncpp;$(XEngine_Include);$(IncludePath)</IncludePath>
     <LibraryPath>$(XEngine_Lib32);$(LibraryPath)</LibraryPath>
-    <IntDir>$(Configuration)\XEngine_Plugin\</IntDir>
+    <IntDir>$(Configuration)\XEngine_LibPlugin\</IntDir>
     <TargetName>$(ProjectName)</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
