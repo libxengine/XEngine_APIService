@@ -78,20 +78,20 @@
     <LibraryPath>$(XEngine_Lib32);$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <OutDir>$(SolutionDir)$(Configuration)\XEngine_Plugin\</OutDir>
-    <IntDir>$(Configuration)\XEngine_Plugin\</IntDir>
+    <OutDir>$(SolutionDir)$(Configuration)\XEngine_LibPlugin\</OutDir>
+    <IntDir>$(Configuration)\XEngine_LibPlugin\</IntDir>
     <IncludePath>$(XEngine_Include);../../XEngine_ThirdPart/jsoncpp;$(IncludePath)</IncludePath>
     <LibraryPath>$(XEngine_Lib32);$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\XEngine_Plugin\</OutDir>
-    <IntDir>$(Platform)\$(Configuration)\XEngine_Plugin\</IntDir>
+    <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\XEngine_LibPlugin\</OutDir>
+    <IntDir>$(Platform)\$(Configuration)\XEngine_LibPlugin\</IntDir>
     <IncludePath>$(XEngine_Include);../../XEngine_ThirdPart/jsoncpp;$(IncludePath)</IncludePath>
     <LibraryPath>$(XEngine_Lib64);$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\XEngine_Plugin\</OutDir>
-    <IntDir>$(Platform)\$(Configuration)\XEngine_Plugin\</IntDir>
+    <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\XEngine_LibPlugin\</OutDir>
+    <IntDir>$(Platform)\$(Configuration)\XEngine_LibPlugin\</IntDir>
     <IncludePath>$(XEngine_Include);../../XEngine_ThirdPart/jsoncpp;$(IncludePath)</IncludePath>
     <LibraryPath>$(XEngine_Lib64);$(LibraryPath)</LibraryPath>
   </PropertyGroup>
