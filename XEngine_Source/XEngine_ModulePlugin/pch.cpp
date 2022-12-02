@@ -75,9 +75,9 @@ extern "C" BOOL ModulePlugin_Loader_Insert(LPCTSTR lpszModuleMethod, LPCTSTR lps
 {
 	return m_PluginLoader.ModulePlugin_Loader_Insert(lpszModuleMethod, lpszModuleName, nType);
 }
-extern "C" BOOL ModulePlugin_Loader_Find(LPCTSTR lpszMethodName)
+extern "C" BOOL ModulePlugin_Loader_Find(LPCTSTR lpszMethodName, int* pInt_Type)
 {
-	return m_PluginLoader.ModulePlugin_Loader_Find(lpszMethodName);
+	return m_PluginLoader.ModulePlugin_Loader_Find(lpszMethodName, pInt_Type);
 }
 extern "C" BOOL ModulePlugin_Loader_Exec(LPCTSTR lpszMethodName, TCHAR * **pppHDRList, int nListCount, int* pInt_HTTPCode, TCHAR * ptszMsgBuffer, int* pInt_MsgLen)
 {

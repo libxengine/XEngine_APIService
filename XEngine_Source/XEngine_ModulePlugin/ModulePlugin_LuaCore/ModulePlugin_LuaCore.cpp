@@ -144,62 +144,48 @@ BOOL CModulePlugin_LuaCore::ModulePlugin_LuaCore_Exec(XNETHANDLE xhModule, TCHAR
 		st_csStl.unlock_shared();
 		return FALSE;
 	}
-
-	if (0 == lua_getglobal(stl_MapIterator->second.pSt_LuaState, "PluginCore_Call1"))
+	if (0 == lua_getglobal(stl_MapIterator->second.pSt_LuaState, "PluginCore_Call"))
 	{
+		ModulePlugin_IsErrorOccur = TRUE;
+		ModulePlugin_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PLUGIN_FPCALL;
+		st_csStl.unlock_shared();
 		return FALSE;
 	}
+    TCHAR tszURLParam[MAX_PATH];
+    memset(tszURLParam, '\0', MAX_PATH);
 
-    lua_pushstring(stl_MapIterator->second.pSt_LuaState, "1");
-    lua_pushstring(stl_MapIterator->second.pSt_LuaState, "2");
-    lua_pushinteger(stl_MapIterator->second.pSt_LuaState, 3);
-    int nRet = lua_pcall(stl_MapIterator->second.pSt_LuaState, 3, 0, 0);
-
-    lua_getglobal(stl_MapIterator->second.pSt_LuaState, "pInt_HTTPCode");
-    *pInt_HTTPCode = lua_tonumber(stl_MapIterator->second.pSt_LuaState, -1);
+    for (int i = 1; i < nListCount; i++)
+    {
+        if (i > 1)
+        {
+            _tcscat(tszURLParam, "&");
+        }
+        _tcscat(tszURLParam, (*pppHDRList)[i]);
+    }
+    lua_pushstring(stl_MapIterator->second.pSt_LuaState, tszURLParam);
+    lua_pushinteger(stl_MapIterator->second.pSt_LuaState, nListCount - 1);
+    lua_pushstring(stl_MapIterator->second.pSt_LuaState, lpszMsgBufer);
+    lua_pushinteger(stl_MapIterator->second.pSt_LuaState, nMsgLen);
+    if (LUA_OK != lua_pcall(stl_MapIterator->second.pSt_LuaState, 4, 1, 0))
+    {
+		ModulePlugin_IsErrorOccur = TRUE;
+		ModulePlugin_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PLUGIN_EXECTION;
+		st_csStl.unlock_shared();
+		return FALSE;
+    }
+    lua_getglobal(stl_MapIterator->second.pSt_LuaState, "PInt_HTTPCode");
+    *pInt_HTTPCode = (int)lua_tonumber(stl_MapIterator->second.pSt_LuaState, -1);
     lua_pop(stl_MapIterator->second.pSt_LuaState, -1);
 
-    lua_getglobal(stl_MapIterator->second.pSt_LuaState, "pInt_MsgLen");
-    *pInt_MsgLen = lua_tonumber(stl_MapIterator->second.pSt_LuaState, -1);
-    lua_pop(stl_MapIterator->second.pSt_LuaState, -1);
-
-	lua_getglobal(stl_MapIterator->second.pSt_LuaState, "ptszMsgBuffer");
-	LPCTSTR lpszStr = lua_tostring(stl_MapIterator->second.pSt_LuaState, -1);
+	lua_getglobal(stl_MapIterator->second.pSt_LuaState, "PtszMsgBuffer");
+	_tcscpy(ptszMsgBuffer, lua_tostring(stl_MapIterator->second.pSt_LuaState, -1));
 	lua_pop(stl_MapIterator->second.pSt_LuaState, -1);
-    /*
-	lua_newtable(stl_MapIterator->second.pSt_LuaState);
-	for (int i = 0; i < nListCount; i++)
-	{
-		TCHAR tszStrKey[64];
-		TCHAR tszStrValue[64];
 
-		memset(tszStrKey, '\0', sizeof(tszStrKey));
-		memset(tszStrValue, '\0', sizeof(tszStrValue));
-		BaseLib_OperatorString_GetKeyValue((*pppHDRList)[i], "=", tszStrKey, tszStrValue);
+	lua_getglobal(stl_MapIterator->second.pSt_LuaState, "PInt_MsgLen");
+	*pInt_MsgLen = (int)lua_tonumber(stl_MapIterator->second.pSt_LuaState, -1);
+	lua_pop(stl_MapIterator->second.pSt_LuaState, -1);
 
-		lua_pushstring(stl_MapIterator->second.pSt_LuaState, tszStrKey);
-		lua_pushstring(stl_MapIterator->second.pSt_LuaState, tszStrValue);
-		lua_settable(stl_MapIterator->second.pSt_LuaState, -3);
-	}
-	lua_pushnumber(stl_MapIterator->second.pSt_LuaState, nListCount);
-
-    int nRet = 0;
-	if (NULL == lpszMsgBufer)
-	{
-		lua_pushstring(stl_MapIterator->second.pSt_LuaState, "");
-        lua_pushinteger(stl_MapIterator->second.pSt_LuaState, 0);
-
-        nRet = lua_pcall(stl_MapIterator->second.pSt_LuaState, 7, 1, 0);
-	}
-    else
-	{
-		lua_pushstring(stl_MapIterator->second.pSt_LuaState, lpszMsgBufer);
-		lua_pushinteger(stl_MapIterator->second.pSt_LuaState, nMsgLen);
-
-        nRet = lua_pcall(stl_MapIterator->second.pSt_LuaState, 7, 1, 0);
-	}
-	*/
-    st_csStl.unlock_shared();
+	st_csStl.unlock_shared();
 
     return TRUE;
 }
@@ -280,42 +266,45 @@ BOOL CModulePlugin_LuaCore::ModulePlugin_LuaCore_Add(XNETHANDLE xhNet, LPCTSTR l
 
     if (NULL == st_LuaCore.pSt_LuaState)
 	{
+		ModulePlugin_IsErrorOccur = TRUE;
+		ModulePlugin_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PLUGIN_MALLOC;
 		return FALSE;
 	}
 	luaL_openlibs(st_LuaCore.pSt_LuaState);
 
-    if (0 != luaL_loadfile(st_LuaCore.pSt_LuaState, lpszPluginFile))
+    if (LUA_OK != luaL_loadfile(st_LuaCore.pSt_LuaState, lpszPluginFile))
     {
-        return FALSE;
+		ModulePlugin_IsErrorOccur = TRUE;
+		ModulePlugin_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PLUGIN_OPENDL;
+		return FALSE;
     }
-    if (0 != lua_pcall(st_LuaCore.pSt_LuaState, 0, 0, 0))
-    {
-        return FALSE;
-    }
+	if (LUA_OK != lua_pcall(st_LuaCore.pSt_LuaState, 0, 0, 0))
+	{
+		ModulePlugin_IsErrorOccur = TRUE;
+		ModulePlugin_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PLUGIN_EXECTION;
+		return FALSE;
+	}
 
     if (0 == lua_getglobal(st_LuaCore.pSt_LuaState, "PluginCore_Init"))
     {
-        return FALSE;
+		ModulePlugin_IsErrorOccur = TRUE;
+		ModulePlugin_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PLUGIN_FPINIT;
+		return FALSE;
     }
-    if (NULL == lParam)
-    {
-		if (LUA_OK != lua_pcall(st_LuaCore.pSt_LuaState, 0, 1, 0))
-		{
-			return FALSE;
-		}
-    }
-    else
-    {
-		lua_pushlightuserdata(st_LuaCore.pSt_LuaState, lParam);
-		if (LUA_OK != lua_pcall(st_LuaCore.pSt_LuaState, 1, 1, 0))
-		{
-			return FALSE;
-		}
-    }
+
+	if (LUA_OK != lua_pcall(st_LuaCore.pSt_LuaState, 0, 1, 0))
+	{
+		ModulePlugin_IsErrorOccur = TRUE;
+		ModulePlugin_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PLUGIN_EXECTION;
+		return FALSE;
+	}
     if (!lua_toboolean(st_LuaCore.pSt_LuaState, -1))
     {
-        return FALSE;
+		ModulePlugin_IsErrorOccur = TRUE;
+		ModulePlugin_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PLUGIN_EXECTION;
+		return FALSE;
     }
+    lua_pop(st_LuaCore.pSt_LuaState, -1);
 
     st_csStl.lock();
     stl_MapFrameWork.insert(make_pair(xhNet, st_LuaCore));

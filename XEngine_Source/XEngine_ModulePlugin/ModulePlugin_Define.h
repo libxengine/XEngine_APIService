@@ -237,12 +237,17 @@ extern "C" BOOL ModulePlugin_Loader_Insert(LPCTSTR lpszModuleMethod, LPCTSTR lps
   类型：常量字符指针
   可空：N
   意思：输入要执行的方法
+ 参数.二：pInt_Type
+  In/Out：Out
+  类型：整数型指针
+  可空：N
+  意思：输出获取到的模块类型
 返回值
   类型：逻辑型
   意思：是否成功
 备注：
 *********************************************************************/
-extern "C" BOOL ModulePlugin_Loader_Find(LPCTSTR lpszMethodName);
+extern "C" BOOL ModulePlugin_Loader_Find(LPCTSTR lpszMethodName, int* pInt_Type);
 /********************************************************************
 函数名称：ModulePlugin_Loader_Exec
 函数功能：执行一次插件

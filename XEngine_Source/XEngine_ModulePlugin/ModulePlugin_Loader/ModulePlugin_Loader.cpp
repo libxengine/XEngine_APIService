@@ -88,12 +88,17 @@ BOOL CModulePlugin_Loader::ModulePlugin_Loader_Insert(LPCTSTR lpszModuleMethod, 
   类型：常量字符指针
   可空：N
   意思：输入要执行的方法
+ 参数.二：pInt_Type
+  In/Out：Out
+  类型：整数型指针
+  可空：N
+  意思：输出获取到的模块类型
 返回值
   类型：逻辑型
   意思：是否成功
 备注：
 *********************************************************************/
-BOOL CModulePlugin_Loader::ModulePlugin_Loader_Find(LPCTSTR lpszMethodName)
+BOOL CModulePlugin_Loader::ModulePlugin_Loader_Find(LPCTSTR lpszMethodName, int* pInt_Type)
 {
 	ModulePlugin_IsErrorOccur = FALSE;
 
@@ -111,6 +116,10 @@ BOOL CModulePlugin_Loader::ModulePlugin_Loader_Find(LPCTSTR lpszMethodName)
 		ModulePlugin_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PLUGIN_NOTFOUND;
 		st_Locker.unlock_shared();
 		return FALSE;
+	}
+	if (NULL != pInt_Type)
+	{
+		*pInt_Type = stl_MapIterator->second.nType;
 	}
 	st_Locker.unlock_shared();
 	return TRUE;
