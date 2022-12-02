@@ -127,9 +127,10 @@ BOOL XEngine_HTTPTask_Handle(RFCCOMPONENTS_HTTP_REQPARAM* pSt_HTTPParam, LPCTSTR
 		return FALSE;
 	}
 	//首先处理插件
-	if (ModulePlugin_Loader_Find(tszValue))
+	int nPluginType = 0;
+	if (ModulePlugin_Loader_Find(tszValue, &nPluginType))
 	{
-		XEngine_PluginTask_Handle(tszValue, lpszClientAddr, lpszRVBuffer, nRVLen, &pptszList, nListCount);
+		XEngine_PluginTask_Handle(tszValue, lpszClientAddr, lpszRVBuffer, nRVLen, &pptszList, nListCount, nPluginType);
 		return TRUE;
 	}
 	if (0 == _tcsnicmp(lpszMethodPost, pSt_HTTPParam->tszHttpMethod, _tcslen(lpszMethodPost)))

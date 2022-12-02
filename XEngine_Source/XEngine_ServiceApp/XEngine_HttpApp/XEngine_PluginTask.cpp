@@ -10,7 +10,7 @@
 //    Purpose:     HTTP任务处理代码
 //    History:
 *********************************************************************/
-BOOL XEngine_PluginTask_Handle(LPCTSTR lpszMethodName, LPCTSTR lpszClientAddr, LPCTSTR lpszRVBuffer, int nRVLen, TCHAR*** ppptszList, int nListCount)
+BOOL XEngine_PluginTask_Handle(LPCTSTR lpszMethodName, LPCTSTR lpszClientAddr, LPCTSTR lpszRVBuffer, int nRVLen, TCHAR*** ppptszList, int nListCount, int nPluginType)
 {
 	int nMsgLen = 0;
 	int nPktLen = 0;
@@ -28,6 +28,6 @@ BOOL XEngine_PluginTask_Handle(LPCTSTR lpszMethodName, LPCTSTR lpszClientAddr, L
 	ModulePlugin_Loader_Exec(lpszMethodName, ppptszList, nListCount, &st_HDRParament.nHttpCode, tszPktBuffer, &nPktLen);
 	RfcComponents_HttpServer_SendMsgEx(xhHTTPPacket, tszMsgBuffer, &nMsgLen, &st_HDRParament, tszPktBuffer, nPktLen);
 	XEngine_Network_Send(lpszClientAddr, tszMsgBuffer, nMsgLen);
-	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _T("HTTP客户端:%s,请求的方法:%s,由插件模块处理成功"), lpszClientAddr, lpszMethodName);
+	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _T("HTTP客户端:%s,请求的方法:%s,由%s插件模块处理成功"), lpszClientAddr, lpszMethodName, 0 == nPluginType ? "Lib" : "Lua");
 	return TRUE;
 }

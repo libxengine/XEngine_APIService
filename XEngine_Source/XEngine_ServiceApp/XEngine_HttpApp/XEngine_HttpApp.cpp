@@ -277,7 +277,7 @@ int main(int argc, char** argv)
 				}
 				else
 				{
-					XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _T("启动服务中,加载Lib模块插件中,当前第:%d 个加载失败,方法:%s,路径:%s,错误:%ld"), i, stl_ListIterator->tszPluginMethod, stl_ListIterator->tszPluginFile, ModulePlugin_GetLastError());
+					XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _T("启动服务中,加载Lib模块插件中,当前第:%d 个加载失败,方法:%s,路径:%s,错误:%lX"), i, stl_ListIterator->tszPluginMethod, stl_ListIterator->tszPluginFile, ModulePlugin_GetLastError());
 				}
 			}
 			else
@@ -288,10 +288,10 @@ int main(int argc, char** argv)
 	}
 	if (!ModulePlugin_LuaCore_Init())
 	{
-		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _T("启动服务中,初始化LUA插件系统失败,错误：%lX"), ModulePlugin_GetLastError());
+		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _T("启动服务中,初始化Lua插件系统失败,错误：%lX"), ModulePlugin_GetLastError());
 		goto XENGINE_SERVICEAPP_EXIT;
 	}
-	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _T("启动服务中,初始化LUA插件系统成功,开始加载插件"));
+	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _T("启动服务中,初始化Lua插件系统成功,开始加载插件"));
 	{
 		list<XENGINE_PLUGININFO>::const_iterator stl_ListIterator = st_PluginLuaConfig.pStl_ListPlugin->begin();
 		for (int i = 1; stl_ListIterator != st_PluginLuaConfig.pStl_ListPlugin->end(); stl_ListIterator++, i++)
@@ -300,16 +300,16 @@ int main(int argc, char** argv)
 			{
 				if (ModulePlugin_Loader_Insert(stl_ListIterator->tszPluginMethod, stl_ListIterator->tszPluginFile, 1))
 				{
-					XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _T("启动服务中,加载LUA模块插件中,当前第:%d 个加载成功,方法:%s,路径:%s"), i, stl_ListIterator->tszPluginMethod, stl_ListIterator->tszPluginFile);
+					XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _T("启动服务中,加载Lua模块插件中,当前第:%d 个加载成功,方法:%s,路径:%s"), i, stl_ListIterator->tszPluginMethod, stl_ListIterator->tszPluginFile);
 				}
 				else
 				{
-					XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _T("启动服务中,加载LUA模块插件中,当前第:%d 个加载失败,方法:%s,路径:%s,错误:%ld"), i, stl_ListIterator->tszPluginMethod, stl_ListIterator->tszPluginFile, ModulePlugin_GetLastError());
+					XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _T("启动服务中,加载Lua模块插件中,当前第:%d 个加载失败,方法:%s,路径:%s,错误:%lX"), i, stl_ListIterator->tszPluginMethod, stl_ListIterator->tszPluginFile, ModulePlugin_GetLastError());
 				}
 			}
 			else
 			{
-				XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_WARN, _T("启动服务中,加载LUA模块插件中,当前第:%d 个加载失败,因为没有启用,方法:%s,路径:%s"), i, stl_ListIterator->tszPluginMethod, stl_ListIterator->tszPluginFile);
+				XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_WARN, _T("启动服务中,加载Lua模块插件中,当前第:%d 个加载失败,因为没有启用,方法:%s,路径:%s"), i, stl_ListIterator->tszPluginMethod, stl_ListIterator->tszPluginFile);
 			}
 		}
 	}
