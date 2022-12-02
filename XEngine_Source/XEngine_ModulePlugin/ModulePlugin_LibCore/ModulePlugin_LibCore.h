@@ -11,7 +11,7 @@
 //    History:
 *********************************************************************/
 typedef BOOL(*FPCall_PluginCore_Init)(LPVOID lParam);
-typedef BOOL(*FPCall_PluginCore_UnInit)();
+typedef void(*FPCall_PluginCore_UnInit)();
 typedef BOOL(*FPCall_PluginCore_Call)(TCHAR*** pppHDRList, int nListCount, int* pInt_HTTPCode, TCHAR* ptszMsgBuffer, int* pInt_MsgLen, LPCTSTR lpszMsgBufer, int nMsgLen);
 typedef DWORD(*FPCall_PluginCore_GetLastError)();
 
@@ -21,7 +21,7 @@ typedef struct
 	TCHAR tszModuleFile[MAX_PATH];
 
 	BOOL(*fpCall_PluginCore_Init)(LPVOID lParam);
-	BOOL(*fpCall_PluginCore_UnInit)();
+	void(*fpCall_PluginCore_UnInit)();
 	BOOL(*fpCall_PluginCore_Call)(TCHAR*** pppHDRList, int nListCount, int* pInt_HTTPCode, TCHAR* ptszMsgBuffer, int* pInt_MsgLen, LPCTSTR lpszMsgBufer, int nMsgLen);
 	DWORD(*fpCall_PluginCore_GetLastError)();
 }PLUGINCORE_FRAMEWORK, * LPPLUGINCORE_FRAMEWORK;

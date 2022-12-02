@@ -18,7 +18,7 @@ public:
 	~CPlugin_Meter();
 public:
 	BOOL PluginCore_Init(LPVOID lParam);
-	BOOL PluginCore_UnInit();
+	void PluginCore_UnInit();
 	BOOL PluginCore_Call(TCHAR*** pppHDRList, int nListCount, int* pInt_HTTPCode, TCHAR* ptszMsgBuffer, int* pInt_MsgLen, LPCTSTR lpszMsgBuffer, int nMsgLen);
 protected:
 	BOOL Plugin_Meter_LengthConvert(int nSource, __int64x nValue, Json::Value *pSt_JsonObject);
