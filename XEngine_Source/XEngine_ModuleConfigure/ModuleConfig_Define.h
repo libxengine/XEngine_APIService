@@ -98,7 +98,6 @@ typedef struct
 typedef struct
 {
 	list<XENGINE_OPTIONINFO> stl_ListBase;
-	list<XENGINE_OPTIONINFO> stl_ListPlug;
 }XENGINE_OPTIONLIST;
 //////////////////////////////////////////////////////////////////////////
 //                        导出函数定义

@@ -88,12 +88,6 @@ BOOL CModuleConfigure_File::ModuleConfigure_File_OPtion(LPCTSTR lpszConfigFile, 
 		Config_dwErrorCode = ERROR_MODULE_CONFIGURE_FILE_BASE;
 		return FALSE;
 	}
-	if (st_JsonRoot["OPTionPlugin"].empty())
-	{
-		Config_IsErrorOccur = TRUE;
-		Config_dwErrorCode = ERROR_MODULE_CONFIGURE_JSON_PLUGIN;
-		return FALSE;
-	}
 	Json::Value st_JsonBase = st_JsonRoot["OPTionBase"];
 	for (unsigned int i = 0; i < st_JsonBase.size(); i++)
 	{
@@ -106,19 +100,6 @@ BOOL CModuleConfigure_File::ModuleConfigure_File_OPtion(LPCTSTR lpszConfigFile, 
 		_tcscpy(st_OPTionInfo.tszOPExample, st_JsonBase[i]["OPTionExample"].asCString());
 
 		pSt_OPtionList->stl_ListBase.push_back(st_OPTionInfo);
-	}
-	Json::Value st_JsonPlug = st_JsonRoot["OPTionPlugin"];
-	for (unsigned int i = 0; i < st_JsonPlug.size(); i++)
-	{
-		XENGINE_OPTIONINFO st_OPTionInfo;
-		memset(&st_OPTionInfo, '\0', sizeof(XENGINE_OPTIONINFO));
-
-		st_OPTionInfo.bEnable = st_JsonPlug[i]["OPTionEnable"].asBool();
-		_tcscpy(st_OPTionInfo.tszOPMethod, st_JsonPlug[i]["OPTionMethod"].asCString());
-		_tcscpy(st_OPTionInfo.tszOPNote, st_JsonPlug[i]["OPTionNote"].asCString());
-		_tcscpy(st_OPTionInfo.tszOPExample, st_JsonPlug[i]["OPTionExample"].asCString());
-
-		pSt_OPtionList->stl_ListPlug.push_back(st_OPTionInfo);
 	}
 	return TRUE;
 }
