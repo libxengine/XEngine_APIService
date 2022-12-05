@@ -186,8 +186,6 @@ BOOL CModulePlugin_Loader::ModulePlugin_Loader_Exec(LPCTSTR lpszMethodName, TCHA
 	{
 		if (!ModulePlugin_LibCore_Exec(stl_MapIterator->second.xhToken, pppHDRList, nListCount, pInt_HTTPCode, ptszMsgBuffer, pInt_MsgLen))
 		{
-			ModulePlugin_IsErrorOccur = TRUE;
-			ModulePlugin_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PLUGIN_EXECTION;
 			st_Locker.unlock_shared();
 			return FALSE;
 		}
@@ -196,8 +194,6 @@ BOOL CModulePlugin_Loader::ModulePlugin_Loader_Exec(LPCTSTR lpszMethodName, TCHA
 	{
 		if (!ModulePlugin_LuaCore_Exec(stl_MapIterator->second.xhToken, pppHDRList, nListCount, pInt_HTTPCode, ptszMsgBuffer, pInt_MsgLen))
 		{
-			ModulePlugin_IsErrorOccur = TRUE;
-			ModulePlugin_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PLUGIN_EXECTION;
 			st_Locker.unlock_shared();
 			return FALSE;
 		}
