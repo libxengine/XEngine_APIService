@@ -17,7 +17,10 @@ end
 
 function PluginCore_Call(lpszStrUrl, nListCount, lpszMsgBuffer, nMsgLen)
     if nListCount < 3 then
-        return false
+        PInt_HTTPCode = 200
+        PtszMsgBuffer = "{\"code\":1001,\"msg\":\"request parament is incorrent\"}"
+        PInt_MsgLen = #PtszMsgBuffer
+        return true
     end
 
     local nValue = 0
@@ -34,13 +37,18 @@ function PluginCore_Call(lpszStrUrl, nListCount, lpszMsgBuffer, nMsgLen)
         nValue = HDRObjectValue1[2] * HDRObjectValue2[2]
     elseif '3' == HDRObjectType[2] then
         nValue = HDRObjectValue1[2] / HDRObjectValue2[2]
+    else
+        PInt_HTTPCode = 200
+        PtszMsgBuffer = "{\"code\":1002,\"msg\":\"type does not support\"}"
+        PInt_MsgLen = #PtszMsgBuffer
+        return true
     end
 
     PInt_HTTPCode = 200
-    PtszMsgBuffer = "{\"code\":0,\"value\":" .. nValue .. "}"
+    PtszMsgBuffer = "{\"code\":0,\"msg\":\"success\",\"data\":{\"nType\":" .. HDRObjectType[2] .. ",\"nValue1\":" .. HDRObjectValue1[2] .. ",\"nValue2\":" .. HDRObjectValue2[2] .. ",\"nCal\":" .. nValue .. "}}"
     PInt_MsgLen = #PtszMsgBuffer
 
     return true
 end
 
--- PluginCore_Call1("param1=1&param2=2&param3=0",3,"hello",5)
+-- PluginCore_Call("param1=1&param2=2&param3=0",3,"hello",5)
