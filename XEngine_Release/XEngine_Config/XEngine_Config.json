@@ -29,9 +29,11 @@
     },
     "XPlugin":{
         "bEnable":true,
-        "tszPluginFile":"./XEngine_Config/XEngine_PluginConfig.json"
+        "tszPluginLib":"./XEngine_Config/XEngine_PluginLib.json",
+        "tszPluginLua":"./XEngine_Config/XEngine_PluginLua.json"
     },
     "XVer":[
+        "2.6.0.1001 Build20221209",
         "2.5.0.1001 Build20221102",
         "2.4.0.1001 Build20220902",
         "2.3.0.1001 Build20220723",

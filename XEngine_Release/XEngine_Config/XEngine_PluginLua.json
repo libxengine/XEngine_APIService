@@ -1,0 +1,9 @@
+{
+    "PluginArray":[
+        {
+            "PluginEnable":true,
+            "PluginMethod":"cal",
+            "PluginFile":"./XEngine_LuaPlugin/ModulePlugin_Calculation.lua"
+        }
+    ]
+}

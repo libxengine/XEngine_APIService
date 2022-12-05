@@ -3,27 +3,27 @@
         {
             "PluginEnable":true,
             "PluginMethod":"zodiac",
-            "PluginFile":"./XEngine_Plugin/libModulePlugin_Zodiac"
+            "PluginFile":"./XEngine_LibPlugin/libModulePlugin_Zodiac"
         },
         {
             "PluginEnable":true,
             "PluginMethod":"pass",
-            "PluginFile":"./XEngine_Plugin/libModulePlugin_Password"
+            "PluginFile":"./XEngine_LibPlugin/libModulePlugin_Password"
         },
         {
             "PluginEnable":true,
             "PluginMethod":"timezone",
-            "PluginFile":"./XEngine_Plugin/libModulePlugin_Timezone"
+            "PluginFile":"./XEngine_LibPlugin/libModulePlugin_Timezone"
         },
         {
             "PluginEnable":true,
             "PluginMethod":"bmindex",
-            "PluginFile":"./XEngine_Plugin/libModulePlugin_BMIndex"
+            "PluginFile":"./XEngine_LibPlugin/libModulePlugin_BMIndex"
         },
         {
             "PluginEnable":true,
             "PluginMethod":"meter",
-            "PluginFile":"./XEngine_Plugin/libModulePlugin_Meter"
+            "PluginFile":"./XEngine_LibPlugin/libModulePlugin_Meter"
         }
     ]
 }
