@@ -21,8 +21,8 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{81b29f95-d383-437f-ad34-11e1f3b6eae5}</ProjectGuid>
-    <RootNamespace>APPClientPluginExample</RootNamespace>
+    <ProjectGuid>{0464ea5f-1e86-40bf-b692-394cf9f5cc67}</ProjectGuid>
+    <RootNamespace>APPClientLibPluginExample</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -131,7 +131,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="APPClient_PluginExample.cpp" />
+    <ClCompile Include="APPClient_LibPluginExample.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
