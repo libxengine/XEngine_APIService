@@ -11,15 +11,16 @@
 // 添加要在此处预编译的标头
 #include "framework.h"
 #include <tchar.h>
+#include <lua.hpp>
 #else
 #include <dlfcn.h>
+#include <lua5.3/lua.hpp>
 #endif
 #endif //PCH_H
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <errno.h>
-#include <lua.hpp>
 #include <list>
 #include <thread>
 #include <memory>

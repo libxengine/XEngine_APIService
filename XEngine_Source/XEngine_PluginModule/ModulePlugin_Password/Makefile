@@ -46,7 +46,7 @@ pch.o:./pch.cpp
 
 InstallAll:InstallSo 
 InstallSo:./libModulePlugin_Password.$(SHAREDLL)
-	cp ./libModulePlugin_Password.$(SHAREDLL) ../../../XEngine_Release/XEngine_Plugin/libModulePlugin_Password.$(SHAREDLL)
+	cp ./libModulePlugin_Password.$(SHAREDLL) ../../../XEngine_Release/XEngine_LibPlugin/libModulePlugin_Password.$(SHAREDLL)
 
 CleanAll:CleanObj CleanMk
 CleanObj:                                               
