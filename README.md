@@ -11,7 +11,7 @@ c c++ interface api service
 这是一个不包含任何语言属性的通用信息查询服务.  
 你可以使用此代码实现自己的信息查询服务,支持查询任何信息  
 基于libXEngine开发并实现的一套简洁高性能跨平台接口服务  
-并且支持模块插件  
+并且支持插件系统,dll(so,dylib)模块或者lua脚本  
 
 #### 为什么选择我们
 支持私有化部署,免费,安全.开源,可控
@@ -42,6 +42,7 @@ c c++ interface api service
 22. 分布式锁API
 23. 短连接生成
 24. 本地标准时间
+25. 数学计算
 
 ## 安装教程
 
@@ -57,17 +58,18 @@ Linux执行:sudo ./XEngine_LINEnv.sh -i 3
 macos执行:./XEngine_LINEnv.sh -i 3  
 
 #### Windows
+需要vcpkg配置第三方环境,具体参考vcpkg安装方式,安装好后执行:vcpkg.exe install lua lua:x64-windows opencc opencc:x64-windows  
 使用VS打开并且编译,支持WINDOWS 7SP1以上系统  
 直接运行即可
 
 #### Linux
-安装opencc,ubuntu:sudo apt install libopencc-dev  
+安装opencc,ubuntu:sudo apt install liblua5.3-dev libopencc-dev  
 centos:需要自己编译  
 Linux使用Makefile编译,UBUNTU20.04 x64或者CENTOS8 x64  
 在控制台运行
 
 #### Macos
-安装opencc,执行命令:brew install opencc  
+安装opencc,执行命令:brew install lua opencc  
 使用makefile编译,控制台运行,需要mac 12以及以上版本  
 在控制台运行
 

@@ -11,7 +11,7 @@ This service mainly uses HTTP/V1.1 to implement various interface services
 This is a general information query service that does not contain any language attributes
 You can use this code to implement your own information query service, which supports querying any information  
 The purpose of development and implementation based on libXEngine is a cross-platform network storage service  
-and support plugin module
+and support plugin system,dll(so,dylib)module or lua script  
 
 #### Why choose us
 
@@ -42,6 +42,7 @@ Support privatization deployment, free, safe, open source, controllable
 22. Distributed lock
 23. short url creator
 24. local system time
+25. math Calculation
 
 ## install
 
@@ -57,6 +58,7 @@ Linux Exection:sudo ./XEngine_LINEnv.sh -i 3
 Macos Exection:./XEngine_LINEnv.sh -i 3
 
 #### Windows
+need to vcpkg configure third-part env.refer vcpkg install guide.after installed and execution:vcpkg.exe install lua lua:x64-windows opencc opencc:x64-windows  
 use vs open and compile,suport windows 7sp1 and above  
 Just Run it
 

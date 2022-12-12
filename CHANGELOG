@@ -1,3 +1,27 @@
+XEngine_APIService V2.6.0.1001
+
+添加:lua插件支持
+添加:加载器的lua插件支持
+修改:插件模块输出目录
+修改:lib代码插件名称修改
+修改:opencc库修改为vcpkg安装了
+修改:PluginCore_UnInit的返回值为void
+修改:输出插件统计
+修复:不需要的插件加载器错误
+修复:执行插件失败没有提示的问题
+删除:选项配置plugin字段
+
+added:lua plugin support
+added:lua plugin core and lug loader supported
+modify:plugin module print dir
+modify:lib code name changed
+modify:opencc library changed vcpkg to install
+modify:PluginCore_UnInit bool to void for plugin
+modify:printf plugin count
+fixed:does not need errorcode for plugin loader
+fixed:plugin failed to execution without tips.
+delete:plugin of option configure
+======================================================================================
 XEngine_APIService V2.5.0.1001
 
 添加:zipcode查询功能
