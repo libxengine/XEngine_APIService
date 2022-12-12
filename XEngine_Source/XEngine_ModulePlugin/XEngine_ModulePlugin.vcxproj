@@ -164,16 +164,18 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="framework.h" />
-    <ClInclude Include="ModulePlugin_Core\ModulePlugin_Core.h" />
     <ClInclude Include="ModulePlugin_Define.h" />
     <ClInclude Include="ModulePlugin_Error.h" />
+    <ClInclude Include="ModulePlugin_LibCore\ModulePlugin_LibCore.h" />
     <ClInclude Include="ModulePlugin_Loader\ModulePlugin_Loader.h" />
+    <ClInclude Include="ModulePlugin_LuaCore\ModulePlugin_LuaCore.h" />
     <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
-    <ClCompile Include="ModulePlugin_Core\ModulePlugin_Core.cpp" />
+    <ClCompile Include="ModulePlugin_LibCore\ModulePlugin_LibCore.cpp" />
     <ClCompile Include="ModulePlugin_Loader\ModulePlugin_Loader.cpp" />
+    <ClCompile Include="ModulePlugin_LuaCore\ModulePlugin_LuaCore.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>

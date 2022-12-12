@@ -88,11 +88,11 @@ extern "C" BOOL PluginCore_Init(LPVOID lParam = NULL);
 函数名称：PluginCore_UnInit
 函数功能：卸载插件
 返回值
-  类型：逻辑型
-  意思：是否成功
+  类型：无
+  意思：
 备注：
 *********************************************************************/
-extern "C" BOOL PluginCore_UnInit();
+extern "C" void PluginCore_UnInit();
 /********************************************************************
 函数名称：PluginCore_Call
 函数功能：调用插件

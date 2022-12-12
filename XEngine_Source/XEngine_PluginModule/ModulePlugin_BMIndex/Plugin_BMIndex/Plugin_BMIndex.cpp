@@ -43,15 +43,13 @@ BOOL CPlugin_BMIndex::PluginCore_Init(LPVOID lParam)
 函数名称：PluginCore_UnInit
 函数功能：卸载插件
 返回值
-  类型：逻辑型
-  意思：是否成功
+  类型：无
+  意思：
 备注：
 *********************************************************************/
-BOOL CPlugin_BMIndex::PluginCore_UnInit()
+void CPlugin_BMIndex::PluginCore_UnInit()
 {
 	BMIndex_IsErrorOccur = FALSE;
-
-	return TRUE;
 }
 /********************************************************************
 函数名称：PluginCore_Call

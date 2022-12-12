@@ -15,6 +15,7 @@ typedef struct
 	TCHAR tszModuleFile[MAX_PATH];
 	TCHAR tszModuleMethod[MAX_PATH];
 	XNETHANDLE xhToken;
+	int nType;
 }PLUGINCORE_LOADER, * LPPLUGINCORE_LOADER;
 
 class CModulePlugin_Loader
@@ -23,8 +24,8 @@ public:
 	CModulePlugin_Loader();
 	~CModulePlugin_Loader();
 public:
-	BOOL ModulePlugin_Loader_Insert(LPCTSTR lpszModuleMethod, LPCTSTR lpszModuleName);
-	BOOL ModulePlugin_Loader_Find(LPCTSTR lpszMethodName);
+	BOOL ModulePlugin_Loader_Insert(LPCTSTR lpszModuleMethod, LPCTSTR lpszModuleName, int nType = 0);
+	BOOL ModulePlugin_Loader_Find(LPCTSTR lpszMethodName, int* pInt_Type);
 	BOOL ModulePlugin_Loader_Exec(LPCTSTR lpszMethodName, TCHAR*** pppHDRList, int nListCount, int* pInt_HTTPCode, TCHAR* ptszMsgBuffer, int* pInt_MsgLen);
 	BOOL ModulePlugin_Loader_Destory();
 protected:

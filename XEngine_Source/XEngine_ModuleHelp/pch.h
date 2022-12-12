@@ -46,9 +46,4 @@ extern DWORD ModuleHelp_dwErrorCode;
 
 #ifdef _MSC_BUILD
 #pragma comment(lib,"XEngine_BaseLib/XEngine_BaseLib")
-#ifdef _WIN64
-#pragma comment(lib,"../XEngine_ThirdPart/opencc/libx64/opencc")
-#else
-#pragma comment(lib,"../XEngine_ThirdPart/opencc/libx86/opencc")
-#endif
 #endif

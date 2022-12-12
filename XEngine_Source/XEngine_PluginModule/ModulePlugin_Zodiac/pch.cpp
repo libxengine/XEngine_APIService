@@ -29,9 +29,9 @@ extern "C" BOOL PluginCore_Init(LPVOID lParam)
 {
 	return m_PluginZodiac.PluginCore_Init(lParam);
 }
-extern "C" BOOL PluginCore_UnInit()
+extern "C" void PluginCore_UnInit()
 {
-	return m_PluginZodiac.PluginCore_UnInit();
+	m_PluginZodiac.PluginCore_UnInit();
 }
 extern "C" BOOL PluginCore_Call(TCHAR * **pppHDRList, int nListCount, int* pInt_HTTPCode, TCHAR * ptszMsgBuffer, int* pInt_MsgLen, LPCTSTR lpszMsgBuffer, int nMsgLen)
 {

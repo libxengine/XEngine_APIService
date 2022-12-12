@@ -33,12 +33,17 @@ CModulePlugin_Loader::~CModulePlugin_Loader()
   类型：常量字符指针
   可空：N
   意思：插件路径
+ 参数.三：nType
+  In/Out：In
+  类型：整数型
+  可空：Y
+  意思：0为lib,1为lua
 返回值
   类型：逻辑型
   意思：是否成功
 备注：
 *********************************************************************/
-BOOL CModulePlugin_Loader::ModulePlugin_Loader_Insert(LPCTSTR lpszModuleMethod, LPCTSTR lpszModuleName)
+BOOL CModulePlugin_Loader::ModulePlugin_Loader_Insert(LPCTSTR lpszModuleMethod, LPCTSTR lpszModuleName, int nType /* = 0 */)
 {
     ModulePlugin_IsErrorOccur = FALSE;
 
@@ -51,14 +56,25 @@ BOOL CModulePlugin_Loader::ModulePlugin_Loader_Insert(LPCTSTR lpszModuleMethod, 
     PLUGINCORE_LOADER st_PluginLoader;
     memset(&st_PluginLoader, '\0', sizeof(PLUGINCORE_LOADER));
 
+	st_PluginLoader.nType = nType;
     _tcscpy(st_PluginLoader.tszModuleFile, lpszModuleName);
     _tcscpy(st_PluginLoader.tszModuleMethod, lpszModuleMethod);
 
-	if (!ModulePlugin_Core_Push(&st_PluginLoader.xhToken, lpszModuleName))
+	if (0 == nType)
 	{
-		return FALSE;
+		if (!ModulePlugin_LibCore_Push(&st_PluginLoader.xhToken, lpszModuleName))
+		{
+			return FALSE;
+		}
 	}
-
+	else
+	{
+		if (!ModulePlugin_LuaCore_Push(&st_PluginLoader.xhToken, lpszModuleName))
+		{
+			return FALSE;
+		}
+	}
+	
     st_Locker.lock();
     stl_MapLoader.insert(make_pair(lpszModuleMethod, st_PluginLoader));
     st_Locker.unlock();
@@ -72,12 +88,17 @@ BOOL CModulePlugin_Loader::ModulePlugin_Loader_Insert(LPCTSTR lpszModuleMethod, 
   类型：常量字符指针
   可空：N
   意思：输入要执行的方法
+ 参数.二：pInt_Type
+  In/Out：Out
+  类型：整数型指针
+  可空：N
+  意思：输出获取到的模块类型
 返回值
   类型：逻辑型
   意思：是否成功
 备注：
 *********************************************************************/
-BOOL CModulePlugin_Loader::ModulePlugin_Loader_Find(LPCTSTR lpszMethodName)
+BOOL CModulePlugin_Loader::ModulePlugin_Loader_Find(LPCTSTR lpszMethodName, int* pInt_Type)
 {
 	ModulePlugin_IsErrorOccur = FALSE;
 
@@ -95,6 +116,10 @@ BOOL CModulePlugin_Loader::ModulePlugin_Loader_Find(LPCTSTR lpszMethodName)
 		ModulePlugin_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PLUGIN_NOTFOUND;
 		st_Locker.unlock_shared();
 		return FALSE;
+	}
+	if (NULL != pInt_Type)
+	{
+		*pInt_Type = stl_MapIterator->second.nType;
 	}
 	st_Locker.unlock_shared();
 	return TRUE;
@@ -156,12 +181,22 @@ BOOL CModulePlugin_Loader::ModulePlugin_Loader_Exec(LPCTSTR lpszMethodName, TCHA
 		st_Locker.unlock_shared();
 		return FALSE;
 	}
-	if (!ModulePlugin_Core_Exec(stl_MapIterator->second.xhToken, pppHDRList, nListCount, pInt_HTTPCode, ptszMsgBuffer, pInt_MsgLen))
+
+	if (0 == stl_MapIterator->second.nType)
 	{
-		ModulePlugin_IsErrorOccur = TRUE;
-		ModulePlugin_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PLUGIN_EXECTION;
-		st_Locker.unlock_shared();
-		return FALSE;
+		if (!ModulePlugin_LibCore_Exec(stl_MapIterator->second.xhToken, pppHDRList, nListCount, pInt_HTTPCode, ptszMsgBuffer, pInt_MsgLen))
+		{
+			st_Locker.unlock_shared();
+			return FALSE;
+		}
+	}
+	else
+	{
+		if (!ModulePlugin_LuaCore_Exec(stl_MapIterator->second.xhToken, pppHDRList, nListCount, pInt_HTTPCode, ptszMsgBuffer, pInt_MsgLen))
+		{
+			st_Locker.unlock_shared();
+			return FALSE;
+		}
 	}
 	st_Locker.unlock_shared();
 	return TRUE;

@@ -90,7 +90,8 @@ extern XHANDLE xhHTTPPool;
 //配置文件
 extern XENGINE_SERVICECONFIG st_ServiceConfig;
 extern XENGINE_OPENCCCONFIG st_OPenccConfig;
-extern XENGINE_PLUGINCONFIG st_PluginConfig;
+extern XENGINE_PLUGINCONFIG st_PluginLibConfig;
+extern XENGINE_PLUGINCONFIG st_PluginLuaConfig;
 extern XENGINE_OPTIONLIST st_OPtionList;
 //连接库
 #ifdef _WINDOWS

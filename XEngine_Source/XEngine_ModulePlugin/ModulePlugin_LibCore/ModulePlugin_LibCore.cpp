@@ -1,35 +1,35 @@
 ﻿#include "pch.h"
-#include "ModulePlugin_Core.h"
+#include "ModulePlugin_LibCore.h"
 /********************************************************************
-//    Created:     2022/04/20  16:14:03
-//    File Name:   D:\XEngine_APIService\XEngine_Source\XEngine_ModulePlugin\ModulePlugin_Core\ModulePlugin_Core.cpp
-//    File Path:   D:\XEngine_APIService\XEngine_Source\XEngine_ModulePlugin\ModulePlugin_Core
-//    File Base:   ModulePlugin_Core
+//    Created:     2022/11/30  16:16:54
+//    File Name:   D:\XEngine_APIService\XEngine_Source\XEngine_ModulePlugin\ModulePlugin_LibCore\ModulePlugin_LibCore.cpp
+//    File Path:   D:\XEngine_APIService\XEngine_Source\XEngine_ModulePlugin\ModulePlugin_LibCore
+//    File Base:   ModulePlugin_LibCore
 //    File Ext:    cpp
 //    Project:     XEngine(网络通信引擎)
 //    Author:      qyt
 //    Purpose:     插件核心架构实现
 //    History:
 *********************************************************************/
-CModulePlugin_Core::CModulePlugin_Core()
+CModulePlugin_LibCore::CModulePlugin_LibCore()
 {
     bIsInit = FALSE;
 }
-CModulePlugin_Core::~CModulePlugin_Core()
+CModulePlugin_LibCore::~CModulePlugin_LibCore()
 {
 }
 //////////////////////////////////////////////////////////////////////////
 //                       公有函数
 //////////////////////////////////////////////////////////////////////////
 /********************************************************************
-函数名称：ModulePlugin_Core_Init
+函数名称：ModulePlugin_LibCore_Init
 函数功能：初始化插件核心系统
 返回值
   类型：逻辑型
   意思：是否成功初始化
 备注：
 *********************************************************************/
-BOOL CModulePlugin_Core::ModulePlugin_Core_Init()
+BOOL CModulePlugin_LibCore::ModulePlugin_LibCore_Init()
 {
     ModulePlugin_IsErrorOccur = FALSE;
     //判断是否初始化
@@ -44,7 +44,7 @@ BOOL CModulePlugin_Core::ModulePlugin_Core_Init()
     return TRUE;
 }
 /********************************************************************
-函数名称：ModulePlugin_Core_Push
+函数名称：ModulePlugin_LibCore_Push
 函数功能：添加一个标准的插件到插件框架中
  参数.一：pxhModule
   In/Out：Out
@@ -66,7 +66,7 @@ BOOL CModulePlugin_Core::ModulePlugin_Core_Init()
   意思：是否成功添加
 备注：
 *********************************************************************/
-BOOL CModulePlugin_Core::ModulePlugin_Core_Push(XNETHANDLE* pxhModule, LPCTSTR lpszPluginFile, LPVOID lParam)
+BOOL CModulePlugin_LibCore::ModulePlugin_LibCore_Push(XNETHANDLE* pxhModule, LPCTSTR lpszPluginFile, LPVOID lParam)
 {
     ModulePlugin_IsErrorOccur = FALSE;
 
@@ -76,14 +76,14 @@ BOOL CModulePlugin_Core::ModulePlugin_Core_Push(XNETHANDLE* pxhModule, LPCTSTR l
         ModulePlugin_dwErrorCode = BaseLib_GetLastError();
         return FALSE;
     }
-    if (!ModulePlugin_Core_Add(*pxhModule, lpszPluginFile, lParam))
+    if (!ModulePlugin_LibCore_Add(*pxhModule, lpszPluginFile, lParam))
     {
         return FALSE;
     }
     return TRUE;
 }
 /********************************************************************
-函数名称：ModulePlugin_Core_Exec
+函数名称：ModulePlugin_LibCore_Exec
 函数功能：执行一次
  参数.一：xhModule
   In/Out：In
@@ -130,7 +130,7 @@ BOOL CModulePlugin_Core::ModulePlugin_Core_Push(XNETHANDLE* pxhModule, LPCTSTR l
   意思：是否成功
 备注：
 *********************************************************************/
-BOOL CModulePlugin_Core::ModulePlugin_Core_Exec(XNETHANDLE xhModule, TCHAR*** pppHDRList, int nListCount, int* pInt_HTTPCode, TCHAR* ptszMsgBuffer, int* pInt_MsgLen, LPCTSTR lpszMsgBufer /* = NULL */, int nMsgLen /* = 0 */)
+BOOL CModulePlugin_LibCore::ModulePlugin_LibCore_Exec(XNETHANDLE xhModule, TCHAR*** pppHDRList, int nListCount, int* pInt_HTTPCode, TCHAR* ptszMsgBuffer, int* pInt_MsgLen, LPCTSTR lpszMsgBufer /* = NULL */, int nMsgLen /* = 0 */)
 {
     ModulePlugin_IsErrorOccur = FALSE;
 
@@ -156,14 +156,14 @@ BOOL CModulePlugin_Core::ModulePlugin_Core_Exec(XNETHANDLE xhModule, TCHAR*** pp
     return TRUE;
 }
 /********************************************************************
-函数名称：ModulePlugin_Core_Destroy
+函数名称：ModulePlugin_LibCore_Destroy
 函数功能：销毁插件核心并且清理资源
 返回值
   类型：逻辑型
   意思：是否成功销毁
 备注：
 *********************************************************************/
-BOOL CModulePlugin_Core::ModulePlugin_Core_Destroy()
+BOOL CModulePlugin_LibCore::ModulePlugin_LibCore_Destroy()
 {
     ModulePlugin_IsErrorOccur = FALSE;
 
@@ -193,7 +193,7 @@ BOOL CModulePlugin_Core::ModulePlugin_Core_Destroy()
 //                       保护函数
 //////////////////////////////////////////////////////////////////////////
 /********************************************************************
-函数名称：ModulePlugin_Core_Add
+函数名称：ModulePlugin_LibCore_Add
 函数功能：添加一个指定模块到插件核心系统当中
  参数.一：xhNet
   In/Out：In
@@ -215,7 +215,7 @@ BOOL CModulePlugin_Core::ModulePlugin_Core_Destroy()
   意思：是否成功执行
 备注：
 *********************************************************************/
-BOOL CModulePlugin_Core::ModulePlugin_Core_Add(XNETHANDLE xhNet, LPCTSTR lpszPluginFile, LPVOID lParam)
+BOOL CModulePlugin_LibCore::ModulePlugin_LibCore_Add(XNETHANDLE xhNet, LPCTSTR lpszPluginFile, LPVOID lParam)
 {
     ModulePlugin_IsErrorOccur = FALSE;
 

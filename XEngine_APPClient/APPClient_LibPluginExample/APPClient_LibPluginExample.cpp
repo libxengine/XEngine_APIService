@@ -18,8 +18,8 @@
 
 //需要优先配置XEngine
 //WINDOWS支持VS2022 x64 debug 编译调试
-//linux::g++ -std=c++17 -Wall -g APPClient_PluginExample.cpp -o APPClient_PluginExample.exe -L /usr/local/lib/XEngine_Release/XEngine_BaseLib -L /usr/local/lib/XEngine_Release/XEngine_NetHelp -lXEngine_BaseLib -lNetHelp_APIHelp
-//macos::g++ -std=c++17 -Wall -g APPClient_PluginExample.cpp -o APPClient_PluginExample.exe -lXEngine_BaseLib -lNetHelp_APIHelp
+//linux::g++ -std=c++17 -Wall -g APPClient_LibPluginExample.cpp -o APPClient_LibPluginExample.exe -L /usr/local/lib/XEngine_Release/XEngine_BaseLib -L /usr/local/lib/XEngine_Release/XEngine_NetHelp -lXEngine_BaseLib -lNetHelp_APIHelp
+//macos::g++ -std=c++17 -Wall -g APPClient_LibPluginExample.cpp -o APPClient_LibPluginExample.exe -lXEngine_BaseLib -lNetHelp_APIHelp
 
 int main()
 {
