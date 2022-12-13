@@ -3,6 +3,7 @@ SHAREFLAG = -shared
 SHAREDLL = so
 RELEASE = 0
 UNICODE = 0
+FILECENTOS=/etc/redhat-release
 INCLUDE = -I ./ 
 LOADBIN = -L /usr/local/lib/XEngine_Release/XEngine_BaseLib
 LIB = -lXEngine_BaseLib -llua5.3
@@ -27,10 +28,10 @@ FLAGS = -c
 DEBUG = -g 
 endif
 
-ifeq ($(UNICODE),1)
-UNICODE = -D _UNICODE
+ifeq ($(FILECENTOS), $(wildcard $(FILECENTOS)))
+	UNICODE = -D _CENTOS
 else
-UNICODE = 
+	UNICODE = -D _UBUNTU
 endif
 
 

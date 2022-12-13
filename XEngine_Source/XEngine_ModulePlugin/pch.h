@@ -14,9 +14,20 @@
 #include <lua.hpp>
 #else
 #include <dlfcn.h>
+
+#ifdef __linux__
+#ifdef _CENTOS
+#include <lua/lua.hpp>
+#else
 #include <lua5.3/lua.hpp>
 #endif
+#else
+#include <lua/lua.hpp>
+#endif
+#endif
+
 #endif //PCH_H
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
