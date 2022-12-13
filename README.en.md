@@ -43,6 +43,7 @@ Support privatization deployment, free, safe, open source, controllable
 23. short url creator
 24. local system time
 25. math Calculation
+26. log service(plan)
 
 ## install
 
