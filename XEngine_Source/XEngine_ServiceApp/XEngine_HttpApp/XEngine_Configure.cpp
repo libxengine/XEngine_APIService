@@ -13,7 +13,6 @@
 BOOL XEngine_Configure_Parament(int argc, char** argv, XENGINE_SERVICECONFIG* pSt_Configure)
 {
 	LPCTSTR lpszConfigFile = _T("./XEngine_Config/XEngine_Config.json");
-	LPCTSTR lpszOPtionFile = _T("./XEngine_Config/XEngine_OPtionConfig.json");
 
 	if (!ModuleConfigure_Json_File(lpszConfigFile, pSt_Configure))
 	{
