@@ -22,7 +22,6 @@ XENGINE_SERVICECONFIG st_ServiceConfig;
 XENGINE_OPENCCCONFIG st_OPenccConfig;
 XENGINE_PLUGINCONFIG st_PluginLibConfig;
 XENGINE_PLUGINCONFIG st_PluginLuaConfig;
-XENGINE_OPTIONLIST st_OPtionList;
 
 void ServiceApp_Stop(int signo)
 {
@@ -314,7 +313,7 @@ int main(int argc, char** argv)
 		}
 	}
 	//展示能力
-	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _T("启动服务中,加载的基本查询服务:%d 个,Lib插件:%d 个,Lua插件:%d 个"), st_OPtionList.stl_ListBase.size(), st_PluginLibConfig.pStl_ListPlugin->size(), st_PluginLuaConfig.pStl_ListPlugin->size());
+	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _T("启动服务中,加载的Lib插件:%d 个,Lua插件:%d 个"), st_PluginLibConfig.pStl_ListPlugin->size(), st_PluginLuaConfig.pStl_ListPlugin->size());
 
 	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _T("所有服务成功启动，服务运行中，XEngine版本:%s,发行版本次数:%d,当前版本：%s。。。"), BaseLib_OperatorVer_XGetStr(), st_ServiceConfig.st_XVer.pStl_ListVer->size(), st_ServiceConfig.st_XVer.pStl_ListVer->front().c_str());
 	while (TRUE)

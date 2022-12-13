@@ -19,11 +19,6 @@ BOOL XEngine_Configure_Parament(int argc, char** argv, XENGINE_SERVICECONFIG* pS
 	{
 		printf("解析配置文件失败,ModuleConfigure_Json_File:%lX\n", ModuleConfigure_GetLastError());
 		return FALSE;
-	}	
-	if (!ModuleConfigure_File_OPtion(lpszOPtionFile, &st_OPtionList))
-	{
-		printf("解析配置文件失败,ModuleConfigure_File_OPtion:%lX\n", ModuleConfigure_GetLastError());
-		return FALSE;
 	}
 
 	for (int i = 0; i < argc; i++)
