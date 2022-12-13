@@ -33,6 +33,7 @@
         "tszPluginLua":"./XEngine_Config/XEngine_PluginLua.json"
     },
     "XVer":[
+        "2.6.1.1001 Build20221213",
         "2.6.0.1001 Build20221212",
         "2.5.0.1001 Build20221102",
         "2.4.0.1001 Build20220902",

@@ -13,16 +13,10 @@
 BOOL XEngine_Configure_Parament(int argc, char** argv, XENGINE_SERVICECONFIG* pSt_Configure)
 {
 	LPCTSTR lpszConfigFile = _T("./XEngine_Config/XEngine_Config.json");
-	LPCTSTR lpszOPtionFile = _T("./XEngine_Config/XEngine_OPtionConfig.json");
 
 	if (!ModuleConfigure_Json_File(lpszConfigFile, pSt_Configure))
 	{
 		printf("解析配置文件失败,ModuleConfigure_Json_File:%lX\n", ModuleConfigure_GetLastError());
-		return FALSE;
-	}	
-	if (!ModuleConfigure_File_OPtion(lpszOPtionFile, &st_OPtionList))
-	{
-		printf("解析配置文件失败,ModuleConfigure_File_OPtion:%lX\n", ModuleConfigure_GetLastError());
 		return FALSE;
 	}
 

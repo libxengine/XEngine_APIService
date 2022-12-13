@@ -46,7 +46,7 @@ pch.o:./pch.cpp
 
 InstallAll:InstallSo 
 InstallSo:./libModulePlugin_Zodiac.$(SHAREDLL)
-	cp ./libModulePlugin_Zodiac.$(SHAREDLL) ../../../XEngine_Release/XEngine_Plugin/libModulePlugin_Zodiac.$(SHAREDLL)
+	cp ./libModulePlugin_Zodiac.$(SHAREDLL) ../../../XEngine_Release/XEngine_LibPlugin/libModulePlugin_Zodiac.$(SHAREDLL)
 
 CleanAll:CleanObj CleanMk
 CleanObj:                                               

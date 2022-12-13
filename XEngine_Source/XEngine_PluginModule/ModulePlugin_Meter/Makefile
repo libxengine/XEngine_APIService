@@ -46,7 +46,7 @@ pch.o:./pch.cpp
 
 InstallAll:InstallSo 
 InstallSo:./libModulePlugin_Meter.$(SHAREDLL)
-	cp ./libModulePlugin_Meter.$(SHAREDLL) ../../../XEngine_Release/XEngine_Plugin/libModulePlugin_Meter.$(SHAREDLL)
+	cp ./libModulePlugin_Meter.$(SHAREDLL) ../../../XEngine_Release/XEngine_LibPlugin/libModulePlugin_Meter.$(SHAREDLL)
 
 CleanAll:CleanObj CleanMk
 CleanObj:                                               

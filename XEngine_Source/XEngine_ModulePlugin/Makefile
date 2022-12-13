@@ -3,12 +3,13 @@ SHAREFLAG = -shared
 SHAREDLL = so
 RELEASE = 0
 UNICODE = 0
+FILECENTOS=/etc/redhat-release
 INCLUDE = -I ./ 
 LOADBIN = -L /usr/local/lib/XEngine_Release/XEngine_BaseLib
-LIB = -lXEngine_BaseLib
+LIB = -lXEngine_BaseLib -llua5.3
 LIBEX = -ldl -lpthread
 LOADSO = -Wl,-rpath=./,--disable-new-dtags
-LIBINCLUDE = ModulePlugin_Core.o ModulePlugin_Loader.o pch.o
+LIBINCLUDE = ModulePlugin_LibCore.o ModulePlugin_LuaCore.o ModulePlugin_Loader.o pch.o
 
 ifeq ($(shell uname),Darwin)
 	SHAREDLL = dylib
@@ -27,18 +28,20 @@ FLAGS = -c
 DEBUG = -g 
 endif
 
-ifeq ($(UNICODE),1)
-UNICODE = -D _UNICODE
+ifeq ($(FILECENTOS), $(wildcard $(FILECENTOS)))
+	UNICODE = -D _CENTOS
 else
-UNICODE = 
+	UNICODE = -D _UBUNTU
 endif
 
 
 all:$(LIBINCLUDE)
 	$(CC) $(DEBUG) $(LIBINCLUDE) -o libXEngine_ModulePlugin.$(SHAREDLL) $(SHAREFLAG) -fPIC $(LOADBIN) $(LIB) $(LIBEX) $(LOADSO)
 
-ModulePlugin_Core.o:./ModulePlugin_Core/ModulePlugin_Core.cpp             
-	$(CC) $(DEBUG) $(FLAGS) $(UNICODE) $(INCLUDE) ./ModulePlugin_Core/ModulePlugin_Core.cpp 
+ModulePlugin_LibCore.o:./ModulePlugin_LibCore/ModulePlugin_LibCore.cpp             
+	$(CC) $(DEBUG) $(FLAGS) $(UNICODE) $(INCLUDE) ./ModulePlugin_LibCore/ModulePlugin_LibCore.cpp
+ModulePlugin_LuaCore.o:./ModulePlugin_LuaCore/ModulePlugin_LuaCore.cpp             
+	$(CC) $(DEBUG) $(FLAGS) $(UNICODE) $(INCLUDE) ./ModulePlugin_LuaCore/ModulePlugin_LuaCore.cpp
 ModulePlugin_Loader.o:./ModulePlugin_Loader/ModulePlugin_Loader.cpp             
 	$(CC) $(DEBUG) $(FLAGS) $(UNICODE) $(INCLUDE) ./ModulePlugin_Loader/ModulePlugin_Loader.cpp 
 

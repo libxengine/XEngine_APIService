@@ -317,7 +317,7 @@ BOOL CModuleConfigure_Json::ModuleConfigure_Json_PluginFile(LPCTSTR lpszConfigFi
 		st_PluginInfo.bEnable = st_JsonArray[i]["PluginEnable"].asBool();
 		_tcscpy(st_PluginInfo.tszPluginFile, st_JsonArray[i]["PluginFile"].asCString());
 
-		if (NULL == _tcsstr(st_PluginInfo.tszPluginFile,_T(".")))
+		if (NULL == _tcsstr(st_PluginInfo.tszPluginFile + 3,_T(".")))
 		{
 #ifdef _MSC_BUILD
 			_tcscat(st_PluginInfo.tszPluginFile, ".dll");

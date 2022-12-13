@@ -1,3 +1,13 @@
+XEngine_APIService V2.6.1.1001
+
+修正:在linux系统下无法加载模块插件的问题
+修正:linux 构建错误
+删除:服务器能力查询相关功能
+
+fixed:cant load lib plugin moudle in linux
+fixed:linux build error
+delete:service option function support
+======================================================================================
 XEngine_APIService V2.6.0.1001
 
 添加:lua插件支持

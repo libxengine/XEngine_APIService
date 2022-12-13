@@ -163,25 +163,3 @@ extern "C" BOOL ModuleConfigure_Json_OPenccFile(LPCTSTR lpszConfigFile, XENGINE_
 备注：
 *********************************************************************/
 extern "C" BOOL ModuleConfigure_Json_PluginFile(LPCTSTR lpszConfigFile, XENGINE_PLUGINCONFIG* pSt_PluginConfig);
-/************************************************************************/
-/*                        其他内容读取                                  */
-/************************************************************************/
-/********************************************************************
-函数名称：ModuleConfigure_File_OPtion
-函数功能：服务器可用方法查询配置文件
- 参数.一：lpszConfigFile
-  In/Out：In
-  类型：常量字符指针
-  可空：N
-  意思：输入要读取的配置文件
- 参数.二：pSt_OPtionList
-  In/Out：Out
-  类型：数据结构指针
-  可空：N
-  意思：输出信息列表
-返回值
-  类型：逻辑型
-  意思：是否成功
-备注：
-*********************************************************************/
-extern "C" BOOL ModuleConfigure_File_OPtion(LPCTSTR lpszConfigFile, XENGINE_OPTIONLIST* pSt_OPtionList);

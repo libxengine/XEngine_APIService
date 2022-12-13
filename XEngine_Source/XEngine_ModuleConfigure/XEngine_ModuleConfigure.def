@@ -6,5 +6,3 @@ EXPORTS
 	ModuleConfigure_Json_File
 	ModuleConfigure_Json_OPenccFile
 	ModuleConfigure_Json_PluginFile
-
-	ModuleConfigure_File_OPtion

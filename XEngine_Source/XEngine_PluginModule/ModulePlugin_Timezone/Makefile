@@ -46,7 +46,7 @@ pch.o:./pch.cpp
 
 InstallAll:InstallSo 
 InstallSo:./libModulePlugin_Timezone.$(SHAREDLL)
-	cp ./libModulePlugin_Timezone.$(SHAREDLL) ../../../XEngine_Release/XEngine_Plugin/libModulePlugin_Timezone.$(SHAREDLL)
+	cp ./libModulePlugin_Timezone.$(SHAREDLL) ../../../XEngine_Release/XEngine_LibPlugin/libModulePlugin_Timezone.$(SHAREDLL)
 
 CleanAll:CleanObj CleanMk
 CleanObj:                                               

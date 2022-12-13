@@ -46,7 +46,7 @@ pch.o:./pch.cpp
 
 InstallAll:InstallSo 
 InstallSo:./libModulePlugin_BMIndex.$(SHAREDLL)
-	cp ./libModulePlugin_BMIndex.$(SHAREDLL) ../../../XEngine_Release/XEngine_Plugin/libModulePlugin_BMIndex.$(SHAREDLL)
+	cp ./libModulePlugin_BMIndex.$(SHAREDLL) ../../../XEngine_Release/XEngine_LibPlugin/libModulePlugin_BMIndex.$(SHAREDLL)
 
 CleanAll:CleanObj CleanMk
 CleanObj:                                               

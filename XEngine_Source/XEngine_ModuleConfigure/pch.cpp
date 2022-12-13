@@ -1,6 +1,5 @@
 ﻿#include "pch.h"
 #include "ModuleConfigure_Json/ModuleConfigure_Json.h"
-#include "ModuleConfigure_File/ModuleConfigure_File.h"
 /********************************************************************
 //    Created:     2021/12/02  16:20:26
 //    File Name:   D:\XEngine_ServiceApp\XEngine_Source\XEngine_ModuleConfigure\pch.cpp
@@ -16,7 +15,6 @@ BOOL Config_IsErrorOccur = FALSE;
 DWORD Config_dwErrorCode = 0;
 //////////////////////////////////////////////////////////////////////
 CModuleConfigure_Json m_ConfigJson;
-CModuleConfigure_File m_ConfigFile;
 //////////////////////////////////////////////////////////////////////
 //                        导出函数定义
 //////////////////////////////////////////////////////////////////////
@@ -42,11 +40,4 @@ extern "C" BOOL ModuleConfigure_Json_OPenccFile(LPCTSTR lpszConfigFile, XENGINE_
 extern "C" BOOL ModuleConfigure_Json_PluginFile(LPCTSTR lpszConfigFile, XENGINE_PLUGINCONFIG * pSt_PluginConfig)
 {
 	return m_ConfigJson.ModuleConfigure_Json_PluginFile(lpszConfigFile, pSt_PluginConfig);
-}
-/************************************************************************/
-/*                        其他内容读取                                  */
-/************************************************************************/
-extern "C" BOOL ModuleConfigure_File_OPtion(LPCTSTR lpszConfigFile, XENGINE_OPTIONLIST * pSt_OPtionList)
-{
-	return m_ConfigFile.ModuleConfigure_File_OPtion(lpszConfigFile, pSt_OPtionList);
 }
