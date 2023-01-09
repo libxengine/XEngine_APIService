@@ -41,7 +41,6 @@ typedef struct
 	{
 		TCHAR tszIPData[MAX_PATH];            //IP数据库地址
 		TCHAR tszIDData[MAX_PATH];            //ID数据库地址
-		TCHAR tszPhoneData[MAX_PATH];         //电话号码数据库地址
 		TCHAR tszBankData[MAX_PATH];          //银行卡数据库地址
 		TCHAR tszZIPCodeData[MAX_PATH];       //邮编数据库地址
 		TCHAR tszBankUrl[MAX_PATH];           //银行卡验证地址
