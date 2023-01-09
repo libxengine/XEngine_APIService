@@ -24,7 +24,7 @@ BOOL XEngine_HTTPTask_BankInfo(LPCTSTR lpszClientAddr, LPCTSTR lpszBankNumber)
 
 	_tcscpy(st_BankInfo.tszBankNumber, lpszBankNumber);
 	_stprintf(tszUrlBuffer, st_ServiceConfig.st_XApi.tszBankUrl, lpszBankNumber);
-	APIHelp_HttpRequest_Custom(_T("GET"), tszUrlBuffer, NULL, NULL, &ptszBodyBuffer, &nBLen);
+	APIClient_Http_Request(_T("GET"), tszUrlBuffer, NULL, NULL, &ptszBodyBuffer, &nBLen);
 	//解析JSON信息
 	if (!ModuleProtocol_Parse_Bank(ptszBodyBuffer, nBLen, &st_BankInfo))
 	{
