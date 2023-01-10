@@ -3,11 +3,6 @@ LIBRARY
 EXPORTS
 	ModuleDB_GetLastError
 
-	ModuleDatabase_IPInfo_Init
-	ModuleDatabase_IPInfo_Destory
-	ModuleDatabase_IPInfo_IPV4Query
-	ModuleDatabase_IPInfo_IPV6Query
-
 	ModuleDatabase_IDCard_Init
 	ModuleDatabase_IDCard_Destory
 	ModuleDatabase_IDCard_QueryRegion

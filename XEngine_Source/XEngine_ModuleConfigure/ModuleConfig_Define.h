@@ -39,7 +39,6 @@ typedef struct
 	}st_XLog;
 	struct  
 	{
-		TCHAR tszIPData[MAX_PATH];            //IP数据库地址
 		TCHAR tszIDData[MAX_PATH];            //ID数据库地址
 		TCHAR tszBankData[MAX_PATH];          //银行卡数据库地址
 		TCHAR tszZIPCodeData[MAX_PATH];       //邮编数据库地址

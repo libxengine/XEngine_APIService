@@ -4,7 +4,6 @@ EXPORTS
 	ModuleProtocol_GetLastError
 
 	ModuleProtocol_Packet_Common
-	ModuleProtocol_Packet_IPQuery
 	ModuleProtocol_Packet_IDQuery
 	ModuleProtocol_Packet_BankQuery
 	ModuleProtocol_Packet_LanguageQuery

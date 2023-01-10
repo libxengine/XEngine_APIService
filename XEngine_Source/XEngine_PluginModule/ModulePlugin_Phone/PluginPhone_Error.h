@@ -1,13 +1,13 @@
 ﻿#pragma once
 /********************************************************************
-//    Created:     2022/04/21  15:43:46
-//    File Name:   D:\XEngine_APIService\XEngine_Source\XEngine_PluginModule\ModulePlugin_Password\PluginPass_Error.h
-//    File Path:   D:\XEngine_APIService\XEngine_Source\XEngine_PluginModule\ModulePlugin_Password
-//    File Base:   PluginPass_Error
+//    Created:     2023/01/10  11:39:26
+//    File Name:   D:\XEngine_APIService\XEngine_Source\XEngine_PluginModule\ModulePlugin_Phone\PluginPhone_Error.h
+//    File Path:   D:\XEngine_APIService\XEngine_Source\XEngine_PluginModule\ModulePlugin_Phone
+//    File Base:   PluginPhone_Error
 //    File Ext:    h
-//    Project:     XEngine(网络通信引擎)
+//    Project:     XEngine
 //    Author:      qyt
-//    Purpose:     密码生成导出错误
+//    Purpose:     电话号码错误导出
 //    History:
 *********************************************************************/
 //////////////////////////////////////////////////////////////////////////

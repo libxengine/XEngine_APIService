@@ -92,20 +92,6 @@ typedef enum
 ///////////////////////////////////////////////////////////////////////////
 #pragma pack(push)
 #pragma pack(1)
-//IP地址信息
-typedef struct  
-{
-	TCHAR tszIPStart[128];
-	TCHAR tszIPEnd[128];
-	TCHAR tszIPAddr[128];       //IP地址
-	TCHAR tszIPCountry[128];    //国家/地区
-	TCHAR tszIPProvince[128];   //省/自治区
-	TCHAR tszIPCity[128];       //市
-	TCHAR tszIPCounty[128];     //县
-	TCHAR tszIPAddress[128];    //详细地址
-	TCHAR tszIPISP[128];        //运营商
-	TCHAR tszIPTime[128];       //数据库日期
-}XENGINE_IPADDRINFO;
 //身份证校验
 typedef struct  
 {

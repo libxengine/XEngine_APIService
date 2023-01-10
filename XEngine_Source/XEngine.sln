@@ -40,6 +40,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libModulePlugin_Meter", "XE
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libModulePlugin_Phone", "XEngine_PluginModule\ModulePlugin_Phone\ModulePlugin_Phone.vcxproj", "{8FBC495D-C05E-49A4-B938-A81C9DFC1E5A}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ModulePlugin_IPAddr", "XEngine_PluginModule\ModulePlugin_IPAddr\ModulePlugin_IPAddr.vcxproj", "{D549160C-CC16-47F8-8345-1F4CF7A25CA2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -152,6 +154,14 @@ Global
 		{8FBC495D-C05E-49A4-B938-A81C9DFC1E5A}.Release|x64.Build.0 = Release|x64
 		{8FBC495D-C05E-49A4-B938-A81C9DFC1E5A}.Release|x86.ActiveCfg = Release|Win32
 		{8FBC495D-C05E-49A4-B938-A81C9DFC1E5A}.Release|x86.Build.0 = Release|Win32
+		{D549160C-CC16-47F8-8345-1F4CF7A25CA2}.Debug|x64.ActiveCfg = Debug|x64
+		{D549160C-CC16-47F8-8345-1F4CF7A25CA2}.Debug|x64.Build.0 = Debug|x64
+		{D549160C-CC16-47F8-8345-1F4CF7A25CA2}.Debug|x86.ActiveCfg = Debug|Win32
+		{D549160C-CC16-47F8-8345-1F4CF7A25CA2}.Debug|x86.Build.0 = Debug|Win32
+		{D549160C-CC16-47F8-8345-1F4CF7A25CA2}.Release|x64.ActiveCfg = Release|x64
+		{D549160C-CC16-47F8-8345-1F4CF7A25CA2}.Release|x64.Build.0 = Release|x64
+		{D549160C-CC16-47F8-8345-1F4CF7A25CA2}.Release|x86.ActiveCfg = Release|Win32
+		{D549160C-CC16-47F8-8345-1F4CF7A25CA2}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -165,6 +175,7 @@ Global
 		{BBC4B2B4-1143-45DF-8890-47CE26A61D0E} = {D0473C03-9464-4C44-818A-AE212680CD05}
 		{6F111577-DAF8-4294-B516-0077C22D7613} = {D0473C03-9464-4C44-818A-AE212680CD05}
 		{8FBC495D-C05E-49A4-B938-A81C9DFC1E5A} = {D0473C03-9464-4C44-818A-AE212680CD05}
+		{D549160C-CC16-47F8-8345-1F4CF7A25CA2} = {D0473C03-9464-4C44-818A-AE212680CD05}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {9B202F91-A601-429E-BB0F-880DDEE096FE}

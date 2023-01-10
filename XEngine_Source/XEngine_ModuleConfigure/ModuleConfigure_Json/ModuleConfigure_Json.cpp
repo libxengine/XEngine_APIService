@@ -119,14 +119,13 @@ BOOL CModuleConfigure_Json::ModuleConfigure_Json_File(LPCTSTR lpszConfigFile, XE
 	pSt_ServerConfig->st_XLog.nMaxCount = st_JsonXLog["MaxCount"].asInt();
 	pSt_ServerConfig->st_XLog.nLogLeave = st_JsonXLog["LogLeave"].asInt();
 
-	if (st_JsonRoot["XApi"].empty() || (6 != st_JsonRoot["XApi"].size()))
+	if (st_JsonRoot["XApi"].empty() || (5 != st_JsonRoot["XApi"].size()))
 	{
 		Config_IsErrorOccur = TRUE;
 		Config_dwErrorCode = ERROR_MODULE_CONFIGURE_JSON_XDB;
 		return FALSE;
 	}
 	Json::Value st_JsonXApi = st_JsonRoot["XApi"];
-	_tcscpy(pSt_ServerConfig->st_XApi.tszIPData, st_JsonXApi["tszIPData"].asCString());
 	_tcscpy(pSt_ServerConfig->st_XApi.tszIDData, st_JsonXApi["tszIDData"].asCString());
 	_tcscpy(pSt_ServerConfig->st_XApi.tszBankData, st_JsonXApi["tszBankData"].asCString());
 	_tcscpy(pSt_ServerConfig->st_XApi.tszZIPCodeData, st_JsonXApi["tszZIPCodeData"].asCString());

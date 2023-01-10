@@ -35,7 +35,6 @@ void ServiceApp_Stop(int signo)
 		RfcComponents_HttpServer_DestroyEx(xhHTTPPacket);
 		ManagePool_Thread_NQDestroy(xhHTTPPool);
 		//销毁数据库
-		ModuleDatabase_IPInfo_Destory();
 		ModuleDatabase_IDCard_Destory();
 		ModuleDatabase_Bank_Destory();
 		ModuleDatabase_ZIPCode_Destory();
@@ -158,12 +157,6 @@ int main(int argc, char** argv)
 		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_WARN, _T("启动服务中,插件系统被禁用"));
 	}
 	//初始化数据库
-	if (!ModuleDatabase_IPInfo_Init(st_ServiceConfig.st_XApi.tszIPData))
-	{
-		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _T("启动服务中,初始化IP数据库失败,错误：%lX"), ModuleDB_GetLastError());
-		goto XENGINE_SERVICEAPP_EXIT;
-	}
-	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _T("启动服务中,初始化IP数据库成功,地址:%s"), st_ServiceConfig.st_XApi.tszIPData);
 	if (!ModuleDatabase_IDCard_Init(st_ServiceConfig.st_XApi.tszIDData))
 	{
 		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _T("启动服务中,初始化ID数据库失败,错误：%lX"), ModuleDB_GetLastError());
@@ -325,7 +318,6 @@ XENGINE_SERVICEAPP_EXIT:
 		RfcComponents_HttpServer_DestroyEx(xhHTTPPacket);
 		ManagePool_Thread_NQDestroy(xhHTTPPool);
 		//销毁数据库
-		ModuleDatabase_IPInfo_Destory();
 		ModuleDatabase_IDCard_Destory();
 		ModuleDatabase_Bank_Destory();
 		ModuleDatabase_ZIPCode_Destory();

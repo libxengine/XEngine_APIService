@@ -1,6 +1,5 @@
 ﻿#include "pch.h"
 #include "ModuleDatabase_IDCard/ModuleDatabase_IDCard.h"
-#include "ModuleDatabase_IPInfo/ModuleDatabase_IPInfo.h"
 #include "ModuleDatabase_Bank/ModuleDatabase_Bank.h"
 #include "ModuleDatabase_ZIPCode/ModuleDatabase_ZIPCode.h"
 /********************************************************************
@@ -17,7 +16,6 @@
 DWORD DBModule_IsErrorOccur = FALSE;
 BOOL DBModule_dwErrorCode = 0;
 //////////////////////////////////////////////////////////////////////////
-CModuleDatabase_IPInfo m_IPAddr;
 CModuleDatabase_IDCard m_IDCard;
 CModuleDatabase_Bank m_Bank;
 CModuleDatabase_ZIPCode m_ZIPCode;
@@ -31,25 +29,6 @@ extern "C" DWORD ModuleDB_GetLastError(int* pInt_SysError)
 		*pInt_SysError = errno;
 	}
 	return DBModule_dwErrorCode;
-}
-/************************************************************************/
-/*                         导出的IP地址操作函数                         */
-/************************************************************************/
-extern "C" BOOL ModuleDatabase_IPInfo_Init(LPCTSTR lpszSQLFile)
-{
-	return m_IPAddr.ModuleDatabase_IPInfo_Init(lpszSQLFile);
-}
-extern "C" BOOL ModuleDatabase_IPInfo_Destory()
-{
-	return m_IPAddr.ModuleDatabase_IPInfo_Destory();
-}
-extern "C" BOOL ModuleDatabase_IPInfo_IPV4Query(XENGINE_IPADDRINFO * pSt_IPAddrInfo, LPCTSTR lpszIPAddr)
-{
-	return m_IPAddr.ModuleDatabase_IPInfo_IPV4Query(pSt_IPAddrInfo, lpszIPAddr);
-}
-extern "C" BOOL ModuleDatabase_IPInfo_IPV6Query(XENGINE_IPADDRINFO * pSt_IPAddrInfo, LPCTSTR lpszIPAddr)
-{
-	return m_IPAddr.ModuleDatabase_IPInfo_IPV6Query(pSt_IPAddrInfo, lpszIPAddr);
 }
 /************************************************************************/
 /*                         导出的身份证地址操作函数                     */

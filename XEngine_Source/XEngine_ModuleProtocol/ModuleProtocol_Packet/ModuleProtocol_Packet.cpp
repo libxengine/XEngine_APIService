@@ -71,83 +71,6 @@ BOOL CModuleProtocol_Packet::ModuleProtocol_Packet_Common(TCHAR* ptszMsgBuffer, 
 	return TRUE;
 }
 /********************************************************************
-函数名称：ModuleProtocol_Packet_IPQuery
-函数功能：IP地址查询打包协议
- 参数.一：ptszMsgBuffer
-  In/Out：Out
-  类型：字符指针
-  可空：N
-  意思：输出打包的数据信息
- 参数.二：pInt_MsgLen
-  In/Out：Out
-  类型：整数型指针
-  可空：N
-  意思：输出打包大小
- 参数.三：pSt_IPAddrInfo
-  In/Out：In
-  类型：数据结构指针
-  可空：N
-  意思：输入要操作的IP地址信息
- 参数.四：nCode
-  In/Out：In
-  类型：整数型
-  可空：Y
-  意思：输入返回的值
- 参数.五：lpszMsgBuffer
-  In/Out：In
-  类型：常量字符指针
-  可空：Y
-  意思：输入操作结果
-返回值
-  类型：逻辑型
-  意思：是否成功
-备注：
-*********************************************************************/
-BOOL CModuleProtocol_Packet::ModuleProtocol_Packet_IPQuery(TCHAR* ptszMsgBuffer, int* pInt_MsgLen, XENGINE_IPADDRINFO* pSt_IPAddrInfo, int nCode /* = 0 */, LPCTSTR lpszMsgBuffer /* = NULL */)
-{
-	ModuleProtocol_IsErrorOccur = FALSE;
-
-	if ((NULL == ptszMsgBuffer) || (NULL == pInt_MsgLen) || (NULL == pSt_IPAddrInfo))
-	{
-		ModuleProtocol_IsErrorOccur = TRUE;
-		ModuleProtocol_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PROTOCOL_PACKET_PARAMENT;
-		return FALSE;
-	}
-	Json::Value st_JsonRoot;
-	Json::Value st_JsonObject;
-	Json::StreamWriterBuilder st_JsonBuilder;
-
-	if (0 == nCode)
-	{
-		st_JsonObject["tszIPAddr"] = pSt_IPAddrInfo->tszIPAddr;
-		st_JsonObject["tszIPStart"] = pSt_IPAddrInfo->tszIPStart;
-		st_JsonObject["tszIPEnd"] = pSt_IPAddrInfo->tszIPEnd;
-		st_JsonObject["tszIPCountry"] = pSt_IPAddrInfo->tszIPCountry;
-		st_JsonObject["tszIPProvince"] = pSt_IPAddrInfo->tszIPProvince;
-		st_JsonObject["tszIPCity"] = pSt_IPAddrInfo->tszIPCity;
-		st_JsonObject["tszIPCounty"] = pSt_IPAddrInfo->tszIPCounty;
-		st_JsonObject["tszIPAddress"] = pSt_IPAddrInfo->tszIPAddress;
-		st_JsonObject["tszIPISP"] = pSt_IPAddrInfo->tszIPISP;
-		st_JsonObject["tszIPTime"] = pSt_IPAddrInfo->tszIPTime;
-	}
-
-	st_JsonRoot["code"] = nCode;
-	if (NULL == lpszMsgBuffer)
-	{
-		st_JsonRoot["msg"] = "success";
-	}
-	else
-	{
-		st_JsonRoot["msg"] = lpszMsgBuffer;
-	}
-	st_JsonRoot["data"] = st_JsonObject;
-	st_JsonBuilder["emitUTF8"] = true;
-
-	*pInt_MsgLen = Json::writeString(st_JsonBuilder, st_JsonRoot).length();
-	memcpy(ptszMsgBuffer, Json::writeString(st_JsonBuilder, st_JsonRoot).c_str(), *pInt_MsgLen);
-	return TRUE;
-}
-/********************************************************************
 函数名称：ModuleProtocol_Packet_IDQuery
 函数功能：ID查询打包为JSON的封包函数
  参数.一：ptszMsgBuffer
@@ -679,17 +602,12 @@ BOOL CModuleProtocol_Packet::ModuleProtocol_Packet_P2PWLan(TCHAR* ptszMsgBuffer,
   类型：数据结构指针
   可空：N
   意思：输入获取到的用户信息
- 参数.四：pSt_AddrInfo
-  In/Out：In
-  类型：数据结构指针
-  可空：N
-  意思：IP地址信息
 返回值
   类型：逻辑型
   意思：是否成功
 备注：
 *********************************************************************/
-BOOL CModuleProtocol_Packet::ModuleProtocol_Packet_P2PUser(TCHAR* ptszMsgBuffer, int* pInt_MsgLen, XENGINE_P2XPPEER_PROTOCOL* pSt_PeerInfo, XENGINE_IPADDRINFO* pSt_AddrInfo)
+BOOL CModuleProtocol_Packet::ModuleProtocol_Packet_P2PUser(TCHAR* ptszMsgBuffer, int* pInt_MsgLen, XENGINE_P2XPPEER_PROTOCOL* pSt_PeerInfo)
 {
 	ModuleProtocol_IsErrorOccur = FALSE;
 
@@ -711,14 +629,6 @@ BOOL CModuleProtocol_Packet::ModuleProtocol_Packet_P2PUser(TCHAR* ptszMsgBuffer,
 	st_JsonRoot["tszPrivateAddr"] = pSt_PeerInfo->tszPrivateAddr;
 	st_JsonRoot["tszPublicAddr"] = pSt_PeerInfo->tszPublicAddr;
 	st_JsonRoot["tszUserName"] = pSt_PeerInfo->tszUserName;
-
-	st_JsonAddr["tszIPCountry"] = pSt_AddrInfo->tszIPCountry;
-	st_JsonAddr["tszIPProvince"] = pSt_AddrInfo->tszIPProvince;
-	st_JsonAddr["tszIPCity"] = pSt_AddrInfo->tszIPCity;
-	st_JsonAddr["tszIPCounty"] = pSt_AddrInfo->tszIPCounty;
-	st_JsonAddr["tszIPISP"] = pSt_AddrInfo->tszIPISP;
-
-	st_JsonRoot["st_AddrInfo"] = st_JsonAddr;
 
 	st_JsonBuilder["emitUTF8"] = true;
 	*pInt_MsgLen = Json::writeString(st_JsonBuilder, st_JsonRoot).length();

@@ -1,38 +1,26 @@
 ﻿#pragma once
 /********************************************************************
-//    Created:     2023/01/10  11:39:12
-//    File Name:   D:\XEngine_APIService\XEngine_Source\XEngine_PluginModule\ModulePlugin_Phone\PluginPhone_Define.h
-//    File Path:   D:\XEngine_APIService\XEngine_Source\XEngine_PluginModule\ModulePlugin_Phone
-//    File Base:   PluginPhone_Define
+//    Created:     2023/01/10  11:24:55
+//    File Name:   D:\XEngine_APIService\XEngine_Source\XEngine_PluginModule\ModulePlugin_IPAddr\PluginIPAddr_Define.h
+//    File Path:   D:\XEngine_APIService\XEngine_Source\XEngine_PluginModule\ModulePlugin_IPAddr
+//    File Base:   PluginIPAddr_Define
 //    File Ext:    h
 //    Project:     XEngine
 //    Author:      qyt
-//    Purpose:     电话号码查询导出
+//    Purpose:     IP地址操作导出定义
 //    History:
 *********************************************************************/
-//电话号码类型
-typedef enum
-{
-	ENUM_XENGINE_APISERVICE_PHONE_TYPE_UNKNOWN = 0,	    // 未知，查找失败
-	ENUM_XENGINE_APISERVICE_PHONE_TYPE_CMCC,			// 中国移动
-	ENUM_XENGINE_APISERVICE_PHONE_TYPE_CUCC,			// 中国联通
-	ENUM_XENGINE_APISERVICE_PHONE_TYPE_CTCC,			// 中国电信
-	ENUM_XENGINE_APISERVICE_PHONE_TYPE_CTCC_V,			// 电信虚拟运营商
-	ENUM_XENGINE_APISERVICE_PHONE_TYPE_CUCC_V,			// 联通虚拟运营商
-	ENUM_XENGINE_APISERVICE_PHONE_TYPE_CMCC_V			// 移动虚拟运营商
-}ENUM_XENGINE_APISERVICE_PHONE_TYPE;
-//////////////////////////////////////////////////////////////////////////
-//                       导出函数定义
-//////////////////////////////////////////////////////////////////////////
+//IP地址信息
 typedef struct
 {
-	TCHAR tszProvincer[64];     //省/自治区/直辖市
-	TCHAR tszCity[64];          //市/区     
-	__int64x nPhoneNumber;      //电话号码
-	int nZipCode;               //邮编
-	int nAreaCode;              //区号
-	ENUM_XENGINE_APISERVICE_PHONE_TYPE enPhoneType;  //电话号码类型
-}XENGINE_PHONEINFO;
+	TCHAR tszIPAddr[128];       //IP地址
+	TCHAR tszIPCountry[128];    //国家/地区
+	TCHAR tszIPProvince[128];   //省/自治区
+	TCHAR tszIPCity[128];       //市
+	TCHAR tszIPCounty[128];     //县
+	TCHAR tszIPAddress[128];    //详细地址
+	TCHAR tszIPISP[128];        //运营商
+}XENGINE_IPADDRINFO;
 //////////////////////////////////////////////////////////////////////////
 //                       导出函数定义
 //////////////////////////////////////////////////////////////////////////

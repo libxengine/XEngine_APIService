@@ -58,7 +58,6 @@ using namespace std;
 #include "XEngine_Network.h"
 #include "XEngine_HTTPTask.h"
 #include "XEngine_PluginTask.h"
-#include "XEngine_HTTPTask/HTTPTask_IPInfo.h"
 #include "XEngine_HTTPTask/HTTPTask_IDCard.h"
 #include "XEngine_HTTPTask/HTTPTask_Bank.h"
 #include "XEngine_HTTPTask/HTTPTask_Language.h"
