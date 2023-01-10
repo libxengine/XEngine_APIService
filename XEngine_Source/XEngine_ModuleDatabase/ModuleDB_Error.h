@@ -21,12 +21,6 @@
 #define ERROR_APISERVICE_MODULE_DATABASE_IDCARD_PARAMENT 0xB1001           //初始化失败.参数错误
 #define ERROR_APISERVICE_MODULE_DATABASE_IDCARD_NOTFOUND 0xB1002           //没有找到
 //////////////////////////////////////////////////////////////////////////
-//                        导出的电话数据库错误
-//////////////////////////////////////////////////////////////////////////
-#define ERROR_APISERVICE_MODULE_DATABASE_PHONE_PARAMENT 0xB2001           //初始化失败.参数错误
-#define ERROR_APISERVICE_MODULE_DATABASE_PHONE_MALLOC 0xB2002             //申请内存失败
-#define ERROR_APISERVICE_MODULE_DATABASE_PHONE_NOTFOUND 0xB1002           //没有找到
-//////////////////////////////////////////////////////////////////////////
 //                        导出的银行卡数据库错误
 //////////////////////////////////////////////////////////////////////////
 #define ERROR_APISERVICE_MODULE_DATABASE_BANK_PARAMENT 0xB2001            //参数错误

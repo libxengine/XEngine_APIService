@@ -91,7 +91,6 @@ BOOL XEngine_HTTPTask_Handle(RFCCOMPONENTS_HTTP_REQPARAM* pSt_HTTPParam, LPCTSTR
 	LPCTSTR lpszParamOPtions = _T("options");
 	LPCTSTR lpszParamIPAddr = _T("ip");
 	LPCTSTR lpszParamIDCard = _T("id");
-	LPCTSTR lpszParamPhone = _T("phone");
 	LPCTSTR lpszParamBank = _T("bank");
 	LPCTSTR lpszParamLanguage = _T("language");
 	LPCTSTR lpszParamTranslation = _T("translation");
@@ -236,23 +235,6 @@ BOOL XEngine_HTTPTask_Handle(RFCCOMPONENTS_HTTP_REQPARAM* pSt_HTTPParam, LPCTSTR
 				return FALSE;
 			}
 			XEngine_HTTPTask_IDCard(lpszClientAddr, tszValue);
-		}
-		else if (0 == _tcsnicmp(lpszParamPhone, tszValue, _tcslen(lpszParamPhone)))
-		{
-			//是不是电话号码查询
-			memset(tszKey, '\0', sizeof(tszKey));
-			memset(tszValue, '\0', sizeof(tszValue));
-			BaseLib_OperatorString_GetKeyValue(pptszList[1], "=", tszKey, tszValue);
-			if (0 != _tcsnicmp(lpszParamName, tszKey, _tcslen(lpszParamName)))
-			{
-				st_HDRParam.nHttpCode = 404;
-				RfcComponents_HttpServer_SendMsgEx(xhHTTPPacket, tszMsgBuffer, &nMsgLen, &st_HDRParam);
-				XEngine_Network_Send(lpszClientAddr, tszMsgBuffer, nMsgLen);
-				BaseLib_OperatorMemory_Free((XPPPMEM)&pptszList, nListCount);
-				XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _T("HTTP客户端:%s,发送的URL请求参数不正确:%s"), lpszClientAddr, pSt_HTTPParam->tszHttpUri);
-				return FALSE;
-			}
-			XEngine_HTTPTask_PhoneInfo(lpszClientAddr, tszValue);
 		}
 		else if (0 == _tcsnicmp(lpszParamBank, tszValue, _tcslen(lpszParamBank)))
 		{

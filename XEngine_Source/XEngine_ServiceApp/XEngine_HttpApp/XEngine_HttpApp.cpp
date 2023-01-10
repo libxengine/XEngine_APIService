@@ -37,7 +37,6 @@ void ServiceApp_Stop(int signo)
 		//销毁数据库
 		ModuleDatabase_IPInfo_Destory();
 		ModuleDatabase_IDCard_Destory();
-		ModuleDatabase_Phone_Destory();
 		ModuleDatabase_Bank_Destory();
 		ModuleDatabase_ZIPCode_Destory();
 		//销毁其他
@@ -171,12 +170,6 @@ int main(int argc, char** argv)
 		goto XENGINE_SERVICEAPP_EXIT;
 	}
 	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _T("启动服务中,初始化ID数据库成功,地址:%s"), st_ServiceConfig.st_XApi.tszIDData);
-	if (!ModuleDatabase_Phone_Init(st_ServiceConfig.st_XApi.tszPhoneData))
-	{
-		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _T("启动服务中,初始化电话数据库失败,错误：%lX"), ModuleDB_GetLastError());
-		goto XENGINE_SERVICEAPP_EXIT;
-	}
-	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _T("启动服务中,初始化电话数据库成功,地址:%s"), st_ServiceConfig.st_XApi.tszPhoneData);
 	if (!ModuleDatabase_Bank_Init(st_ServiceConfig.st_XApi.tszBankData))
 	{
 		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _T("启动服务中,初始化银行卡数据库失败,错误：%lX"), ModuleDB_GetLastError());
@@ -334,7 +327,6 @@ XENGINE_SERVICEAPP_EXIT:
 		//销毁数据库
 		ModuleDatabase_IPInfo_Destory();
 		ModuleDatabase_IDCard_Destory();
-		ModuleDatabase_Phone_Destory();
 		ModuleDatabase_Bank_Destory();
 		ModuleDatabase_ZIPCode_Destory();
 		//销毁其他

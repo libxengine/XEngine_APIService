@@ -1,7 +1,6 @@
 ﻿#include "pch.h"
 #include "ModuleDatabase_IDCard/ModuleDatabase_IDCard.h"
 #include "ModuleDatabase_IPInfo/ModuleDatabase_IPInfo.h"
-#include "ModuleDatabase_Phone/ModuleDatabase_Phone.h"
 #include "ModuleDatabase_Bank/ModuleDatabase_Bank.h"
 #include "ModuleDatabase_ZIPCode/ModuleDatabase_ZIPCode.h"
 /********************************************************************
@@ -20,7 +19,6 @@ BOOL DBModule_dwErrorCode = 0;
 //////////////////////////////////////////////////////////////////////////
 CModuleDatabase_IPInfo m_IPAddr;
 CModuleDatabase_IDCard m_IDCard;
-CModuleDatabase_Phone m_Phone;
 CModuleDatabase_Bank m_Bank;
 CModuleDatabase_ZIPCode m_ZIPCode;
 //////////////////////////////////////////////////////////////////////////
@@ -67,21 +65,6 @@ extern "C" BOOL ModuleDatabase_IDCard_Destory()
 extern "C" BOOL ModuleDatabase_IDCard_QueryRegion(XENGINE_IDREGION * pSt_IDRegion, XENGINE_IDCARDINFO * pSt_IDInfo)
 {
 	return m_IDCard.ModuleDatabase_IDCard_QueryRegion(pSt_IDRegion, pSt_IDInfo);
-}
-/************************************************************************/
-/*                         导出的电话号码信息函数                       */
-/************************************************************************/
-extern "C" BOOL ModuleDatabase_Phone_Init(LPCTSTR lpszSQLFile)
-{
-	return m_Phone.ModuleDatabase_Phone_Init(lpszSQLFile);
-}
-extern "C" BOOL ModuleDatabase_Phone_Destory()
-{
-	return m_Phone.ModuleDatabase_Phone_Destory();
-}
-extern "C" BOOL ModuleDatabase_Phone_Query(LPCTSTR lpszPhoneNumber, XENGINE_PHONEINFO * pSt_PhoneInfo)
-{
-	return m_Phone.ModuleDatabase_Phone_Query(lpszPhoneNumber, pSt_PhoneInfo);
 }
 /************************************************************************/
 /*                         导出的银行卡信息函数                         */
