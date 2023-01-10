@@ -34,6 +34,8 @@ using namespace std;
 #include <XEngine_Include/XEngine_HelpComponents/XLog_Error.h>
 #include <XEngine_Include/XEngine_HelpComponents/Authorize_Define.h>
 #include <XEngine_Include/XEngine_HelpComponents/Authorize_Error.h>
+#include <XEngine_Include/XEngine_HelpComponents/DataBase_Define.h>
+#include <XEngine_Include/XEngine_HelpComponents/DataBase_Error.h>
 #include <XEngine_Include/XEngine_RfcComponents/HttpServer_Define.h>
 #include <XEngine_Include/XEngine_RfcComponents/HttpServer_Error.h>
 #include <XEngine_Include/XEngine_NetHelp/APIClient_Define.h>

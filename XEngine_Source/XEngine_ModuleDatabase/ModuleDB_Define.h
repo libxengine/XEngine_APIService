@@ -20,17 +20,17 @@ extern "C" DWORD ModuleDB_GetLastError(int *pInt_SysError = NULL);
 /********************************************************************
 函数名称：ModuleDatabase_IDCard_Init
 函数功能：初始化SQLITE文件系统
- 参数.一：lpszSQLFile
+ 参数.一：pSt_DBConnector
   In/Out：In
-  类型：常量字符指针
+  类型：数据结构指针
   可空：N
-  意思：输入要操作的SQL文件
+  意思：输入要操作的数据库
 返回值
   类型：逻辑型
   意思：是否成功
 备注：
 *********************************************************************/
-extern "C" BOOL ModuleDatabase_IDCard_Init(LPCTSTR lpszSQLFile);
+extern "C" BOOL ModuleDatabase_IDCard_Init(DATABASE_MYSQL_CONNECTINFO * pSt_DBConnector);
 /********************************************************************
 函数名称：ModuleDatabase_IDCard_Destory
 函数功能：销毁
@@ -65,17 +65,17 @@ extern "C" BOOL ModuleDatabase_IDCard_QueryRegion(XENGINE_IDREGION * pSt_IDRegio
 /********************************************************************
 函数名称：ModuleDatabase_Bank_Init
 函数功能：初始化SQLITE文件系统
- 参数.一：lpszSQLFile
+ 参数.一：pSt_DBConnector
   In/Out：In
-  类型：常量字符指针
+  类型：数据结构指针
   可空：N
-  意思：输入要操作的SQL文件
+  意思：输入要操作的数据库
 返回值
   类型：逻辑型
   意思：是否成功
 备注：
 *********************************************************************/
-extern "C" BOOL ModuleDatabase_Bank_Init(LPCTSTR lpszSQLFile);
+extern "C" BOOL ModuleDatabase_Bank_Init(DATABASE_MYSQL_CONNECTINFO * pSt_DBConnector);
 /********************************************************************
 函数名称：ModuleDatabase_Bank_Destory
 函数功能：销毁
@@ -105,17 +105,17 @@ extern "C" BOOL ModuleDatabase_Bank_Query(XENGINE_BANKINFO * pSt_BankInfo);
 /********************************************************************
 函数名称：ModuleDatabase_ZIPCode_Init
 函数功能：初始化数据库
- 参数.一：lpszSQLFile
+ 参数.一：pSt_DBConnector
   In/Out：In
-  类型：常量字符指针
+  类型：数据结构指针
   可空：N
-  意思：输入要操作的SQL文件
+  意思：输入要操作的数据库
 返回值
   类型：逻辑型
   意思：是否成功
 备注：
 *********************************************************************/
-extern "C" BOOL ModuleDatabase_ZIPCode_Init(LPCTSTR lpszSQLFile);
+extern "C" BOOL ModuleDatabase_ZIPCode_Init(DATABASE_MYSQL_CONNECTINFO * pSt_DBConnector);
 /********************************************************************
 函数名称：ModuleDatabase_ZIPCode_Destory
 函数功能：销毁

@@ -33,9 +33,9 @@ extern "C" DWORD ModuleDB_GetLastError(int* pInt_SysError)
 /************************************************************************/
 /*                         导出的身份证地址操作函数                     */
 /************************************************************************/
-extern "C" BOOL ModuleDatabase_IDCard_Init(LPCTSTR lpszSQLFile)
+extern "C" BOOL ModuleDatabase_IDCard_Init(DATABASE_MYSQL_CONNECTINFO * pSt_DBConnector)
 {
-	return m_IDCard.ModuleDatabase_IDCard_Init(lpszSQLFile);
+	return m_IDCard.ModuleDatabase_IDCard_Init(pSt_DBConnector);
 }
 extern "C" BOOL ModuleDatabase_IDCard_Destory()
 {
@@ -48,9 +48,9 @@ extern "C" BOOL ModuleDatabase_IDCard_QueryRegion(XENGINE_IDREGION * pSt_IDRegio
 /************************************************************************/
 /*                         导出的银行卡信息函数                         */
 /************************************************************************/
-extern "C" BOOL ModuleDatabase_Bank_Init(LPCTSTR lpszSQLFile)
+extern "C" BOOL ModuleDatabase_Bank_Init(DATABASE_MYSQL_CONNECTINFO * pSt_DBConnector)
 {
-	return m_Bank.ModuleDatabase_Bank_Init(lpszSQLFile);
+	return m_Bank.ModuleDatabase_Bank_Init(pSt_DBConnector);
 }
 extern "C" BOOL ModuleDatabase_Bank_Destory()
 {
@@ -63,9 +63,9 @@ extern "C" BOOL ModuleDatabase_Bank_Query(XENGINE_BANKINFO * pSt_BankInfo)
 /************************************************************************/
 /*                         导出的邮编行政信息函数                       */
 /************************************************************************/
-extern "C" BOOL ModuleDatabase_ZIPCode_Init(LPCTSTR lpszSQLFile)
+extern "C" BOOL ModuleDatabase_ZIPCode_Init(DATABASE_MYSQL_CONNECTINFO * pSt_DBConnector)
 {
-	return m_ZIPCode.ModuleDatabase_ZIPCode_Init(lpszSQLFile);
+	return m_ZIPCode.ModuleDatabase_ZIPCode_Init(pSt_DBConnector);
 }
 extern "C" BOOL ModuleDatabase_ZIPCode_Destory()
 {

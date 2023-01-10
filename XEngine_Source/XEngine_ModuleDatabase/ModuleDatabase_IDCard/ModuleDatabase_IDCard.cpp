@@ -34,11 +34,24 @@ CModuleDatabase_IDCard::~CModuleDatabase_IDCard()
   意思：是否成功
 备注：
 *********************************************************************/
-BOOL CModuleDatabase_IDCard::ModuleDatabase_IDCard_Init(LPCTSTR lpszSQLFile)
+BOOL CModuleDatabase_IDCard::ModuleDatabase_IDCard_Init(DATABASE_MYSQL_CONNECTINFO* pSt_DBConnector)
 {
 	DBModule_IsErrorOccur = FALSE;
-	//打开数据库
-	if (!DataBase_SQLite_Open(&xhSQL, lpszSQLFile))
+
+	if (NULL == pSt_DBConnector)
+	{
+		DBModule_IsErrorOccur = TRUE;
+		DBModule_dwErrorCode = ERROR_APISERVICE_MODULE_DATABASE_PARAMENT;
+		return FALSE;
+	}
+#ifdef _WINDOWS
+	LPCTSTR lpszStrCharset = _T("gbk");
+#else
+	LPCTSTR lpszStrCharset = _T("utf8");
+#endif
+	//连接数据库
+	_tcscpy(pSt_DBConnector->tszDBName, _T("XEngine_APIInfo"));
+	if (!DataBase_MySQL_Connect(&xhDBSQL, pSt_DBConnector, 5, TRUE, lpszStrCharset))
 	{
 		DBModule_IsErrorOccur = TRUE;
 		DBModule_dwErrorCode = DataBase_GetLastError();
@@ -58,7 +71,7 @@ BOOL CModuleDatabase_IDCard::ModuleDatabase_IDCard_Destory()
 {
 	DBModule_IsErrorOccur = FALSE;
 
-	DataBase_SQLite_Close(xhSQL);
+	DataBase_MySQL_Close(xhDBSQL);
 	return TRUE;
 }
 /********************************************************************
@@ -113,18 +126,18 @@ BOOL CModuleDatabase_IDCard::ModuleDatabase_IDCard_QueryProvincer(XENGINE_IDREGI
     if ((NULL == pSt_IDRegion) || (NULL == pSt_IDInfo))
     {
         DBModule_IsErrorOccur = TRUE;
-        DBModule_dwErrorCode = ERROR_APISERVICE_MODULE_DATABASE_IDCARD_PARAMENT;
+        DBModule_dwErrorCode = ERROR_APISERVICE_MODULE_DATABASE_PARAMENT;
         return FALSE;
     }
     //查询
-    int nLine = 0;
-    int nRow = 0;
-    TCHAR** pptszResult;
+	__int64u nLine = 0;
+	__int64u nRow = 0;
+	XNETHANDLE xhTable = 0;
     TCHAR tszSQLStatement[1024];
 
     memset(tszSQLStatement, '\0', sizeof(tszSQLStatement));
-	_stprintf(tszSQLStatement, _T("SELECT * FROM `regionsid` WHERE code = '%02d0000'"), pSt_IDInfo->nIDProvince);
-	if (!DataBase_SQLite_GetTable(xhSQL, tszSQLStatement, &pptszResult, &nLine, &nRow))
+	_stprintf(tszSQLStatement, _T("SELECT * FROM `RegionID` WHERE code = '%02d0000'"), pSt_IDInfo->nIDProvince);
+	if (!DataBase_MySQL_ExecuteQuery(xhDBSQL, &xhTable, tszSQLStatement, &nLine, &nRow))
 	{
 		DBModule_IsErrorOccur = TRUE;
 		DBModule_dwErrorCode = DataBase_GetLastError();
@@ -133,12 +146,13 @@ BOOL CModuleDatabase_IDCard::ModuleDatabase_IDCard_QueryProvincer(XENGINE_IDREGI
 	if (nLine <= 0)
 	{
 		DBModule_IsErrorOccur = TRUE;
-		DBModule_dwErrorCode = ERROR_APISERVICE_MODULE_DATABASE_IDCARD_NOTFOUND;
+		DBModule_dwErrorCode = ERROR_APISERVICE_MODULE_DATABASE_NOTFOUND;
 		return FALSE;
 	}
-	_tcscpy(pSt_IDRegion->tszProvincer, pptszResult[nRow + 1]);
+	TCHAR** pptszResult = DataBase_MySQL_GetResult(xhDBSQL, xhTable);
+	_tcscpy(pSt_IDRegion->tszProvincer, pptszResult[1]);
 
-	DataBase_SQLite_FreeTable(pptszResult);
+	DataBase_MySQL_FreeResult(xhDBSQL, xhTable);
 	return TRUE;
 }
 /********************************************************************
@@ -166,18 +180,18 @@ BOOL CModuleDatabase_IDCard::ModuleDatabase_IDCard_QueryCity(XENGINE_IDREGION* p
 	if ((NULL == pSt_IDRegion) || (NULL == pSt_IDInfo))
 	{
 		DBModule_IsErrorOccur = TRUE;
-		DBModule_dwErrorCode = ERROR_APISERVICE_MODULE_DATABASE_IDCARD_PARAMENT;
+		DBModule_dwErrorCode = ERROR_APISERVICE_MODULE_DATABASE_PARAMENT;
 		return FALSE;
 	}
 	//查询
-	int nLine = 0;
-	int nRow = 0;
-	TCHAR** pptszResult;
+	__int64u nLine = 0;
+	__int64u nRow = 0;
+	XNETHANDLE xhTable = 0;
 	TCHAR tszSQLStatement[1024];
 
 	memset(tszSQLStatement, '\0', sizeof(tszSQLStatement));
-	_stprintf(tszSQLStatement, _T("SELECT * FROM `regionsid` WHERE code = '%02d%02d00'"), pSt_IDInfo->nIDProvince, pSt_IDInfo->nIDCity);
-	if (!DataBase_SQLite_GetTable(xhSQL, tszSQLStatement, &pptszResult, &nLine, &nRow))
+	_stprintf(tszSQLStatement, _T("SELECT * FROM `RegionID` WHERE code = '%02d%02d00'"), pSt_IDInfo->nIDProvince, pSt_IDInfo->nIDCity);
+	if (!DataBase_MySQL_ExecuteQuery(xhDBSQL, &xhTable, tszSQLStatement, &nLine, &nRow))
 	{
 		DBModule_IsErrorOccur = TRUE;
 		DBModule_dwErrorCode = DataBase_GetLastError();
@@ -186,12 +200,13 @@ BOOL CModuleDatabase_IDCard::ModuleDatabase_IDCard_QueryCity(XENGINE_IDREGION* p
 	if (nLine <= 0)
 	{
 		DBModule_IsErrorOccur = TRUE;
-		DBModule_dwErrorCode = ERROR_APISERVICE_MODULE_DATABASE_IDCARD_NOTFOUND;
+		DBModule_dwErrorCode = ERROR_APISERVICE_MODULE_DATABASE_NOTFOUND;
 		return FALSE;
 	}
-	_tcscpy(pSt_IDRegion->tszCity, pptszResult[nRow + 1]);
+	TCHAR** pptszResult = DataBase_MySQL_GetResult(xhDBSQL, xhTable);
+	_tcscpy(pSt_IDRegion->tszCity, pptszResult[1]);
 
-	DataBase_SQLite_FreeTable(pptszResult);
+	DataBase_MySQL_FreeResult(xhDBSQL, xhTable);
 	return TRUE;
 }
 /********************************************************************
@@ -219,18 +234,18 @@ BOOL CModuleDatabase_IDCard::ModuleDatabase_IDCard_QueryCounty(XENGINE_IDREGION*
 	if ((NULL == pSt_IDRegion) || (NULL == pSt_IDInfo))
 	{
 		DBModule_IsErrorOccur = TRUE;
-		DBModule_dwErrorCode = ERROR_APISERVICE_MODULE_DATABASE_IDCARD_PARAMENT;
+		DBModule_dwErrorCode = ERROR_APISERVICE_MODULE_DATABASE_PARAMENT;
 		return FALSE;
 	}
 	//查询
-	int nLine = 0;
-	int nRow = 0;
-	TCHAR** pptszResult;
+	__int64u nLine = 0;
+	__int64u nRow = 0;
+	XNETHANDLE xhTable = 0;
 	TCHAR tszSQLStatement[1024];
 
 	memset(tszSQLStatement, '\0', sizeof(tszSQLStatement));
-	_stprintf(tszSQLStatement, _T("SELECT * FROM `regionsid` WHERE code = '%02d%02d%02d'"), pSt_IDInfo->nIDProvince, pSt_IDInfo->nIDCity, pSt_IDInfo->nIDCounty);
-	if (!DataBase_SQLite_GetTable(xhSQL, tszSQLStatement, &pptszResult, &nLine, &nRow))
+	_stprintf(tszSQLStatement, _T("SELECT * FROM `RegionID` WHERE code = '%02d%02d%02d'"), pSt_IDInfo->nIDProvince, pSt_IDInfo->nIDCity, pSt_IDInfo->nIDCounty);
+	if (!DataBase_MySQL_ExecuteQuery(xhDBSQL, &xhTable, tszSQLStatement, &nLine, &nRow))
 	{
 		DBModule_IsErrorOccur = TRUE;
 		DBModule_dwErrorCode = DataBase_GetLastError();
@@ -239,11 +254,12 @@ BOOL CModuleDatabase_IDCard::ModuleDatabase_IDCard_QueryCounty(XENGINE_IDREGION*
 	if (nLine <= 0)
 	{
 		DBModule_IsErrorOccur = TRUE;
-		DBModule_dwErrorCode = ERROR_APISERVICE_MODULE_DATABASE_IDCARD_NOTFOUND;
+		DBModule_dwErrorCode = ERROR_APISERVICE_MODULE_DATABASE_NOTFOUND;
 		return FALSE;
 	}
-	_tcscpy(pSt_IDRegion->tszCounty, pptszResult[nRow + 1]);
+	TCHAR** pptszResult = DataBase_MySQL_GetResult(xhDBSQL, xhTable);
+	_tcscpy(pSt_IDRegion->tszCounty, pptszResult[1]);
 
-	DataBase_SQLite_FreeTable(pptszResult);
+	DataBase_MySQL_FreeResult(xhDBSQL, xhTable);
 	return TRUE;
 }

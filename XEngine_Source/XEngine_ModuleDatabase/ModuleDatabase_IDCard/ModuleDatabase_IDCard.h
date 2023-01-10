@@ -18,7 +18,7 @@ public:
 	CModuleDatabase_IDCard();
 	~CModuleDatabase_IDCard();
 public:
-	BOOL ModuleDatabase_IDCard_Init(LPCTSTR lpszSQLFile);
+	BOOL ModuleDatabase_IDCard_Init(DATABASE_MYSQL_CONNECTINFO* pSt_DBConnector);
 	BOOL ModuleDatabase_IDCard_Destory();
 	BOOL ModuleDatabase_IDCard_QueryRegion(XENGINE_IDREGION* pSt_IDRegion, XENGINE_IDCARDINFO* pSt_IDInfo);
 protected:
@@ -26,5 +26,5 @@ protected:
 	BOOL ModuleDatabase_IDCard_QueryCity(XENGINE_IDREGION* pSt_IDRegion, XENGINE_IDCARDINFO* pSt_IDInfo);
 	BOOL ModuleDatabase_IDCard_QueryCounty(XENGINE_IDREGION* pSt_IDRegion, XENGINE_IDCARDINFO* pSt_IDInfo);
 private:
-	XHDATA xhSQL;
+	XNETHANDLE xhDBSQL;
 };
