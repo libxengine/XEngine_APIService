@@ -8,7 +8,7 @@ LOADBIN = -L /usr/local/lib/XEngine_Release/XEngine_BaseLib -L /usr/local/lib/XE
 LIB = -lXEngine_BaseLib -lHelpComponents_DataBase
 LIBEX = -ldl -lpthread
 LOADSO = -Wl,-rpath=./,--disable-new-dtags
-LIBINCLUDE = ModuleDatabase_IDCard.o ModuleDatabase_IPInfo.o ModuleDatabase_Phone.o ModuleDatabase_Bank.o ModuleDatabase_ZIPCode.o pch.o
+LIBINCLUDE = ModuleDatabase_IDCard.o ModuleDatabase_Bank.o ModuleDatabase_ZIPCode.o pch.o
 
 ifeq ($(shell uname),Darwin)
 	SHAREDLL = dylib
@@ -39,10 +39,6 @@ all:$(LIBINCLUDE)
 
 ModuleDatabase_IDCard.o:./ModuleDatabase_IDCard/ModuleDatabase_IDCard.cpp             
 	$(CC) $(DEBUG) $(FLAGS) $(UNICODE) $(INCLUDE) ./ModuleDatabase_IDCard/ModuleDatabase_IDCard.cpp 
-ModuleDatabase_IPInfo.o:./ModuleDatabase_IPInfo/ModuleDatabase_IPInfo.cpp             
-	$(CC) $(DEBUG) $(FLAGS) $(UNICODE) $(INCLUDE) ./ModuleDatabase_IPInfo/ModuleDatabase_IPInfo.cpp 
-ModuleDatabase_Phone.o:./ModuleDatabase_Phone/ModuleDatabase_Phone.cpp             
-	$(CC) $(DEBUG) $(FLAGS) $(UNICODE) $(INCLUDE) ./ModuleDatabase_Phone/ModuleDatabase_Phone.cpp
 ModuleDatabase_Bank.o:./ModuleDatabase_Bank/ModuleDatabase_Bank.cpp             
 	$(CC) $(DEBUG) $(FLAGS) $(UNICODE) $(INCLUDE) ./ModuleDatabase_Bank/ModuleDatabase_Bank.cpp
 ModuleDatabase_ZIPCode.o:./ModuleDatabase_ZIPCode/ModuleDatabase_ZIPCode.cpp             

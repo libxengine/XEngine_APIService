@@ -17,13 +17,15 @@ PLUGIN_MODULE_PASSWORD = ./XEngine_PluginModule/ModulePlugin_Password
 PLUGIN_MODULE_TIMEZONE = ./XEngine_PluginModule/ModulePlugin_Timezone
 PLUGIN_MODULE_BMINDEX = ./XEngine_PluginModule/ModulePlugin_BMIndex
 PLUGIN_MODULE_METER = ./XEngine_PluginModule/ModulePlugin_Meter
+PLUGIN_MODULE_PHONE = ./XEngine_PluginModule/ModulePlugin_Phone
+PLUGIN_MODULE_IPADDR = ./XEngine_PluginModule/ModulePlugin_IPAddr
 
 APP_CENTER_PATH = ./XEngine_ServiceApp/XEngine_CenterApp
 APP_HTTP_PATH = ./XEngine_ServiceApp/XEngine_HttpApp
 
 XENGINE_MODULES = libjsoncpp.so            \
                   libXEngine_ModuleConfigure.so libXEngine_ModuleDatabase.so libXEngine_ModuleProtocol.so libXEngine_ModuleHelp.so libXEngine_ModulePlugin.so  \
-				  libModulePlugin_Zodiac.so libModulePlugin_Password.so libModulePlugin_Timezone.so libModulePlugin_BMIndex.so  libModulePlugin_Meter.so \
+				  libModulePlugin_Zodiac.so libModulePlugin_Password.so libModulePlugin_Timezone.so libModulePlugin_BMIndex.so  libModulePlugin_Meter.so libModulePlugin_Phone.so libModulePlugin_IPAddr.so \
 		   		  XEngine_HttpApp.exe
 
 .PHONY:MakeAll 
@@ -53,6 +55,10 @@ libModulePlugin_BMIndex.so:
 	make -C $(PLUGIN_MODULE_BMINDEX) $(FLAGS)
 libModulePlugin_Meter.so:
 	make -C $(PLUGIN_MODULE_METER) $(FLAGS)
+libModulePlugin_Phone.so:
+	make -C $(PLUGIN_MODULE_PHONE) $(FLAGS)
+libModulePlugin_IPAddr.so:
+	make -C $(PLUGIN_MODULE_IPADDR) $(FLAGS)
 
 XEngine_HttpApp.exe:
 	make -C $(APP_HTTP_PATH) $(FLAGS)

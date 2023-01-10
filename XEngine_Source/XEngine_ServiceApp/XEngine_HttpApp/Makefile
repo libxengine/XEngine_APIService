@@ -4,13 +4,13 @@ UNICODE = 0
 LOADBIN = -L /usr/local/lib/XEngine_Release/XEngine_BaseLib -L /usr/local/lib/XEngine_Release/XEngine_Core -L /usr/local/lib/XEngine_Release/XEngine_HelpComponents -L /usr/local/lib/XEngine_Release/XEngine_RfcComponents -L /usr/local/lib/XEngine_Release/XEngine_NetHelp  \
           -L ../../XEngine_ModuleConfigure -L ../../XEngine_ModuleDatabase -L ../../XEngine_ModuleProtocol -L ../../XEngine_ModuleHelp -L ../../XEngine_ModulePlugin   \
 		  -L ../../XEngine_ThirdPart/jsoncpp
-LIB = -lXEngine_BaseLib -lXEngine_Algorithm -lXEngine_Core -lXEngine_ManagePool -lXEngine_OPenSsl -lHelpComponents_XLog -lHelpComponents_Authorize -lRfcComponents_HttpServer -lNetHelp_APIHelp \
+LIB = -lXEngine_BaseLib -lXEngine_Algorithm -lXEngine_Core -lXEngine_ManagePool -lXEngine_OPenSsl -lHelpComponents_XLog -lHelpComponents_Authorize -lRfcComponents_HttpServer -lNetHelp_APIClient \
 	  -lXEngine_ModuleConfigure -lXEngine_ModuleDatabase -lXEngine_ModuleProtocol -lXEngine_ModuleHelp -lXEngine_ModulePlugin                          \
 	  -ljsoncpp
 LIBEX = -ldl -lpthread
 LOADSO = -Wl,-rpath=./,--disable-new-dtags
 LIBINCLUDE = XEngine_Configure.o XEngine_Network.o XEngine_HTTPTask.o XEngine_PluginTask.o XEngine_HttpApp.o        \
-             HTTPTask_IPInfo.o HTTPTask_IDCard.o HTTPTask_Phone.o HTTPTask_Bank.o HTTPTask_Language.o HTTPTask_Translation.o HTTPTask_P2PClient.o HTTPTask_OPtions.o HTTPTask_CDKey.o HTTPTask_Locker.o HTTPTask_PostCode.o
+             HTTPTask_IDCard.o HTTPTask_Bank.o HTTPTask_Language.o HTTPTask_Translation.o HTTPTask_P2PClient.o HTTPTask_OPtions.o HTTPTask_CDKey.o HTTPTask_Locker.o HTTPTask_PostCode.o
 
 ifeq ($(shell uname),Darwin)
 	LOADSO = 
@@ -42,12 +42,8 @@ XEngine_HTTPTask.o:./XEngine_HTTPTask.cpp
 XEngine_PluginTask.o:./XEngine_PluginTask.cpp
 	$(CC) $(DEBUG) $(FLAGS) $(UNICODE) ./XEngine_PluginTask.cpp
 
-HTTPTask_IPInfo.o:./XEngine_HTTPTask/HTTPTask_IPInfo.cpp
-	$(CC) $(DEBUG) $(FLAGS) $(UNICODE) ./XEngine_HTTPTask/HTTPTask_IPInfo.cpp
 HTTPTask_IDCard.o:./XEngine_HTTPTask/HTTPTask_IDCard.cpp
 	$(CC) $(DEBUG) $(FLAGS) $(UNICODE) ./XEngine_HTTPTask/HTTPTask_IDCard.cpp
-HTTPTask_Phone.o:./XEngine_HTTPTask/HTTPTask_Phone.cpp
-	$(CC) $(DEBUG) $(FLAGS) $(UNICODE) ./XEngine_HTTPTask/HTTPTask_Phone.cpp
 HTTPTask_Bank.o:./XEngine_HTTPTask/HTTPTask_Bank.cpp
 	$(CC) $(DEBUG) $(FLAGS) $(UNICODE) ./XEngine_HTTPTask/HTTPTask_Bank.cpp
 HTTPTask_Language.o:./XEngine_HTTPTask/HTTPTask_Language.cpp
