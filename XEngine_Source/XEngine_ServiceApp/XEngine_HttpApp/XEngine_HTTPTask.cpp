@@ -82,8 +82,8 @@ BOOL XEngine_HTTPTask_Handle(RFCCOMPONENTS_HTTP_REQPARAM* pSt_HTTPParam, LPCTSTR
 		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _T("HTTP客户端:%s,发送的URL请求参数不正确:%s"), lpszClientAddr, pSt_HTTPParam->tszHttpUri);
 		return FALSE;
 	}
-	TCHAR tszKey[128];
-	TCHAR tszValue[128];
+	TCHAR tszKey[MAX_PATH];
+	TCHAR tszValue[MAX_PATH];
 	LPCTSTR lpszFuncName = _T("api");
 	LPCTSTR lpszParamFuncKey = _T("function");
 	LPCTSTR lpszParamName = _T("params1");
@@ -99,8 +99,8 @@ BOOL XEngine_HTTPTask_Handle(RFCCOMPONENTS_HTTP_REQPARAM* pSt_HTTPParam, LPCTSTR
 	LPCTSTR lpszParamCDKey = _T("cdkey");
 	LPCTSTR lpszParamZIPCode = _T("zipcode");
 
-	memset(tszKey, '\0', sizeof(tszKey));
-	memset(tszValue, '\0', sizeof(tszValue));
+	memset(tszKey, '\0', MAX_PATH);
+	memset(tszValue, '\0', MAX_PATH);
 
 	if (0 != _tcsnicmp(lpszFuncName, tszUrlName, _tcslen(lpszFuncName)))
 	{
