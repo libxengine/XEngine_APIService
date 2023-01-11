@@ -31,6 +31,12 @@
     <Filter Include="源文件\ModuleDatabase_ZIPCode">
       <UniqueIdentifier>{5095bb8f-8ecf-4876-ad6b-f9fe6bcbcc3c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="头文件\ModuleDatabase_XLog">
+      <UniqueIdentifier>{6462c954-388d-4d93-b12c-aa94467e3874}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\ModuleDatabase_XLog">
+      <UniqueIdentifier>{a88dc16d-2168-4784-9f3b-8c2e924f49f3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -54,6 +60,9 @@
     <ClInclude Include="ModuleDatabase_ZIPCode\ModuleDatabase_ZIPCode.h">
       <Filter>头文件\ModuleDatabase_ZIPCode</Filter>
     </ClInclude>
+    <ClInclude Include="ModuleDatabase_XLog\ModuleDatabase_XLog.h">
+      <Filter>头文件\ModuleDatabase_XLog</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp">
@@ -70,6 +79,9 @@
     </ClCompile>
     <ClCompile Include="ModuleDatabase_ZIPCode\ModuleDatabase_ZIPCode.cpp">
       <Filter>源文件\ModuleDatabase_ZIPCode</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleDatabase_XLog\ModuleDatabase_XLog.cpp">
+      <Filter>源文件\ModuleDatabase_XLog</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

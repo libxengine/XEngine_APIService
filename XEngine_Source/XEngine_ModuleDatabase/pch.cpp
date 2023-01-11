@@ -2,6 +2,7 @@
 #include "ModuleDatabase_IDCard/ModuleDatabase_IDCard.h"
 #include "ModuleDatabase_Bank/ModuleDatabase_Bank.h"
 #include "ModuleDatabase_ZIPCode/ModuleDatabase_ZIPCode.h"
+#include "ModuleDatabase_XLog/ModuleDatabase_XLog.h"
 /********************************************************************
 //    Created:     2022/02/28  13:26:15
 //    File Name:   D:\XEngine_IPInfo\XEngine_Source\XEngine_ModuleDatabase\pch.cpp
@@ -19,6 +20,7 @@ BOOL DBModule_dwErrorCode = 0;
 CModuleDatabase_IDCard m_IDCard;
 CModuleDatabase_Bank m_Bank;
 CModuleDatabase_ZIPCode m_ZIPCode;
+CModuleDatabase_XLog m_XLog;
 //////////////////////////////////////////////////////////////////////////
 ///                        导出的函数
 //////////////////////////////////////////////////////////////////////////
@@ -78,4 +80,31 @@ extern "C" BOOL ModuleDatabase_ZIPCode_QueryZIPCode(XENGINE_ZIPINFO * pSt_ZIPInf
 extern "C" BOOL ModuleDatabase_ZIPCode_QueryName(XENGINE_ZIPINFO * pSt_ZIPInfo)
 {
 	return m_ZIPCode.ModuleDatabase_ZIPCode_QueryName(pSt_ZIPInfo);
+}
+/************************************************************************/
+/*                         导出的日志服务数据库函数                     */
+/************************************************************************/
+extern "C" BOOL ModuleDatabase_XLog_Init(DATABASE_MYSQL_CONNECTINFO * pSt_DBConnector)
+{
+	return m_XLog.ModuleDatabase_XLog_Init(pSt_DBConnector);
+}
+extern "C" BOOL ModuleDatabase_XLog_Destory()
+{
+	return m_XLog.ModuleDatabase_XLog_Destory();
+}
+extern "C" BOOL ModuleDatabase_XLog_Create(LPCTSTR lpszTableName)
+{
+	return m_XLog.ModuleDatabase_XLog_Create(lpszTableName);
+}
+extern "C" BOOL ModuleDatabase_XLog_Insert(XENGINE_XLOGINFO * pSt_XLogInfo)
+{
+	return m_XLog.ModuleDatabase_XLog_Insert(pSt_XLogInfo);
+}
+extern "C" BOOL ModuleDatabase_XLog_Query(XENGINE_XLOGINFO * **pppSt_XLogInfo, int* pInt_ListCount, LPCTSTR lpszTableName, LPCTSTR lpszTimeStart, LPCTSTR lpszTimeEnd)
+{
+	return m_XLog.ModuleDatabase_XLog_Query(pppSt_XLogInfo, pInt_ListCount, lpszTableName, lpszTimeStart, lpszTimeEnd);
+}
+extern "C" BOOL ModuleDatabase_XLog_Delete(LPCTSTR lpszTableName)
+{
+	return m_XLog.ModuleDatabase_XLog_Delete(lpszTableName);
 }

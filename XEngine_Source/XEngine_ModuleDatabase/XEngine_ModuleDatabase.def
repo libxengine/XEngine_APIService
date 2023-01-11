@@ -15,3 +15,10 @@ EXPORTS
 	ModuleDatabase_ZIPCode_Destory
 	ModuleDatabase_ZIPCode_QueryZIPCode
 	ModuleDatabase_ZIPCode_QueryName
+
+	ModuleDatabase_XLog_Init
+	ModuleDatabase_XLog_Destory
+	ModuleDatabase_XLog_Create
+	ModuleDatabase_XLog_Insert
+	ModuleDatabase_XLog_Query
+	ModuleDatabase_XLog_Delete

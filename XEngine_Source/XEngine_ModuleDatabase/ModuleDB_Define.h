@@ -153,3 +153,105 @@ extern "C" BOOL ModuleDatabase_ZIPCode_QueryZIPCode(XENGINE_ZIPINFO* pSt_ZIPInfo
 备注：
 *********************************************************************/
 extern "C" BOOL ModuleDatabase_ZIPCode_QueryName(XENGINE_ZIPINFO* pSt_ZIPInfo);
+/************************************************************************/
+/*                         导出的日志服务数据库函数                     */
+/************************************************************************/
+/********************************************************************
+函数名称：ModuleDatabase_XLog_Init
+函数功能：初始化SQLITE文件系统
+ 参数.一：lpszSQLFile
+  In/Out：In
+  类型：常量字符指针
+  可空：N
+  意思：输入要操作的SQL文件
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+extern "C" BOOL ModuleDatabase_XLog_Init(DATABASE_MYSQL_CONNECTINFO* pSt_DBConnector);
+/********************************************************************
+函数名称：ModuleDatabase_XLog_Destory
+函数功能：销毁
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+extern "C" BOOL ModuleDatabase_XLog_Destory();
+/********************************************************************
+函数名称：ModuleDatabase_XLog_Create
+函数功能：创建一个日志服务表
+ 参数.一：lpszTableName
+  In/Out：In
+  类型：常量字符指针
+  可空：N
+  意思：创建的名称
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+extern "C" BOOL ModuleDatabase_XLog_Create(LPCTSTR lpszTableName);
+/********************************************************************
+函数名称：ModuleDatabase_XLog_Insert
+函数功能：查询身份证位置信息
+ 参数.一：pSt_IDRegion
+  In/Out：In
+  类型：数据结构指针
+  可空：N
+  意思：输入要插入的日志信息
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+extern "C" BOOL ModuleDatabase_XLog_Insert(XENGINE_XLOGINFO* pSt_XLogInfo);
+/********************************************************************
+函数名称：ModuleDatabase_XLog_Query
+函数功能：日志信息查询
+ 参数.一：pppSt_XLogInfo
+  In/Out：Out
+  类型：三级指针
+  可空：N
+  意思：输出查询到的数据
+ 参数.二：pInt_ListCount
+  In/Out：Out
+  类型：整数型指针
+  可空：N
+  意思：输出数据个数
+ 参数.三：lpszTableName
+  In/Out：In
+  类型：常量字符指针
+  可空：N
+  意思：输入表名称
+ 参数.四：lpszTimeStart
+  In/Out：In
+  类型：常量字符指针
+  可空：N
+  意思：输入开始时间
+ 参数.五：lpszTimeEnd
+  In/Out：In
+  类型：常量字符指针
+  可空：N
+  意思：输入结束时间
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+extern "C" BOOL ModuleDatabase_XLog_Query(XENGINE_XLOGINFO*** pppSt_XLogInfo, int* pInt_ListCount, LPCTSTR lpszTableName, LPCTSTR lpszTimeStart, LPCTSTR lpszTimeEnd);
+/********************************************************************
+函数名称：ModuleDatabase_XLog_Delete
+函数功能：删除日志表
+ 参数.一：lpszTableName
+  In/Out：In
+  类型：常量字符指针
+  可空：N
+  意思：删除的名称
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+extern "C" BOOL ModuleDatabase_XLog_Delete(LPCTSTR lpszTableName);
