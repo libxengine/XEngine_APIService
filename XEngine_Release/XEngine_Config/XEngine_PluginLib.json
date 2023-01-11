@@ -24,6 +24,16 @@
             "PluginEnable":true,
             "PluginMethod":"meter",
             "PluginFile":"./XEngine_LibPlugin/libModulePlugin_Meter"
+        },
+        {
+            "PluginEnable":true,
+            "PluginMethod":"phone",
+            "PluginFile":"./XEngine_LibPlugin/libModulePlugin_Phone"
+        },
+        {
+            "PluginEnable":true,
+            "PluginMethod":"ip",
+            "PluginFile":"./XEngine_LibPlugin/libModulePlugin_IPAddr"
         }
     ]
 }

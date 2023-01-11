@@ -18,12 +18,13 @@
         "MaxCount":10,
         "LogLeave":32
     },
+    "XSql":{
+        "SQLAddr":"192.168.1.12",
+        "SQLPort":3306,
+        "SQLUser":"ruiyue",
+        "SQLPass":"123123Ruiyue"
+    },
     "XApi":{
-        "tszIPData":"./XEngine_DBFile/ipdata.db",
-        "tszIDData":"./XEngine_DBFile/regionsid.db",
-        "tszPhoneData":"./XEngine_DBFile/phone.dat",
-        "tszBankData":"./XEngine_DBFile/bankinfo.db",
-        "tszZIPCodeData":"./XEngine_DBFile/zipcode.db",
         "tszBankUrl":"https://ccdcapi.alipay.com/validateAndCacheCardInfo.json?cardNo=%s&cardBinCheck=true",
         "tszTranslationUrl":"http://fanyi.youdao.com/translate?&doctype=json&type=%s&i=%s"
     },
@@ -33,6 +34,7 @@
         "tszPluginLua":"./XEngine_Config/XEngine_PluginLua.json"
     },
     "XVer":[
+        "2.7.0.1001 Build20230118",
         "2.6.1.1001 Build20221213",
         "2.6.0.1001 Build20221212",
         "2.5.0.1001 Build20221102",
