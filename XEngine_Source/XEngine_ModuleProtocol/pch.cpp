@@ -98,3 +98,7 @@ extern "C" BOOL ModuleProtocol_Parse_ZIPCode(LPCTSTR lpszMsgBuffer, int nMsgLen,
 {
 	return m_ProtocolParse.ModuleProtocol_Parse_ZIPCode(lpszMsgBuffer, nMsgLen, pSt_ZIPInfo);
 }
+extern "C" BOOL ModuleProtocol_Parse_XLog(LPCTSTR lpszMsgBuffer, int nMsgLen, XENGINE_XLOGINFO * pSt_XLogInfo)
+{
+	return m_ProtocolParse.ModuleProtocol_Parse_XLog(lpszMsgBuffer, nMsgLen, pSt_XLogInfo);
+}

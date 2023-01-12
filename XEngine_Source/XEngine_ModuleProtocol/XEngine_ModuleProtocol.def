@@ -20,3 +20,4 @@ EXPORTS
 	ModuleProtocol_Parse_P2PClient
 	ModuleProtocol_Parse_CDKey
 	ModuleProtocol_Parse_ZIPCode
+	ModuleProtocol_Parse_XLog

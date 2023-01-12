@@ -508,3 +508,78 @@ BOOL CModuleProtocol_Parse::ModuleProtocol_Parse_ZIPCode(LPCTSTR lpszMsgBuffer, 
 	}
 	return TRUE;
 }
+/********************************************************************
+函数名称：ModuleProtocol_Parse_XLog
+函数功能：解析日志信息
+ 参数.一：lpszMsgBuffer
+  In/Out：In
+  类型：常量字符指针
+  可空：N
+  意思：输入要解析的数据
+ 参数.二：nMsgLen
+  In/Out：In
+  类型：整数型
+  可空：N
+  意思：输入数据大小
+ 参数.三：pSt_XLogInfo
+  In/Out：Out
+  类型：数据结构指针
+  可空：N
+  意思：输出解析的日志信息
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+BOOL CModuleProtocol_Parse::ModuleProtocol_Parse_XLog(LPCTSTR lpszMsgBuffer, int nMsgLen, XENGINE_XLOGINFO* pSt_XLogInfo)
+{
+	ModuleProtocol_IsErrorOccur = FALSE;
+
+	if ((NULL == lpszMsgBuffer) || (NULL == pSt_XLogInfo))
+	{
+		ModuleProtocol_IsErrorOccur = TRUE;
+		ModuleProtocol_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PROTOCOL_PARSE_PARAMENT;
+		return FALSE;
+	}
+	Json::Value st_JsonRoot;
+	JSONCPP_STRING st_JsonError;
+	Json::CharReaderBuilder st_ReaderBuilder;
+	//解析JSON
+	std::unique_ptr<Json::CharReader> const pSt_JsonReader(st_ReaderBuilder.newCharReader());
+	if (!pSt_JsonReader->parse(lpszMsgBuffer, lpszMsgBuffer + nMsgLen, &st_JsonRoot, &st_JsonError))
+	{
+		ModuleProtocol_IsErrorOccur = TRUE;
+		ModuleProtocol_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PROTOCOL_PARSE_PARAMENT;
+		return FALSE;
+	}
+
+	if (!st_JsonRoot["tszTableName"].isNull())
+	{
+		_tcscpy(pSt_XLogInfo->tszTableName, st_JsonRoot["tszTableName"].asCString());
+	}
+	if (!st_JsonRoot["tszLogBuffer"].isNull())
+	{
+		_tcscpy(pSt_XLogInfo->tszLogBuffer, st_JsonRoot["tszLogBuffer"].asCString());
+	}
+	if (!st_JsonRoot["tszFileName"].isNull())
+	{
+		_tcscpy(pSt_XLogInfo->st_ProtocolLog.tszFileName, st_JsonRoot["tszFileName"].asCString());
+	}
+	if (!st_JsonRoot["tszFuncName"].isNull())
+	{
+		_tcscpy(pSt_XLogInfo->st_ProtocolLog.tszFuncName, st_JsonRoot["tszFuncName"].asCString());
+	}
+	if (!st_JsonRoot["tszLogTimer"].isNull())
+	{
+		_tcscpy(pSt_XLogInfo->st_ProtocolLog.tszLogTimer, st_JsonRoot["tszLogTimer"].asCString());
+	}
+	if (!st_JsonRoot["nLogLine"].isNull())
+	{
+		pSt_XLogInfo->st_ProtocolLog.nLogLine = st_JsonRoot["nLogLine"].asInt();
+	}
+	if (!st_JsonRoot["nLogLevel"].isNull())
+	{
+		pSt_XLogInfo->st_ProtocolLog.nLogLevel = st_JsonRoot["nLogLevel"].asInt();
+	}
+	return TRUE;
+}
