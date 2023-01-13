@@ -22,19 +22,19 @@ SET FOREIGN_KEY_CHECKS = 0;
 -- ----------------------------
 DROP TABLE IF EXISTS `AdministrativeArea`;
 CREATE TABLE `AdministrativeArea`  (
-  `id` longtext CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL,
-  `pid` longtext CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL,
-  `shortname` longtext CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL,
-  `name` longtext CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL,
-  `merger_name` longtext CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL,
-  `level` longtext CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL,
-  `pinyin` longtext CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL,
-  `code` longtext CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL,
-  `zip_code` longtext CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL,
-  `first` longtext CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL,
-  `lng` longtext CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL,
-  `lat` longtext CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL
-) ENGINE = InnoDB CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = Dynamic;
+  `id` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL,
+  `pid` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL,
+  `shortname` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL,
+  `name` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL,
+  `merger_name` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL,
+  `level` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL,
+  `pinyin` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL,
+  `code` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL,
+  `zip_code` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL,
+  `first` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL,
+  `lng` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL,
+  `lat` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of AdministrativeArea
@@ -3795,10 +3795,10 @@ INSERT INTO `AdministrativeArea` VALUES ('3749', '0', '钓鱼岛', '钓鱼岛', 
 DROP TABLE IF EXISTS `BankList`;
 CREATE TABLE `BankList`  (
   `ID` int NOT NULL AUTO_INCREMENT,
-  `tszBankAbridge` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL,
-  `tszBankName` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL,
+  `tszBankAbridge` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `tszBankName` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`ID`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 169 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 169 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of BankList
@@ -3977,10 +3977,10 @@ INSERT INTO `BankList` VALUES (168, 'ZZBANK', '郑州银行');
 -- ----------------------------
 DROP TABLE IF EXISTS `RegionID`;
 CREATE TABLE `RegionID`  (
-  `code` longtext CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL,
-  `name` longtext CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL,
-  `parentCode` longtext CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL
-) ENGINE = InnoDB CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = Dynamic;
+  `code` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL,
+  `name` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL,
+  `parentCode` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of RegionID
