@@ -19,10 +19,10 @@
         "LogLeave":32
     },
     "XSql":{
-        "SQLAddr":"192.168.1.12",
+        "SQLAddr":"192.168.1.10",
         "SQLPort":3306,
-        "SQLUser":"ruiyue",
-        "SQLPass":"123123Ruiyue"
+        "SQLUser":"root",
+        "SQLPass":"123123aa"
     },
     "XApi":{
         "tszBankUrl":"https://ccdcapi.alipay.com/validateAndCacheCardInfo.json?cardNo=%s&cardBinCheck=true",

@@ -4,6 +4,11 @@
             "PluginEnable":true,
             "PluginMethod":"cal",
             "PluginFile":"./XEngine_LuaPlugin/ModulePlugin_Calculation.lua"
+        },
+        {
+            "PluginEnable":true,
+            "PluginMethod":"time",
+            "PluginFile":"./XEngine_LuaPlugin/ModulePlugin_OSTime.lua"
         }
     ]
 }
