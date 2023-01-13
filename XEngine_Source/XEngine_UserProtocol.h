@@ -164,7 +164,8 @@ typedef struct
 typedef struct  
 {
 	XENGINE_PROTOCOL_XLOG st_ProtocolLog;
-	TCHAR tszTableName[128];
 	TCHAR tszLogBuffer[10240];
+	TCHAR tszTableName[128];
+	int nLogSize;
 }XENGINE_XLOGINFO;
 #pragma pack(pop)

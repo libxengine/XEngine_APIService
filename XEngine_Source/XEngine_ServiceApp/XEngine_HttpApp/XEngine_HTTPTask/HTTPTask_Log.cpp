@@ -18,12 +18,22 @@ BOOL XEngine_HTTPTask_LogInfo(LPCTSTR lpszClientAddr, LPCTSTR lpszMsgBuffer, int
 	st_HDRParam.bIsClose = TRUE; //收到回复后就关闭
 	//解析JSON信息
 	ModuleProtocol_Parse_XLog(lpszMsgBuffer, nMsgLen, &st_XLogInfo);
-	//写入数据库名称
-	ModuleDatabase_XLog_Insert(&st_XLogInfo);
-	//打包发送
-	ModuleProtocol_Packet_Common(tszRVBuffer, &nRVLen);
-	RfcComponents_HttpServer_SendMsgEx(xhHTTPPacket, tszSDBuffer, &nSDLen, &st_HDRParam, tszRVBuffer, nRVLen);
-	XEngine_Network_Send(lpszClientAddr, tszSDBuffer, nSDLen);
-	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _T("HTTP客户端:%s,发送银行卡信息获取请求给服务器"), lpszClientAddr);
+	//数据库操作
+	if (0 == nType)
+	{
+		ModuleDatabase_XLog_Insert(&st_XLogInfo);
+		ModuleProtocol_Packet_Common(tszRVBuffer, &nRVLen);
+		RfcComponents_HttpServer_SendMsgEx(xhHTTPPacket, tszSDBuffer, &nSDLen, &st_HDRParam, tszRVBuffer, nRVLen);
+		XEngine_Network_Send(lpszClientAddr, tszSDBuffer, nSDLen);
+		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _T("HTTP客户端:%s,请求日志插入成功,日志大小:%d"), lpszClientAddr, st_XLogInfo.nLogSize);
+	}
+	else if (1 == nType)
+	{
+
+	}
+	else
+	{
+
+	}
 	return TRUE;
 }

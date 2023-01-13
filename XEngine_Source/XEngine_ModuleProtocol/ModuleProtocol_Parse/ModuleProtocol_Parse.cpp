@@ -561,6 +561,10 @@ BOOL CModuleProtocol_Parse::ModuleProtocol_Parse_XLog(LPCTSTR lpszMsgBuffer, int
 	{
 		_tcscpy(pSt_XLogInfo->tszLogBuffer, st_JsonRoot["tszLogBuffer"].asCString());
 	}
+	if (!st_JsonRoot["nLogSize"].isNull())
+	{
+		pSt_XLogInfo->nLogSize = st_JsonRoot["nLogSize"].asInt();
+	}
 	if (!st_JsonRoot["tszFileName"].isNull())
 	{
 		_tcscpy(pSt_XLogInfo->st_ProtocolLog.tszFileName, st_JsonRoot["tszFileName"].asCString());
