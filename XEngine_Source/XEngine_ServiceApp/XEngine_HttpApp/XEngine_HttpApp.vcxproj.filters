@@ -54,9 +54,6 @@
     <ClCompile Include="XEngine_HTTPTask\HTTPTask_OPtions.cpp">
       <Filter>源文件\XEngine_HTTPTask</Filter>
     </ClCompile>
-    <ClCompile Include="XEngine_HTTPTask\HTTPTask_CDKey.cpp">
-      <Filter>源文件\XEngine_HTTPTask</Filter>
-    </ClCompile>
     <ClCompile Include="XEngine_HTTPTask\HTTPTask_Locker.cpp">
       <Filter>源文件\XEngine_HTTPTask</Filter>
     </ClCompile>
@@ -99,9 +96,6 @@
       <Filter>头文件\XEngine_HTTPTask</Filter>
     </ClInclude>
     <ClInclude Include="XEngine_HTTPTask\HTTPTask_OPtions.h">
-      <Filter>头文件\XEngine_HTTPTask</Filter>
-    </ClInclude>
-    <ClInclude Include="XEngine_HTTPTask\HTTPTask_CDKey.h">
       <Filter>头文件\XEngine_HTTPTask</Filter>
     </ClInclude>
     <ClInclude Include="XEngine_HTTPTask\HTTPTask_Locker.h">

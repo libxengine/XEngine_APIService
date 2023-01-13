@@ -23,8 +23,6 @@
 #include <XEngine_Include/XEngine_ProtocolHdr.h>
 #include <XEngine_Include/XEngine_BaseLib/BaseLib_Define.h>
 #include <XEngine_Include/XEngine_BaseLib/BaseLib_Error.h>
-#include <XEngine_Include/XEngine_HelpComponents/Authorize_Define.h>
-#include <XEngine_Include/XEngine_HelpComponents/Authorize_Error.h>
 using namespace std;
 #include "../XEngine_UserProtocol.h"
 #include "ModuleProtocol_Define.h"

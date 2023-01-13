@@ -157,7 +157,6 @@
     <ClCompile Include="XEngine_HttpApp.cpp" />
     <ClCompile Include="XEngine_HTTPTask.cpp" />
     <ClCompile Include="XEngine_HTTPTask\HTTPTask_Bank.cpp" />
-    <ClCompile Include="XEngine_HTTPTask\HTTPTask_CDKey.cpp" />
     <ClCompile Include="XEngine_HTTPTask\HTTPTask_IDCard.cpp" />
     <ClCompile Include="XEngine_HTTPTask\HTTPTask_Language.cpp" />
     <ClCompile Include="XEngine_HTTPTask\HTTPTask_Locker.cpp" />
@@ -174,7 +173,6 @@
     <ClInclude Include="XEngine_Hdr.h" />
     <ClInclude Include="XEngine_HTTPTask.h" />
     <ClInclude Include="XEngine_HTTPTask\HTTPTask_Bank.h" />
-    <ClInclude Include="XEngine_HTTPTask\HTTPTask_CDKey.h" />
     <ClInclude Include="XEngine_HTTPTask\HTTPTask_IDCard.h" />
     <ClInclude Include="XEngine_HTTPTask\HTTPTask_Language.h" />
     <ClInclude Include="XEngine_HTTPTask\HTTPTask_Locker.h" />

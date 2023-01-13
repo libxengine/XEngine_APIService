@@ -32,8 +32,6 @@ using namespace std;
 #include <XEngine_Include/XEngine_Core/OPenSsl_Error.h>
 #include <XEngine_Include/XEngine_HelpComponents/XLog_Define.h>
 #include <XEngine_Include/XEngine_HelpComponents/XLog_Error.h>
-#include <XEngine_Include/XEngine_HelpComponents/Authorize_Define.h>
-#include <XEngine_Include/XEngine_HelpComponents/Authorize_Error.h>
 #include <XEngine_Include/XEngine_HelpComponents/DataBase_Define.h>
 #include <XEngine_Include/XEngine_HelpComponents/DataBase_Error.h>
 #include <XEngine_Include/XEngine_RfcComponents/HttpServer_Define.h>
@@ -67,7 +65,6 @@ using namespace std;
 #include "XEngine_HTTPTask/HTTPTask_Locker.h"
 #include "XEngine_HTTPTask/HTTPTask_OPtions.h"
 #include "XEngine_HTTPTask/HTTPTask_P2PClient.h"
-#include "XEngine_HTTPTask/HTTPTask_CDKey.h"
 #include "XEngine_HTTPTask/HTTPTask_PostCode.h"
 #include "XEngine_HTTPTask/HTTPTask_Log.h"
 /********************************************************************
@@ -129,7 +126,6 @@ extern XENGINE_PLUGINCONFIG st_PluginLuaConfig;
 #pragma comment(lib,"XEngine_Core/XEngine_ManagePool.lib")
 #pragma comment(lib,"XEngine_Core/XEngine_OPenSsl.lib")
 #pragma comment(lib,"XEngine_HelpComponents/HelpComponents_XLog.lib")
-#pragma comment(lib,"XEngine_HelpComponents/HelpComponents_Authorize.lib")
 #pragma comment(lib,"XEngine_RfcComponents/RfcComponents_HttpServer.lib")
 #pragma comment(lib,"XEngine_NetHelp/NetHelp_APIClient.lib")
 #pragma comment(lib,"XEngine_SystemSdk/XEngine_SystemApi")
