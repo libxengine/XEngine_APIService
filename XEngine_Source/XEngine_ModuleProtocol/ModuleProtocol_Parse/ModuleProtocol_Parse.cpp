@@ -565,6 +565,14 @@ BOOL CModuleProtocol_Parse::ModuleProtocol_Parse_XLog(LPCTSTR lpszMsgBuffer, int
 	{
 		pSt_XLogInfo->nLogSize = st_JsonRoot["nLogSize"].asInt();
 	}
+	if (!st_JsonRoot["tszTimeStart"].isNull())
+	{
+		_tcscpy(pSt_XLogInfo->tszTimeStart, st_JsonRoot["tszTimeStart"].asCString());
+	}
+	if (!st_JsonRoot["tszTimeStart"].isNull())
+	{
+		_tcscpy(pSt_XLogInfo->tszTimeStart, st_JsonRoot["tszTimeStart"].asCString());
+	}
 	if (!st_JsonRoot["tszFileName"].isNull())
 	{
 		_tcscpy(pSt_XLogInfo->st_ProtocolLog.tszFileName, st_JsonRoot["tszFileName"].asCString());

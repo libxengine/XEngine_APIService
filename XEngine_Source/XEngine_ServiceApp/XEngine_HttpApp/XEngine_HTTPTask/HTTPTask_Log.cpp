@@ -16,11 +16,9 @@ BOOL XEngine_HTTPTask_LogInfo(LPCTSTR lpszClientAddr, LPCTSTR lpszMsgBuffer, int
 
 	st_HDRParam.nHttpCode = 200; //HTTP CODE码
 	st_HDRParam.bIsClose = TRUE; //收到回复后就关闭
-	//解析JSON信息
-	ModuleProtocol_Parse_XLog(lpszMsgBuffer, nMsgLen, &st_XLogInfo);
-	//数据库操作
 	if (0 == nType)
 	{
+		ModuleProtocol_Parse_XLog(lpszMsgBuffer, nMsgLen, &st_XLogInfo);
 		ModuleDatabase_XLog_Insert(&st_XLogInfo);
 		ModuleProtocol_Packet_Common(tszRVBuffer, &nRVLen);
 		RfcComponents_HttpServer_SendMsgEx(xhHTTPPacket, tszSDBuffer, &nSDLen, &st_HDRParam, tszRVBuffer, nRVLen);
@@ -29,7 +27,14 @@ BOOL XEngine_HTTPTask_LogInfo(LPCTSTR lpszClientAddr, LPCTSTR lpszMsgBuffer, int
 	}
 	else if (1 == nType)
 	{
-
+		int nListCount = 0;
+		XENGINE_XLOGINFO** ppSt_XLogInfo;
+		ModuleProtocol_Parse_XLog(lpszMsgBuffer, nMsgLen, &st_XLogInfo);
+		ModuleDatabase_XLog_Query(&ppSt_XLogInfo, &nListCount, st_XLogInfo.tszTableName, st_XLogInfo.tszTimeStart, st_XLogInfo.tszTimeEnd);
+		ModuleProtocol_Packet_Log(tszRVBuffer, &nRVLen, &ppSt_XLogInfo, nListCount);
+		RfcComponents_HttpServer_SendMsgEx(xhHTTPPacket, tszSDBuffer, &nSDLen, &st_HDRParam, tszRVBuffer, nRVLen);
+		XEngine_Network_Send(lpszClientAddr, tszSDBuffer, nSDLen);
+		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _T("HTTP客户端:%s,请求日志插入成功,日志大小:%d"), lpszClientAddr, st_XLogInfo.nLogSize);
 	}
 	else
 	{

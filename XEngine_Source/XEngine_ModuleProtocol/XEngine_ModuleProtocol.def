@@ -9,6 +9,7 @@ EXPORTS
 	ModuleProtocol_Packet_LanguageQuery
 	ModuleProtocol_Packet_Locker
 	ModuleProtocol_Packet_ZIPCode
+	ModuleProtocol_Packet_Log
 	ModuleProtocol_Packet_P2PLan
 	ModuleProtocol_Packet_P2PWLan
 	ModuleProtocol_Packet_P2PUser

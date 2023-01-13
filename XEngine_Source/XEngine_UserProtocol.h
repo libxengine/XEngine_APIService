@@ -166,6 +166,8 @@ typedef struct
 	XENGINE_PROTOCOL_XLOG st_ProtocolLog;
 	TCHAR tszLogBuffer[10240];
 	TCHAR tszTableName[128];
+	TCHAR tszTimeStart[128];
+	TCHAR tszTimeEnd[128];
 	int nLogSize;
 }XENGINE_XLOGINFO;
 #pragma pack(pop)
