@@ -142,7 +142,7 @@ BOOL CModuleDatabase_XLog::ModuleDatabase_XLog_Insert(XENGINE_XLOGINFO* pSt_XLog
 		DBModule_dwErrorCode = ERROR_APISERVICE_MODULE_DATABASE_PARAMENT;
 		return FALSE;
 	}
-	TCHAR tszSQLStatement[10240];
+	TCHAR tszSQLStatement[11240];
 	memset(tszSQLStatement, '\0', sizeof(tszSQLStatement));
 
 	_stprintf(tszSQLStatement, _T("INSERT INTO `%s` (tszFileName,tszFuncName,nLogLine,nLogLeave,tszLogBuffer,tszLogTimer) VALUES('%s','%s',%d,%d,'%s','%s')"), pSt_XLogInfo->tszTableName, pSt_XLogInfo->st_ProtocolLog.tszFileName, pSt_XLogInfo->st_ProtocolLog.tszFuncName, pSt_XLogInfo->st_ProtocolLog.nLogLine, pSt_XLogInfo->st_ProtocolLog.nLogLevel, pSt_XLogInfo->tszLogBuffer, pSt_XLogInfo->st_ProtocolLog.tszLogTimer);

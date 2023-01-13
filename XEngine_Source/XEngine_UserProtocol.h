@@ -160,4 +160,11 @@ typedef struct
 	int nAreaCode;              //区号
 	int nLevel;                 //行政级别
 }XENGINE_ZIPINFO;
+//日志服务
+typedef struct  
+{
+	XENGINE_PROTOCOL_XLOG st_ProtocolLog;
+	TCHAR tszTableName[128];
+	TCHAR tszLogBuffer[10240];
+}XENGINE_XLOGINFO;
 #pragma pack(pop)
