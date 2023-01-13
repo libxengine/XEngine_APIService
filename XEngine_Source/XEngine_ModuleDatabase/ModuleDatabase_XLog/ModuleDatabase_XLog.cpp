@@ -198,7 +198,7 @@ BOOL CModuleDatabase_XLog::ModuleDatabase_XLog_Query(XENGINE_XLOGINFO*** pppSt_X
 		return FALSE;
 	}
 	//查询
-	XHDATA xhTable = 0;
+	XNETHANDLE xhTable = 0;
 	__int64u nllLine = 0;
 	__int64u nllRow = 0;
 
