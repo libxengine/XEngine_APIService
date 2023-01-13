@@ -38,6 +38,7 @@ void ServiceApp_Stop(int signo)
 		ModuleDatabase_IDCard_Destory();
 		ModuleDatabase_Bank_Destory();
 		ModuleDatabase_ZIPCode_Destory();
+		ModuleDatabase_XLog_Destory();
 		//销毁其他
 		ModulePlugin_LibCore_Destroy();
 		ModulePlugin_LuaCore_Destroy();
@@ -170,6 +171,12 @@ int main(int argc, char** argv)
 	}
 	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _T("启动服务中,初始化银行卡数据库成功"));
 	if (!ModuleDatabase_ZIPCode_Init((DATABASE_MYSQL_CONNECTINFO*)&st_ServiceConfig.st_XSql))
+	{
+		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _T("启动服务中,初始化行政邮编信息数据库失败,错误：%lX"), ModuleDB_GetLastError());
+		goto XENGINE_SERVICEAPP_EXIT;
+	}
+	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _T("启动服务中,初始化行政邮编信息数据库成功"));
+	if (!ModuleDatabase_XLog_Init((DATABASE_MYSQL_CONNECTINFO*)&st_ServiceConfig.st_XSql))
 	{
 		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _T("启动服务中,初始化行政邮编信息数据库失败,错误：%lX"), ModuleDB_GetLastError());
 		goto XENGINE_SERVICEAPP_EXIT;
@@ -320,6 +327,7 @@ XENGINE_SERVICEAPP_EXIT:
 		ModuleDatabase_IDCard_Destory();
 		ModuleDatabase_Bank_Destory();
 		ModuleDatabase_ZIPCode_Destory();
+		ModuleDatabase_XLog_Destory();
 		//销毁其他
 		ModulePlugin_LibCore_Destroy();
 		ModulePlugin_LuaCore_Destroy();

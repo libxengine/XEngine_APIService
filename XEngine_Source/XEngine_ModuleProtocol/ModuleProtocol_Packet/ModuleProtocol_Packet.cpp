@@ -521,7 +521,6 @@ BOOL CModuleProtocol_Packet::ModuleProtocol_Packet_Log(TCHAR* ptszMsgBuffer, int
 		st_JsonObject["nLogLevel"] = (*pppSt_XLogList)[i]->st_ProtocolLog.nLogLevel;
 		st_JsonArray.append(st_JsonObject);
 	}
-
 	st_JsonRoot["code"] = 0;
 	st_JsonRoot["msg"] = "success";
 	st_JsonRoot["data"] = st_JsonArray;
