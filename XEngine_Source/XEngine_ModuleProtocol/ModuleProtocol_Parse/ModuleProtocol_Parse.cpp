@@ -569,9 +569,9 @@ BOOL CModuleProtocol_Parse::ModuleProtocol_Parse_XLog(LPCTSTR lpszMsgBuffer, int
 	{
 		_tcscpy(pSt_XLogInfo->tszTimeStart, st_JsonRoot["tszTimeStart"].asCString());
 	}
-	if (!st_JsonRoot["tszTimeStart"].isNull())
+	if (!st_JsonRoot["tszTimeEnd"].isNull())
 	{
-		_tcscpy(pSt_XLogInfo->tszTimeStart, st_JsonRoot["tszTimeStart"].asCString());
+		_tcscpy(pSt_XLogInfo->tszTimeEnd, st_JsonRoot["tszTimeEnd"].asCString());
 	}
 	if (!st_JsonRoot["tszFileName"].isNull())
 	{

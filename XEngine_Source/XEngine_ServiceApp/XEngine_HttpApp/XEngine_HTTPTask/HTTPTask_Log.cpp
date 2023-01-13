@@ -20,13 +20,21 @@ BOOL XEngine_HTTPTask_LogInfo(LPCTSTR lpszClientAddr, LPCTSTR lpszMsgBuffer, int
 
 	if (0 == nType)
 	{
+		ModuleDatabase_XLog_Create(st_XLogInfo.tszTableName);
+		ModuleProtocol_Packet_Common(tszRVBuffer, &nRVLen);
+		RfcComponents_HttpServer_SendMsgEx(xhHTTPPacket, tszSDBuffer, &nSDLen, &st_HDRParam, tszRVBuffer, nRVLen);
+		XEngine_Network_Send(lpszClientAddr, tszSDBuffer, nSDLen);
+		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _T("HTTP客户端:%s,请求日志表创建成功,创建的表:%s,"), lpszClientAddr, st_XLogInfo.tszTableName);
+	}
+	else if (1 == nType)
+	{
 		ModuleDatabase_XLog_Insert(&st_XLogInfo);
 		ModuleProtocol_Packet_Common(tszRVBuffer, &nRVLen);
 		RfcComponents_HttpServer_SendMsgEx(xhHTTPPacket, tszSDBuffer, &nSDLen, &st_HDRParam, tszRVBuffer, nRVLen);
 		XEngine_Network_Send(lpszClientAddr, tszSDBuffer, nSDLen);
 		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _T("HTTP客户端:%s,请求日志插入成功,插入的表:%s,日志大小:%d"), lpszClientAddr, st_XLogInfo.tszTableName, st_XLogInfo.nLogSize);
 	}
-	else if (1 == nType)
+	else if (2 == nType)
 	{
 		int nListCount = 0;
 		XENGINE_XLOGINFO** ppSt_XLogInfo;
@@ -34,7 +42,7 @@ BOOL XEngine_HTTPTask_LogInfo(LPCTSTR lpszClientAddr, LPCTSTR lpszMsgBuffer, int
 		ModuleProtocol_Packet_Log(tszRVBuffer, &nRVLen, &ppSt_XLogInfo, nListCount);
 		RfcComponents_HttpServer_SendMsgEx(xhHTTPPacket, tszSDBuffer, &nSDLen, &st_HDRParam, tszRVBuffer, nRVLen);
 		XEngine_Network_Send(lpszClientAddr, tszSDBuffer, nSDLen);
-		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _T("HTTP客户端:%s,请求日志查询成功,查询日期:%s - %s"), lpszClientAddr, st_XLogInfo.tszTimeStart, st_XLogInfo.tszTimeEnd);
+		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _T("HTTP客户端:%s,请求日志查询成功,查询的表:%s,查询日期:%s - %s"), lpszClientAddr, st_XLogInfo.tszTableName, st_XLogInfo.tszTimeStart, st_XLogInfo.tszTimeEnd);
 	}
 	else
 	{
