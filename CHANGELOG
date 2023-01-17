@@ -1,3 +1,27 @@
+XEngine_APIService V2.7.0.1001
+
+增加:日志信息操作API相关函数
+增加:时间信息获取lua脚本
+优化:扩展了HTTP参数缓存大小
+优化:HTTP请求函数
+修改:ip查询功能修改为模块插件
+修改:电话查询功能修改为模块插件
+修改:数据库从SQLITE改为MYSQL
+修正:id和银行查询打包中文不正确的问题
+删除:cdkey相关API函数库
+删除:SQLITE相关代码
+
+added:log info support
+added:time plugin of lua
+improved:extend http parament cache size
+improved:http request function
+modify:ipaddr query modify to plugin of module
+modify:phone number query modify to plugin of module
+modify:database to mysql from sqlite
+fixed:id and bank query packet chinese is incorrent
+delete:cdkey functions
+delete:sqlite db
+======================================================================================
 XEngine_APIService V2.6.1.1001
 
 修正:在linux系统下无法加载模块插件的问题
