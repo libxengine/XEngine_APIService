@@ -19,18 +19,6 @@
     <Filter Include="源文件\ModuleDatabase_IDCard">
       <UniqueIdentifier>{e9607c40-79f5-4867-862b-fedb12e965c0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="头文件\ModuleDatabase_IPInfo">
-      <UniqueIdentifier>{03852075-f646-4a9d-92c9-774dfc0128f1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="源文件\ModuleDatabase_IPInfo">
-      <UniqueIdentifier>{6b278ea0-4508-4d95-bd66-45093876c078}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="头文件\ModuleDatabase_Phone">
-      <UniqueIdentifier>{7cff7f4e-9be6-4728-8d7e-465e87a7b9ea}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="源文件\ModuleDatabase_Phone">
-      <UniqueIdentifier>{213c5e28-4b0f-4314-9d6f-cbc412594ca4}</UniqueIdentifier>
-    </Filter>
     <Filter Include="头文件\ModuleDatabase_Bank">
       <UniqueIdentifier>{8bef1d18-25d0-4e83-b5ed-ace7892f30b1}</UniqueIdentifier>
     </Filter>
@@ -42,6 +30,12 @@
     </Filter>
     <Filter Include="源文件\ModuleDatabase_ZIPCode">
       <UniqueIdentifier>{5095bb8f-8ecf-4876-ad6b-f9fe6bcbcc3c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\ModuleDatabase_XLog">
+      <UniqueIdentifier>{6462c954-388d-4d93-b12c-aa94467e3874}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\ModuleDatabase_XLog">
+      <UniqueIdentifier>{a88dc16d-2168-4784-9f3b-8c2e924f49f3}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -60,17 +54,14 @@
     <ClInclude Include="ModuleDatabase_IDCard\ModuleDatabase_IDCard.h">
       <Filter>头文件\ModuleDatabase_IDCard</Filter>
     </ClInclude>
-    <ClInclude Include="ModuleDatabase_IPInfo\ModuleDatabase_IPInfo.h">
-      <Filter>头文件\ModuleDatabase_IPInfo</Filter>
-    </ClInclude>
-    <ClInclude Include="ModuleDatabase_Phone\ModuleDatabase_Phone.h">
-      <Filter>头文件\ModuleDatabase_Phone</Filter>
-    </ClInclude>
     <ClInclude Include="ModuleDatabase_Bank\ModuleDatabase_Bank.h">
       <Filter>头文件\ModuleDatabase_Bank</Filter>
     </ClInclude>
     <ClInclude Include="ModuleDatabase_ZIPCode\ModuleDatabase_ZIPCode.h">
       <Filter>头文件\ModuleDatabase_ZIPCode</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleDatabase_XLog\ModuleDatabase_XLog.h">
+      <Filter>头文件\ModuleDatabase_XLog</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -83,17 +74,14 @@
     <ClCompile Include="ModuleDatabase_IDCard\ModuleDatabase_IDCard.cpp">
       <Filter>源文件\ModuleDatabase_IDCard</Filter>
     </ClCompile>
-    <ClCompile Include="ModuleDatabase_IPInfo\ModuleDatabase_IPInfo.cpp">
-      <Filter>源文件\ModuleDatabase_IPInfo</Filter>
-    </ClCompile>
-    <ClCompile Include="ModuleDatabase_Phone\ModuleDatabase_Phone.cpp">
-      <Filter>源文件\ModuleDatabase_Phone</Filter>
-    </ClCompile>
     <ClCompile Include="ModuleDatabase_Bank\ModuleDatabase_Bank.cpp">
       <Filter>源文件\ModuleDatabase_Bank</Filter>
     </ClCompile>
     <ClCompile Include="ModuleDatabase_ZIPCode\ModuleDatabase_ZIPCode.cpp">
       <Filter>源文件\ModuleDatabase_ZIPCode</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleDatabase_XLog\ModuleDatabase_XLog.cpp">
+      <Filter>源文件\ModuleDatabase_XLog</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

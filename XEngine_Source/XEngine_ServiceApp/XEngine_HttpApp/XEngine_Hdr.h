@@ -32,12 +32,12 @@ using namespace std;
 #include <XEngine_Include/XEngine_Core/OPenSsl_Error.h>
 #include <XEngine_Include/XEngine_HelpComponents/XLog_Define.h>
 #include <XEngine_Include/XEngine_HelpComponents/XLog_Error.h>
-#include <XEngine_Include/XEngine_HelpComponents/Authorize_Define.h>
-#include <XEngine_Include/XEngine_HelpComponents/Authorize_Error.h>
+#include <XEngine_Include/XEngine_HelpComponents/DataBase_Define.h>
+#include <XEngine_Include/XEngine_HelpComponents/DataBase_Error.h>
 #include <XEngine_Include/XEngine_RfcComponents/HttpServer_Define.h>
 #include <XEngine_Include/XEngine_RfcComponents/HttpServer_Error.h>
-#include <XEngine_Include/XEngine_NetHelp/APIHelp_Define.h>
-#include <XEngine_Include/XEngine_NetHelp/APIHelp_Error.h>
+#include <XEngine_Include/XEngine_NetHelp/APIClient_Define.h>
+#include <XEngine_Include/XEngine_NetHelp/APIClient_Error.h>
 #include <XEngine_Include/XEngine_SystemSdk/ProcFile_Define.h>
 #include <XEngine_Include/XEngine_SystemSdk/SystemApi_Define.h>
 #include <XEngine_Include/XEngine_SystemSdk/SystemApi_Error.h>
@@ -58,17 +58,15 @@ using namespace std;
 #include "XEngine_Network.h"
 #include "XEngine_HTTPTask.h"
 #include "XEngine_PluginTask.h"
-#include "XEngine_HTTPTask/HTTPTask_IPInfo.h"
 #include "XEngine_HTTPTask/HTTPTask_IDCard.h"
-#include "XEngine_HTTPTask/HTTPTask_Phone.h"
 #include "XEngine_HTTPTask/HTTPTask_Bank.h"
 #include "XEngine_HTTPTask/HTTPTask_Language.h"
 #include "XEngine_HTTPTask/HTTPTask_Translation.h"
 #include "XEngine_HTTPTask/HTTPTask_Locker.h"
 #include "XEngine_HTTPTask/HTTPTask_OPtions.h"
 #include "XEngine_HTTPTask/HTTPTask_P2PClient.h"
-#include "XEngine_HTTPTask/HTTPTask_CDKey.h"
 #include "XEngine_HTTPTask/HTTPTask_PostCode.h"
+#include "XEngine_HTTPTask/HTTPTask_Log.h"
 /********************************************************************
 //    Created:     2022/01/20  14:42:06
 //    File Name:   D:\XEngine_ServiceApp\XEngine_Source\XEngine_ServiceApp\XEngine_HttpApp\XEngine_Hdr.h
@@ -128,9 +126,8 @@ extern XENGINE_PLUGINCONFIG st_PluginLuaConfig;
 #pragma comment(lib,"XEngine_Core/XEngine_ManagePool.lib")
 #pragma comment(lib,"XEngine_Core/XEngine_OPenSsl.lib")
 #pragma comment(lib,"XEngine_HelpComponents/HelpComponents_XLog.lib")
-#pragma comment(lib,"XEngine_HelpComponents/HelpComponents_Authorize.lib")
 #pragma comment(lib,"XEngine_RfcComponents/RfcComponents_HttpServer.lib")
-#pragma comment(lib,"XEngine_NetHelp/NetHelp_APIHelp.lib")
+#pragma comment(lib,"XEngine_NetHelp/NetHelp_APIClient.lib")
 #pragma comment(lib,"XEngine_SystemSdk/XEngine_SystemApi")
 #pragma comment(lib,"Ws2_32.lib")
 #endif

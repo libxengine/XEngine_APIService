@@ -35,17 +35,9 @@ extern "C" BOOL ModuleProtocol_Packet_Common(TCHAR * ptszMsgBuffer, int* pInt_Ms
 {
 	return m_ProtocolPacket.ModuleProtocol_Packet_Common(ptszMsgBuffer, pInt_MsgLen, nCode, lpszMsgBuffer);
 }
-extern "C" BOOL ModuleProtocol_Packet_IPQuery(TCHAR * ptszMsgBuffer, int* pInt_MsgLen, XENGINE_IPADDRINFO * pSt_IPAddrInfo, int nCode, LPCTSTR lpszMsgBuffer)
-{
-	return m_ProtocolPacket.ModuleProtocol_Packet_IPQuery(ptszMsgBuffer, pInt_MsgLen, pSt_IPAddrInfo, nCode, lpszMsgBuffer);
-}
 extern "C" BOOL ModuleProtocol_Packet_IDQuery(TCHAR * ptszMsgBuffer, int* pInt_MsgLen, XENGINE_IDCARDINFO * pSt_IDInfo, XENGINE_IDREGION * pSt_IDRegion, int nCode, LPCTSTR lpszMsgBuffer)
 {
 	return m_ProtocolPacket.ModuleProtocol_Packet_IDQuery(ptszMsgBuffer, pInt_MsgLen, pSt_IDInfo, pSt_IDRegion, nCode, lpszMsgBuffer);
-}
-extern "C" BOOL ModuleProtocol_Packet_PhoneQuery(TCHAR * ptszMsgBuffer, int* pInt_MsgLen, XENGINE_PHONEINFO * pSt_PhoneInfo, int nCode, LPCTSTR lpszMsgBuffer)
-{
-	return m_ProtocolPacket.ModuleProtocol_Packet_PhoneQuery(ptszMsgBuffer, pInt_MsgLen, pSt_PhoneInfo, nCode, lpszMsgBuffer);
 }
 extern "C" BOOL ModuleProtocol_Packet_BankQuery(TCHAR * ptszMsgBuffer, int* pInt_MsgLen, XENGINE_BANKINFO * pSt_BankInfo, int nCode, LPCTSTR lpszMsgBuffer)
 {
@@ -63,6 +55,10 @@ extern "C" BOOL ModuleProtocol_Packet_ZIPCode(TCHAR * ptszMsgBuffer, int* pInt_M
 {
 	return m_ProtocolPacket.ModuleProtocol_Packet_ZIPCode(ptszMsgBuffer, pInt_MsgLen, pSt_ZIPInfo, nCode, lpszMsgBuffer);
 }
+extern "C" BOOL ModuleProtocol_Packet_Log(TCHAR * ptszMsgBuffer, int* pInt_MsgLen, XENGINE_XLOGINFO * **pppSt_XLogList, int nListCount)
+{
+	return m_ProtocolPacket.ModuleProtocol_Packet_Log(ptszMsgBuffer, pInt_MsgLen, pppSt_XLogList, nListCount);
+}
 extern "C" BOOL ModuleProtocol_Packet_P2PLan(TCHAR * ptszMsgBuffer, int* pInt_MsgLen, XENGINE_P2XPPEER_PROTOCOL * **pppSt_ListClients, int nListCount)
 {
 	return m_ProtocolPacket.ModuleProtocol_Packet_P2PLan(ptszMsgBuffer, pInt_MsgLen, pppSt_ListClients, nListCount);
@@ -71,9 +67,9 @@ extern "C" BOOL ModuleProtocol_Packet_P2PWLan(TCHAR * ptszMsgBuffer, int* pInt_M
 {
 	return m_ProtocolPacket.ModuleProtocol_Packet_P2PWLan(ptszMsgBuffer, pInt_MsgLen, pStl_ListClients);
 }
-extern "C" BOOL ModuleProtocol_Packet_P2PUser(TCHAR * ptszMsgBuffer, int* pInt_MsgLen, XENGINE_P2XPPEER_PROTOCOL * pSt_PeerInfo, XENGINE_IPADDRINFO * pSt_AddrInfo)
+extern "C" BOOL ModuleProtocol_Packet_P2PUser(TCHAR * ptszMsgBuffer, int* pInt_MsgLen, XENGINE_P2XPPEER_PROTOCOL * pSt_PeerInfo)
 {
-	return m_ProtocolPacket.ModuleProtocol_Packet_P2PUser(ptszMsgBuffer, pInt_MsgLen, pSt_PeerInfo, pSt_AddrInfo);
+	return m_ProtocolPacket.ModuleProtocol_Packet_P2PUser(ptszMsgBuffer, pInt_MsgLen, pSt_PeerInfo);
 }
 extern "C" BOOL ModuleProtocol_Packet_P2PConnect(TCHAR * ptszMsgBuffer, int* pInt_MsgLen, XENGINE_P2XPIO_PROTOCOL * pSt_IOProtocol)
 {
@@ -98,11 +94,11 @@ extern "C" BOOL ModuleProtocol_Parse_P2PClient(LPCTSTR lpszMsgBuffer, int nMsgLe
 {
 	return m_ProtocolParse.ModuleProtocol_Parse_P2PClient(lpszMsgBuffer, nMsgLen, pSt_P2XPPeer);
 }
-extern "C" BOOL ModuleProtocol_Parse_CDKey(LPCTSTR lpszMsgBuffer, int nMsgLen, XENGINE_AUTHORIZE_LOCAL * pSt_Authorize)
-{
-	return m_ProtocolParse.ModuleProtocol_Parse_CDKey(lpszMsgBuffer, nMsgLen, pSt_Authorize);
-}
 extern "C" BOOL ModuleProtocol_Parse_ZIPCode(LPCTSTR lpszMsgBuffer, int nMsgLen, XENGINE_ZIPINFO * pSt_ZIPInfo)
 {
 	return m_ProtocolParse.ModuleProtocol_Parse_ZIPCode(lpszMsgBuffer, nMsgLen, pSt_ZIPInfo);
+}
+extern "C" BOOL ModuleProtocol_Parse_XLog(LPCTSTR lpszMsgBuffer, int nMsgLen, XENGINE_XLOGINFO * pSt_XLogInfo)
+{
+	return m_ProtocolParse.ModuleProtocol_Parse_XLog(lpszMsgBuffer, nMsgLen, pSt_XLogInfo);
 }

@@ -6,7 +6,7 @@ UNICODE = 0
 FILECENTOS=/etc/redhat-release
 INCLUDE = -I ./ 
 LOADBIN = -L /usr/local/lib/XEngine_Release/XEngine_BaseLib
-LIB = -lXEngine_BaseLib -llua5.3
+LIB = 
 LIBEX = -ldl -lpthread
 LOADSO = -Wl,-rpath=./,--disable-new-dtags
 LIBINCLUDE = ModulePlugin_LibCore.o ModulePlugin_LuaCore.o ModulePlugin_Loader.o pch.o
@@ -14,10 +14,12 @@ LIBINCLUDE = ModulePlugin_LibCore.o ModulePlugin_LuaCore.o ModulePlugin_Loader.o
 ifeq ($(shell uname),Darwin)
 	SHAREDLL = dylib
 	SHAREFLAG = -dynamiclib
+	LIB = -lXEngine_BaseLib -llua
 	LOADSO = 
 else
 	SHAREDLL = so
 	SHAREFLAG = -shared
+	LIB = -lXEngine_BaseLib -llua5.3
 endif
 
 ifeq ($(RELEASE),1)

@@ -15,86 +15,22 @@
 //////////////////////////////////////////////////////////////////////////
 extern "C" DWORD ModuleDB_GetLastError(int *pInt_SysError = NULL);
 /************************************************************************/
-/*                         导出的IP地址操作函数                         */
-/************************************************************************/
-/********************************************************************
-函数名称：ModuleDatabase_IPInfo_Init
-函数功能：初始化SQLITE文件系统
- 参数.一：lpszSQLFile
-  In/Out：In
-  类型：常量字符指针
-  可空：N
-  意思：输入要操作的SQL文件
-返回值
-  类型：逻辑型
-  意思：是否成功
-备注：
-*********************************************************************/
-extern "C" BOOL ModuleDatabase_IPInfo_Init(LPCTSTR lpszSQLFile);
-/********************************************************************
-函数名称：ModuleDatabase_IPInfo_Destory
-函数功能：销毁
-返回值
-  类型：逻辑型
-  意思：是否成功
-备注：
-*********************************************************************/
-extern "C" BOOL ModuleDatabase_IPInfo_Destory();
-/********************************************************************
-函数名称：ModuleDatabase_IPInfo_IPV4Query
-函数功能：查询文件信息
- 参数.一：pSt_IPAddrInfo
-  In/Out：Out
-  类型：数据结构指针
-  可空：N
-  意思：输出IP地址信息结构
- 参数.二：lpszIPAddr
-  In/Out：In
-  类型：常量字符指针
-  可空：N
-  意思：输入要查询的IPV4
-返回值
-  类型：逻辑型
-  意思：是否成功
-备注：
-*********************************************************************/
-extern "C" BOOL ModuleDatabase_IPInfo_IPV4Query(XENGINE_IPADDRINFO* pSt_IPAddrInfo, LPCTSTR lpszIPAddr);
-/********************************************************************
-函数名称：ModuleDatabase_IPInfo_IPV6Query
-函数功能：查询IPV6地址信息
- 参数.一：pSt_IPAddrInfo
-  In/Out：Out
-  类型：数据结构指针
-  可空：N
-  意思：输出IP地址信息结构
- 参数.二：lpszIPAddr
-  In/Out：In
-  类型：常量字符指针
-  可空：N
-  意思：输入要查询的地址
-返回值
-  类型：逻辑型
-  意思：是否成功
-备注：
-*********************************************************************/
-extern "C" BOOL ModuleDatabase_IPInfo_IPV6Query(XENGINE_IPADDRINFO* pSt_IPAddrInfo, LPCTSTR lpszIPAddr);
-/************************************************************************/
 /*                         导出的身份证地址操作函数                     */
 /************************************************************************/
 /********************************************************************
 函数名称：ModuleDatabase_IDCard_Init
 函数功能：初始化SQLITE文件系统
- 参数.一：lpszSQLFile
+ 参数.一：pSt_DBConnector
   In/Out：In
-  类型：常量字符指针
+  类型：数据结构指针
   可空：N
-  意思：输入要操作的SQL文件
+  意思：输入要操作的数据库
 返回值
   类型：逻辑型
   意思：是否成功
 备注：
 *********************************************************************/
-extern "C" BOOL ModuleDatabase_IDCard_Init(LPCTSTR lpszSQLFile);
+extern "C" BOOL ModuleDatabase_IDCard_Init(DATABASE_MYSQL_CONNECTINFO * pSt_DBConnector);
 /********************************************************************
 函数名称：ModuleDatabase_IDCard_Destory
 函数功能：销毁
@@ -124,67 +60,22 @@ extern "C" BOOL ModuleDatabase_IDCard_Destory();
 *********************************************************************/
 extern "C" BOOL ModuleDatabase_IDCard_QueryRegion(XENGINE_IDREGION * pSt_IDRegion, XENGINE_IDCARDINFO * pSt_IDInfo);
 /************************************************************************/
-/*                         导出的电话号码信息函数                       */
-/************************************************************************/
-/********************************************************************
-函数名称：ModuleDatabase_Phone_Init
-函数功能：初始化电话信息查询数据库
- 参数.一：lpszSQLFile
-  In/Out：In
-  类型：常量字符指针
-  可空：N
-  意思：输入要操作的SQL文件
-返回值
-  类型：逻辑型
-  意思：是否成功
-备注：
-*********************************************************************/
-extern "C" BOOL ModuleDatabase_Phone_Init(LPCTSTR lpszSQLFile);
-/********************************************************************
-函数名称：ModuleDatabase_Phone_Destory
-函数功能：销毁
-返回值
-  类型：逻辑型
-  意思：是否成功
-备注：
-*********************************************************************/
-extern "C" BOOL ModuleDatabase_Phone_Destory();
-/********************************************************************
-函数名称：ModuleDatabase_Phone_Query
-函数功能：查询电话号码信息
- 参数.一：lpszPhoneNumber
-  In/Out：In
-  类型：常量字符指针
-  可空：N
-  意思：输入要查询的电话号码
- 参数.二：pSt_PhoneInfo
-  In/Out：Out
-  类型：数据结构指针
-  可空：N
-  意思：输出电话信息
-返回值
-  类型：逻辑型
-  意思：是否成功
-备注：
-*********************************************************************/
-extern "C" BOOL ModuleDatabase_Phone_Query(LPCTSTR lpszPhoneNumber, XENGINE_PHONEINFO * pSt_PhoneInfo);
-/************************************************************************/
 /*                         导出的银行卡信息函数                         */
 /************************************************************************/
 /********************************************************************
 函数名称：ModuleDatabase_Bank_Init
 函数功能：初始化SQLITE文件系统
- 参数.一：lpszSQLFile
+ 参数.一：pSt_DBConnector
   In/Out：In
-  类型：常量字符指针
+  类型：数据结构指针
   可空：N
-  意思：输入要操作的SQL文件
+  意思：输入要操作的数据库
 返回值
   类型：逻辑型
   意思：是否成功
 备注：
 *********************************************************************/
-extern "C" BOOL ModuleDatabase_Bank_Init(LPCTSTR lpszSQLFile);
+extern "C" BOOL ModuleDatabase_Bank_Init(DATABASE_MYSQL_CONNECTINFO * pSt_DBConnector);
 /********************************************************************
 函数名称：ModuleDatabase_Bank_Destory
 函数功能：销毁
@@ -214,17 +105,17 @@ extern "C" BOOL ModuleDatabase_Bank_Query(XENGINE_BANKINFO * pSt_BankInfo);
 /********************************************************************
 函数名称：ModuleDatabase_ZIPCode_Init
 函数功能：初始化数据库
- 参数.一：lpszSQLFile
+ 参数.一：pSt_DBConnector
   In/Out：In
-  类型：常量字符指针
+  类型：数据结构指针
   可空：N
-  意思：输入要操作的SQL文件
+  意思：输入要操作的数据库
 返回值
   类型：逻辑型
   意思：是否成功
 备注：
 *********************************************************************/
-extern "C" BOOL ModuleDatabase_ZIPCode_Init(LPCTSTR lpszSQLFile);
+extern "C" BOOL ModuleDatabase_ZIPCode_Init(DATABASE_MYSQL_CONNECTINFO * pSt_DBConnector);
 /********************************************************************
 函数名称：ModuleDatabase_ZIPCode_Destory
 函数功能：销毁
@@ -262,3 +153,105 @@ extern "C" BOOL ModuleDatabase_ZIPCode_QueryZIPCode(XENGINE_ZIPINFO* pSt_ZIPInfo
 备注：
 *********************************************************************/
 extern "C" BOOL ModuleDatabase_ZIPCode_QueryName(XENGINE_ZIPINFO* pSt_ZIPInfo);
+/************************************************************************/
+/*                         导出的日志服务数据库函数                     */
+/************************************************************************/
+/********************************************************************
+函数名称：ModuleDatabase_XLog_Init
+函数功能：初始化SQLITE文件系统
+ 参数.一：lpszSQLFile
+  In/Out：In
+  类型：常量字符指针
+  可空：N
+  意思：输入要操作的SQL文件
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+extern "C" BOOL ModuleDatabase_XLog_Init(DATABASE_MYSQL_CONNECTINFO* pSt_DBConnector);
+/********************************************************************
+函数名称：ModuleDatabase_XLog_Destory
+函数功能：销毁
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+extern "C" BOOL ModuleDatabase_XLog_Destory();
+/********************************************************************
+函数名称：ModuleDatabase_XLog_Create
+函数功能：创建一个日志服务表
+ 参数.一：lpszTableName
+  In/Out：In
+  类型：常量字符指针
+  可空：N
+  意思：创建的名称
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+extern "C" BOOL ModuleDatabase_XLog_Create(LPCTSTR lpszTableName);
+/********************************************************************
+函数名称：ModuleDatabase_XLog_Insert
+函数功能：查询身份证位置信息
+ 参数.一：pSt_IDRegion
+  In/Out：In
+  类型：数据结构指针
+  可空：N
+  意思：输入要插入的日志信息
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+extern "C" BOOL ModuleDatabase_XLog_Insert(XENGINE_XLOGINFO* pSt_XLogInfo);
+/********************************************************************
+函数名称：ModuleDatabase_XLog_Query
+函数功能：日志信息查询
+ 参数.一：pppSt_XLogInfo
+  In/Out：Out
+  类型：三级指针
+  可空：N
+  意思：输出查询到的数据
+ 参数.二：pInt_ListCount
+  In/Out：Out
+  类型：整数型指针
+  可空：N
+  意思：输出数据个数
+ 参数.三：lpszTableName
+  In/Out：In
+  类型：常量字符指针
+  可空：N
+  意思：输入表名称
+ 参数.四：lpszTimeStart
+  In/Out：In
+  类型：常量字符指针
+  可空：N
+  意思：输入开始时间
+ 参数.五：lpszTimeEnd
+  In/Out：In
+  类型：常量字符指针
+  可空：N
+  意思：输入结束时间
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+extern "C" BOOL ModuleDatabase_XLog_Query(XENGINE_XLOGINFO*** pppSt_XLogInfo, int* pInt_ListCount, LPCTSTR lpszTableName, LPCTSTR lpszTimeStart, LPCTSTR lpszTimeEnd);
+/********************************************************************
+函数名称：ModuleDatabase_XLog_Delete
+函数功能：删除日志表
+ 参数.一：lpszTableName
+  In/Out：In
+  类型：常量字符指针
+  可空：N
+  意思：删除的名称
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+extern "C" BOOL ModuleDatabase_XLog_Delete(LPCTSTR lpszTableName);

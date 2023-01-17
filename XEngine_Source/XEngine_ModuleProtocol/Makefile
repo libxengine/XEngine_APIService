@@ -1,4 +1,4 @@
-CC = g++ -Wall -std=c++17 -fPIC
+CC = g++ -Wall -std=c++17 -fPIC -Wno-deprecated-declarations
 SHAREFLAG = -shared
 SHAREDLL = so
 RELEASE = 0

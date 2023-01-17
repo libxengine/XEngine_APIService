@@ -38,7 +38,7 @@ BOOL XEngine_HTTPTask_P2PClient(LPCTSTR lpszClientAddr, LPCTSTR lpszMsgBuffer, i
 			BaseLib_OperatorIPAddr_SegAddr(st_ClientPeer.st_PeerAddr.tszPublicAddr, NULL);
 		}
 		//获取外网IP所在位置
-		ModuleDatabase_IPInfo_IPV4Query(&st_ClientPeer.st_IPAddrInfo, st_ClientPeer.st_PeerAddr.tszPublicAddr);
+		//ModuleDatabase_IPInfo_IPV4Query(&st_ClientPeer.st_IPAddrInfo, st_ClientPeer.st_PeerAddr.tszPublicAddr);
 
 		st_ClientPeer.st_PeerTimer.dwUserTime = time(NULL);
 		st_ClientPeer.st_PeerTimer.dwKeepAlive = time(NULL);

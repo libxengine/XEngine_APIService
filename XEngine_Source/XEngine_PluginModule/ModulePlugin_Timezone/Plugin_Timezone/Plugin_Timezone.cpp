@@ -579,7 +579,7 @@ BOOL CPlugin_Timezone::Plugin_Timezone_Count(TCHAR* ptszMsgBufer, int* pInt_Len)
 	Json::Value st_JsonObject;
 	Json::StreamWriterBuilder st_JsonBuilder;
 
-	st_JsonObject["Count"] = stl_MapTimezone.size();
+	st_JsonObject["Count"] = (Json::Value::UInt)stl_MapTimezone.size();
 	st_JsonRoot["data"] = st_JsonObject;
 	st_JsonRoot["code"] = 0;
 	st_JsonRoot["msg"] = "success";

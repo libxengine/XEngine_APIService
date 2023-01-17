@@ -37,13 +37,16 @@ typedef struct
 		int nMaxCount;                        //最大日志个数
 		int nLogLeave;                        //日志等级
 	}st_XLog;
+	struct
+	{
+		TCHAR tszSQLAddr[128];                //MYSQL数据库地址
+		TCHAR tszSQLUser[128];                //数据库用户名
+		TCHAR tszSQLPass[128];                //数据库密码
+		TCHAR tszDBName[128];                 //数据库表明
+		int nSQLPort;                         //端口
+	}st_XSql;
 	struct  
 	{
-		TCHAR tszIPData[MAX_PATH];            //IP数据库地址
-		TCHAR tszIDData[MAX_PATH];            //ID数据库地址
-		TCHAR tszPhoneData[MAX_PATH];         //电话号码数据库地址
-		TCHAR tszBankData[MAX_PATH];          //银行卡数据库地址
-		TCHAR tszZIPCodeData[MAX_PATH];       //邮编数据库地址
 		TCHAR tszBankUrl[MAX_PATH];           //银行卡验证地址
 		TCHAR tszTranslationUrl[MAX_PATH];    //翻译接口
 	}st_XApi;

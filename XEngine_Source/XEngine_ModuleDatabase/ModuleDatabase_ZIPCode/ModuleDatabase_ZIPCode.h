@@ -18,7 +18,7 @@ public:
 	CModuleDatabase_ZIPCode();
 	~CModuleDatabase_ZIPCode();
 public:
-	BOOL ModuleDatabase_ZIPCode_Init(LPCTSTR lpszSQLFile);
+	BOOL ModuleDatabase_ZIPCode_Init(DATABASE_MYSQL_CONNECTINFO* pSt_DBConnector);
 	BOOL ModuleDatabase_ZIPCode_Destory();
 	BOOL ModuleDatabase_ZIPCode_QueryZIPCode(XENGINE_ZIPINFO* pSt_ZIPInfo);
 	BOOL ModuleDatabase_ZIPCode_QueryName(XENGINE_ZIPINFO* pSt_ZIPInfo);
@@ -26,5 +26,5 @@ protected:
 	BOOL ModuleDatabase_ZIPCode_QueryParentByID(int nParentID, TCHAR* ptszParentStr, int* pInt_ParentID = NULL);
 	BOOL ModuleDatabase_ZIPCode_QueryParentByName(LPCTSTR lpszName, int* pInt_ParentID = NULL);
 private:
-	XHDATA xhSQL;
+	XNETHANDLE xhDBSQL;
 };

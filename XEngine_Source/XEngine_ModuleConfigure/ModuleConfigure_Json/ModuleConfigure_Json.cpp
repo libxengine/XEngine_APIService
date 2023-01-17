@@ -119,20 +119,27 @@ BOOL CModuleConfigure_Json::ModuleConfigure_Json_File(LPCTSTR lpszConfigFile, XE
 	pSt_ServerConfig->st_XLog.nMaxCount = st_JsonXLog["MaxCount"].asInt();
 	pSt_ServerConfig->st_XLog.nLogLeave = st_JsonXLog["LogLeave"].asInt();
 
-	if (st_JsonRoot["XApi"].empty() || (7 != st_JsonRoot["XApi"].size()))
+	if (st_JsonRoot["XApi"].empty() || (2 != st_JsonRoot["XApi"].size()))
+	{
+		Config_IsErrorOccur = TRUE;
+		Config_dwErrorCode = ERROR_MODULE_CONFIGURE_JSON_XAPI;
+		return FALSE;
+	}
+	Json::Value st_JsonXApi = st_JsonRoot["XApi"];
+	_tcscpy(pSt_ServerConfig->st_XApi.tszBankUrl, st_JsonXApi["tszBankUrl"].asCString());
+	_tcscpy(pSt_ServerConfig->st_XApi.tszTranslationUrl, st_JsonXApi["tszTranslationUrl"].asCString());
+
+	if (st_JsonRoot["XSql"].empty() || (4 != st_JsonRoot["XSql"].size()))
 	{
 		Config_IsErrorOccur = TRUE;
 		Config_dwErrorCode = ERROR_MODULE_CONFIGURE_JSON_XDB;
 		return FALSE;
 	}
-	Json::Value st_JsonXApi = st_JsonRoot["XApi"];
-	_tcscpy(pSt_ServerConfig->st_XApi.tszIPData, st_JsonXApi["tszIPData"].asCString());
-	_tcscpy(pSt_ServerConfig->st_XApi.tszIDData, st_JsonXApi["tszIDData"].asCString());
-	_tcscpy(pSt_ServerConfig->st_XApi.tszPhoneData, st_JsonXApi["tszPhoneData"].asCString());
-	_tcscpy(pSt_ServerConfig->st_XApi.tszBankData, st_JsonXApi["tszBankData"].asCString());
-	_tcscpy(pSt_ServerConfig->st_XApi.tszZIPCodeData, st_JsonXApi["tszZIPCodeData"].asCString());
-	_tcscpy(pSt_ServerConfig->st_XApi.tszBankUrl, st_JsonXApi["tszBankUrl"].asCString());
-	_tcscpy(pSt_ServerConfig->st_XApi.tszTranslationUrl, st_JsonXApi["tszTranslationUrl"].asCString());
+	Json::Value st_JsonXSql = st_JsonRoot["XSql"];
+	pSt_ServerConfig->st_XSql.nSQLPort = st_JsonXSql["SQLPort"].asInt();
+	_tcscpy(pSt_ServerConfig->st_XSql.tszSQLAddr, st_JsonXSql["SQLAddr"].asCString());
+	_tcscpy(pSt_ServerConfig->st_XSql.tszSQLUser, st_JsonXSql["SQLUser"].asCString());
+	_tcscpy(pSt_ServerConfig->st_XSql.tszSQLPass, st_JsonXSql["SQLPass"].asCString());
 
 	if (st_JsonRoot["XPlugin"].empty() || (3 != st_JsonRoot["XPlugin"].size()))
 	{

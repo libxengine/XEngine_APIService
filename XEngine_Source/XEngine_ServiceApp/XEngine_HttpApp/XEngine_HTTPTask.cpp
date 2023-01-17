@@ -82,27 +82,25 @@ BOOL XEngine_HTTPTask_Handle(RFCCOMPONENTS_HTTP_REQPARAM* pSt_HTTPParam, LPCTSTR
 		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _T("HTTP客户端:%s,发送的URL请求参数不正确:%s"), lpszClientAddr, pSt_HTTPParam->tszHttpUri);
 		return FALSE;
 	}
-	TCHAR tszKey[128];
-	TCHAR tszValue[128];
+	TCHAR tszKey[MAX_PATH];
+	TCHAR tszValue[MAX_PATH];
 	LPCTSTR lpszFuncName = _T("api");
 	LPCTSTR lpszParamFuncKey = _T("function");
 	LPCTSTR lpszParamName = _T("params1");
 	//get
 	LPCTSTR lpszParamOPtions = _T("options");
-	LPCTSTR lpszParamIPAddr = _T("ip");
 	LPCTSTR lpszParamIDCard = _T("id");
-	LPCTSTR lpszParamPhone = _T("phone");
 	LPCTSTR lpszParamBank = _T("bank");
 	LPCTSTR lpszParamLanguage = _T("language");
 	LPCTSTR lpszParamTranslation = _T("translation");
 	LPCTSTR lpszParamLocker = _T("lock");
 	//post
 	LPCTSTR lpszParamP2PClient = _T("p2p");
-	LPCTSTR lpszParamCDKey = _T("cdkey");
 	LPCTSTR lpszParamZIPCode = _T("zipcode");
+	LPCTSTR lpszParamXLog = _T("log");
 
-	memset(tszKey, '\0', sizeof(tszKey));
-	memset(tszValue, '\0', sizeof(tszValue));
+	memset(tszKey, '\0', MAX_PATH);
+	memset(tszValue, '\0', MAX_PATH);
 
 	if (0 != _tcsnicmp(lpszFuncName, tszUrlName, _tcslen(lpszFuncName)))
 	{
@@ -150,34 +148,6 @@ BOOL XEngine_HTTPTask_Handle(RFCCOMPONENTS_HTTP_REQPARAM* pSt_HTTPParam, LPCTSTR
 			}
 			XEngine_HTTPTask_P2PClient(lpszClientAddr, lpszRVBuffer, nRVLen, _ttoi(tszValue));
 		}
-		else if (0 == _tcsnicmp(lpszParamCDKey, tszValue, _tcslen(lpszParamCDKey)))
-		{
-			//是不是CDKEY生成器:http://app.xyry.org:5501/api?function=cdkey&params1=0&params2=123456
-			memset(tszKey, '\0', sizeof(tszKey));
-			memset(tszValue, '\0', sizeof(tszValue));
-			BaseLib_OperatorString_GetKeyValue(pptszList[1], "=", tszKey, tszValue);
-			if (0 != _tcsnicmp(lpszParamName, tszKey, _tcslen(lpszParamName)))
-			{
-				st_HDRParam.nHttpCode = 404;
-				RfcComponents_HttpServer_SendMsgEx(xhHTTPPacket, tszMsgBuffer, &nMsgLen, &st_HDRParam);
-				XEngine_Network_Send(lpszClientAddr, tszMsgBuffer, nMsgLen);
-				BaseLib_OperatorMemory_Free((XPPPMEM)&pptszList, nListCount);
-				XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _T("HTTP客户端:%s,发送的URL请求参数不正确:%s"), lpszClientAddr, pSt_HTTPParam->tszHttpUri);
-				return FALSE;
-			}
-			int nOPType = _ttoi(tszValue);
-			if (3 == nListCount)
-			{
-				memset(tszKey, '\0', sizeof(tszKey));
-				memset(tszValue, '\0', sizeof(tszValue));
-				BaseLib_OperatorString_GetKeyValue(pptszList[2], "=", tszKey, tszValue);
-				XEngine_HTTPTask_CDKey(lpszClientAddr, lpszRVBuffer, nRVLen, nOPType, tszValue);
-			}
-			else
-			{
-				XEngine_HTTPTask_CDKey(lpszClientAddr, lpszRVBuffer, nRVLen, nOPType);
-			}
-		}
 		else if (0 == _tcsnicmp(lpszParamZIPCode, tszValue, _tcslen(lpszParamZIPCode)))
 		{
 			//邮政信息:http://app.xyry.org:5501/api?function=zipcode&params1=0
@@ -195,17 +165,9 @@ BOOL XEngine_HTTPTask_Handle(RFCCOMPONENTS_HTTP_REQPARAM* pSt_HTTPParam, LPCTSTR
 			}
 			XEngine_HTTPTask_PostCode(lpszClientAddr, lpszRVBuffer, nRVLen, _ttoi(tszValue));
 		}
-	}
-	else if (0 == _tcsnicmp(lpszMethodGet, pSt_HTTPParam->tszHttpMethod, _tcslen(lpszMethodGet)))
-	{
-		if (0 == _tcsnicmp(lpszParamOPtions, tszValue, _tcslen(lpszParamOPtions)))
+		else if (0 == _tcsnicmp(lpszParamXLog, tszValue, _tcslen(lpszParamXLog)))
 		{
-			//HTTP能力查询
-			XEngine_HTTPTask_OPTions(lpszClientAddr);
-		}
-		else if (0 == _tcsnicmp(lpszParamIPAddr, tszValue, _tcslen(lpszParamIPAddr)))
-		{
-			//是不是ip查询
+			//邮政信息:http://app.xyry.org:5501/api?function=log&params1=0
 			memset(tszKey, '\0', sizeof(tszKey));
 			memset(tszValue, '\0', sizeof(tszValue));
 			BaseLib_OperatorString_GetKeyValue(pptszList[1], "=", tszKey, tszValue);
@@ -218,7 +180,15 @@ BOOL XEngine_HTTPTask_Handle(RFCCOMPONENTS_HTTP_REQPARAM* pSt_HTTPParam, LPCTSTR
 				XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _T("HTTP客户端:%s,发送的URL请求参数不正确:%s"), lpszClientAddr, pSt_HTTPParam->tszHttpUri);
 				return FALSE;
 			}
-			XEngine_HTTPTask_IPInfo(lpszClientAddr, tszValue);
+			XEngine_HTTPTask_LogInfo(lpszClientAddr, lpszRVBuffer, nRVLen, _ttoi(tszValue));
+		}
+	}
+	else if (0 == _tcsnicmp(lpszMethodGet, pSt_HTTPParam->tszHttpMethod, _tcslen(lpszMethodGet)))
+	{
+		if (0 == _tcsnicmp(lpszParamOPtions, tszValue, _tcslen(lpszParamOPtions)))
+		{
+			//HTTP能力查询
+			XEngine_HTTPTask_OPTions(lpszClientAddr);
 		}
 		else if (0 == _tcsnicmp(lpszParamIDCard, tszValue, _tcslen(lpszParamIDCard)))
 		{
@@ -236,23 +206,6 @@ BOOL XEngine_HTTPTask_Handle(RFCCOMPONENTS_HTTP_REQPARAM* pSt_HTTPParam, LPCTSTR
 				return FALSE;
 			}
 			XEngine_HTTPTask_IDCard(lpszClientAddr, tszValue);
-		}
-		else if (0 == _tcsnicmp(lpszParamPhone, tszValue, _tcslen(lpszParamPhone)))
-		{
-			//是不是电话号码查询
-			memset(tszKey, '\0', sizeof(tszKey));
-			memset(tszValue, '\0', sizeof(tszValue));
-			BaseLib_OperatorString_GetKeyValue(pptszList[1], "=", tszKey, tszValue);
-			if (0 != _tcsnicmp(lpszParamName, tszKey, _tcslen(lpszParamName)))
-			{
-				st_HDRParam.nHttpCode = 404;
-				RfcComponents_HttpServer_SendMsgEx(xhHTTPPacket, tszMsgBuffer, &nMsgLen, &st_HDRParam);
-				XEngine_Network_Send(lpszClientAddr, tszMsgBuffer, nMsgLen);
-				BaseLib_OperatorMemory_Free((XPPPMEM)&pptszList, nListCount);
-				XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _T("HTTP客户端:%s,发送的URL请求参数不正确:%s"), lpszClientAddr, pSt_HTTPParam->tszHttpUri);
-				return FALSE;
-			}
-			XEngine_HTTPTask_PhoneInfo(lpszClientAddr, tszValue);
 		}
 		else if (0 == _tcsnicmp(lpszParamBank, tszValue, _tcslen(lpszParamBank)))
 		{

@@ -18,17 +18,6 @@ typedef enum
 	//用户消息
 	ENUM_XENGINE_COMMUNICATION_PROTOCOL_TYPE_MSG = ENUM_XENGINE_COMMUNICATION_PROTOCOL_TYPE_USER + 1
 }ENUM_XENGINE_COMMUNICATION_PROTOCOL_TYPE_CUSTOM;
-//电话号码类型
-typedef enum
-{
-	ENUM_XENGINE_APISERVICE_PHONE_TYPE_UNKNOWN = 0,	    // 未知，查找失败
-	ENUM_XENGINE_APISERVICE_PHONE_TYPE_CMCC,			// 中国移动
-	ENUM_XENGINE_APISERVICE_PHONE_TYPE_CUCC,			// 中国联通
-	ENUM_XENGINE_APISERVICE_PHONE_TYPE_CTCC,			// 中国电信
-	ENUM_XENGINE_APISERVICE_PHONE_TYPE_CTCC_V,			// 电信虚拟运营商
-	ENUM_XENGINE_APISERVICE_PHONE_TYPE_CUCC_V,			// 联通虚拟运营商
-	ENUM_XENGINE_APISERVICE_PHONE_TYPE_CMCC_V			// 移动虚拟运营商
-}ENUM_XENGINE_APISERVICE_PHONE_TYPE;
 //银行卡类型
 typedef enum
 {
@@ -103,20 +92,6 @@ typedef enum
 ///////////////////////////////////////////////////////////////////////////
 #pragma pack(push)
 #pragma pack(1)
-//IP地址信息
-typedef struct  
-{
-	TCHAR tszIPStart[128];
-	TCHAR tszIPEnd[128];
-	TCHAR tszIPAddr[128];       //IP地址
-	TCHAR tszIPCountry[128];    //国家/地区
-	TCHAR tszIPProvince[128];   //省/自治区
-	TCHAR tszIPCity[128];       //市
-	TCHAR tszIPCounty[128];     //县
-	TCHAR tszIPAddress[128];    //详细地址
-	TCHAR tszIPISP[128];        //运营商
-	TCHAR tszIPTime[128];       //数据库日期
-}XENGINE_IPADDRINFO;
 //身份证校验
 typedef struct  
 {
@@ -138,16 +113,6 @@ typedef struct
 	TCHAR tszCity[64];          //市/区     
 	TCHAR tszCounty[64];        //县
 }XENGINE_IDREGION;
-//行政区域
-typedef struct
-{
-	TCHAR tszProvincer[64];     //省/自治区/直辖市
-	TCHAR tszCity[64];          //市/区     
-	__int64x nPhoneNumber;      //电话号码
-	int nZipCode;               //邮编
-	int nAreaCode;              //区号
-	ENUM_XENGINE_APISERVICE_PHONE_TYPE enPhoneType;  //电话号码类型
-}XENGINE_PHONEINFO;
 //银行卡
 typedef struct
 {
@@ -195,4 +160,14 @@ typedef struct
 	int nAreaCode;              //区号
 	int nLevel;                 //行政级别
 }XENGINE_ZIPINFO;
+//日志服务
+typedef struct  
+{
+	XENGINE_PROTOCOL_XLOG st_ProtocolLog;
+	TCHAR tszLogBuffer[10240];
+	TCHAR tszTableName[128];
+	TCHAR tszTimeStart[128];
+	TCHAR tszTimeEnd[128];
+	int nLogSize;
+}XENGINE_XLOGINFO;
 #pragma pack(pop)

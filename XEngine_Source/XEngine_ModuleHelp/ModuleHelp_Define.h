@@ -30,7 +30,6 @@ typedef struct
 {
 	XENGINE_P2XPPEER_PROTOCOL st_PeerAddr;                                //P2P通信的时候使用的地址（客户方使用）
 	P2XP_TIMER_INFOMATION st_PeerTimer;                                   //节点时间信息
-	XENGINE_IPADDRINFO st_IPAddrInfo;                                     //IP地址信息
 	BOOL bIsLogin;
 }XENGINE_P2XP_PEERINFO, * LPNETENGINE_P2XP_PEERINFO;
 //////////////////////////////////////////////////////////////////////////

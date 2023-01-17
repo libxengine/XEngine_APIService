@@ -3,7 +3,7 @@
 #include <tchar.h>
 #pragma comment(lib,"XEngine_BaseLib/XEngine_BaseLib")
 #pragma comment(lib,"XEngine_Core/XEngine_NetXApi")
-#pragma comment(lib,"XEngine_NetHelp/NetHelp_APIHelp")
+#pragma comment(lib,"XEngine_NetHelp/NetHelp_APIClient")
 #pragma comment(lib,"Ws2_32")
 #pragma comment(lib,"../../XEngine_Source/x64/Debug/jsoncpp")
 #else
@@ -17,14 +17,14 @@
 #include <XEngine_Include/XEngine_BaseLib/BaseLib_Error.h>
 #include <XEngine_Include/XEngine_Core/NetXApi_Define.h>
 #include <XEngine_Include/XEngine_Core/NetXApi_Error.h>
-#include <XEngine_Include/XEngine_NetHelp/APIHelp_Define.h>
-#include <XEngine_Include/XEngine_NetHelp/APIHelp_Error.h>
+#include <XEngine_Include/XEngine_NetHelp/APIClient_Define.h>
+#include <XEngine_Include/XEngine_NetHelp/APIClient_Error.h>
 #include "../../XEngine_Source/XEngine_UserProtocol.h"
 
 //需要优先配置XEngine
 //WINDOWS使用VS2022 x64 debug 编译
 //linux使用下面的命令编译
-//g++ -std=c++17 -Wall -g APPClient_P2PExample.cpp -o APPClient_P2PExample.exe -I ../../XEngine_Source/XEngine_ThirdPart/jsoncpp -L /usr/local/lib/XEngine_Release/XEngine_BaseLib -L /usr/local/lib/XEngine_Release/XEngine_Core -L /usr/local/lib/XEngine_Release/XEngine_NetHelp -lXEngine_BaseLib -lXEngine_NetXApi -lNetHelp_APIHelp -ljsoncpp
+//g++ -std=c++17 -Wall -g APPClient_P2PExample.cpp -o APPClient_P2PExample.exe -I ../../XEngine_Source/XEngine_ThirdPart/jsoncpp -L /usr/local/lib/XEngine_Release/XEngine_BaseLib -L /usr/local/lib/XEngine_Release/XEngine_Core -L /usr/local/lib/XEngine_Release/XEngine_NetHelp -lXEngine_BaseLib -lXEngine_NetXApi -lNetHelp_APIClient -ljsoncpp
 
 LPCTSTR lpszUserName = _T("123123aa");
 TCHAR tszPublicAddr[128];
@@ -33,6 +33,22 @@ TCHAR tszPrivateAddr[128];
 int nPort = 5103;
 SOCKET m_hSocket;
 
+BOOL APIHelp_NetWork_GetIPNet(TCHAR* ptszIPAddr)
+{
+	//获取本地外网IP地址
+	int nBLen = 0;
+	TCHAR* ptszBody = NULL;
+	LPCTSTR lpszUrl = _T("http://members.3322.org/dyndns/getip");
+	LPCTSTR lpszHdrBuffer = _T("Connection: close\r\nDNT: 1\r\nUpgrade-Insecure-Requests: 1\r\nUser-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/97.0.4692.71 Safari/537.36 Edg/97.0.1072.55\r\nAccept: text/html\r\nAccept-Language: zh-CN,zh\r\nAccept-Encoding: deflate\r\n");
+
+	if (!APIClient_Http_Request(_T("GET"), lpszUrl, NULL, NULL, &ptszBody, &nBLen, lpszHdrBuffer))
+	{
+		return FALSE;
+	}
+	memcpy(ptszIPAddr, ptszBody, nBLen - 1);
+	BaseLib_OperatorMemory_FreeCStyle((VOID**)&ptszBody);
+	return TRUE;
+}
 int APPClient_P2XPLogin()
 {
 	Json::Value st_JsonRoot;
@@ -67,7 +83,7 @@ int APPClient_P2XPLogin()
 	int nMsgLen = 0;
 	int nHTTPCode = 0;
 	TCHAR* ptszMsgBuffer = NULL;
-	if (!APIHelp_HttpRequest_Custom(_T("POST"), lpszAddr, st_JsonRoot.toStyledString().c_str(), &nHTTPCode, &ptszMsgBuffer, &nMsgLen))
+	if (!APIClient_Http_Request(_T("POST"), lpszAddr, st_JsonRoot.toStyledString().c_str(), &nHTTPCode, &ptszMsgBuffer, &nMsgLen))
 	{
 		return -1;
 	}
@@ -88,7 +104,7 @@ int APPClient_P2XPList()
 	int nMsgLen = 0;
 	int nHTTPCode = 0;
 	TCHAR* ptszMsgBuffer = NULL;
-	if (!APIHelp_HttpRequest_Custom(_T("POST"), lpszAddr, st_JsonRoot.toStyledString().c_str(), &nHTTPCode, &ptszMsgBuffer, &nMsgLen))
+	if (!APIClient_Http_Request(_T("POST"), lpszAddr, st_JsonRoot.toStyledString().c_str(), &nHTTPCode, &ptszMsgBuffer, &nMsgLen))
 	{
 		return -1;
 	}
@@ -109,7 +125,7 @@ int APPClient_P2XPGetUser()
 	int nMsgLen = 0;
 	int nHTTPCode = 0;
 	TCHAR* ptszMsgBuffer = NULL;
-	if (!APIHelp_HttpRequest_Custom(_T("POST"), lpszAddr, st_JsonRoot.toStyledString().c_str(), &nHTTPCode, &ptszMsgBuffer, &nMsgLen))
+	if (!APIClient_Http_Request(_T("POST"), lpszAddr, st_JsonRoot.toStyledString().c_str(), &nHTTPCode, &ptszMsgBuffer, &nMsgLen))
 	{
 		return -1;
 	}
@@ -130,7 +146,7 @@ int APPClient_P2XPConnect()
 	int nMsgLen = 0;
 	int nHTTPCode = 0;
 	TCHAR* ptszMsgBuffer = NULL;
-	if (!APIHelp_HttpRequest_Custom(_T("POST"), lpszAddr, st_JsonRoot.toStyledString().c_str(), &nHTTPCode, &ptszMsgBuffer, &nMsgLen))
+	if (!APIClient_Http_Request(_T("POST"), lpszAddr, st_JsonRoot.toStyledString().c_str(), &nHTTPCode, &ptszMsgBuffer, &nMsgLen))
 	{
 		return -1;
 	}

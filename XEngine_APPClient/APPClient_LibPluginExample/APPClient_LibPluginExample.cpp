@@ -3,7 +3,7 @@
 #include <tchar.h>
 #pragma comment(lib,"Ws2_32")
 #pragma comment(lib,"XEngine_BaseLib/XEngine_BaseLib")
-#pragma comment(lib,"XEngine_NetHelp/NetHelp_APIHelp")
+#pragma comment(lib,"XEngine_NetHelp/NetHelp_APIClient")
 #endif
 #include <stdio.h>
 #include <stdlib.h>
@@ -13,13 +13,13 @@
 #include <XEngine_Include/XEngine_ProtocolHdr.h>
 #include <XEngine_Include/XEngine_BaseLib/BaseLib_Define.h>
 #include <XEngine_Include/XEngine_BaseLib/BaseLib_Error.h>
-#include <XEngine_Include/XEngine_NetHelp/APIHelp_Define.h>
-#include <XEngine_Include/XEngine_NetHelp/APIHelp_Error.h>
+#include <XEngine_Include/XEngine_NetHelp/APIClient_Define.h>
+#include <XEngine_Include/XEngine_NetHelp/APIClient_Error.h>
 
 //需要优先配置XEngine
 //WINDOWS支持VS2022 x64 debug 编译调试
-//linux::g++ -std=c++17 -Wall -g APPClient_LibPluginExample.cpp -o APPClient_LibPluginExample.exe -L /usr/local/lib/XEngine_Release/XEngine_BaseLib -L /usr/local/lib/XEngine_Release/XEngine_NetHelp -lXEngine_BaseLib -lNetHelp_APIHelp
-//macos::g++ -std=c++17 -Wall -g APPClient_LibPluginExample.cpp -o APPClient_LibPluginExample.exe -lXEngine_BaseLib -lNetHelp_APIHelp
+//linux::g++ -std=c++17 -Wall -g APPClient_LibPluginExample.cpp -o APPClient_LibPluginExample.exe -L /usr/local/lib/XEngine_Release/XEngine_BaseLib -L /usr/local/lib/XEngine_Release/XEngine_NetHelp -lXEngine_BaseLib -lNetHelp_APIClient
+//macos::g++ -std=c++17 -Wall -g APPClient_LibPluginExample.cpp -o APPClient_LibPluginExample.exe -lXEngine_BaseLib -lNetHelp_APIClient
 
 int main()
 {
@@ -30,7 +30,7 @@ int main()
 	int nLen = 0;
 	TCHAR* ptszMsgBuffer = NULL;
 	LPCTSTR lpszPassUrl = _T("http://127.0.0.1:5501/api?function=pass&params1=1&params2=4");
-	if (!APIHelp_HttpRequest_Custom(_T("GET"), lpszPassUrl, NULL, NULL, &ptszMsgBuffer, &nLen))
+	if (!APIClient_Http_Request(_T("GET"), lpszPassUrl, NULL, NULL, &ptszMsgBuffer, &nLen))
 	{
 		printf("发送投递失败！\n");
 		return 0;
@@ -39,7 +39,7 @@ int main()
 	BaseLib_OperatorMemory_FreeCStyle((XPPMEM)&ptszMsgBuffer);
 
 	LPCTSTR lpszZodiacUrl = _T("http://127.0.0.1:5501/api?function=zodiac&params1=19880121");
-	if (!APIHelp_HttpRequest_Custom(_T("GET"), lpszZodiacUrl, NULL, NULL, &ptszMsgBuffer, &nLen))
+	if (!APIClient_Http_Request(_T("GET"), lpszZodiacUrl, NULL, NULL, &ptszMsgBuffer, &nLen))
 	{
 		printf("发送投递失败！\n");
 		return 0;
@@ -48,7 +48,7 @@ int main()
 	BaseLib_OperatorMemory_FreeCStyle((XPPMEM)&ptszMsgBuffer);
 
 	LPCTSTR lpszTimeUrl = _T("http://127.0.0.1:5501/api?function=timezone&params1=1&params2=1-20");
-	if (!APIHelp_HttpRequest_Custom(_T("GET"), lpszTimeUrl, NULL, NULL, &ptszMsgBuffer, &nLen))
+	if (!APIClient_Http_Request(_T("GET"), lpszTimeUrl, NULL, NULL, &ptszMsgBuffer, &nLen))
 	{
 		printf("发送投递失败！\n");
 		return 0;
@@ -57,7 +57,7 @@ int main()
 	BaseLib_OperatorMemory_FreeCStyle((XPPMEM)&ptszMsgBuffer);
 
 	LPCTSTR lpszBmiUrl = _T("http://127.0.0.1:5501/api?function=bmindex&params1=1.78&params2=62");
-	if (!APIHelp_HttpRequest_Custom(_T("GET"), lpszBmiUrl, NULL, NULL, &ptszMsgBuffer, &nLen))
+	if (!APIClient_Http_Request(_T("GET"), lpszBmiUrl, NULL, NULL, &ptszMsgBuffer, &nLen))
 	{
 		printf("发送投递失败！\n");
 		return 0;

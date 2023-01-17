@@ -5,7 +5,7 @@
 #pragma comment(lib,"jsoncpp")
 #pragma comment(lib,"XEngine_BaseLib/XEngine_BaseLib")
 #pragma comment(lib,"XEngine_Core/XEngine_OPenSsl")
-#pragma comment(lib,"XEngine_NetHelp/NetHelp_APIHelp")
+#pragma comment(lib,"XEngine_NetHelp/NetHelp_APIClient")
 #pragma comment(lib,"XEngine_HelpComponents/HelpComponents_Authorize")
 #endif
 #include <stdio.h>
@@ -19,15 +19,15 @@
 #include <XEngine_Include/XEngine_BaseLib/BaseLib_Error.h>
 #include <XEngine_Include/XEngine_Core/OPenSsl_Define.h>
 #include <XEngine_Include/XEngine_Core/OPenSsl_Error.h>
-#include <XEngine_Include/XEngine_NetHelp/APIHelp_Define.h>
-#include <XEngine_Include/XEngine_NetHelp/APIHelp_Error.h>
+#include <XEngine_Include/XEngine_NetHelp/APIClient_Define.h>
+#include <XEngine_Include/XEngine_NetHelp/APIClient_Error.h>
 #include <XEngine_Include/XEngine_HelpComponents/Authorize_Define.h>
 #include <XEngine_Include/XEngine_HelpComponents/Authorize_Error.h>
 
 //需要优先配置XEngine
 //WINDOWS支持VS2022 x64 debug 编译调试
-//linux::g++ -std=c++17 -Wall -g APPClient_CDKeyExample.cpp -o APPClient_CDKeyExample.exe -L /usr/local/lib/XEngine_Release/XEngine_BaseLib -L /usr/local/lib/XEngine_Release/XEngine_Core -L /usr/local/lib/XEngine_Release/XEngine_NetHelp -L /usr/local/lib/XEngine_Release/XEngine_HelpComponents -lXEngine_BaseLib -lXEngine_OPenSsl -lNetHelp_APIHelp -lHelpComponents_Authorize
-//macos::g++ -std=c++17 -Wall -g APPClient_CDKeyExample.cpp -o APPClient_CDKeyExample.exe -lXEngine_BaseLib -lXEngine_OPenSsl -lNetHelp_APIHelp -lHelpComponents_Authorize
+//linux::g++ -std=c++17 -Wall -g APPClient_CDKeyExample.cpp -o APPClient_CDKeyExample.exe -L /usr/local/lib/XEngine_Release/XEngine_BaseLib -L /usr/local/lib/XEngine_Release/XEngine_Core -L /usr/local/lib/XEngine_Release/XEngine_NetHelp -L /usr/local/lib/XEngine_Release/XEngine_HelpComponents -lXEngine_BaseLib -lXEngine_OPenSsl -lNetHelp_APIClient -lHelpComponents_Authorize
+//macos::g++ -std=c++17 -Wall -g APPClient_CDKeyExample.cpp -o APPClient_CDKeyExample.exe -lXEngine_BaseLib -lXEngine_OPenSsl -lNetHelp_APIClient -lHelpComponents_Authorize
 
 int main()
 {
@@ -63,7 +63,7 @@ int main()
 
 	TCHAR* ptszCreateBuffer = NULL;
 	TCHAR* ptszAuthBuffer = NULL;
-	if (!APIHelp_HttpRequest_Custom(_T("POST"), lpszCreateUrl, st_JsonRoot.toStyledString().c_str(), &nCode, &ptszCreateBuffer, &nLen))
+	if (!APIClient_Http_Request(_T("POST"), lpszCreateUrl, st_JsonRoot.toStyledString().c_str(), &nCode, &ptszCreateBuffer, &nLen))
 	{
 		printf("发送投递失败！\n");
 		return 0;
@@ -77,7 +77,7 @@ int main()
 	BaseLib_OperatorMemory_FreeCStyle((XPPMEM)&ptszCreateBuffer);
 
 	LPCTSTR lpszAuthUrl = _T("http://127.0.0.1:5501/api?function=cdkey&params1=1&params2=123123");
-	if (!APIHelp_HttpRequest_Custom(_T("POST"), lpszAuthUrl, tszMsgBuffer, &nCode, &ptszAuthBuffer, &nLen))
+	if (!APIClient_Http_Request(_T("POST"), lpszAuthUrl, tszMsgBuffer, &nCode, &ptszAuthBuffer, &nLen))
 	{
 		printf("发送投递失败！\n");
 		return 0;

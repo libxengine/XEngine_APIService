@@ -3,18 +3,9 @@ LIBRARY
 EXPORTS
 	ModuleDB_GetLastError
 
-	ModuleDatabase_IPInfo_Init
-	ModuleDatabase_IPInfo_Destory
-	ModuleDatabase_IPInfo_IPV4Query
-	ModuleDatabase_IPInfo_IPV6Query
-
 	ModuleDatabase_IDCard_Init
 	ModuleDatabase_IDCard_Destory
 	ModuleDatabase_IDCard_QueryRegion
-
-	ModuleDatabase_Phone_Init
-	ModuleDatabase_Phone_Destory
-	ModuleDatabase_Phone_Query
 
 	ModuleDatabase_Bank_Init
 	ModuleDatabase_Bank_Destory
@@ -24,3 +15,10 @@ EXPORTS
 	ModuleDatabase_ZIPCode_Destory
 	ModuleDatabase_ZIPCode_QueryZIPCode
 	ModuleDatabase_ZIPCode_QueryName
+
+	ModuleDatabase_XLog_Init
+	ModuleDatabase_XLog_Destory
+	ModuleDatabase_XLog_Create
+	ModuleDatabase_XLog_Insert
+	ModuleDatabase_XLog_Query
+	ModuleDatabase_XLog_Delete

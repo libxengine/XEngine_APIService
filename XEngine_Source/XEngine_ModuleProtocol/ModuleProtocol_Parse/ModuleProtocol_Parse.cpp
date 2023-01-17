@@ -312,139 +312,6 @@ BOOL CModuleProtocol_Parse::ModuleProtocol_Parse_P2PClient(LPCTSTR lpszMsgBuffer
 	return TRUE;
 }
 /********************************************************************
-函数名称：ModuleProtocol_Parse_CDKey
-函数功能：解析CDKEY
- 参数.一：lpszMsgBuffer
-  In/Out：In
-  类型：常量字符指针
-  可空：N
-  意思：输入要解析的缓冲区
- 参数.二：nMsgLen
-  In/Out：In
-  类型：整数型
-  可空：N
-  意思：输入缓冲区大小
- 参数.三：pSt_Authorize
-  In/Out：Out
-  类型：数据结构指针
-  可空：N
-  意思：输出解析后的信息
-返回值
-  类型：逻辑型
-  意思：是否成功
-备注：
-*********************************************************************/
-BOOL CModuleProtocol_Parse::ModuleProtocol_Parse_CDKey(LPCTSTR lpszMsgBuffer, int nMsgLen, XENGINE_AUTHORIZE_LOCAL* pSt_Authorize)
-{
-	ModuleProtocol_IsErrorOccur = FALSE;
-
-	if ((NULL == lpszMsgBuffer) || (NULL == pSt_Authorize))
-	{
-		ModuleProtocol_IsErrorOccur = TRUE;
-		ModuleProtocol_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PROTOCOL_PARSE_PARAMENT;
-		return FALSE;
-	}
-	Json::Value st_JsonRoot;
-	JSONCPP_STRING st_JsonError;
-	Json::CharReaderBuilder st_ReaderBuilder;
-	//解析JSON
-	std::unique_ptr<Json::CharReader> const pSt_JsonReader(st_ReaderBuilder.newCharReader());
-	if (!pSt_JsonReader->parse(lpszMsgBuffer, lpszMsgBuffer + nMsgLen, &st_JsonRoot, &st_JsonError))
-	{
-		ModuleProtocol_IsErrorOccur = TRUE;
-		ModuleProtocol_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PROTOCOL_PARSE_PARAMENT;
-		return FALSE;
-	}
-
-	if (!st_JsonRoot["tszAddr"].isNull())
-	{
-		_tcscpy(pSt_Authorize->tszAddr, st_JsonRoot["tszAddr"].asCString());
-	}
-	if (!st_JsonRoot["nPort"].isNull())
-	{
-		pSt_Authorize->nPort = st_JsonRoot["nPort"].asInt();
-	}
-	//应用信息
-	Json::Value st_JsonAPPInfo = st_JsonRoot["st_AuthAppInfo"];
-	if (!st_JsonAPPInfo["nExecTime"].isNull())
-	{
-		pSt_Authorize->st_AuthAppInfo.nExecTime = st_JsonAPPInfo["nExecTime"].asInt();
-	}
-	if (!st_JsonAPPInfo["bInit"].isNull())
-	{
-		pSt_Authorize->st_AuthAppInfo.bInit = st_JsonAPPInfo["bInit"].asBool();
-	}
-	if (!st_JsonAPPInfo["tszAppName"].isNull())
-	{
-		_tcscpy(pSt_Authorize->st_AuthAppInfo.tszAppName, st_JsonAPPInfo["tszAppName"].asCString());
-	}
-	if (!st_JsonAPPInfo["tszAppVer"].isNull())
-	{
-		_tcscpy(pSt_Authorize->st_AuthAppInfo.tszAppVer, st_JsonAPPInfo["tszAppVer"].asCString());
-	}
-	//注册信息
-	Json::Value st_JsonREGInfo = st_JsonRoot["st_AuthRegInfo"];
-	if (!st_JsonREGInfo["nHasTime"].isNull())
-	{
-		pSt_Authorize->st_AuthRegInfo.nHasTime = (ENUM_HELPCOMPONENTS_AUTHORIZE_REG_TYPE)st_JsonREGInfo["nHasTime"].asInt();
-	}
-	if (!st_JsonREGInfo["enSerialType"].isNull())
-	{
-		pSt_Authorize->st_AuthRegInfo.enSerialType = (ENUM_HELPCOMPONENTS_AUTHORIZE_SERIAL_TYPE)st_JsonREGInfo["enSerialType"].asInt();
-	}
-	if (!st_JsonREGInfo["enRegType"].isNull())
-	{
-		pSt_Authorize->st_AuthRegInfo.enRegType = (ENUM_HELPCOMPONENTS_AUTHORIZE_REG_TYPE)st_JsonREGInfo["enRegType"].asInt();
-	}
-	if (!st_JsonREGInfo["enHWType"].isNull())
-	{
-		pSt_Authorize->st_AuthRegInfo.enHWType = (ENUM_HELPCOMPONENTS_AUTHORIZE_HW_TYPE)st_JsonREGInfo["enHWType"].asInt();
-	}
-	if (!st_JsonREGInfo["enVModeType"].isNull())
-	{
-		pSt_Authorize->st_AuthRegInfo.enVModeType = (ENUM_HELPCOMPONENTS_AUTHORIZE_VERMODE_TYPE)st_JsonREGInfo["enVModeType"].asInt();
-	}
-	if (!st_JsonREGInfo["tszHardware"].isNull())
-	{
-		_tcscpy(pSt_Authorize->st_AuthRegInfo.tszHardware, st_JsonREGInfo["tszHardware"].asCString());
-	}
-	if (!st_JsonREGInfo["tszCreateTime"].isNull())
-	{
-		_tcscpy(pSt_Authorize->st_AuthRegInfo.tszCreateTime, st_JsonREGInfo["tszCreateTime"].asCString());
-	}
-	if (!st_JsonREGInfo["tszRegisterTime"].isNull())
-	{
-		_tcscpy(pSt_Authorize->st_AuthRegInfo.tszRegisterTime, st_JsonREGInfo["tszRegisterTime"].asCString());
-	}
-	if (!st_JsonREGInfo["tszLeftTime"].isNull())
-	{
-		_tcscpy(pSt_Authorize->st_AuthRegInfo.tszLeftTime, st_JsonREGInfo["tszLeftTime"].asCString());
-	}
-	if (!st_JsonREGInfo["tszStartTime"].isNull())
-	{
-		_tcscpy(pSt_Authorize->st_AuthRegInfo.tszStartTime, st_JsonREGInfo["tszStartTime"].asCString());
-	}
-	if (!st_JsonREGInfo["tszExpiryTime"].isNull())
-	{
-		_tcscpy(pSt_Authorize->st_AuthRegInfo.tszExpiryTime, st_JsonREGInfo["tszExpiryTime"].asCString());
-	}
-	//CDKEY用户信息
-	Json::Value st_JsonUserInfo = st_JsonRoot["st_AuthUserInfo"];
-	if (!st_JsonUserInfo["tszUserName"].isNull())
-	{
-		_tcscpy(pSt_Authorize->st_AuthUserInfo.tszUserName, st_JsonUserInfo["tszUserName"].asCString());
-	}
-	if (!st_JsonUserInfo["tszUserContact"].isNull())
-	{
-		_tcscpy(pSt_Authorize->st_AuthUserInfo.tszUserContact, st_JsonUserInfo["tszUserContact"].asCString());
-	}
-	if (!st_JsonUserInfo["tszCustom"].isNull())
-	{
-		_tcscpy(pSt_Authorize->st_AuthUserInfo.tszCustom, st_JsonUserInfo["tszCustom"].asCString());
-	}
-	return TRUE;
-}
-/********************************************************************
 函数名称：ModuleProtocol_Parse_ZIPCode
 函数功能：解析邮政地址信息
  参数.一：lpszMsgBuffer
@@ -505,6 +372,93 @@ BOOL CModuleProtocol_Parse::ModuleProtocol_Parse_ZIPCode(LPCTSTR lpszMsgBuffer, 
 	if (!st_JsonRoot["nZipCode"].isNull())
 	{
 		pSt_ZIPInfo->nZipCode = st_JsonRoot["nZipCode"].asInt();
+	}
+	return TRUE;
+}
+/********************************************************************
+函数名称：ModuleProtocol_Parse_XLog
+函数功能：解析日志信息
+ 参数.一：lpszMsgBuffer
+  In/Out：In
+  类型：常量字符指针
+  可空：N
+  意思：输入要解析的数据
+ 参数.二：nMsgLen
+  In/Out：In
+  类型：整数型
+  可空：N
+  意思：输入数据大小
+ 参数.三：pSt_XLogInfo
+  In/Out：Out
+  类型：数据结构指针
+  可空：N
+  意思：输出解析的日志信息
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+BOOL CModuleProtocol_Parse::ModuleProtocol_Parse_XLog(LPCTSTR lpszMsgBuffer, int nMsgLen, XENGINE_XLOGINFO* pSt_XLogInfo)
+{
+	ModuleProtocol_IsErrorOccur = FALSE;
+
+	if ((NULL == lpszMsgBuffer) || (NULL == pSt_XLogInfo))
+	{
+		ModuleProtocol_IsErrorOccur = TRUE;
+		ModuleProtocol_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PROTOCOL_PARSE_PARAMENT;
+		return FALSE;
+	}
+	Json::Value st_JsonRoot;
+	JSONCPP_STRING st_JsonError;
+	Json::CharReaderBuilder st_ReaderBuilder;
+	//解析JSON
+	std::unique_ptr<Json::CharReader> const pSt_JsonReader(st_ReaderBuilder.newCharReader());
+	if (!pSt_JsonReader->parse(lpszMsgBuffer, lpszMsgBuffer + nMsgLen, &st_JsonRoot, &st_JsonError))
+	{
+		ModuleProtocol_IsErrorOccur = TRUE;
+		ModuleProtocol_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PROTOCOL_PARSE_PARAMENT;
+		return FALSE;
+	}
+
+	if (!st_JsonRoot["tszTableName"].isNull())
+	{
+		_tcscpy(pSt_XLogInfo->tszTableName, st_JsonRoot["tszTableName"].asCString());
+	}
+	if (!st_JsonRoot["tszLogBuffer"].isNull())
+	{
+		_tcscpy(pSt_XLogInfo->tszLogBuffer, st_JsonRoot["tszLogBuffer"].asCString());
+	}
+	if (!st_JsonRoot["nLogSize"].isNull())
+	{
+		pSt_XLogInfo->nLogSize = st_JsonRoot["nLogSize"].asInt();
+	}
+	if (!st_JsonRoot["tszTimeStart"].isNull())
+	{
+		_tcscpy(pSt_XLogInfo->tszTimeStart, st_JsonRoot["tszTimeStart"].asCString());
+	}
+	if (!st_JsonRoot["tszTimeEnd"].isNull())
+	{
+		_tcscpy(pSt_XLogInfo->tszTimeEnd, st_JsonRoot["tszTimeEnd"].asCString());
+	}
+	if (!st_JsonRoot["tszFileName"].isNull())
+	{
+		_tcscpy(pSt_XLogInfo->st_ProtocolLog.tszFileName, st_JsonRoot["tszFileName"].asCString());
+	}
+	if (!st_JsonRoot["tszFuncName"].isNull())
+	{
+		_tcscpy(pSt_XLogInfo->st_ProtocolLog.tszFuncName, st_JsonRoot["tszFuncName"].asCString());
+	}
+	if (!st_JsonRoot["tszLogTimer"].isNull())
+	{
+		_tcscpy(pSt_XLogInfo->st_ProtocolLog.tszLogTimer, st_JsonRoot["tszLogTimer"].asCString());
+	}
+	if (!st_JsonRoot["nLogLine"].isNull())
+	{
+		pSt_XLogInfo->st_ProtocolLog.nLogLine = st_JsonRoot["nLogLine"].asInt();
+	}
+	if (!st_JsonRoot["nLogLevel"].isNull())
+	{
+		pSt_XLogInfo->st_ProtocolLog.nLogLevel = st_JsonRoot["nLogLevel"].asInt();
 	}
 	return TRUE;
 }

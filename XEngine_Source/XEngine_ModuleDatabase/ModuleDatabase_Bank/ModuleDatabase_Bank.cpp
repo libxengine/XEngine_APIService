@@ -34,11 +34,24 @@ CModuleDatabase_Bank::~CModuleDatabase_Bank()
   意思：是否成功
 备注：
 *********************************************************************/
-BOOL CModuleDatabase_Bank::ModuleDatabase_Bank_Init(LPCTSTR lpszSQLFile)
+BOOL CModuleDatabase_Bank::ModuleDatabase_Bank_Init(DATABASE_MYSQL_CONNECTINFO* pSt_DBConnector)
 {
 	DBModule_IsErrorOccur = FALSE;
-	//打开数据库
-	if (!DataBase_SQLite_Open(&xhSQL, lpszSQLFile))
+
+	if (NULL == pSt_DBConnector)
+	{
+		DBModule_IsErrorOccur = TRUE;
+		DBModule_dwErrorCode = ERROR_APISERVICE_MODULE_DATABASE_PARAMENT;
+		return FALSE;
+	}
+#ifdef _WINDOWS
+	LPCTSTR lpszStrCharset = _T("gbk");
+#else
+	LPCTSTR lpszStrCharset = _T("utf8");
+#endif
+	//连接数据库
+	_tcscpy(pSt_DBConnector->tszDBName, _T("XEngine_APIInfo"));
+	if (!DataBase_MySQL_Connect(&xhDBSQL, pSt_DBConnector, 5, TRUE, lpszStrCharset))
 	{
 		DBModule_IsErrorOccur = TRUE;
 		DBModule_dwErrorCode = DataBase_GetLastError();
@@ -58,7 +71,7 @@ BOOL CModuleDatabase_Bank::ModuleDatabase_Bank_Destory()
 {
 	DBModule_IsErrorOccur = FALSE;
 
-	DataBase_SQLite_Close(xhSQL);
+	DataBase_MySQL_Close(xhDBSQL);
 	return TRUE;
 }
 /********************************************************************
@@ -81,18 +94,18 @@ BOOL CModuleDatabase_Bank::ModuleDatabase_Bank_Query(XENGINE_BANKINFO* pSt_BankI
     if (NULL == pSt_BankInfo)
     {
         DBModule_IsErrorOccur = TRUE;
-        DBModule_dwErrorCode = ERROR_APISERVICE_MODULE_DATABASE_BANK_PARAMENT;
+        DBModule_dwErrorCode = ERROR_APISERVICE_MODULE_DATABASE_PARAMENT;
         return FALSE;
     }
     //查询
-    int nLine = 0;
-    int nRow = 0;
-    TCHAR** pptszResult;
+	__int64u nLine = 0;
+	__int64u nRow = 0;
+	XNETHANDLE xhTable = 0;
     TCHAR tszSQLStatement[1024];
 
     memset(tszSQLStatement, '\0', sizeof(tszSQLStatement));
-	_stprintf(tszSQLStatement, _T("SELECT * FROM `BankCard` WHERE tszBankAbridge = '%s'"), pSt_BankInfo->tszBankAbridge);
-	if (!DataBase_SQLite_GetTable(xhSQL, tszSQLStatement, &pptszResult, &nLine, &nRow))
+	_stprintf(tszSQLStatement, _T("SELECT * FROM `BankList` WHERE tszBankAbridge = '%s'"), pSt_BankInfo->tszBankAbridge);
+	if (!DataBase_MySQL_ExecuteQuery(xhDBSQL, &xhTable, tszSQLStatement, &nLine, &nRow))
 	{
 		DBModule_IsErrorOccur = TRUE;
 		DBModule_dwErrorCode = DataBase_GetLastError();
@@ -101,11 +114,12 @@ BOOL CModuleDatabase_Bank::ModuleDatabase_Bank_Query(XENGINE_BANKINFO* pSt_BankI
 	if (nLine <= 0)
 	{
 		DBModule_IsErrorOccur = TRUE;
-		DBModule_dwErrorCode = ERROR_APISERVICE_MODULE_DATABASE_BANK_NOTFOUND;
+		DBModule_dwErrorCode = ERROR_APISERVICE_MODULE_DATABASE_NOTFOUND;
 		return FALSE;
 	}
-	_tcscpy(pSt_BankInfo->tszBankName, pptszResult[nRow + 1]);
+	TCHAR** pptszResult = DataBase_MySQL_GetResult(xhDBSQL, xhTable);
+	_tcscpy(pSt_BankInfo->tszBankName, pptszResult[2]);
 
-	DataBase_SQLite_FreeTable(pptszResult);
+	DataBase_MySQL_FreeResult(xhDBSQL, xhTable);
 	return TRUE;
 }
