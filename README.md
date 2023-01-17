@@ -19,7 +19,7 @@ c c++ interface api service
 
 ## 软件特性
 1. 权限验证
-2. 支持IP地址位置信息查询(IPV4和IPV6)
+2. 支持IP地址位置信息查询
 3. 支持身份证校验与信息查询
 4. 支持手机号信息归属查询
 5. 天气预报(计划中)
@@ -40,10 +40,11 @@ c c++ interface api service
 20. 计量转换
 21. CDKey创建支持
 22. 分布式锁API
-23. 短连接生成
+23. 短连接生成(计划中)
 24. 本地标准时间
 25. 数学计算
-26. 日志服务(计划中)
+26. 日志服务
+27. 插件脚本热重载(计划中)
 
 ## 安装教程
 
@@ -58,13 +59,17 @@ window执行XEngine_WINEnv.bat 脚本.
 Linux执行:sudo ./XEngine_LINEnv.sh -i 3  
 macos执行:./XEngine_LINEnv.sh -i 3  
 
+#### 数据库环境
+需要MYSQL数据库8.0以上版本.通过CreateDatabase.sql创建表,然后XEngine_APIInfo.sql导入表  
+修改配置文件里面XSQL里面的数据库配置为你的  
+
 #### Windows
 需要vcpkg配置第三方环境,具体参考vcpkg安装方式,安装好后执行:vcpkg.exe install lua lua:x64-windows opencc opencc:x64-windows  
 使用VS打开并且编译,支持WINDOWS 7SP1以上系统  
 直接运行即可
 
 #### Linux
-安装opencc,ubuntu:sudo apt install liblua5.3-dev libopencc-dev  
+ubuntu:sudo apt install liblua5.3-dev libopencc-dev  
 centos:需要自己编译  
 Linux使用Makefile编译,UBUNTU20.04 x64或者CENTOS8 x64  
 在控制台运行
@@ -109,41 +114,6 @@ make FLAGS=CleanAll 清理编译
 
 #### 测试接口示例
 更多内容请参考文档  
-手机信息查询  
-接口:http://app.xyry.org:5501/api?function=phone&params1=13699439999
-```json
-{
-    "code":0,
-    "data":{
-        "nAreaCode":28,
-        "nPhoneNumber":13699439999,
-        "nZipCode":610000,
-        "tszCity":"成都",
-        "tszProvincer":"四川"
-    },
-    "msg":"success"
-}
-```
-IP地址查询  
-接口:http://app.xyry.org:5501/api?function=ip&params1=1.29.164.255
-```json
-{
-    "code":0,
-    "data":{
-        "tszIPAddr":"1.29.164.255",
-        "tszIPAddress":"内蒙古通辽市霍林郭勒市",
-        "tszIPCity":"通辽市",
-        "tszIPCountry":"中国",
-        "tszIPCounty":"霍林郭勒市",
-        "tszIPEnd":"1.29.164.255",
-        "tszIPISP":"联通",
-        "tszIPProvince":"内蒙古",
-        "tszIPStart":"1.29.164.0",
-        "tszIPTime":"2021-11-03 07:33:50"
-    },
-    "msg":"success"
-}
-```
 身份证查询  
 接口:http://app.xyry.org:5501/api?function=id&params1=511025198800000000
 ```json

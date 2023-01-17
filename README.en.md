@@ -19,7 +19,7 @@ Support privatization deployment, free, safe, open source, controllable
 
 ## Software feature
 1. permission verication
-2. support ip address location information query(IPV4 and IPV6)
+2. support ip address location information query
 3. support ID verification and information query
 4. support phone number information query
 5. Weather forecast (planned)
@@ -40,10 +40,11 @@ Support privatization deployment, free, safe, open source, controllable
 20. Metering Conversion
 21. CDKey Creator
 22. Distributed lock
-23. short url creator
+23. short url creator(planned)
 24. local system time
 25. math Calculation
-26. log service(plan)
+26. log service
+27. Plugin hot reload(planned)
 
 ## install
 
@@ -58,13 +59,17 @@ window Exection XEngine_WINEnv.bat
 Linux Exection:sudo ./XEngine_LINEnv.sh -i 3  
 Macos Exection:./XEngine_LINEnv.sh -i 3
 
+#### Database Env
+MYSQL database version 8.0 or above is required. Create a table through CreateDatabase.sql, and then import the table with XEngine_APIInfo.sql  
+Modify the database configuration in XSQL in the configuration file to your  
+
 #### Windows
 need to vcpkg configure third-part env.refer vcpkg install guide.after installed and execution:vcpkg.exe install lua lua:x64-windows opencc opencc:x64-windows  
 use vs open and compile,suport windows 7sp1 and above  
 Just Run it
 
 #### Linux
-install opencc,ubuntu:sudo apt install libopencc-dev  
+ubuntu:sudo apt install libopencc-dev  
 centos:compile by self  
 use makefile compile,UBUNTU20.04 x64 or CENTOS8 x64  
 Run it on the terminal
@@ -111,41 +116,6 @@ You can refer to the document under the docment directory. It contains API proto
 Address:app.xyry.org,Port:5501  
 #### example
 For more information please refer to the documentation  
-phone information query  
-api:http://app.xyry.org:5501/api?function=phone&params1=13699439999
-```json
-{
-    "code":0,
-    "data":{
-        "nAreaCode":28,
-        "nPhoneNumber":13699439999,
-        "nZipCode":610000,
-        "tszCity":"成都",
-        "tszProvincer":"四川"
-    },
-    "msg":"success"
-}
-```
-ip address information  
-api:http://app.xyry.org:5501/api?function=ip&params1=1.29.164.255
-```json
-{
-    "code":0,
-    "data":{
-        "tszIPAddr":"1.29.164.255",
-        "tszIPAddress":"内蒙古通辽市霍林郭勒市",
-        "tszIPCity":"通辽市",
-        "tszIPCountry":"中国",
-        "tszIPCounty":"霍林郭勒市",
-        "tszIPEnd":"1.29.164.255",
-        "tszIPISP":"联通",
-        "tszIPProvince":"内蒙古",
-        "tszIPStart":"1.29.164.0",
-        "tszIPTime":"2021-11-03 07:33:50"
-    },
-    "msg":"success"
-}
-```
 id information query  
 api:http://app.xyry.org:5501/api?function=id&params1=511025198800000000
 ```json
