@@ -176,29 +176,6 @@ api:http://app.xyry.org:5501/api?function=translation&params1=中国&params2=0
     "msg":"success"
 }
 ```
-Authorize CDKey  
-Api:http://app.xyry.org:5501/api?function=cdkey&params1=0
-```json
-{
-    "tszAddr":"服务器地址",
-    "nPort":5000,
-    "st_AuthAppInfo":{
-        "tszAppName":"自定义名称",
-        "tszAppVer":"自定义版本"
-    },
-    "st_AuthRegInfo":{
-        "tszHardware":"硬件吗",
-        "enSerialType":1,
-        "enRegType":1,
-        "enHWType":1
-    },
-    "st_AuthUserInfo":{
-        "tszUserName":"注册的用户名",
-        "tszUserContact":"联系方式",
-        "tszCustom":"自定义,可选参数"
-    }
-}
-```
 Distributed Lock  
 Api:http://app.xyry.org:5501/api?function=lock&params1=1000154321&params2=1
 ```json
@@ -208,6 +185,27 @@ Api:http://app.xyry.org:5501/api?function=lock&params1=1000154321&params2=1
         "xhToken":1000154321
     },
     "msg":"success"
+}
+```
+ZIPCode  
+Api:http://app.xyry.org:5501/api?function=zipcode&params1=0  
+```json
+{
+    "nZipCode":100010
+}
+```
+Log  
+Api:http://app.xyry.org:5501/api?function=log&params1=1  
+```json
+{
+    "tszTableName":"xengine",
+    "tszLogBuffer":"d12d",
+    "nLogSize":4,
+    "tszFileName":"file.cpp",
+    "tszFuncName":"xengine_file_insert",
+    "tszLogTimer":"2023-01-13 22:10:01",
+    "nLogLine":102,
+    "nLogLevel":4
 }
 ```
 ## Participate in contribution
