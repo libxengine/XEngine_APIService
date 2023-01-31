@@ -462,3 +462,58 @@ BOOL CModuleProtocol_Parse::ModuleProtocol_Parse_XLog(LPCTSTR lpszMsgBuffer, int
 	}
 	return TRUE;
 }
+/********************************************************************
+函数名称：ModuleProtocol_Parse_QRCode
+函数功能：二维码协议解析
+ 参数.一：lpszMsgBuffer
+  In/Out：In
+  类型：常量字符指针
+  可空：N
+  意思：输入要解析的数据
+ 参数.二：nMsgLen
+  In/Out：In
+  类型：整数型
+  可空：N
+  意思：输入数据大小
+ 参数.三：pSt_QRCode
+  In/Out：Out
+  类型：数据结构指针
+  可空：N
+  意思：输出解析的信息
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+BOOL CModuleProtocol_Parse::ModuleProtocol_Parse_QRCode(LPCTSTR lpszMsgBuffer, int nMsgLen, XENGINE_QRCODE* pSt_QRCode)
+{
+	ModuleProtocol_IsErrorOccur = FALSE;
+
+	if ((NULL == lpszMsgBuffer) || (NULL == pSt_QRCode))
+	{
+		ModuleProtocol_IsErrorOccur = TRUE;
+		ModuleProtocol_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PROTOCOL_PARSE_PARAMENT;
+		return FALSE;
+	}
+	Json::Value st_JsonRoot;
+	JSONCPP_STRING st_JsonError;
+	Json::CharReaderBuilder st_ReaderBuilder;
+	//解析JSON
+	std::unique_ptr<Json::CharReader> const pSt_JsonReader(st_ReaderBuilder.newCharReader());
+	if (!pSt_JsonReader->parse(lpszMsgBuffer, lpszMsgBuffer + nMsgLen, &st_JsonRoot, &st_JsonError))
+	{
+		ModuleProtocol_IsErrorOccur = TRUE;
+		ModuleProtocol_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PROTOCOL_PARSE_PARAMENT;
+		return FALSE;
+	}
+
+	if (!st_JsonRoot["tszMsgBuffer"].isNull())
+	{
+		_tcscpy(pSt_QRCode->tszMsgBuffer, st_JsonRoot["tszMsgBuffer"].asCString());
+	}
+	if (!st_JsonRoot["tszFmtBuffer"].isNull())
+	{
+		_tcscpy(pSt_QRCode->tszFmtBuffer, st_JsonRoot["tszFmtBuffer"].asCString());
+	}
+	return TRUE;
+}

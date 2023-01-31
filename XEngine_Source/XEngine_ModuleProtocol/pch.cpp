@@ -102,3 +102,7 @@ extern "C" BOOL ModuleProtocol_Parse_XLog(LPCTSTR lpszMsgBuffer, int nMsgLen, XE
 {
 	return m_ProtocolParse.ModuleProtocol_Parse_XLog(lpszMsgBuffer, nMsgLen, pSt_XLogInfo);
 }
+extern "C" BOOL ModuleProtocol_Parse_QRCode(LPCTSTR lpszMsgBuffer, int nMsgLen, XENGINE_QRCODE * pSt_QRCode)
+{
+	return m_ProtocolParse.ModuleProtocol_Parse_QRCode(lpszMsgBuffer, nMsgLen, pSt_QRCode);
+}

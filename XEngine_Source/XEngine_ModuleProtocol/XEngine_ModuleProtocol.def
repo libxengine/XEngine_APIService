@@ -21,3 +21,4 @@ EXPORTS
 	ModuleProtocol_Parse_P2PClient
 	ModuleProtocol_Parse_ZIPCode
 	ModuleProtocol_Parse_XLog
+	ModuleProtocol_Parse_QRCode
