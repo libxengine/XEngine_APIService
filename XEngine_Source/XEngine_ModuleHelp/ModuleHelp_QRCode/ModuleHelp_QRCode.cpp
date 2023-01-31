@@ -107,12 +107,17 @@ BOOL CModuleHelp_QRCode::ModuleHelp_QRCode_QREncodecFile(LPCTSTR lpszFileName, L
   类型：整数型指针
   可空：N
   意思：输出数据大小
+ 参数.四：lpszFmt
+  In/Out：In
+  类型：常量字符指针
+  可空：N
+  意思：输入文件格式.png
 返回值
   类型：逻辑型
   意思：是否成功
 备注：
 *********************************************************************/
-BOOL CModuleHelp_QRCode::ModuleHelp_QRCode_QREncodecMemory(LPCTSTR lpszMsgBuffer, TCHAR* ptszMsgBuffer, int* pInt_MsgLen)
+BOOL CModuleHelp_QRCode::ModuleHelp_QRCode_QREncodecMemory(LPCTSTR lpszMsgBuffer, TCHAR* ptszMsgBuffer, int* pInt_MsgLen, LPCTSTR lpszFmt)
 {
 	ModuleHelp_IsErrorOccur = FALSE;
 
@@ -151,7 +156,7 @@ BOOL CModuleHelp_QRCode::ModuleHelp_QRCode_QREncodecMemory(LPCTSTR lpszMsgBuffer
 	//转换成彩色
 	cv::cvtColor(m_SrcFrame, m_SrcFrame, cv::COLOR_GRAY2BGR);
 	//是否成功
-	if (!cv::imencode(".png", m_SrcFrame, stl_VecImg))
+	if (!cv::imencode(lpszFmt, m_SrcFrame, stl_VecImg))
 	{
 		ModuleHelp_IsErrorOccur = TRUE;
 		ModuleHelp_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_HELP_QRCODE_FAILED;

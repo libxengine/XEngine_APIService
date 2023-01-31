@@ -427,12 +427,18 @@ extern "C" BOOL ModuleHelp_QRCode_QREncodecFile(LPCTSTR lpszFileName, LPCTSTR lp
   类型：整数型指针
   可空：N
   意思：输出数据大小
+  意思：输出数据大小
+ 参数.四：lpszFmt
+  In/Out：In
+  类型：常量字符指针
+  可空：N
+  意思：输入文件格式.png
 返回值
   类型：逻辑型
   意思：是否成功
 备注：
 *********************************************************************/
-extern "C" BOOL ModuleHelp_QRCode_QREncodecMemory(LPCTSTR lpszMsgBuffer, TCHAR* ptszMsgBuffer, int* pInt_MsgLen);
+extern "C" BOOL ModuleHelp_QRCode_QREncodecMemory(LPCTSTR lpszMsgBuffer, TCHAR* ptszMsgBuffer, int* pInt_MsgLen, LPCTSTR lpszFmt);
 /********************************************************************
 函数名称：ModuleHelp_QRCode_QRDecodecFile
 函数功能：从文件解码二维码

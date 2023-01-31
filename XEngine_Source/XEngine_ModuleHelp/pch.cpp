@@ -137,9 +137,9 @@ extern "C" BOOL ModuleHelp_QRCode_QREncodecFile(LPCTSTR lpszFileName, LPCTSTR lp
 {
 	return m_QRCode.ModuleHelp_QRCode_QREncodecFile(lpszFileName, lpszMsgBuffer);
 }
-extern "C" BOOL ModuleHelp_QRCode_QREncodecMemory(LPCTSTR lpszMsgBuffer, TCHAR * ptszMsgBuffer, int* pInt_MsgLen)
+extern "C" BOOL ModuleHelp_QRCode_QREncodecMemory(LPCTSTR lpszMsgBuffer, TCHAR * ptszMsgBuffer, int* pInt_MsgLen, LPCTSTR lpszFmt)
 {
-	return m_QRCode.ModuleHelp_QRCode_QREncodecMemory(lpszMsgBuffer, ptszMsgBuffer, pInt_MsgLen);
+	return m_QRCode.ModuleHelp_QRCode_QREncodecMemory(lpszMsgBuffer, ptszMsgBuffer, pInt_MsgLen, lpszFmt);
 }
 extern "C" BOOL ModuleHelp_QRCode_QRDecodecFile(LPCTSTR lpszFileName, TCHAR * ptszMsgBuffer, LPCTSTR lpszDetectProto, LPCTSTR lpszDetectModel, LPCTSTR lpszSrProto, LPCTSTR lpszSrModel)
 {

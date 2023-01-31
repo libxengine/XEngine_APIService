@@ -10,6 +10,12 @@ LIBEX = -ldl -lpthread
 LOADSO = -Wl,-rpath=./,--disable-new-dtags
 LIBINCLUDE = ModuleHelp_IDCard.o ModuleHelp_Language.o ModuleHelp_P2PClient.o ModuleHelp_Locker.o pch.o
 
+ifeq ($(FILECENTOS), $(wildcard $(FILECENTOS)))
+	LIB += -lopencv_core -lopencv_imgcodecs -lopencv_imgproc
+else
+	LIB += -llzma -lpng16 -lopencv_core -lopencv_imgcodecs -lopencv_imgproc -ltiff
+endif 
+
 ifeq ($(shell uname),Darwin)
 	SHAREDLL = dylib
 	SHAREFLAG = -dynamiclib
