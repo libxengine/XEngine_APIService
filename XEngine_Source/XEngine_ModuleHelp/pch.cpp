@@ -3,6 +3,7 @@
 #include "ModuleHelp_Language/ModuleHelp_Language.h"
 #include "ModuleHelp_P2PClient/ModuleHelp_P2PClient.h"
 #include "ModuleHelp_Locker/ModuleHelp_Locker.h"
+#include "ModuleHelp_QRCode/ModuleHelp_QRCode.h"
 /********************************************************************
 //    Created:     2022/03/04  13:37:38
 //    File Name:   D:\XEngine_APIService\XEngine_Source\XEngine_ModuleHelp\pch.cpp
@@ -21,6 +22,7 @@ CModuleHelp_IDCard m_IDCard;
 CModuleHelp_Language m_Language;
 CModuleHelp_P2PClient m_P2PClient;
 CModuleHelp_Locker m_Locker;
+CModuleHelp_QRCode m_QRCode;
 //////////////////////////////////////////////////////////////////////////
 ///                        导出的函数
 //////////////////////////////////////////////////////////////////////////
@@ -127,4 +129,23 @@ extern "C" BOOL ModuleHelp_Locker_WriteUNLock(XNETHANDLE xhToken)
 extern "C" BOOL ModuleHelp_Locker_Close(XNETHANDLE xhToken)
 {
 	return m_Locker.ModuleHelp_Locker_Close(xhToken);
+}
+/************************************************************************/
+/*                       二维码导出函数                                 */
+/************************************************************************/
+extern "C" BOOL ModuleHelp_QRCode_QREncodecFile(LPCTSTR lpszFileName, LPCTSTR lpszMsgBuffer)
+{
+	return m_QRCode.ModuleHelp_QRCode_QREncodecFile(lpszFileName, lpszMsgBuffer);
+}
+extern "C" BOOL ModuleHelp_QRCode_QREncodecMemory(LPCTSTR lpszMsgBuffer, TCHAR * ptszMsgBuffer, int* pInt_MsgLen)
+{
+	return m_QRCode.ModuleHelp_QRCode_QREncodecMemory(lpszMsgBuffer, ptszMsgBuffer, pInt_MsgLen);
+}
+extern "C" BOOL ModuleHelp_QRCode_QRDecodecFile(LPCTSTR lpszFileName, TCHAR * ptszMsgBuffer, LPCTSTR lpszDetectProto, LPCTSTR lpszDetectModel, LPCTSTR lpszSrProto, LPCTSTR lpszSrModel)
+{
+	return m_QRCode.ModuleHelp_QRCode_QRDecodecFile(lpszFileName, ptszMsgBuffer, lpszDetectProto, lpszDetectModel, lpszSrProto, lpszSrModel);
+}
+extern "C" BOOL ModuleHelp_QRCode_QRDecodecMemory(LPCSTR lpszMsgBuffer, int nMsgLen, TCHAR * ptszMsgBuffer, LPCTSTR lpszDetectProto, LPCTSTR lpszDetectModel, LPCTSTR lpszSrProto, LPCTSTR lpszSrModel)
+{
+	return m_QRCode.ModuleHelp_QRCode_QRDecodecMemory(lpszMsgBuffer, nMsgLen, ptszMsgBuffer, lpszDetectProto, lpszDetectModel, lpszSrProto, lpszSrModel);
 }

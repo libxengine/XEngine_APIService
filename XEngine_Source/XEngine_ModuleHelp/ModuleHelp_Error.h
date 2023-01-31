@@ -42,3 +42,11 @@
 #define ERROR_XENGINE_APISERVICE_MODULE_HELP_LOCK_NOTFOUND 0xD3004       //没有找到锁
 #define ERROR_XENGINE_APISERVICE_MODULE_HELP_LOCK_LOCKED 0xD3005         //已锁定
 #define ERROR_XENGINE_APISERVICE_MODULE_HELP_LOCK_STATUS 0xD3006         //解锁状态错误
+//////////////////////////////////////////////////////////////////////////
+//                        二维码错误
+//////////////////////////////////////////////////////////////////////////
+#define ERROR_XENGINE_APISERVICE_MODULE_HELP_QRCODE_PARAMENT 0xD4001      //参数错误
+#define ERROR_XENGINE_APISERVICE_MODULE_HELP_QRCODE_FAILED 0xD4002        //处理失败
+#define ERROR_XENGINE_APISERVICE_MODULE_HELP_QRCODE_WRITE 0xD4003         //写入失败
+#define ERROR_XENGINE_APISERVICE_MODULE_HELP_QRCODE_EMPTY 0xD4004         //空的数据
+#define ERROR_XENGINE_APISERVICE_MODULE_HELP_QRCODE_NOTQR 0xD4005         //不是QR

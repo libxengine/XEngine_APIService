@@ -387,3 +387,132 @@ extern "C" BOOL ModuleHelp_Locker_WriteUNLock(XNETHANDLE xhToken);
 备注：
 *********************************************************************/
 extern "C" BOOL ModuleHelp_Locker_Close(XNETHANDLE xhToken);
+/************************************************************************/
+/*                       二维码导出函数                                 */
+/************************************************************************/
+/********************************************************************
+函数名称：ModuleHelp_QRCode_QREncodecFile
+函数功能：二维码生成器
+ 参数.一：lpszFileName
+  In/Out：In
+  类型：常量字符指针
+  可空：N
+  意思：输入要生成的图片位置
+ 参数.二：lpszMsgBuffer
+  In/Out：In
+  类型：常量字符指针
+  可空：N
+  意思：输入要编码的数据
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+extern "C" BOOL ModuleHelp_QRCode_QREncodecFile(LPCTSTR lpszFileName, LPCTSTR lpszMsgBuffer);
+/********************************************************************
+函数名称：ModuleHelp_QRCode_QREncodecMemory
+函数功能：编码数据为二维码格式PNG图片
+ 参数.一：lpszMsgBuffer
+  In/Out：In
+  类型：常量字符指针
+  可空：N
+  意思：输入要编码的数据
+ 参数.二：ptszMsgBuffer
+  In/Out：Out
+  类型：字符指针
+  可空：N
+  意思：输出编码的数据
+ 参数.三：pInt_MsgLen
+  In/Out：Out
+  类型：整数型指针
+  可空：N
+  意思：输出数据大小
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+extern "C" BOOL ModuleHelp_QRCode_QREncodecMemory(LPCTSTR lpszMsgBuffer, TCHAR* ptszMsgBuffer, int* pInt_MsgLen);
+/********************************************************************
+函数名称：ModuleHelp_QRCode_QRDecodecFile
+函数功能：从文件解码二维码
+ 参数.一：lpszFileName
+  In/Out：In
+  类型：常量字符指针
+  可空：N
+  意思：输入要解析的图片地址
+ 参数.二：ptszMsgBuffer
+  In/Out：Out
+  类型：字符指针
+  可空：N
+  意思：输出识别到的内容
+ 参数.三：lpszDetectProto
+  In/Out：In
+  类型：常量字符指针
+  可空：N
+  意思：学习模型地址,参考示例
+ 参数.四：lpszDetectModel
+  In/Out：In
+  类型：常量字符指针
+  可空：N
+  意思：学习模型地址,参考示例
+ 参数.五：lpszSrProto
+  In/Out：In
+  类型：常量字符指针
+  可空：N
+  意思：学习模型地址,参考示例
+ 参数.六：lpszSrModel
+  In/Out：In
+  类型：常量字符指针
+  可空：N
+  意思：学习模型地址,参考示例
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+extern "C" BOOL ModuleHelp_QRCode_QRDecodecFile(LPCTSTR lpszFileName, TCHAR* ptszMsgBuffer, LPCTSTR lpszDetectProto, LPCTSTR lpszDetectModel, LPCTSTR lpszSrProto, LPCTSTR lpszSrModel);
+/********************************************************************
+函数名称：ModuleHelp_QRCode_QRDecodecMemory
+函数功能：从内存解析二维码
+ 参数.一：lpszMsgBuffer
+  In/Out：In
+  类型：常量字符指针
+  可空：N
+  意思：输入要解析的图片缓冲区
+ 参数.二：nMsgLen
+  In/Out：In
+  类型：整数型
+  可空：N
+  意思：输入缓冲区大小
+ 参数.三：ptszMsgBuffer
+  In/Out：Out
+  类型：字符指针
+  可空：N
+  意思：输出识别到的内容
+ 参数.四：lpszDetectProto
+  In/Out：In
+  类型：常量字符指针
+  可空：N
+  意思：学习模型地址,参考示例
+ 参数.五：lpszDetectModel
+  In/Out：In
+  类型：常量字符指针
+  可空：N
+  意思：学习模型地址,参考示例
+ 参数.六：lpszSrProto
+  In/Out：In
+  类型：常量字符指针
+  可空：N
+  意思：学习模型地址,参考示例
+ 参数.七：lpszSrModel
+  In/Out：In
+  类型：常量字符指针
+  可空：N
+  意思：学习模型地址,参考示例
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+extern "C" BOOL ModuleHelp_QRCode_QRDecodecMemory(LPCSTR lpszMsgBuffer, int nMsgLen, TCHAR* ptszMsgBuffer, LPCTSTR lpszDetectProto, LPCTSTR lpszDetectModel, LPCTSTR lpszSrProto, LPCTSTR lpszSrModel);

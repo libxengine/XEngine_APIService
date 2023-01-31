@@ -37,6 +37,12 @@
     <Filter Include="头文件\ModuleHelp_Locker">
       <UniqueIdentifier>{7e3b001c-b07c-4457-ab32-54b6d25ccbae}</UniqueIdentifier>
     </Filter>
+    <Filter Include="头文件\ModuleHelp_QRCode">
+      <UniqueIdentifier>{133df44f-aebf-43ba-840b-a75388ba2143}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\ModuleHelp_QRCode">
+      <UniqueIdentifier>{54085aa4-6c15-4804-b7f0-5e9ca22048f1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -63,6 +69,9 @@
     <ClInclude Include="ModuleHelp_Locker\ModuleHelp_Locker.h">
       <Filter>头文件\ModuleHelp_Locker</Filter>
     </ClInclude>
+    <ClInclude Include="ModuleHelp_QRCode\ModuleHelp_QRCode.h">
+      <Filter>头文件\ModuleHelp_QRCode</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp">
@@ -82,6 +91,9 @@
     </ClCompile>
     <ClCompile Include="ModuleHelp_Locker\ModuleHelp_Locker.cpp">
       <Filter>源文件\ModuleHelp_Locker</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleHelp_QRCode\ModuleHelp_QRCode.cpp">
+      <Filter>源文件\ModuleHelp_QRCode</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
