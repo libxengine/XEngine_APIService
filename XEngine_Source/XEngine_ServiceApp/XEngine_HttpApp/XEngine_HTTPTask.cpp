@@ -94,6 +94,7 @@ BOOL XEngine_HTTPTask_Handle(RFCCOMPONENTS_HTTP_REQPARAM* pSt_HTTPParam, LPCTSTR
 	LPCTSTR lpszParamLanguage = _T("language");
 	LPCTSTR lpszParamTranslation = _T("translation");
 	LPCTSTR lpszParamLocker = _T("lock");
+	LPCTSTR lpszParamQRCode = _T("qrcode");
 	//post
 	LPCTSTR lpszParamP2PClient = _T("p2p");
 	LPCTSTR lpszParamZIPCode = _T("zipcode");
@@ -167,7 +168,7 @@ BOOL XEngine_HTTPTask_Handle(RFCCOMPONENTS_HTTP_REQPARAM* pSt_HTTPParam, LPCTSTR
 		}
 		else if (0 == _tcsnicmp(lpszParamXLog, tszValue, _tcslen(lpszParamXLog)))
 		{
-			//邮政信息:http://app.xyry.org:5501/api?function=log&params1=0
+			//日志信息:http://app.xyry.org:5501/api?function=log&params1=0
 			memset(tszKey, '\0', sizeof(tszKey));
 			memset(tszValue, '\0', sizeof(tszValue));
 			BaseLib_OperatorString_GetKeyValue(pptszList[1], "=", tszKey, tszValue);
@@ -181,6 +182,23 @@ BOOL XEngine_HTTPTask_Handle(RFCCOMPONENTS_HTTP_REQPARAM* pSt_HTTPParam, LPCTSTR
 				return FALSE;
 			}
 			XEngine_HTTPTask_LogInfo(lpszClientAddr, lpszRVBuffer, nRVLen, _ttoi(tszValue));
+		}
+		else if (0 == _tcsnicmp(lpszParamQRCode, tszValue, _tcslen(lpszParamQRCode)))
+		{
+			//二维码生成:http://app.xyry.org:5501/api?function=qrcode&params1=0 或者 1
+			memset(tszKey, '\0', sizeof(tszKey));
+			memset(tszValue, '\0', sizeof(tszValue));
+			BaseLib_OperatorString_GetKeyValue(pptszList[1], "=", tszKey, tszValue);
+			if (0 != _tcsnicmp(lpszParamName, tszKey, _tcslen(lpszParamName)))
+			{
+				st_HDRParam.nHttpCode = 404;
+				RfcComponents_HttpServer_SendMsgEx(xhHTTPPacket, tszMsgBuffer, &nMsgLen, &st_HDRParam);
+				XEngine_Network_Send(lpszClientAddr, tszMsgBuffer, nMsgLen);
+				BaseLib_OperatorMemory_Free((XPPPMEM)&pptszList, nListCount);
+				XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _T("HTTP客户端:%s,发送的URL请求参数不正确:%s"), lpszClientAddr, pSt_HTTPParam->tszHttpUri);
+				return FALSE;
+			}
+			XEngine_HTTPTask_QRCode(lpszClientAddr, lpszRVBuffer, nRVLen, _ttoi(tszValue));
 		}
 	}
 	else if (0 == _tcsnicmp(lpszMethodGet, pSt_HTTPParam->tszHttpMethod, _tcslen(lpszMethodGet)))

@@ -67,6 +67,7 @@ using namespace std;
 #include "XEngine_HTTPTask/HTTPTask_P2PClient.h"
 #include "XEngine_HTTPTask/HTTPTask_PostCode.h"
 #include "XEngine_HTTPTask/HTTPTask_Log.h"
+#include "XEngine_HTTPTask/HTTPTask_QRCode.h"
 /********************************************************************
 //    Created:     2022/01/20  14:42:06
 //    File Name:   D:\XEngine_ServiceApp\XEngine_Source\XEngine_ServiceApp\XEngine_HttpApp\XEngine_Hdr.h
@@ -88,6 +89,7 @@ extern XHANDLE xhHTTPPool;
 //配置文件
 extern XENGINE_SERVICECONFIG st_ServiceConfig;
 extern XENGINE_OPENCCCONFIG st_OPenccConfig;
+extern XENGINE_QRCODECONFIG st_QRCodeConfig;
 extern XENGINE_PLUGINCONFIG st_PluginLibConfig;
 extern XENGINE_PLUGINCONFIG st_PluginLuaConfig;
 //连接库
