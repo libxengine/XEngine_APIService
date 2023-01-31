@@ -5,4 +5,5 @@ EXPORTS
 
 	ModuleConfigure_Json_File
 	ModuleConfigure_Json_OPenccFile
+	ModuleConfigure_Json_QRCodeFile
 	ModuleConfigure_Json_PluginFile

@@ -79,6 +79,14 @@ typedef struct
 	TCHAR tszFilejp2t[MAX_PATH];
 	TCHAR tszFiletw2t[MAX_PATH];
 }XENGINE_OPENCCCONFIG;
+//二维码模型库
+typedef struct
+{
+	TCHAR tszModelDetect[MAX_PATH];
+	TCHAR tszModelSr[MAX_PATH];
+	TCHAR tszProtoDetect[MAX_PATH];
+	TCHAR tszProtoSr[MAX_PATH];
+}XENGINE_QRCODECONFIG;
 //插件
 typedef struct
 {
@@ -147,6 +155,25 @@ extern "C" BOOL ModuleConfigure_Json_File(LPCTSTR lpszConfigFile, XENGINE_SERVIC
 备注：
 *********************************************************************/
 extern "C" BOOL ModuleConfigure_Json_OPenccFile(LPCTSTR lpszConfigFile, XENGINE_OPENCCCONFIG* pSt_OPenccConfig);
+/********************************************************************
+函数名称：ModuleConfigure_Json_QRCodeFile
+函数功能：读取JSON配置文件
+ 参数.一：lpszConfigFile
+  In/Out：In
+  类型：常量字符指针
+  可空：N
+  意思：输入要读取的配置文件
+ 参数.二：pSt_QRCodeConfig
+  In/Out：Out
+  类型：数据结构指针
+  可空：N
+  意思：输出二维码配置信息
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+extern "C" BOOL ModuleConfigure_Json_QRCodeFile(LPCTSTR lpszConfigFile, XENGINE_QRCODECONFIG* pSt_QRCodeConfig);
 /********************************************************************
 函数名称：ModuleConfigure_Json_PluginFile
 函数功能：读取JSON配置文件
