@@ -152,6 +152,16 @@ BOOL CModuleConfigure_Json::ModuleConfigure_Json_File(LPCTSTR lpszConfigFile, XE
 	_tcscpy(pSt_ServerConfig->st_XPlugin.tszPluginLib, st_JsonXPlugin["tszPluginLib"].asCString());
 	_tcscpy(pSt_ServerConfig->st_XPlugin.tszPluginLua, st_JsonXPlugin["tszPluginLua"].asCString());
 
+	if (st_JsonRoot["XConfig"].empty() || (2 != st_JsonRoot["XConfig"].size()))
+	{
+		Config_IsErrorOccur = TRUE;
+		Config_dwErrorCode = ERROR_MODULE_CONFIGURE_JSON_XCONFIG;
+		return FALSE;
+	}
+	Json::Value st_JsonXConfig = st_JsonRoot["XConfig"];
+	_tcscpy(pSt_ServerConfig->st_XConfig.tszConfigOPencc, st_JsonXConfig["tszConfigOPencc"].asCString());
+	_tcscpy(pSt_ServerConfig->st_XConfig.tszConfigQRCode, st_JsonXConfig["tszConfigQRCode"].asCString());
+
 	if (st_JsonRoot["XVer"].empty())
 	{
 		Config_IsErrorOccur = TRUE;

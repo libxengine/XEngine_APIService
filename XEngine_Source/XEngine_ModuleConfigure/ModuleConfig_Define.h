@@ -56,6 +56,11 @@ typedef struct
 		TCHAR tszPluginLib[MAX_PATH];         //配置文件地址
 		TCHAR tszPluginLua[MAX_PATH];         //配置文件地址
 	}st_XPlugin;
+	struct
+	{   
+		TCHAR tszConfigOPencc[MAX_PATH];      //OPENCC配置地址
+		TCHAR tszConfigQRCode[MAX_PATH];      //二维码配置地址
+	}st_XConfig;
 	struct  
 	{
 		list<string>* pStl_ListVer;
