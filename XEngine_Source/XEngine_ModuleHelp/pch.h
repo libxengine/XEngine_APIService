@@ -22,10 +22,12 @@
 #include <shared_mutex>
 #include <unordered_map>
 #include <opencc/opencc.h>
+#ifdef _MSC_BUILD
 #include <opencv2/opencv.hpp>
 #include <opencv2/core/utils/logger.hpp>
 #include <opencv2/wechat_qrcode.hpp>
 #include <qrencode.h>
+#endif
 using namespace std;
 #include <XEngine_Include/XEngine_CommHdr.h>
 #include <XEngine_Include/XEngine_Types.h>

@@ -13,7 +13,9 @@
 *********************************************************************/
 CModuleHelp_QRCode::CModuleHelp_QRCode()
 {
+#ifdef _MSC_BUILD
 	cv::utils::logging::setLogLevel(cv::utils::logging::LOG_LEVEL_SILENT);
+#endif
 }
 CModuleHelp_QRCode::~CModuleHelp_QRCode()
 {
@@ -49,6 +51,7 @@ BOOL CModuleHelp_QRCode::ModuleHelp_QRCode_QREncodecFile(LPCTSTR lpszFileName, L
 		ModuleHelp_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_HELP_QRCODE_PARAMENT;
 		return FALSE;
 	}
+#ifdef _MSC_BUILD
 	//使用qrencode进行字符串编码
 #ifdef _UNICODE
 	USES_CONVERSION;
@@ -87,6 +90,11 @@ BOOL CModuleHelp_QRCode::ModuleHelp_QRCode_QREncodecFile(LPCTSTR lpszFileName, L
 		ModuleHelp_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_HELP_QRCODE_WRITE;
 		return FALSE;
 	}
+#else 
+	ModuleHelp_IsErrorOccur = TRUE;
+	ModuleHelp_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_HELP_QRCODE_NOTSUPPORT;
+	return FALSE;
+#endif
 	return TRUE;
 }
 /********************************************************************
@@ -127,6 +135,7 @@ BOOL CModuleHelp_QRCode::ModuleHelp_QRCode_QREncodecMemory(LPCTSTR lpszMsgBuffer
 		ModuleHelp_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_HELP_QRCODE_PARAMENT;
 		return FALSE;
 	}
+#ifdef _MSC_BUILD
 	//使用qrencode进行字符串编码
 #ifdef _UNICODE
 	USES_CONVERSION;
@@ -167,6 +176,11 @@ BOOL CModuleHelp_QRCode::ModuleHelp_QRCode_QREncodecMemory(LPCTSTR lpszMsgBuffer
 	{
 		ptszMsgBuffer[i] = stl_VecImg[i];
 	}
+#else 
+	ModuleHelp_IsErrorOccur = TRUE;
+	ModuleHelp_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_HELP_QRCODE_NOTSUPPORT;
+	return FALSE;
+#endif
 	return TRUE;
 }
 /********************************************************************
@@ -217,6 +231,7 @@ BOOL CModuleHelp_QRCode::ModuleHelp_QRCode_QRDecodecFile(LPCTSTR lpszFileName, T
 		ModuleHelp_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_HELP_QRCODE_PARAMENT;
 		return FALSE;
 	}
+#ifdef _MSC_BUILD
 	cv::Mat m_Frame;
 	vector<cv::Mat> m_MatPoint;
 	cv::Ptr<cv::wechat_qrcode::WeChatQRCode> m_QRDetector;
@@ -251,6 +266,11 @@ BOOL CModuleHelp_QRCode::ModuleHelp_QRCode_QRDecodecFile(LPCTSTR lpszFileName, T
 	wcscpy(ptszMsgBuffer, A2W(stl_VectorQRList[0].c_str()));
 #else
 	strcpy(ptszMsgBuffer, stl_VectorQRList[0].c_str());
+#endif
+#else 
+	ModuleHelp_IsErrorOccur = TRUE;
+	ModuleHelp_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_HELP_QRCODE_NOTSUPPORT;
+	return FALSE;
 #endif
 	return TRUE;
 }
@@ -307,6 +327,7 @@ BOOL CModuleHelp_QRCode::ModuleHelp_QRCode_QRDecodecMemory(LPCSTR lpszMsgBuffer,
 		ModuleHelp_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_HELP_QRCODE_PARAMENT;
 		return FALSE;
 	}
+#ifdef _MSC_BUILD
 	cv::Mat m_Frame;
 	vector<cv::Mat> m_MatPoint;
 	cv::Ptr<cv::wechat_qrcode::WeChatQRCode> m_QRDetector;
@@ -338,6 +359,11 @@ BOOL CModuleHelp_QRCode::ModuleHelp_QRCode_QRDecodecMemory(LPCSTR lpszMsgBuffer,
 	wcscpy(ptszMsgBuffer, A2W(stl_VectorQRList[0].c_str()));
 #else
 	strcpy(ptszMsgBuffer, stl_VectorQRList[0].c_str());
+#endif
+#else 
+	ModuleHelp_IsErrorOccur = TRUE;
+	ModuleHelp_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_HELP_QRCODE_NOTSUPPORT;
+	return FALSE;
 #endif
 	return TRUE;
 }
