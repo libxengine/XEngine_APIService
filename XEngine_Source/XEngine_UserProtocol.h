@@ -170,4 +170,9 @@ typedef struct
 	TCHAR tszTimeEnd[128];
 	int nLogSize;
 }XENGINE_XLOGINFO;
+typedef struct
+{
+	TCHAR tszMsgBuffer[4096];
+	TCHAR tszFmtBuffer[8];
+}XENGINE_QRCODE;
 #pragma pack(pop)

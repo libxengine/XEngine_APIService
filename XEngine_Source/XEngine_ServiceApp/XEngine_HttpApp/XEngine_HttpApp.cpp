@@ -133,18 +133,18 @@ int main(int argc, char** argv)
 	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _T("启动服务中,初始化信号量成功"));
 
 	//初始化OPENCC配置
-	if (!ModuleConfigure_Json_OPenccFile(_T("./XEngine_Config/XEngine_OPenccConfig.json"), &st_OPenccConfig))
+	if (!ModuleConfigure_Json_OPenccFile(st_ServiceConfig.st_XConfig.tszConfigOPencc, &st_OPenccConfig))
 	{
 		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _T("启动服务中,初始化OPenCC配置文件失败,错误：%lX"), ModuleConfigure_GetLastError());
 		goto XENGINE_SERVICEAPP_EXIT;
 	}
-	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _T("启动服务中,初始化OPenCC配置文件成功"));
-	if (!ModuleConfigure_Json_QRCodeFile(_T("./XEngine_Config/XEngine_QRCode.json"), &st_QRCodeConfig))
+	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _T("启动服务中,初始化OPenCC配置文件:%s 成功"), st_ServiceConfig.st_XConfig.tszConfigOPencc);
+	if (!ModuleConfigure_Json_QRCodeFile(st_ServiceConfig.st_XConfig.tszConfigQRCode, &st_QRCodeConfig))
 	{
 		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _T("启动服务中,初始化二维码配置文件失败,错误：%lX"), ModuleConfigure_GetLastError());
 		goto XENGINE_SERVICEAPP_EXIT;
 	}
-	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _T("启动服务中,初始化二维码配置文件成功"));
+	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _T("启动服务中,初始化二维码配置文件:%s 成功"), st_ServiceConfig.st_XConfig.tszConfigQRCode);
 	//初始化插件配置
 	if (st_ServiceConfig.st_XPlugin.bEnable)
 	{
