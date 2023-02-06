@@ -170,9 +170,40 @@ typedef struct
 	TCHAR tszTimeEnd[128];
 	int nLogSize;
 }XENGINE_XLOGINFO;
+//二维码
 typedef struct
 {
 	TCHAR tszMsgBuffer[4096];
 	TCHAR tszFmtBuffer[8];
 }XENGINE_QRCODE;
+//网络测试
+typedef struct
+{
+	CHAR tszAddr[64];                                                     //要测试的IP地址
+	int nPort;                                                            //端口号码
+	//单位毫秒
+	int nConnectCount;                                                    //要测试的客户端个数
+	int nConnectTest;                                                     //每个客户端测试的次数,-1表示不限制
+	int nContWaitTime;                                                    //连接后等待多长时间关闭/处理一次休息时间，毫秒
+	int nCloseWaitContTime;                                               //关闭后等待多长时间连接/套接字操作超时时间
+}MODULEHELP_SOCKETTEST_RECONNECT, * LPMODULEHELP_SOCKETTEST_RECONNECT;
+//数据包压力测试
+typedef struct
+{
+	MODULEHELP_SOCKETTEST_RECONNECT st_REConnect;
+	int nSDLen;                                                           //发送数据包大小，如果ptszSDBuffer的值为NULL，那么这个值表示测试端允许发送的大小，否则表示缓冲区大小
+	int nRVLen;                                                           //接收端大小,表示ptszRVBuffer缓冲区大小,ptszRVBuffer的值匹配接受数据才表示成功,如果ptszRVBuffer为NULL,不做数据验证只接受.
+	CHAR tszSDBuffer[4096];                                               //如果你的服务器有特殊数据测试，请填写这个参数，否则测试端将自定义数据发送,内存需要由用户管理
+	CHAR tszRVBuffer[4096];
+}MODULEHELP_SOCKETTEST_DATAS, * LPMODULEHELP_SOCKETTEST_DATAS;
+typedef struct
+{
+	MODULEHELP_SOCKETTEST_RECONNECT st_SocketConn;
+	MODULEHELP_SOCKETTEST_DATAS st_SocketData;
+	TCHAR tszAPIUrl[MAX_PATH];
+	XNETHANDLE xhToken;
+	int nType;                                                  //0,全部报告,其他结束统计报告
+	bool bTCP;
+	bool bConn;
+}XENGINE_SOCKETTEST;
 #pragma pack(pop)

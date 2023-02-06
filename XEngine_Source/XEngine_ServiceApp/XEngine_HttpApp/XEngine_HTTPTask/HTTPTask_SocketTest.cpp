@@ -10,28 +10,37 @@ void CALLBACK XEngine_HTTPTask_CBSocketTest(XNETHANDLE xhToken, LPCSTR lpszAddr,
 	if (0 == pSt_SocketTest->nType)
 	{
 		//每次都报告
-		ModuleProtocol_Packet_SocketTest(tszMsgBuffer, &nMsgLen, xhToken, lpszAddr, nPort, nNumber, nFailed, nSuccess, nStatus);
+		ModuleProtocol_Packet_TestReport(tszMsgBuffer, &nMsgLen, xhToken, lpszAddr, nPort, nNumber, nFailed, nSuccess, nStatus);
 		APIClient_Http_Request("POST", pSt_SocketTest->tszAPIUrl, tszMsgBuffer);
 	}
 	else if ((1 == pSt_SocketTest->nType) && (0 == nStatus))
 	{
 		//成功报告
-		ModuleProtocol_Packet_SocketTest(tszMsgBuffer, &nMsgLen, xhToken, lpszAddr, nPort, nNumber, nFailed, nSuccess, nStatus);
-		APIClient_Http_Request("POST", pSt_SocketTest->tszAPIUrl, tszMsgBuffer);
+		ModuleProtocol_Packet_TestReport(tszMsgBuffer, &nMsgLen, xhToken, lpszAddr, nPort, nNumber, nFailed, nSuccess, nStatus);
+		if (_tcslen(pSt_SocketTest->tszAPIUrl) > 0)
+		{
+			APIClient_Http_Request("POST", pSt_SocketTest->tszAPIUrl, tszMsgBuffer);
+		}
 	}
 	else if ((2 == pSt_SocketTest->nType) && (1 == nStatus))
 	{
 		//失败报告
-		ModuleProtocol_Packet_SocketTest(tszMsgBuffer, &nMsgLen, xhToken, lpszAddr, nPort, nNumber, nFailed, nSuccess, nStatus);
-		APIClient_Http_Request("POST", pSt_SocketTest->tszAPIUrl, tszMsgBuffer);
+		ModuleProtocol_Packet_TestReport(tszMsgBuffer, &nMsgLen, xhToken, lpszAddr, nPort, nNumber, nFailed, nSuccess, nStatus);
+		if (_tcslen(pSt_SocketTest->tszAPIUrl) > 0)
+		{
+			APIClient_Http_Request("POST", pSt_SocketTest->tszAPIUrl, tszMsgBuffer);
+		}
 	}
 	else
 	{
 		if (2 == nStatus)
 		{
 			//结束报告
-			ModuleProtocol_Packet_SocketTest(tszMsgBuffer, &nMsgLen, xhToken, lpszAddr, nPort, nNumber, nFailed, nSuccess, nStatus);
-			APIClient_Http_Request("POST", pSt_SocketTest->tszAPIUrl, tszMsgBuffer);
+			ModuleProtocol_Packet_TestReport(tszMsgBuffer, &nMsgLen, xhToken, lpszAddr, nPort, nNumber, nFailed, nSuccess, nStatus);
+			if (_tcslen(pSt_SocketTest->tszAPIUrl) > 0)
+			{
+				APIClient_Http_Request("POST", pSt_SocketTest->tszAPIUrl, tszMsgBuffer);
+			}
 		}
 	}
 }
@@ -65,7 +74,7 @@ BOOL XEngine_HTTPTask_SocketTest(LPCTSTR lpszClientAddr, LPCTSTR lpszMsgBuffer, 
 			memcpy(&pSt_SocketTest->st_SocketData.st_REConnect, &pSt_SocketTest->st_SocketConn, sizeof(MODULEHELP_SOCKETTEST_RECONNECT));
 			ModuleHelp_SocketTest_StartDatas(&pSt_SocketTest->xhToken, &pSt_SocketTest->st_SocketData, XEngine_HTTPTask_CBSocketTest, pSt_SocketTest->bTCP, pSt_SocketTest);
 		}
-		ModuleProtocol_Packet_Common(tszRVBuffer, &nRVLen);
+		ModuleProtocol_Packet_TestReply(tszRVBuffer, &nRVLen, pSt_SocketTest->xhToken);
 		RfcComponents_HttpServer_SendMsgEx(xhHTTPPacket, tszSDBuffer, &nSDLen, &st_HDRParam, tszRVBuffer, nRVLen);
 		XEngine_Network_Send(lpszClientAddr, tszSDBuffer, nSDLen);
 		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _T("HTTP客户端:%s,请求创建套接字测试成功,句柄:%lld,地址:%s:%d,TCP:%d,测试类型:%d"), lpszClientAddr, pSt_SocketTest->xhToken, pSt_SocketTest->st_SocketConn.tszAddr, pSt_SocketTest->st_SocketConn.nPort, pSt_SocketTest->bTCP, pSt_SocketTest->bConn);
