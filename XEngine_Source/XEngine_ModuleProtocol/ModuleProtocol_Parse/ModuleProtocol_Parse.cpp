@@ -566,25 +566,59 @@ BOOL CModuleProtocol_Parse::ModuleProtocol_Parse_SocketTest(LPCTSTR lpszMsgBuffe
 	{
 		_tcscpy(pSt_SocketTest->tszAPIUrl, st_JsonRoot["tszAPIUrl"].asCString());
 	}
-	if (!st_JsonRoot["tszIPAddr"].isNull())
+	if (!st_JsonRoot["xhToken"].isNull())
 	{
-		_tcscpy(pSt_SocketTest->tszIPAddr, st_JsonRoot["tszIPAddr"].asCString());
-	}
-	if (!st_JsonRoot["bConn"].isNull())
-	{
-		pSt_SocketTest->bConn = st_JsonRoot["bConn"].asBool();
+		pSt_SocketTest->xhToken = st_JsonRoot["xhToken"].asInt64();
 	}
 	if (!st_JsonRoot["bTCP"].isNull())
 	{
 		pSt_SocketTest->bTCP = st_JsonRoot["bTCP"].asBool();
 	}
+	if (!st_JsonRoot["bConn"].isNull())
+	{
+		pSt_SocketTest->bConn = st_JsonRoot["bConn"].asBool();
+	}
+	//链接
+	if (!st_JsonRoot["tszAddr"].isNull())
+	{
+		_tcscpy(pSt_SocketTest->st_SocketConn.tszAddr, st_JsonRoot["tszAddr"].asCString());
+	}
 	if (!st_JsonRoot["nPort"].isNull())
 	{
-		pSt_SocketTest->nPort = st_JsonRoot["nPort"].asInt();
+		pSt_SocketTest->st_SocketConn.nPort = st_JsonRoot["nPort"].asInt();
 	}
-	if (!st_JsonRoot["xhToken"].isNull())
+	if (!st_JsonRoot["nCloseWaitContTime"].isNull())
 	{
-		pSt_SocketTest->xhToken = st_JsonRoot["xhToken"].asInt64();
+		pSt_SocketTest->st_SocketConn.nCloseWaitContTime = st_JsonRoot["nCloseWaitContTime"].asInt();
+	}
+	if (!st_JsonRoot["nConnectCount"].isNull())
+	{
+		pSt_SocketTest->st_SocketConn.nConnectCount = st_JsonRoot["nConnectCount"].asInt();
+	}
+	if (!st_JsonRoot["nConnectTest"].isNull())
+	{
+		pSt_SocketTest->st_SocketConn.nConnectTest = st_JsonRoot["nConnectTest"].asInt();
+	}
+	if (!st_JsonRoot["nContWaitTime"].isNull())
+	{
+		pSt_SocketTest->st_SocketConn.nContWaitTime = st_JsonRoot["nContWaitTime"].asInt();
+	}
+	//数据
+	if (!st_JsonRoot["tszSDBuffer"].isNull())
+	{
+		_tcscpy(pSt_SocketTest->st_SocketData.tszSDBuffer, st_JsonRoot["tszSDBuffer"].asCString());
+	}
+	if (!st_JsonRoot["tszRVBuffer"].isNull())
+	{
+		_tcscpy(pSt_SocketTest->st_SocketData.tszRVBuffer, st_JsonRoot["tszRVBuffer"].asCString());
+	}
+	if (!st_JsonRoot["nRVLen"].isNull())
+	{
+		pSt_SocketTest->st_SocketData.nRVLen = st_JsonRoot["nRVLen"].asInt();
+	}
+	if (!st_JsonRoot["nSDLen"].isNull())
+	{
+		pSt_SocketTest->st_SocketData.nSDLen = st_JsonRoot["nSDLen"].asInt();
 	}
 	return TRUE;
 }
