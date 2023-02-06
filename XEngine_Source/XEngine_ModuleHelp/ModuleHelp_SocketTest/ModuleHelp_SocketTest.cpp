@@ -326,11 +326,11 @@ XHTHREAD CModuleHelp_SocketTest::ModuleHelp_SocketTest_ThreadConn(LPVOID lParam)
 		SOCKET hSocket = INVALID_SOCKET;
 		if (XClient_TCPSelect_Create(&hSocket, pSt_ReConnect->st_SocketConn.tszAddr, pSt_ReConnect->st_SocketConn.nPort, 100))
 		{
-			pSt_ReConnect->lpCall_ReConnect(pSt_ReConnect->xhToken, pSt_ReConnect->st_SocketConn.tszAddr, pSt_ReConnect->st_SocketConn.nPort, ++nNumber, nFailed, ++nSucess, pSt_ReConnect->lParam);
+			pSt_ReConnect->lpCall_ReConnect(pSt_ReConnect->xhToken, pSt_ReConnect->st_SocketConn.tszAddr, pSt_ReConnect->st_SocketConn.nPort, ++nNumber, nFailed, ++nSucess, TRUE, pSt_ReConnect->lParam);
 		}
 		else
 		{
-			pSt_ReConnect->lpCall_ReConnect(pSt_ReConnect->xhToken, pSt_ReConnect->st_SocketConn.tszAddr, pSt_ReConnect->st_SocketConn.nPort, ++nNumber, ++nFailed, nSucess, pSt_ReConnect->lParam);
+			pSt_ReConnect->lpCall_ReConnect(pSt_ReConnect->xhToken, pSt_ReConnect->st_SocketConn.tszAddr, pSt_ReConnect->st_SocketConn.nPort, ++nNumber, ++nFailed, nSucess, TRUE, pSt_ReConnect->lParam);
 		}
 		//等待指定时间关闭客户端
 		std::this_thread::sleep_for(std::chrono::milliseconds(pSt_ReConnect->st_SocketConn.nContWaitTime));
@@ -338,6 +338,7 @@ XHTHREAD CModuleHelp_SocketTest::ModuleHelp_SocketTest_ThreadConn(LPVOID lParam)
 		//等待指定时链接
 		std::this_thread::sleep_for(std::chrono::milliseconds(pSt_ReConnect->st_SocketConn.nCloseWaitContTime));
     }
+	pSt_ReConnect->lpCall_ReConnect(pSt_ReConnect->xhToken, pSt_ReConnect->st_SocketConn.tszAddr, pSt_ReConnect->st_SocketConn.nPort, nNumber, nFailed, nSucess, FALSE, pSt_ReConnect->lParam);
     pSt_ReConnect->bIsRun = FALSE;
     return 0;
 }
@@ -392,25 +393,26 @@ XHTHREAD CModuleHelp_SocketTest::ModuleHelp_SocketTest_ThreadData(LPVOID lParam)
 					//需要验证数据
 					if (0 == memcmp(pSt_DataSocket->st_SocketData.tszRVBuffer, tszMsgBuffer, pSt_DataSocket->st_SocketData.nRVLen))
 					{
-						pSt_DataSocket->lpCall_TestDatas(pSt_DataSocket->xhToken, pSt_DataSocket->st_SocketData.st_REConnect.tszAddr, pSt_DataSocket->st_SocketData.st_REConnect.nPort, ++nNumber, nFailed, ++nSucess, pSt_DataSocket->lParam);
+						pSt_DataSocket->lpCall_TestDatas(pSt_DataSocket->xhToken, pSt_DataSocket->st_SocketData.st_REConnect.tszAddr, pSt_DataSocket->st_SocketData.st_REConnect.nPort, ++nNumber, nFailed, ++nSucess, TRUE, pSt_DataSocket->lParam);
 					}
 					else
 					{
-						pSt_DataSocket->lpCall_TestDatas(pSt_DataSocket->xhToken, pSt_DataSocket->st_SocketData.st_REConnect.tszAddr, pSt_DataSocket->st_SocketData.st_REConnect.nPort, ++nNumber, ++nFailed, nSucess, pSt_DataSocket->lParam);
+						pSt_DataSocket->lpCall_TestDatas(pSt_DataSocket->xhToken, pSt_DataSocket->st_SocketData.st_REConnect.tszAddr, pSt_DataSocket->st_SocketData.st_REConnect.nPort, ++nNumber, ++nFailed, nSucess, TRUE, pSt_DataSocket->lParam);
 					}
 				}
 				else
 				{
-					pSt_DataSocket->lpCall_TestDatas(pSt_DataSocket->xhToken, pSt_DataSocket->st_SocketData.st_REConnect.tszAddr, pSt_DataSocket->st_SocketData.st_REConnect.nPort, ++nNumber, ++nFailed, nSucess, pSt_DataSocket->lParam);
+					pSt_DataSocket->lpCall_TestDatas(pSt_DataSocket->xhToken, pSt_DataSocket->st_SocketData.st_REConnect.tszAddr, pSt_DataSocket->st_SocketData.st_REConnect.nPort, ++nNumber, ++nFailed, nSucess, TRUE, pSt_DataSocket->lParam);
 				}
 			}
 		}
 		else
 		{
-			pSt_DataSocket->lpCall_TestDatas(pSt_DataSocket->xhToken, pSt_DataSocket->st_SocketData.st_REConnect.tszAddr, pSt_DataSocket->st_SocketData.st_REConnect.nPort, ++nNumber, ++nFailed, nSucess, pSt_DataSocket->lParam);
+			pSt_DataSocket->lpCall_TestDatas(pSt_DataSocket->xhToken, pSt_DataSocket->st_SocketData.st_REConnect.tszAddr, pSt_DataSocket->st_SocketData.st_REConnect.nPort, ++nNumber, ++nFailed, nSucess, TRUE, pSt_DataSocket->lParam);
 		}
 		std::this_thread::sleep_for(std::chrono::milliseconds(pSt_DataSocket->st_SocketData.st_REConnect.nCloseWaitContTime));
 	}
+	pSt_DataSocket->lpCall_TestDatas(pSt_DataSocket->xhToken, pSt_DataSocket->st_SocketData.st_REConnect.tszAddr, pSt_DataSocket->st_SocketData.st_REConnect.nPort, nNumber, nFailed, nSucess, FALSE, pSt_DataSocket->lParam);
     pSt_DataSocket->bIsRun = FALSE;
     return 0;
 }
