@@ -79,6 +79,8 @@ using namespace std;
 //    Purpose:     公用头文件
 //    History:
 *********************************************************************/
+#define XENGIEN_APISERVICE_BUFFER_SIZE (1024 * 1024 * 10)
+
 extern BOOL bIsRun;
 extern XLOG xhLog;
 //HTTP服务器
