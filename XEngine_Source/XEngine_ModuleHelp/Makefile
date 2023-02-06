@@ -8,7 +8,7 @@ LOADBIN = -L /usr/local/lib/XEngine_Release/XEngine_BaseLib
 LIB = -lXEngine_BaseLib -lopencc
 LIBEX = -ldl -lpthread
 LOADSO = -Wl,-rpath=./,--disable-new-dtags
-LIBINCLUDE = ModuleHelp_IDCard.o ModuleHelp_Language.o ModuleHelp_P2PClient.o ModuleHelp_Locker.o ModuleHelp_QRCode.o pch.o
+LIBINCLUDE = ModuleHelp_IDCard.o ModuleHelp_Language.o ModuleHelp_P2PClient.o ModuleHelp_Locker.o ModuleHelp_QRCode.o ModuleHelp_SocketTest.o pch.o
 
 ifeq ($(OS),Windows_NT)
 	PLATFORM="Windows"
@@ -61,6 +61,8 @@ ModuleHelp_Locker.o:./ModuleHelp_Locker/ModuleHelp_Locker.cpp
 	$(CC) $(DEBUG) $(FLAGS) $(UNICODE) $(INCLUDE) ./ModuleHelp_Locker/ModuleHelp_Locker.cpp
 ModuleHelp_QRCode.o:./ModuleHelp_QRCode/ModuleHelp_QRCode.cpp             
 	$(CC) $(DEBUG) $(FLAGS) $(UNICODE) $(INCLUDE) ./ModuleHelp_QRCode/ModuleHelp_QRCode.cpp
+ModuleHelp_SocketTest.o:./ModuleHelp_SocketTest/ModuleHelp_SocketTest.cpp             
+	$(CC) $(DEBUG) $(FLAGS) $(UNICODE) $(INCLUDE) ./ModuleHelp_SocketTest/ModuleHelp_SocketTest.cpp
 
 pch.o:./pch.cpp                 		       	    
 	$(CC) $(DEBUG) $(FLAGS) $(UNICODE) $(INCLUDE) ./pch.cpp

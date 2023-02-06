@@ -51,3 +51,10 @@
 #define ERROR_XENGINE_APISERVICE_MODULE_HELP_QRCODE_EMPTY 0xD4004         //空的数据
 #define ERROR_XENGINE_APISERVICE_MODULE_HELP_QRCODE_NOTQR 0xD4005         //不是QR
 #define ERROR_XENGINE_APISERVICE_MODULE_HELP_QRCODE_NOTSUPPORT 0xD4006    //暂时不支持
+//////////////////////////////////////////////////////////////////////////
+//                       套接字测试错误
+//////////////////////////////////////////////////////////////////////////
+#define ERROR_XENGINE_APISERVICE_MODULE_HELP_SOCKETTEST_PARAMRT 0xD5001   //参数错误
+#define ERROR_XENGINE_APISERVICE_MODULE_HELP_SOCKETTEST_MALLOC 0xD5002    //申请内存失败
+#define ERROR_XENGINE_APISERVICE_MODULE_HELP_SOCKETTEST_THREAD 0xD5003    //创建线程失败
+#define ERROR_XENGINE_APISERVICE_MODULE_HELP_SOCKETTEST_NOTFOUND 0xD5004  //没有找到

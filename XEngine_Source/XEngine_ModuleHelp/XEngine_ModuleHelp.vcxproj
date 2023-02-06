@@ -171,6 +171,7 @@
     <ClInclude Include="ModuleHelp_Locker\ModuleHelp_Locker.h" />
     <ClInclude Include="ModuleHelp_P2PClient\ModuleHelp_P2PClient.h" />
     <ClInclude Include="ModuleHelp_QRCode\ModuleHelp_QRCode.h" />
+    <ClInclude Include="ModuleHelp_SocketTest\ModuleHelp_SocketTest.h" />
     <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>
@@ -180,6 +181,7 @@
     <ClCompile Include="ModuleHelp_Locker\ModuleHelp_Locker.cpp" />
     <ClCompile Include="ModuleHelp_P2PClient\ModuleHelp_P2PClient.cpp" />
     <ClCompile Include="ModuleHelp_QRCode\ModuleHelp_QRCode.cpp" />
+    <ClCompile Include="ModuleHelp_SocketTest\ModuleHelp_SocketTest.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>

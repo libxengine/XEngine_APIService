@@ -4,6 +4,7 @@
 #include "ModuleHelp_P2PClient/ModuleHelp_P2PClient.h"
 #include "ModuleHelp_Locker/ModuleHelp_Locker.h"
 #include "ModuleHelp_QRCode/ModuleHelp_QRCode.h"
+#include "ModuleHelp_SocketTest/ModuleHelp_SocketTest.h"
 /********************************************************************
 //    Created:     2022/03/04  13:37:38
 //    File Name:   D:\XEngine_APIService\XEngine_Source\XEngine_ModuleHelp\pch.cpp
@@ -23,6 +24,7 @@ CModuleHelp_Language m_Language;
 CModuleHelp_P2PClient m_P2PClient;
 CModuleHelp_Locker m_Locker;
 CModuleHelp_QRCode m_QRCode;
+CModuleHelp_SocketTest m_SocketTest;
 //////////////////////////////////////////////////////////////////////////
 ///                        导出的函数
 //////////////////////////////////////////////////////////////////////////
@@ -148,4 +150,31 @@ extern "C" BOOL ModuleHelp_QRCode_QRDecodecFile(LPCTSTR lpszFileName, TCHAR * pt
 extern "C" BOOL ModuleHelp_QRCode_QRDecodecMemory(LPCSTR lpszMsgBuffer, int nMsgLen, TCHAR * ptszMsgBuffer, LPCTSTR lpszDetectProto, LPCTSTR lpszDetectModel, LPCTSTR lpszSrProto, LPCTSTR lpszSrModel)
 {
 	return m_QRCode.ModuleHelp_QRCode_QRDecodecMemory(lpszMsgBuffer, nMsgLen, ptszMsgBuffer, lpszDetectProto, lpszDetectModel, lpszSrProto, lpszSrModel);
+}
+/************************************************************************/
+/*                       网络测试导出函数                               */
+/************************************************************************/
+extern "C" BOOL ModuleHelp_SocketTest_StartConnect(XNETHANDLE * pxhToken, MODULEHELP_SOCKETTEST_RECONNECT * pSt_ReConnect, CALLBACK_APISERVICE_MODULE_HELP_SOCKETTEST fpCall_ReConnect, LPVOID lParam)
+{
+	return m_SocketTest.ModuleHelp_SocketTest_StartConnect(pxhToken, pSt_ReConnect, fpCall_ReConnect, lParam);
+}
+extern "C" BOOL ModuleHelp_SocketTest_GetConnect(XNETHANDLE xhToken, BOOL * pbRun)
+{
+	return m_SocketTest.ModuleHelp_SocketTest_GetConnect(xhToken, pbRun);
+}
+extern "C" BOOL ModuleHelp_SocketTest_StopConnect(XNETHANDLE xhToken)
+{
+	return m_SocketTest.ModuleHelp_SocketTest_StopConnect(xhToken);
+}
+extern "C" BOOL ModuleHelp_SocketTest_StartDatas(XNETHANDLE * pxhToken, MODULEHELP_SOCKETTEST_DATAS * pSt_SocketDatas, CALLBACK_APISERVICE_MODULE_HELP_SOCKETTEST fpCall_DataTest, BOOL bTCP, LPVOID lParam)
+{
+	return m_SocketTest.ModuleHelp_SocketTest_StartDatas(pxhToken, pSt_SocketDatas, fpCall_DataTest, bTCP, lParam);
+}
+extern "C" BOOL ModuleHelp_SocketTest_GetDatas(XNETHANDLE xhToken, BOOL * pbRun)
+{
+	return m_SocketTest.ModuleHelp_SocketTest_GetDatas(xhToken, pbRun);
+}
+extern "C" BOOL ModuleHelp_SocketTest_StopDatas(XNETHANDLE xhToken)
+{
+	return m_SocketTest.ModuleHelp_SocketTest_StopDatas(xhToken);
 }
