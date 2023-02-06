@@ -73,7 +73,7 @@ BOOL CModuleHelp_SocketTest::ModuleHelp_SocketTest_StartConnect(XNETHANDLE* pxhT
     BaseLib_OperatorHandle_Create(&pSt_ConnSocket->xhToken);
     memcpy(&pSt_ConnSocket->st_SocketConn, pSt_ReConnect, sizeof(MODULEHELP_SOCKETTEST_RECONNECT));
     //创建线程
-    pSt_ConnSocket->pSTDThread = make_shared<std::thread>(ModuleHelp_SocketTest_ThreadConnect, pSt_ConnSocket);
+    pSt_ConnSocket->pSTDThread = make_shared<std::thread>(ModuleHelp_SocketTest_ThreadConn, pSt_ConnSocket);
     if (NULL == pSt_ConnSocket->pSTDThread)
     {
         ModuleHelp_IsErrorOccur = TRUE;
@@ -221,7 +221,7 @@ BOOL CModuleHelp_SocketTest::ModuleHelp_SocketTest_StartDatas(XNETHANDLE* pxhTok
 		}
 	}
 	//创建线程
-	pSt_DataSocket->pSTDThread = make_shared<std::thread>(StressTest_Thread_DatasTest, pSt_DataSocket);
+	pSt_DataSocket->pSTDThread = make_shared<std::thread>(ModuleHelp_SocketTest_ThreadData, pSt_DataSocket);
 	if (!pSt_DataSocket->pSTDThread->joinable())
 	{
 		ModuleHelp_IsErrorOccur = TRUE;
@@ -305,7 +305,7 @@ BOOL CModuleHelp_SocketTest::ModuleHelp_SocketTest_StopDatas(XNETHANDLE xhToken)
 //////////////////////////////////////////////////////////////////////////
 //                    线程函数
 //////////////////////////////////////////////////////////////////////////
-XHTHREAD CModuleHelp_SocketTest::ModuleHelp_SocketTest_ThreadConnect(LPVOID lParam)
+XHTHREAD CModuleHelp_SocketTest::ModuleHelp_SocketTest_ThreadConn(LPVOID lParam)
 {
     MODULEHELP_SOCKETTEST_CONNINFO* pSt_ReConnect = (MODULEHELP_SOCKETTEST_CONNINFO*)lParam;
     __int64x nFailed = 0;
@@ -341,7 +341,7 @@ XHTHREAD CModuleHelp_SocketTest::ModuleHelp_SocketTest_ThreadConnect(LPVOID lPar
     pSt_ReConnect->bIsRun = FALSE;
     return 0;
 }
-XHTHREAD CModuleHelp_SocketTest::StressTest_Thread_DatasTest(LPVOID lParam)
+XHTHREAD CModuleHelp_SocketTest::ModuleHelp_SocketTest_ThreadData(LPVOID lParam)
 {
     MODULEHELP_SOCKETTEST_DATAINFO* pSt_DataSocket = (MODULEHELP_SOCKETTEST_DATAINFO*)lParam;
 	__int64x nFailed = 0;

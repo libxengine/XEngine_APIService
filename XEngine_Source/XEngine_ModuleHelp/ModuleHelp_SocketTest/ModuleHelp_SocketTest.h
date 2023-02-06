@@ -49,8 +49,8 @@ public:
 	BOOL ModuleHelp_SocketTest_GetDatas(XNETHANDLE xhToken, BOOL* pbRun);
 	BOOL ModuleHelp_SocketTest_StopDatas(XNETHANDLE xhToken);
 protected:
-    static XHTHREAD ModuleHelp_SocketTest_ThreadConnect(LPVOID lParam);          //反复连接测试线程
-    static XHTHREAD StressTest_Thread_DatasTest(LPVOID lParam);                  //大数据包长连接测试
+    static XHTHREAD ModuleHelp_SocketTest_ThreadConn(LPVOID lParam);          //反复连接测试线程
+    static XHTHREAD ModuleHelp_SocketTest_ThreadData(LPVOID lParam);                  //大数据包长连接测试
 private:
 	shared_mutex st_LockConn;
 	shared_mutex st_LockData;
