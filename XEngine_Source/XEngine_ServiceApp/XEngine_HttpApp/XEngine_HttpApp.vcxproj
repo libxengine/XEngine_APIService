@@ -165,6 +165,7 @@
     <ClCompile Include="XEngine_HTTPTask\HTTPTask_P2PClient.cpp" />
     <ClCompile Include="XEngine_HTTPTask\HTTPTask_PostCode.cpp" />
     <ClCompile Include="XEngine_HTTPTask\HTTPTask_QRCode.cpp" />
+    <ClCompile Include="XEngine_HTTPTask\HTTPTask_SocketTest.cpp" />
     <ClCompile Include="XEngine_HTTPTask\HTTPTask_Translation.cpp" />
     <ClCompile Include="XEngine_Network.cpp" />
     <ClCompile Include="XEngine_PluginTask.cpp" />
@@ -182,6 +183,7 @@
     <ClInclude Include="XEngine_HTTPTask\HTTPTask_P2PClient.h" />
     <ClInclude Include="XEngine_HTTPTask\HTTPTask_PostCode.h" />
     <ClInclude Include="XEngine_HTTPTask\HTTPTask_QRCode.h" />
+    <ClInclude Include="XEngine_HTTPTask\HTTPTask_SocketTest.h" />
     <ClInclude Include="XEngine_HTTPTask\HTTPTask_Translation.h" />
     <ClInclude Include="XEngine_Network.h" />
     <ClInclude Include="XEngine_PluginTask.h" />
