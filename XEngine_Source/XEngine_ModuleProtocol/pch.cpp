@@ -59,6 +59,14 @@ extern "C" BOOL ModuleProtocol_Packet_Log(TCHAR * ptszMsgBuffer, int* pInt_MsgLe
 {
 	return m_ProtocolPacket.ModuleProtocol_Packet_Log(ptszMsgBuffer, pInt_MsgLen, pppSt_XLogList, nListCount);
 }
+extern "C" BOOL ModuleProtocol_Packet_TestReport(TCHAR * ptszMsgBuffer, int* pInt_MsgLen, XNETHANDLE xhToken, LPCTSTR lpszIPAddr, int nIPPort, __int64x nNumber, __int64x nFailed, __int64x nSuccess, int nStatus)
+{
+	return m_ProtocolPacket.ModuleProtocol_Packet_TestReport(ptszMsgBuffer, pInt_MsgLen, xhToken, lpszIPAddr, nIPPort, nNumber, nFailed, nSuccess, nStatus);
+}
+extern "C" BOOL ModuleProtocol_Packet_TestReply(TCHAR * ptszMsgBuffer, int* pInt_MsgLen, XNETHANDLE xhToken)
+{
+	return m_ProtocolPacket.ModuleProtocol_Packet_TestReply(ptszMsgBuffer, pInt_MsgLen, xhToken);
+}
 extern "C" BOOL ModuleProtocol_Packet_P2PLan(TCHAR * ptszMsgBuffer, int* pInt_MsgLen, XENGINE_P2XPPEER_PROTOCOL * **pppSt_ListClients, int nListCount)
 {
 	return m_ProtocolPacket.ModuleProtocol_Packet_P2PLan(ptszMsgBuffer, pInt_MsgLen, pppSt_ListClients, nListCount);
