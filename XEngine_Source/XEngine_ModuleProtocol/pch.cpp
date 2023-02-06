@@ -106,3 +106,7 @@ extern "C" BOOL ModuleProtocol_Parse_QRCode(LPCTSTR lpszMsgBuffer, int nMsgLen, 
 {
 	return m_ProtocolParse.ModuleProtocol_Parse_QRCode(lpszMsgBuffer, nMsgLen, pSt_QRCode);
 }
+extern "C" BOOL ModuleProtocol_Parse_SocketTest(LPCTSTR lpszMsgBuffer, int nMsgLen, XENGINE_SOCKETTEST * pSt_SocketTest)
+{
+	return m_ProtocolParse.ModuleProtocol_Parse_SocketTest(lpszMsgBuffer, nMsgLen, pSt_SocketTest);
+}

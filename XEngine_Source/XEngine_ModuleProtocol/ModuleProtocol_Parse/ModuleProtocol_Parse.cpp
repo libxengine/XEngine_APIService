@@ -517,3 +517,74 @@ BOOL CModuleProtocol_Parse::ModuleProtocol_Parse_QRCode(LPCTSTR lpszMsgBuffer, i
 	}
 	return TRUE;
 }
+/********************************************************************
+函数名称：ModuleProtocol_Parse_SocketTest
+函数功能：套接字测试协议解析
+ 参数.一：lpszMsgBuffer
+  In/Out：In
+  类型：常量字符指针
+  可空：N
+  意思：输入要解析的数据
+ 参数.二：nMsgLen
+  In/Out：In
+  类型：整数型
+  可空：N
+  意思：pSt_SocketTest
+ 参数.三：pSt_QRCode
+  In/Out：Out
+  类型：数据结构指针
+  可空：N
+  意思：输出解析的信息
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+BOOL CModuleProtocol_Parse::ModuleProtocol_Parse_SocketTest(LPCTSTR lpszMsgBuffer, int nMsgLen, XENGINE_SOCKETTEST* pSt_SocketTest)
+{
+	ModuleProtocol_IsErrorOccur = FALSE;
+
+	if ((NULL == lpszMsgBuffer) || (NULL == pSt_SocketTest))
+	{
+		ModuleProtocol_IsErrorOccur = TRUE;
+		ModuleProtocol_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PROTOCOL_PARSE_PARAMENT;
+		return FALSE;
+	}
+	Json::Value st_JsonRoot;
+	JSONCPP_STRING st_JsonError;
+	Json::CharReaderBuilder st_ReaderBuilder;
+	//解析JSON
+	std::unique_ptr<Json::CharReader> const pSt_JsonReader(st_ReaderBuilder.newCharReader());
+	if (!pSt_JsonReader->parse(lpszMsgBuffer, lpszMsgBuffer + nMsgLen, &st_JsonRoot, &st_JsonError))
+	{
+		ModuleProtocol_IsErrorOccur = TRUE;
+		ModuleProtocol_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PROTOCOL_PARSE_PARAMENT;
+		return FALSE;
+	}
+
+	if (!st_JsonRoot["tszAPIUrl"].isNull())
+	{
+		_tcscpy(pSt_SocketTest->tszAPIUrl, st_JsonRoot["tszAPIUrl"].asCString());
+	}
+	if (!st_JsonRoot["tszIPAddr"].isNull())
+	{
+		_tcscpy(pSt_SocketTest->tszIPAddr, st_JsonRoot["tszIPAddr"].asCString());
+	}
+	if (!st_JsonRoot["bConn"].isNull())
+	{
+		pSt_SocketTest->bConn = st_JsonRoot["bConn"].asBool();
+	}
+	if (!st_JsonRoot["bTCP"].isNull())
+	{
+		pSt_SocketTest->bTCP = st_JsonRoot["bTCP"].asBool();
+	}
+	if (!st_JsonRoot["nPort"].isNull())
+	{
+		pSt_SocketTest->nPort = st_JsonRoot["nPort"].asInt();
+	}
+	if (!st_JsonRoot["xhToken"].isNull())
+	{
+		pSt_SocketTest->xhToken = st_JsonRoot["xhToken"].asInt64();
+	}
+	return TRUE;
+}
