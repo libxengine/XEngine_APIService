@@ -6,6 +6,7 @@ copy /y "D:\XEngine\XEngine_SourceCode\Debug\XEngine_OPenSsl.dll" "./"
 
 copy /y "D:\XEngine\XEngine_SourceCode\Debug\XEngine_SystemApi.dll" "./"
 copy /y "D:\XEngine\XEngine_SourceCode\Debug\NetHelp_APIHelp.dll" "./"
+copy /y "D:\XEngine\XEngine_SourceCode\Debug\XClient_Socket.dll" "./"
 
 copy /y "D:\XEngine\XEngine_SourceCode\Debug\HelpComponents_DataBase.dll" "./"
 copy /y "D:\XEngine\XEngine_SourceCode\Debug\HelpComponents_Packets.dll" "./"
