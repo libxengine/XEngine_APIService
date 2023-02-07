@@ -220,7 +220,10 @@ BOOL XEngine_HTTPTask_Handle(RFCCOMPONENTS_HTTP_REQPARAM* pSt_HTTPParam, LPCTSTR
 		}
 		else
 		{
-
+			st_HDRParam.nHttpCode = 404;
+			RfcComponents_HttpServer_SendMsgEx(xhHTTPPacket, tszMsgBuffer, &nMsgLen, &st_HDRParam);
+			XEngine_Network_Send(lpszClientAddr, tszMsgBuffer, nMsgLen);
+			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _T("HTTP客户端:%s,发送的请求不支持:%s，内容:\r\n%s"), lpszClientAddr, pSt_HTTPParam->tszHttpUri, lpszRVBuffer);
 		}
 	}
 	else if (0 == _tcsnicmp(lpszMethodGet, pSt_HTTPParam->tszHttpMethod, _tcslen(lpszMethodGet)))
@@ -325,6 +328,13 @@ BOOL XEngine_HTTPTask_Handle(RFCCOMPONENTS_HTTP_REQPARAM* pSt_HTTPParam, LPCTSTR
 			BaseLib_OperatorString_GetKeyValue(pptszList[1], "=", tszKey, tszLockToken);
 			BaseLib_OperatorString_GetKeyValue(pptszList[2], "=", tszKey, tszLockType);
 			XEngine_HTTPTask_Locker(lpszClientAddr, _ttoi64(tszLockToken), (ENUM_XENGINE_APISERVICE_LOCKER_TYPE)_ttoi(tszLockType));
+		}
+		else
+		{
+			st_HDRParam.nHttpCode = 404;
+			RfcComponents_HttpServer_SendMsgEx(xhHTTPPacket, tszMsgBuffer, &nMsgLen, &st_HDRParam);
+			XEngine_Network_Send(lpszClientAddr, tszMsgBuffer, nMsgLen);
+			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _T("HTTP客户端:%s,发送的请求不支持:%s，内容:\r\n%s"), lpszClientAddr, pSt_HTTPParam->tszHttpUri, lpszRVBuffer);
 		}
 	}
 	else
