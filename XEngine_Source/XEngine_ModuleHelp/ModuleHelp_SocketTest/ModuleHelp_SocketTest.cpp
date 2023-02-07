@@ -143,6 +143,13 @@ BOOL CModuleHelp_SocketTest::ModuleHelp_SocketTest_StopConnect(XNETHANDLE xhToke
 	{
 		stl_MapIterator->second->bIsRun = FALSE;
 		stl_MapIterator->second->pSTDThread->join();
+		
+		if (NULL != stl_MapIterator->second->lParam)
+		{
+			delete stl_MapIterator->second->lParam;
+			stl_MapIterator->second->lParam = NULL;
+		}
+		
 		delete stl_MapIterator->second;
 		stl_MapIterator->second = NULL;
 
@@ -201,6 +208,7 @@ BOOL CModuleHelp_SocketTest::ModuleHelp_SocketTest_StartDatas(XNETHANDLE* pxhTok
 	pSt_DataSocket->lParam = lParam;
 	pSt_DataSocket->lpCall_TestDatas = fpCall_DataTest;
     BaseLib_OperatorHandle_Create(&pSt_DataSocket->xhToken);
+	memcpy(&pSt_DataSocket->st_SocketData, pSt_SocketDatas, sizeof(MODULEHELP_SOCKETTEST_DATAS));
 	//创建客户端
 	if (pSt_DataSocket->bIsTCP)
 	{
@@ -294,6 +302,13 @@ BOOL CModuleHelp_SocketTest::ModuleHelp_SocketTest_StopDatas(XNETHANDLE xhToken)
         stl_MapIterator->second->bIsRun = FALSE;
         stl_MapIterator->second->pSTDThread->join();
 		XClient_TCPSelect_Close(stl_MapIterator->second->hSocket);
+
+		if (NULL != stl_MapIterator->second->lParam)
+		{
+			delete stl_MapIterator->second->lParam;
+			stl_MapIterator->second->lParam = NULL;
+		}
+
 		delete stl_MapIterator->second;
         stl_MapIterator->second = NULL;
 
