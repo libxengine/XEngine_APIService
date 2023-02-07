@@ -4,8 +4,8 @@ SHAREDLL = so
 RELEASE = 0
 UNICODE = 0
 INCLUDE = -I ./ -I /usr/include/opencv4
-LOADBIN = -L /usr/local/lib/XEngine_Release/XEngine_BaseLib 
-LIB = -lXEngine_BaseLib -lopencc
+LOADBIN = -L /usr/local/lib/XEngine_Release/XEngine_BaseLib -L /usr/local/lib/XEngine_Release/XEngine_Client 
+LIB = -lXEngine_BaseLib -lXClient_Socket -lopencc
 LIBEX = -ldl -lpthread
 LOADSO = -Wl,-rpath=./,--disable-new-dtags
 LIBINCLUDE = ModuleHelp_IDCard.o ModuleHelp_Language.o ModuleHelp_P2PClient.o ModuleHelp_Locker.o ModuleHelp_QRCode.o ModuleHelp_SocketTest.o pch.o

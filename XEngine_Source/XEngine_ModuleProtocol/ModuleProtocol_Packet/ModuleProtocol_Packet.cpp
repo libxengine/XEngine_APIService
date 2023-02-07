@@ -598,10 +598,10 @@ BOOL CModuleProtocol_Packet::ModuleProtocol_Packet_TestReport(TCHAR* ptszMsgBuff
 
 	st_JsonObject["lpszIPAddr"] = lpszIPAddr;
 	st_JsonObject["nIPPort"] = nIPPort;
-	st_JsonObject["xhToken"] = xhToken;
-	st_JsonObject["nNumber"] = nNumber;
-	st_JsonObject["nFailed"] = nFailed;
-	st_JsonObject["nSuccess"] = nSuccess;
+	st_JsonObject["xhToken"] = (Json::Value::Int64)xhToken;
+	st_JsonObject["nNumber"] = (Json::Value::Int64)nNumber;
+	st_JsonObject["nFailed"] = (Json::Value::Int64)nFailed;
+	st_JsonObject["nSuccess"] = (Json::Value::Int64)nSuccess;
 	st_JsonObject["nStatus"] = nStatus;
 
 	st_JsonRoot["code"] = 0;
@@ -650,7 +650,7 @@ BOOL CModuleProtocol_Packet::ModuleProtocol_Packet_TestReply(TCHAR* ptszMsgBuffe
 	Json::Value st_JsonObject;
 	Json::StreamWriterBuilder st_JsonBuilder;
 
-	st_JsonObject["xhToken"] = xhToken;
+	st_JsonObject["xhToken"] = (Json::Value::Int64)xhToken;
 
 	st_JsonRoot["code"] = 0;
 	st_JsonRoot["msg"] = "success";

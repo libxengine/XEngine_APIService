@@ -147,7 +147,7 @@ BOOL CModuleHelp_SocketTest::ModuleHelp_SocketTest_StopConnect(XNETHANDLE xhToke
 		
 		if (NULL != stl_MapIterator->second->lParam)
 		{
-			delete stl_MapIterator->second->lParam;
+			delete (TCHAR*)stl_MapIterator->second->lParam;
 			stl_MapIterator->second->lParam = NULL;
 		}
 		
@@ -235,7 +235,7 @@ BOOL CModuleHelp_SocketTest::ModuleHelp_SocketTest_StartDatas(XNETHANDLE* pxhTok
 	{
 		ModuleHelp_IsErrorOccur = TRUE;
 		ModuleHelp_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_HELP_SOCKETTEST_THREAD;
-		return NULL;
+		return FALSE;
 	}
 	*pxhToken = pSt_DataSocket->xhToken;
     st_LockData.lock();
@@ -306,7 +306,7 @@ BOOL CModuleHelp_SocketTest::ModuleHelp_SocketTest_StopDatas(XNETHANDLE xhToken)
 
 		if (NULL != stl_MapIterator->second->lParam)
 		{
-			delete stl_MapIterator->second->lParam;
+			delete (TCHAR*)stl_MapIterator->second->lParam;
 			stl_MapIterator->second->lParam = NULL;
 		}
 

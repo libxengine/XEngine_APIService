@@ -11,7 +11,10 @@ void CALLBACK XEngine_HTTPTask_CBSocketTest(XNETHANDLE xhToken, LPCSTR lpszAddr,
 	{
 		//每次都报告
 		ModuleProtocol_Packet_TestReport(tszMsgBuffer, &nMsgLen, xhToken, lpszAddr, nPort, nNumber, nFailed, nSuccess, nStatus);
-		APIClient_Http_Request("POST", pSt_SocketTest->tszAPIUrl, tszMsgBuffer);
+		if (_tcslen(pSt_SocketTest->tszAPIUrl) > 0)
+		{
+			APIClient_Http_Request("POST", pSt_SocketTest->tszAPIUrl, tszMsgBuffer);
+		}
 	}
 	else if ((1 == pSt_SocketTest->nType) && (0 == nStatus))
 	{

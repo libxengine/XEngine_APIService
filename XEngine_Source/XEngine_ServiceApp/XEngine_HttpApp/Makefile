@@ -10,7 +10,7 @@ LIB = -lXEngine_BaseLib -lXEngine_Algorithm -lXEngine_Core -lXEngine_ManagePool 
 LIBEX = -ldl -lpthread
 LOADSO = -Wl,-rpath=./,--disable-new-dtags
 LIBINCLUDE = XEngine_Configure.o XEngine_Network.o XEngine_HTTPTask.o XEngine_PluginTask.o XEngine_HttpApp.o        \
-             HTTPTask_IDCard.o HTTPTask_Bank.o HTTPTask_Language.o HTTPTask_Translation.o HTTPTask_P2PClient.o HTTPTask_OPtions.o HTTPTask_Locker.o HTTPTask_PostCode.o HTTPTask_Log.o HTTPTask_QRCode.o
+             HTTPTask_IDCard.o HTTPTask_Bank.o HTTPTask_Language.o HTTPTask_Translation.o HTTPTask_P2PClient.o HTTPTask_OPtions.o HTTPTask_Locker.o HTTPTask_PostCode.o HTTPTask_Log.o HTTPTask_QRCode.o HTTPTask_SocketTest.o
 
 ifeq ($(shell uname),Darwin)
 	LOADSO = 
@@ -63,6 +63,8 @@ HTTPTask_Log.o:./XEngine_HTTPTask/HTTPTask_Log.cpp
 	$(CC) $(DEBUG) $(FLAGS) $(UNICODE) ./XEngine_HTTPTask/HTTPTask_Log.cpp
 HTTPTask_QRCode.o:./XEngine_HTTPTask/HTTPTask_QRCode.cpp
 	$(CC) $(DEBUG) $(FLAGS) $(UNICODE) ./XEngine_HTTPTask/HTTPTask_QRCode.cpp
+HTTPTask_SocketTest.o:./XEngine_HTTPTask/HTTPTask_SocketTest.cpp
+	$(CC) $(DEBUG) $(FLAGS) $(UNICODE) ./XEngine_HTTPTask/HTTPTask_SocketTest.cpp
 
 XEngine_HttpApp.o:./XEngine_HttpApp.cpp             
 	$(CC) $(DEBUG) $(FLAGS) $(UNICODE) ./XEngine_HttpApp.cpp   
