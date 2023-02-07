@@ -11,22 +11,32 @@
 // 添加要在此处预编译的标头
 #include "framework.h"
 #include <tchar.h>
+#include <WinSock2.h>
 #endif
 #endif //PCH_H
 #include <string.h>
 #include <errno.h>
 #include <thread>
 #include <list>
+#include <vector>
 #include <atomic>
 #include <shared_mutex>
 #include <unordered_map>
 #include <opencc/opencc.h>
+#ifdef _MSC_BUILD
+#include <opencv2/opencv.hpp>
+#include <opencv2/core/utils/logger.hpp>
+#include <opencv2/wechat_qrcode.hpp>
+#include <qrencode.h>
+#endif
 using namespace std;
 #include <XEngine_Include/XEngine_CommHdr.h>
 #include <XEngine_Include/XEngine_Types.h>
 #include <XEngine_Include/XEngine_ProtocolHdr.h>
 #include <XEngine_Include/XEngine_BaseLib/BaseLib_Define.h>
 #include <XEngine_Include/XEngine_BaseLib/BaseLib_Error.h>
+#include <XEngine_Include/XEngine_Client/XClient_Define.h>
+#include <XEngine_Include/XEngine_Client/XClient_Error.h>
 #include "../XEngine_UserProtocol.h"
 #include "ModuleHelp_Define.h"
 #include "ModuleHelp_Error.h"
@@ -46,4 +56,9 @@ extern DWORD ModuleHelp_dwErrorCode;
 
 #ifdef _MSC_BUILD
 #pragma comment(lib,"XEngine_BaseLib/XEngine_BaseLib")
+#pragma comment(lib,"XEngine_Client/XClient_Socket")
+#else
+#if __linux__ && !__ANDROID__
+#pragma GCC diagnostic ignored "-Wclass-memaccess"
+#endif
 #endif

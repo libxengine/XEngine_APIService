@@ -531,6 +531,137 @@ BOOL CModuleProtocol_Packet::ModuleProtocol_Packet_Log(TCHAR* ptszMsgBuffer, int
 	return TRUE;
 }
 /********************************************************************
+函数名称：ModuleProtocol_Packet_TestReport
+函数功能：套接字测试信息打包
+ 参数.一：ptszMsgBuffer
+  In/Out：Out
+  类型：字符指针
+  可空：N
+  意思：输出打包的数据信息
+ 参数.二：pInt_MsgLen
+  In/Out：Out
+  类型：整数型指针
+  可空：N
+  意思：输出打包大小
+ 参数.三：xhToken
+  In/Out：In
+  类型：句柄
+  可空：N
+  意思：输入句柄
+ 参数.四：lpszIPAddr
+  In/Out：In
+  类型：常量字符指针
+  可空：N
+ 参数.五：nIPPort
+  In/Out：In
+  类型：整数型
+  可空：N
+  意思：测试的端口
+ 参数.六：nNumber
+  In/Out：In
+  类型：整数型
+  可空：N
+  意思：测试的次数
+ 参数.七：nFailed
+  In/Out：In
+  类型：整数型
+  可空：N
+  意思：失败的次数
+ 参数.八：nSuccess
+  In/Out：In
+  类型：整数型
+  可空：N
+  意思：成功的次数
+ 参数.九：nStatus
+  In/Out：In
+  类型：整数型
+  可空：N
+  意思：运行状态
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+BOOL CModuleProtocol_Packet::ModuleProtocol_Packet_TestReport(TCHAR* ptszMsgBuffer, int* pInt_MsgLen, XNETHANDLE xhToken, LPCTSTR lpszIPAddr, int nIPPort, __int64x nNumber, __int64x nFailed, __int64x nSuccess, int nStatus)
+{
+	ModuleProtocol_IsErrorOccur = FALSE;
+
+	if ((NULL == ptszMsgBuffer) || (NULL == pInt_MsgLen))
+	{
+		ModuleProtocol_IsErrorOccur = TRUE;
+		ModuleProtocol_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PROTOCOL_PACKET_PARAMENT;
+		return FALSE;
+	}
+	Json::Value st_JsonRoot;
+	Json::Value st_JsonObject;
+	Json::StreamWriterBuilder st_JsonBuilder;
+
+	st_JsonObject["lpszIPAddr"] = lpszIPAddr;
+	st_JsonObject["nIPPort"] = nIPPort;
+	st_JsonObject["xhToken"] = (Json::Value::Int64)xhToken;
+	st_JsonObject["nNumber"] = (Json::Value::Int64)nNumber;
+	st_JsonObject["nFailed"] = (Json::Value::Int64)nFailed;
+	st_JsonObject["nSuccess"] = (Json::Value::Int64)nSuccess;
+	st_JsonObject["nStatus"] = nStatus;
+
+	st_JsonRoot["code"] = 0;
+	st_JsonRoot["msg"] = "success";
+	st_JsonRoot["data"] = st_JsonObject;
+	st_JsonBuilder["emitUTF8"] = true;
+
+	*pInt_MsgLen = Json::writeString(st_JsonBuilder, st_JsonRoot).length();
+	memcpy(ptszMsgBuffer, Json::writeString(st_JsonBuilder, st_JsonRoot).c_str(), *pInt_MsgLen);
+	return TRUE;
+}
+/********************************************************************
+函数名称：ModuleProtocol_Packet_TestReply
+函数功能：请求返回
+ 参数.一：ptszMsgBuffer
+  In/Out：Out
+  类型：字符指针
+  可空：N
+  意思：输出打包的数据信息
+ 参数.二：pInt_MsgLen
+  In/Out：Out
+  类型：整数型指针
+  可空：N
+  意思：输出打包大小
+ 参数.三：xhToken
+  In/Out：In
+  类型：句柄
+  可空：N
+  意思：输入句柄
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+BOOL CModuleProtocol_Packet::ModuleProtocol_Packet_TestReply(TCHAR* ptszMsgBuffer, int* pInt_MsgLen, XNETHANDLE xhToken)
+{
+	ModuleProtocol_IsErrorOccur = FALSE;
+
+	if ((NULL == ptszMsgBuffer) || (NULL == pInt_MsgLen))
+	{
+		ModuleProtocol_IsErrorOccur = TRUE;
+		ModuleProtocol_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PROTOCOL_PACKET_PARAMENT;
+		return FALSE;
+	}
+	Json::Value st_JsonRoot;
+	Json::Value st_JsonObject;
+	Json::StreamWriterBuilder st_JsonBuilder;
+
+	st_JsonObject["xhToken"] = (Json::Value::Int64)xhToken;
+
+	st_JsonRoot["code"] = 0;
+	st_JsonRoot["msg"] = "success";
+	st_JsonRoot["data"] = st_JsonObject;
+	st_JsonBuilder["emitUTF8"] = true;
+
+	*pInt_MsgLen = Json::writeString(st_JsonBuilder, st_JsonRoot).length();
+	memcpy(ptszMsgBuffer, Json::writeString(st_JsonBuilder, st_JsonRoot).c_str(), *pInt_MsgLen);
+	return TRUE;
+}
+/********************************************************************
 函数名称：ModuleProtocol_Packet_P2PLan
 函数功能：响应同步局域网地址列表
  参数.一：ptszMsgBuffer

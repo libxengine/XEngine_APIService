@@ -14,6 +14,8 @@
 //                       导出回调函数
 //////////////////////////////////////////////////////////////////////////
 typedef void(CALLBACK* CALLBACK_APISERVICE_MODULE_HELP_P2PCLIENT)(XENGINE_P2XPPEER_PROTOCOL* pSt_P2PProtocol, LPVOID lParam);
+//套接字测试回调:测试句柄，测试的服务器地址，测试的端口，当前测试次数，失败次数,成功次数,状态:0成功报告,1失败报告,2结束报告,自定义参数
+typedef void(CALLBACK* CALLBACK_APISERVICE_MODULE_HELP_SOCKETTEST)(XNETHANDLE xhToken, LPCSTR lpszAddr, int nPort, __int64x nNumber, __int64x nFailed, __int64x nSuccess, int nStatus, LPVOID lParam);
 //////////////////////////////////////////////////////////////////////////
 //                       导出数据结构
 //////////////////////////////////////////////////////////////////////////
@@ -387,3 +389,265 @@ extern "C" BOOL ModuleHelp_Locker_WriteUNLock(XNETHANDLE xhToken);
 备注：
 *********************************************************************/
 extern "C" BOOL ModuleHelp_Locker_Close(XNETHANDLE xhToken);
+/************************************************************************/
+/*                       二维码导出函数                                 */
+/************************************************************************/
+/********************************************************************
+函数名称：ModuleHelp_QRCode_QREncodecFile
+函数功能：二维码生成器
+ 参数.一：lpszFileName
+  In/Out：In
+  类型：常量字符指针
+  可空：N
+  意思：输入要生成的图片位置
+ 参数.二：lpszMsgBuffer
+  In/Out：In
+  类型：常量字符指针
+  可空：N
+  意思：输入要编码的数据
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+extern "C" BOOL ModuleHelp_QRCode_QREncodecFile(LPCTSTR lpszFileName, LPCTSTR lpszMsgBuffer);
+/********************************************************************
+函数名称：ModuleHelp_QRCode_QREncodecMemory
+函数功能：编码数据为二维码格式PNG图片
+ 参数.一：lpszMsgBuffer
+  In/Out：In
+  类型：常量字符指针
+  可空：N
+  意思：输入要编码的数据
+ 参数.二：ptszMsgBuffer
+  In/Out：Out
+  类型：字符指针
+  可空：N
+  意思：输出编码的数据
+ 参数.三：pInt_MsgLen
+  In/Out：Out
+  类型：整数型指针
+  可空：N
+  意思：输出数据大小
+  意思：输出数据大小
+ 参数.四：lpszFmt
+  In/Out：In
+  类型：常量字符指针
+  可空：N
+  意思：输入文件格式.png
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+extern "C" BOOL ModuleHelp_QRCode_QREncodecMemory(LPCTSTR lpszMsgBuffer, TCHAR* ptszMsgBuffer, int* pInt_MsgLen, LPCTSTR lpszFmt);
+/********************************************************************
+函数名称：ModuleHelp_QRCode_QRDecodecFile
+函数功能：从文件解码二维码
+ 参数.一：lpszFileName
+  In/Out：In
+  类型：常量字符指针
+  可空：N
+  意思：输入要解析的图片地址
+ 参数.二：ptszMsgBuffer
+  In/Out：Out
+  类型：字符指针
+  可空：N
+  意思：输出识别到的内容
+ 参数.三：lpszDetectProto
+  In/Out：In
+  类型：常量字符指针
+  可空：N
+  意思：学习模型地址,参考示例
+ 参数.四：lpszDetectModel
+  In/Out：In
+  类型：常量字符指针
+  可空：N
+  意思：学习模型地址,参考示例
+ 参数.五：lpszSrProto
+  In/Out：In
+  类型：常量字符指针
+  可空：N
+  意思：学习模型地址,参考示例
+ 参数.六：lpszSrModel
+  In/Out：In
+  类型：常量字符指针
+  可空：N
+  意思：学习模型地址,参考示例
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+extern "C" BOOL ModuleHelp_QRCode_QRDecodecFile(LPCTSTR lpszFileName, TCHAR* ptszMsgBuffer, LPCTSTR lpszDetectProto, LPCTSTR lpszDetectModel, LPCTSTR lpszSrProto, LPCTSTR lpszSrModel);
+/********************************************************************
+函数名称：ModuleHelp_QRCode_QRDecodecMemory
+函数功能：从内存解析二维码
+ 参数.一：lpszMsgBuffer
+  In/Out：In
+  类型：常量字符指针
+  可空：N
+  意思：输入要解析的图片缓冲区
+ 参数.二：nMsgLen
+  In/Out：In
+  类型：整数型
+  可空：N
+  意思：输入缓冲区大小
+ 参数.三：ptszMsgBuffer
+  In/Out：Out
+  类型：字符指针
+  可空：N
+  意思：输出识别到的内容
+ 参数.四：lpszDetectProto
+  In/Out：In
+  类型：常量字符指针
+  可空：N
+  意思：学习模型地址,参考示例
+ 参数.五：lpszDetectModel
+  In/Out：In
+  类型：常量字符指针
+  可空：N
+  意思：学习模型地址,参考示例
+ 参数.六：lpszSrProto
+  In/Out：In
+  类型：常量字符指针
+  可空：N
+  意思：学习模型地址,参考示例
+ 参数.七：lpszSrModel
+  In/Out：In
+  类型：常量字符指针
+  可空：N
+  意思：学习模型地址,参考示例
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+extern "C" BOOL ModuleHelp_QRCode_QRDecodecMemory(LPCSTR lpszMsgBuffer, int nMsgLen, TCHAR* ptszMsgBuffer, LPCTSTR lpszDetectProto, LPCTSTR lpszDetectModel, LPCTSTR lpszSrProto, LPCTSTR lpszSrModel);
+/************************************************************************/
+/*                       网络测试导出函数                               */
+/************************************************************************/
+/********************************************************************
+函数名称：ModuleHelp_SocketTest_StartConnect
+函数功能：测试连接
+ 参数.一：pxhToken
+  In/Out：Out
+  类型：句柄
+  可空：N
+  意思：导出句柄
+ 参数.二：pSt_ReConnect
+  In/Out：In
+  类型：数据结构指针
+  可空：N
+  意思：要测试的属性
+ 参数.三：fpCall_ReConnect
+  In/Out：In/Out
+  类型：回调函数
+  可空：N
+  意思：测试回调信息
+ 参数.四：lParam
+  In/Out：In/Out
+  类型：无类型指针
+  可空：Y
+  意思：回调函数自定义参数
+返回值
+  类型：句柄型
+  意思：成功返回连接的句柄,失败返回NULL
+备注：链接测试函数，链接一次后就关闭
+*********************************************************************/
+extern "C" BOOL ModuleHelp_SocketTest_StartConnect(XNETHANDLE* pxhToken, MODULEHELP_SOCKETTEST_RECONNECT* pSt_ReConnect, CALLBACK_APISERVICE_MODULE_HELP_SOCKETTEST fpCall_ReConnect, LPVOID lParam = NULL);
+/********************************************************************
+函数名称：ModuleHelp_SocketTest_GetConnect
+函数功能：获取是否在处理中
+ 参数.一：xhToken
+  In/Out：In
+  类型：句柄
+  可空：N
+  意思：输入操作的句柄
+ 参数.二：pbRun
+  In/Out：Out
+  类型：逻辑型指针
+  可空：N
+  意思：输出是否在运行
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+extern "C" BOOL ModuleHelp_SocketTest_GetConnect(XNETHANDLE xhToken, BOOL* pbRun);
+/********************************************************************
+函数名称：ModuleHelp_SocketTest_StopConnect
+函数功能：停止短连接测试
+ 参数.一：xhToken
+  In/Out：In
+  类型：句柄
+  可空：N
+  意思：输入测试的句柄
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+extern "C" BOOL ModuleHelp_SocketTest_StopConnect(XNETHANDLE xhToken);
+/********************************************************************
+函数名称：ModuleHelp_SocketTest_StartDatas
+函数功能：数据包测试函数
+ 参数.一：pxhToken
+  In/Out：In
+  类型：句柄
+  可空：N
+  意思：输出创建的句柄
+ 参数.二：pSt_SocketDatas
+  In/Out：In
+  类型：数据结构指针
+  可空：N
+  意思：要测试的属性
+ 参数.三：fpCall_DataTest
+  In/Out：In/Out
+  类型：回调函数
+  可空：N
+  意思：测试回调信息
+ 参数.四：lParam
+  In/Out：In/Out
+  类型：无类型指针
+  可空：Y
+  意思：回调函数自定义参数
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+extern "C" BOOL ModuleHelp_SocketTest_StartDatas(XNETHANDLE* pxhToken, MODULEHELP_SOCKETTEST_DATAS* pSt_SocketDatas, CALLBACK_APISERVICE_MODULE_HELP_SOCKETTEST fpCall_DataTest, BOOL bTCP = TRUE, LPVOID lParam = NULL);
+/********************************************************************
+函数名称：ModuleHelp_SocketTest_GetDatas
+函数功能：获取是否在处理中
+ 参数.一：xhToken
+  In/Out：In
+  类型：句柄
+  可空：N
+  意思：输入操作的句柄
+ 参数.二：pbRun
+  In/Out：Out
+  类型：逻辑型指针
+  可空：N
+  意思：输出是否在运行
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+extern "C" BOOL ModuleHelp_SocketTest_GetDatas(XNETHANDLE xhToken, BOOL* pbRun);
+/************************************************************************
+函数名称：ModuleHelp_SocketTest_DatasStop
+函数功能：停止大数据包测试
+  参数.一：xhToken
+   In/Out：In
+   类型：句柄
+   可空：N
+   意思：输入测试的句柄
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+************************************************************************/
+extern "C" BOOL ModuleHelp_SocketTest_StopDatas(XNETHANDLE xhToken);

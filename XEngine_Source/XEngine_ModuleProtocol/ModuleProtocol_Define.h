@@ -222,6 +222,83 @@ extern "C" BOOL ModuleProtocol_Packet_Locker(TCHAR* ptszMsgBuffer, int* pInt_Msg
 *********************************************************************/
 extern "C" BOOL ModuleProtocol_Packet_ZIPCode(TCHAR* ptszMsgBuffer, int* pInt_MsgLen, XENGINE_ZIPINFO* pSt_ZIPInfo, int nCode = 0, LPCTSTR lpszMsgBuffer = NULL);
 /********************************************************************
+函数名称：ModuleProtocol_Packet_TestReport
+函数功能：套接字测试信息打包
+ 参数.一：ptszMsgBuffer
+  In/Out：Out
+  类型：字符指针
+  可空：N
+  意思：输出打包的数据信息
+ 参数.二：pInt_MsgLen
+  In/Out：Out
+  类型：整数型指针
+  可空：N
+  意思：输出打包大小
+ 参数.三：xhToken
+  In/Out：In
+  类型：句柄
+  可空：N
+  意思：输入句柄
+ 参数.四：lpszIPAddr
+  In/Out：In
+  类型：常量字符指针
+  可空：N
+ 参数.五：nIPPort
+  In/Out：In
+  类型：整数型
+  可空：N
+  意思：测试的端口
+ 参数.六：nNumber
+  In/Out：In
+  类型：整数型
+  可空：N
+  意思：测试的次数
+ 参数.七：nFailed
+  In/Out：In
+  类型：整数型
+  可空：N
+  意思：失败的次数
+ 参数.八：nSuccess
+  In/Out：In
+  类型：整数型
+  可空：N
+  意思：成功的次数
+ 参数.九：nStatus
+  In/Out：In
+  类型：整数型
+  可空：N
+  意思：运行状态
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+extern "C" BOOL ModuleProtocol_Packet_TestReport(TCHAR* ptszMsgBuffer, int* pInt_MsgLen, XNETHANDLE xhToken, LPCTSTR lpszIPAddr, int nIPPort, __int64x nNumber, __int64x nFailed, __int64x nSuccess, int nStatus);
+/********************************************************************
+函数名称：ModuleProtocol_Packet_TestReply
+函数功能：请求返回
+ 参数.一：ptszMsgBuffer
+  In/Out：Out
+  类型：字符指针
+  可空：N
+  意思：输出打包的数据信息
+ 参数.二：pInt_MsgLen
+  In/Out：Out
+  类型：整数型指针
+  可空：N
+  意思：输出打包大小
+ 参数.三：xhToken
+  In/Out：In
+  类型：句柄
+  可空：N
+  意思：输入句柄
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+extern "C" BOOL ModuleProtocol_Packet_TestReply(TCHAR* ptszMsgBuffer, int* pInt_MsgLen, XNETHANDLE xhToken);
+/********************************************************************
 函数名称：ModuleProtocol_Packet_P2PLan
 函数功能：响应同步局域网地址列表
  参数.一：ptszMsgBuffer
@@ -498,3 +575,51 @@ extern "C" BOOL ModuleProtocol_Parse_ZIPCode(LPCTSTR lpszMsgBuffer, int nMsgLen,
 备注：
 *********************************************************************/
 extern "C" BOOL ModuleProtocol_Parse_XLog(LPCTSTR lpszMsgBuffer, int nMsgLen, XENGINE_XLOGINFO* pSt_XLogInfo);
+/********************************************************************
+函数名称：ModuleProtocol_Parse_QRCode
+函数功能：二维码协议解析
+ 参数.一：lpszMsgBuffer
+  In/Out：In
+  类型：常量字符指针
+  可空：N
+  意思：输入要解析的数据
+ 参数.二：nMsgLen
+  In/Out：In
+  类型：整数型
+  可空：N
+  意思：输入数据大小
+ 参数.三：pSt_QRCode
+  In/Out：Out
+  类型：数据结构指针
+  可空：N
+  意思：输出解析的信息
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+extern "C" BOOL ModuleProtocol_Parse_QRCode(LPCTSTR lpszMsgBuffer, int nMsgLen, XENGINE_QRCODE* pSt_QRCode);
+/********************************************************************
+函数名称：ModuleProtocol_Parse_SocketTest
+函数功能：套接字测试协议解析
+ 参数.一：lpszMsgBuffer
+  In/Out：In
+  类型：常量字符指针
+  可空：N
+  意思：输入要解析的数据
+ 参数.二：nMsgLen
+  In/Out：In
+  类型：整数型
+  可空：N
+  意思：pSt_SocketTest
+ 参数.三：pSt_QRCode
+  In/Out：Out
+  类型：数据结构指针
+  可空：N
+  意思：输出解析的信息
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+extern "C" BOOL ModuleProtocol_Parse_SocketTest(LPCTSTR lpszMsgBuffer, int nMsgLen, XENGINE_SOCKETTEST* pSt_SocketTest);

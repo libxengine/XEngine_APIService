@@ -3,12 +3,26 @@ SHAREFLAG = -shared
 SHAREDLL = so
 RELEASE = 0
 UNICODE = 0
-INCLUDE = -I ./
-LOADBIN = -L /usr/local/lib/XEngine_Release/XEngine_BaseLib 
-LIB = -lXEngine_BaseLib -lopencc
+INCLUDE = -I ./ -I /usr/include/opencv4
+LOADBIN = -L /usr/local/lib/XEngine_Release/XEngine_BaseLib -L /usr/local/lib/XEngine_Release/XEngine_Client 
+LIB = -lXEngine_BaseLib -lXClient_Socket -lopencc
 LIBEX = -ldl -lpthread
 LOADSO = -Wl,-rpath=./,--disable-new-dtags
-LIBINCLUDE = ModuleHelp_IDCard.o ModuleHelp_Language.o ModuleHelp_P2PClient.o ModuleHelp_Locker.o pch.o
+LIBINCLUDE = ModuleHelp_IDCard.o ModuleHelp_Language.o ModuleHelp_P2PClient.o ModuleHelp_Locker.o ModuleHelp_QRCode.o ModuleHelp_SocketTest.o pch.o
+
+ifeq ($(OS),Windows_NT)
+	PLATFORM="Windows"
+else
+	ifeq ($(shell uname),Darwin)
+		PLATFORM="MacOS"
+	else
+		ifeq ($(FILECENTOS), $(wildcard $(FILECENTOS)))
+#			LIB += -lopencv_core -lopencv_imgcodecs -lopencv_imgproc
+		else
+#			LIB += -llzma -lpng16 -lopencv_core -lopencv_imgcodecs -lopencv_imgproc -ltiff
+		endif 
+	endif
+endif
 
 ifeq ($(shell uname),Darwin)
 	SHAREDLL = dylib
@@ -45,6 +59,10 @@ ModuleHelp_P2PClient.o:./ModuleHelp_P2PClient/ModuleHelp_P2PClient.cpp
 	$(CC) $(DEBUG) $(FLAGS) $(UNICODE) $(INCLUDE) ./ModuleHelp_P2PClient/ModuleHelp_P2PClient.cpp
 ModuleHelp_Locker.o:./ModuleHelp_Locker/ModuleHelp_Locker.cpp             
 	$(CC) $(DEBUG) $(FLAGS) $(UNICODE) $(INCLUDE) ./ModuleHelp_Locker/ModuleHelp_Locker.cpp
+ModuleHelp_QRCode.o:./ModuleHelp_QRCode/ModuleHelp_QRCode.cpp             
+	$(CC) $(DEBUG) $(FLAGS) $(UNICODE) $(INCLUDE) ./ModuleHelp_QRCode/ModuleHelp_QRCode.cpp
+ModuleHelp_SocketTest.o:./ModuleHelp_SocketTest/ModuleHelp_SocketTest.cpp             
+	$(CC) $(DEBUG) $(FLAGS) $(UNICODE) $(INCLUDE) ./ModuleHelp_SocketTest/ModuleHelp_SocketTest.cpp
 
 pch.o:./pch.cpp                 		       	    
 	$(CC) $(DEBUG) $(FLAGS) $(UNICODE) $(INCLUDE) ./pch.cpp

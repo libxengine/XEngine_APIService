@@ -29,6 +29,8 @@ public:
 	BOOL ModuleProtocol_Packet_Locker(TCHAR* ptszMsgBuffer, int* pInt_MsgLen, XNETHANDLE xhToken, int nCode = 0, LPCTSTR lpszMsgBuffer = NULL);
 	BOOL ModuleProtocol_Packet_ZIPCode(TCHAR* ptszMsgBuffer, int* pInt_MsgLen, XENGINE_ZIPINFO* pSt_ZIPInfo, int nCode = 0, LPCTSTR lpszMsgBuffer = NULL);
 	BOOL ModuleProtocol_Packet_Log(TCHAR* ptszMsgBuffer, int* pInt_MsgLen, XENGINE_XLOGINFO*** pppSt_XLogList, int nListCount);
+	BOOL ModuleProtocol_Packet_TestReport(TCHAR* ptszMsgBuffer, int* pInt_MsgLen, XNETHANDLE xhToken, LPCTSTR lpszIPAddr, int nIPPort, __int64x nNumber, __int64x nFailed, __int64x nSuccess, int nStatus);
+	BOOL ModuleProtocol_Packet_TestReply(TCHAR* ptszMsgBuffer, int* pInt_MsgLen, XNETHANDLE xhToken);
 public:
 	BOOL ModuleProtocol_Packet_P2PLan(TCHAR* ptszMsgBuffer, int* pInt_MsgLen, XENGINE_P2XPPEER_PROTOCOL*** pppSt_ListClients, int nListCount);
 	BOOL ModuleProtocol_Packet_P2PWLan(TCHAR* ptszMsgBuffer, int* pInt_MsgLen, list<XENGINE_P2XPPEER_PROTOCOL>* pStl_ListClients);

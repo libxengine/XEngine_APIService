@@ -27,3 +27,15 @@ EXPORTS
 	ModuleHelp_Locker_WriteLock
 	ModuleHelp_Locker_WriteUNLock
 	ModuleHelp_Locker_Close
+
+	ModuleHelp_QRCode_QREncodecFile
+	ModuleHelp_QRCode_QREncodecMemory
+	ModuleHelp_QRCode_QRDecodecFile
+	ModuleHelp_QRCode_QRDecodecMemory
+
+	ModuleHelp_SocketTest_StartConnect
+	ModuleHelp_SocketTest_GetConnect
+	ModuleHelp_SocketTest_StopConnect
+	ModuleHelp_SocketTest_StartDatas
+	ModuleHelp_SocketTest_GetDatas
+	ModuleHelp_SocketTest_StopDatas

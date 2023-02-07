@@ -21,6 +21,7 @@
 #define ERROR_MODULE_CONFIGURE_JSON_XVER 0xA0009                     //版本配置文件读取错误
 #define ERROR_MODULE_CONFIGURE_JSON_MALLOC 0xA000A                   //申请内存失败
 #define ERROR_MODULE_CONFIGURE_JSON_XAPI 0xA000B                     //API配置失败
+#define ERROR_MODULE_CONFIGURE_JSON_XCONFIG 0xA000C                  //配置文件配置加载失败
 //////////////////////////////////////////////////////////////////////////
 #define ERROR_MODULE_CONFIGURE_FILE_PARAMENT 0xA1001                 //参数错误
 #define ERROR_MODULE_CONFIGURE_FILE_OPENFILE 0xA1002                 //打开文件失败

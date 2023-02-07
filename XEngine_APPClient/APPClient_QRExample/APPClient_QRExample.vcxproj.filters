@@ -15,7 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="APPClient_CDKeyExample.cpp">
+    <ClCompile Include="APPClient_QRExample.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
