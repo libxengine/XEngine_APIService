@@ -33,12 +33,12 @@ c c++ interface api service
 13. 行政邮编
 14. 银行卡验证
 15. 汇率计算(计划中)
-16. 二维码生成解析(计划中)
+16. 二维码生成解析
 17. 简繁转换
 18. 二十四节气(计划中)
 19. 新华词典
 20. 计量转换
-21. CDKey创建支持
+21. 网络测试
 22. 分布式锁API
 23. 短连接生成(计划中)
 24. 本地标准时间
@@ -64,12 +64,12 @@ macos执行:./XEngine_LINEnv.sh -i 3
 修改配置文件里面XSQL里面的数据库配置为你的  
 
 #### Windows
-需要vcpkg配置第三方环境,具体参考vcpkg安装方式,安装好后执行:vcpkg.exe install lua lua:x64-windows opencc opencc:x64-windows  
+需要vcpkg配置第三方环境,具体参考vcpkg安装方式,安装好后执行:vcpkg.exe install lua lua:x64-windows opencc opencc:x64-windows opencv[contrib] libqrencode opencv[contrib]:x64-windows libqrencode:x64-windows  
 使用VS打开并且编译,支持WINDOWS 7SP1以上系统  
 直接运行即可
 
 #### Linux
-ubuntu:sudo apt install liblua5.3-dev libopencc-dev  
+ubuntu:sudo apt install liblua5.3-dev libopencc-dev libopencv-dev libopencv-contrib-dev libqrencode-dev  
 centos:需要自己编译  
 Linux使用Makefile编译,UBUNTU20.04 x64或者CENTOS8 x64  
 在控制台运行

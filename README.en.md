@@ -33,12 +33,12 @@ Support privatization deployment, free, safe, open source, controllable
 13. Administrative zip code
 14. Bank card verification
 15. Exchange rate calculation (planned)
-16. QR code generation and parse (planned)
+16. QR code generation and parse
 17. Simplified and Traditional Conversion
 18. Twenty-four solar terms (planned)
 19. Xinhua Dictionary
 20. Metering Conversion
-21. CDKey Creator
+21. network test
 22. Distributed lock
 23. short url creator(planned)
 24. local system time
@@ -64,7 +64,7 @@ MYSQL database version 8.0 or above is required. Create a table through CreateDa
 Modify the database configuration in XSQL in the configuration file to your  
 
 #### Windows
-need to vcpkg configure third-part env.refer vcpkg install guide.after installed and execution:vcpkg.exe install lua lua:x64-windows opencc opencc:x64-windows  
+need to vcpkg configure third-part env.refer vcpkg install guide.after installed and execution:vcpkg.exe install lua lua:x64-windows opencc opencc:x64-windows opencv[contrib] libqrencode opencv[contrib]:x64-windows libqrencode:x64-windows  
 use vs open and compile,suport windows 7sp1 and above  
 Just Run it
 
