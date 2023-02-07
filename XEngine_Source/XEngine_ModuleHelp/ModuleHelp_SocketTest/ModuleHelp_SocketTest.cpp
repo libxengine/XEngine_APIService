@@ -80,6 +80,7 @@ BOOL CModuleHelp_SocketTest::ModuleHelp_SocketTest_StartConnect(XNETHANDLE* pxhT
         ModuleHelp_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_HELP_SOCKETTEST_THREAD;
         return FALSE;
     }
+	*pxhToken = pSt_ConnSocket->xhToken;
     st_LockConn.lock();
     stl_MapConnTest.insert(make_pair(pSt_ConnSocket->xhToken, pSt_ConnSocket));
     st_LockConn.unlock();
@@ -236,7 +237,7 @@ BOOL CModuleHelp_SocketTest::ModuleHelp_SocketTest_StartDatas(XNETHANDLE* pxhTok
 		ModuleHelp_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_HELP_SOCKETTEST_THREAD;
 		return NULL;
 	}
-
+	*pxhToken = pSt_DataSocket->xhToken;
     st_LockData.lock();
     stl_MapDataTest.insert(make_pair(pSt_DataSocket->xhToken, pSt_DataSocket));
     st_LockData.unlock();
