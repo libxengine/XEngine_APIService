@@ -1,10 +1,10 @@
 ﻿#include "../XEngine_Hdr.h"
 
-void CALLBACK XEngine_HTTPTask_CBSocketTest(XNETHANDLE xhToken, LPCSTR lpszAddr, int nPort, __int64x nNumber, __int64x nFailed, __int64x nSuccess, int nStatus, LPVOID lParam)
+void CALLBACK XEngine_HTTPTask_CBSocketTest(XNETHANDLE xhToken, LPCSTR lpszAddr, int nPort, __int64x nNumber, __int64x nFailed, __int64x nSuccess, int nStatus, XPVOID lParam)
 {
 	XENGINE_SOCKETTEST* pSt_SocketTest = (XENGINE_SOCKETTEST*)lParam;
 	int nMsgLen = 0;
-	TCHAR tszMsgBuffer[4096];
+	XCHAR tszMsgBuffer[4096];
 	memset(tszMsgBuffer, '\0', sizeof(tszMsgBuffer));
 
 	if (0 == pSt_SocketTest->nType)
@@ -47,12 +47,12 @@ void CALLBACK XEngine_HTTPTask_CBSocketTest(XNETHANDLE xhToken, LPCSTR lpszAddr,
 		}
 	}
 }
-BOOL XEngine_HTTPTask_SocketTest(LPCTSTR lpszClientAddr, LPCTSTR lpszMsgBuffer, int nMsgLen, int nType)
+XBOOL XEngine_HTTPTask_SocketTest(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer, int nMsgLen, int nType)
 {
 	int nSDLen = 0;
 	int nRVLen = 0;
-	TCHAR tszSDBuffer[4096];
-	TCHAR tszRVBuffer[4096];
+	XCHAR tszSDBuffer[4096];
+	XCHAR tszRVBuffer[4096];
 	XENGINE_SOCKETTEST *pSt_SocketTest = new XENGINE_SOCKETTEST;
 	RFCCOMPONENTS_HTTP_HDRPARAM st_HDRParam;    //发送给客户端的参数
 
@@ -78,7 +78,7 @@ BOOL XEngine_HTTPTask_SocketTest(LPCTSTR lpszClientAddr, LPCTSTR lpszMsgBuffer, 
 			ModuleHelp_SocketTest_StartDatas(&pSt_SocketTest->xhToken, &pSt_SocketTest->st_SocketData, XEngine_HTTPTask_CBSocketTest, pSt_SocketTest->bTCP, pSt_SocketTest);
 		}
 		ModuleProtocol_Packet_TestReply(tszRVBuffer, &nRVLen, pSt_SocketTest->xhToken);
-		RfcComponents_HttpServer_SendMsgEx(xhHTTPPacket, tszSDBuffer, &nSDLen, &st_HDRParam, tszRVBuffer, nRVLen);
+		HttpProtocol_Server_SendMsgEx(xhHTTPPacket, tszSDBuffer, &nSDLen, &st_HDRParam, tszRVBuffer, nRVLen);
 		XEngine_Network_Send(lpszClientAddr, tszSDBuffer, nSDLen);
 		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _T("HTTP客户端:%s,请求创建套接字测试成功,句柄:%lld,地址:%s:%d,TCP:%d,测试类型:%d"), lpszClientAddr, pSt_SocketTest->xhToken, pSt_SocketTest->st_SocketConn.tszAddr, pSt_SocketTest->st_SocketConn.nPort, pSt_SocketTest->bTCP, pSt_SocketTest->bConn);
 	}
@@ -93,7 +93,7 @@ BOOL XEngine_HTTPTask_SocketTest(LPCTSTR lpszClientAddr, LPCTSTR lpszMsgBuffer, 
 			ModuleHelp_SocketTest_StopDatas(pSt_SocketTest->xhToken);
 		}
 		ModuleProtocol_Packet_Common(tszRVBuffer, &nRVLen);
-		RfcComponents_HttpServer_SendMsgEx(xhHTTPPacket, tszSDBuffer, &nSDLen, &st_HDRParam, tszRVBuffer, nRVLen);
+		HttpProtocol_Server_SendMsgEx(xhHTTPPacket, tszSDBuffer, &nSDLen, &st_HDRParam, tszRVBuffer, nRVLen);
 		XEngine_Network_Send(lpszClientAddr, tszSDBuffer, nSDLen);
 		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _T("HTTP客户端:%s,请求销毁套接字测试成功,句柄:%lld"), lpszClientAddr, pSt_SocketTest->xhToken);
 		delete pSt_SocketTest;

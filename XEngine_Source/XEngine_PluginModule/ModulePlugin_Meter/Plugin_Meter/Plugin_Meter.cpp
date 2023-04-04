@@ -33,7 +33,7 @@ CPlugin_Meter::~CPlugin_Meter()
   意思：是否成功
 备注：
 *********************************************************************/
-BOOL CPlugin_Meter::PluginCore_Init(LPVOID lParam)
+XBOOL CPlugin_Meter::PluginCore_Init(XPVOID lParam)
 {
 	Meter_IsErrorOccur = FALSE;
 
@@ -59,7 +59,7 @@ void CPlugin_Meter::PluginCore_UnInit()
   意思：是否成功
 备注：
 *********************************************************************/
-BOOL CPlugin_Meter::PluginCore_Call(TCHAR*** pppHDRList, int nListCount, int* pInt_HTTPCode, TCHAR* ptszMsgBuffer, int* pInt_MsgLen, LPCTSTR lpszMsgBuffer, int nMsgLen)
+XBOOL CPlugin_Meter::PluginCore_Call(XCHAR*** pppHDRList, int nListCount, int* pInt_HTTPCode, XCHAR* ptszMsgBuffer, int* pInt_MsgLen, LPCXSTR lpszMsgBuffer, int nMsgLen)
 {
 	Meter_IsErrorOccur = FALSE;
 
@@ -69,10 +69,10 @@ BOOL CPlugin_Meter::PluginCore_Call(TCHAR*** pppHDRList, int nListCount, int* pI
 		Meter_dwErrorCode = ERROR_XENGINE_APISERVICE_PLUGIN_MODULE_METER_PARAMENT;
 		return FALSE;
 	}
-	TCHAR tszKeyName[128];
-	TCHAR tszParamType[128];
-	TCHAR tszParamValue[128];
-	TCHAR tszParamSource[128];
+	XCHAR tszKeyName[128];
+	XCHAR tszParamType[128];
+	XCHAR tszParamValue[128];
+	XCHAR tszParamSource[128];
 	
 	Json::Value st_JsonRoot;
 	Json::Value st_JsonObject;
@@ -122,7 +122,7 @@ BOOL CPlugin_Meter::PluginCore_Call(TCHAR*** pppHDRList, int nListCount, int* pI
 //////////////////////////////////////////////////////////////////////////
 //                       保护函数
 //////////////////////////////////////////////////////////////////////////
-BOOL CPlugin_Meter::Plugin_Meter_LengthConvert(int nSource, __int64x nValue, Json::Value *pSt_JsonObject)
+XBOOL CPlugin_Meter::Plugin_Meter_LengthConvert(int nSource, __int64x nValue, Json::Value *pSt_JsonObject)
 {
 	Meter_IsErrorOccur = FALSE;
 
@@ -193,7 +193,7 @@ BOOL CPlugin_Meter::Plugin_Meter_LengthConvert(int nSource, __int64x nValue, Jso
 	(*pSt_JsonObject)["Length"] = st_JsonObejct;
 	return TRUE;
 }
-BOOL CPlugin_Meter::Plugin_Meter_TemperatureConvert(int nSource, __int64x nValue, Json::Value* pSt_JsonObject)
+XBOOL CPlugin_Meter::Plugin_Meter_TemperatureConvert(int nSource, __int64x nValue, Json::Value* pSt_JsonObject)
 {
 	Meter_IsErrorOccur = FALSE;
 
@@ -208,7 +208,7 @@ BOOL CPlugin_Meter::Plugin_Meter_TemperatureConvert(int nSource, __int64x nValue
 	(*pSt_JsonObject)["Temperature"] = st_JsonObejct;
 	return TRUE;
 }
-BOOL CPlugin_Meter::Plugin_Meter_PowerConvert(int nSource, __int64x nValue, Json::Value* pSt_JsonObject)
+XBOOL CPlugin_Meter::Plugin_Meter_PowerConvert(int nSource, __int64x nValue, Json::Value* pSt_JsonObject)
 {
 	Meter_IsErrorOccur = FALSE;
 
@@ -222,7 +222,7 @@ BOOL CPlugin_Meter::Plugin_Meter_PowerConvert(int nSource, __int64x nValue, Json
 	(*pSt_JsonObject)["Power"] = st_JsonObejct;
 	return TRUE;
 }
-BOOL CPlugin_Meter::Plugin_Meter_SpeedConvert(int nSource, __int64x nValue, Json::Value* pSt_JsonObject)
+XBOOL CPlugin_Meter::Plugin_Meter_SpeedConvert(int nSource, __int64x nValue, Json::Value* pSt_JsonObject)
 {
 	Meter_IsErrorOccur = FALSE;
 

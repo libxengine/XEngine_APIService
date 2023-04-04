@@ -1,3 +1,3 @@
 ﻿#pragma once
 
-BOOL XEngine_HTTPTask_LogInfo(LPCTSTR lpszClientAddr, LPCTSTR lpszMsgBuffer, int nMsgLen, int nType);
+XBOOL XEngine_HTTPTask_LogInfo(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer, int nMsgLen, int nType);

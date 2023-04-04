@@ -34,7 +34,7 @@ CModuleDatabase_ZIPCode::~CModuleDatabase_ZIPCode()
   意思：是否成功
 备注：
 *********************************************************************/
-BOOL CModuleDatabase_ZIPCode::ModuleDatabase_ZIPCode_Init(DATABASE_MYSQL_CONNECTINFO* pSt_DBConnector)
+XBOOL CModuleDatabase_ZIPCode::ModuleDatabase_ZIPCode_Init(DATABASE_MYSQL_CONNECTINFO* pSt_DBConnector)
 {
 	DBModule_IsErrorOccur = FALSE;
 
@@ -44,10 +44,10 @@ BOOL CModuleDatabase_ZIPCode::ModuleDatabase_ZIPCode_Init(DATABASE_MYSQL_CONNECT
 		DBModule_dwErrorCode = ERROR_APISERVICE_MODULE_DATABASE_PARAMENT;
 		return FALSE;
 	}
-#ifdef _WINDOWS
-	LPCTSTR lpszStrCharset = _T("gbk");
+#ifdef _MSC_BUILD
+	LPCXSTR lpszStrCharset = _T("gbk");
 #else
-	LPCTSTR lpszStrCharset = _T("utf8");
+	LPCXSTR lpszStrCharset = _T("utf8");
 #endif
 	//连接数据库
 	_tcscpy(pSt_DBConnector->tszDBName, _T("XEngine_APIInfo"));
@@ -67,7 +67,7 @@ BOOL CModuleDatabase_ZIPCode::ModuleDatabase_ZIPCode_Init(DATABASE_MYSQL_CONNECT
   意思：是否成功
 备注：
 *********************************************************************/
-BOOL CModuleDatabase_ZIPCode::ModuleDatabase_ZIPCode_Destory()
+XBOOL CModuleDatabase_ZIPCode::ModuleDatabase_ZIPCode_Destory()
 {
 	DBModule_IsErrorOccur = FALSE;
 
@@ -87,7 +87,7 @@ BOOL CModuleDatabase_ZIPCode::ModuleDatabase_ZIPCode_Destory()
   意思：是否成功
 备注：
 *********************************************************************/
-BOOL CModuleDatabase_ZIPCode::ModuleDatabase_ZIPCode_QueryZIPCode(XENGINE_ZIPINFO* pSt_ZIPInfo)
+XBOOL CModuleDatabase_ZIPCode::ModuleDatabase_ZIPCode_QueryZIPCode(XENGINE_ZIPINFO* pSt_ZIPInfo)
 {
 	DBModule_IsErrorOccur = FALSE;
 
@@ -95,7 +95,7 @@ BOOL CModuleDatabase_ZIPCode::ModuleDatabase_ZIPCode_QueryZIPCode(XENGINE_ZIPINF
 	__int64u nLine = 0;
 	__int64u nRow = 0;
 	XNETHANDLE xhTable = 0;
-	TCHAR tszSQLStatement[1024];
+	XCHAR tszSQLStatement[1024];
 
 	memset(tszSQLStatement, '\0', sizeof(tszSQLStatement));
 	_stprintf(tszSQLStatement, _T("SELECT * FROM `AdministrativeArea` WHERE zip_code = %d"), pSt_ZIPInfo->nZipCode);
@@ -111,7 +111,7 @@ BOOL CModuleDatabase_ZIPCode::ModuleDatabase_ZIPCode_QueryZIPCode(XENGINE_ZIPINF
 		DBModule_dwErrorCode = ERROR_APISERVICE_MODULE_DATABASE_NOTFOUND;
 		return FALSE;
 	}
-	TCHAR** pptszResult = DataBase_MySQL_GetResult(xhDBSQL, xhTable);
+	XCHAR** pptszResult = DataBase_MySQL_GetResult(xhDBSQL, xhTable);
 	//三个级别 省->市->区/县
 	_tcscpy(pSt_ZIPInfo->tszPinYin, pptszResult[6]);
 	pSt_ZIPInfo->nLevel = _ttoi(pptszResult[5]);
@@ -152,7 +152,7 @@ BOOL CModuleDatabase_ZIPCode::ModuleDatabase_ZIPCode_QueryZIPCode(XENGINE_ZIPINF
   意思：是否成功
 备注：
 *********************************************************************/
-BOOL CModuleDatabase_ZIPCode::ModuleDatabase_ZIPCode_QueryName(XENGINE_ZIPINFO* pSt_ZIPInfo)
+XBOOL CModuleDatabase_ZIPCode::ModuleDatabase_ZIPCode_QueryName(XENGINE_ZIPINFO* pSt_ZIPInfo)
 {
 	DBModule_IsErrorOccur = FALSE;
 
@@ -166,7 +166,7 @@ BOOL CModuleDatabase_ZIPCode::ModuleDatabase_ZIPCode_QueryName(XENGINE_ZIPINFO* 
 	__int64u nLine = 0;
 	__int64u nRow = 0;
 	XNETHANDLE xhTable = 0;
-	TCHAR tszSQLStatement[1024];
+	XCHAR tszSQLStatement[1024];
 
 	memset(tszSQLStatement, '\0', sizeof(tszSQLStatement));
 
@@ -206,7 +206,7 @@ BOOL CModuleDatabase_ZIPCode::ModuleDatabase_ZIPCode_QueryName(XENGINE_ZIPINFO* 
 		DBModule_dwErrorCode = ERROR_APISERVICE_MODULE_DATABASE_NOTFOUND;
 		return FALSE;
 	}
-	TCHAR** pptszResult = DataBase_MySQL_GetResult(xhDBSQL, xhTable);
+	XCHAR** pptszResult = DataBase_MySQL_GetResult(xhDBSQL, xhTable);
 	pSt_ZIPInfo->nLevel = _ttoi(pptszResult[5]);
 	pSt_ZIPInfo->nAreaCode = _ttoi(pptszResult[7]);
 	pSt_ZIPInfo->nZipCode = _ttoi(pptszResult[8]);
@@ -243,7 +243,7 @@ BOOL CModuleDatabase_ZIPCode::ModuleDatabase_ZIPCode_QueryName(XENGINE_ZIPINFO* 
   意思：是否成功
 备注：
 *********************************************************************/
-BOOL CModuleDatabase_ZIPCode::ModuleDatabase_ZIPCode_QueryParentByID(int nParentID, TCHAR* ptszParentStr, int* pInt_ParentID /* = NULL */)
+XBOOL CModuleDatabase_ZIPCode::ModuleDatabase_ZIPCode_QueryParentByID(int nParentID, XCHAR* ptszParentStr, int* pInt_ParentID /* = NULL */)
 {
 	DBModule_IsErrorOccur = FALSE;
 
@@ -257,7 +257,7 @@ BOOL CModuleDatabase_ZIPCode::ModuleDatabase_ZIPCode_QueryParentByID(int nParent
 	__int64u nLine = 0;
 	__int64u nRow = 0;
 	XNETHANDLE xhTable = 0;
-	TCHAR tszSQLStatement[1024];
+	XCHAR tszSQLStatement[1024];
 
 	memset(tszSQLStatement, '\0', sizeof(tszSQLStatement));
 	_stprintf(tszSQLStatement, _T("SELECT * FROM `AdministrativeArea` WHERE id = %d"), nParentID);
@@ -273,7 +273,7 @@ BOOL CModuleDatabase_ZIPCode::ModuleDatabase_ZIPCode_QueryParentByID(int nParent
 		DBModule_dwErrorCode = ERROR_APISERVICE_MODULE_DATABASE_NOTFOUND;
 		return FALSE;
 	}
-	TCHAR** pptszResult = DataBase_MySQL_GetResult(xhDBSQL, xhTable);
+	XCHAR** pptszResult = DataBase_MySQL_GetResult(xhDBSQL, xhTable);
 	
 	if (NULL != pInt_ParentID)
 	{
@@ -302,7 +302,7 @@ BOOL CModuleDatabase_ZIPCode::ModuleDatabase_ZIPCode_QueryParentByID(int nParent
   意思：是否成功
 备注：
 *********************************************************************/
-BOOL CModuleDatabase_ZIPCode::ModuleDatabase_ZIPCode_QueryParentByName(LPCTSTR lpszName, int* pInt_ParentID /* = NULL */)
+XBOOL CModuleDatabase_ZIPCode::ModuleDatabase_ZIPCode_QueryParentByName(LPCXSTR lpszName, int* pInt_ParentID /* = NULL */)
 {
 	DBModule_IsErrorOccur = FALSE;
 
@@ -316,7 +316,7 @@ BOOL CModuleDatabase_ZIPCode::ModuleDatabase_ZIPCode_QueryParentByName(LPCTSTR l
 	__int64u nLine = 0;
 	__int64u nRow = 0;
 	XNETHANDLE xhTable = 0;
-	TCHAR tszSQLStatement[1024];
+	XCHAR tszSQLStatement[1024];
 
 	memset(tszSQLStatement, '\0', sizeof(tszSQLStatement));
 	_stprintf(tszSQLStatement, _T("SELECT * FROM `AdministrativeArea` WHERE name = '%s'"), lpszName);
@@ -332,7 +332,7 @@ BOOL CModuleDatabase_ZIPCode::ModuleDatabase_ZIPCode_QueryParentByName(LPCTSTR l
 		DBModule_dwErrorCode = ERROR_APISERVICE_MODULE_DATABASE_NOTFOUND;
 		return FALSE;
 	}
-	TCHAR** pptszResult = DataBase_MySQL_GetResult(xhDBSQL, xhTable);
+	XCHAR** pptszResult = DataBase_MySQL_GetResult(xhDBSQL, xhTable);
 	if (NULL != pInt_ParentID)
 	{
 		*pInt_ParentID = _ttoi(pptszResult[1]);

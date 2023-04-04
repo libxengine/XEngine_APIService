@@ -51,7 +51,7 @@ using namespace std;
 //    Purpose:     公用头文件
 //    History:
 *********************************************************************/
-extern BOOL ModuleHelp_IsErrorOccur;
+extern XBOOL ModuleHelp_IsErrorOccur;
 extern DWORD ModuleHelp_dwErrorCode;
 
 #ifdef _MSC_BUILD

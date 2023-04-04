@@ -1,15 +1,15 @@
 ﻿#include "../XEngine_Hdr.h"
 
 
-BOOL XEngine_HTTPTask_BankInfo(LPCTSTR lpszClientAddr, LPCTSTR lpszBankNumber)
+XBOOL XEngine_HTTPTask_BankInfo(LPCXSTR lpszClientAddr, LPCXSTR lpszBankNumber)
 {
 	int nMsgLen = 4096;
 	int nPktLen = 4096;
 	int nBLen = 0;
-	TCHAR* ptszBodyBuffer;
-	TCHAR tszMsgBuffer[4096];
-	TCHAR tszPktBuffer[4096];
-	TCHAR tszUrlBuffer[MAX_PATH];
+	XCHAR* ptszBodyBuffer;
+	XCHAR tszMsgBuffer[4096];
+	XCHAR tszPktBuffer[4096];
+	XCHAR tszUrlBuffer[MAX_PATH];
 	XENGINE_BANKINFO st_BankInfo;
 	RFCCOMPONENTS_HTTP_HDRPARAM st_HDRParam;    //发送给客户端的参数
 
@@ -30,7 +30,7 @@ BOOL XEngine_HTTPTask_BankInfo(LPCTSTR lpszClientAddr, LPCTSTR lpszBankNumber)
 	{
 		ModuleProtocol_Packet_BankQuery(tszPktBuffer, &nPktLen, NULL, 1001, _T("banknumber is corrent"));
 		BaseLib_OperatorMemory_FreeCStyle((XPPMEM)&ptszBodyBuffer);
-		RfcComponents_HttpServer_SendMsgEx(xhHTTPPacket, tszMsgBuffer, &nMsgLen, &st_HDRParam, tszPktBuffer, nPktLen);
+		HttpProtocol_Server_SendMsgEx(xhHTTPPacket, tszMsgBuffer, &nMsgLen, &st_HDRParam, tszPktBuffer, nPktLen);
 		XEngine_Network_Send(lpszClientAddr, tszMsgBuffer, nMsgLen);
 		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _T("HTTP客户端:%s,请求的银行卡号码错误:%s"), lpszClientAddr, lpszBankNumber);
 		return FALSE;
@@ -40,14 +40,14 @@ BOOL XEngine_HTTPTask_BankInfo(LPCTSTR lpszClientAddr, LPCTSTR lpszBankNumber)
 	if (!ModuleDatabase_Bank_Query(&st_BankInfo))
 	{
 		ModuleProtocol_Packet_BankQuery(tszPktBuffer, &nPktLen, NULL, 1010, _T("not found"));
-		RfcComponents_HttpServer_SendMsgEx(xhHTTPPacket, tszMsgBuffer, &nMsgLen, &st_HDRParam, tszPktBuffer, nPktLen);
+		HttpProtocol_Server_SendMsgEx(xhHTTPPacket, tszMsgBuffer, &nMsgLen, &st_HDRParam, tszPktBuffer, nPktLen);
 		XEngine_Network_Send(lpszClientAddr, tszMsgBuffer, nMsgLen);
 		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _T("HTTP客户端:%s,请求的银行卡信息没有找到:%s"), lpszClientAddr, lpszBankNumber);
 		return FALSE;
 	}
 	//打包发送
 	ModuleProtocol_Packet_BankQuery(tszPktBuffer, &nPktLen, &st_BankInfo);
-	RfcComponents_HttpServer_SendMsgEx(xhHTTPPacket, tszMsgBuffer, &nMsgLen, &st_HDRParam, tszPktBuffer, nPktLen);
+	HttpProtocol_Server_SendMsgEx(xhHTTPPacket, tszMsgBuffer, &nMsgLen, &st_HDRParam, tszPktBuffer, nPktLen);
 	XEngine_Network_Send(lpszClientAddr, tszMsgBuffer, nMsgLen);
 	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _T("HTTP客户端:%s,发送银行卡信息获取请求给服务器,查询号码:%s"), lpszClientAddr, lpszBankNumber);
 	return TRUE;

@@ -12,8 +12,8 @@
 *********************************************************************/
 typedef struct
 {
-	TCHAR tszModuleFile[MAX_PATH];
-	TCHAR tszModuleMethod[MAX_PATH];
+	XCHAR tszModuleFile[MAX_PATH];
+	XCHAR tszModuleMethod[MAX_PATH];
 	XNETHANDLE xhToken;
 	int nType;
 }PLUGINCORE_LOADER, * LPPLUGINCORE_LOADER;
@@ -24,10 +24,10 @@ public:
 	CModulePlugin_Loader();
 	~CModulePlugin_Loader();
 public:
-	BOOL ModulePlugin_Loader_Insert(LPCTSTR lpszModuleMethod, LPCTSTR lpszModuleName, int nType = 0);
-	BOOL ModulePlugin_Loader_Find(LPCTSTR lpszMethodName, int* pInt_Type);
-	BOOL ModulePlugin_Loader_Exec(LPCTSTR lpszMethodName, TCHAR*** pppHDRList, int nListCount, int* pInt_HTTPCode, TCHAR* ptszMsgBuffer, int* pInt_MsgLen);
-	BOOL ModulePlugin_Loader_Destory();
+	XBOOL ModulePlugin_Loader_Insert(LPCXSTR lpszModuleMethod, LPCXSTR lpszModuleName, int nType = 0);
+	XBOOL ModulePlugin_Loader_Find(LPCXSTR lpszMethodName, int* pInt_Type);
+	XBOOL ModulePlugin_Loader_Exec(LPCXSTR lpszMethodName, XCHAR*** pppHDRList, int nListCount, int* pInt_HTTPCode, XCHAR* ptszMsgBuffer, int* pInt_MsgLen);
+	XBOOL ModulePlugin_Loader_Destory();
 protected:
 private:
 	shared_mutex st_Locker;

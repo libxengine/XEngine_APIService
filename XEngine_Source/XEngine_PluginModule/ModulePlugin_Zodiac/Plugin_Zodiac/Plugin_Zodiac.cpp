@@ -45,7 +45,7 @@ CPlugin_Zodiac::~CPlugin_Zodiac()
   意思：是否成功
 备注：
 *********************************************************************/
-BOOL CPlugin_Zodiac::PluginCore_Init(LPVOID lParam)
+XBOOL CPlugin_Zodiac::PluginCore_Init(XPVOID lParam)
 {
 	Zodiac_IsErrorOccur = FALSE;
 
@@ -71,7 +71,7 @@ void CPlugin_Zodiac::PluginCore_UnInit()
   意思：是否成功
 备注：
 *********************************************************************/
-BOOL CPlugin_Zodiac::PluginCore_Call(TCHAR*** pppHDRList, int nListCount, int* pInt_HTTPCode, TCHAR* ptszMsgBuffer, int* pInt_MsgLen, LPCTSTR lpszMsgBuffer, int nMsgLen)
+XBOOL CPlugin_Zodiac::PluginCore_Call(XCHAR*** pppHDRList, int nListCount, int* pInt_HTTPCode, XCHAR* ptszMsgBuffer, int* pInt_MsgLen, LPCXSTR lpszMsgBuffer, int nMsgLen)
 {
 	Zodiac_IsErrorOccur = FALSE;
 
@@ -81,10 +81,10 @@ BOOL CPlugin_Zodiac::PluginCore_Call(TCHAR*** pppHDRList, int nListCount, int* p
 		Zodiac_dwErrorCode = ERROR_XENGINE_APISERVICE_PLUGIN_MODULE_ZODIAC_PARAMENT;
 		return FALSE;
 	}
-	TCHAR tszKeyName[128];
-	TCHAR tszValueName[128];
-	TCHAR tszChineseZodiac[64];
-	TCHAR tszEnglishZodiac[64];
+	XCHAR tszKeyName[128];
+	XCHAR tszValueName[128];
+	XCHAR tszChineseZodiac[64];
+	XCHAR tszEnglishZodiac[64];
 	Json::Value st_JsonRoot;
 	Json::Value st_JsonObject;
 	Json::StreamWriterBuilder st_JsonBuilder;
@@ -114,7 +114,7 @@ BOOL CPlugin_Zodiac::PluginCore_Call(TCHAR*** pppHDRList, int nListCount, int* p
 //////////////////////////////////////////////////////////////////////////
 //                       保护函数
 //////////////////////////////////////////////////////////////////////////
-BOOL CPlugin_Zodiac::Plugin_Zodiac_Chinese(LPCTSTR lpszDate, TCHAR* ptszCZodiac)
+XBOOL CPlugin_Zodiac::Plugin_Zodiac_Chinese(LPCXSTR lpszDate, XCHAR* ptszCZodiac)
 {
 	Zodiac_IsErrorOccur = FALSE;
 
@@ -125,7 +125,7 @@ BOOL CPlugin_Zodiac::Plugin_Zodiac_Chinese(LPCTSTR lpszDate, TCHAR* ptszCZodiac)
 	_tcscpy(ptszCZodiac, m_StrChinese[nYear].c_str());
 	return TRUE;
 }
-BOOL CPlugin_Zodiac::Plugin_Zodiac_English(LPCTSTR lpszDate, TCHAR* ptszEZodiac)
+XBOOL CPlugin_Zodiac::Plugin_Zodiac_English(LPCXSTR lpszDate, XCHAR* ptszEZodiac)
 {
 	Zodiac_IsErrorOccur = FALSE;
 

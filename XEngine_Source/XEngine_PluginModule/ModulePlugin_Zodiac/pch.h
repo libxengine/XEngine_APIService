@@ -35,7 +35,7 @@ using namespace std;
 //    Purpose:     公用头文件
 //    History:
 *********************************************************************/
-extern BOOL Zodiac_IsErrorOccur;
+extern XBOOL Zodiac_IsErrorOccur;
 extern DWORD Zodiac_dwErrorCode;
 
 

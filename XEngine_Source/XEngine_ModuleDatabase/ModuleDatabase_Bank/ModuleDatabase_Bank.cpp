@@ -34,7 +34,7 @@ CModuleDatabase_Bank::~CModuleDatabase_Bank()
   意思：是否成功
 备注：
 *********************************************************************/
-BOOL CModuleDatabase_Bank::ModuleDatabase_Bank_Init(DATABASE_MYSQL_CONNECTINFO* pSt_DBConnector)
+XBOOL CModuleDatabase_Bank::ModuleDatabase_Bank_Init(DATABASE_MYSQL_CONNECTINFO* pSt_DBConnector)
 {
 	DBModule_IsErrorOccur = FALSE;
 
@@ -44,10 +44,10 @@ BOOL CModuleDatabase_Bank::ModuleDatabase_Bank_Init(DATABASE_MYSQL_CONNECTINFO* 
 		DBModule_dwErrorCode = ERROR_APISERVICE_MODULE_DATABASE_PARAMENT;
 		return FALSE;
 	}
-#ifdef _WINDOWS
-	LPCTSTR lpszStrCharset = _T("gbk");
+#ifdef _MSC_BUILD
+	LPCXSTR lpszStrCharset = _T("gbk");
 #else
-	LPCTSTR lpszStrCharset = _T("utf8");
+	LPCXSTR lpszStrCharset = _T("utf8");
 #endif
 	//连接数据库
 	_tcscpy(pSt_DBConnector->tszDBName, _T("XEngine_APIInfo"));
@@ -67,7 +67,7 @@ BOOL CModuleDatabase_Bank::ModuleDatabase_Bank_Init(DATABASE_MYSQL_CONNECTINFO* 
   意思：是否成功
 备注：
 *********************************************************************/
-BOOL CModuleDatabase_Bank::ModuleDatabase_Bank_Destory()
+XBOOL CModuleDatabase_Bank::ModuleDatabase_Bank_Destory()
 {
 	DBModule_IsErrorOccur = FALSE;
 
@@ -87,7 +87,7 @@ BOOL CModuleDatabase_Bank::ModuleDatabase_Bank_Destory()
   意思：是否成功
 备注：
 *********************************************************************/
-BOOL CModuleDatabase_Bank::ModuleDatabase_Bank_Query(XENGINE_BANKINFO* pSt_BankInfo)
+XBOOL CModuleDatabase_Bank::ModuleDatabase_Bank_Query(XENGINE_BANKINFO* pSt_BankInfo)
 {
     DBModule_IsErrorOccur = FALSE;
 
@@ -101,7 +101,7 @@ BOOL CModuleDatabase_Bank::ModuleDatabase_Bank_Query(XENGINE_BANKINFO* pSt_BankI
 	__int64u nLine = 0;
 	__int64u nRow = 0;
 	XNETHANDLE xhTable = 0;
-    TCHAR tszSQLStatement[1024];
+    XCHAR tszSQLStatement[1024];
 
     memset(tszSQLStatement, '\0', sizeof(tszSQLStatement));
 	_stprintf(tszSQLStatement, _T("SELECT * FROM `BankList` WHERE tszBankAbridge = '%s'"), pSt_BankInfo->tszBankAbridge);
@@ -117,7 +117,7 @@ BOOL CModuleDatabase_Bank::ModuleDatabase_Bank_Query(XENGINE_BANKINFO* pSt_BankI
 		DBModule_dwErrorCode = ERROR_APISERVICE_MODULE_DATABASE_NOTFOUND;
 		return FALSE;
 	}
-	TCHAR** pptszResult = DataBase_MySQL_GetResult(xhDBSQL, xhTable);
+	XCHAR** pptszResult = DataBase_MySQL_GetResult(xhDBSQL, xhTable);
 	_tcscpy(pSt_BankInfo->tszBankName, pptszResult[2]);
 
 	DataBase_MySQL_FreeResult(xhDBSQL, xhTable);

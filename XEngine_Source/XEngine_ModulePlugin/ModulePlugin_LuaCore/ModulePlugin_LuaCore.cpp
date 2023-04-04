@@ -29,7 +29,7 @@ CModulePlugin_LuaCore::~CModulePlugin_LuaCore()
   意思：是否成功初始化
 备注：
 *********************************************************************/
-BOOL CModulePlugin_LuaCore::ModulePlugin_LuaCore_Init()
+XBOOL CModulePlugin_LuaCore::ModulePlugin_LuaCore_Init()
 {
     ModulePlugin_IsErrorOccur = FALSE;
     //判断是否初始化
@@ -66,7 +66,7 @@ BOOL CModulePlugin_LuaCore::ModulePlugin_LuaCore_Init()
   意思：是否成功添加
 备注：
 *********************************************************************/
-BOOL CModulePlugin_LuaCore::ModulePlugin_LuaCore_Push(XNETHANDLE* pxhModule, LPCTSTR lpszPluginFile, LPVOID lParam)
+XBOOL CModulePlugin_LuaCore::ModulePlugin_LuaCore_Push(XNETHANDLE* pxhModule, LPCXSTR lpszPluginFile, XPVOID lParam)
 {
     ModulePlugin_IsErrorOccur = FALSE;
 
@@ -130,7 +130,7 @@ BOOL CModulePlugin_LuaCore::ModulePlugin_LuaCore_Push(XNETHANDLE* pxhModule, LPC
   意思：是否成功
 备注：
 *********************************************************************/
-BOOL CModulePlugin_LuaCore::ModulePlugin_LuaCore_Exec(XNETHANDLE xhModule, TCHAR*** pppHDRList, int nListCount, int* pInt_HTTPCode, TCHAR* ptszMsgBuffer, int* pInt_MsgLen, LPCTSTR lpszMsgBufer /* = NULL */, int nMsgLen /* = 0 */)
+XBOOL CModulePlugin_LuaCore::ModulePlugin_LuaCore_Exec(XNETHANDLE xhModule, XCHAR*** pppHDRList, int nListCount, int* pInt_HTTPCode, XCHAR* ptszMsgBuffer, int* pInt_MsgLen, LPCXSTR lpszMsgBufer /* = NULL */, int nMsgLen /* = 0 */)
 {
     ModulePlugin_IsErrorOccur = FALSE;
 
@@ -151,7 +151,7 @@ BOOL CModulePlugin_LuaCore::ModulePlugin_LuaCore_Exec(XNETHANDLE xhModule, TCHAR
 		st_csStl.unlock_shared();
 		return FALSE;
 	}
-    TCHAR tszURLParam[MAX_PATH];
+    XCHAR tszURLParam[MAX_PATH];
     memset(tszURLParam, '\0', MAX_PATH);
 
     for (int i = 1; i < nListCount; i++)
@@ -197,7 +197,7 @@ BOOL CModulePlugin_LuaCore::ModulePlugin_LuaCore_Exec(XNETHANDLE xhModule, TCHAR
   意思：是否成功销毁
 备注：
 *********************************************************************/
-BOOL CModulePlugin_LuaCore::ModulePlugin_LuaCore_Destroy()
+XBOOL CModulePlugin_LuaCore::ModulePlugin_LuaCore_Destroy()
 {
     ModulePlugin_IsErrorOccur = FALSE;
 
@@ -248,7 +248,7 @@ BOOL CModulePlugin_LuaCore::ModulePlugin_LuaCore_Destroy()
   意思：是否成功执行
 备注：
 *********************************************************************/
-BOOL CModulePlugin_LuaCore::ModulePlugin_LuaCore_Add(XNETHANDLE xhNet, LPCTSTR lpszPluginFile, LPVOID lParam)
+XBOOL CModulePlugin_LuaCore::ModulePlugin_LuaCore_Add(XNETHANDLE xhNet, LPCXSTR lpszPluginFile, XPVOID lParam)
 {
     ModulePlugin_IsErrorOccur = FALSE;
 

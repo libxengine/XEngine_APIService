@@ -34,7 +34,7 @@ CModuleHelp_Locker::~CModuleHelp_Locker()
   意思：是否成功
 备注：
 *********************************************************************/
-BOOL CModuleHelp_Locker::ModuleHelp_Locker_Create(XNETHANDLE* pxhToken)
+XBOOL CModuleHelp_Locker::ModuleHelp_Locker_Create(XNETHANDLE* pxhToken)
 {
 	ModuleHelp_IsErrorOccur = FALSE;
 
@@ -73,7 +73,7 @@ BOOL CModuleHelp_Locker::ModuleHelp_Locker_Create(XNETHANDLE* pxhToken)
   意思：是否成功
 备注：
 *********************************************************************/
-BOOL CModuleHelp_Locker::ModuleHelp_Locker_OPen(XNETHANDLE xhToken)
+XBOOL CModuleHelp_Locker::ModuleHelp_Locker_OPen(XNETHANDLE xhToken)
 {
 	ModuleHelp_IsErrorOccur = FALSE;
 
@@ -116,7 +116,7 @@ BOOL CModuleHelp_Locker::ModuleHelp_Locker_OPen(XNETHANDLE xhToken)
   意思：是否成功
 备注：
 *********************************************************************/
-BOOL CModuleHelp_Locker::ModuleHelp_Locker_ReadLock(XNETHANDLE xhToken)
+XBOOL CModuleHelp_Locker::ModuleHelp_Locker_ReadLock(XNETHANDLE xhToken)
 {
 	ModuleHelp_IsErrorOccur = FALSE;
 
@@ -157,7 +157,7 @@ BOOL CModuleHelp_Locker::ModuleHelp_Locker_ReadLock(XNETHANDLE xhToken)
   意思：是否成功
 备注：
 *********************************************************************/
-BOOL CModuleHelp_Locker::ModuleHelp_Locker_ReadUNLock(XNETHANDLE xhToken)
+XBOOL CModuleHelp_Locker::ModuleHelp_Locker_ReadUNLock(XNETHANDLE xhToken)
 {
 	ModuleHelp_IsErrorOccur = FALSE;
 
@@ -197,7 +197,7 @@ BOOL CModuleHelp_Locker::ModuleHelp_Locker_ReadUNLock(XNETHANDLE xhToken)
   意思：是否成功
 备注：
 *********************************************************************/
-BOOL CModuleHelp_Locker::ModuleHelp_Locker_WriteLock(XNETHANDLE xhToken)
+XBOOL CModuleHelp_Locker::ModuleHelp_Locker_WriteLock(XNETHANDLE xhToken)
 {
 	ModuleHelp_IsErrorOccur = FALSE;
 
@@ -237,7 +237,7 @@ BOOL CModuleHelp_Locker::ModuleHelp_Locker_WriteLock(XNETHANDLE xhToken)
   意思：是否成功
 备注：
 *********************************************************************/
-BOOL CModuleHelp_Locker::ModuleHelp_Locker_WriteUNLock(XNETHANDLE xhToken)
+XBOOL CModuleHelp_Locker::ModuleHelp_Locker_WriteUNLock(XNETHANDLE xhToken)
 {
 	ModuleHelp_IsErrorOccur = FALSE;
 
@@ -277,7 +277,7 @@ BOOL CModuleHelp_Locker::ModuleHelp_Locker_WriteUNLock(XNETHANDLE xhToken)
   意思：是否成功
 备注：
 *********************************************************************/
-BOOL CModuleHelp_Locker::ModuleHelp_Locker_Close(XNETHANDLE xhToken)
+XBOOL CModuleHelp_Locker::ModuleHelp_Locker_Close(XNETHANDLE xhToken)
 {
 	ModuleHelp_IsErrorOccur = FALSE;
 

@@ -10,9 +10,9 @@
 //    Purpose:     配置文件操作代码
 //    History:
 *********************************************************************/
-BOOL XEngine_Configure_Parament(int argc, char** argv, XENGINE_SERVICECONFIG* pSt_Configure)
+XBOOL XEngine_Configure_Parament(int argc, char** argv, XENGINE_SERVICECONFIG* pSt_Configure)
 {
-	LPCTSTR lpszConfigFile = _T("./XEngine_Config/XEngine_Config.json");
+	LPCXSTR lpszConfigFile = _T("./XEngine_Config/XEngine_Config.json");
 
 	if (!ModuleConfigure_Json_File(lpszConfigFile, pSt_Configure))
 	{

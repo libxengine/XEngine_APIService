@@ -11,10 +11,10 @@
 //    History:
 *********************************************************************/
 //HTTP相关
-BOOL CALLBACK Network_Callback_HTTPLogin(LPCTSTR lpszClientAddr, SOCKET hSocket, LPVOID lParam);
-void CALLBACK Network_Callback_HTTPRecv(LPCTSTR lpszClientAddr, SOCKET hSocket, LPCTSTR lpszRecvMsg, int nMsgLen, LPVOID lParam);
-void CALLBACK Network_Callback_HTTPLeave(LPCTSTR lpszClientAddr, SOCKET hSocket, LPVOID lParam);
-void CALLBACK Network_Callback_HTTPHeart(LPCTSTR lpszClientAddr, SOCKET hSocket, int nStatus, LPVOID lParam);
+XBOOL CALLBACK Network_Callback_HTTPLogin(LPCXSTR lpszClientAddr, XSOCKET hSocket, XPVOID lParam);
+void CALLBACK Network_Callback_HTTPRecv(LPCXSTR lpszClientAddr, XSOCKET hSocket, LPCXSTR lpszRecvMsg, int nMsgLen, XPVOID lParam);
+void CALLBACK Network_Callback_HTTPLeave(LPCXSTR lpszClientAddr, XSOCKET hSocket, XPVOID lParam);
+void CALLBACK Network_Callback_HTTPHeart(LPCXSTR lpszClientAddr, XSOCKET hSocket, int nStatus, XPVOID lParam);
 //关闭与发送
-void XEngine_Network_Close(LPCTSTR lpszClientAddr, BOOL bHeart);
-BOOL XEngine_Network_Send(LPCTSTR lpszClientAddr, LPCTSTR lpszMsgBuffer, int nMsgLen);
+void XEngine_Network_Close(LPCXSTR lpszClientAddr, XBOOL bHeart);
+XBOOL XEngine_Network_Send(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer, int nMsgLen);

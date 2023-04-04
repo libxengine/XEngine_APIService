@@ -39,7 +39,7 @@ CModuleProtocol_Parse::~CModuleProtocol_Parse()
   意思：是否成功
 备注：
 *********************************************************************/
-BOOL CModuleProtocol_Parse::ModuleProtocol_Parse_IDCard(LPCTSTR lpszMsgBuffer, XENGINE_IDCARDINFO* pSt_IDInfo)
+XBOOL CModuleProtocol_Parse::ModuleProtocol_Parse_IDCard(LPCXSTR lpszMsgBuffer, XENGINE_IDCARDINFO* pSt_IDInfo)
 {
 	ModuleProtocol_IsErrorOccur = FALSE;
 
@@ -56,7 +56,7 @@ BOOL CModuleProtocol_Parse::ModuleProtocol_Parse_IDCard(LPCTSTR lpszMsgBuffer, X
 		return FALSE;
 	}
 	int nPos = 0;
-	TCHAR tszTmpBuffer[16];
+	XCHAR tszTmpBuffer[16];
 	//是否是身份证号码
 	for (int i = 0; i < 17; i++)
 	{
@@ -138,7 +138,7 @@ BOOL CModuleProtocol_Parse::ModuleProtocol_Parse_IDCard(LPCTSTR lpszMsgBuffer, X
   意思：是否成功
 备注：
 *********************************************************************/
-BOOL CModuleProtocol_Parse::ModuleProtocol_Parse_Bank(LPCTSTR lpszMsgBuffer, int nMsgLen, XENGINE_BANKINFO* pSt_BankInfo)
+XBOOL CModuleProtocol_Parse::ModuleProtocol_Parse_Bank(LPCXSTR lpszMsgBuffer, int nMsgLen, XENGINE_BANKINFO* pSt_BankInfo)
 {
 	ModuleProtocol_IsErrorOccur = FALSE;
 
@@ -167,8 +167,8 @@ BOOL CModuleProtocol_Parse::ModuleProtocol_Parse_Bank(LPCTSTR lpszMsgBuffer, int
 		ModuleProtocol_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PROTOCOL_PARSE_VALIDATE;
 		return FALSE;
 	}
-	LPCTSTR lpszTypeDC = _T("DC");
-	LPCTSTR lpszTypeCC = _T("CC");
+	LPCXSTR lpszTypeDC = _T("DC");
+	LPCXSTR lpszTypeCC = _T("CC");
 	if (0 == _tcsncmp(lpszTypeDC, st_JsonRoot["cardType"].asCString(), _tcslen(lpszTypeDC)))
 	{
 		pSt_BankInfo->enBankType = ENUM_XENGINE_APISERVICE_BANK_TYPE_DC;
@@ -207,7 +207,7 @@ BOOL CModuleProtocol_Parse::ModuleProtocol_Parse_Bank(LPCTSTR lpszMsgBuffer, int
   意思：是否成功
 备注：
 *********************************************************************/
-BOOL CModuleProtocol_Parse::ModuleProtocol_Parse_Translation(LPCTSTR lpszMsgBuffer, int nMsgLen, XENGINE_LANGUAGEINFO* pSt_LanguageInfo)
+XBOOL CModuleProtocol_Parse::ModuleProtocol_Parse_Translation(LPCXSTR lpszMsgBuffer, int nMsgLen, XENGINE_LANGUAGEINFO* pSt_LanguageInfo)
 {
 	ModuleProtocol_IsErrorOccur = FALSE;
 
@@ -264,7 +264,7 @@ BOOL CModuleProtocol_Parse::ModuleProtocol_Parse_Translation(LPCTSTR lpszMsgBuff
   意思：是否成功
 备注：
 *********************************************************************/
-BOOL CModuleProtocol_Parse::ModuleProtocol_Parse_P2PClient(LPCTSTR lpszMsgBuffer, int nMsgLen, XENGINE_P2XPPEER_PROTOCOL* pSt_P2XPPeer)
+XBOOL CModuleProtocol_Parse::ModuleProtocol_Parse_P2PClient(LPCXSTR lpszMsgBuffer, int nMsgLen, XENGINE_P2XPPEER_PROTOCOL* pSt_P2XPPeer)
 {
 	ModuleProtocol_IsErrorOccur = FALSE;
 
@@ -334,7 +334,7 @@ BOOL CModuleProtocol_Parse::ModuleProtocol_Parse_P2PClient(LPCTSTR lpszMsgBuffer
   意思：是否成功
 备注：
 *********************************************************************/
-BOOL CModuleProtocol_Parse::ModuleProtocol_Parse_ZIPCode(LPCTSTR lpszMsgBuffer, int nMsgLen, XENGINE_ZIPINFO* pSt_ZIPInfo)
+XBOOL CModuleProtocol_Parse::ModuleProtocol_Parse_ZIPCode(LPCXSTR lpszMsgBuffer, int nMsgLen, XENGINE_ZIPINFO* pSt_ZIPInfo)
 {
 	ModuleProtocol_IsErrorOccur = FALSE;
 
@@ -398,7 +398,7 @@ BOOL CModuleProtocol_Parse::ModuleProtocol_Parse_ZIPCode(LPCTSTR lpszMsgBuffer, 
   意思：是否成功
 备注：
 *********************************************************************/
-BOOL CModuleProtocol_Parse::ModuleProtocol_Parse_XLog(LPCTSTR lpszMsgBuffer, int nMsgLen, XENGINE_XLOGINFO* pSt_XLogInfo)
+XBOOL CModuleProtocol_Parse::ModuleProtocol_Parse_XLog(LPCXSTR lpszMsgBuffer, int nMsgLen, XENGINE_XLOGINFO* pSt_XLogInfo)
 {
 	ModuleProtocol_IsErrorOccur = FALSE;
 
@@ -485,7 +485,7 @@ BOOL CModuleProtocol_Parse::ModuleProtocol_Parse_XLog(LPCTSTR lpszMsgBuffer, int
   意思：是否成功
 备注：
 *********************************************************************/
-BOOL CModuleProtocol_Parse::ModuleProtocol_Parse_QRCode(LPCTSTR lpszMsgBuffer, int nMsgLen, XENGINE_QRCODE* pSt_QRCode)
+XBOOL CModuleProtocol_Parse::ModuleProtocol_Parse_QRCode(LPCXSTR lpszMsgBuffer, int nMsgLen, XENGINE_QRCODE* pSt_QRCode)
 {
 	ModuleProtocol_IsErrorOccur = FALSE;
 
@@ -540,7 +540,7 @@ BOOL CModuleProtocol_Parse::ModuleProtocol_Parse_QRCode(LPCTSTR lpszMsgBuffer, i
   意思：是否成功
 备注：
 *********************************************************************/
-BOOL CModuleProtocol_Parse::ModuleProtocol_Parse_SocketTest(LPCTSTR lpszMsgBuffer, int nMsgLen, XENGINE_SOCKETTEST* pSt_SocketTest)
+XBOOL CModuleProtocol_Parse::ModuleProtocol_Parse_SocketTest(LPCXSTR lpszMsgBuffer, int nMsgLen, XENGINE_SOCKETTEST* pSt_SocketTest)
 {
 	ModuleProtocol_IsErrorOccur = FALSE;
 

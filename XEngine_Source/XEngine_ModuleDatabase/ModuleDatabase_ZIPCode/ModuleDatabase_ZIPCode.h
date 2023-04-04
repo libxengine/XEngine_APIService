@@ -18,13 +18,13 @@ public:
 	CModuleDatabase_ZIPCode();
 	~CModuleDatabase_ZIPCode();
 public:
-	BOOL ModuleDatabase_ZIPCode_Init(DATABASE_MYSQL_CONNECTINFO* pSt_DBConnector);
-	BOOL ModuleDatabase_ZIPCode_Destory();
-	BOOL ModuleDatabase_ZIPCode_QueryZIPCode(XENGINE_ZIPINFO* pSt_ZIPInfo);
-	BOOL ModuleDatabase_ZIPCode_QueryName(XENGINE_ZIPINFO* pSt_ZIPInfo);
+	XBOOL ModuleDatabase_ZIPCode_Init(DATABASE_MYSQL_CONNECTINFO* pSt_DBConnector);
+	XBOOL ModuleDatabase_ZIPCode_Destory();
+	XBOOL ModuleDatabase_ZIPCode_QueryZIPCode(XENGINE_ZIPINFO* pSt_ZIPInfo);
+	XBOOL ModuleDatabase_ZIPCode_QueryName(XENGINE_ZIPINFO* pSt_ZIPInfo);
 protected:
-	BOOL ModuleDatabase_ZIPCode_QueryParentByID(int nParentID, TCHAR* ptszParentStr, int* pInt_ParentID = NULL);
-	BOOL ModuleDatabase_ZIPCode_QueryParentByName(LPCTSTR lpszName, int* pInt_ParentID = NULL);
+	XBOOL ModuleDatabase_ZIPCode_QueryParentByID(int nParentID, XCHAR* ptszParentStr, int* pInt_ParentID = NULL);
+	XBOOL ModuleDatabase_ZIPCode_QueryParentByName(LPCXSTR lpszName, int* pInt_ParentID = NULL);
 private:
 	XNETHANDLE xhDBSQL;
 };

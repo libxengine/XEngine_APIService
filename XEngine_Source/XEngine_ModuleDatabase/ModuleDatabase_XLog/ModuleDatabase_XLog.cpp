@@ -34,7 +34,7 @@ CModuleDatabase_XLog::~CModuleDatabase_XLog()
   意思：是否成功
 备注：
 *********************************************************************/
-BOOL CModuleDatabase_XLog::ModuleDatabase_XLog_Init(DATABASE_MYSQL_CONNECTINFO* pSt_DBConnector)
+XBOOL CModuleDatabase_XLog::ModuleDatabase_XLog_Init(DATABASE_MYSQL_CONNECTINFO* pSt_DBConnector)
 {
 	DBModule_IsErrorOccur = FALSE;
 
@@ -44,10 +44,10 @@ BOOL CModuleDatabase_XLog::ModuleDatabase_XLog_Init(DATABASE_MYSQL_CONNECTINFO* 
 		DBModule_dwErrorCode = ERROR_APISERVICE_MODULE_DATABASE_PARAMENT;
 		return FALSE;
 	}
-#ifdef _WINDOWS
-	LPCTSTR lpszStrCharset = _T("gbk");
+#ifdef _MSC_BUILD
+	LPCXSTR lpszStrCharset = _T("gbk");
 #else
-	LPCTSTR lpszStrCharset = _T("utf8");
+	LPCXSTR lpszStrCharset = _T("utf8");
 #endif
 	//连接数据库
 	_tcscpy(pSt_DBConnector->tszDBName, _T("XEngine_APILog"));
@@ -67,7 +67,7 @@ BOOL CModuleDatabase_XLog::ModuleDatabase_XLog_Init(DATABASE_MYSQL_CONNECTINFO* 
   意思：是否成功
 备注：
 *********************************************************************/
-BOOL CModuleDatabase_XLog::ModuleDatabase_XLog_Destory()
+XBOOL CModuleDatabase_XLog::ModuleDatabase_XLog_Destory()
 {
 	DBModule_IsErrorOccur = FALSE;
 
@@ -87,7 +87,7 @@ BOOL CModuleDatabase_XLog::ModuleDatabase_XLog_Destory()
   意思：是否成功
 备注：
 *********************************************************************/
-BOOL CModuleDatabase_XLog::ModuleDatabase_XLog_Create(LPCTSTR lpszTableName)
+XBOOL CModuleDatabase_XLog::ModuleDatabase_XLog_Create(LPCXSTR lpszTableName)
 {
 	DBModule_IsErrorOccur = FALSE;
 
@@ -97,7 +97,7 @@ BOOL CModuleDatabase_XLog::ModuleDatabase_XLog_Create(LPCTSTR lpszTableName)
 		DBModule_dwErrorCode = ERROR_APISERVICE_MODULE_DATABASE_PARAMENT;
 		return FALSE;
 	}
-	TCHAR tszSQLStatement[10240];
+	XCHAR tszSQLStatement[10240];
 	memset(tszSQLStatement, '\0', sizeof(tszSQLStatement));
 
 	_stprintf(tszSQLStatement, _T("CREATE TABLE IF NOT EXISTS `%s` ("
@@ -132,7 +132,7 @@ BOOL CModuleDatabase_XLog::ModuleDatabase_XLog_Create(LPCTSTR lpszTableName)
   意思：是否成功
 备注：
 *********************************************************************/
-BOOL CModuleDatabase_XLog::ModuleDatabase_XLog_Insert(XENGINE_XLOGINFO* pSt_XLogInfo)
+XBOOL CModuleDatabase_XLog::ModuleDatabase_XLog_Insert(XENGINE_XLOGINFO* pSt_XLogInfo)
 {
 	DBModule_IsErrorOccur = FALSE;
 
@@ -142,7 +142,7 @@ BOOL CModuleDatabase_XLog::ModuleDatabase_XLog_Insert(XENGINE_XLOGINFO* pSt_XLog
 		DBModule_dwErrorCode = ERROR_APISERVICE_MODULE_DATABASE_PARAMENT;
 		return FALSE;
 	}
-	TCHAR tszSQLStatement[11240];
+	XCHAR tszSQLStatement[11240];
 	memset(tszSQLStatement, '\0', sizeof(tszSQLStatement));
 
 	_stprintf(tszSQLStatement, _T("INSERT INTO `%s` (tszFileName,tszFuncName,nLogLine,nLogLevel,tszLogBuffer,tszLogTime) VALUES('%s','%s',%d,%d,'%s','%s')"), pSt_XLogInfo->tszTableName, pSt_XLogInfo->st_ProtocolLog.tszFileName, pSt_XLogInfo->st_ProtocolLog.tszFuncName, pSt_XLogInfo->st_ProtocolLog.nLogLine, pSt_XLogInfo->st_ProtocolLog.nLogLevel, pSt_XLogInfo->tszLogBuffer, pSt_XLogInfo->st_ProtocolLog.tszLogTimer);
@@ -187,7 +187,7 @@ BOOL CModuleDatabase_XLog::ModuleDatabase_XLog_Insert(XENGINE_XLOGINFO* pSt_XLog
   意思：是否成功
 备注：
 *********************************************************************/
-BOOL CModuleDatabase_XLog::ModuleDatabase_XLog_Query(XENGINE_XLOGINFO*** pppSt_XLogInfo, int* pInt_ListCount, LPCTSTR lpszTableName, LPCTSTR lpszTimeStart, LPCTSTR lpszTimeEnd)
+XBOOL CModuleDatabase_XLog::ModuleDatabase_XLog_Query(XENGINE_XLOGINFO*** pppSt_XLogInfo, int* pInt_ListCount, LPCXSTR lpszTableName, LPCXSTR lpszTimeStart, LPCXSTR lpszTimeEnd)
 {
 	DBModule_IsErrorOccur = FALSE;
 
@@ -202,7 +202,7 @@ BOOL CModuleDatabase_XLog::ModuleDatabase_XLog_Query(XENGINE_XLOGINFO*** pppSt_X
 	__int64u nllLine = 0;
 	__int64u nllRow = 0;
 
-	TCHAR tszSQLStatement[1024];
+	XCHAR tszSQLStatement[1024];
 	memset(tszSQLStatement, '\0', sizeof(tszSQLStatement));
 	//名称为,消息名为必填
 	_stprintf_s(tszSQLStatement, _T("SELECT * FROM `%s` WHERE tszLogTime BETWEEN  '%s' AND '%s'"), lpszTableName, lpszTimeStart, lpszTimeEnd);
@@ -222,7 +222,7 @@ BOOL CModuleDatabase_XLog::ModuleDatabase_XLog_Query(XENGINE_XLOGINFO*** pppSt_X
 	BaseLib_OperatorMemory_Malloc((XPPPMEM)pppSt_XLogInfo, (int)nllLine, sizeof(XENGINE_XLOGINFO));
 	for (__int64u i = 0; i < nllLine; i++)
 	{
-		TCHAR** pptszResult = DataBase_MySQL_GetResult(xhDBSQL, xhTable);
+		XCHAR** pptszResult = DataBase_MySQL_GetResult(xhDBSQL, xhTable);
 
 		_tcscpy((*pppSt_XLogInfo)[i]->tszTableName, lpszTableName);
 		if (NULL != pptszResult[1])
@@ -266,7 +266,7 @@ BOOL CModuleDatabase_XLog::ModuleDatabase_XLog_Query(XENGINE_XLOGINFO*** pppSt_X
   意思：是否成功
 备注：
 *********************************************************************/
-BOOL CModuleDatabase_XLog::ModuleDatabase_XLog_Delete(LPCTSTR lpszTableName)
+XBOOL CModuleDatabase_XLog::ModuleDatabase_XLog_Delete(LPCXSTR lpszTableName)
 {
 	DBModule_IsErrorOccur = FALSE;
 
@@ -276,7 +276,7 @@ BOOL CModuleDatabase_XLog::ModuleDatabase_XLog_Delete(LPCTSTR lpszTableName)
 		DBModule_dwErrorCode = ERROR_APISERVICE_MODULE_DATABASE_PARAMENT;
 		return FALSE;
 	}
-	TCHAR tszSQLStatement[10240];
+	XCHAR tszSQLStatement[10240];
 	memset(tszSQLStatement, '\0', sizeof(tszSQLStatement));
 
 	_stprintf(tszSQLStatement, _T("DROP TABLE IF EXISTS `%s`;"), lpszTableName);

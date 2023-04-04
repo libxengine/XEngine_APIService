@@ -1,11 +1,11 @@
 ﻿#include "../XEngine_Hdr.h"
 
-BOOL XEngine_HTTPTask_PostCode(LPCTSTR lpszClientAddr, LPCTSTR lpszMsgBuffer, int nMsgLen, int nType)
+XBOOL XEngine_HTTPTask_PostCode(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer, int nMsgLen, int nType)
 {
 	int nSDLen = 4096;
 	int nRVLen = 4096;
-	TCHAR tszSDBuffer[4096];
-	TCHAR tszRVBuffer[4096];
+	XCHAR tszSDBuffer[4096];
+	XCHAR tszRVBuffer[4096];
 	XENGINE_ZIPINFO st_ZIPInfo;
 	RFCCOMPONENTS_HTTP_HDRPARAM st_HDRParam;    //发送给客户端的参数
 
@@ -28,7 +28,7 @@ BOOL XEngine_HTTPTask_PostCode(LPCTSTR lpszClientAddr, LPCTSTR lpszMsgBuffer, in
 	}
 
 	ModuleProtocol_Packet_ZIPCode(tszRVBuffer, &nRVLen, &st_ZIPInfo);
-	RfcComponents_HttpServer_SendMsgEx(xhHTTPPacket, tszSDBuffer, &nSDLen, &st_HDRParam, tszRVBuffer, nRVLen);
+	HttpProtocol_Server_SendMsgEx(xhHTTPPacket, tszSDBuffer, &nSDLen, &st_HDRParam, tszRVBuffer, nRVLen);
 	XEngine_Network_Send(lpszClientAddr, tszSDBuffer, nSDLen);
 	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _T("HTTP客户端:%s,请求查询邮政编码地址信息查询成功,查询邮编;%d,查询地址:%s"), lpszClientAddr, st_ZIPInfo.nZipCode, st_ZIPInfo.tszCounty);
 	return TRUE;

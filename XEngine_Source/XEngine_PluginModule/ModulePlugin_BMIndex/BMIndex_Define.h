@@ -30,7 +30,7 @@ extern "C" DWORD PluginCore_GetLastError();
   意思：是否成功
 备注：
 *********************************************************************/
-extern "C" BOOL PluginCore_Init(LPVOID lParam = NULL);
+extern "C" XBOOL PluginCore_Init(XPVOID lParam = NULL);
 /********************************************************************
 函数名称：PluginCore_UnInit
 函数功能：卸载插件
@@ -48,4 +48,4 @@ extern "C" void PluginCore_UnInit();
   意思：是否成功
 备注：
 *********************************************************************/
-extern "C" BOOL PluginCore_Call(TCHAR * **pppHDRList, int nListCount, int* pInt_HTTPCode, TCHAR * ptszMsgBuffer, int* pInt_MsgLen, LPCTSTR lpszMsgBuffer = NULL, int nMsgLen = 0);
+extern "C" XBOOL PluginCore_Call(XCHAR * **pppHDRList, int nListCount, int* pInt_HTTPCode, XCHAR * ptszMsgBuffer, int* pInt_MsgLen, LPCXSTR lpszMsgBuffer = NULL, int nMsgLen = 0);

@@ -10,19 +10,19 @@
 //    Purpose:     插件核心架构定义
 //    History:
 *********************************************************************/
-typedef BOOL(*FPCall_PluginCore_Init)(LPVOID lParam);
+typedef XBOOL(*FPCall_PluginCore_Init)(XPVOID lParam);
 typedef void(*FPCall_PluginCore_UnInit)();
-typedef BOOL(*FPCall_PluginCore_Call)(TCHAR*** pppHDRList, int nListCount, int* pInt_HTTPCode, TCHAR* ptszMsgBuffer, int* pInt_MsgLen, LPCTSTR lpszMsgBufer, int nMsgLen);
+typedef XBOOL(*FPCall_PluginCore_Call)(XCHAR*** pppHDRList, int nListCount, int* pInt_HTTPCode, XCHAR* ptszMsgBuffer, int* pInt_MsgLen, LPCXSTR lpszMsgBufer, int nMsgLen);
 typedef DWORD(*FPCall_PluginCore_GetLastError)();
 
 typedef struct 
 {
 	HMODULE mhFile;
-	TCHAR tszModuleFile[MAX_PATH];
+	XCHAR tszModuleFile[MAX_PATH];
 
-	BOOL(*fpCall_PluginCore_Init)(LPVOID lParam);
+	XBOOL(*fpCall_PluginCore_Init)(XPVOID lParam);
 	void(*fpCall_PluginCore_UnInit)();
-	BOOL(*fpCall_PluginCore_Call)(TCHAR*** pppHDRList, int nListCount, int* pInt_HTTPCode, TCHAR* ptszMsgBuffer, int* pInt_MsgLen, LPCTSTR lpszMsgBufer, int nMsgLen);
+	XBOOL(*fpCall_PluginCore_Call)(XCHAR*** pppHDRList, int nListCount, int* pInt_HTTPCode, XCHAR* ptszMsgBuffer, int* pInt_MsgLen, LPCXSTR lpszMsgBufer, int nMsgLen);
 	DWORD(*fpCall_PluginCore_GetLastError)();
 }PLUGINCORE_FRAMEWORK, * LPPLUGINCORE_FRAMEWORK;
 
@@ -32,14 +32,14 @@ public:
 	CModulePlugin_LibCore();
 	~CModulePlugin_LibCore();
 public:
-	BOOL ModulePlugin_LibCore_Init();
-	BOOL ModulePlugin_LibCore_Push(XNETHANDLE* pxhModule, LPCTSTR lpszPluginFile, LPVOID lParam = NULL);
-	BOOL ModulePlugin_LibCore_Exec(XNETHANDLE xhModule, TCHAR*** pppHDRList, int nListCount, int* pInt_HTTPCode, TCHAR* ptszMsgBuffer, int* pInt_MsgLen, LPCTSTR lpszMsgBufer = NULL, int nMsgLen = 0);
-	BOOL ModulePlugin_LibCore_Destroy();
+	XBOOL ModulePlugin_LibCore_Init();
+	XBOOL ModulePlugin_LibCore_Push(XNETHANDLE* pxhModule, LPCXSTR lpszPluginFile, XPVOID lParam = NULL);
+	XBOOL ModulePlugin_LibCore_Exec(XNETHANDLE xhModule, XCHAR*** pppHDRList, int nListCount, int* pInt_HTTPCode, XCHAR* ptszMsgBuffer, int* pInt_MsgLen, LPCXSTR lpszMsgBufer = NULL, int nMsgLen = 0);
+	XBOOL ModulePlugin_LibCore_Destroy();
 protected:
-	BOOL ModulePlugin_LibCore_Add(XNETHANDLE xhNet, LPCTSTR lpszPluginFile, LPVOID lParam = NULL);
+	XBOOL ModulePlugin_LibCore_Add(XNETHANDLE xhNet, LPCXSTR lpszPluginFile, XPVOID lParam = NULL);
 private:
-	BOOL bIsInit;
+	XBOOL bIsInit;
 private:
 	shared_mutex st_csStl;
 private:

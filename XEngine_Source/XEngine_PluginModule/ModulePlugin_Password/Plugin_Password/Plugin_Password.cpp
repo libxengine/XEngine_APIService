@@ -33,7 +33,7 @@ CPlugin_Password::~CPlugin_Password()
   意思：是否成功
 备注：
 *********************************************************************/
-BOOL CPlugin_Password::PluginCore_Init(LPVOID lParam)
+XBOOL CPlugin_Password::PluginCore_Init(XPVOID lParam)
 {
 	Pass_IsErrorOccur = FALSE;
 
@@ -59,7 +59,7 @@ void CPlugin_Password::PluginCore_UnInit()
   意思：是否成功
 备注：
 *********************************************************************/
-BOOL CPlugin_Password::PluginCore_Call(TCHAR*** pppHDRList, int nListCount, int* pInt_HTTPCode, TCHAR* ptszMsgBuffer, int* pInt_MsgLen, LPCTSTR lpszMsgBuffer, int nMsgLen)
+XBOOL CPlugin_Password::PluginCore_Call(XCHAR*** pppHDRList, int nListCount, int* pInt_HTTPCode, XCHAR* ptszMsgBuffer, int* pInt_MsgLen, LPCXSTR lpszMsgBuffer, int nMsgLen)
 {
 	Pass_IsErrorOccur = FALSE;
 
@@ -69,10 +69,10 @@ BOOL CPlugin_Password::PluginCore_Call(TCHAR*** pppHDRList, int nListCount, int*
 		Pass_dwErrorCode = ERROR_XENGINE_APISERVICE_PLUGIN_MODULE_PASS_PARAMENT;
 		return FALSE;
 	}
-	TCHAR tszKeyName[128];
-	TCHAR tszParamType[128];
-	TCHAR tszParamLength[128];
-	TCHAR tszPassword[MAX_PATH];
+	XCHAR tszKeyName[128];
+	XCHAR tszParamType[128];
+	XCHAR tszParamLength[128];
+	XCHAR tszPassword[MAX_PATH];
 	Json::Value st_JsonRoot;
 	Json::Value st_JsonObject;
 	Json::StreamWriterBuilder st_JsonBuilder;
@@ -102,13 +102,13 @@ BOOL CPlugin_Password::PluginCore_Call(TCHAR*** pppHDRList, int nListCount, int*
 //////////////////////////////////////////////////////////////////////////
 //                       保护函数
 //////////////////////////////////////////////////////////////////////////
-BOOL CPlugin_Password::Plugin_Password_Creator(LPCTSTR lpszPassType, LPCTSTR lpszLength, TCHAR* ptszPassStr)
+XBOOL CPlugin_Password::Plugin_Password_Creator(LPCXSTR lpszPassType, LPCXSTR lpszLength, XCHAR* ptszPassStr)
 {
 	Pass_IsErrorOccur = FALSE;
 
 	int nType = _ttoi(lpszPassType);
 	int nLen = _ttoi(lpszLength);
-	TCHAR tszPassBuffer[MAX_PATH];
+	XCHAR tszPassBuffer[MAX_PATH];
 
 	memset(tszPassBuffer, '\0', MAX_PATH);
 	if (0 == nType)

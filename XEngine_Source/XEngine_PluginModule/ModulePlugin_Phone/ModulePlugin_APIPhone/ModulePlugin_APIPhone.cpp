@@ -33,7 +33,7 @@ CModulePlugin_APIPhone::~CModulePlugin_APIPhone()
   意思：是否成功
 备注：
 *********************************************************************/
-BOOL CModulePlugin_APIPhone::PluginCore_Init(LPVOID lParam)
+XBOOL CModulePlugin_APIPhone::PluginCore_Init(XPVOID lParam)
 {
 	Phone_IsErrorOccur = FALSE;
 
@@ -65,7 +65,7 @@ void CModulePlugin_APIPhone::PluginCore_UnInit()
   意思：是否成功
 备注：
 *********************************************************************/
-BOOL CModulePlugin_APIPhone::PluginCore_Call(TCHAR*** pppHDRList, int nListCount, int* pInt_HTTPCode, TCHAR* ptszMsgBuffer, int* pInt_MsgLen, LPCTSTR lpszMsgBuffer, int nMsgLen)
+XBOOL CModulePlugin_APIPhone::PluginCore_Call(XCHAR*** pppHDRList, int nListCount, int* pInt_HTTPCode, XCHAR* ptszMsgBuffer, int* pInt_MsgLen, LPCXSTR lpszMsgBuffer, int nMsgLen)
 {
 	Phone_IsErrorOccur = FALSE;
 
@@ -75,8 +75,8 @@ BOOL CModulePlugin_APIPhone::PluginCore_Call(TCHAR*** pppHDRList, int nListCount
 		Phone_dwErrorCode = ERROR_XENGINE_APISERVICE_PLUGIN_MODULE_PHONE_PARAMENT;
 		return FALSE;
 	}
-	TCHAR tszKeyName[128];
-	TCHAR tszKeyValue[128];
+	XCHAR tszKeyName[128];
+	XCHAR tszKeyValue[128];
 	Json::Value st_JsonRoot;
 	Json::Value st_JsonObject;
 	Json::StreamWriterBuilder st_JsonBuilder;

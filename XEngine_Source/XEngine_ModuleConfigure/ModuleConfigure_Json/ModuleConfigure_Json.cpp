@@ -40,7 +40,7 @@ CModuleConfigure_Json::~CModuleConfigure_Json()
   意思：是否成功
 备注：
 *********************************************************************/
-BOOL CModuleConfigure_Json::ModuleConfigure_Json_File(LPCTSTR lpszConfigFile, XENGINE_SERVICECONFIG* pSt_ServerConfig)
+XBOOL CModuleConfigure_Json::ModuleConfigure_Json_File(LPCXSTR lpszConfigFile, XENGINE_SERVICECONFIG* pSt_ServerConfig)
 {
 	Config_IsErrorOccur = FALSE;
 
@@ -62,7 +62,7 @@ BOOL CModuleConfigure_Json::ModuleConfigure_Json_File(LPCTSTR lpszConfigFile, XE
 		return FALSE;
 	}
 	size_t nCount = 0;
-	TCHAR tszMsgBuffer[4096];
+	XCHAR tszMsgBuffer[4096];
 	while (1)
 	{
 		size_t nRet = fread(tszMsgBuffer + nCount, 1, 2048, pSt_File);
@@ -200,7 +200,7 @@ BOOL CModuleConfigure_Json::ModuleConfigure_Json_File(LPCTSTR lpszConfigFile, XE
   意思：是否成功
 备注：
 *********************************************************************/
-BOOL CModuleConfigure_Json::ModuleConfigure_Json_OPenccFile(LPCTSTR lpszConfigFile, XENGINE_OPENCCCONFIG* pSt_OPenccConfig)
+XBOOL CModuleConfigure_Json::ModuleConfigure_Json_OPenccFile(LPCXSTR lpszConfigFile, XENGINE_OPENCCCONFIG* pSt_OPenccConfig)
 {
 	Config_IsErrorOccur = FALSE;
 
@@ -222,7 +222,7 @@ BOOL CModuleConfigure_Json::ModuleConfigure_Json_OPenccFile(LPCTSTR lpszConfigFi
 		return FALSE;
 	}
 	size_t nCount = 0;
-	TCHAR tszMsgBuffer[4096];
+	XCHAR tszMsgBuffer[4096];
 	while (1)
 	{
 		size_t nRet = fread(tszMsgBuffer + nCount, 1, 2048, pSt_File);
@@ -275,7 +275,7 @@ BOOL CModuleConfigure_Json::ModuleConfigure_Json_OPenccFile(LPCTSTR lpszConfigFi
   意思：是否成功
 备注：
 *********************************************************************/
-BOOL CModuleConfigure_Json::ModuleConfigure_Json_QRCodeFile(LPCTSTR lpszConfigFile, XENGINE_QRCODECONFIG* pSt_QRCodeConfig)
+XBOOL CModuleConfigure_Json::ModuleConfigure_Json_QRCodeFile(LPCXSTR lpszConfigFile, XENGINE_QRCODECONFIG* pSt_QRCodeConfig)
 {
 	Config_IsErrorOccur = FALSE;
 
@@ -297,7 +297,7 @@ BOOL CModuleConfigure_Json::ModuleConfigure_Json_QRCodeFile(LPCTSTR lpszConfigFi
 		return FALSE;
 	}
 	size_t nCount = 0;
-	TCHAR tszMsgBuffer[4096];
+	XCHAR tszMsgBuffer[4096];
 	while (1)
 	{
 		size_t nRet = fread(tszMsgBuffer + nCount, 1, 2048, pSt_File);
@@ -340,7 +340,7 @@ BOOL CModuleConfigure_Json::ModuleConfigure_Json_QRCodeFile(LPCTSTR lpszConfigFi
   意思：是否成功
 备注：
 *********************************************************************/
-BOOL CModuleConfigure_Json::ModuleConfigure_Json_PluginFile(LPCTSTR lpszConfigFile, XENGINE_PLUGINCONFIG* pSt_PluginConfig)
+XBOOL CModuleConfigure_Json::ModuleConfigure_Json_PluginFile(LPCXSTR lpszConfigFile, XENGINE_PLUGINCONFIG* pSt_PluginConfig)
 {
 	Config_IsErrorOccur = FALSE;
 
@@ -362,7 +362,7 @@ BOOL CModuleConfigure_Json::ModuleConfigure_Json_PluginFile(LPCTSTR lpszConfigFi
 		return FALSE;
 	}
 	size_t nCount = 0;
-	TCHAR tszMsgBuffer[4096];
+	XCHAR tszMsgBuffer[4096];
 	while (1)
 	{
 		size_t nRet = fread(tszMsgBuffer + nCount, 1, 2048, pSt_File);

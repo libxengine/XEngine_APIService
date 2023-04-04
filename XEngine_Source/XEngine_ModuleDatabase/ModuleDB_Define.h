@@ -30,7 +30,7 @@ extern "C" DWORD ModuleDB_GetLastError(int *pInt_SysError = NULL);
   意思：是否成功
 备注：
 *********************************************************************/
-extern "C" BOOL ModuleDatabase_IDCard_Init(DATABASE_MYSQL_CONNECTINFO * pSt_DBConnector);
+extern "C" XBOOL ModuleDatabase_IDCard_Init(DATABASE_MYSQL_CONNECTINFO * pSt_DBConnector);
 /********************************************************************
 函数名称：ModuleDatabase_IDCard_Destory
 函数功能：销毁
@@ -39,7 +39,7 @@ extern "C" BOOL ModuleDatabase_IDCard_Init(DATABASE_MYSQL_CONNECTINFO * pSt_DBCo
   意思：是否成功
 备注：
 *********************************************************************/
-extern "C" BOOL ModuleDatabase_IDCard_Destory();
+extern "C" XBOOL ModuleDatabase_IDCard_Destory();
 /********************************************************************
 函数名称：ModuleDatabase_IDCard_QueryRegion
 函数功能：查询身份证位置信息
@@ -58,7 +58,7 @@ extern "C" BOOL ModuleDatabase_IDCard_Destory();
   意思：是否成功
 备注：
 *********************************************************************/
-extern "C" BOOL ModuleDatabase_IDCard_QueryRegion(XENGINE_IDREGION * pSt_IDRegion, XENGINE_IDCARDINFO * pSt_IDInfo);
+extern "C" XBOOL ModuleDatabase_IDCard_QueryRegion(XENGINE_IDREGION * pSt_IDRegion, XENGINE_IDCARDINFO * pSt_IDInfo);
 /************************************************************************/
 /*                         导出的银行卡信息函数                         */
 /************************************************************************/
@@ -75,7 +75,7 @@ extern "C" BOOL ModuleDatabase_IDCard_QueryRegion(XENGINE_IDREGION * pSt_IDRegio
   意思：是否成功
 备注：
 *********************************************************************/
-extern "C" BOOL ModuleDatabase_Bank_Init(DATABASE_MYSQL_CONNECTINFO * pSt_DBConnector);
+extern "C" XBOOL ModuleDatabase_Bank_Init(DATABASE_MYSQL_CONNECTINFO * pSt_DBConnector);
 /********************************************************************
 函数名称：ModuleDatabase_Bank_Destory
 函数功能：销毁
@@ -84,7 +84,7 @@ extern "C" BOOL ModuleDatabase_Bank_Init(DATABASE_MYSQL_CONNECTINFO * pSt_DBConn
   意思：是否成功
 备注：
 *********************************************************************/
-extern "C" BOOL ModuleDatabase_Bank_Destory();
+extern "C" XBOOL ModuleDatabase_Bank_Destory();
 /********************************************************************
 函数名称：ModuleDatabase_Bank_Query
 函数功能：通过银行缩写获得银行名称
@@ -98,7 +98,7 @@ extern "C" BOOL ModuleDatabase_Bank_Destory();
   意思：是否成功
 备注：
 *********************************************************************/
-extern "C" BOOL ModuleDatabase_Bank_Query(XENGINE_BANKINFO * pSt_BankInfo);
+extern "C" XBOOL ModuleDatabase_Bank_Query(XENGINE_BANKINFO * pSt_BankInfo);
 /************************************************************************/
 /*                         导出的邮编行政信息函数                       */
 /************************************************************************/
@@ -115,7 +115,7 @@ extern "C" BOOL ModuleDatabase_Bank_Query(XENGINE_BANKINFO * pSt_BankInfo);
   意思：是否成功
 备注：
 *********************************************************************/
-extern "C" BOOL ModuleDatabase_ZIPCode_Init(DATABASE_MYSQL_CONNECTINFO * pSt_DBConnector);
+extern "C" XBOOL ModuleDatabase_ZIPCode_Init(DATABASE_MYSQL_CONNECTINFO * pSt_DBConnector);
 /********************************************************************
 函数名称：ModuleDatabase_ZIPCode_Destory
 函数功能：销毁
@@ -124,7 +124,7 @@ extern "C" BOOL ModuleDatabase_ZIPCode_Init(DATABASE_MYSQL_CONNECTINFO * pSt_DBC
   意思：是否成功
 备注：
 *********************************************************************/
-extern "C" BOOL ModuleDatabase_ZIPCode_Destory();
+extern "C" XBOOL ModuleDatabase_ZIPCode_Destory();
 /********************************************************************
 函数名称：ModuleDatabase_ZIPCode_QueryZIPCode
 函数功能：通过邮编查询行政地址信息
@@ -138,7 +138,7 @@ extern "C" BOOL ModuleDatabase_ZIPCode_Destory();
   意思：是否成功
 备注：
 *********************************************************************/
-extern "C" BOOL ModuleDatabase_ZIPCode_QueryZIPCode(XENGINE_ZIPINFO* pSt_ZIPInfo);
+extern "C" XBOOL ModuleDatabase_ZIPCode_QueryZIPCode(XENGINE_ZIPINFO* pSt_ZIPInfo);
 /********************************************************************
 函数名称：ModuleDatabase_ZIPCode_QueryName
 函数功能：通过行政名称查询内容
@@ -152,7 +152,7 @@ extern "C" BOOL ModuleDatabase_ZIPCode_QueryZIPCode(XENGINE_ZIPINFO* pSt_ZIPInfo
   意思：是否成功
 备注：
 *********************************************************************/
-extern "C" BOOL ModuleDatabase_ZIPCode_QueryName(XENGINE_ZIPINFO* pSt_ZIPInfo);
+extern "C" XBOOL ModuleDatabase_ZIPCode_QueryName(XENGINE_ZIPINFO* pSt_ZIPInfo);
 /************************************************************************/
 /*                         导出的日志服务数据库函数                     */
 /************************************************************************/
@@ -169,7 +169,7 @@ extern "C" BOOL ModuleDatabase_ZIPCode_QueryName(XENGINE_ZIPINFO* pSt_ZIPInfo);
   意思：是否成功
 备注：
 *********************************************************************/
-extern "C" BOOL ModuleDatabase_XLog_Init(DATABASE_MYSQL_CONNECTINFO* pSt_DBConnector);
+extern "C" XBOOL ModuleDatabase_XLog_Init(DATABASE_MYSQL_CONNECTINFO* pSt_DBConnector);
 /********************************************************************
 函数名称：ModuleDatabase_XLog_Destory
 函数功能：销毁
@@ -178,7 +178,7 @@ extern "C" BOOL ModuleDatabase_XLog_Init(DATABASE_MYSQL_CONNECTINFO* pSt_DBConne
   意思：是否成功
 备注：
 *********************************************************************/
-extern "C" BOOL ModuleDatabase_XLog_Destory();
+extern "C" XBOOL ModuleDatabase_XLog_Destory();
 /********************************************************************
 函数名称：ModuleDatabase_XLog_Create
 函数功能：创建一个日志服务表
@@ -192,7 +192,7 @@ extern "C" BOOL ModuleDatabase_XLog_Destory();
   意思：是否成功
 备注：
 *********************************************************************/
-extern "C" BOOL ModuleDatabase_XLog_Create(LPCTSTR lpszTableName);
+extern "C" XBOOL ModuleDatabase_XLog_Create(LPCXSTR lpszTableName);
 /********************************************************************
 函数名称：ModuleDatabase_XLog_Insert
 函数功能：查询身份证位置信息
@@ -206,7 +206,7 @@ extern "C" BOOL ModuleDatabase_XLog_Create(LPCTSTR lpszTableName);
   意思：是否成功
 备注：
 *********************************************************************/
-extern "C" BOOL ModuleDatabase_XLog_Insert(XENGINE_XLOGINFO* pSt_XLogInfo);
+extern "C" XBOOL ModuleDatabase_XLog_Insert(XENGINE_XLOGINFO* pSt_XLogInfo);
 /********************************************************************
 函数名称：ModuleDatabase_XLog_Query
 函数功能：日志信息查询
@@ -240,7 +240,7 @@ extern "C" BOOL ModuleDatabase_XLog_Insert(XENGINE_XLOGINFO* pSt_XLogInfo);
   意思：是否成功
 备注：
 *********************************************************************/
-extern "C" BOOL ModuleDatabase_XLog_Query(XENGINE_XLOGINFO*** pppSt_XLogInfo, int* pInt_ListCount, LPCTSTR lpszTableName, LPCTSTR lpszTimeStart, LPCTSTR lpszTimeEnd);
+extern "C" XBOOL ModuleDatabase_XLog_Query(XENGINE_XLOGINFO*** pppSt_XLogInfo, int* pInt_ListCount, LPCXSTR lpszTableName, LPCXSTR lpszTimeStart, LPCXSTR lpszTimeEnd);
 /********************************************************************
 函数名称：ModuleDatabase_XLog_Delete
 函数功能：删除日志表
@@ -254,4 +254,4 @@ extern "C" BOOL ModuleDatabase_XLog_Query(XENGINE_XLOGINFO*** pppSt_XLogInfo, in
   意思：是否成功
 备注：
 *********************************************************************/
-extern "C" BOOL ModuleDatabase_XLog_Delete(LPCTSTR lpszTableName);
+extern "C" XBOOL ModuleDatabase_XLog_Delete(LPCXSTR lpszTableName);

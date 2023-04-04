@@ -44,7 +44,7 @@ CModuleHelp_Language::~CModuleHelp_Language()
   意思：是否成功
 备注：
 *********************************************************************/
-BOOL CModuleHelp_Language::ModuleHelp_Language_ConvertZh(LPCTSTR lpszJsonFile, LPCTSTR lpszSourceStr, TCHAR* ptszDestStr)
+XBOOL CModuleHelp_Language::ModuleHelp_Language_ConvertZh(LPCXSTR lpszJsonFile, LPCXSTR lpszSourceStr, XCHAR* ptszDestStr)
 {
 	ModuleHelp_IsErrorOccur = FALSE;
 
@@ -89,7 +89,7 @@ BOOL CModuleHelp_Language::ModuleHelp_Language_ConvertZh(LPCTSTR lpszJsonFile, L
   意思：是否成功
 备注：
 *********************************************************************/
-BOOL CModuleHelp_Language::ModuleHelp_Translation_Convert(ENUM_XENGINE_APISERVICE_TRANSLATION_TYPE enTranslationType, TCHAR* ptszTranslationType)
+XBOOL CModuleHelp_Language::ModuleHelp_Translation_Convert(ENUM_XENGINE_APISERVICE_TRANSLATION_TYPE enTranslationType, XCHAR* ptszTranslationType)
 {
 	ModuleHelp_IsErrorOccur = FALSE;
 

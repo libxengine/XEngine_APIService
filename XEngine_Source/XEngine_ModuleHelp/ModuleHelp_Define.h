@@ -13,9 +13,9 @@
 //////////////////////////////////////////////////////////////////////////
 //                       导出回调函数
 //////////////////////////////////////////////////////////////////////////
-typedef void(CALLBACK* CALLBACK_APISERVICE_MODULE_HELP_P2PCLIENT)(XENGINE_P2XPPEER_PROTOCOL* pSt_P2PProtocol, LPVOID lParam);
+typedef void(CALLBACK* CALLBACK_APISERVICE_MODULE_HELP_P2PCLIENT)(XENGINE_P2XPPEER_PROTOCOL* pSt_P2PProtocol, XPVOID lParam);
 //套接字测试回调:测试句柄，测试的服务器地址，测试的端口，当前测试次数，失败次数,成功次数,状态:0成功报告,1失败报告,2结束报告,自定义参数
-typedef void(CALLBACK* CALLBACK_APISERVICE_MODULE_HELP_SOCKETTEST)(XNETHANDLE xhToken, LPCSTR lpszAddr, int nPort, __int64x nNumber, __int64x nFailed, __int64x nSuccess, int nStatus, LPVOID lParam);
+typedef void(CALLBACK* CALLBACK_APISERVICE_MODULE_HELP_SOCKETTEST)(XNETHANDLE xhToken, LPCSTR lpszAddr, int nPort, __int64x nNumber, __int64x nFailed, __int64x nSuccess, int nStatus, XPVOID lParam);
 //////////////////////////////////////////////////////////////////////////
 //                       导出数据结构
 //////////////////////////////////////////////////////////////////////////
@@ -32,7 +32,7 @@ typedef struct
 {
 	XENGINE_P2XPPEER_PROTOCOL st_PeerAddr;                                //P2P通信的时候使用的地址（客户方使用）
 	P2XP_TIMER_INFOMATION st_PeerTimer;                                   //节点时间信息
-	BOOL bIsLogin;
+	XBOOL bIsLogin;
 }XENGINE_P2XP_PEERINFO, * LPNETENGINE_P2XP_PEERINFO;
 //////////////////////////////////////////////////////////////////////////
 ///                        导出的函数
@@ -54,7 +54,7 @@ extern "C" DWORD ModuleHelp_GetLastError(int *pInt_SysError = NULL);
   意思：是否成功
 备注：
 *********************************************************************/
-extern "C" BOOL ModuleHelp_IDCard_CheckBirth(XENGINE_IDCARDINFO* pSt_IDInfo);
+extern "C" XBOOL ModuleHelp_IDCard_CheckBirth(XENGINE_IDCARDINFO* pSt_IDInfo);
 /********************************************************************
 函数名称：ModuleHelp_IDCard_CheckBirth
 函数功能：检查身份证的校验码是否正确
@@ -68,7 +68,7 @@ extern "C" BOOL ModuleHelp_IDCard_CheckBirth(XENGINE_IDCARDINFO* pSt_IDInfo);
   意思：是否成功
 备注：
 *********************************************************************/
-extern "C" BOOL ModuleHelp_IDCard_CheckSum(XENGINE_IDCARDINFO* pSt_IDInfo);
+extern "C" XBOOL ModuleHelp_IDCard_CheckSum(XENGINE_IDCARDINFO* pSt_IDInfo);
 /************************************************************************/
 /*                         导出的语言转换帮助函数                       */
 /************************************************************************/
@@ -95,7 +95,7 @@ extern "C" BOOL ModuleHelp_IDCard_CheckSum(XENGINE_IDCARDINFO* pSt_IDInfo);
   意思：是否成功
 备注：
 *********************************************************************/
-extern "C" BOOL ModuleHelp_Language_ConvertZh(LPCTSTR lpszJsonFile, LPCTSTR lpszSourceStr, TCHAR* ptszDestStr);
+extern "C" XBOOL ModuleHelp_Language_ConvertZh(LPCXSTR lpszJsonFile, LPCXSTR lpszSourceStr, XCHAR* ptszDestStr);
 /********************************************************************
 函数名称：ModuleHelp_Translation_Convert
 函数功能：翻译类型转换
@@ -114,7 +114,7 @@ extern "C" BOOL ModuleHelp_Language_ConvertZh(LPCTSTR lpszJsonFile, LPCTSTR lpsz
   意思：是否成功
 备注：
 *********************************************************************/
-extern "C" BOOL ModuleHelp_Translation_Convert(ENUM_XENGINE_APISERVICE_TRANSLATION_TYPE enTranslationType, TCHAR* ptszTranslationType);
+extern "C" XBOOL ModuleHelp_Translation_Convert(ENUM_XENGINE_APISERVICE_TRANSLATION_TYPE enTranslationType, XCHAR* ptszTranslationType);
 /************************************************************************/
 /*                       节点管理器导出函数                             */
 /************************************************************************/
@@ -141,7 +141,7 @@ extern "C" BOOL ModuleHelp_Translation_Convert(ENUM_XENGINE_APISERVICE_TRANSLATI
   意思：是否成功
 备注：
 *********************************************************************/
-extern "C" BOOL ModuleHelp_P2PClient_Init(int nTimeout, CALLBACK_APISERVICE_MODULE_HELP_P2PCLIENT fpCall_P2PClient, LPVOID lParam = NULL);
+extern "C" XBOOL ModuleHelp_P2PClient_Init(int nTimeout, CALLBACK_APISERVICE_MODULE_HELP_P2PCLIENT fpCall_P2PClient, XPVOID lParam = NULL);
 /********************************************************************
 函数名称：ModuleHelp_P2PClient_Destory
 函数功能：销毁
@@ -150,7 +150,7 @@ extern "C" BOOL ModuleHelp_P2PClient_Init(int nTimeout, CALLBACK_APISERVICE_MODU
   意思：是否成功
 备注：
 *********************************************************************/
-extern "C" BOOL ModuleHelp_P2PClient_Destory();
+extern "C" XBOOL ModuleHelp_P2PClient_Destory();
 /********************************************************************
 函数名称：ModuleHelp_P2PClient_Add
 函数功能：添加一个客户到一个节点信息
@@ -164,7 +164,7 @@ extern "C" BOOL ModuleHelp_P2PClient_Destory();
   意思：是否添加成功
 备注：
 *********************************************************************/
-extern "C" BOOL ModuleHelp_P2PClient_Add(XENGINE_P2XP_PEERINFO * pSt_PeerInfo);
+extern "C" XBOOL ModuleHelp_P2PClient_Add(XENGINE_P2XP_PEERINFO * pSt_PeerInfo);
 /********************************************************************
 函数名称：ModuleHelp_P2PClient_Get
 函数功能：获取P2P节点对应信息
@@ -183,7 +183,7 @@ extern "C" BOOL ModuleHelp_P2PClient_Add(XENGINE_P2XP_PEERINFO * pSt_PeerInfo);
   意思：是否查找成功
 备注：
 *********************************************************************/
-extern "C" BOOL ModuleHelp_P2PClient_Get(XENGINE_P2XPPEER_PROTOCOL * pSt_P2PProtocol, XENGINE_P2XP_PEERINFO * pSt_PeerInfo = NULL);
+extern "C" XBOOL ModuleHelp_P2PClient_Get(XENGINE_P2XPPEER_PROTOCOL * pSt_P2PProtocol, XENGINE_P2XP_PEERINFO * pSt_PeerInfo = NULL);
 /********************************************************************
 函数名称：ModuleHelp_P2PClient_GetLan
 函数功能：获取局域网IP地址列表
@@ -207,7 +207,7 @@ extern "C" BOOL ModuleHelp_P2PClient_Get(XENGINE_P2XPPEER_PROTOCOL * pSt_P2PProt
   意思：是否成功
 备注：参数二需要调用基础库的BaseLib_OperatorMemory_Free函数进行内存释放
 *********************************************************************/
-extern "C" BOOL ModuleHelp_P2PClient_GetLan(XENGINE_P2XPPEER_PROTOCOL * pSt_P2PProtocol, XENGINE_P2XPPEER_PROTOCOL * **pppSt_P2XPClient, int* pInt_ListCount);
+extern "C" XBOOL ModuleHelp_P2PClient_GetLan(XENGINE_P2XPPEER_PROTOCOL * pSt_P2PProtocol, XENGINE_P2XPPEER_PROTOCOL * **pppSt_P2XPClient, int* pInt_ListCount);
 /********************************************************************
 函数名称：ModuleHelp_P2PClient_GetLList
 函数功能：获取同一公网下所有局域网主IP列表
@@ -231,7 +231,7 @@ extern "C" BOOL ModuleHelp_P2PClient_GetLan(XENGINE_P2XPPEER_PROTOCOL * pSt_P2PP
   意思：是否成功
 备注：参数二需要调用基础库的BaseLib_OperatorMemory_Free函数进行内存释放
 *********************************************************************/
-extern "C" BOOL ModuleHelp_P2PClient_GetLList(LPCSTR lpszPubAddr, CHAR * **pppszP2XPClient, int* pInt_ListCount);
+extern "C" XBOOL ModuleHelp_P2PClient_GetLList(LPCSTR lpszPubAddr, CHAR * **pppszP2XPClient, int* pInt_ListCount);
 /********************************************************************
 函数名称：ModuleHelp_P2PClient_GetWList
 函数功能：获取所有连接到的公网地址列表
@@ -250,7 +250,7 @@ extern "C" BOOL ModuleHelp_P2PClient_GetLList(LPCSTR lpszPubAddr, CHAR * **pppsz
   意思：是否成功
 备注：
 *********************************************************************/
-extern "C" BOOL ModuleHelp_P2PClient_GetWList(CHAR * **pppszP2XPClient, int* pInt_ListCount);
+extern "C" XBOOL ModuleHelp_P2PClient_GetWList(CHAR * **pppszP2XPClient, int* pInt_ListCount);
 /********************************************************************
 函数名称：ModuleHelp_P2PClient_Delete
 函数功能：删除一个指定的节点
@@ -264,7 +264,7 @@ extern "C" BOOL ModuleHelp_P2PClient_GetWList(CHAR * **pppszP2XPClient, int* pIn
   意思：是否成功删除
 备注：
 *********************************************************************/
-extern "C" BOOL ModuleHelp_P2PClient_Delete(XENGINE_P2XPPEER_PROTOCOL * pSt_P2PProtocol);
+extern "C" XBOOL ModuleHelp_P2PClient_Delete(XENGINE_P2XPPEER_PROTOCOL * pSt_P2PProtocol);
 /********************************************************************
 函数名称：ModuleHelp_P2PClient_DelAll
 函数功能：清空节点列表数据
@@ -273,7 +273,7 @@ extern "C" BOOL ModuleHelp_P2PClient_Delete(XENGINE_P2XPPEER_PROTOCOL * pSt_P2PP
   意思：是否成功
 备注：
 *********************************************************************/
-extern "C" BOOL ModuleHelp_P2PClient_DelAll();
+extern "C" XBOOL ModuleHelp_P2PClient_DelAll();
 /********************************************************************
 函数名称：ModuleHelp_P2PClient_Heart
 函数功能：触发一次心跳
@@ -287,7 +287,7 @@ extern "C" BOOL ModuleHelp_P2PClient_DelAll();
   意思：是否成功
 备注：
 *********************************************************************/
-extern "C" BOOL ModuleHelp_P2PClient_Heart(XENGINE_P2XPPEER_PROTOCOL* pSt_P2PProtocol);
+extern "C" XBOOL ModuleHelp_P2PClient_Heart(XENGINE_P2XPPEER_PROTOCOL* pSt_P2PProtocol);
 /************************************************************************/
 /*                       分布式锁导出函数                               */
 /************************************************************************/
@@ -304,7 +304,7 @@ extern "C" BOOL ModuleHelp_P2PClient_Heart(XENGINE_P2XPPEER_PROTOCOL* pSt_P2PPro
   意思：是否成功
 备注：
 *********************************************************************/
-extern "C" BOOL ModuleHelp_Locker_Create(XNETHANDLE* pxhToken);
+extern "C" XBOOL ModuleHelp_Locker_Create(XNETHANDLE* pxhToken);
 /********************************************************************
 函数名称：ModuleHelp_Locker_OPen
 函数功能：打开一个锁
@@ -318,7 +318,7 @@ extern "C" BOOL ModuleHelp_Locker_Create(XNETHANDLE* pxhToken);
   意思：是否成功
 备注：
 *********************************************************************/
-extern "C" BOOL ModuleHelp_Locker_OPen(XNETHANDLE xhToken);
+extern "C" XBOOL ModuleHelp_Locker_OPen(XNETHANDLE xhToken);
 /********************************************************************
 函数名称：ModuleHelp_Locker_ReadLock
 函数功能：读加锁
@@ -332,7 +332,7 @@ extern "C" BOOL ModuleHelp_Locker_OPen(XNETHANDLE xhToken);
   意思：是否成功
 备注：
 *********************************************************************/
-extern "C" BOOL ModuleHelp_Locker_ReadLock(XNETHANDLE xhToken);
+extern "C" XBOOL ModuleHelp_Locker_ReadLock(XNETHANDLE xhToken);
 /********************************************************************
 函数名称：ModuleHelp_Locker_ReadUNLock
 函数功能：读解锁
@@ -346,7 +346,7 @@ extern "C" BOOL ModuleHelp_Locker_ReadLock(XNETHANDLE xhToken);
   意思：是否成功
 备注：
 *********************************************************************/
-extern "C" BOOL ModuleHelp_Locker_ReadUNLock(XNETHANDLE xhToken);
+extern "C" XBOOL ModuleHelp_Locker_ReadUNLock(XNETHANDLE xhToken);
 /********************************************************************
 函数名称：ModuleHelp_Locker_WriteLock
 函数功能：写加锁
@@ -360,7 +360,7 @@ extern "C" BOOL ModuleHelp_Locker_ReadUNLock(XNETHANDLE xhToken);
   意思：是否成功
 备注：
 *********************************************************************/
-extern "C" BOOL ModuleHelp_Locker_WriteLock(XNETHANDLE xhToken);
+extern "C" XBOOL ModuleHelp_Locker_WriteLock(XNETHANDLE xhToken);
 /********************************************************************
 函数名称：ModuleHelp_Locker_WriteUNLock
 函数功能：写解锁
@@ -374,7 +374,7 @@ extern "C" BOOL ModuleHelp_Locker_WriteLock(XNETHANDLE xhToken);
   意思：是否成功
 备注：
 *********************************************************************/
-extern "C" BOOL ModuleHelp_Locker_WriteUNLock(XNETHANDLE xhToken);
+extern "C" XBOOL ModuleHelp_Locker_WriteUNLock(XNETHANDLE xhToken);
 /********************************************************************
 函数名称：ModuleHelp_Locker_Close
 函数功能：关闭锁
@@ -388,7 +388,7 @@ extern "C" BOOL ModuleHelp_Locker_WriteUNLock(XNETHANDLE xhToken);
   意思：是否成功
 备注：
 *********************************************************************/
-extern "C" BOOL ModuleHelp_Locker_Close(XNETHANDLE xhToken);
+extern "C" XBOOL ModuleHelp_Locker_Close(XNETHANDLE xhToken);
 /************************************************************************/
 /*                       二维码导出函数                                 */
 /************************************************************************/
@@ -410,7 +410,7 @@ extern "C" BOOL ModuleHelp_Locker_Close(XNETHANDLE xhToken);
   意思：是否成功
 备注：
 *********************************************************************/
-extern "C" BOOL ModuleHelp_QRCode_QREncodecFile(LPCTSTR lpszFileName, LPCTSTR lpszMsgBuffer);
+extern "C" XBOOL ModuleHelp_QRCode_QREncodecFile(LPCXSTR lpszFileName, LPCXSTR lpszMsgBuffer);
 /********************************************************************
 函数名称：ModuleHelp_QRCode_QREncodecMemory
 函数功能：编码数据为二维码格式PNG图片
@@ -440,7 +440,7 @@ extern "C" BOOL ModuleHelp_QRCode_QREncodecFile(LPCTSTR lpszFileName, LPCTSTR lp
   意思：是否成功
 备注：
 *********************************************************************/
-extern "C" BOOL ModuleHelp_QRCode_QREncodecMemory(LPCTSTR lpszMsgBuffer, TCHAR* ptszMsgBuffer, int* pInt_MsgLen, LPCTSTR lpszFmt);
+extern "C" XBOOL ModuleHelp_QRCode_QREncodecMemory(LPCXSTR lpszMsgBuffer, XCHAR* ptszMsgBuffer, int* pInt_MsgLen, LPCXSTR lpszFmt);
 /********************************************************************
 函数名称：ModuleHelp_QRCode_QRDecodecFile
 函数功能：从文件解码二维码
@@ -479,7 +479,7 @@ extern "C" BOOL ModuleHelp_QRCode_QREncodecMemory(LPCTSTR lpszMsgBuffer, TCHAR* 
   意思：是否成功
 备注：
 *********************************************************************/
-extern "C" BOOL ModuleHelp_QRCode_QRDecodecFile(LPCTSTR lpszFileName, TCHAR* ptszMsgBuffer, LPCTSTR lpszDetectProto, LPCTSTR lpszDetectModel, LPCTSTR lpszSrProto, LPCTSTR lpszSrModel);
+extern "C" XBOOL ModuleHelp_QRCode_QRDecodecFile(LPCXSTR lpszFileName, XCHAR* ptszMsgBuffer, LPCXSTR lpszDetectProto, LPCXSTR lpszDetectModel, LPCXSTR lpszSrProto, LPCXSTR lpszSrModel);
 /********************************************************************
 函数名称：ModuleHelp_QRCode_QRDecodecMemory
 函数功能：从内存解析二维码
@@ -523,7 +523,7 @@ extern "C" BOOL ModuleHelp_QRCode_QRDecodecFile(LPCTSTR lpszFileName, TCHAR* pts
   意思：是否成功
 备注：
 *********************************************************************/
-extern "C" BOOL ModuleHelp_QRCode_QRDecodecMemory(LPCSTR lpszMsgBuffer, int nMsgLen, TCHAR* ptszMsgBuffer, LPCTSTR lpszDetectProto, LPCTSTR lpszDetectModel, LPCTSTR lpszSrProto, LPCTSTR lpszSrModel);
+extern "C" XBOOL ModuleHelp_QRCode_QRDecodecMemory(LPCSTR lpszMsgBuffer, int nMsgLen, XCHAR* ptszMsgBuffer, LPCXSTR lpszDetectProto, LPCXSTR lpszDetectModel, LPCXSTR lpszSrProto, LPCXSTR lpszSrModel);
 /************************************************************************/
 /*                       网络测试导出函数                               */
 /************************************************************************/
@@ -555,7 +555,7 @@ extern "C" BOOL ModuleHelp_QRCode_QRDecodecMemory(LPCSTR lpszMsgBuffer, int nMsg
   意思：成功返回连接的句柄,失败返回NULL
 备注：链接测试函数，链接一次后就关闭
 *********************************************************************/
-extern "C" BOOL ModuleHelp_SocketTest_StartConnect(XNETHANDLE* pxhToken, MODULEHELP_SOCKETTEST_RECONNECT* pSt_ReConnect, CALLBACK_APISERVICE_MODULE_HELP_SOCKETTEST fpCall_ReConnect, LPVOID lParam = NULL);
+extern "C" XBOOL ModuleHelp_SocketTest_StartConnect(XNETHANDLE* pxhToken, MODULEHELP_SOCKETTEST_RECONNECT* pSt_ReConnect, CALLBACK_APISERVICE_MODULE_HELP_SOCKETTEST fpCall_ReConnect, XPVOID lParam = NULL);
 /********************************************************************
 函数名称：ModuleHelp_SocketTest_GetConnect
 函数功能：获取是否在处理中
@@ -574,7 +574,7 @@ extern "C" BOOL ModuleHelp_SocketTest_StartConnect(XNETHANDLE* pxhToken, MODULEH
   意思：是否成功
 备注：
 *********************************************************************/
-extern "C" BOOL ModuleHelp_SocketTest_GetConnect(XNETHANDLE xhToken, BOOL* pbRun);
+extern "C" XBOOL ModuleHelp_SocketTest_GetConnect(XNETHANDLE xhToken, XBOOL* pbRun);
 /********************************************************************
 函数名称：ModuleHelp_SocketTest_StopConnect
 函数功能：停止短连接测试
@@ -588,7 +588,7 @@ extern "C" BOOL ModuleHelp_SocketTest_GetConnect(XNETHANDLE xhToken, BOOL* pbRun
   意思：是否成功
 备注：
 *********************************************************************/
-extern "C" BOOL ModuleHelp_SocketTest_StopConnect(XNETHANDLE xhToken);
+extern "C" XBOOL ModuleHelp_SocketTest_StopConnect(XNETHANDLE xhToken);
 /********************************************************************
 函数名称：ModuleHelp_SocketTest_StartDatas
 函数功能：数据包测试函数
@@ -617,7 +617,7 @@ extern "C" BOOL ModuleHelp_SocketTest_StopConnect(XNETHANDLE xhToken);
   意思：是否成功
 备注：
 *********************************************************************/
-extern "C" BOOL ModuleHelp_SocketTest_StartDatas(XNETHANDLE* pxhToken, MODULEHELP_SOCKETTEST_DATAS* pSt_SocketDatas, CALLBACK_APISERVICE_MODULE_HELP_SOCKETTEST fpCall_DataTest, BOOL bTCP = TRUE, LPVOID lParam = NULL);
+extern "C" XBOOL ModuleHelp_SocketTest_StartDatas(XNETHANDLE* pxhToken, MODULEHELP_SOCKETTEST_DATAS* pSt_SocketDatas, CALLBACK_APISERVICE_MODULE_HELP_SOCKETTEST fpCall_DataTest, XBOOL bTCP = TRUE, XPVOID lParam = NULL);
 /********************************************************************
 函数名称：ModuleHelp_SocketTest_GetDatas
 函数功能：获取是否在处理中
@@ -636,7 +636,7 @@ extern "C" BOOL ModuleHelp_SocketTest_StartDatas(XNETHANDLE* pxhToken, MODULEHEL
   意思：是否成功
 备注：
 *********************************************************************/
-extern "C" BOOL ModuleHelp_SocketTest_GetDatas(XNETHANDLE xhToken, BOOL* pbRun);
+extern "C" XBOOL ModuleHelp_SocketTest_GetDatas(XNETHANDLE xhToken, XBOOL* pbRun);
 /************************************************************************
 函数名称：ModuleHelp_SocketTest_DatasStop
 函数功能：停止大数据包测试
@@ -650,4 +650,4 @@ extern "C" BOOL ModuleHelp_SocketTest_GetDatas(XNETHANDLE xhToken, BOOL* pbRun);
   意思：是否成功
 备注：
 ************************************************************************/
-extern "C" BOOL ModuleHelp_SocketTest_StopDatas(XNETHANDLE xhToken);
+extern "C" XBOOL ModuleHelp_SocketTest_StopDatas(XNETHANDLE xhToken);

@@ -1,3 +1,3 @@
 ﻿#pragma once
 
-BOOL XEngine_HTTPTask_Translation(LPCTSTR lpszClientAddr, LPCTSTR lpszMsgBuffer, int nConvertType);
+XBOOL XEngine_HTTPTask_Translation(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer, int nConvertType);

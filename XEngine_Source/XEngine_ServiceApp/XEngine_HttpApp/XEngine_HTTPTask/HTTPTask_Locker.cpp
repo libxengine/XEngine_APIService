@@ -1,11 +1,11 @@
 ﻿#include "../XEngine_Hdr.h"
 
-BOOL XEngine_HTTPTask_Locker(LPCTSTR lpszClientAddr, __int64x xhToken, ENUM_XENGINE_APISERVICE_LOCKER_TYPE enLockType)
+XBOOL XEngine_HTTPTask_Locker(LPCXSTR lpszClientAddr, __int64x xhToken, ENUM_XENGINE_APISERVICE_LOCKER_TYPE enLockType)
 {
 	int nSDLen = 4096;
 	int nRVLen = 4096;
-	TCHAR tszSDBuffer[4096];
-	TCHAR tszRVBuffer[4096];
+	XCHAR tszSDBuffer[4096];
+	XCHAR tszRVBuffer[4096];
 	RFCCOMPONENTS_HTTP_HDRPARAM st_HDRParam;    //发送给客户端的参数
 
 	memset(tszSDBuffer, '\0', sizeof(tszSDBuffer));
@@ -20,7 +20,7 @@ BOOL XEngine_HTTPTask_Locker(LPCTSTR lpszClientAddr, __int64x xhToken, ENUM_XENG
 		XNETHANDLE xhToken = 0;
 		ModuleHelp_Locker_Create(&xhToken);
 		ModuleProtocol_Packet_Locker(tszRVBuffer, &nRVLen, xhToken);
-		RfcComponents_HttpServer_SendMsgEx(xhHTTPPacket, tszSDBuffer, &nSDLen, &st_HDRParam, tszRVBuffer, nRVLen);
+		HttpProtocol_Server_SendMsgEx(xhHTTPPacket, tszSDBuffer, &nSDLen, &st_HDRParam, tszRVBuffer, nRVLen);
 		XEngine_Network_Send(lpszClientAddr, tszSDBuffer, nSDLen);
 		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_WARN, _T("客户端:%s,请求创建锁成功,锁句柄:%lld"), lpszClientAddr, xhToken);
 	}
@@ -31,13 +31,13 @@ BOOL XEngine_HTTPTask_Locker(LPCTSTR lpszClientAddr, __int64x xhToken, ENUM_XENG
 		{
 			DWORD dwRet = ModuleHelp_GetLastError();
 			ModuleProtocol_Packet_Locker(tszRVBuffer, &nRVLen, xhToken, dwRet, "request is failed");
-			RfcComponents_HttpServer_SendMsgEx(xhHTTPPacket, tszSDBuffer, &nSDLen, &st_HDRParam, tszRVBuffer, nRVLen);
+			HttpProtocol_Server_SendMsgEx(xhHTTPPacket, tszSDBuffer, &nSDLen, &st_HDRParam, tszRVBuffer, nRVLen);
 			XEngine_Network_Send(lpszClientAddr, tszSDBuffer, nSDLen);
 			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_WARN, _T("客户端:%s,请求打开锁失败,锁句柄:%lld,错误码:%lX"), lpszClientAddr, xhToken, dwRet);
 			return FALSE;
 		}
 		ModuleProtocol_Packet_Locker(tszRVBuffer, &nRVLen, xhToken);
-		RfcComponents_HttpServer_SendMsgEx(xhHTTPPacket, tszSDBuffer, &nSDLen, &st_HDRParam, tszRVBuffer, nRVLen);
+		HttpProtocol_Server_SendMsgEx(xhHTTPPacket, tszSDBuffer, &nSDLen, &st_HDRParam, tszRVBuffer, nRVLen);
 		XEngine_Network_Send(lpszClientAddr, tszSDBuffer, nSDLen);
 		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_WARN, _T("客户端:%s,请求打开锁成功,锁句柄:%lld"), lpszClientAddr, xhToken);
 	}
@@ -45,7 +45,7 @@ BOOL XEngine_HTTPTask_Locker(LPCTSTR lpszClientAddr, __int64x xhToken, ENUM_XENG
 	{
 		ModuleHelp_Locker_Close(xhToken);
 		ModuleProtocol_Packet_Locker(tszRVBuffer, &nRVLen, xhToken);
-		RfcComponents_HttpServer_SendMsgEx(xhHTTPPacket, tszSDBuffer, &nSDLen, &st_HDRParam, tszRVBuffer, nRVLen);
+		HttpProtocol_Server_SendMsgEx(xhHTTPPacket, tszSDBuffer, &nSDLen, &st_HDRParam, tszRVBuffer, nRVLen);
 		XEngine_Network_Send(lpszClientAddr, tszSDBuffer, nSDLen);
 		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_WARN, _T("客户端:%s,请求关闭锁成功,锁句柄:%lld"), lpszClientAddr, xhToken);
 	}
@@ -55,13 +55,13 @@ BOOL XEngine_HTTPTask_Locker(LPCTSTR lpszClientAddr, __int64x xhToken, ENUM_XENG
 		{
 			DWORD dwRet = ModuleHelp_GetLastError();
 			ModuleProtocol_Packet_Locker(tszRVBuffer, &nRVLen, xhToken, dwRet, "request is failed");
-			RfcComponents_HttpServer_SendMsgEx(xhHTTPPacket, tszSDBuffer, &nSDLen, &st_HDRParam, tszRVBuffer, nRVLen);
+			HttpProtocol_Server_SendMsgEx(xhHTTPPacket, tszSDBuffer, &nSDLen, &st_HDRParam, tszRVBuffer, nRVLen);
 			XEngine_Network_Send(lpszClientAddr, tszSDBuffer, nSDLen);
 			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_WARN, _T("客户端:%s,请求读加锁失败,锁句柄:%lld,错误码:%lX"), lpszClientAddr, xhToken, dwRet);
 			return FALSE;
 		}
 		ModuleProtocol_Packet_Locker(tszRVBuffer, &nRVLen, xhToken);
-		RfcComponents_HttpServer_SendMsgEx(xhHTTPPacket, tszSDBuffer, &nSDLen, &st_HDRParam, tszRVBuffer, nRVLen);
+		HttpProtocol_Server_SendMsgEx(xhHTTPPacket, tszSDBuffer, &nSDLen, &st_HDRParam, tszRVBuffer, nRVLen);
 		XEngine_Network_Send(lpszClientAddr, tszSDBuffer, nSDLen);
 		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_WARN, _T("客户端:%s,请求读加锁成功,锁句柄:%lld"), lpszClientAddr, xhToken);
 	}
@@ -71,13 +71,13 @@ BOOL XEngine_HTTPTask_Locker(LPCTSTR lpszClientAddr, __int64x xhToken, ENUM_XENG
 		{
 			DWORD dwRet = ModuleHelp_GetLastError();
 			ModuleProtocol_Packet_Locker(tszRVBuffer, &nRVLen, xhToken, dwRet, "request is failed");
-			RfcComponents_HttpServer_SendMsgEx(xhHTTPPacket, tszSDBuffer, &nSDLen, &st_HDRParam, tszRVBuffer, nRVLen);
+			HttpProtocol_Server_SendMsgEx(xhHTTPPacket, tszSDBuffer, &nSDLen, &st_HDRParam, tszRVBuffer, nRVLen);
 			XEngine_Network_Send(lpszClientAddr, tszSDBuffer, nSDLen);
 			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_WARN, _T("客户端:%s,请求读解锁失败,锁句柄:%lld,错误码:%lX"), lpszClientAddr, xhToken, dwRet);
 			return FALSE;
 		}
 		ModuleProtocol_Packet_Locker(tszRVBuffer, &nRVLen, xhToken);
-		RfcComponents_HttpServer_SendMsgEx(xhHTTPPacket, tszSDBuffer, &nSDLen, &st_HDRParam, tszRVBuffer, nRVLen);
+		HttpProtocol_Server_SendMsgEx(xhHTTPPacket, tszSDBuffer, &nSDLen, &st_HDRParam, tszRVBuffer, nRVLen);
 		XEngine_Network_Send(lpszClientAddr, tszSDBuffer, nSDLen);
 		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_WARN, _T("客户端:%s,请求读解锁成功,锁句柄:%lld"), lpszClientAddr, xhToken);
 	}
@@ -87,13 +87,13 @@ BOOL XEngine_HTTPTask_Locker(LPCTSTR lpszClientAddr, __int64x xhToken, ENUM_XENG
 		{
 			DWORD dwRet = ModuleHelp_GetLastError();
 			ModuleProtocol_Packet_Locker(tszRVBuffer, &nRVLen, xhToken, dwRet, "request is failed");
-			RfcComponents_HttpServer_SendMsgEx(xhHTTPPacket, tszSDBuffer, &nSDLen, &st_HDRParam, tszRVBuffer, nRVLen);
+			HttpProtocol_Server_SendMsgEx(xhHTTPPacket, tszSDBuffer, &nSDLen, &st_HDRParam, tszRVBuffer, nRVLen);
 			XEngine_Network_Send(lpszClientAddr, tszSDBuffer, nSDLen);
 			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_WARN, _T("客户端:%s,请求写加锁失败,锁句柄:%lld,错误码:%lX"), lpszClientAddr, xhToken, dwRet);
 			return FALSE;
 		}
 		ModuleProtocol_Packet_Locker(tszRVBuffer, &nRVLen, xhToken);
-		RfcComponents_HttpServer_SendMsgEx(xhHTTPPacket, tszSDBuffer, &nSDLen, &st_HDRParam, tszRVBuffer, nRVLen);
+		HttpProtocol_Server_SendMsgEx(xhHTTPPacket, tszSDBuffer, &nSDLen, &st_HDRParam, tszRVBuffer, nRVLen);
 		XEngine_Network_Send(lpszClientAddr, tszSDBuffer, nSDLen);
 		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_WARN, _T("客户端:%s,请求写加锁成功,锁句柄:%lld"), lpszClientAddr, xhToken);
 	}
@@ -103,20 +103,20 @@ BOOL XEngine_HTTPTask_Locker(LPCTSTR lpszClientAddr, __int64x xhToken, ENUM_XENG
 		{
 			DWORD dwRet = ModuleHelp_GetLastError();
 			ModuleProtocol_Packet_Locker(tszRVBuffer, &nRVLen, xhToken, dwRet, "request is failed");
-			RfcComponents_HttpServer_SendMsgEx(xhHTTPPacket, tszSDBuffer, &nSDLen, &st_HDRParam, tszRVBuffer, nRVLen);
+			HttpProtocol_Server_SendMsgEx(xhHTTPPacket, tszSDBuffer, &nSDLen, &st_HDRParam, tszRVBuffer, nRVLen);
 			XEngine_Network_Send(lpszClientAddr, tszSDBuffer, nSDLen);
 			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_WARN, _T("客户端:%s,请求写解锁失败,锁句柄:%lld,错误码:%lX"), lpszClientAddr, xhToken, dwRet);
 			return FALSE;
 		}
 		ModuleProtocol_Packet_Locker(tszRVBuffer, &nRVLen, xhToken);
-		RfcComponents_HttpServer_SendMsgEx(xhHTTPPacket, tszSDBuffer, &nSDLen, &st_HDRParam, tszRVBuffer, nRVLen);
+		HttpProtocol_Server_SendMsgEx(xhHTTPPacket, tszSDBuffer, &nSDLen, &st_HDRParam, tszRVBuffer, nRVLen);
 		XEngine_Network_Send(lpszClientAddr, tszSDBuffer, nSDLen);
 		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_WARN, _T("客户端:%s,请求写解锁成功,锁句柄:%lld"), lpszClientAddr, xhToken);
 	}
 	else
 	{
 		st_HDRParam.nHttpCode = 404;
-		RfcComponents_HttpServer_SendMsgEx(xhHTTPPacket, tszSDBuffer, &nSDLen, &st_HDRParam);
+		HttpProtocol_Server_SendMsgEx(xhHTTPPacket, tszSDBuffer, &nSDLen, &st_HDRParam);
 		XEngine_Network_Send(lpszClientAddr, tszSDBuffer, nSDLen);
 		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_WARN, _T("客户端:%s,请求了一条未知的子协议：%d"), lpszClientAddr, enLockType);
 	}

@@ -17,10 +17,10 @@ public:
 	CModuleConfigure_Json();
 	~CModuleConfigure_Json();
 public:
-	BOOL ModuleConfigure_Json_File(LPCTSTR lpszConfigFile, XENGINE_SERVICECONFIG* pSt_ServerConfig);
-	BOOL ModuleConfigure_Json_OPenccFile(LPCTSTR lpszConfigFile, XENGINE_OPENCCCONFIG* pSt_OPenccConfig);
-	BOOL ModuleConfigure_Json_QRCodeFile(LPCTSTR lpszConfigFile, XENGINE_QRCODECONFIG* pSt_QRCodeConfig);
-	BOOL ModuleConfigure_Json_PluginFile(LPCTSTR lpszConfigFile, XENGINE_PLUGINCONFIG* pSt_PluginConfig);
+	XBOOL ModuleConfigure_Json_File(LPCXSTR lpszConfigFile, XENGINE_SERVICECONFIG* pSt_ServerConfig);
+	XBOOL ModuleConfigure_Json_OPenccFile(LPCXSTR lpszConfigFile, XENGINE_OPENCCCONFIG* pSt_OPenccConfig);
+	XBOOL ModuleConfigure_Json_QRCodeFile(LPCXSTR lpszConfigFile, XENGINE_QRCODECONFIG* pSt_QRCodeConfig);
+	XBOOL ModuleConfigure_Json_PluginFile(LPCXSTR lpszConfigFile, XENGINE_PLUGINCONFIG* pSt_PluginConfig);
 protected:
 private:
 };

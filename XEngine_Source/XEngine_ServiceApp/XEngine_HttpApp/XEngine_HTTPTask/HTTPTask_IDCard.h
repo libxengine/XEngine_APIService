@@ -1,3 +1,3 @@
 ﻿#pragma once
 
-BOOL XEngine_HTTPTask_IDCard(LPCTSTR lpszClientAddr, LPCTSTR lpszMsgBuffer);
+XBOOL XEngine_HTTPTask_IDCard(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer);

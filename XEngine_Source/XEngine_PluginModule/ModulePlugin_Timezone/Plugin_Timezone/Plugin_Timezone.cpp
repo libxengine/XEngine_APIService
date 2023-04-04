@@ -33,7 +33,7 @@ CPlugin_Timezone::~CPlugin_Timezone()
   意思：是否成功
 备注：
 *********************************************************************/
-BOOL CPlugin_Timezone::PluginCore_Init(LPVOID lParam)
+XBOOL CPlugin_Timezone::PluginCore_Init(XPVOID lParam)
 {
 	Timezone_IsErrorOccur = FALSE;
 
@@ -521,7 +521,7 @@ void CPlugin_Timezone::PluginCore_UnInit()
   意思：是否成功
 备注：
 *********************************************************************/
-BOOL CPlugin_Timezone::PluginCore_Call(TCHAR*** pppHDRList, int nListCount, int* pInt_HTTPCode, TCHAR* ptszMsgBuffer, int* pInt_MsgLen, LPCTSTR lpszMsgBuffer, int nMsgLen)
+XBOOL CPlugin_Timezone::PluginCore_Call(XCHAR*** pppHDRList, int nListCount, int* pInt_HTTPCode, XCHAR* ptszMsgBuffer, int* pInt_MsgLen, LPCXSTR lpszMsgBuffer, int nMsgLen)
 {
 	Timezone_IsErrorOccur = FALSE;
 
@@ -531,10 +531,10 @@ BOOL CPlugin_Timezone::PluginCore_Call(TCHAR*** pppHDRList, int nListCount, int*
 		Timezone_dwErrorCode = ERROR_XENGINE_APISERVICE_PLUGIN_MODULE_TIMEZONE_PARAMENT;
 		return FALSE;
 	}
-	TCHAR tszKeyName[128];
-	TCHAR tszParamType[128];
-	TCHAR tszParamCvt[128];
-	TCHAR tszParamTime[128];
+	XCHAR tszKeyName[128];
+	XCHAR tszParamType[128];
+	XCHAR tszParamCvt[128];
+	XCHAR tszParamTime[128];
 
 	memset(tszKeyName, '\0', sizeof(tszKeyName));
 	memset(tszParamType, '\0', sizeof(tszParamType));
@@ -571,7 +571,7 @@ BOOL CPlugin_Timezone::PluginCore_Call(TCHAR*** pppHDRList, int nListCount, int*
 //////////////////////////////////////////////////////////////////////////
 //                       保护函数
 //////////////////////////////////////////////////////////////////////////
-BOOL CPlugin_Timezone::Plugin_Timezone_Count(TCHAR* ptszMsgBufer, int* pInt_Len)
+XBOOL CPlugin_Timezone::Plugin_Timezone_Count(XCHAR* ptszMsgBufer, int* pInt_Len)
 {
 	Timezone_IsErrorOccur = FALSE;
 
@@ -589,7 +589,7 @@ BOOL CPlugin_Timezone::Plugin_Timezone_Count(TCHAR* ptszMsgBufer, int* pInt_Len)
 	memcpy(ptszMsgBufer, Json::writeString(st_JsonBuilder, st_JsonRoot).c_str(), *pInt_Len);
 	return TRUE;
 }
-BOOL CPlugin_Timezone::Plugin_Timezone_List(LPCTSTR lpszConvert, TCHAR* ptszMsgBufer, int* pInt_Len)
+XBOOL CPlugin_Timezone::Plugin_Timezone_List(LPCXSTR lpszConvert, XCHAR* ptszMsgBufer, int* pInt_Len)
 {
 	Timezone_IsErrorOccur = FALSE;
 
@@ -624,7 +624,7 @@ BOOL CPlugin_Timezone::Plugin_Timezone_List(LPCTSTR lpszConvert, TCHAR* ptszMsgB
 	memcpy(ptszMsgBufer, Json::writeString(st_JsonBuilder, st_JsonRoot).c_str(), *pInt_Len);
 	return TRUE;
 }
-BOOL CPlugin_Timezone::Plugin_Timezone_Convert(LPCTSTR lpszConvert, LPCTSTR lpszTimeStr, TCHAR* ptszMsgBufer, int* pInt_Len)
+XBOOL CPlugin_Timezone::Plugin_Timezone_Convert(LPCXSTR lpszConvert, LPCXSTR lpszTimeStr, XCHAR* ptszMsgBufer, int* pInt_Len)
 {
 	Timezone_IsErrorOccur = FALSE;
 
@@ -637,7 +637,7 @@ BOOL CPlugin_Timezone::Plugin_Timezone_Convert(LPCTSTR lpszConvert, LPCTSTR lpsz
 	{
 		return FALSE;
 	}
-	TCHAR tszTimeStr[64];
+	XCHAR tszTimeStr[64];
 	XENGINE_LIBTIMER st_TimeStart;
 	XENGINE_LIBTIMER st_TimeEnd;
 

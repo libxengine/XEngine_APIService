@@ -34,7 +34,7 @@ CModulePlugin_DBPhone::~CModulePlugin_DBPhone()
   意思：是否成功
 备注：
 *********************************************************************/
-BOOL CModulePlugin_DBPhone::ModuleDatabase_Phone_Init(LPCTSTR lpszSQLFile)
+XBOOL CModulePlugin_DBPhone::ModuleDatabase_Phone_Init(LPCXSTR lpszSQLFile)
 {
 	Phone_IsErrorOccur = FALSE;
 
@@ -53,7 +53,7 @@ BOOL CModulePlugin_DBPhone::ModuleDatabase_Phone_Init(LPCTSTR lpszSQLFile)
 		return FALSE;
 	}
 	//申请内存
-	ptszMsgBuffer = (TCHAR*)malloc(XENGINE_APISERVICE_DATABASE_PHONE_BUFFER_SIZE);
+	ptszMsgBuffer = (XCHAR*)malloc(XENGINE_APISERVICE_DATABASE_PHONE_BUFFER_SIZE);
 	if (NULL == ptszMsgBuffer)
 	{
 		Phone_IsErrorOccur = TRUE;
@@ -84,7 +84,7 @@ BOOL CModulePlugin_DBPhone::ModuleDatabase_Phone_Init(LPCTSTR lpszSQLFile)
   意思：是否成功
 备注：
 *********************************************************************/
-BOOL CModulePlugin_DBPhone::ModuleDatabase_Phone_Destory()
+XBOOL CModulePlugin_DBPhone::ModuleDatabase_Phone_Destory()
 {
 	Phone_IsErrorOccur = FALSE;
 
@@ -110,7 +110,7 @@ BOOL CModulePlugin_DBPhone::ModuleDatabase_Phone_Destory()
   意思：是否成功
 备注：
 *********************************************************************/
-BOOL CModulePlugin_DBPhone::ModuleDatabase_Phone_Query(LPCTSTR lpszPhoneNumber, XENGINE_PHONEINFO* pSt_PhoneInfo)
+XBOOL CModulePlugin_DBPhone::ModuleDatabase_Phone_Query(LPCXSTR lpszPhoneNumber, XENGINE_PHONEINFO* pSt_PhoneInfo)
 {
 	Phone_IsErrorOccur = FALSE;
 
@@ -125,7 +125,7 @@ BOOL CModulePlugin_DBPhone::ModuleDatabase_Phone_Query(LPCTSTR lpszPhoneNumber, 
 	//不能超过7
 	if (nPLen > 7)
 	{
-		TCHAR tszPhone[64];
+		XCHAR tszPhone[64];
 		memset(tszPhone, '\0', sizeof(tszPhone));
 
 		memcpy(tszPhone, lpszPhoneNumber, 7);
@@ -207,15 +207,15 @@ BOOL CModulePlugin_DBPhone::ModuleDatabase_Phone_Query(LPCTSTR lpszPhoneNumber, 
   意思：是否成功
 备注：
 *********************************************************************/
-BOOL CModulePlugin_DBPhone::ModuleDatabase_Phone_Convert(LPCTSTR lpszPhoneInfo, int nMsgLen, XENGINE_PHONEINFO* pSt_PhoneInfo)
+XBOOL CModulePlugin_DBPhone::ModuleDatabase_Phone_Convert(LPCXSTR lpszPhoneInfo, int nMsgLen, XENGINE_PHONEINFO* pSt_PhoneInfo)
 {
 	Phone_IsErrorOccur = FALSE;
 
-	TCHAR tszMsgBuffer[128];
+	XCHAR tszMsgBuffer[128];
 	memset(tszMsgBuffer, '\0', sizeof(tszMsgBuffer));
 	memcpy(tszMsgBuffer, lpszPhoneInfo, nMsgLen);
 	//省
-	TCHAR* ptszTokStr = _tcstok(tszMsgBuffer, _T("|"));
+	XCHAR* ptszTokStr = _tcstok(tszMsgBuffer, _T("|"));
 	if (NULL == ptszTokStr)
 	{
 		Phone_IsErrorOccur = TRUE;

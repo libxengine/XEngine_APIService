@@ -34,7 +34,7 @@ CModuleDatabase_IDCard::~CModuleDatabase_IDCard()
   意思：是否成功
 备注：
 *********************************************************************/
-BOOL CModuleDatabase_IDCard::ModuleDatabase_IDCard_Init(DATABASE_MYSQL_CONNECTINFO* pSt_DBConnector)
+XBOOL CModuleDatabase_IDCard::ModuleDatabase_IDCard_Init(DATABASE_MYSQL_CONNECTINFO* pSt_DBConnector)
 {
 	DBModule_IsErrorOccur = FALSE;
 
@@ -44,10 +44,10 @@ BOOL CModuleDatabase_IDCard::ModuleDatabase_IDCard_Init(DATABASE_MYSQL_CONNECTIN
 		DBModule_dwErrorCode = ERROR_APISERVICE_MODULE_DATABASE_PARAMENT;
 		return FALSE;
 	}
-#ifdef _WINDOWS
-	LPCTSTR lpszStrCharset = _T("gbk");
+#ifdef _MSC_BUILD
+	LPCXSTR lpszStrCharset = _T("gbk");
 #else
-	LPCTSTR lpszStrCharset = _T("utf8");
+	LPCXSTR lpszStrCharset = _T("utf8");
 #endif
 	//连接数据库
 	_tcscpy(pSt_DBConnector->tszDBName, _T("XEngine_APIInfo"));
@@ -67,7 +67,7 @@ BOOL CModuleDatabase_IDCard::ModuleDatabase_IDCard_Init(DATABASE_MYSQL_CONNECTIN
   意思：是否成功
 备注：
 *********************************************************************/
-BOOL CModuleDatabase_IDCard::ModuleDatabase_IDCard_Destory()
+XBOOL CModuleDatabase_IDCard::ModuleDatabase_IDCard_Destory()
 {
 	DBModule_IsErrorOccur = FALSE;
 
@@ -92,7 +92,7 @@ BOOL CModuleDatabase_IDCard::ModuleDatabase_IDCard_Destory()
   意思：是否成功
 备注：
 *********************************************************************/
-BOOL CModuleDatabase_IDCard::ModuleDatabase_IDCard_QueryRegion(XENGINE_IDREGION* pSt_IDRegion, XENGINE_IDCARDINFO* pSt_IDInfo)
+XBOOL CModuleDatabase_IDCard::ModuleDatabase_IDCard_QueryRegion(XENGINE_IDREGION* pSt_IDRegion, XENGINE_IDCARDINFO* pSt_IDInfo)
 {
 	DBModule_IsErrorOccur = FALSE;
 
@@ -119,7 +119,7 @@ BOOL CModuleDatabase_IDCard::ModuleDatabase_IDCard_QueryRegion(XENGINE_IDREGION*
   意思：是否成功
 备注：
 *********************************************************************/
-BOOL CModuleDatabase_IDCard::ModuleDatabase_IDCard_QueryProvincer(XENGINE_IDREGION* pSt_IDRegion, XENGINE_IDCARDINFO* pSt_IDInfo)
+XBOOL CModuleDatabase_IDCard::ModuleDatabase_IDCard_QueryProvincer(XENGINE_IDREGION* pSt_IDRegion, XENGINE_IDCARDINFO* pSt_IDInfo)
 {
     DBModule_IsErrorOccur = FALSE;
 
@@ -133,7 +133,7 @@ BOOL CModuleDatabase_IDCard::ModuleDatabase_IDCard_QueryProvincer(XENGINE_IDREGI
 	__int64u nLine = 0;
 	__int64u nRow = 0;
 	XNETHANDLE xhTable = 0;
-    TCHAR tszSQLStatement[1024];
+    XCHAR tszSQLStatement[1024];
 
     memset(tszSQLStatement, '\0', sizeof(tszSQLStatement));
 	_stprintf(tszSQLStatement, _T("SELECT * FROM `RegionID` WHERE code = '%02d0000'"), pSt_IDInfo->nIDProvince);
@@ -149,7 +149,7 @@ BOOL CModuleDatabase_IDCard::ModuleDatabase_IDCard_QueryProvincer(XENGINE_IDREGI
 		DBModule_dwErrorCode = ERROR_APISERVICE_MODULE_DATABASE_NOTFOUND;
 		return FALSE;
 	}
-	TCHAR** pptszResult = DataBase_MySQL_GetResult(xhDBSQL, xhTable);
+	XCHAR** pptszResult = DataBase_MySQL_GetResult(xhDBSQL, xhTable);
 	_tcscpy(pSt_IDRegion->tszProvincer, pptszResult[1]);
 
 	DataBase_MySQL_FreeResult(xhDBSQL, xhTable);
@@ -173,7 +173,7 @@ BOOL CModuleDatabase_IDCard::ModuleDatabase_IDCard_QueryProvincer(XENGINE_IDREGI
   意思：是否成功
 备注：
 *********************************************************************/
-BOOL CModuleDatabase_IDCard::ModuleDatabase_IDCard_QueryCity(XENGINE_IDREGION* pSt_IDRegion, XENGINE_IDCARDINFO* pSt_IDInfo)
+XBOOL CModuleDatabase_IDCard::ModuleDatabase_IDCard_QueryCity(XENGINE_IDREGION* pSt_IDRegion, XENGINE_IDCARDINFO* pSt_IDInfo)
 {
 	DBModule_IsErrorOccur = FALSE;
 
@@ -187,7 +187,7 @@ BOOL CModuleDatabase_IDCard::ModuleDatabase_IDCard_QueryCity(XENGINE_IDREGION* p
 	__int64u nLine = 0;
 	__int64u nRow = 0;
 	XNETHANDLE xhTable = 0;
-	TCHAR tszSQLStatement[1024];
+	XCHAR tszSQLStatement[1024];
 
 	memset(tszSQLStatement, '\0', sizeof(tszSQLStatement));
 	_stprintf(tszSQLStatement, _T("SELECT * FROM `RegionID` WHERE code = '%02d%02d00'"), pSt_IDInfo->nIDProvince, pSt_IDInfo->nIDCity);
@@ -203,7 +203,7 @@ BOOL CModuleDatabase_IDCard::ModuleDatabase_IDCard_QueryCity(XENGINE_IDREGION* p
 		DBModule_dwErrorCode = ERROR_APISERVICE_MODULE_DATABASE_NOTFOUND;
 		return FALSE;
 	}
-	TCHAR** pptszResult = DataBase_MySQL_GetResult(xhDBSQL, xhTable);
+	XCHAR** pptszResult = DataBase_MySQL_GetResult(xhDBSQL, xhTable);
 	_tcscpy(pSt_IDRegion->tszCity, pptszResult[1]);
 
 	DataBase_MySQL_FreeResult(xhDBSQL, xhTable);
@@ -227,7 +227,7 @@ BOOL CModuleDatabase_IDCard::ModuleDatabase_IDCard_QueryCity(XENGINE_IDREGION* p
   意思：是否成功
 备注：
 *********************************************************************/
-BOOL CModuleDatabase_IDCard::ModuleDatabase_IDCard_QueryCounty(XENGINE_IDREGION* pSt_IDRegion, XENGINE_IDCARDINFO* pSt_IDInfo)
+XBOOL CModuleDatabase_IDCard::ModuleDatabase_IDCard_QueryCounty(XENGINE_IDREGION* pSt_IDRegion, XENGINE_IDCARDINFO* pSt_IDInfo)
 {
 	DBModule_IsErrorOccur = FALSE;
 
@@ -241,7 +241,7 @@ BOOL CModuleDatabase_IDCard::ModuleDatabase_IDCard_QueryCounty(XENGINE_IDREGION*
 	__int64u nLine = 0;
 	__int64u nRow = 0;
 	XNETHANDLE xhTable = 0;
-	TCHAR tszSQLStatement[1024];
+	XCHAR tszSQLStatement[1024];
 
 	memset(tszSQLStatement, '\0', sizeof(tszSQLStatement));
 	_stprintf(tszSQLStatement, _T("SELECT * FROM `RegionID` WHERE code = '%02d%02d%02d'"), pSt_IDInfo->nIDProvince, pSt_IDInfo->nIDCity, pSt_IDInfo->nIDCounty);
@@ -257,7 +257,7 @@ BOOL CModuleDatabase_IDCard::ModuleDatabase_IDCard_QueryCounty(XENGINE_IDREGION*
 		DBModule_dwErrorCode = ERROR_APISERVICE_MODULE_DATABASE_NOTFOUND;
 		return FALSE;
 	}
-	TCHAR** pptszResult = DataBase_MySQL_GetResult(xhDBSQL, xhTable);
+	XCHAR** pptszResult = DataBase_MySQL_GetResult(xhDBSQL, xhTable);
 	_tcscpy(pSt_IDRegion->tszCounty, pptszResult[1]);
 
 	DataBase_MySQL_FreeResult(xhDBSQL, xhTable);

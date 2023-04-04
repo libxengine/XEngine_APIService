@@ -43,7 +43,7 @@ CModuleHelp_P2PClient::~CModuleHelp_P2PClient()
   意思：是否成功
 备注：
 *********************************************************************/
-BOOL CModuleHelp_P2PClient::ModuleHelp_P2PClient_Init(int nTimeout, CALLBACK_APISERVICE_MODULE_HELP_P2PCLIENT fpCall_P2PClient, LPVOID lParam /* = NULL */)
+XBOOL CModuleHelp_P2PClient::ModuleHelp_P2PClient_Init(int nTimeout, CALLBACK_APISERVICE_MODULE_HELP_P2PCLIENT fpCall_P2PClient, XPVOID lParam /* = NULL */)
 {
     ModuleHelp_IsErrorOccur = FALSE;
 
@@ -69,7 +69,7 @@ BOOL CModuleHelp_P2PClient::ModuleHelp_P2PClient_Init(int nTimeout, CALLBACK_API
   意思：是否成功
 备注：
 *********************************************************************/
-BOOL CModuleHelp_P2PClient::ModuleHelp_P2PClient_Destory()
+XBOOL CModuleHelp_P2PClient::ModuleHelp_P2PClient_Destory()
 {
 	ModuleHelp_IsErrorOccur = FALSE;
 
@@ -96,7 +96,7 @@ BOOL CModuleHelp_P2PClient::ModuleHelp_P2PClient_Destory()
   意思：是否添加成功
 备注：
 *********************************************************************/
-BOOL CModuleHelp_P2PClient::ModuleHelp_P2PClient_Add(XENGINE_P2XP_PEERINFO* pSt_PeerInfo)
+XBOOL CModuleHelp_P2PClient::ModuleHelp_P2PClient_Add(XENGINE_P2XP_PEERINFO* pSt_PeerInfo)
 {
     ModuleHelp_IsErrorOccur = FALSE;
 
@@ -109,7 +109,7 @@ BOOL CModuleHelp_P2PClient::ModuleHelp_P2PClient_Add(XENGINE_P2XP_PEERINFO* pSt_
         stl_MapPrivate.insert(make_pair(pSt_PeerInfo->st_PeerAddr.tszConnectAddr, *pSt_PeerInfo));
 		//获取私有网络的路由地址
 		XENGINE_LIBADDR st_LibAddr;
-		TCHAR tszPrivateAddr[64];
+		XCHAR tszPrivateAddr[64];
 
 		memset(tszPrivateAddr, '\0', sizeof(tszPrivateAddr));
 		memset(&st_LibAddr, '\0', sizeof(XENGINE_LIBADDR));
@@ -131,7 +131,7 @@ BOOL CModuleHelp_P2PClient::ModuleHelp_P2PClient_Add(XENGINE_P2XP_PEERINFO* pSt_
 	{
 		//找到了这个公网的地址
 		XENGINE_LIBADDR st_LibAddr;
-		TCHAR tszPrivateAddr[64];
+		XCHAR tszPrivateAddr[64];
 
 		memset(tszPrivateAddr, '\0', sizeof(tszPrivateAddr));
 		memset(&st_LibAddr, '\0', sizeof(XENGINE_LIBADDR));
@@ -186,7 +186,7 @@ BOOL CModuleHelp_P2PClient::ModuleHelp_P2PClient_Add(XENGINE_P2XP_PEERINFO* pSt_
   意思：是否查找成功
 备注：
 *********************************************************************/
-BOOL CModuleHelp_P2PClient::ModuleHelp_P2PClient_Get(XENGINE_P2XPPEER_PROTOCOL *pSt_P2PProtocol, XENGINE_P2XP_PEERINFO* pSt_PeerInfo /* = NULL */)
+XBOOL CModuleHelp_P2PClient::ModuleHelp_P2PClient_Get(XENGINE_P2XPPEER_PROTOCOL *pSt_P2PProtocol, XENGINE_P2XP_PEERINFO* pSt_PeerInfo /* = NULL */)
 {
     ModuleHelp_IsErrorOccur = FALSE;
 
@@ -208,7 +208,7 @@ BOOL CModuleHelp_P2PClient::ModuleHelp_P2PClient_Get(XENGINE_P2XPPEER_PROTOCOL *
     }
     //转换地址
 	XENGINE_LIBADDR st_LibAddr;
-	TCHAR tszPrivateAddr[64];
+	XCHAR tszPrivateAddr[64];
 
 	memset(tszPrivateAddr, '\0', sizeof(tszPrivateAddr));
 	memset(&st_LibAddr, '\0', sizeof(XENGINE_LIBADDR));
@@ -263,7 +263,7 @@ BOOL CModuleHelp_P2PClient::ModuleHelp_P2PClient_Get(XENGINE_P2XPPEER_PROTOCOL *
   意思：是否成功
 备注：参数二需要调用基础库的BaseLib_OperatorMemory_Free函数进行内存释放
 *********************************************************************/
-BOOL CModuleHelp_P2PClient::ModuleHelp_P2PClient_GetLan(XENGINE_P2XPPEER_PROTOCOL* pSt_P2PProtocol, XENGINE_P2XPPEER_PROTOCOL*** pppSt_P2XPClient, int* pInt_ListCount)
+XBOOL CModuleHelp_P2PClient::ModuleHelp_P2PClient_GetLan(XENGINE_P2XPPEER_PROTOCOL* pSt_P2PProtocol, XENGINE_P2XPPEER_PROTOCOL*** pppSt_P2XPClient, int* pInt_ListCount)
 {
     ModuleHelp_IsErrorOccur = FALSE;
 
@@ -284,7 +284,7 @@ BOOL CModuleHelp_P2PClient::ModuleHelp_P2PClient_GetLan(XENGINE_P2XPPEER_PROTOCO
         return FALSE;
     }
     XENGINE_LIBADDR st_LibAddr;
-    TCHAR tszPrivateAddr[64];
+    XCHAR tszPrivateAddr[64];
 
     memset(tszPrivateAddr, '\0', sizeof(tszPrivateAddr));
     memset(&st_LibAddr, '\0', sizeof(XENGINE_LIBADDR));
@@ -366,7 +366,7 @@ BOOL CModuleHelp_P2PClient::ModuleHelp_P2PClient_GetLan(XENGINE_P2XPPEER_PROTOCO
   意思：是否成功
 备注：参数二需要调用基础库的BaseLib_OperatorMemory_Free函数进行内存释放
 *********************************************************************/
-BOOL CModuleHelp_P2PClient::ModuleHelp_P2PClient_GetLList(LPCTSTR lpszPubAddr, TCHAR*** pppszP2XPClient, int* pInt_ListCount)
+XBOOL CModuleHelp_P2PClient::ModuleHelp_P2PClient_GetLList(LPCXSTR lpszPubAddr, XCHAR*** pppszP2XPClient, int* pInt_ListCount)
 {
     ModuleHelp_IsErrorOccur = FALSE;
 
@@ -413,7 +413,7 @@ BOOL CModuleHelp_P2PClient::ModuleHelp_P2PClient_GetLList(LPCTSTR lpszPubAddr, T
   意思：是否成功
 备注：
 *********************************************************************/
-BOOL CModuleHelp_P2PClient::ModuleHelp_P2PClient_GetWList(TCHAR*** pppszP2XPClient, int* pInt_ListCount)
+XBOOL CModuleHelp_P2PClient::ModuleHelp_P2PClient_GetWList(XCHAR*** pppszP2XPClient, int* pInt_ListCount)
 {
     ModuleHelp_IsErrorOccur = FALSE;
 
@@ -454,7 +454,7 @@ BOOL CModuleHelp_P2PClient::ModuleHelp_P2PClient_GetWList(TCHAR*** pppszP2XPClie
   意思：是否成功删除
 备注：
 *********************************************************************/
-BOOL CModuleHelp_P2PClient::ModuleHelp_P2PClient_Delete(XENGINE_P2XPPEER_PROTOCOL* pSt_P2PProtocol)
+XBOOL CModuleHelp_P2PClient::ModuleHelp_P2PClient_Delete(XENGINE_P2XPPEER_PROTOCOL* pSt_P2PProtocol)
 {
 	ModuleHelp_IsErrorOccur = FALSE;
 	//查找公网地址
@@ -462,7 +462,7 @@ BOOL CModuleHelp_P2PClient::ModuleHelp_P2PClient_Delete(XENGINE_P2XPPEER_PROTOCO
 	if (stl_MapPubIteartor != stl_MapClients.end())
 	{
 		XENGINE_LIBADDR st_LibAddr;
-		TCHAR tszPrivateAddr[64];
+		XCHAR tszPrivateAddr[64];
 
 		memset(tszPrivateAddr, '\0', sizeof(tszPrivateAddr));
 		memset(&st_LibAddr, '\0', sizeof(XENGINE_LIBADDR));
@@ -502,7 +502,7 @@ BOOL CModuleHelp_P2PClient::ModuleHelp_P2PClient_Delete(XENGINE_P2XPPEER_PROTOCO
   意思：是否成功
 备注：
 *********************************************************************/
-BOOL CModuleHelp_P2PClient::ModuleHelp_P2PClient_DelAll()
+XBOOL CModuleHelp_P2PClient::ModuleHelp_P2PClient_DelAll()
 {
     ModuleHelp_IsErrorOccur = FALSE;
 
@@ -525,7 +525,7 @@ BOOL CModuleHelp_P2PClient::ModuleHelp_P2PClient_DelAll()
   意思：是否成功
 备注：
 *********************************************************************/
-BOOL CModuleHelp_P2PClient::ModuleHelp_P2PClient_Heart(XENGINE_P2XPPEER_PROTOCOL* pSt_P2PProtocol)
+XBOOL CModuleHelp_P2PClient::ModuleHelp_P2PClient_Heart(XENGINE_P2XPPEER_PROTOCOL* pSt_P2PProtocol)
 {
 	ModuleHelp_IsErrorOccur = FALSE;
 
@@ -547,7 +547,7 @@ BOOL CModuleHelp_P2PClient::ModuleHelp_P2PClient_Heart(XENGINE_P2XPPEER_PROTOCOL
 	}
 	//转换地址
 	XENGINE_LIBADDR st_LibAddr;
-	TCHAR tszPrivateAddr[64];
+	XCHAR tszPrivateAddr[64];
 
 	memset(tszPrivateAddr, '\0', sizeof(tszPrivateAddr));
 	memset(&st_LibAddr, '\0', sizeof(XENGINE_LIBADDR));
@@ -578,7 +578,7 @@ BOOL CModuleHelp_P2PClient::ModuleHelp_P2PClient_Heart(XENGINE_P2XPPEER_PROTOCOL
 //////////////////////////////////////////////////////////////////////////
 //                          保护函数
 //////////////////////////////////////////////////////////////////////////
-XHTHREAD CALLBACK CModuleHelp_P2PClient::ModuleHelp_P2PClient_Thread(LPVOID lParam)
+XHTHREAD CALLBACK CModuleHelp_P2PClient::ModuleHelp_P2PClient_Thread(XPVOID lParam)
 {
     CModuleHelp_P2PClient* pClass_This = (CModuleHelp_P2PClient*)lParam;
     list<XENGINE_P2XP_PEERINFO> stl_ListRemove;

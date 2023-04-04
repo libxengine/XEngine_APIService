@@ -36,7 +36,7 @@ using namespace std;
 //    Purpose:     公用头文件
 //    History:
 *********************************************************************/
-extern BOOL Config_IsErrorOccur;
+extern XBOOL Config_IsErrorOccur;
 extern DWORD Config_dwErrorCode;
 
 #ifdef _MSC_BUILD

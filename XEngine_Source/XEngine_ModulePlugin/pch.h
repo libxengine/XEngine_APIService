@@ -55,7 +55,7 @@ using namespace std;
 //    Purpose:     插件核心公有头文件
 //    History:
 *********************************************************************/
-extern BOOL ModulePlugin_IsErrorOccur;
+extern XBOOL ModulePlugin_IsErrorOccur;
 extern DWORD ModulePlugin_dwErrorCode;
 
 #ifdef _MSC_BUILD

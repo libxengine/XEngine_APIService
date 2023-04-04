@@ -45,7 +45,7 @@ extern "C" DWORD ModuleProtocol_GetLastError(int *pInt_SysError = NULL);
   意思：是否成功
 备注：
 *********************************************************************/
-extern "C" BOOL ModuleProtocol_Packet_Common(TCHAR * ptszMsgBuffer, int* pInt_MsgLen, int nCode = 0, LPCTSTR lpszMsgBuffer = NULL);
+extern "C" XBOOL ModuleProtocol_Packet_Common(XCHAR * ptszMsgBuffer, int* pInt_MsgLen, int nCode = 0, LPCXSTR lpszMsgBuffer = NULL);
 /********************************************************************
 函数名称：ModuleProtocol_Packet_IDQuery
 函数功能：ID查询打包为JSON的封包函数
@@ -84,7 +84,7 @@ extern "C" BOOL ModuleProtocol_Packet_Common(TCHAR * ptszMsgBuffer, int* pInt_Ms
   意思：是否成功
 备注：
 *********************************************************************/
-extern "C" BOOL ModuleProtocol_Packet_IDQuery(TCHAR* ptszMsgBuffer, int* pInt_MsgLen, XENGINE_IDCARDINFO* pSt_IDInfo, XENGINE_IDREGION* pSt_IDRegion, int nCode = 0, LPCTSTR lpszMsgBuffer = NULL);
+extern "C" XBOOL ModuleProtocol_Packet_IDQuery(XCHAR* ptszMsgBuffer, int* pInt_MsgLen, XENGINE_IDCARDINFO* pSt_IDInfo, XENGINE_IDREGION* pSt_IDRegion, int nCode = 0, LPCXSTR lpszMsgBuffer = NULL);
 /********************************************************************
 函数名称：ModuleProtocol_Packet_BankQuery
 函数功能：银行卡信息查询打包为JSON
@@ -118,7 +118,7 @@ extern "C" BOOL ModuleProtocol_Packet_IDQuery(TCHAR* ptszMsgBuffer, int* pInt_Ms
   意思：是否成功
 备注：
 *********************************************************************/
-extern "C" BOOL ModuleProtocol_Packet_BankQuery(TCHAR* ptszMsgBuffer, int* pInt_MsgLen, XENGINE_BANKINFO* pSt_BankInfo, int nCode = 0, LPCTSTR lpszMsgBuffer = NULL);
+extern "C" XBOOL ModuleProtocol_Packet_BankQuery(XCHAR* ptszMsgBuffer, int* pInt_MsgLen, XENGINE_BANKINFO* pSt_BankInfo, int nCode = 0, LPCXSTR lpszMsgBuffer = NULL);
 /********************************************************************
 函数名称：ModuleProtocol_Packet_LanguageQuery
 函数功能：语言打包为JSON
@@ -152,7 +152,7 @@ extern "C" BOOL ModuleProtocol_Packet_BankQuery(TCHAR* ptszMsgBuffer, int* pInt_
   意思：是否成功
 备注：
 *********************************************************************/
-extern "C" BOOL ModuleProtocol_Packet_LanguageQuery(TCHAR* ptszMsgBuffer, int* pInt_MsgLen, XENGINE_LANGUAGEINFO* pSt_LanguageInfo, int nCode = 0, LPCTSTR lpszMsgBuffer = NULL);
+extern "C" XBOOL ModuleProtocol_Packet_LanguageQuery(XCHAR* ptszMsgBuffer, int* pInt_MsgLen, XENGINE_LANGUAGEINFO* pSt_LanguageInfo, int nCode = 0, LPCXSTR lpszMsgBuffer = NULL);
 /********************************************************************
 函数名称：ModuleProtocol_Packet_Locker
 函数功能：分布式锁协议打包函数
@@ -186,7 +186,7 @@ extern "C" BOOL ModuleProtocol_Packet_LanguageQuery(TCHAR* ptszMsgBuffer, int* p
   意思：是否成功
 备注：
 *********************************************************************/
-extern "C" BOOL ModuleProtocol_Packet_Locker(TCHAR* ptszMsgBuffer, int* pInt_MsgLen, XNETHANDLE xhToken, int nCode = 0, LPCTSTR lpszMsgBuffer = NULL);
+extern "C" XBOOL ModuleProtocol_Packet_Locker(XCHAR* ptszMsgBuffer, int* pInt_MsgLen, XNETHANDLE xhToken, int nCode = 0, LPCXSTR lpszMsgBuffer = NULL);
 /********************************************************************
 函数名称：ModuleProtocol_Packet_ZIPCode
 函数功能：打包行政邮编信息协议
@@ -220,7 +220,7 @@ extern "C" BOOL ModuleProtocol_Packet_Locker(TCHAR* ptszMsgBuffer, int* pInt_Msg
   意思：是否成功
 备注：
 *********************************************************************/
-extern "C" BOOL ModuleProtocol_Packet_ZIPCode(TCHAR* ptszMsgBuffer, int* pInt_MsgLen, XENGINE_ZIPINFO* pSt_ZIPInfo, int nCode = 0, LPCTSTR lpszMsgBuffer = NULL);
+extern "C" XBOOL ModuleProtocol_Packet_ZIPCode(XCHAR* ptszMsgBuffer, int* pInt_MsgLen, XENGINE_ZIPINFO* pSt_ZIPInfo, int nCode = 0, LPCXSTR lpszMsgBuffer = NULL);
 /********************************************************************
 函数名称：ModuleProtocol_Packet_TestReport
 函数功能：套接字测试信息打包
@@ -273,7 +273,7 @@ extern "C" BOOL ModuleProtocol_Packet_ZIPCode(TCHAR* ptszMsgBuffer, int* pInt_Ms
   意思：是否成功
 备注：
 *********************************************************************/
-extern "C" BOOL ModuleProtocol_Packet_TestReport(TCHAR* ptszMsgBuffer, int* pInt_MsgLen, XNETHANDLE xhToken, LPCTSTR lpszIPAddr, int nIPPort, __int64x nNumber, __int64x nFailed, __int64x nSuccess, int nStatus);
+extern "C" XBOOL ModuleProtocol_Packet_TestReport(XCHAR* ptszMsgBuffer, int* pInt_MsgLen, XNETHANDLE xhToken, LPCXSTR lpszIPAddr, int nIPPort, __int64x nNumber, __int64x nFailed, __int64x nSuccess, int nStatus);
 /********************************************************************
 函数名称：ModuleProtocol_Packet_TestReply
 函数功能：请求返回
@@ -297,7 +297,7 @@ extern "C" BOOL ModuleProtocol_Packet_TestReport(TCHAR* ptszMsgBuffer, int* pInt
   意思：是否成功
 备注：
 *********************************************************************/
-extern "C" BOOL ModuleProtocol_Packet_TestReply(TCHAR* ptszMsgBuffer, int* pInt_MsgLen, XNETHANDLE xhToken);
+extern "C" XBOOL ModuleProtocol_Packet_TestReply(XCHAR* ptszMsgBuffer, int* pInt_MsgLen, XNETHANDLE xhToken);
 /********************************************************************
 函数名称：ModuleProtocol_Packet_P2PLan
 函数功能：响应同步局域网地址列表
@@ -326,7 +326,7 @@ extern "C" BOOL ModuleProtocol_Packet_TestReply(TCHAR* ptszMsgBuffer, int* pInt_
   意思：是否成功
 备注：
 *********************************************************************/
-extern "C" BOOL ModuleProtocol_Packet_P2PLan(TCHAR* ptszMsgBuffer, int* pInt_MsgLen, XENGINE_P2XPPEER_PROTOCOL*** pppSt_ListClients, int nListCount);
+extern "C" XBOOL ModuleProtocol_Packet_P2PLan(XCHAR* ptszMsgBuffer, int* pInt_MsgLen, XENGINE_P2XPPEER_PROTOCOL*** pppSt_ListClients, int nListCount);
 /********************************************************************
 函数名称：ModuleProtocol_Packet_P2PWLan
 函数功能：响应同步局域网所有地址列表
@@ -350,7 +350,7 @@ extern "C" BOOL ModuleProtocol_Packet_P2PLan(TCHAR* ptszMsgBuffer, int* pInt_Msg
   意思：是否成功
 备注：
 *********************************************************************/
-extern "C" BOOL ModuleProtocol_Packet_P2PWLan(TCHAR* ptszMsgBuffer, int* pInt_MsgLen, list<XENGINE_P2XPPEER_PROTOCOL>* pStl_ListClients);
+extern "C" XBOOL ModuleProtocol_Packet_P2PWLan(XCHAR* ptszMsgBuffer, int* pInt_MsgLen, list<XENGINE_P2XPPEER_PROTOCOL>* pStl_ListClients);
 /********************************************************************
 函数名称：ModuleProtocol_Packet_P2PUser
 函数功能：响应用户查询用户信息的请求协议封包函数
@@ -374,7 +374,7 @@ extern "C" BOOL ModuleProtocol_Packet_P2PWLan(TCHAR* ptszMsgBuffer, int* pInt_Ms
   意思：是否成功
 备注：
 *********************************************************************/
-extern "C" BOOL ModuleProtocol_Packet_P2PUser(TCHAR* ptszMsgBuffer, int* pInt_MsgLen, XENGINE_P2XPPEER_PROTOCOL* pSt_PeerInfo);
+extern "C" XBOOL ModuleProtocol_Packet_P2PUser(XCHAR* ptszMsgBuffer, int* pInt_MsgLen, XENGINE_P2XPPEER_PROTOCOL* pSt_PeerInfo);
 /********************************************************************
 函数名称：ModuleProtocol_Packet_P2PConnect
 函数功能：请求连接打包函数
@@ -403,7 +403,7 @@ extern "C" BOOL ModuleProtocol_Packet_P2PUser(TCHAR* ptszMsgBuffer, int* pInt_Ms
   意思：是否成功
 备注：
 *********************************************************************/
-extern "C" BOOL ModuleProtocol_Packet_P2PConnect(TCHAR* ptszMsgBuffer, int* pInt_MsgLen, XENGINE_P2XPIO_PROTOCOL* pSt_IOProtocol);
+extern "C" XBOOL ModuleProtocol_Packet_P2PConnect(XCHAR* ptszMsgBuffer, int* pInt_MsgLen, XENGINE_P2XPIO_PROTOCOL* pSt_IOProtocol);
 /********************************************************************
 函数名称：ModuleProtocol_Packet_Log
 函数功能：日志信息打包
@@ -432,7 +432,7 @@ extern "C" BOOL ModuleProtocol_Packet_P2PConnect(TCHAR* ptszMsgBuffer, int* pInt
   意思：是否成功
 备注：
 *********************************************************************/
-extern "C" BOOL ModuleProtocol_Packet_Log(TCHAR* ptszMsgBuffer, int* pInt_MsgLen, XENGINE_XLOGINFO*** pppSt_XLogList, int nListCount);
+extern "C" XBOOL ModuleProtocol_Packet_Log(XCHAR* ptszMsgBuffer, int* pInt_MsgLen, XENGINE_XLOGINFO*** pppSt_XLogList, int nListCount);
 /************************************************************************/
 /*                         导出的协议解析函数                           */
 /************************************************************************/
@@ -454,7 +454,7 @@ extern "C" BOOL ModuleProtocol_Packet_Log(TCHAR* ptszMsgBuffer, int* pInt_MsgLen
   意思：是否成功
 备注：
 *********************************************************************/
-extern "C" BOOL ModuleProtocol_Parse_IDCard(LPCTSTR lpszMsgBuffer, XENGINE_IDCARDINFO* pSt_IDInfo);
+extern "C" XBOOL ModuleProtocol_Parse_IDCard(LPCXSTR lpszMsgBuffer, XENGINE_IDCARDINFO* pSt_IDInfo);
 /********************************************************************
 函数名称：ModuleProtocol_Parse_Bank
 函数功能：银行卡解析
@@ -478,7 +478,7 @@ extern "C" BOOL ModuleProtocol_Parse_IDCard(LPCTSTR lpszMsgBuffer, XENGINE_IDCAR
   意思：是否成功
 备注：
 *********************************************************************/
-extern "C" BOOL ModuleProtocol_Parse_Bank(LPCTSTR lpszMsgBuffer, int nMsgLen, XENGINE_BANKINFO* pSt_BankInfo);
+extern "C" XBOOL ModuleProtocol_Parse_Bank(LPCXSTR lpszMsgBuffer, int nMsgLen, XENGINE_BANKINFO* pSt_BankInfo);
 /********************************************************************
 函数名称：ModuleProtocol_Parse_Translation
 函数功能：翻译解析
@@ -502,7 +502,7 @@ extern "C" BOOL ModuleProtocol_Parse_Bank(LPCTSTR lpszMsgBuffer, int nMsgLen, XE
   意思：是否成功
 备注：
 *********************************************************************/
-extern "C" BOOL ModuleProtocol_Parse_Translation(LPCTSTR lpszMsgBuffer, int nMsgLen, XENGINE_LANGUAGEINFO* pSt_LanguageInfo);
+extern "C" XBOOL ModuleProtocol_Parse_Translation(LPCXSTR lpszMsgBuffer, int nMsgLen, XENGINE_LANGUAGEINFO* pSt_LanguageInfo);
 /********************************************************************
 函数名称：ModuleProtocol_Parse_P2PClient
 函数功能：P2P客户端请求解析函数
@@ -526,7 +526,7 @@ extern "C" BOOL ModuleProtocol_Parse_Translation(LPCTSTR lpszMsgBuffer, int nMsg
   意思：是否成功
 备注：
 *********************************************************************/
-extern "C" BOOL ModuleProtocol_Parse_P2PClient(LPCTSTR lpszMsgBuffer, int nMsgLen, XENGINE_P2XPPEER_PROTOCOL * pSt_P2XPPeer);
+extern "C" XBOOL ModuleProtocol_Parse_P2PClient(LPCXSTR lpszMsgBuffer, int nMsgLen, XENGINE_P2XPPEER_PROTOCOL * pSt_P2XPPeer);
 /********************************************************************
 函数名称：ModuleProtocol_Parse_ZIPCode
 函数功能：解析邮政地址信息
@@ -550,7 +550,7 @@ extern "C" BOOL ModuleProtocol_Parse_P2PClient(LPCTSTR lpszMsgBuffer, int nMsgLe
   意思：是否成功
 备注：
 *********************************************************************/
-extern "C" BOOL ModuleProtocol_Parse_ZIPCode(LPCTSTR lpszMsgBuffer, int nMsgLen, XENGINE_ZIPINFO* pSt_ZIPInfo);
+extern "C" XBOOL ModuleProtocol_Parse_ZIPCode(LPCXSTR lpszMsgBuffer, int nMsgLen, XENGINE_ZIPINFO* pSt_ZIPInfo);
 /********************************************************************
 函数名称：ModuleProtocol_Parse_XLog
 函数功能：解析日志信息
@@ -574,7 +574,7 @@ extern "C" BOOL ModuleProtocol_Parse_ZIPCode(LPCTSTR lpszMsgBuffer, int nMsgLen,
   意思：是否成功
 备注：
 *********************************************************************/
-extern "C" BOOL ModuleProtocol_Parse_XLog(LPCTSTR lpszMsgBuffer, int nMsgLen, XENGINE_XLOGINFO* pSt_XLogInfo);
+extern "C" XBOOL ModuleProtocol_Parse_XLog(LPCXSTR lpszMsgBuffer, int nMsgLen, XENGINE_XLOGINFO* pSt_XLogInfo);
 /********************************************************************
 函数名称：ModuleProtocol_Parse_QRCode
 函数功能：二维码协议解析
@@ -598,7 +598,7 @@ extern "C" BOOL ModuleProtocol_Parse_XLog(LPCTSTR lpszMsgBuffer, int nMsgLen, XE
   意思：是否成功
 备注：
 *********************************************************************/
-extern "C" BOOL ModuleProtocol_Parse_QRCode(LPCTSTR lpszMsgBuffer, int nMsgLen, XENGINE_QRCODE* pSt_QRCode);
+extern "C" XBOOL ModuleProtocol_Parse_QRCode(LPCXSTR lpszMsgBuffer, int nMsgLen, XENGINE_QRCODE* pSt_QRCode);
 /********************************************************************
 函数名称：ModuleProtocol_Parse_SocketTest
 函数功能：套接字测试协议解析
@@ -622,4 +622,4 @@ extern "C" BOOL ModuleProtocol_Parse_QRCode(LPCTSTR lpszMsgBuffer, int nMsgLen, 
   意思：是否成功
 备注：
 *********************************************************************/
-extern "C" BOOL ModuleProtocol_Parse_SocketTest(LPCTSTR lpszMsgBuffer, int nMsgLen, XENGINE_SOCKETTEST* pSt_SocketTest);
+extern "C" XBOOL ModuleProtocol_Parse_SocketTest(LPCXSTR lpszMsgBuffer, int nMsgLen, XENGINE_SOCKETTEST* pSt_SocketTest);

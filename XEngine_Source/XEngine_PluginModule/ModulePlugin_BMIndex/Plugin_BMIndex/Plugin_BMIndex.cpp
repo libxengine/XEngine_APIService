@@ -33,7 +33,7 @@ CPlugin_BMIndex::~CPlugin_BMIndex()
   意思：是否成功
 备注：
 *********************************************************************/
-BOOL CPlugin_BMIndex::PluginCore_Init(LPVOID lParam)
+XBOOL CPlugin_BMIndex::PluginCore_Init(XPVOID lParam)
 {
 	BMIndex_IsErrorOccur = FALSE;
 
@@ -59,7 +59,7 @@ void CPlugin_BMIndex::PluginCore_UnInit()
   意思：是否成功
 备注：
 *********************************************************************/
-BOOL CPlugin_BMIndex::PluginCore_Call(TCHAR*** pppHDRList, int nListCount, int* pInt_HTTPCode, TCHAR* ptszMsgBuffer, int* pInt_MsgLen, LPCTSTR lpszMsgBuffer, int nMsgLen)
+XBOOL CPlugin_BMIndex::PluginCore_Call(XCHAR*** pppHDRList, int nListCount, int* pInt_HTTPCode, XCHAR* ptszMsgBuffer, int* pInt_MsgLen, LPCXSTR lpszMsgBuffer, int nMsgLen)
 {
 	BMIndex_IsErrorOccur = FALSE;
 
@@ -69,9 +69,9 @@ BOOL CPlugin_BMIndex::PluginCore_Call(TCHAR*** pppHDRList, int nListCount, int* 
 		BMIndex_dwErrorCode = ERROR_XENGINE_APISERVICE_PLUGIN_MODULE_BMINDEX_PARAMENT;
 		return FALSE;
 	}
-	TCHAR tszKeyName[128];
-	TCHAR tszParamHigh[128];
-	TCHAR tszParamWeight[128];
+	XCHAR tszKeyName[128];
+	XCHAR tszParamHigh[128];
+	XCHAR tszParamWeight[128];
 
 	memset(tszKeyName, '\0', sizeof(tszKeyName));
 	memset(tszParamHigh, '\0', sizeof(tszParamHigh));
@@ -87,7 +87,7 @@ BOOL CPlugin_BMIndex::PluginCore_Call(TCHAR*** pppHDRList, int nListCount, int* 
 //////////////////////////////////////////////////////////////////////////
 //                       保护函数
 //////////////////////////////////////////////////////////////////////////
-BOOL CPlugin_BMIndex::Plugin_Timezone_BMIndex(LPCTSTR lpszHigh, LPCTSTR lpszWeight, TCHAR* ptszMsgBufer, int* pInt_Len)
+XBOOL CPlugin_BMIndex::Plugin_Timezone_BMIndex(LPCXSTR lpszHigh, LPCXSTR lpszWeight, XCHAR* ptszMsgBufer, int* pInt_Len)
 {
 	BMIndex_IsErrorOccur = FALSE;
 

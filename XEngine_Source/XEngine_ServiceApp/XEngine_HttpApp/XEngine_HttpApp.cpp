@@ -10,8 +10,8 @@
 //    Purpose:     主要入口函数
 //    History:
 *********************************************************************/
-BOOL bIsRun = FALSE;
-XLOG xhLog = NULL;
+XBOOL bIsRun = FALSE;
+XHANDLE xhLog = NULL;
 //HTTP服务器
 XHANDLE xhHTTPSocket = NULL;
 XHANDLE xhHTTPHeart = NULL;
@@ -33,7 +33,7 @@ void ServiceApp_Stop(int signo)
 		//销毁HTTP资源
 		NetCore_TCPXCore_DestroyEx(xhHTTPSocket);
 		SocketOpt_HeartBeat_DestoryEx(xhHTTPHeart);
-		RfcComponents_HttpServer_DestroyEx(xhHTTPPacket);
+		HttpProtocol_Server_DestroyEx(xhHTTPPacket);
 		ManagePool_Thread_NQDestroy(xhHTTPPool);
 		//销毁数据库
 		ModuleDatabase_IDCard_Destory();
@@ -47,7 +47,7 @@ void ServiceApp_Stop(int signo)
 		//销毁日志资源
 		HelpComponents_XLog_Destroy(xhLog);
 	}
-#ifdef _WINDOWS
+#ifdef _MSC_BUILD
 	WSACleanup();
 #endif
 	exit(0);
@@ -55,7 +55,7 @@ void ServiceApp_Stop(int signo)
 //LINUX守护进程
 static int ServiceApp_Deamon()
 {
-#ifndef _WINDOWS
+#ifndef _MSC_BUILD
 	pid_t nPID = 0;
 	int nStatus = 0;
 	nPID = fork();
@@ -85,14 +85,14 @@ static int ServiceApp_Deamon()
 
 int main(int argc, char** argv)
 {
-#ifdef _WINDOWS
+#ifdef _MSC_BUILD
 	WSADATA st_WSAData;
 	WSAStartup(MAKEWORD(2, 2), &st_WSAData);
 #endif
 	bIsRun = TRUE;
-	LPCTSTR lpszHTTPMime = _T("./XEngine_Config/HttpMime.types");
-	LPCTSTR lpszHTTPCode = _T("./XEngine_Config/HttpCode.types");
-	LPCTSTR lpszLogFile = _T("./XEngine_Log/XEngine_HttpApp.Log");
+	LPCXSTR lpszHTTPMime = _T("./XEngine_Config/HttpMime.types");
+	LPCXSTR lpszHTTPCode = _T("./XEngine_Config/HttpCode.types");
+	LPCXSTR lpszLogFile = _T("./XEngine_Log/XEngine_HttpApp.Log");
 	HELPCOMPONENTS_XLOG_CONFIGURE st_XLogConfig;
 	THREADPOOL_PARAMENT** ppSt_ListHTTPParam;
 
@@ -194,10 +194,10 @@ int main(int argc, char** argv)
 	if (st_ServiceConfig.nHttpPort > 0)
 	{
 		//HTTP包处理器
-		xhHTTPPacket = RfcComponents_HttpServer_InitEx(lpszHTTPCode, lpszHTTPMime, st_ServiceConfig.st_XMax.nHTTPThread);
+		xhHTTPPacket = HttpProtocol_Server_InitEx(lpszHTTPCode, lpszHTTPMime, st_ServiceConfig.st_XMax.nHTTPThread);
 		if (NULL == xhHTTPPacket)
 		{
-			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _T("启动服务中,初始化HTTP组包失败,错误：%lX"), HttpServer_GetLastError());
+			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _T("启动服务中,初始化HTTP组包失败,错误：%lX"), HttpProtocol_GetLastError());
 			goto XENGINE_SERVICEAPP_EXIT;
 		}
 		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _T("启动服务中,初始化HTTP组包成功,IO线程个数:%d"), st_ServiceConfig.st_XMax.nHTTPThread);
@@ -329,7 +329,7 @@ XENGINE_SERVICEAPP_EXIT:
 		//销毁HTTP资源
 		NetCore_TCPXCore_DestroyEx(xhHTTPSocket);
 		SocketOpt_HeartBeat_DestoryEx(xhHTTPHeart);
-		RfcComponents_HttpServer_DestroyEx(xhHTTPPacket);
+		HttpProtocol_Server_DestroyEx(xhHTTPPacket);
 		ManagePool_Thread_NQDestroy(xhHTTPPool);
 		//销毁数据库
 		ModuleDatabase_IDCard_Destory();
@@ -343,7 +343,7 @@ XENGINE_SERVICEAPP_EXIT:
 		//销毁日志资源
 		HelpComponents_XLog_Destroy(xhLog);
 	}
-#ifdef _WINDOWS
+#ifdef _MSC_BUILD
 	WSACleanup();
 #endif
 	return 0;

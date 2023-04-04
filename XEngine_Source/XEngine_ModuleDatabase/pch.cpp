@@ -15,7 +15,7 @@
 //    History:
 *********************************************************************/
 DWORD DBModule_IsErrorOccur = FALSE;
-BOOL DBModule_dwErrorCode = 0;
+XBOOL DBModule_dwErrorCode = 0;
 //////////////////////////////////////////////////////////////////////////
 CModuleDatabase_IDCard m_IDCard;
 CModuleDatabase_Bank m_Bank;
@@ -35,76 +35,76 @@ extern "C" DWORD ModuleDB_GetLastError(int* pInt_SysError)
 /************************************************************************/
 /*                         导出的身份证地址操作函数                     */
 /************************************************************************/
-extern "C" BOOL ModuleDatabase_IDCard_Init(DATABASE_MYSQL_CONNECTINFO * pSt_DBConnector)
+extern "C" XBOOL ModuleDatabase_IDCard_Init(DATABASE_MYSQL_CONNECTINFO * pSt_DBConnector)
 {
 	return m_IDCard.ModuleDatabase_IDCard_Init(pSt_DBConnector);
 }
-extern "C" BOOL ModuleDatabase_IDCard_Destory()
+extern "C" XBOOL ModuleDatabase_IDCard_Destory()
 {
 	return m_IDCard.ModuleDatabase_IDCard_Destory();
 }
-extern "C" BOOL ModuleDatabase_IDCard_QueryRegion(XENGINE_IDREGION * pSt_IDRegion, XENGINE_IDCARDINFO * pSt_IDInfo)
+extern "C" XBOOL ModuleDatabase_IDCard_QueryRegion(XENGINE_IDREGION * pSt_IDRegion, XENGINE_IDCARDINFO * pSt_IDInfo)
 {
 	return m_IDCard.ModuleDatabase_IDCard_QueryRegion(pSt_IDRegion, pSt_IDInfo);
 }
 /************************************************************************/
 /*                         导出的银行卡信息函数                         */
 /************************************************************************/
-extern "C" BOOL ModuleDatabase_Bank_Init(DATABASE_MYSQL_CONNECTINFO * pSt_DBConnector)
+extern "C" XBOOL ModuleDatabase_Bank_Init(DATABASE_MYSQL_CONNECTINFO * pSt_DBConnector)
 {
 	return m_Bank.ModuleDatabase_Bank_Init(pSt_DBConnector);
 }
-extern "C" BOOL ModuleDatabase_Bank_Destory()
+extern "C" XBOOL ModuleDatabase_Bank_Destory()
 {
 	return m_Bank.ModuleDatabase_Bank_Destory();
 }
-extern "C" BOOL ModuleDatabase_Bank_Query(XENGINE_BANKINFO * pSt_BankInfo)
+extern "C" XBOOL ModuleDatabase_Bank_Query(XENGINE_BANKINFO * pSt_BankInfo)
 {
 	return m_Bank.ModuleDatabase_Bank_Query(pSt_BankInfo);
 }
 /************************************************************************/
 /*                         导出的邮编行政信息函数                       */
 /************************************************************************/
-extern "C" BOOL ModuleDatabase_ZIPCode_Init(DATABASE_MYSQL_CONNECTINFO * pSt_DBConnector)
+extern "C" XBOOL ModuleDatabase_ZIPCode_Init(DATABASE_MYSQL_CONNECTINFO * pSt_DBConnector)
 {
 	return m_ZIPCode.ModuleDatabase_ZIPCode_Init(pSt_DBConnector);
 }
-extern "C" BOOL ModuleDatabase_ZIPCode_Destory()
+extern "C" XBOOL ModuleDatabase_ZIPCode_Destory()
 {
 	return m_ZIPCode.ModuleDatabase_ZIPCode_Destory();
 }
-extern "C" BOOL ModuleDatabase_ZIPCode_QueryZIPCode(XENGINE_ZIPINFO * pSt_ZIPInfo)
+extern "C" XBOOL ModuleDatabase_ZIPCode_QueryZIPCode(XENGINE_ZIPINFO * pSt_ZIPInfo)
 {
 	return m_ZIPCode.ModuleDatabase_ZIPCode_QueryZIPCode(pSt_ZIPInfo);
 }
-extern "C" BOOL ModuleDatabase_ZIPCode_QueryName(XENGINE_ZIPINFO * pSt_ZIPInfo)
+extern "C" XBOOL ModuleDatabase_ZIPCode_QueryName(XENGINE_ZIPINFO * pSt_ZIPInfo)
 {
 	return m_ZIPCode.ModuleDatabase_ZIPCode_QueryName(pSt_ZIPInfo);
 }
 /************************************************************************/
 /*                         导出的日志服务数据库函数                     */
 /************************************************************************/
-extern "C" BOOL ModuleDatabase_XLog_Init(DATABASE_MYSQL_CONNECTINFO * pSt_DBConnector)
+extern "C" XBOOL ModuleDatabase_XLog_Init(DATABASE_MYSQL_CONNECTINFO * pSt_DBConnector)
 {
 	return m_XLog.ModuleDatabase_XLog_Init(pSt_DBConnector);
 }
-extern "C" BOOL ModuleDatabase_XLog_Destory()
+extern "C" XBOOL ModuleDatabase_XLog_Destory()
 {
 	return m_XLog.ModuleDatabase_XLog_Destory();
 }
-extern "C" BOOL ModuleDatabase_XLog_Create(LPCTSTR lpszTableName)
+extern "C" XBOOL ModuleDatabase_XLog_Create(LPCXSTR lpszTableName)
 {
 	return m_XLog.ModuleDatabase_XLog_Create(lpszTableName);
 }
-extern "C" BOOL ModuleDatabase_XLog_Insert(XENGINE_XLOGINFO * pSt_XLogInfo)
+extern "C" XBOOL ModuleDatabase_XLog_Insert(XENGINE_XLOGINFO * pSt_XLogInfo)
 {
 	return m_XLog.ModuleDatabase_XLog_Insert(pSt_XLogInfo);
 }
-extern "C" BOOL ModuleDatabase_XLog_Query(XENGINE_XLOGINFO * **pppSt_XLogInfo, int* pInt_ListCount, LPCTSTR lpszTableName, LPCTSTR lpszTimeStart, LPCTSTR lpszTimeEnd)
+extern "C" XBOOL ModuleDatabase_XLog_Query(XENGINE_XLOGINFO * **pppSt_XLogInfo, int* pInt_ListCount, LPCXSTR lpszTableName, LPCXSTR lpszTimeStart, LPCXSTR lpszTimeEnd)
 {
 	return m_XLog.ModuleDatabase_XLog_Query(pppSt_XLogInfo, pInt_ListCount, lpszTableName, lpszTimeStart, lpszTimeEnd);
 }
-extern "C" BOOL ModuleDatabase_XLog_Delete(LPCTSTR lpszTableName)
+extern "C" XBOOL ModuleDatabase_XLog_Delete(LPCXSTR lpszTableName)
 {
 	return m_XLog.ModuleDatabase_XLog_Delete(lpszTableName);
 }

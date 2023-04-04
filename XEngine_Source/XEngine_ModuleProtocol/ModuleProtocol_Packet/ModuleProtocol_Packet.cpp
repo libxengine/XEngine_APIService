@@ -49,7 +49,7 @@ CModuleProtocol_Packet::~CModuleProtocol_Packet()
   意思：是否成功
 备注：
 *********************************************************************/
-BOOL CModuleProtocol_Packet::ModuleProtocol_Packet_Common(TCHAR* ptszMsgBuffer, int* pInt_MsgLen, int nCode /* = 0 */, LPCTSTR lpszMsgBuffer /* = NULL */)
+XBOOL CModuleProtocol_Packet::ModuleProtocol_Packet_Common(XCHAR* ptszMsgBuffer, int* pInt_MsgLen, int nCode /* = 0 */, LPCXSTR lpszMsgBuffer /* = NULL */)
 {
 	ModuleProtocol_IsErrorOccur = FALSE;
 
@@ -108,7 +108,7 @@ BOOL CModuleProtocol_Packet::ModuleProtocol_Packet_Common(TCHAR* ptszMsgBuffer, 
   意思：是否成功
 备注：
 *********************************************************************/
-BOOL CModuleProtocol_Packet::ModuleProtocol_Packet_IDQuery(TCHAR* ptszMsgBuffer, int* pInt_MsgLen, XENGINE_IDCARDINFO* pSt_IDInfo, XENGINE_IDREGION* pSt_IDRegion, int nCode /* = 0 */, LPCTSTR lpszMsgBuffer /* = NULL */)
+XBOOL CModuleProtocol_Packet::ModuleProtocol_Packet_IDQuery(XCHAR* ptszMsgBuffer, int* pInt_MsgLen, XENGINE_IDCARDINFO* pSt_IDInfo, XENGINE_IDREGION* pSt_IDRegion, int nCode /* = 0 */, LPCXSTR lpszMsgBuffer /* = NULL */)
 {
 	ModuleProtocol_IsErrorOccur = FALSE;
 
@@ -134,7 +134,7 @@ BOOL CModuleProtocol_Packet::ModuleProtocol_Packet_IDQuery(TCHAR* ptszMsgBuffer,
 
 #ifdef _MSC_BUILD
 		int nUTFLen = _tcslen(pSt_IDRegion->tszProvincer);
-		TCHAR tszUTFBuffer[MAX_PATH];
+		XCHAR tszUTFBuffer[MAX_PATH];
 		memset(tszUTFBuffer, '\0', MAX_PATH);
 
 		BaseLib_OperatorCharset_AnsiToUTF(pSt_IDRegion->tszProvincer, tszUTFBuffer, &nUTFLen);
@@ -205,7 +205,7 @@ BOOL CModuleProtocol_Packet::ModuleProtocol_Packet_IDQuery(TCHAR* ptszMsgBuffer,
   意思：是否成功
 备注：
 *********************************************************************/
-BOOL CModuleProtocol_Packet::ModuleProtocol_Packet_BankQuery(TCHAR* ptszMsgBuffer, int* pInt_MsgLen, XENGINE_BANKINFO* pSt_BankInfo, int nCode /* = 0 */, LPCTSTR lpszMsgBuffer /* = NULL */)
+XBOOL CModuleProtocol_Packet::ModuleProtocol_Packet_BankQuery(XCHAR* ptszMsgBuffer, int* pInt_MsgLen, XENGINE_BANKINFO* pSt_BankInfo, int nCode /* = 0 */, LPCXSTR lpszMsgBuffer /* = NULL */)
 {
 	ModuleProtocol_IsErrorOccur = FALSE;
 
@@ -226,7 +226,7 @@ BOOL CModuleProtocol_Packet::ModuleProtocol_Packet_BankQuery(TCHAR* ptszMsgBuffe
 		st_JsonObject["enBankType"] = pSt_BankInfo->enBankType;
 
 #ifdef _MSC_BUILD
-		TCHAR tszUTFBuffer[MAX_PATH];
+		XCHAR tszUTFBuffer[MAX_PATH];
 		memset(tszUTFBuffer, '\0', MAX_PATH);
 
 		int nUTFLen = _tcslen(pSt_BankInfo->tszBankName);
@@ -286,7 +286,7 @@ BOOL CModuleProtocol_Packet::ModuleProtocol_Packet_BankQuery(TCHAR* ptszMsgBuffe
   意思：是否成功
 备注：
 *********************************************************************/
-BOOL CModuleProtocol_Packet::ModuleProtocol_Packet_LanguageQuery(TCHAR* ptszMsgBuffer, int* pInt_MsgLen, XENGINE_LANGUAGEINFO* pSt_LanguageInfo, int nCode /* = 0 */, LPCTSTR lpszMsgBuffer /* = NULL */)
+XBOOL CModuleProtocol_Packet::ModuleProtocol_Packet_LanguageQuery(XCHAR* ptszMsgBuffer, int* pInt_MsgLen, XENGINE_LANGUAGEINFO* pSt_LanguageInfo, int nCode /* = 0 */, LPCXSTR lpszMsgBuffer /* = NULL */)
 {
 	ModuleProtocol_IsErrorOccur = FALSE;
 
@@ -356,7 +356,7 @@ BOOL CModuleProtocol_Packet::ModuleProtocol_Packet_LanguageQuery(TCHAR* ptszMsgB
   意思：是否成功
 备注：
 *********************************************************************/
-BOOL CModuleProtocol_Packet::ModuleProtocol_Packet_Locker(TCHAR* ptszMsgBuffer, int* pInt_MsgLen, XNETHANDLE xhToken, int nCode, LPCTSTR lpszMsgBuffer)
+XBOOL CModuleProtocol_Packet::ModuleProtocol_Packet_Locker(XCHAR* ptszMsgBuffer, int* pInt_MsgLen, XNETHANDLE xhToken, int nCode, LPCXSTR lpszMsgBuffer)
 {
 	ModuleProtocol_IsErrorOccur = FALSE;
 
@@ -421,7 +421,7 @@ BOOL CModuleProtocol_Packet::ModuleProtocol_Packet_Locker(TCHAR* ptszMsgBuffer, 
   意思：是否成功
 备注：
 *********************************************************************/
-BOOL CModuleProtocol_Packet::ModuleProtocol_Packet_ZIPCode(TCHAR* ptszMsgBuffer, int* pInt_MsgLen, XENGINE_ZIPINFO* pSt_ZIPInfo, int nCode /* = 0 */, LPCTSTR lpszMsgBuffer /* = NULL */)
+XBOOL CModuleProtocol_Packet::ModuleProtocol_Packet_ZIPCode(XCHAR* ptszMsgBuffer, int* pInt_MsgLen, XENGINE_ZIPINFO* pSt_ZIPInfo, int nCode /* = 0 */, LPCXSTR lpszMsgBuffer /* = NULL */)
 {
 	ModuleProtocol_IsErrorOccur = FALSE;
 
@@ -492,7 +492,7 @@ BOOL CModuleProtocol_Packet::ModuleProtocol_Packet_ZIPCode(TCHAR* ptszMsgBuffer,
   意思：是否成功
 备注：
 *********************************************************************/
-BOOL CModuleProtocol_Packet::ModuleProtocol_Packet_Log(TCHAR* ptszMsgBuffer, int* pInt_MsgLen, XENGINE_XLOGINFO*** pppSt_XLogList, int nListCount)
+XBOOL CModuleProtocol_Packet::ModuleProtocol_Packet_Log(XCHAR* ptszMsgBuffer, int* pInt_MsgLen, XENGINE_XLOGINFO*** pppSt_XLogList, int nListCount)
 {
 	ModuleProtocol_IsErrorOccur = FALSE;
 
@@ -582,7 +582,7 @@ BOOL CModuleProtocol_Packet::ModuleProtocol_Packet_Log(TCHAR* ptszMsgBuffer, int
   意思：是否成功
 备注：
 *********************************************************************/
-BOOL CModuleProtocol_Packet::ModuleProtocol_Packet_TestReport(TCHAR* ptszMsgBuffer, int* pInt_MsgLen, XNETHANDLE xhToken, LPCTSTR lpszIPAddr, int nIPPort, __int64x nNumber, __int64x nFailed, __int64x nSuccess, int nStatus)
+XBOOL CModuleProtocol_Packet::ModuleProtocol_Packet_TestReport(XCHAR* ptszMsgBuffer, int* pInt_MsgLen, XNETHANDLE xhToken, LPCXSTR lpszIPAddr, int nIPPort, __int64x nNumber, __int64x nFailed, __int64x nSuccess, int nStatus)
 {
 	ModuleProtocol_IsErrorOccur = FALSE;
 
@@ -636,7 +636,7 @@ BOOL CModuleProtocol_Packet::ModuleProtocol_Packet_TestReport(TCHAR* ptszMsgBuff
   意思：是否成功
 备注：
 *********************************************************************/
-BOOL CModuleProtocol_Packet::ModuleProtocol_Packet_TestReply(TCHAR* ptszMsgBuffer, int* pInt_MsgLen, XNETHANDLE xhToken)
+XBOOL CModuleProtocol_Packet::ModuleProtocol_Packet_TestReply(XCHAR* ptszMsgBuffer, int* pInt_MsgLen, XNETHANDLE xhToken)
 {
 	ModuleProtocol_IsErrorOccur = FALSE;
 
@@ -689,7 +689,7 @@ BOOL CModuleProtocol_Packet::ModuleProtocol_Packet_TestReply(TCHAR* ptszMsgBuffe
   意思：是否成功
 备注：
 *********************************************************************/
-BOOL CModuleProtocol_Packet::ModuleProtocol_Packet_P2PLan(TCHAR* ptszMsgBuffer, int* pInt_MsgLen, XENGINE_P2XPPEER_PROTOCOL*** pppSt_ListClients, int nListCount)
+XBOOL CModuleProtocol_Packet::ModuleProtocol_Packet_P2PLan(XCHAR* ptszMsgBuffer, int* pInt_MsgLen, XENGINE_P2XPPEER_PROTOCOL*** pppSt_ListClients, int nListCount)
 {
 	ModuleProtocol_IsErrorOccur = FALSE;
 
@@ -740,7 +740,7 @@ BOOL CModuleProtocol_Packet::ModuleProtocol_Packet_P2PLan(TCHAR* ptszMsgBuffer, 
   意思：是否成功
 备注：
 *********************************************************************/
-BOOL CModuleProtocol_Packet::ModuleProtocol_Packet_P2PWLan(TCHAR* ptszMsgBuffer, int* pInt_MsgLen, list<XENGINE_P2XPPEER_PROTOCOL>* pStl_ListClients)
+XBOOL CModuleProtocol_Packet::ModuleProtocol_Packet_P2PWLan(XCHAR* ptszMsgBuffer, int* pInt_MsgLen, list<XENGINE_P2XPPEER_PROTOCOL>* pStl_ListClients)
 {
 	ModuleProtocol_IsErrorOccur = FALSE;
 
@@ -754,7 +754,7 @@ BOOL CModuleProtocol_Packet::ModuleProtocol_Packet_P2PWLan(TCHAR* ptszMsgBuffer,
 	//首先处理公网下的局域网网段列表
 	for (auto stl_ListIterator = pStl_ListClients->begin(); stl_ListIterator != pStl_ListClients->end(); stl_ListIterator++)
 	{
-		TCHAR tszClientAddr[128];
+		XCHAR tszClientAddr[128];
 		XENGINE_LIBADDR st_LibAddr;
 		P2XPPROTOCOL_LANPACKET st_LANPacket;
 
@@ -833,7 +833,7 @@ BOOL CModuleProtocol_Packet::ModuleProtocol_Packet_P2PWLan(TCHAR* ptszMsgBuffer,
   意思：是否成功
 备注：
 *********************************************************************/
-BOOL CModuleProtocol_Packet::ModuleProtocol_Packet_P2PUser(TCHAR* ptszMsgBuffer, int* pInt_MsgLen, XENGINE_P2XPPEER_PROTOCOL* pSt_PeerInfo)
+XBOOL CModuleProtocol_Packet::ModuleProtocol_Packet_P2PUser(XCHAR* ptszMsgBuffer, int* pInt_MsgLen, XENGINE_P2XPPEER_PROTOCOL* pSt_PeerInfo)
 {
 	ModuleProtocol_IsErrorOccur = FALSE;
 
@@ -889,7 +889,7 @@ BOOL CModuleProtocol_Packet::ModuleProtocol_Packet_P2PUser(TCHAR* ptszMsgBuffer,
   意思：是否成功
 备注：
 *********************************************************************/
-BOOL CModuleProtocol_Packet::ModuleProtocol_Packet_P2PConnect(TCHAR* ptszMsgBuffer, int* pInt_MsgLen, XENGINE_P2XPIO_PROTOCOL* pSt_IOProtocol)
+XBOOL CModuleProtocol_Packet::ModuleProtocol_Packet_P2PConnect(XCHAR* ptszMsgBuffer, int* pInt_MsgLen, XENGINE_P2XPIO_PROTOCOL* pSt_IOProtocol)
 {
 	ModuleProtocol_IsErrorOccur = FALSE;
 

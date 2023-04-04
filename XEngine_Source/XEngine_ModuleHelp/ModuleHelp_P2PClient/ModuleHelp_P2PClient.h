@@ -16,22 +16,22 @@ public:
 	CModuleHelp_P2PClient();
 	~CModuleHelp_P2PClient();
 public:
-	BOOL ModuleHelp_P2PClient_Init(int nTimeout, CALLBACK_APISERVICE_MODULE_HELP_P2PCLIENT fpCall_P2PClient, LPVOID lParam = NULL);
-	BOOL ModuleHelp_P2PClient_Destory();
-	BOOL ModuleHelp_P2PClient_Add(XENGINE_P2XP_PEERINFO* pSt_PeerInfo);
-	BOOL ModuleHelp_P2PClient_Get(XENGINE_P2XPPEER_PROTOCOL* pSt_P2PProtocol, XENGINE_P2XP_PEERINFO* pSt_PeerInfo = NULL);
-	BOOL ModuleHelp_P2PClient_GetLan(XENGINE_P2XPPEER_PROTOCOL* pSt_P2PProtocol, XENGINE_P2XPPEER_PROTOCOL*** pppSt_P2XPClient, int* pInt_ListCount);
-	BOOL ModuleHelp_P2PClient_GetLList(LPCTSTR lpszPubAddr, TCHAR*** pppszP2XPClient, int* pInt_ListCount);
-	BOOL ModuleHelp_P2PClient_GetWList(TCHAR*** pppszP2XPClient, int* pInt_ListCount);
-	BOOL ModuleHelp_P2PClient_Delete(XENGINE_P2XPPEER_PROTOCOL* pSt_P2PProtocol);
-	BOOL ModuleHelp_P2PClient_DelAll();
-	BOOL ModuleHelp_P2PClient_Heart(XENGINE_P2XPPEER_PROTOCOL* pSt_P2PProtocol);
+	XBOOL ModuleHelp_P2PClient_Init(int nTimeout, CALLBACK_APISERVICE_MODULE_HELP_P2PCLIENT fpCall_P2PClient, XPVOID lParam = NULL);
+	XBOOL ModuleHelp_P2PClient_Destory();
+	XBOOL ModuleHelp_P2PClient_Add(XENGINE_P2XP_PEERINFO* pSt_PeerInfo);
+	XBOOL ModuleHelp_P2PClient_Get(XENGINE_P2XPPEER_PROTOCOL* pSt_P2PProtocol, XENGINE_P2XP_PEERINFO* pSt_PeerInfo = NULL);
+	XBOOL ModuleHelp_P2PClient_GetLan(XENGINE_P2XPPEER_PROTOCOL* pSt_P2PProtocol, XENGINE_P2XPPEER_PROTOCOL*** pppSt_P2XPClient, int* pInt_ListCount);
+	XBOOL ModuleHelp_P2PClient_GetLList(LPCXSTR lpszPubAddr, XCHAR*** pppszP2XPClient, int* pInt_ListCount);
+	XBOOL ModuleHelp_P2PClient_GetWList(XCHAR*** pppszP2XPClient, int* pInt_ListCount);
+	XBOOL ModuleHelp_P2PClient_Delete(XENGINE_P2XPPEER_PROTOCOL* pSt_P2PProtocol);
+	XBOOL ModuleHelp_P2PClient_DelAll();
+	XBOOL ModuleHelp_P2PClient_Heart(XENGINE_P2XPPEER_PROTOCOL* pSt_P2PProtocol);
 protected:
-	static XHTHREAD CALLBACK ModuleHelp_P2PClient_Thread(LPVOID lParam);
+	static XHTHREAD CALLBACK ModuleHelp_P2PClient_Thread(XPVOID lParam);
 private:
-	BOOL m_bIsRun;
+	XBOOL m_bIsRun;
 	int m_nTimeout;
-	LPVOID m_lParam;
+	XPVOID m_lParam;
 	CALLBACK_APISERVICE_MODULE_HELP_P2PCLIENT lpCall_P2PClient;
 private:
 	shared_mutex st_Locker;    

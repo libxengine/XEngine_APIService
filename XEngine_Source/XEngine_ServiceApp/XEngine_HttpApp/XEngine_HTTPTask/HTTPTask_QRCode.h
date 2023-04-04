@@ -1,3 +1,3 @@
 ﻿#pragma once
 
-BOOL XEngine_HTTPTask_QRCode(LPCTSTR lpszClientAddr, LPCTSTR lpszMsgBuffer, int nMsgLen, int nType);
+XBOOL XEngine_HTTPTask_QRCode(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer, int nMsgLen, int nType);

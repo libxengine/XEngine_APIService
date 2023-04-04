@@ -34,7 +34,7 @@ CModuleHelp_IDCard::~CModuleHelp_IDCard()
   意思：是否成功
 备注：
 *********************************************************************/
-BOOL CModuleHelp_IDCard::ModuleHelp_IDCard_CheckBirth(XENGINE_IDCARDINFO *pSt_IDInfo)
+XBOOL CModuleHelp_IDCard::ModuleHelp_IDCard_CheckBirth(XENGINE_IDCARDINFO *pSt_IDInfo)
 {
 	ModuleHelp_IsErrorOccur = FALSE;
 
@@ -77,7 +77,7 @@ BOOL CModuleHelp_IDCard::ModuleHelp_IDCard_CheckBirth(XENGINE_IDCARDINFO *pSt_ID
   意思：是否成功
 备注：
 *********************************************************************/
-BOOL CModuleHelp_IDCard::ModuleHelp_IDCard_CheckSum(XENGINE_IDCARDINFO* pSt_IDInfo)
+XBOOL CModuleHelp_IDCard::ModuleHelp_IDCard_CheckSum(XENGINE_IDCARDINFO* pSt_IDInfo)
 {
 	ModuleHelp_IsErrorOccur = FALSE;
 

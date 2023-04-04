@@ -29,7 +29,7 @@ CModulePlugin_LibCore::~CModulePlugin_LibCore()
   意思：是否成功初始化
 备注：
 *********************************************************************/
-BOOL CModulePlugin_LibCore::ModulePlugin_LibCore_Init()
+XBOOL CModulePlugin_LibCore::ModulePlugin_LibCore_Init()
 {
     ModulePlugin_IsErrorOccur = FALSE;
     //判断是否初始化
@@ -66,7 +66,7 @@ BOOL CModulePlugin_LibCore::ModulePlugin_LibCore_Init()
   意思：是否成功添加
 备注：
 *********************************************************************/
-BOOL CModulePlugin_LibCore::ModulePlugin_LibCore_Push(XNETHANDLE* pxhModule, LPCTSTR lpszPluginFile, LPVOID lParam)
+XBOOL CModulePlugin_LibCore::ModulePlugin_LibCore_Push(XNETHANDLE* pxhModule, LPCXSTR lpszPluginFile, XPVOID lParam)
 {
     ModulePlugin_IsErrorOccur = FALSE;
 
@@ -130,7 +130,7 @@ BOOL CModulePlugin_LibCore::ModulePlugin_LibCore_Push(XNETHANDLE* pxhModule, LPC
   意思：是否成功
 备注：
 *********************************************************************/
-BOOL CModulePlugin_LibCore::ModulePlugin_LibCore_Exec(XNETHANDLE xhModule, TCHAR*** pppHDRList, int nListCount, int* pInt_HTTPCode, TCHAR* ptszMsgBuffer, int* pInt_MsgLen, LPCTSTR lpszMsgBufer /* = NULL */, int nMsgLen /* = 0 */)
+XBOOL CModulePlugin_LibCore::ModulePlugin_LibCore_Exec(XNETHANDLE xhModule, XCHAR*** pppHDRList, int nListCount, int* pInt_HTTPCode, XCHAR* ptszMsgBuffer, int* pInt_MsgLen, LPCXSTR lpszMsgBufer /* = NULL */, int nMsgLen /* = 0 */)
 {
     ModulePlugin_IsErrorOccur = FALSE;
 
@@ -163,7 +163,7 @@ BOOL CModulePlugin_LibCore::ModulePlugin_LibCore_Exec(XNETHANDLE xhModule, TCHAR
   意思：是否成功销毁
 备注：
 *********************************************************************/
-BOOL CModulePlugin_LibCore::ModulePlugin_LibCore_Destroy()
+XBOOL CModulePlugin_LibCore::ModulePlugin_LibCore_Destroy()
 {
     ModulePlugin_IsErrorOccur = FALSE;
 
@@ -215,7 +215,7 @@ BOOL CModulePlugin_LibCore::ModulePlugin_LibCore_Destroy()
   意思：是否成功执行
 备注：
 *********************************************************************/
-BOOL CModulePlugin_LibCore::ModulePlugin_LibCore_Add(XNETHANDLE xhNet, LPCTSTR lpszPluginFile, LPVOID lParam)
+XBOOL CModulePlugin_LibCore::ModulePlugin_LibCore_Add(XNETHANDLE xhNet, LPCXSTR lpszPluginFile, XPVOID lParam)
 {
     ModulePlugin_IsErrorOccur = FALSE;
 

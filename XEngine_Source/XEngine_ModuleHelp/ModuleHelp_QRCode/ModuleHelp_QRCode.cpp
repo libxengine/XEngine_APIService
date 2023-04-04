@@ -41,7 +41,7 @@ CModuleHelp_QRCode::~CModuleHelp_QRCode()
   意思：是否成功
 备注：
 *********************************************************************/
-BOOL CModuleHelp_QRCode::ModuleHelp_QRCode_QREncodecFile(LPCTSTR lpszFileName, LPCTSTR lpszMsgBuffer)
+XBOOL CModuleHelp_QRCode::ModuleHelp_QRCode_QREncodecFile(LPCXSTR lpszFileName, LPCXSTR lpszMsgBuffer)
 {
 	ModuleHelp_IsErrorOccur = FALSE;
 
@@ -125,7 +125,7 @@ BOOL CModuleHelp_QRCode::ModuleHelp_QRCode_QREncodecFile(LPCTSTR lpszFileName, L
   意思：是否成功
 备注：
 *********************************************************************/
-BOOL CModuleHelp_QRCode::ModuleHelp_QRCode_QREncodecMemory(LPCTSTR lpszMsgBuffer, TCHAR* ptszMsgBuffer, int* pInt_MsgLen, LPCTSTR lpszFmt)
+XBOOL CModuleHelp_QRCode::ModuleHelp_QRCode_QREncodecMemory(LPCXSTR lpszMsgBuffer, XCHAR* ptszMsgBuffer, int* pInt_MsgLen, LPCXSTR lpszFmt)
 {
 	ModuleHelp_IsErrorOccur = FALSE;
 
@@ -221,7 +221,7 @@ BOOL CModuleHelp_QRCode::ModuleHelp_QRCode_QREncodecMemory(LPCTSTR lpszMsgBuffer
   意思：是否成功
 备注：
 *********************************************************************/
-BOOL CModuleHelp_QRCode::ModuleHelp_QRCode_QRDecodecFile(LPCTSTR lpszFileName, TCHAR* ptszMsgBuffer, LPCTSTR lpszDetectProto, LPCTSTR lpszDetectModel, LPCTSTR lpszSrProto, LPCTSTR lpszSrModel)
+XBOOL CModuleHelp_QRCode::ModuleHelp_QRCode_QRDecodecFile(LPCXSTR lpszFileName, XCHAR* ptszMsgBuffer, LPCXSTR lpszDetectProto, LPCXSTR lpszDetectModel, LPCXSTR lpszSrProto, LPCXSTR lpszSrModel)
 {
 	ModuleHelp_IsErrorOccur = FALSE;
 
@@ -317,7 +317,7 @@ BOOL CModuleHelp_QRCode::ModuleHelp_QRCode_QRDecodecFile(LPCTSTR lpszFileName, T
   意思：是否成功
 备注：
 *********************************************************************/
-BOOL CModuleHelp_QRCode::ModuleHelp_QRCode_QRDecodecMemory(LPCSTR lpszMsgBuffer, int nMsgLen, TCHAR* ptszMsgBuffer, LPCTSTR lpszDetectProto, LPCTSTR lpszDetectModel, LPCTSTR lpszSrProto, LPCTSTR lpszSrModel)
+XBOOL CModuleHelp_QRCode::ModuleHelp_QRCode_QRDecodecMemory(LPCSTR lpszMsgBuffer, int nMsgLen, XCHAR* ptszMsgBuffer, LPCXSTR lpszDetectProto, LPCXSTR lpszDetectModel, LPCXSTR lpszSrProto, LPCXSTR lpszSrModel)
 {
 	ModuleHelp_IsErrorOccur = FALSE;
 

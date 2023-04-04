@@ -8,7 +8,7 @@
 #include <thread>
 #include <string>
 #include <list>
-#ifdef _WINDOWS
+#ifdef _MSC_BUILD
 #include <Windows.h>
 #include <tchar.h>
 #else
@@ -34,8 +34,8 @@ using namespace std;
 #include <XEngine_Include/XEngine_HelpComponents/XLog_Error.h>
 #include <XEngine_Include/XEngine_HelpComponents/DataBase_Define.h>
 #include <XEngine_Include/XEngine_HelpComponents/DataBase_Error.h>
-#include <XEngine_Include/XEngine_RfcComponents/HttpServer_Define.h>
-#include <XEngine_Include/XEngine_RfcComponents/HttpServer_Error.h>
+#include <XEngine_Include/XEngine_RfcComponents/HttpProtocol_Define.h>
+#include <XEngine_Include/XEngine_RfcComponents/HttpProtocol_Error.h>
 #include <XEngine_Include/XEngine_NetHelp/APIClient_Define.h>
 #include <XEngine_Include/XEngine_NetHelp/APIClient_Error.h>
 #include <XEngine_Include/XEngine_SystemSdk/ProcFile_Define.h>
@@ -82,8 +82,8 @@ using namespace std;
 *********************************************************************/
 #define XENGIEN_APISERVICE_BUFFER_SIZE (1024 * 1024 * 10)
 
-extern BOOL bIsRun;
-extern XLOG xhLog;
+extern XBOOL bIsRun;
+extern XHANDLE xhLog;
 //HTTP服务器
 extern XHANDLE xhHTTPSocket;
 extern XHANDLE xhHTTPHeart;
@@ -96,7 +96,7 @@ extern XENGINE_QRCODECONFIG st_QRCodeConfig;
 extern XENGINE_PLUGINCONFIG st_PluginLibConfig;
 extern XENGINE_PLUGINCONFIG st_PluginLuaConfig;
 //连接库
-#ifdef _WINDOWS
+#ifdef _MSC_BUILD
 #ifdef _WIN64
 #ifdef _DEBUG
 #pragma comment(lib,"../../x64/Debug/XEngine_ModuleConfigure.lib")
@@ -131,7 +131,7 @@ extern XENGINE_PLUGINCONFIG st_PluginLuaConfig;
 #pragma comment(lib,"XEngine_Core/XEngine_ManagePool.lib")
 #pragma comment(lib,"XEngine_Core/XEngine_OPenSsl.lib")
 #pragma comment(lib,"XEngine_HelpComponents/HelpComponents_XLog.lib")
-#pragma comment(lib,"XEngine_RfcComponents/RfcComponents_HttpServer.lib")
+#pragma comment(lib,"XEngine_RfcComponents/RfcComponents_HttpProtocol.lib")
 #pragma comment(lib,"XEngine_NetHelp/NetHelp_APIClient.lib")
 #pragma comment(lib,"XEngine_SystemSdk/XEngine_SystemApi")
 #pragma comment(lib,"Ws2_32.lib")

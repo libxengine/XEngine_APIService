@@ -43,7 +43,7 @@ CModulePlugin_Loader::~CModulePlugin_Loader()
   意思：是否成功
 备注：
 *********************************************************************/
-BOOL CModulePlugin_Loader::ModulePlugin_Loader_Insert(LPCTSTR lpszModuleMethod, LPCTSTR lpszModuleName, int nType /* = 0 */)
+XBOOL CModulePlugin_Loader::ModulePlugin_Loader_Insert(LPCXSTR lpszModuleMethod, LPCXSTR lpszModuleName, int nType /* = 0 */)
 {
     ModulePlugin_IsErrorOccur = FALSE;
 
@@ -98,7 +98,7 @@ BOOL CModulePlugin_Loader::ModulePlugin_Loader_Insert(LPCTSTR lpszModuleMethod, 
   意思：是否成功
 备注：
 *********************************************************************/
-BOOL CModulePlugin_Loader::ModulePlugin_Loader_Find(LPCTSTR lpszMethodName, int* pInt_Type)
+XBOOL CModulePlugin_Loader::ModulePlugin_Loader_Find(LPCXSTR lpszMethodName, int* pInt_Type)
 {
 	ModulePlugin_IsErrorOccur = FALSE;
 
@@ -162,7 +162,7 @@ BOOL CModulePlugin_Loader::ModulePlugin_Loader_Find(LPCTSTR lpszMethodName, int*
   意思：是否成功
 备注：
 *********************************************************************/
-BOOL CModulePlugin_Loader::ModulePlugin_Loader_Exec(LPCTSTR lpszMethodName, TCHAR*** pppHDRList, int nListCount, int* pInt_HTTPCode, TCHAR* ptszMsgBuffer, int* pInt_MsgLen)
+XBOOL CModulePlugin_Loader::ModulePlugin_Loader_Exec(LPCXSTR lpszMethodName, XCHAR*** pppHDRList, int nListCount, int* pInt_HTTPCode, XCHAR* ptszMsgBuffer, int* pInt_MsgLen)
 {
 	ModulePlugin_IsErrorOccur = FALSE;
 
@@ -209,7 +209,7 @@ BOOL CModulePlugin_Loader::ModulePlugin_Loader_Exec(LPCTSTR lpszMethodName, TCHA
   意思：是否成功
 备注：
 *********************************************************************/
-BOOL CModulePlugin_Loader::ModulePlugin_Loader_Destory()
+XBOOL CModulePlugin_Loader::ModulePlugin_Loader_Destory()
 {
 	ModulePlugin_IsErrorOccur = FALSE;
 

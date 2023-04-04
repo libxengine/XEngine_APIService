@@ -95,7 +95,7 @@ typedef enum
 //身份证校验
 typedef struct  
 {
-	TCHAR tszIDNumber[20];
+	XCHAR tszIDNumber[20];
 	WORD nIDProvince;           //省/自治区/直辖市
 	WORD nIDCity;               //市/区
 	WORD nIDCounty;             //县
@@ -109,23 +109,23 @@ typedef struct
 //行政区域
 typedef struct
 {
-	TCHAR tszProvincer[64];     //省/自治区/直辖市
-	TCHAR tszCity[64];          //市/区     
-	TCHAR tszCounty[64];        //县
+	XCHAR tszProvincer[64];     //省/自治区/直辖市
+	XCHAR tszCity[64];          //市/区     
+	XCHAR tszCounty[64];        //县
 }XENGINE_IDREGION;
 //银行卡
 typedef struct
 {
-	TCHAR tszBankNumber[MAX_PATH];       //银行卡号
-	TCHAR tszBankName[MAX_PATH];         //银行卡名称
-	TCHAR tszBankAbridge[MAX_PATH];      //银行卡缩写
+	XCHAR tszBankNumber[MAX_PATH];       //银行卡号
+	XCHAR tszBankName[MAX_PATH];         //银行卡名称
+	XCHAR tszBankAbridge[MAX_PATH];      //银行卡缩写
 	ENUM_XENGINE_APISERVICE_BANK_TYPE enBankType;
 }XENGINE_BANKINFO;
 //语言转换
 typedef struct
 {
-	TCHAR tszSourceStr[1024];                                //原始字符串
-	TCHAR tszDestStr[1024];                                  //转换字符串
+	XCHAR tszSourceStr[1024];                                //原始字符串
+	XCHAR tszDestStr[1024];                                  //转换字符串
 	int enType;                                              //简繁为ENUM_XENGINE_APISERVICE_LANGUAGE_TYPE 翻译为ENUM_XENGINE_APISERVICE_TRANSLATION_TYPE
 }XENGINE_LANGUAGEINFO;
 //连接信息
@@ -145,15 +145,15 @@ typedef struct tag_XEngine_P2XPIO_Protocol
 	CHAR tszDestUser[32];                                                 //要连接的用户
 	CHAR tszConnectAddr[32];                                              //连接的IP地址
 	int nDestPort;                                                        //要连接的端口
-	BOOL bIsTcp;                                                          //连接类型TCP,否则为UDP
+	XBOOL bIsTcp;                                                          //连接类型TCP,否则为UDP
 }XENGINE_P2XPIO_PROTOCOL, * LPXENGINE_P2XPIO_PROTOCOL;
 //邮编信息
 typedef struct
 {
-	TCHAR tszProvincer[64];     //省/自治区/直辖市
-	TCHAR tszCity[64];          //市/区     
-	TCHAR tszCounty[64];        //县
-	TCHAR tszPinYin[64];        //拼音
+	XCHAR tszProvincer[64];     //省/自治区/直辖市
+	XCHAR tszCity[64];          //市/区     
+	XCHAR tszCounty[64];        //县
+	XCHAR tszPinYin[64];        //拼音
 	double dlLng;               //经度
 	double dlLat;               //纬度
 	int nZipCode;               //邮编
@@ -164,17 +164,17 @@ typedef struct
 typedef struct  
 {
 	XENGINE_PROTOCOL_XLOG st_ProtocolLog;
-	TCHAR tszLogBuffer[10240];
-	TCHAR tszTableName[128];
-	TCHAR tszTimeStart[128];
-	TCHAR tszTimeEnd[128];
+	XCHAR tszLogBuffer[10240];
+	XCHAR tszTableName[128];
+	XCHAR tszTimeStart[128];
+	XCHAR tszTimeEnd[128];
 	int nLogSize;
 }XENGINE_XLOGINFO;
 //二维码
 typedef struct
 {
-	TCHAR tszMsgBuffer[4096];
-	TCHAR tszFmtBuffer[8];
+	XCHAR tszMsgBuffer[4096];
+	XCHAR tszFmtBuffer[8];
 }XENGINE_QRCODE;
 //网络测试
 typedef struct
@@ -200,7 +200,7 @@ typedef struct
 {
 	MODULEHELP_SOCKETTEST_RECONNECT st_SocketConn;
 	MODULEHELP_SOCKETTEST_DATAS st_SocketData;
-	TCHAR tszAPIUrl[MAX_PATH];
+	XCHAR tszAPIUrl[MAX_PATH];
 	XNETHANDLE xhToken;
 	int nType;                                                  //0,全部报告,其他结束统计报告
 	bool bTCP;

@@ -12,7 +12,7 @@
 *********************************************************************/
 typedef struct
 {
-	TCHAR tszModuleFile[MAX_PATH];
+	XCHAR tszModuleFile[MAX_PATH];
 	lua_State* pSt_LuaState;
 }PLUGINCORE_LUAFRAMEWORK;
 
@@ -22,14 +22,14 @@ public:
 	CModulePlugin_LuaCore();
 	~CModulePlugin_LuaCore();
 public:
-	BOOL ModulePlugin_LuaCore_Init();
-	BOOL ModulePlugin_LuaCore_Push(XNETHANDLE* pxhModule, LPCTSTR lpszPluginFile, LPVOID lParam = NULL);
-	BOOL ModulePlugin_LuaCore_Exec(XNETHANDLE xhModule, TCHAR*** pppHDRList, int nListCount, int* pInt_HTTPCode, TCHAR* ptszMsgBuffer, int* pInt_MsgLen, LPCTSTR lpszMsgBufer = NULL, int nMsgLen = 0);
-	BOOL ModulePlugin_LuaCore_Destroy();
+	XBOOL ModulePlugin_LuaCore_Init();
+	XBOOL ModulePlugin_LuaCore_Push(XNETHANDLE* pxhModule, LPCXSTR lpszPluginFile, XPVOID lParam = NULL);
+	XBOOL ModulePlugin_LuaCore_Exec(XNETHANDLE xhModule, XCHAR*** pppHDRList, int nListCount, int* pInt_HTTPCode, XCHAR* ptszMsgBuffer, int* pInt_MsgLen, LPCXSTR lpszMsgBufer = NULL, int nMsgLen = 0);
+	XBOOL ModulePlugin_LuaCore_Destroy();
 protected:
-	BOOL ModulePlugin_LuaCore_Add(XNETHANDLE xhNet, LPCTSTR lpszPluginFile, LPVOID lParam = NULL);
+	XBOOL ModulePlugin_LuaCore_Add(XNETHANDLE xhNet, LPCXSTR lpszPluginFile, XPVOID lParam = NULL);
 private:
-	BOOL bIsInit;
+	XBOOL bIsInit;
 private:
 	shared_mutex st_csStl;
 private:

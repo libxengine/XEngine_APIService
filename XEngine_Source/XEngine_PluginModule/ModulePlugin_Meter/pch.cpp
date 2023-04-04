@@ -11,7 +11,7 @@
 //    Purpose:     导出实现
 //    History:
 *********************************************************************/
-BOOL Meter_IsErrorOccur = FALSE;
+XBOOL Meter_IsErrorOccur = FALSE;
 DWORD Meter_dwErrorCode = 0;
 //////////////////////////////////////////////////////////////////////////
 CPlugin_Meter m_PluginMeter;
@@ -25,7 +25,7 @@ extern "C" DWORD PluginCore_GetLastError()
 /*********************************************************************************
 *                                导出函数定义                                    *
 *********************************************************************************/
-extern "C" BOOL PluginCore_Init(LPVOID lParam)
+extern "C" XBOOL PluginCore_Init(XPVOID lParam)
 {
 	return m_PluginMeter.PluginCore_Init(lParam);
 }
@@ -33,7 +33,7 @@ extern "C" void PluginCore_UnInit()
 {
 	m_PluginMeter.PluginCore_UnInit();
 }
-extern "C" BOOL PluginCore_Call(TCHAR * **pppHDRList, int nListCount, int* pInt_HTTPCode, TCHAR * ptszMsgBuffer, int* pInt_MsgLen, LPCTSTR lpszMsgBuffer, int nMsgLen)
+extern "C" XBOOL PluginCore_Call(XCHAR * **pppHDRList, int nListCount, int* pInt_HTTPCode, XCHAR * ptszMsgBuffer, int* pInt_MsgLen, LPCXSTR lpszMsgBuffer, int nMsgLen)
 {
 	return m_PluginMeter.PluginCore_Call(pppHDRList, nListCount, pInt_HTTPCode, ptszMsgBuffer, pInt_MsgLen, lpszMsgBuffer, nMsgLen);
 }

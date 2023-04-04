@@ -11,7 +11,7 @@
 //    Purpose:     导出函数实现
 //    History:
 *********************************************************************/
-BOOL Config_IsErrorOccur = FALSE;
+XBOOL Config_IsErrorOccur = FALSE;
 DWORD Config_dwErrorCode = 0;
 //////////////////////////////////////////////////////////////////////
 CModuleConfigure_Json m_ConfigJson;
@@ -29,19 +29,19 @@ extern "C" DWORD ModuleConfigure_GetLastError(int* pInt_ErrorCode)
 /************************************************************************/
 /*                        配置文件读取                                  */
 /************************************************************************/
-extern "C" BOOL ModuleConfigure_Json_File(LPCTSTR lpszConfigFile, XENGINE_SERVICECONFIG * pSt_ServerConfig)
+extern "C" XBOOL ModuleConfigure_Json_File(LPCXSTR lpszConfigFile, XENGINE_SERVICECONFIG * pSt_ServerConfig)
 {
 	return m_ConfigJson.ModuleConfigure_Json_File(lpszConfigFile, pSt_ServerConfig);
 }
-extern "C" BOOL ModuleConfigure_Json_OPenccFile(LPCTSTR lpszConfigFile, XENGINE_OPENCCCONFIG * pSt_OPenccConfig)
+extern "C" XBOOL ModuleConfigure_Json_OPenccFile(LPCXSTR lpszConfigFile, XENGINE_OPENCCCONFIG * pSt_OPenccConfig)
 {
 	return m_ConfigJson.ModuleConfigure_Json_OPenccFile(lpszConfigFile, pSt_OPenccConfig);
 }
-extern "C" BOOL ModuleConfigure_Json_QRCodeFile(LPCTSTR lpszConfigFile, XENGINE_QRCODECONFIG * pSt_QRCodeConfig)
+extern "C" XBOOL ModuleConfigure_Json_QRCodeFile(LPCXSTR lpszConfigFile, XENGINE_QRCODECONFIG * pSt_QRCodeConfig)
 {
 	return m_ConfigJson.ModuleConfigure_Json_QRCodeFile(lpszConfigFile, pSt_QRCodeConfig);
 }
-extern "C" BOOL ModuleConfigure_Json_PluginFile(LPCTSTR lpszConfigFile, XENGINE_PLUGINCONFIG * pSt_PluginConfig)
+extern "C" XBOOL ModuleConfigure_Json_PluginFile(LPCXSTR lpszConfigFile, XENGINE_PLUGINCONFIG * pSt_PluginConfig)
 {
 	return m_ConfigJson.ModuleConfigure_Json_PluginFile(lpszConfigFile, pSt_PluginConfig);
 }
