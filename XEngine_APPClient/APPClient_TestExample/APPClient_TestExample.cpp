@@ -25,13 +25,13 @@
 
 XNETHANDLE xhToken = 0;
 #define QRCODE_BUFFER_SIZE 1024 * 1024 * 10
-LPCTSTR lpszFileName = _T("D:\\XEngine_APIService\\XEngine_APPClient\\x64\\Debug\\1.png");
+LPCXSTR lpszFileName = _T("D:\\XEngine_APIService\\XEngine_APPClient\\x64\\Debug\\1.png");
 
 int test_create()
 {
 	int nLen = 0;
 	int nCode = 0;
-	LPCTSTR lpszAPIUrl = _T("http://127.0.0.1:5501/api?function=test&params1=0");
+	LPCXSTR lpszAPIUrl = _T("http://127.0.0.1:5501/api?function=test&params1=0");
 
 	Json::Value st_JsonRoot;
 	st_JsonRoot["tszAPIUrl"] = "http://127.0.0.1:5501/api?function=report&params1=0";
@@ -44,7 +44,7 @@ int test_create()
 	st_JsonRoot["nConnectTest"] = 1;
 	st_JsonRoot["nContWaitTime"] = 1000;
 
-	TCHAR* ptszMsgBuffer = NULL;
+	XCHAR* ptszMsgBuffer = NULL;
 	if (!APIClient_Http_Request(_T("POST"), lpszAPIUrl, st_JsonRoot.toStyledString().c_str(), &nCode, &ptszMsgBuffer, &nLen))
 	{
 		printf("发送投递失败！\n");
@@ -73,13 +73,13 @@ int test_delete()
 {
 	int nLen = 0;
 	int nCode = 0;
-	TCHAR* ptszMsgBuffer;
+	XCHAR* ptszMsgBuffer;
 	Json::Value st_JsonRoot;
 	st_JsonRoot["bTCP"] = true;
 	st_JsonRoot["bConn"] = true;
 	st_JsonRoot["xhToken"] = xhToken;
 
-	LPCTSTR lpszAPIUrl = _T("http://127.0.0.1:5501/api?function=test&params1=1");
+	LPCXSTR lpszAPIUrl = _T("http://127.0.0.1:5501/api?function=test&params1=1");
 	if (!APIClient_Http_Request(_T("POST"), lpszAPIUrl, st_JsonRoot.toStyledString().c_str(), &nCode, &ptszMsgBuffer, &nLen))
 	{
 		printf("发送投递失败！\n");

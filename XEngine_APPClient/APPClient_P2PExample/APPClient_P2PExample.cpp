@@ -26,20 +26,20 @@
 //linux使用下面的命令编译
 //g++ -std=c++17 -Wall -g APPClient_P2PExample.cpp -o APPClient_P2PExample.exe -I ../../XEngine_Source/XEngine_ThirdPart/jsoncpp -L /usr/local/lib/XEngine_Release/XEngine_BaseLib -L /usr/local/lib/XEngine_Release/XEngine_Core -L /usr/local/lib/XEngine_Release/XEngine_NetHelp -lXEngine_BaseLib -lXEngine_NetXApi -lNetHelp_APIClient -ljsoncpp
 
-LPCTSTR lpszUserName = _T("123123aa");
-TCHAR tszPublicAddr[128];
-TCHAR tszPrivateAddr[128];
+LPCXSTR lpszUserName = _T("123123aa");
+XCHAR tszPublicAddr[128];
+XCHAR tszPrivateAddr[128];
 
 int nPort = 5103;
 SOCKET m_hSocket;
 
-BOOL APIHelp_NetWork_GetIPNet(TCHAR* ptszIPAddr)
+BOOL APIHelp_NetWork_GetIPNet(XCHAR* ptszIPAddr)
 {
 	//获取本地外网IP地址
 	int nBLen = 0;
-	TCHAR* ptszBody = NULL;
-	LPCTSTR lpszUrl = _T("http://members.3322.org/dyndns/getip");
-	LPCTSTR lpszHdrBuffer = _T("Connection: close\r\nDNT: 1\r\nUpgrade-Insecure-Requests: 1\r\nUser-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/97.0.4692.71 Safari/537.36 Edg/97.0.1072.55\r\nAccept: text/html\r\nAccept-Language: zh-CN,zh\r\nAccept-Encoding: deflate\r\n");
+	XCHAR* ptszBody = NULL;
+	LPCXSTR lpszUrl = _T("http://members.3322.org/dyndns/getip");
+	LPCXSTR lpszHdrBuffer = _T("Connection: close\r\nDNT: 1\r\nUpgrade-Insecure-Requests: 1\r\nUser-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/97.0.4692.71 Safari/537.36 Edg/97.0.1072.55\r\nAccept: text/html\r\nAccept-Language: zh-CN,zh\r\nAccept-Encoding: deflate\r\n");
 
 	if (!APIClient_Http_Request(_T("GET"), lpszUrl, NULL, NULL, &ptszBody, &nBLen, lpszHdrBuffer))
 	{
@@ -52,7 +52,7 @@ BOOL APIHelp_NetWork_GetIPNet(TCHAR* ptszIPAddr)
 int APPClient_P2XPLogin()
 {
 	Json::Value st_JsonRoot;
-	LPCTSTR lpszAddr = _T("http://192.168.1.8:5501/api?function=p2p&params1=24577");
+	LPCXSTR lpszAddr = _T("http://192.168.1.8:5501/api?function=p2p&params1=24577");
 	ENUM_XENGINE_NETXAPI_SOCKET_CONNECTTYPE dwNetType;
 
 	memset(tszPublicAddr, '\0', sizeof(tszPublicAddr));
@@ -82,7 +82,7 @@ int APPClient_P2XPLogin()
 
 	int nMsgLen = 0;
 	int nHTTPCode = 0;
-	TCHAR* ptszMsgBuffer = NULL;
+	XCHAR* ptszMsgBuffer = NULL;
 	if (!APIClient_Http_Request(_T("POST"), lpszAddr, st_JsonRoot.toStyledString().c_str(), &nHTTPCode, &ptszMsgBuffer, &nMsgLen))
 	{
 		return -1;
@@ -95,7 +95,7 @@ int APPClient_P2XPLogin()
 int APPClient_P2XPList()
 {
 	Json::Value st_JsonRoot;
-	LPCTSTR lpszAddr = _T("http://192.168.1.8:5501/api?function=p2p&params1=24579");
+	LPCXSTR lpszAddr = _T("http://192.168.1.8:5501/api?function=p2p&params1=24579");
 
 	st_JsonRoot["tszUserName"] = lpszUserName;
 	st_JsonRoot["tszPrivateAddr"] = tszPrivateAddr;
@@ -103,7 +103,7 @@ int APPClient_P2XPList()
 
 	int nMsgLen = 0;
 	int nHTTPCode = 0;
-	TCHAR* ptszMsgBuffer = NULL;
+	XCHAR* ptszMsgBuffer = NULL;
 	if (!APIClient_Http_Request(_T("POST"), lpszAddr, st_JsonRoot.toStyledString().c_str(), &nHTTPCode, &ptszMsgBuffer, &nMsgLen))
 	{
 		return -1;
@@ -116,7 +116,7 @@ int APPClient_P2XPList()
 int APPClient_P2XPGetUser()
 {
 	Json::Value st_JsonRoot;
-	LPCTSTR lpszAddr = _T("http://192.168.1.8:5501/api?function=p2p&params1=24583");
+	LPCXSTR lpszAddr = _T("http://192.168.1.8:5501/api?function=p2p&params1=24583");
 
 	st_JsonRoot["tszUserName"] = lpszUserName;
 	st_JsonRoot["tszPrivateAddr"] = tszPrivateAddr;
@@ -124,7 +124,7 @@ int APPClient_P2XPGetUser()
 
 	int nMsgLen = 0;
 	int nHTTPCode = 0;
-	TCHAR* ptszMsgBuffer = NULL;
+	XCHAR* ptszMsgBuffer = NULL;
 	if (!APIClient_Http_Request(_T("POST"), lpszAddr, st_JsonRoot.toStyledString().c_str(), &nHTTPCode, &ptszMsgBuffer, &nMsgLen))
 	{
 		return -1;
@@ -137,7 +137,7 @@ int APPClient_P2XPGetUser()
 int APPClient_P2XPConnect()
 {
 	Json::Value st_JsonRoot;
-	LPCTSTR lpszAddr = _T("http://192.168.1.8:5501/api?function=p2p&params1=24581");
+	LPCXSTR lpszAddr = _T("http://192.168.1.8:5501/api?function=p2p&params1=24581");
 
 	st_JsonRoot["tszUserName"] = lpszUserName;
 	st_JsonRoot["tszPrivateAddr"] = tszPrivateAddr;
@@ -145,7 +145,7 @@ int APPClient_P2XPConnect()
 
 	int nMsgLen = 0;
 	int nHTTPCode = 0;
-	TCHAR* ptszMsgBuffer = NULL;
+	XCHAR* ptszMsgBuffer = NULL;
 	if (!APIClient_Http_Request(_T("POST"), lpszAddr, st_JsonRoot.toStyledString().c_str(), &nHTTPCode, &ptszMsgBuffer, &nMsgLen))
 	{
 		return -1;

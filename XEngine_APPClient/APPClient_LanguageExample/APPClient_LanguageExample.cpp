@@ -28,8 +28,8 @@ int main()
 	WSAStartup(MAKEWORD(2, 2), &st_WSAData);
 #endif
 	int nLen = 0;
-	TCHAR* ptszMsgBuffer = NULL;
-	LPCTSTR lpszUrl = _T("http://127.0.0.1:5501/api?function=language&params1=简体&params2=0&param3=1");
+	XCHAR* ptszMsgBuffer = NULL;
+	LPCXSTR lpszUrl = _T("http://127.0.0.1:5501/api?function=language&params1=简体&params2=0&param3=1");
 
 	if (!APIClient_Http_Request(_T("GET"), lpszUrl, NULL, NULL, &ptszMsgBuffer, &nLen))
 	{

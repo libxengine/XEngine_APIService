@@ -28,15 +28,19 @@ int main()
 	WSAStartup(MAKEWORD(2, 2), &st_WSAData);
 #endif
 	int nLen = 0;
-	TCHAR* ptszMsgBuffer = NULL;
-	LPCTSTR lpszUrl = _T("http://127.0.0.1:5501/api?function=ip&params1=1.29.164.255&params2=0");
+	XCHAR* ptszMsgBuffer = NULL;
+	LPCXSTR lpszUrl = _T("http://127.0.0.1:5501/api?function=ip&params1=1.29.164.255&params2=0");
 
 	if (!APIClient_Http_Request(_T("GET"), lpszUrl, NULL, NULL, &ptszMsgBuffer, &nLen))
 	{
 		printf("发送投递失败！\n");
 		return 0;
 	}
-	printf("接受到数据,大小:%d,内容:%s\n", nLen, ptszMsgBuffer);
+	XCHAR tszMsgBuffer[2048];
+	memset(tszMsgBuffer, '\0', sizeof(tszMsgBuffer));
+
+	BaseLib_OperatorCharset_UTFToAnsi(ptszMsgBuffer, tszMsgBuffer, &nLen);
+	printf("接受到数据,大小:%d,内容:%s\n", nLen, tszMsgBuffer);
 	BaseLib_OperatorMemory_FreeCStyle((XPPMEM)&ptszMsgBuffer);
 
 #ifdef _MSC_BUILD

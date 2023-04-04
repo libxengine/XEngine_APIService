@@ -25,19 +25,19 @@
 
 #define QRCODE_BUFFER_SIZE 1024 * 1024 * 10
 
-LPCTSTR lpszFileName = _T("D:\\XEngine_APIService\\XEngine_APPClient\\x64\\Debug\\1.png");
+LPCXSTR lpszFileName = _T("D:\\XEngine_APIService\\XEngine_APPClient\\x64\\Debug\\1.png");
 
 int test_create()
 {
 	int nLen = 0;
 	int nCode = 0;
-	LPCTSTR lpszAPIUrl = _T("http://127.0.0.1:5501/api?function=qrcode&params1=0");
+	LPCXSTR lpszAPIUrl = _T("http://127.0.0.1:5501/api?function=qrcode&params1=0");
 
 	Json::Value st_JsonRoot;
 	st_JsonRoot["tszMsgBuffer"] = lpszAPIUrl;
 	st_JsonRoot["tszFmtBuffer"] = ".png";
 
-	TCHAR* ptszMsgBuffer = NULL;
+	XCHAR* ptszMsgBuffer = NULL;
 	if (!APIClient_Http_Request(_T("POST"), lpszAPIUrl, st_JsonRoot.toStyledString().c_str(), &nCode, &ptszMsgBuffer, &nLen))
 	{
 		printf("发送投递失败！\n");
@@ -57,17 +57,17 @@ int test_create()
 int test_parse()
 {
 	int nCode = 0;
-	TCHAR* ptszMsgBuffer = (TCHAR*)malloc(QRCODE_BUFFER_SIZE);
+	XCHAR* ptszMsgBuffer = (XCHAR*)malloc(QRCODE_BUFFER_SIZE);
 
-	LPCTSTR lpszAPIUrl = _T("http://127.0.0.1:5501/api?function=qrcode&params1=1");
+	LPCXSTR lpszAPIUrl = _T("http://127.0.0.1:5501/api?function=qrcode&params1=1");
 	FILE* pSt_File = fopen(lpszFileName, "rb");
 	if (NULL != pSt_File)
 	{
-		LPCTSTR lpszCustomHdr = _T("Content-Type: image/png\r\n");
+		LPCXSTR lpszCustomHdr = _T("Content-Type: image/png\r\n");
 		memset(ptszMsgBuffer, '\0', QRCODE_BUFFER_SIZE);
 		int nRet = fread(ptszMsgBuffer, 1, QRCODE_BUFFER_SIZE, pSt_File);
 		
-		TCHAR* ptszBodyBuffer = NULL;
+		XCHAR* ptszBodyBuffer = NULL;
 		if (!APIClient_Http_Request(_T("POST"), lpszAPIUrl, ptszMsgBuffer, &nCode, &ptszBodyBuffer, &nRet, lpszCustomHdr))
 		{
 			printf("发送投递失败！\n");
