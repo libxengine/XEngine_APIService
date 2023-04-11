@@ -163,13 +163,13 @@
     <ClCompile Include="XEngine_TaskGet\TaskGet_Language.cpp" />
     <ClCompile Include="XEngine_TaskGet\TaskGet_Locker.cpp" />
     <ClCompile Include="XEngine_TaskGet\TaskGet_OPtions.cpp" />
-    <ClCompile Include="XEngine_TaskGet\TaskGet_ShortLink.cpp" />
     <ClCompile Include="XEngine_TaskGet\TaskGet_Translation.cpp" />
     <ClCompile Include="XEngine_TaskPost\TaskPost_DTest.cpp" />
     <ClCompile Include="XEngine_TaskPost\TaskPost_Log.cpp" />
     <ClCompile Include="XEngine_TaskPost\TaskPost_P2PClient.cpp" />
     <ClCompile Include="XEngine_TaskPost\TaskPost_PostCode.cpp" />
     <ClCompile Include="XEngine_TaskPost\TaskPost_QRCode.cpp" />
+    <ClCompile Include="XEngine_TaskPost\TaskPost_ShortLink.cpp" />
     <ClCompile Include="XEngine_TaskPost\TaskPost_SocketTest.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -178,13 +178,13 @@
     <ClInclude Include="XEngine_HTTPTask.h" />
     <ClInclude Include="XEngine_Network.h" />
     <ClInclude Include="XEngine_PluginTask.h" />
-    <ClInclude Include="XEngine_TaskGet\TaskGet_ShortLink.h" />
     <ClInclude Include="XEngine_TaskGet\TaskGet_Bank.h" />
     <ClInclude Include="XEngine_TaskGet\TaskGet_IDCard.h" />
     <ClInclude Include="XEngine_TaskGet\TaskGet_Language.h" />
     <ClInclude Include="XEngine_TaskGet\TaskGet_Locker.h" />
     <ClInclude Include="XEngine_TaskGet\TaskGet_OPtions.h" />
     <ClInclude Include="XEngine_TaskGet\TaskGet_Translation.h" />
+    <ClInclude Include="XEngine_TaskPost\TaskPost_ShortLink.h" />
     <ClInclude Include="XEngine_TaskPost\TaskPost_DTest.h" />
     <ClInclude Include="XEngine_TaskPost\TaskPost_Log.h" />
     <ClInclude Include="XEngine_TaskPost\TaskPost_P2PClient.h" />

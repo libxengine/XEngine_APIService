@@ -212,6 +212,10 @@ typedef struct
 	XCHAR tszFullUrl[MAX_PATH];
 	XCHAR tszShotUrl[MAX_PATH];
 	XCHAR tszKeyUrl[MAX_PATH];
+	XCHAR tszMapUrl[MAX_PATH];
+	XCHAR tszCvtUrl[MAX_PATH];
 	XCHAR tszCreateTime[128];
+	int nLength;
+	int nID;
 }XENGINE_SHORTLINK;
 #pragma pack(pop)

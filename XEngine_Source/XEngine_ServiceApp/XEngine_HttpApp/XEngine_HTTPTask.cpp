@@ -94,13 +94,14 @@ XBOOL HTTPTask_TastPost_Handle(RFCCOMPONENTS_HTTP_REQPARAM* pSt_HTTPParam, LPCXS
 	LPCXSTR lpszParamLanguage = _T("language");
 	LPCXSTR lpszParamTranslation = _T("translation");
 	LPCXSTR lpszParamLocker = _T("lock");
-	LPCXSTR lpszParamQRCode = _T("qrcode");
 	//post
 	LPCXSTR lpszParamP2PClient = _T("p2p");
 	LPCXSTR lpszParamZIPCode = _T("zipcode");
 	LPCXSTR lpszParamXLog = _T("log");
+	LPCXSTR lpszParamQRCode = _T("qrcode");
 	LPCXSTR lpszParamSocket = _T("socket");
 	LPCXSTR lpszParamDTest = _T("dtest");
+	LPCXSTR lpszParamShortLink = _T("slink");
 
 	memset(tszKey, '\0', MAX_PATH);
 	memset(tszValue, '\0', MAX_PATH);
@@ -235,6 +236,15 @@ XBOOL HTTPTask_TastPost_Handle(RFCCOMPONENTS_HTTP_REQPARAM* pSt_HTTPParam, LPCXS
 				return XFALSE;
 			}
 			HTTPTask_TastPost_DTest(lpszClientAddr, lpszRVBuffer, nRVLen, _ttoi(tszValue));
+		}
+		else if (0 == _tcsnicmp(lpszParamShortLink, tszValue, _tcslen(lpszParamShortLink)))
+		{
+			//短连接:http://app.xyry.org:5501/api?function=slink&params1=0 
+			XCHAR tszType[64];
+			memset(tszType, '\0', sizeof(tszType));
+
+			BaseLib_OperatorString_GetKeyValue(pptszList[1], "=", tszKey, tszType);
+			HTTPTask_TaskPost_ShortLink(lpszClientAddr, lpszRVBuffer, nRVLen, _ttoi(tszType));
 		}
 		else
 		{
