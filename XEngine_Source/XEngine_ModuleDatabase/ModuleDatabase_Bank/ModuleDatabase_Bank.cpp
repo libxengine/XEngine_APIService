@@ -24,11 +24,11 @@ CModuleDatabase_Bank::~CModuleDatabase_Bank()
 /********************************************************************
 函数名称：ModuleDatabase_Bank_Init
 函数功能：初始化SQLITE文件系统
- 参数.一：lpszSQLFile
+ 参数.一：pSt_DBConnector
   In/Out：In
-  类型：常量字符指针
+  类型：数据结构指针
   可空：N
-  意思：输入要操作的SQL文件
+  意思：输入要操作的数据库
 返回值
   类型：逻辑型
   意思：是否成功
@@ -44,14 +44,9 @@ XBOOL CModuleDatabase_Bank::ModuleDatabase_Bank_Init(DATABASE_MYSQL_CONNECTINFO*
 		DBModule_dwErrorCode = ERROR_APISERVICE_MODULE_DATABASE_PARAMENT;
 		return FALSE;
 	}
-#ifdef _MSC_BUILD
-	LPCXSTR lpszStrCharset = _T("gbk");
-#else
-	LPCXSTR lpszStrCharset = _T("utf8");
-#endif
 	//连接数据库
 	_tcscpy(pSt_DBConnector->tszDBName, _T("XEngine_APIInfo"));
-	if (!DataBase_MySQL_Connect(&xhDBSQL, pSt_DBConnector, 5, TRUE, lpszStrCharset))
+	if (!DataBase_MySQL_Connect(&xhDBSQL, pSt_DBConnector))
 	{
 		DBModule_IsErrorOccur = TRUE;
 		DBModule_dwErrorCode = DataBase_GetLastError();

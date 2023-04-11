@@ -44,14 +44,9 @@ XBOOL CModuleDatabase_ZIPCode::ModuleDatabase_ZIPCode_Init(DATABASE_MYSQL_CONNEC
 		DBModule_dwErrorCode = ERROR_APISERVICE_MODULE_DATABASE_PARAMENT;
 		return FALSE;
 	}
-#ifdef _MSC_BUILD
-	LPCXSTR lpszStrCharset = _T("gbk");
-#else
-	LPCXSTR lpszStrCharset = _T("utf8");
-#endif
 	//连接数据库
 	_tcscpy(pSt_DBConnector->tszDBName, _T("XEngine_APIInfo"));
-	if (!DataBase_MySQL_Connect(&xhDBSQL, pSt_DBConnector, 5, TRUE, lpszStrCharset))
+	if (!DataBase_MySQL_Connect(&xhDBSQL, pSt_DBConnector))
 	{
 		DBModule_IsErrorOccur = TRUE;
 		DBModule_dwErrorCode = DataBase_GetLastError();

@@ -159,11 +159,11 @@ extern "C" XBOOL ModuleDatabase_ZIPCode_QueryName(XENGINE_ZIPINFO* pSt_ZIPInfo);
 /********************************************************************
 函数名称：ModuleDatabase_XLog_Init
 函数功能：初始化SQLITE文件系统
- 参数.一：lpszSQLFile
+ 参数.一：pSt_DBConnector
   In/Out：In
-  类型：常量字符指针
+  类型：数据结构指针
   可空：N
-  意思：输入要操作的SQL文件
+  意思：输入要操作的数据库
 返回值
   类型：逻辑型
   意思：是否成功

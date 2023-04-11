@@ -166,6 +166,7 @@
     <ClInclude Include="framework.h" />
     <ClInclude Include="ModuleDatabase_Bank\ModuleDatabase_Bank.h" />
     <ClInclude Include="ModuleDatabase_IDCard\ModuleDatabase_IDCard.h" />
+    <ClInclude Include="ModuleDatabase_ShortLink\ModuleDatabase_ShortLink.h" />
     <ClInclude Include="ModuleDatabase_XLog\ModuleDatabase_XLog.h" />
     <ClInclude Include="ModuleDatabase_ZIPCode\ModuleDatabase_ZIPCode.h" />
     <ClInclude Include="ModuleDB_Define.h" />
@@ -176,6 +177,7 @@
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="ModuleDatabase_Bank\ModuleDatabase_Bank.cpp" />
     <ClCompile Include="ModuleDatabase_IDCard\ModuleDatabase_IDCard.cpp" />
+    <ClCompile Include="ModuleDatabase_ShortLink\ModuleDatabase_ShortLink.cpp" />
     <ClCompile Include="ModuleDatabase_XLog\ModuleDatabase_XLog.cpp" />
     <ClCompile Include="ModuleDatabase_ZIPCode\ModuleDatabase_ZIPCode.cpp" />
     <ClCompile Include="pch.cpp">
