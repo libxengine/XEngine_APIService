@@ -255,3 +255,71 @@ extern "C" XBOOL ModuleDatabase_XLog_Query(XENGINE_XLOGINFO*** pppSt_XLogInfo, i
 备注：
 *********************************************************************/
 extern "C" XBOOL ModuleDatabase_XLog_Delete(LPCXSTR lpszTableName);
+/************************************************************************/
+/*                         导出的短连接数据库函数                       */
+/************************************************************************/
+/********************************************************************
+函数名称：ModuleDatabase_ShortLink_Init
+函数功能：初始化SQLITE文件系统
+ 参数.一：pSt_DBConnector
+  In/Out：In
+  类型：数据结构指针
+  可空：N
+  意思：数据数据库信息
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+extern "C" XBOOL ModuleDatabase_ShortLink_Init(DATABASE_MYSQL_CONNECTINFO* pSt_DBConnector);
+/********************************************************************
+函数名称：ModuleDatabase_ShortLink_Destory
+函数功能：销毁
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+extern "C" XBOOL ModuleDatabase_ShortLink_Destory();
+/********************************************************************
+函数名称：ModuleDatabase_ShortLink_Insert
+函数功能：插入一个短连接到数据库中
+ 参数.一：pSt_SLinkInfo
+  In/Out：In
+  类型：数据结构指针
+  可空：N
+  意思：输入要插入的信息
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+extern "C" XBOOL ModuleDatabase_ShortLink_Insert(XENGINE_SHORTLINK* pSt_SLinkInfo);
+/********************************************************************
+函数名称：ModuleDatabase_ShortLink_Query
+函数功能：查询短连接
+ 参数.一：pSt_SLinkInfo
+  In/Out：In/Out
+  类型：数据结构指针
+  可空：N
+  意思：输入查询的短连接,输出完整的连接
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+extern "C" XBOOL ModuleDatabase_ShortLink_Query(XENGINE_SHORTLINK* pSt_SLinkInfo);
+/********************************************************************
+函数名称：ModuleDatabase_ShortLink_Delete
+函数功能：删除短连接
+ 参数.一：pSt_SLinkInfo
+  In/Out：In
+  类型：数据结构指针
+  可空：N
+  意思：输入要删除的短连接
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+extern "C" XBOOL ModuleDatabase_ShortLink_Delete(XENGINE_SHORTLINK* pSt_SLinkInfo);

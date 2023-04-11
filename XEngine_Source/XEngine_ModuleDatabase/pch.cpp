@@ -3,6 +3,7 @@
 #include "ModuleDatabase_Bank/ModuleDatabase_Bank.h"
 #include "ModuleDatabase_ZIPCode/ModuleDatabase_ZIPCode.h"
 #include "ModuleDatabase_XLog/ModuleDatabase_XLog.h"
+#include "ModuleDatabase_ShortLink/ModuleDatabase_ShortLink.h"
 /********************************************************************
 //    Created:     2022/02/28  13:26:15
 //    File Name:   D:\XEngine_IPInfo\XEngine_Source\XEngine_ModuleDatabase\pch.cpp
@@ -14,13 +15,14 @@
 //    Purpose:     导出函数实现
 //    History:
 *********************************************************************/
-DWORD DBModule_IsErrorOccur = FALSE;
+DWORD DBModule_IsErrorOccur = XFALSE;
 XBOOL DBModule_dwErrorCode = 0;
 //////////////////////////////////////////////////////////////////////////
 CModuleDatabase_IDCard m_IDCard;
 CModuleDatabase_Bank m_Bank;
 CModuleDatabase_ZIPCode m_ZIPCode;
 CModuleDatabase_XLog m_XLog;
+CModuleDatabase_ShortLink m_ShortLink;
 //////////////////////////////////////////////////////////////////////////
 ///                        导出的函数
 //////////////////////////////////////////////////////////////////////////
@@ -107,4 +109,27 @@ extern "C" XBOOL ModuleDatabase_XLog_Query(XENGINE_XLOGINFO * **pppSt_XLogInfo, 
 extern "C" XBOOL ModuleDatabase_XLog_Delete(LPCXSTR lpszTableName)
 {
 	return m_XLog.ModuleDatabase_XLog_Delete(lpszTableName);
+}
+/************************************************************************/
+/*                         导出的短连接数据库函数                       */
+/************************************************************************/
+extern "C" XBOOL ModuleDatabase_ShortLink_Init(DATABASE_MYSQL_CONNECTINFO * pSt_DBConnector)
+{
+	return m_ShortLink.ModuleDatabase_ShortLink_Init(pSt_DBConnector);
+}
+extern "C" XBOOL ModuleDatabase_ShortLink_Destory()
+{
+	return m_ShortLink.ModuleDatabase_ShortLink_Destory();
+}
+extern "C" XBOOL ModuleDatabase_ShortLink_Insert(XENGINE_SHORTLINK * pSt_SLinkInfo)
+{
+	return m_ShortLink.ModuleDatabase_ShortLink_Insert(pSt_SLinkInfo);
+}
+extern "C" XBOOL ModuleDatabase_ShortLink_Query(XENGINE_SHORTLINK * pSt_SLinkInfo)
+{
+	return m_ShortLink.ModuleDatabase_ShortLink_Query(pSt_SLinkInfo);
+}
+extern "C" XBOOL ModuleDatabase_ShortLink_Delete(XENGINE_SHORTLINK * pSt_SLinkInfo)
+{
+	return m_ShortLink.ModuleDatabase_ShortLink_Delete(pSt_SLinkInfo);
 }
