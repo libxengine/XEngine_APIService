@@ -16,7 +16,7 @@ XBOOL HTTPTask_TaskGet_Language(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer, i
 	memset(&st_HDRParam, '\0', sizeof(RFCCOMPONENTS_HTTP_HDRPARAM));
 
 	st_HDRParam.nHttpCode = 200; //HTTP CODE码
-	st_HDRParam.bIsClose = TRUE; //收到回复后就关闭
+	st_HDRParam.bIsClose = XTRUE; //收到回复后就关闭
 	
 	st_LanguageInfo.enType = nConvertType;
 	OPenSsl_Codec_UrlDeCodec(lpszMsgBuffer, _tcslen(lpszMsgBuffer), st_LanguageInfo.tszSourceStr);
@@ -81,5 +81,5 @@ XBOOL HTTPTask_TaskGet_Language(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer, i
 	HttpProtocol_Server_SendMsgEx(xhHTTPPacket, tszMsgBuffer, &nMsgLen, &st_HDRParam, tszPktBuffer, nPktLen);
 	XEngine_Network_Send(lpszClientAddr, tszMsgBuffer, nMsgLen);
 	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _T("HTTP客户端:%s,请求语言转换成功,原始语言:%s,目标语言:%s"), lpszClientAddr, st_LanguageInfo.tszSourceStr, st_LanguageInfo.tszDestStr);
-	return TRUE;
+	return XTRUE;
 }

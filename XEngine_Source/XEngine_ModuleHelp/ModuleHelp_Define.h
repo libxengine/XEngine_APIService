@@ -617,7 +617,7 @@ extern "C" XBOOL ModuleHelp_SocketTest_StopConnect(XNETHANDLE xhToken);
   意思：是否成功
 备注：
 *********************************************************************/
-extern "C" XBOOL ModuleHelp_SocketTest_StartDatas(XNETHANDLE* pxhToken, MODULEHELP_SOCKETTEST_DATAS* pSt_SocketDatas, CALLBACK_APISERVICE_MODULE_HELP_SOCKETTEST fpCall_DataTest, XBOOL bTCP = TRUE, XPVOID lParam = NULL);
+extern "C" XBOOL ModuleHelp_SocketTest_StartDatas(XNETHANDLE* pxhToken, MODULEHELP_SOCKETTEST_DATAS* pSt_SocketDatas, CALLBACK_APISERVICE_MODULE_HELP_SOCKETTEST fpCall_DataTest, XBOOL bTCP = XTRUE, XPVOID lParam = NULL);
 /********************************************************************
 函数名称：ModuleHelp_SocketTest_GetDatas
 函数功能：获取是否在处理中

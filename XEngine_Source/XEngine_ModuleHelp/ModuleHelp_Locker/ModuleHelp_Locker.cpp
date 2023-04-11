@@ -36,20 +36,20 @@ CModuleHelp_Locker::~CModuleHelp_Locker()
 *********************************************************************/
 XBOOL CModuleHelp_Locker::ModuleHelp_Locker_Create(XNETHANDLE* pxhToken)
 {
-	ModuleHelp_IsErrorOccur = FALSE;
+	ModuleHelp_IsErrorOccur = XFALSE;
 
 	if (NULL == pxhToken)
 	{
-		ModuleHelp_IsErrorOccur = TRUE;
+		ModuleHelp_IsErrorOccur = XTRUE;
 		ModuleHelp_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_HELP_LOCK_PARAMENT;
-		return FALSE;
+		return XFALSE;
 	}
 	MODULEHELP_LOCKINFO *pSt_LockInfo = new MODULEHELP_LOCKINFO;
 	if (NULL == pSt_LockInfo)
 	{
-		ModuleHelp_IsErrorOccur = TRUE;
+		ModuleHelp_IsErrorOccur = XTRUE;
 		ModuleHelp_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_HELP_LOCK_MALLOC;
-		return FALSE;
+		return XFALSE;
 	}
 	pSt_LockInfo->enLockStatus = ENUM_MODULEHELP_LOCKSTATUS_NOTUSED;
 
@@ -58,7 +58,7 @@ XBOOL CModuleHelp_Locker::ModuleHelp_Locker_Create(XNETHANDLE* pxhToken)
 	st_Locker.lock();
 	stl_MapLocker.insert(make_pair(*pxhToken, pSt_LockInfo));
 	st_Locker.unlock();
-	return TRUE;
+	return XTRUE;
 }
 /********************************************************************
 函数名称：ModuleHelp_Locker_OPen
@@ -75,33 +75,33 @@ XBOOL CModuleHelp_Locker::ModuleHelp_Locker_Create(XNETHANDLE* pxhToken)
 *********************************************************************/
 XBOOL CModuleHelp_Locker::ModuleHelp_Locker_OPen(XNETHANDLE xhToken)
 {
-	ModuleHelp_IsErrorOccur = FALSE;
+	ModuleHelp_IsErrorOccur = XFALSE;
 
 	//看看存在不存在
 	st_Locker.lock_shared();
 	auto stl_MapIterator = stl_MapLocker.find(xhToken);
 	if (stl_MapIterator != stl_MapLocker.end())
 	{
-		ModuleHelp_IsErrorOccur = TRUE;
+		ModuleHelp_IsErrorOccur = XTRUE;
 		ModuleHelp_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_HELP_LOCK_EXIST;
 		st_Locker.unlock_shared();
-		return FALSE;
+		return XFALSE;
 	}
 	st_Locker.unlock_shared();
 	//不存在插入
 	MODULEHELP_LOCKINFO* pSt_LockInfo = new MODULEHELP_LOCKINFO;
 	if (NULL == pSt_LockInfo)
 	{
-		ModuleHelp_IsErrorOccur = TRUE;
+		ModuleHelp_IsErrorOccur = XTRUE;
 		ModuleHelp_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_HELP_LOCK_MALLOC;
-		return FALSE;
+		return XFALSE;
 	}
 	pSt_LockInfo->enLockStatus = ENUM_MODULEHELP_LOCKSTATUS_NOTUSED;
 
 	st_Locker.lock();
 	stl_MapLocker.insert(make_pair(xhToken, pSt_LockInfo));
 	st_Locker.unlock();
-	return TRUE;
+	return XTRUE;
 }
 /********************************************************************
 函数名称：ModuleHelp_Locker_ReadLock
@@ -118,31 +118,31 @@ XBOOL CModuleHelp_Locker::ModuleHelp_Locker_OPen(XNETHANDLE xhToken)
 *********************************************************************/
 XBOOL CModuleHelp_Locker::ModuleHelp_Locker_ReadLock(XNETHANDLE xhToken)
 {
-	ModuleHelp_IsErrorOccur = FALSE;
+	ModuleHelp_IsErrorOccur = XFALSE;
 
 	//看看存在不存在
 	st_Locker.lock_shared();
 	auto stl_MapIterator = stl_MapLocker.find(xhToken);
 	if (stl_MapIterator == stl_MapLocker.end())
 	{
-		ModuleHelp_IsErrorOccur = TRUE;
+		ModuleHelp_IsErrorOccur = XTRUE;
 		ModuleHelp_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_HELP_LOCK_NOTFOUND;
 		st_Locker.unlock_shared();
-		return FALSE;
+		return XFALSE;
 	}
 	//判断锁状态,如果是写,返回错误
 	if (ENUM_MODULEHELP_LOCKSTATUS_WRITE == stl_MapIterator->second->enLockStatus)
 	{
-		ModuleHelp_IsErrorOccur = TRUE;
+		ModuleHelp_IsErrorOccur = XTRUE;
 		ModuleHelp_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_HELP_LOCK_LOCKED;
 		st_Locker.unlock_shared();
-		return FALSE;
+		return XFALSE;
 	}
 	//没有加锁,开始加锁
 	stl_MapIterator->second->enLockStatus = ENUM_MODULEHELP_LOCKSTATUS_READ;
 
 	st_Locker.unlock_shared();
-	return TRUE;
+	return XTRUE;
 }
 /********************************************************************
 函数名称：ModuleHelp_Locker_ReadUNLock
@@ -159,30 +159,30 @@ XBOOL CModuleHelp_Locker::ModuleHelp_Locker_ReadLock(XNETHANDLE xhToken)
 *********************************************************************/
 XBOOL CModuleHelp_Locker::ModuleHelp_Locker_ReadUNLock(XNETHANDLE xhToken)
 {
-	ModuleHelp_IsErrorOccur = FALSE;
+	ModuleHelp_IsErrorOccur = XFALSE;
 
 	//看看存在不存在
 	st_Locker.lock_shared();
 	auto stl_MapIterator = stl_MapLocker.find(xhToken);
 	if (stl_MapIterator == stl_MapLocker.end())
 	{
-		ModuleHelp_IsErrorOccur = TRUE;
+		ModuleHelp_IsErrorOccur = XTRUE;
 		ModuleHelp_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_HELP_LOCK_NOTFOUND;
 		st_Locker.unlock_shared();
-		return FALSE;
+		return XFALSE;
 	}
 	//是不是READ锁定,不是返回错误
 	if (ENUM_MODULEHELP_LOCKSTATUS_READ != stl_MapIterator->second->enLockStatus)
 	{
-		ModuleHelp_IsErrorOccur = TRUE;
+		ModuleHelp_IsErrorOccur = XTRUE;
 		ModuleHelp_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_HELP_LOCK_STATUS;
 		st_Locker.unlock_shared();
-		return FALSE;
+		return XFALSE;
 	}
 	stl_MapIterator->second->enLockStatus = ENUM_MODULEHELP_LOCKSTATUS_NOTUSED;
 
 	st_Locker.unlock_shared();
-	return TRUE;
+	return XTRUE;
 }
 /********************************************************************
 函数名称：ModuleHelp_Locker_WriteLock
@@ -199,30 +199,30 @@ XBOOL CModuleHelp_Locker::ModuleHelp_Locker_ReadUNLock(XNETHANDLE xhToken)
 *********************************************************************/
 XBOOL CModuleHelp_Locker::ModuleHelp_Locker_WriteLock(XNETHANDLE xhToken)
 {
-	ModuleHelp_IsErrorOccur = FALSE;
+	ModuleHelp_IsErrorOccur = XFALSE;
 
 	//看看存在不存在
 	st_Locker.lock_shared();
 	auto stl_MapIterator = stl_MapLocker.find(xhToken);
 	if (stl_MapIterator == stl_MapLocker.end())
 	{
-		ModuleHelp_IsErrorOccur = TRUE;
+		ModuleHelp_IsErrorOccur = XTRUE;
 		ModuleHelp_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_HELP_LOCK_NOTFOUND;
 		st_Locker.unlock_shared();
-		return FALSE;
+		return XFALSE;
 	}
 	//有没有锁定状态
 	if ((ENUM_MODULEHELP_LOCKSTATUS_READ == stl_MapIterator->second->enLockStatus) || (ENUM_MODULEHELP_LOCKSTATUS_WRITE == stl_MapIterator->second->enLockStatus))
 	{
-		ModuleHelp_IsErrorOccur = TRUE;
+		ModuleHelp_IsErrorOccur = XTRUE;
 		ModuleHelp_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_HELP_LOCK_LOCKED;
 		st_Locker.unlock_shared();
-		return FALSE;
+		return XFALSE;
 	}
 	stl_MapIterator->second->enLockStatus = ENUM_MODULEHELP_LOCKSTATUS_WRITE;
 
 	st_Locker.unlock_shared();
-	return TRUE;
+	return XTRUE;
 }
 /********************************************************************
 函数名称：ModuleHelp_Locker_WriteUNLock
@@ -239,30 +239,30 @@ XBOOL CModuleHelp_Locker::ModuleHelp_Locker_WriteLock(XNETHANDLE xhToken)
 *********************************************************************/
 XBOOL CModuleHelp_Locker::ModuleHelp_Locker_WriteUNLock(XNETHANDLE xhToken)
 {
-	ModuleHelp_IsErrorOccur = FALSE;
+	ModuleHelp_IsErrorOccur = XFALSE;
 
 	//看看存在不存在
 	st_Locker.lock_shared();
 	auto stl_MapIterator = stl_MapLocker.find(xhToken);
 	if (stl_MapIterator == stl_MapLocker.end())
 	{
-		ModuleHelp_IsErrorOccur = TRUE;
+		ModuleHelp_IsErrorOccur = XTRUE;
 		ModuleHelp_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_HELP_LOCK_NOTFOUND;
 		st_Locker.unlock_shared();
-		return FALSE;
+		return XFALSE;
 	}
 	//有没有锁定状态
 	if (ENUM_MODULEHELP_LOCKSTATUS_WRITE == stl_MapIterator->second->enLockStatus)
 	{
-		ModuleHelp_IsErrorOccur = TRUE;
+		ModuleHelp_IsErrorOccur = XTRUE;
 		ModuleHelp_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_HELP_LOCK_STATUS;
 		st_Locker.unlock_shared();
-		return FALSE;
+		return XFALSE;
 	}
 	stl_MapIterator->second->enLockStatus = ENUM_MODULEHELP_LOCKSTATUS_NOTUSED;
 
 	st_Locker.unlock_shared();
-	return TRUE;
+	return XTRUE;
 }
 /********************************************************************
 函数名称：ModuleHelp_Locker_Close
@@ -279,7 +279,7 @@ XBOOL CModuleHelp_Locker::ModuleHelp_Locker_WriteUNLock(XNETHANDLE xhToken)
 *********************************************************************/
 XBOOL CModuleHelp_Locker::ModuleHelp_Locker_Close(XNETHANDLE xhToken)
 {
-	ModuleHelp_IsErrorOccur = FALSE;
+	ModuleHelp_IsErrorOccur = XFALSE;
 
 	//看看存在不存在
 	st_Locker.lock();
@@ -291,5 +291,5 @@ XBOOL CModuleHelp_Locker::ModuleHelp_Locker_Close(XNETHANDLE xhToken)
 		stl_MapLocker.erase(stl_MapIterator);
 	}
 	st_Locker.unlock();
-	return TRUE;
+	return XTRUE;
 }

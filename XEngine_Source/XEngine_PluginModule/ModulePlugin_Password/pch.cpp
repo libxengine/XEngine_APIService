@@ -11,7 +11,7 @@
 //    Purpose:     导出实现
 //    History:
 *********************************************************************/
-XBOOL Pass_IsErrorOccur = FALSE;
+XBOOL Pass_IsErrorOccur = XFALSE;
 DWORD Pass_dwErrorCode = 0;
 //////////////////////////////////////////////////////////////////////////
 CPlugin_Password m_PluginPass;

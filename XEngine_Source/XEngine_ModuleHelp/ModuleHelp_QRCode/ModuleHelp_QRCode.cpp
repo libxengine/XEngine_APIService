@@ -43,13 +43,13 @@ CModuleHelp_QRCode::~CModuleHelp_QRCode()
 *********************************************************************/
 XBOOL CModuleHelp_QRCode::ModuleHelp_QRCode_QREncodecFile(LPCXSTR lpszFileName, LPCXSTR lpszMsgBuffer)
 {
-	ModuleHelp_IsErrorOccur = FALSE;
+	ModuleHelp_IsErrorOccur = XFALSE;
 
 	if ((NULL == lpszFileName) || (NULL == lpszMsgBuffer))
 	{
-		ModuleHelp_IsErrorOccur = TRUE;
+		ModuleHelp_IsErrorOccur = XTRUE;
 		ModuleHelp_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_HELP_QRCODE_PARAMENT;
-		return FALSE;
+		return XFALSE;
 	}
 #ifdef _MSC_BUILD
 	//使用qrencode进行字符串编码
@@ -61,9 +61,9 @@ XBOOL CModuleHelp_QRCode::ModuleHelp_QRCode_QREncodecFile(LPCXSTR lpszFileName, 
 #endif
 	if (NULL == pSt_QRCodec)
 	{
-		ModuleHelp_IsErrorOccur = TRUE;
+		ModuleHelp_IsErrorOccur = XTRUE;
 		ModuleHelp_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_HELP_QRCODE_FAILED;
-		return FALSE;
+		return XFALSE;
 	}
 	cv::Mat m_SrcFrame;
 	//转换数据
@@ -86,16 +86,16 @@ XBOOL CModuleHelp_QRCode::ModuleHelp_QRCode_QREncodecFile(LPCXSTR lpszFileName, 
 	if (!cv::imwrite(lpszFileName, m_SrcFrame))
 #endif
 	{
-		ModuleHelp_IsErrorOccur = TRUE;
+		ModuleHelp_IsErrorOccur = XTRUE;
 		ModuleHelp_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_HELP_QRCODE_WRITE;
-		return FALSE;
+		return XFALSE;
 	}
 #else 
-	ModuleHelp_IsErrorOccur = TRUE;
+	ModuleHelp_IsErrorOccur = XTRUE;
 	ModuleHelp_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_HELP_QRCODE_NOTSUPPORT;
-	return FALSE;
+	return XFALSE;
 #endif
-	return TRUE;
+	return XTRUE;
 }
 /********************************************************************
 函数名称：ModuleHelp_QRCode_QREncodecMemory
@@ -127,13 +127,13 @@ XBOOL CModuleHelp_QRCode::ModuleHelp_QRCode_QREncodecFile(LPCXSTR lpszFileName, 
 *********************************************************************/
 XBOOL CModuleHelp_QRCode::ModuleHelp_QRCode_QREncodecMemory(LPCXSTR lpszMsgBuffer, XCHAR* ptszMsgBuffer, int* pInt_MsgLen, LPCXSTR lpszFmt)
 {
-	ModuleHelp_IsErrorOccur = FALSE;
+	ModuleHelp_IsErrorOccur = XFALSE;
 
 	if ((NULL == lpszMsgBuffer) || (NULL == ptszMsgBuffer))
 	{
-		ModuleHelp_IsErrorOccur = TRUE;
+		ModuleHelp_IsErrorOccur = XTRUE;
 		ModuleHelp_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_HELP_QRCODE_PARAMENT;
-		return FALSE;
+		return XFALSE;
 	}
 #ifdef _MSC_BUILD
 	//使用qrencode进行字符串编码
@@ -145,9 +145,9 @@ XBOOL CModuleHelp_QRCode::ModuleHelp_QRCode_QREncodecMemory(LPCXSTR lpszMsgBuffe
 #endif
 	if (NULL == pSt_QRCodec)
 	{
-		ModuleHelp_IsErrorOccur = TRUE;
+		ModuleHelp_IsErrorOccur = XTRUE;
 		ModuleHelp_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_HELP_QRCODE_FAILED;
-		return FALSE;
+		return XFALSE;
 	}
 	cv::Mat m_SrcFrame;
 	vector<uchar> stl_VecImg;
@@ -167,9 +167,9 @@ XBOOL CModuleHelp_QRCode::ModuleHelp_QRCode_QREncodecMemory(LPCXSTR lpszMsgBuffe
 	//是否成功
 	if (!cv::imencode(lpszFmt, m_SrcFrame, stl_VecImg))
 	{
-		ModuleHelp_IsErrorOccur = TRUE;
+		ModuleHelp_IsErrorOccur = XTRUE;
 		ModuleHelp_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_HELP_QRCODE_FAILED;
-		return FALSE;
+		return XFALSE;
 	}
 	*pInt_MsgLen = stl_VecImg.size();
 	for (int i = 0; i < (*pInt_MsgLen); i++)
@@ -177,11 +177,11 @@ XBOOL CModuleHelp_QRCode::ModuleHelp_QRCode_QREncodecMemory(LPCXSTR lpszMsgBuffe
 		ptszMsgBuffer[i] = stl_VecImg[i];
 	}
 #else 
-	ModuleHelp_IsErrorOccur = TRUE;
+	ModuleHelp_IsErrorOccur = XTRUE;
 	ModuleHelp_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_HELP_QRCODE_NOTSUPPORT;
-	return FALSE;
+	return XFALSE;
 #endif
-	return TRUE;
+	return XTRUE;
 }
 /********************************************************************
 函数名称：ModuleHelp_QRCode_QRDecodecFile
@@ -223,13 +223,13 @@ XBOOL CModuleHelp_QRCode::ModuleHelp_QRCode_QREncodecMemory(LPCXSTR lpszMsgBuffe
 *********************************************************************/
 XBOOL CModuleHelp_QRCode::ModuleHelp_QRCode_QRDecodecFile(LPCXSTR lpszFileName, XCHAR* ptszMsgBuffer, LPCXSTR lpszDetectProto, LPCXSTR lpszDetectModel, LPCXSTR lpszSrProto, LPCXSTR lpszSrModel)
 {
-	ModuleHelp_IsErrorOccur = FALSE;
+	ModuleHelp_IsErrorOccur = XFALSE;
 
 	if ((NULL == lpszFileName) || (NULL == ptszMsgBuffer))
 	{
-		ModuleHelp_IsErrorOccur = TRUE;
+		ModuleHelp_IsErrorOccur = XTRUE;
 		ModuleHelp_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_HELP_QRCODE_PARAMENT;
-		return FALSE;
+		return XFALSE;
 	}
 #ifdef _MSC_BUILD
 	cv::Mat m_Frame;
@@ -245,9 +245,9 @@ XBOOL CModuleHelp_QRCode::ModuleHelp_QRCode_QRDecodecFile(LPCXSTR lpszFileName, 
 	//是否成功
 	if (m_Frame.empty())
 	{
-		ModuleHelp_IsErrorOccur = TRUE;
+		ModuleHelp_IsErrorOccur = XTRUE;
 		ModuleHelp_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_HELP_QRCODE_EMPTY;
-		return FALSE;
+		return XFALSE;
 	}
 #ifdef _UNICODE
 	m_QRDetector = cv::makePtr<cv::wechat_qrcode::WeChatQRCode>(W2A(lpszDetectProto), W2A(lpszDetectModel), W2A(lpszSrProto), W2A(lpszSrModel));
@@ -258,9 +258,9 @@ XBOOL CModuleHelp_QRCode::ModuleHelp_QRCode_QRDecodecFile(LPCXSTR lpszFileName, 
 
 	if (stl_VectorQRList.empty())
 	{
-		ModuleHelp_IsErrorOccur = TRUE;
+		ModuleHelp_IsErrorOccur = XTRUE;
 		ModuleHelp_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_HELP_QRCODE_NOTQR;
-		return FALSE;
+		return XFALSE;
 	}
 #ifdef _UNICODE
 	wcscpy(ptszMsgBuffer, A2W(stl_VectorQRList[0].c_str()));
@@ -268,11 +268,11 @@ XBOOL CModuleHelp_QRCode::ModuleHelp_QRCode_QRDecodecFile(LPCXSTR lpszFileName, 
 	strcpy(ptszMsgBuffer, stl_VectorQRList[0].c_str());
 #endif
 #else 
-	ModuleHelp_IsErrorOccur = TRUE;
+	ModuleHelp_IsErrorOccur = XTRUE;
 	ModuleHelp_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_HELP_QRCODE_NOTSUPPORT;
-	return FALSE;
+	return XFALSE;
 #endif
-	return TRUE;
+	return XTRUE;
 }
 /********************************************************************
 函数名称：ModuleHelp_QRCode_QRDecodecMemory
@@ -319,13 +319,13 @@ XBOOL CModuleHelp_QRCode::ModuleHelp_QRCode_QRDecodecFile(LPCXSTR lpszFileName, 
 *********************************************************************/
 XBOOL CModuleHelp_QRCode::ModuleHelp_QRCode_QRDecodecMemory(LPCSTR lpszMsgBuffer, int nMsgLen, XCHAR* ptszMsgBuffer, LPCXSTR lpszDetectProto, LPCXSTR lpszDetectModel, LPCXSTR lpszSrProto, LPCXSTR lpszSrModel)
 {
-	ModuleHelp_IsErrorOccur = FALSE;
+	ModuleHelp_IsErrorOccur = XFALSE;
 
 	if ((NULL == lpszMsgBuffer) || (NULL == ptszMsgBuffer))
 	{
-		ModuleHelp_IsErrorOccur = TRUE;
+		ModuleHelp_IsErrorOccur = XTRUE;
 		ModuleHelp_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_HELP_QRCODE_PARAMENT;
-		return FALSE;
+		return XFALSE;
 	}
 #ifdef _MSC_BUILD
 	cv::Mat m_Frame;
@@ -337,9 +337,9 @@ XBOOL CModuleHelp_QRCode::ModuleHelp_QRCode_QRDecodecMemory(LPCSTR lpszMsgBuffer
 	//是否成功
 	if (m_Frame.empty())
 	{
-		ModuleHelp_IsErrorOccur = TRUE;
+		ModuleHelp_IsErrorOccur = XTRUE;
 		ModuleHelp_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_HELP_QRCODE_EMPTY;
-		return FALSE;
+		return XFALSE;
 	}
 #ifdef _UNICODE
 	USES_CONVERSION;
@@ -351,9 +351,9 @@ XBOOL CModuleHelp_QRCode::ModuleHelp_QRCode_QRDecodecMemory(LPCSTR lpszMsgBuffer
 
 	if (stl_VectorQRList.empty())
 	{
-		ModuleHelp_IsErrorOccur = TRUE;
+		ModuleHelp_IsErrorOccur = XTRUE;
 		ModuleHelp_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_HELP_QRCODE_NOTQR;
-		return FALSE;
+		return XFALSE;
 	}
 #ifdef _UNICODE
 	wcscpy(ptszMsgBuffer, A2W(stl_VectorQRList[0].c_str()));
@@ -361,9 +361,9 @@ XBOOL CModuleHelp_QRCode::ModuleHelp_QRCode_QRDecodecMemory(LPCSTR lpszMsgBuffer
 	strcpy(ptszMsgBuffer, stl_VectorQRList[0].c_str());
 #endif
 #else 
-	ModuleHelp_IsErrorOccur = TRUE;
+	ModuleHelp_IsErrorOccur = XTRUE;
 	ModuleHelp_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_HELP_QRCODE_NOTSUPPORT;
-	return FALSE;
+	return XFALSE;
 #endif
-	return TRUE;
+	return XTRUE;
 }

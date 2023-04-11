@@ -206,4 +206,12 @@ typedef struct
 	bool bTCP;
 	bool bConn;
 }XENGINE_SOCKETTEST;
+//短连接
+typedef struct
+{
+	XCHAR tszFullUrl[MAX_PATH];
+	XCHAR tszShotUrl[MAX_PATH];
+	XCHAR tszKeyUrl[MAX_PATH];
+	XCHAR tszCreateTime[128];
+}XENGINE_SHORTLINK;
 #pragma pack(pop)

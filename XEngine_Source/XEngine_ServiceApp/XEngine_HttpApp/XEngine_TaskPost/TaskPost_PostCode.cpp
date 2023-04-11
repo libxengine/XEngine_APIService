@@ -15,7 +15,7 @@ XBOOL HTTPTask_TastPost_PostCode(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer, 
 	memset(&st_HDRParam, '\0', sizeof(RFCCOMPONENTS_HTTP_HDRPARAM));
 
 	st_HDRParam.nHttpCode = 200; //HTTP CODE码
-	st_HDRParam.bIsClose = TRUE; //收到回复后就关闭
+	st_HDRParam.bIsClose = XTRUE; //收到回复后就关闭
 
 	ModuleProtocol_Parse_ZIPCode(lpszMsgBuffer, nMsgLen, &st_ZIPInfo);
 	if (0 == nType)
@@ -31,5 +31,5 @@ XBOOL HTTPTask_TastPost_PostCode(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer, 
 	HttpProtocol_Server_SendMsgEx(xhHTTPPacket, tszSDBuffer, &nSDLen, &st_HDRParam, tszRVBuffer, nRVLen);
 	XEngine_Network_Send(lpszClientAddr, tszSDBuffer, nSDLen);
 	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _T("HTTP客户端:%s,请求查询邮政编码地址信息查询成功,查询邮编;%d,查询地址:%s"), lpszClientAddr, st_ZIPInfo.nZipCode, st_ZIPInfo.tszCounty);
-	return TRUE;
+	return XTRUE;
 }

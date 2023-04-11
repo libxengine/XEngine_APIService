@@ -11,7 +11,7 @@
 //    Purpose:     导出函数实现
 //    History:
 *********************************************************************/
-XBOOL Config_IsErrorOccur = FALSE;
+XBOOL Config_IsErrorOccur = XFALSE;
 DWORD Config_dwErrorCode = 0;
 //////////////////////////////////////////////////////////////////////
 CModuleConfigure_Json m_ConfigJson;

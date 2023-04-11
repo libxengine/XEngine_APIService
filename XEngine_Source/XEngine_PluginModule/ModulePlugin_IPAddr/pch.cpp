@@ -11,7 +11,7 @@
 //    Purpose:     导出实现
 //    History:
 *********************************************************************/
-XBOOL IPAddr_IsErrorOccur = FALSE;
+XBOOL IPAddr_IsErrorOccur = XFALSE;
 DWORD IPAddr_dwErrorCode = 0;
 //////////////////////////////////////////////////////////////////////////
 CModulePlugin_Interface m_PluginIPAddr;

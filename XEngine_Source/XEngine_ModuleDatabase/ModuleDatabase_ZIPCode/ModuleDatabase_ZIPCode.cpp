@@ -36,23 +36,23 @@ CModuleDatabase_ZIPCode::~CModuleDatabase_ZIPCode()
 *********************************************************************/
 XBOOL CModuleDatabase_ZIPCode::ModuleDatabase_ZIPCode_Init(DATABASE_MYSQL_CONNECTINFO* pSt_DBConnector)
 {
-	DBModule_IsErrorOccur = FALSE;
+	DBModule_IsErrorOccur = XFALSE;
 
 	if (NULL == pSt_DBConnector)
 	{
-		DBModule_IsErrorOccur = TRUE;
+		DBModule_IsErrorOccur = XTRUE;
 		DBModule_dwErrorCode = ERROR_APISERVICE_MODULE_DATABASE_PARAMENT;
-		return FALSE;
+		return XFALSE;
 	}
 	//连接数据库
 	_tcscpy(pSt_DBConnector->tszDBName, _T("XEngine_APIInfo"));
 	if (!DataBase_MySQL_Connect(&xhDBSQL, pSt_DBConnector))
 	{
-		DBModule_IsErrorOccur = TRUE;
+		DBModule_IsErrorOccur = XTRUE;
 		DBModule_dwErrorCode = DataBase_GetLastError();
-		return FALSE;
+		return XFALSE;
 	}
-	return TRUE;
+	return XTRUE;
 }
 /********************************************************************
 函数名称：ModuleDatabase_ZIPCode_Destory
@@ -64,10 +64,10 @@ XBOOL CModuleDatabase_ZIPCode::ModuleDatabase_ZIPCode_Init(DATABASE_MYSQL_CONNEC
 *********************************************************************/
 XBOOL CModuleDatabase_ZIPCode::ModuleDatabase_ZIPCode_Destory()
 {
-	DBModule_IsErrorOccur = FALSE;
+	DBModule_IsErrorOccur = XFALSE;
 
 	DataBase_MySQL_Close(xhDBSQL);
-	return TRUE;
+	return XTRUE;
 }
 /********************************************************************
 函数名称：ModuleDatabase_ZIPCode_QueryZIPCode
@@ -84,7 +84,7 @@ XBOOL CModuleDatabase_ZIPCode::ModuleDatabase_ZIPCode_Destory()
 *********************************************************************/
 XBOOL CModuleDatabase_ZIPCode::ModuleDatabase_ZIPCode_QueryZIPCode(XENGINE_ZIPINFO* pSt_ZIPInfo)
 {
-	DBModule_IsErrorOccur = FALSE;
+	DBModule_IsErrorOccur = XFALSE;
 
 	//查询
 	__int64u nLine = 0;
@@ -96,15 +96,15 @@ XBOOL CModuleDatabase_ZIPCode::ModuleDatabase_ZIPCode_QueryZIPCode(XENGINE_ZIPIN
 	_stprintf(tszSQLStatement, _T("SELECT * FROM `AdministrativeArea` WHERE zip_code = %d"), pSt_ZIPInfo->nZipCode);
 	if (!DataBase_MySQL_ExecuteQuery(xhDBSQL, &xhTable, tszSQLStatement, &nLine, &nRow))
 	{
-		DBModule_IsErrorOccur = TRUE;
+		DBModule_IsErrorOccur = XTRUE;
 		DBModule_dwErrorCode = DataBase_GetLastError();
-		return FALSE;
+		return XFALSE;
 	}
 	if (nLine <= 0)
 	{
-		DBModule_IsErrorOccur = TRUE;
+		DBModule_IsErrorOccur = XTRUE;
 		DBModule_dwErrorCode = ERROR_APISERVICE_MODULE_DATABASE_NOTFOUND;
-		return FALSE;
+		return XFALSE;
 	}
 	XCHAR** pptszResult = DataBase_MySQL_GetResult(xhDBSQL, xhTable);
 	//三个级别 省->市->区/县
@@ -132,7 +132,7 @@ XBOOL CModuleDatabase_ZIPCode::ModuleDatabase_ZIPCode_QueryZIPCode(XENGINE_ZIPIN
 	}
 
 	DataBase_MySQL_FreeResult(xhDBSQL, xhTable);
-	return TRUE;
+	return XTRUE;
 }
 /********************************************************************
 函数名称：ModuleDatabase_ZIPCode_QueryName
@@ -149,13 +149,13 @@ XBOOL CModuleDatabase_ZIPCode::ModuleDatabase_ZIPCode_QueryZIPCode(XENGINE_ZIPIN
 *********************************************************************/
 XBOOL CModuleDatabase_ZIPCode::ModuleDatabase_ZIPCode_QueryName(XENGINE_ZIPINFO* pSt_ZIPInfo)
 {
-	DBModule_IsErrorOccur = FALSE;
+	DBModule_IsErrorOccur = XFALSE;
 
 	if (NULL == pSt_ZIPInfo)
 	{
-		DBModule_IsErrorOccur = TRUE;
+		DBModule_IsErrorOccur = XTRUE;
 		DBModule_dwErrorCode = ERROR_APISERVICE_MODULE_DATABASE_PARAMENT;
-		return FALSE;
+		return XFALSE;
 	}
 	//查询
 	__int64u nLine = 0;
@@ -184,22 +184,22 @@ XBOOL CModuleDatabase_ZIPCode::ModuleDatabase_ZIPCode_QueryName(XENGINE_ZIPINFO*
 	}
 	else
 	{
-		DBModule_IsErrorOccur = TRUE;
+		DBModule_IsErrorOccur = XTRUE;
 		DBModule_dwErrorCode = ERROR_APISERVICE_MODULE_DATABASE_NOTSET;
-		return FALSE;
+		return XFALSE;
 	}
 	//查询内容
 	if (!DataBase_MySQL_ExecuteQuery(xhDBSQL, &xhTable, tszSQLStatement, &nLine, &nRow))
 	{
-		DBModule_IsErrorOccur = TRUE;
+		DBModule_IsErrorOccur = XTRUE;
 		DBModule_dwErrorCode = DataBase_GetLastError();
-		return FALSE;
+		return XFALSE;
 	}
 	if (nLine <= 0)
 	{
-		DBModule_IsErrorOccur = TRUE;
+		DBModule_IsErrorOccur = XTRUE;
 		DBModule_dwErrorCode = ERROR_APISERVICE_MODULE_DATABASE_NOTFOUND;
-		return FALSE;
+		return XFALSE;
 	}
 	XCHAR** pptszResult = DataBase_MySQL_GetResult(xhDBSQL, xhTable);
 	pSt_ZIPInfo->nLevel = _ttoi(pptszResult[5]);
@@ -210,7 +210,7 @@ XBOOL CModuleDatabase_ZIPCode::ModuleDatabase_ZIPCode_QueryName(XENGINE_ZIPINFO*
 	_tcscpy(pSt_ZIPInfo->tszPinYin, pptszResult[6]);
 
 	DataBase_MySQL_FreeResult(xhDBSQL, xhTable);
-	return TRUE;
+	return XTRUE;
 }
 //////////////////////////////////////////////////////////////////////////
 //                             保护函数
@@ -240,13 +240,13 @@ XBOOL CModuleDatabase_ZIPCode::ModuleDatabase_ZIPCode_QueryName(XENGINE_ZIPINFO*
 *********************************************************************/
 XBOOL CModuleDatabase_ZIPCode::ModuleDatabase_ZIPCode_QueryParentByID(int nParentID, XCHAR* ptszParentStr, int* pInt_ParentID /* = NULL */)
 {
-	DBModule_IsErrorOccur = FALSE;
+	DBModule_IsErrorOccur = XFALSE;
 
 	if (NULL == ptszParentStr)
 	{
-		DBModule_IsErrorOccur = TRUE;
+		DBModule_IsErrorOccur = XTRUE;
 		DBModule_dwErrorCode = ERROR_APISERVICE_MODULE_DATABASE_PARAMENT;
-		return FALSE;
+		return XFALSE;
 	}
 	//查询
 	__int64u nLine = 0;
@@ -258,15 +258,15 @@ XBOOL CModuleDatabase_ZIPCode::ModuleDatabase_ZIPCode_QueryParentByID(int nParen
 	_stprintf(tszSQLStatement, _T("SELECT * FROM `AdministrativeArea` WHERE id = %d"), nParentID);
 	if (!DataBase_MySQL_ExecuteQuery(xhDBSQL, &xhTable, tszSQLStatement, &nLine, &nRow))
 	{
-		DBModule_IsErrorOccur = TRUE;
+		DBModule_IsErrorOccur = XTRUE;
 		DBModule_dwErrorCode = DataBase_GetLastError();
-		return FALSE;
+		return XFALSE;
 	}
 	if (nLine <= 0)
 	{
-		DBModule_IsErrorOccur = TRUE;
+		DBModule_IsErrorOccur = XTRUE;
 		DBModule_dwErrorCode = ERROR_APISERVICE_MODULE_DATABASE_NOTFOUND;
-		return FALSE;
+		return XFALSE;
 	}
 	XCHAR** pptszResult = DataBase_MySQL_GetResult(xhDBSQL, xhTable);
 	
@@ -277,7 +277,7 @@ XBOOL CModuleDatabase_ZIPCode::ModuleDatabase_ZIPCode_QueryParentByID(int nParen
 	_tcscpy(ptszParentStr, pptszResult[3]);
 
 	DataBase_MySQL_FreeResult(xhDBSQL, xhTable);
-	return TRUE;
+	return XTRUE;
 }
 /********************************************************************
 函数名称：ModuleDatabase_ZIPCode_QueryParentByName
@@ -299,13 +299,13 @@ XBOOL CModuleDatabase_ZIPCode::ModuleDatabase_ZIPCode_QueryParentByID(int nParen
 *********************************************************************/
 XBOOL CModuleDatabase_ZIPCode::ModuleDatabase_ZIPCode_QueryParentByName(LPCXSTR lpszName, int* pInt_ParentID /* = NULL */)
 {
-	DBModule_IsErrorOccur = FALSE;
+	DBModule_IsErrorOccur = XFALSE;
 
 	if (NULL == lpszName)
 	{
-		DBModule_IsErrorOccur = TRUE;
+		DBModule_IsErrorOccur = XTRUE;
 		DBModule_dwErrorCode = ERROR_APISERVICE_MODULE_DATABASE_PARAMENT;
-		return FALSE;
+		return XFALSE;
 	}
 	//查询
 	__int64u nLine = 0;
@@ -317,15 +317,15 @@ XBOOL CModuleDatabase_ZIPCode::ModuleDatabase_ZIPCode_QueryParentByName(LPCXSTR 
 	_stprintf(tszSQLStatement, _T("SELECT * FROM `AdministrativeArea` WHERE name = '%s'"), lpszName);
 	if (!DataBase_MySQL_ExecuteQuery(xhDBSQL, &xhTable, tszSQLStatement, &nLine, &nRow))
 	{
-		DBModule_IsErrorOccur = TRUE;
+		DBModule_IsErrorOccur = XTRUE;
 		DBModule_dwErrorCode = DataBase_GetLastError();
-		return FALSE;
+		return XFALSE;
 	}
 	if (nLine <= 0)
 	{
-		DBModule_IsErrorOccur = TRUE;
+		DBModule_IsErrorOccur = XTRUE;
 		DBModule_dwErrorCode = ERROR_APISERVICE_MODULE_DATABASE_NOTFOUND;
-		return FALSE;
+		return XFALSE;
 	}
 	XCHAR** pptszResult = DataBase_MySQL_GetResult(xhDBSQL, xhTable);
 	if (NULL != pInt_ParentID)
@@ -333,5 +333,5 @@ XBOOL CModuleDatabase_ZIPCode::ModuleDatabase_ZIPCode_QueryParentByName(LPCXSTR 
 		*pInt_ParentID = _ttoi(pptszResult[1]);
 	}
 	DataBase_MySQL_FreeResult(xhDBSQL, xhTable);
-	return TRUE;
+	return XTRUE;
 }

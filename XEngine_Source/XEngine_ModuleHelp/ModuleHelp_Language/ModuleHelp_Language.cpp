@@ -46,30 +46,30 @@ CModuleHelp_Language::~CModuleHelp_Language()
 *********************************************************************/
 XBOOL CModuleHelp_Language::ModuleHelp_Language_ConvertZh(LPCXSTR lpszJsonFile, LPCXSTR lpszSourceStr, XCHAR* ptszDestStr)
 {
-	ModuleHelp_IsErrorOccur = FALSE;
+	ModuleHelp_IsErrorOccur = XFALSE;
 
 	if ((NULL == lpszJsonFile) || (NULL == lpszSourceStr) || (NULL == ptszDestStr))
 	{
-		ModuleHelp_IsErrorOccur = TRUE;
+		ModuleHelp_IsErrorOccur = XTRUE;
 		ModuleHelp_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_HELP_LANGUAGE_PARAMENT;
-		return FALSE;
+		return XFALSE;
 	}
 	opencc_t m_OPencc = opencc_open(lpszJsonFile);
 	if ((opencc_t)-1 == m_OPencc)
 	{
-		ModuleHelp_IsErrorOccur = TRUE;
+		ModuleHelp_IsErrorOccur = XTRUE;
 		ModuleHelp_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_HELP_LANGUAGE_FAILED;
-		return FALSE;
+		return XFALSE;
 	}
 	if ((size_t)-1 == opencc_convert_utf8_to_buffer(m_OPencc, lpszSourceStr, strlen(lpszSourceStr), ptszDestStr))
 	{
-		ModuleHelp_IsErrorOccur = TRUE;
+		ModuleHelp_IsErrorOccur = XTRUE;
 		ModuleHelp_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_HELP_LANGUAGE_NOTSUPPORT;
-		return FALSE;
+		return XFALSE;
 	}
 	opencc_close(m_OPencc);
 
-	return TRUE;
+	return XTRUE;
 }
 /********************************************************************
 函数名称：ModuleHelp_Translation_Convert
@@ -91,13 +91,13 @@ XBOOL CModuleHelp_Language::ModuleHelp_Language_ConvertZh(LPCXSTR lpszJsonFile, 
 *********************************************************************/
 XBOOL CModuleHelp_Language::ModuleHelp_Translation_Convert(ENUM_XENGINE_APISERVICE_TRANSLATION_TYPE enTranslationType, XCHAR* ptszTranslationType)
 {
-	ModuleHelp_IsErrorOccur = FALSE;
+	ModuleHelp_IsErrorOccur = XFALSE;
 
 	if (NULL == ptszTranslationType)
 	{
-		ModuleHelp_IsErrorOccur = TRUE;
+		ModuleHelp_IsErrorOccur = XTRUE;
 		ModuleHelp_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_HELP_LANGUAGE_PARAMENT;
-		return FALSE;
+		return XFALSE;
 	}
 	//转换为服务需要的类型
 	if (ENUM_XENGINE_APISERVICE_TRANSLATION_TYPE_AUTO == enTranslationType)
@@ -154,9 +154,9 @@ XBOOL CModuleHelp_Language::ModuleHelp_Translation_Convert(ENUM_XENGINE_APISERVI
 	}
 	else
 	{
-		ModuleHelp_IsErrorOccur = TRUE;
+		ModuleHelp_IsErrorOccur = XTRUE;
 		ModuleHelp_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_HELP_LANGUAGE_NOTSUPPORT;
-		return FALSE;
+		return XFALSE;
 	}
-	return TRUE;
+	return XTRUE;
 }

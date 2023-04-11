@@ -35,13 +35,13 @@ CModulePlugin_APIPhone::~CModulePlugin_APIPhone()
 *********************************************************************/
 XBOOL CModulePlugin_APIPhone::PluginCore_Init(XPVOID lParam)
 {
-	Phone_IsErrorOccur = FALSE;
+	Phone_IsErrorOccur = XFALSE;
 
 	if (!m_DBPhone.ModuleDatabase_Phone_Init(_T("./XEngine_DBFile/phone.dat")))
 	{
-		return FALSE;
+		return XFALSE;
 	}
-    return TRUE;
+    return XTRUE;
 }
 /********************************************************************
 函数名称：PluginCore_UnInit
@@ -53,7 +53,7 @@ XBOOL CModulePlugin_APIPhone::PluginCore_Init(XPVOID lParam)
 *********************************************************************/
 void CModulePlugin_APIPhone::PluginCore_UnInit()
 {
-	Phone_IsErrorOccur = FALSE;
+	Phone_IsErrorOccur = XFALSE;
 
 	m_DBPhone.ModuleDatabase_Phone_Destory();
 }
@@ -67,13 +67,13 @@ void CModulePlugin_APIPhone::PluginCore_UnInit()
 *********************************************************************/
 XBOOL CModulePlugin_APIPhone::PluginCore_Call(XCHAR*** pppHDRList, int nListCount, int* pInt_HTTPCode, XCHAR* ptszMsgBuffer, int* pInt_MsgLen, LPCXSTR lpszMsgBuffer, int nMsgLen)
 {
-	Phone_IsErrorOccur = FALSE;
+	Phone_IsErrorOccur = XFALSE;
 
 	if ((NULL == pInt_HTTPCode) || (NULL == ptszMsgBuffer) || (NULL == pInt_MsgLen))
 	{
-		Phone_IsErrorOccur = TRUE;
+		Phone_IsErrorOccur = XTRUE;
 		Phone_dwErrorCode = ERROR_XENGINE_APISERVICE_PLUGIN_MODULE_PHONE_PARAMENT;
-		return FALSE;
+		return XFALSE;
 	}
 	XCHAR tszKeyName[128];
 	XCHAR tszKeyValue[128];
@@ -91,7 +91,7 @@ XBOOL CModulePlugin_APIPhone::PluginCore_Call(XCHAR*** pppHDRList, int nListCoun
 	st_PhoneInfo.nPhoneNumber = _ttoi64(tszKeyValue);
 	if (!m_DBPhone.ModuleDatabase_Phone_Query(tszKeyValue, &st_PhoneInfo))
 	{
-		return FALSE;
+		return XFALSE;
 	}
 	st_JsonObject["nPhoneNumber"] = (Json::Value::Int64)st_PhoneInfo.nPhoneNumber;
 	st_JsonObject["tszProvincer"] = st_PhoneInfo.tszProvincer;
@@ -107,5 +107,5 @@ XBOOL CModulePlugin_APIPhone::PluginCore_Call(XCHAR*** pppHDRList, int nListCoun
 	*pInt_HTTPCode = 200;
 	*pInt_MsgLen = Json::writeString(st_JsonBuilder, st_JsonRoot).length();
 	memcpy(ptszMsgBuffer, Json::writeString(st_JsonBuilder, st_JsonRoot).c_str(), *pInt_MsgLen);
-	return TRUE;
+	return XTRUE;
 }

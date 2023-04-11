@@ -17,7 +17,7 @@ XBOOL XEngine_Configure_Parament(int argc, char** argv, XENGINE_SERVICECONFIG* p
 	if (!ModuleConfigure_Json_File(lpszConfigFile, pSt_Configure))
 	{
 		printf("解析配置文件失败,ModuleConfigure_Json_File:%lX\n", ModuleConfigure_GetLastError());
-		return FALSE;
+		return XFALSE;
 	}
 
 	for (int i = 0; i < argc; i++)
@@ -25,7 +25,7 @@ XBOOL XEngine_Configure_Parament(int argc, char** argv, XENGINE_SERVICECONFIG* p
 		if ((0 == _tcscmp("-h", argv[i])) || (0 == _tcscmp("-H", argv[i])))
 		{
 			XEngine_Configure_Help();
-			return FALSE;
+			return XFALSE;
 		}
 		else if (0 == _tcscmp("-d", argv[i]))
 		{
@@ -33,7 +33,7 @@ XBOOL XEngine_Configure_Parament(int argc, char** argv, XENGINE_SERVICECONFIG* p
 		}
 	}
 
-	return TRUE;
+	return XTRUE;
 }
 
 void XEngine_Configure_Help()

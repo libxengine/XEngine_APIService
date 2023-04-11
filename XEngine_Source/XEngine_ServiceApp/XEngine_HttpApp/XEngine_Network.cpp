@@ -16,7 +16,7 @@ XBOOL CALLBACK Network_Callback_HTTPLogin(LPCXSTR lpszClientAddr, XSOCKET hSocke
 	SocketOpt_HeartBeat_InsertAddrEx(xhHTTPHeart, lpszClientAddr);
 	HttpProtocol_Server_CreateClientEx(xhHTTPPacket, lpszClientAddr, 0);
 	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _T("HTTP客户端:%s,连接到服务器"), lpszClientAddr);
-	return TRUE;
+	return XTRUE;
 }
 void CALLBACK Network_Callback_HTTPRecv(LPCXSTR lpszClientAddr, XSOCKET hSocket, LPCXSTR lpszRecvMsg, int nMsgLen, XPVOID lParam)
 {
@@ -30,11 +30,11 @@ void CALLBACK Network_Callback_HTTPRecv(LPCXSTR lpszClientAddr, XSOCKET hSocket,
 }
 void CALLBACK Network_Callback_HTTPLeave(LPCXSTR lpszClientAddr, XSOCKET hSocket, XPVOID lParam)
 {
-	XEngine_Network_Close(lpszClientAddr, FALSE);
+	XEngine_Network_Close(lpszClientAddr, XFALSE);
 }
 void CALLBACK Network_Callback_HTTPHeart(LPCXSTR lpszClientAddr, XSOCKET hSocket, int nStatus, XPVOID lParam)
 {
-	XEngine_Network_Close(lpszClientAddr, TRUE);
+	XEngine_Network_Close(lpszClientAddr, XTRUE);
 }
 //////////////////////////////////////////////////////////////////////////网络IO关闭操作
 void XEngine_Network_Close(LPCXSTR lpszClientAddr, XBOOL bHeart)
@@ -57,9 +57,9 @@ XBOOL XEngine_Network_Send(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer, int nM
 	if (!NetCore_TCPXCore_SendEx(xhHTTPSocket, lpszClientAddr, lpszMsgBuffer, nMsgLen))
 	{
 		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _T("HTTP客户端:%s,发送数据失败，错误:%lX"), lpszClientAddr, NetCore_GetLastError());
-		return FALSE;
+		return XFALSE;
 	}
 	//发送成功激活一次心跳
 	SocketOpt_HeartBeat_ActiveAddrEx(xhHTTPHeart, lpszClientAddr);
-	return TRUE;
+	return XTRUE;
 }

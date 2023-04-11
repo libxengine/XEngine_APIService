@@ -35,9 +35,9 @@ CPlugin_Meter::~CPlugin_Meter()
 *********************************************************************/
 XBOOL CPlugin_Meter::PluginCore_Init(XPVOID lParam)
 {
-	Meter_IsErrorOccur = FALSE;
+	Meter_IsErrorOccur = XFALSE;
 
-    return TRUE;
+    return XTRUE;
 }
 /********************************************************************
 函数名称：PluginCore_UnInit
@@ -49,7 +49,7 @@ XBOOL CPlugin_Meter::PluginCore_Init(XPVOID lParam)
 *********************************************************************/
 void CPlugin_Meter::PluginCore_UnInit()
 {
-	Meter_IsErrorOccur = FALSE;
+	Meter_IsErrorOccur = XFALSE;
 }
 /********************************************************************
 函数名称：PluginCore_Call
@@ -61,13 +61,13 @@ void CPlugin_Meter::PluginCore_UnInit()
 *********************************************************************/
 XBOOL CPlugin_Meter::PluginCore_Call(XCHAR*** pppHDRList, int nListCount, int* pInt_HTTPCode, XCHAR* ptszMsgBuffer, int* pInt_MsgLen, LPCXSTR lpszMsgBuffer, int nMsgLen)
 {
-	Meter_IsErrorOccur = FALSE;
+	Meter_IsErrorOccur = XFALSE;
 
 	if ((NULL == pInt_HTTPCode) || (NULL == ptszMsgBuffer) || (NULL == pInt_MsgLen))
 	{
-		Meter_IsErrorOccur = TRUE;
+		Meter_IsErrorOccur = XTRUE;
 		Meter_dwErrorCode = ERROR_XENGINE_APISERVICE_PLUGIN_MODULE_METER_PARAMENT;
-		return FALSE;
+		return XFALSE;
 	}
 	XCHAR tszKeyName[128];
 	XCHAR tszParamType[128];
@@ -117,14 +117,14 @@ XBOOL CPlugin_Meter::PluginCore_Call(XCHAR*** pppHDRList, int nListCount, int* p
 	*pInt_HTTPCode = 200;
 	*pInt_MsgLen = Json::writeString(st_JsonBuilder, st_JsonRoot).length();
 	memcpy(ptszMsgBuffer, Json::writeString(st_JsonBuilder, st_JsonRoot).c_str(), *pInt_MsgLen);
-	return TRUE;
+	return XTRUE;
 }
 //////////////////////////////////////////////////////////////////////////
 //                       保护函数
 //////////////////////////////////////////////////////////////////////////
 XBOOL CPlugin_Meter::Plugin_Meter_LengthConvert(int nSource, __int64x nValue, Json::Value *pSt_JsonObject)
 {
-	Meter_IsErrorOccur = FALSE;
+	Meter_IsErrorOccur = XFALSE;
 
 	Json::Value st_JsonObejct;
 	if (ENUM_APISERVICE_PLUGIN_METER_LENGTH_KILOMETRE == nSource)
@@ -191,11 +191,11 @@ XBOOL CPlugin_Meter::Plugin_Meter_LengthConvert(int nSource, __int64x nValue, Js
 		st_JsonObejct["foot"] = double(nValue * 0.32808399);
 	}
 	(*pSt_JsonObject)["Length"] = st_JsonObejct;
-	return TRUE;
+	return XTRUE;
 }
 XBOOL CPlugin_Meter::Plugin_Meter_TemperatureConvert(int nSource, __int64x nValue, Json::Value* pSt_JsonObject)
 {
-	Meter_IsErrorOccur = FALSE;
+	Meter_IsErrorOccur = XFALSE;
 
 	Json::Value st_JsonObejct;
 	if (ENUM_APISERVICE_PLUGIN_METER_TEMPERATURE_C == nSource)
@@ -206,11 +206,11 @@ XBOOL CPlugin_Meter::Plugin_Meter_TemperatureConvert(int nSource, __int64x nValu
 		st_JsonObejct["degree"] = double(nValue * 0.8);
 	}
 	(*pSt_JsonObject)["Temperature"] = st_JsonObejct;
-	return TRUE;
+	return XTRUE;
 }
 XBOOL CPlugin_Meter::Plugin_Meter_PowerConvert(int nSource, __int64x nValue, Json::Value* pSt_JsonObject)
 {
-	Meter_IsErrorOccur = FALSE;
+	Meter_IsErrorOccur = XFALSE;
 
 	Json::Value st_JsonObejct;
 	if (ENUM_APISERVICE_PLUGIN_METER_POWER_W == nSource)
@@ -220,11 +220,11 @@ XBOOL CPlugin_Meter::Plugin_Meter_PowerConvert(int nSource, __int64x nValue, Jso
 		st_JsonObejct["ps"] = double(nValue * 0.00136);
 	}
 	(*pSt_JsonObject)["Power"] = st_JsonObejct;
-	return TRUE;
+	return XTRUE;
 }
 XBOOL CPlugin_Meter::Plugin_Meter_SpeedConvert(int nSource, __int64x nValue, Json::Value* pSt_JsonObject)
 {
-	Meter_IsErrorOccur = FALSE;
+	Meter_IsErrorOccur = XFALSE;
 
 	Json::Value st_JsonObejct;
 	if (ENUM_APISERVICE_PLUGIN_METER_SPEED_KNOT == nSource)
@@ -243,5 +243,5 @@ XBOOL CPlugin_Meter::Plugin_Meter_SpeedConvert(int nSource, __int64x nValue, Jso
 		st_JsonObejct["kilometer"] = double(nValue * 00.621);
 	}
 	(*pSt_JsonObject)["Power"] = st_JsonObejct;
-	return TRUE;
+	return XTRUE;
 }

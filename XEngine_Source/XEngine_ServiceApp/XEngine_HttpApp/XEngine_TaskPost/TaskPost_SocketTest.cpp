@@ -62,7 +62,7 @@ XBOOL HTTPTask_TastPost_SocketTest(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer
 	memset(&st_HDRParam, '\0', sizeof(RFCCOMPONENTS_HTTP_HDRPARAM));
 
 	st_HDRParam.nHttpCode = 200; //HTTP CODE码
-	st_HDRParam.bIsClose = TRUE; //收到回复后就关闭
+	st_HDRParam.bIsClose = XTRUE; //收到回复后就关闭
 
 	ModuleProtocol_Parse_SocketTest(lpszMsgBuffer, nMsgLen, pSt_SocketTest);
 	//0创建,1删除
@@ -99,5 +99,5 @@ XBOOL HTTPTask_TastPost_SocketTest(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer
 		delete pSt_SocketTest;
 		pSt_SocketTest = NULL;
 	}
-	return TRUE;
+	return XTRUE;
 }

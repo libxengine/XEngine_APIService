@@ -35,7 +35,7 @@ CPlugin_Timezone::~CPlugin_Timezone()
 *********************************************************************/
 XBOOL CPlugin_Timezone::PluginCore_Init(XPVOID lParam)
 {
-	Timezone_IsErrorOccur = FALSE;
+	Timezone_IsErrorOccur = XFALSE;
 
 	MODULEPLUGIN_TIMEZONE st_TimeZone;
 	memset(&st_TimeZone, '\0', sizeof(MODULEPLUGIN_TIMEZONE));
@@ -497,7 +497,7 @@ XBOOL CPlugin_Timezone::PluginCore_Init(XPVOID lParam)
 	st_TimeZone.st_TimeZone.wHour = 14;
 	_tcscpy(st_TimeZone.tszTimeCountry, _T("基里巴斯线岛时间"));
 	stl_MapTimezone.insert(make_pair(_T("KLT"), st_TimeZone));
-    return TRUE;
+    return XTRUE;
 }
 /********************************************************************
 函数名称：PluginCore_UnInit
@@ -509,7 +509,7 @@ XBOOL CPlugin_Timezone::PluginCore_Init(XPVOID lParam)
 *********************************************************************/
 void CPlugin_Timezone::PluginCore_UnInit()
 {
-	Timezone_IsErrorOccur = FALSE;
+	Timezone_IsErrorOccur = XFALSE;
 
 	stl_MapTimezone.clear();
 }
@@ -523,13 +523,13 @@ void CPlugin_Timezone::PluginCore_UnInit()
 *********************************************************************/
 XBOOL CPlugin_Timezone::PluginCore_Call(XCHAR*** pppHDRList, int nListCount, int* pInt_HTTPCode, XCHAR* ptszMsgBuffer, int* pInt_MsgLen, LPCXSTR lpszMsgBuffer, int nMsgLen)
 {
-	Timezone_IsErrorOccur = FALSE;
+	Timezone_IsErrorOccur = XFALSE;
 
 	if ((NULL == pInt_HTTPCode) || (NULL == ptszMsgBuffer) || (NULL == pInt_MsgLen))
 	{
-		Timezone_IsErrorOccur = TRUE;
+		Timezone_IsErrorOccur = XTRUE;
 		Timezone_dwErrorCode = ERROR_XENGINE_APISERVICE_PLUGIN_MODULE_TIMEZONE_PARAMENT;
-		return FALSE;
+		return XFALSE;
 	}
 	XCHAR tszKeyName[128];
 	XCHAR tszParamType[128];
@@ -561,19 +561,19 @@ XBOOL CPlugin_Timezone::PluginCore_Call(XCHAR*** pppHDRList, int nListCount, int
 		if (!Plugin_Timezone_Convert(tszParamCvt, tszParamTime, ptszMsgBuffer, pInt_MsgLen))
 		{
 			*pInt_HTTPCode = 404;
-			return FALSE;
+			return XFALSE;
 		}
 	}
 	*pInt_HTTPCode = 200;
 	
-	return TRUE;
+	return XTRUE;
 }
 //////////////////////////////////////////////////////////////////////////
 //                       保护函数
 //////////////////////////////////////////////////////////////////////////
 XBOOL CPlugin_Timezone::Plugin_Timezone_Count(XCHAR* ptszMsgBufer, int* pInt_Len)
 {
-	Timezone_IsErrorOccur = FALSE;
+	Timezone_IsErrorOccur = XFALSE;
 
 	Json::Value st_JsonRoot;
 	Json::Value st_JsonObject;
@@ -587,11 +587,11 @@ XBOOL CPlugin_Timezone::Plugin_Timezone_Count(XCHAR* ptszMsgBufer, int* pInt_Len
 
 	*pInt_Len = Json::writeString(st_JsonBuilder, st_JsonRoot).length();
 	memcpy(ptszMsgBufer, Json::writeString(st_JsonBuilder, st_JsonRoot).c_str(), *pInt_Len);
-	return TRUE;
+	return XTRUE;
 }
 XBOOL CPlugin_Timezone::Plugin_Timezone_List(LPCXSTR lpszConvert, XCHAR* ptszMsgBufer, int* pInt_Len)
 {
-	Timezone_IsErrorOccur = FALSE;
+	Timezone_IsErrorOccur = XFALSE;
 
 	int nPosStart = 0;
 	int nPosEnd = 0;
@@ -622,11 +622,11 @@ XBOOL CPlugin_Timezone::Plugin_Timezone_List(LPCXSTR lpszConvert, XCHAR* ptszMsg
 
 	*pInt_Len = Json::writeString(st_JsonBuilder, st_JsonRoot).length();
 	memcpy(ptszMsgBufer, Json::writeString(st_JsonBuilder, st_JsonRoot).c_str(), *pInt_Len);
-	return TRUE;
+	return XTRUE;
 }
 XBOOL CPlugin_Timezone::Plugin_Timezone_Convert(LPCXSTR lpszConvert, LPCXSTR lpszTimeStr, XCHAR* ptszMsgBufer, int* pInt_Len)
 {
-	Timezone_IsErrorOccur = FALSE;
+	Timezone_IsErrorOccur = XFALSE;
 
 	Json::Value st_JsonRoot;
 	Json::Value st_JsonObject;
@@ -635,7 +635,7 @@ XBOOL CPlugin_Timezone::Plugin_Timezone_Convert(LPCXSTR lpszConvert, LPCXSTR lps
 	unordered_map<string, MODULEPLUGIN_TIMEZONE>::const_iterator stl_MapIterator = stl_MapTimezone.find(lpszConvert);
 	if (stl_MapIterator == stl_MapTimezone.end())
 	{
-		return FALSE;
+		return XFALSE;
 	}
 	XCHAR tszTimeStr[64];
 	XENGINE_LIBTIMER st_TimeStart;
@@ -661,5 +661,5 @@ XBOOL CPlugin_Timezone::Plugin_Timezone_Convert(LPCXSTR lpszConvert, LPCXSTR lps
 
 	*pInt_Len = Json::writeString(st_JsonBuilder, st_JsonRoot).length();
 	memcpy(ptszMsgBufer, Json::writeString(st_JsonBuilder, st_JsonRoot).c_str(), *pInt_Len);
-	return TRUE;
+	return XTRUE;
 }

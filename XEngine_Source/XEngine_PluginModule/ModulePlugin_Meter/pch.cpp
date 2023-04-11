@@ -11,7 +11,7 @@
 //    Purpose:     导出实现
 //    History:
 *********************************************************************/
-XBOOL Meter_IsErrorOccur = FALSE;
+XBOOL Meter_IsErrorOccur = XFALSE;
 DWORD Meter_dwErrorCode = 0;
 //////////////////////////////////////////////////////////////////////////
 CPlugin_Meter m_PluginMeter;

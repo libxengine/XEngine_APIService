@@ -36,23 +36,23 @@ CModuleDatabase_XLog::~CModuleDatabase_XLog()
 *********************************************************************/
 XBOOL CModuleDatabase_XLog::ModuleDatabase_XLog_Init(DATABASE_MYSQL_CONNECTINFO* pSt_DBConnector)
 {
-	DBModule_IsErrorOccur = FALSE;
+	DBModule_IsErrorOccur = XFALSE;
 
 	if (NULL == pSt_DBConnector)
 	{
-		DBModule_IsErrorOccur = TRUE;
+		DBModule_IsErrorOccur = XTRUE;
 		DBModule_dwErrorCode = ERROR_APISERVICE_MODULE_DATABASE_PARAMENT;
-		return FALSE;
+		return XFALSE;
 	}
 	//连接数据库
 	_tcscpy(pSt_DBConnector->tszDBName, _T("XEngine_APILog"));
 	if (!DataBase_MySQL_Connect(&xhDBSQL, pSt_DBConnector))
 	{
-		DBModule_IsErrorOccur = TRUE;
+		DBModule_IsErrorOccur = XTRUE;
 		DBModule_dwErrorCode = DataBase_GetLastError();
-		return FALSE;
+		return XFALSE;
 	}
-	return TRUE;
+	return XTRUE;
 }
 /********************************************************************
 函数名称：ModuleDatabase_XLog_Destory
@@ -64,10 +64,10 @@ XBOOL CModuleDatabase_XLog::ModuleDatabase_XLog_Init(DATABASE_MYSQL_CONNECTINFO*
 *********************************************************************/
 XBOOL CModuleDatabase_XLog::ModuleDatabase_XLog_Destory()
 {
-	DBModule_IsErrorOccur = FALSE;
+	DBModule_IsErrorOccur = XFALSE;
 
 	DataBase_MySQL_Close(xhDBSQL);
-	return TRUE;
+	return XTRUE;
 }
 /********************************************************************
 函数名称：ModuleDatabase_XLog_Create
@@ -84,13 +84,13 @@ XBOOL CModuleDatabase_XLog::ModuleDatabase_XLog_Destory()
 *********************************************************************/
 XBOOL CModuleDatabase_XLog::ModuleDatabase_XLog_Create(LPCXSTR lpszTableName)
 {
-	DBModule_IsErrorOccur = FALSE;
+	DBModule_IsErrorOccur = XFALSE;
 
 	if (NULL == lpszTableName)
 	{
-		DBModule_IsErrorOccur = TRUE;
+		DBModule_IsErrorOccur = XTRUE;
 		DBModule_dwErrorCode = ERROR_APISERVICE_MODULE_DATABASE_PARAMENT;
-		return FALSE;
+		return XFALSE;
 	}
 	XCHAR tszSQLStatement[10240];
 	memset(tszSQLStatement, '\0', sizeof(tszSQLStatement));
@@ -108,11 +108,11 @@ XBOOL CModuleDatabase_XLog::ModuleDatabase_XLog_Create(LPCXSTR lpszTableName)
 
 	if (!DataBase_MySQL_Execute(xhDBSQL, tszSQLStatement))
 	{
-		DBModule_IsErrorOccur = TRUE;
+		DBModule_IsErrorOccur = XTRUE;
 		DBModule_dwErrorCode = DataBase_GetLastError();
-		return FALSE;
+		return XFALSE;
 	}
-	return TRUE;
+	return XTRUE;
 }
 /********************************************************************
 函数名称：ModuleDatabase_XLog_Insert
@@ -129,13 +129,13 @@ XBOOL CModuleDatabase_XLog::ModuleDatabase_XLog_Create(LPCXSTR lpszTableName)
 *********************************************************************/
 XBOOL CModuleDatabase_XLog::ModuleDatabase_XLog_Insert(XENGINE_XLOGINFO* pSt_XLogInfo)
 {
-	DBModule_IsErrorOccur = FALSE;
+	DBModule_IsErrorOccur = XFALSE;
 
 	if (NULL == pSt_XLogInfo)
 	{
-		DBModule_IsErrorOccur = TRUE;
+		DBModule_IsErrorOccur = XTRUE;
 		DBModule_dwErrorCode = ERROR_APISERVICE_MODULE_DATABASE_PARAMENT;
-		return FALSE;
+		return XFALSE;
 	}
 	XCHAR tszSQLStatement[11240];
 	memset(tszSQLStatement, '\0', sizeof(tszSQLStatement));
@@ -143,11 +143,11 @@ XBOOL CModuleDatabase_XLog::ModuleDatabase_XLog_Insert(XENGINE_XLOGINFO* pSt_XLo
 	_stprintf(tszSQLStatement, _T("INSERT INTO `%s` (tszFileName,tszFuncName,nLogLine,nLogLevel,tszLogBuffer,tszLogTime) VALUES('%s','%s',%d,%d,'%s','%s')"), pSt_XLogInfo->tszTableName, pSt_XLogInfo->st_ProtocolLog.tszFileName, pSt_XLogInfo->st_ProtocolLog.tszFuncName, pSt_XLogInfo->st_ProtocolLog.nLogLine, pSt_XLogInfo->st_ProtocolLog.nLogLevel, pSt_XLogInfo->tszLogBuffer, pSt_XLogInfo->st_ProtocolLog.tszLogTimer);
 	if (!DataBase_MySQL_Execute(xhDBSQL, tszSQLStatement))
 	{
-		DBModule_IsErrorOccur = TRUE;
+		DBModule_IsErrorOccur = XTRUE;
 		DBModule_dwErrorCode = DataBase_GetLastError();
-		return FALSE;
+		return XFALSE;
 	}
-	return TRUE;
+	return XTRUE;
 }
 /********************************************************************
 函数名称：ModuleDatabase_XLog_Query
@@ -184,13 +184,13 @@ XBOOL CModuleDatabase_XLog::ModuleDatabase_XLog_Insert(XENGINE_XLOGINFO* pSt_XLo
 *********************************************************************/
 XBOOL CModuleDatabase_XLog::ModuleDatabase_XLog_Query(XENGINE_XLOGINFO*** pppSt_XLogInfo, int* pInt_ListCount, LPCXSTR lpszTableName, LPCXSTR lpszTimeStart, LPCXSTR lpszTimeEnd)
 {
-	DBModule_IsErrorOccur = FALSE;
+	DBModule_IsErrorOccur = XFALSE;
 
 	if ((NULL == lpszTableName) || (NULL == lpszTimeStart) || (NULL == lpszTimeEnd))
 	{
-		DBModule_IsErrorOccur = TRUE;
+		DBModule_IsErrorOccur = XTRUE;
 		DBModule_dwErrorCode = ERROR_APISERVICE_MODULE_DATABASE_PARAMENT;
-		return FALSE;
+		return XFALSE;
 	}
 	//查询
 	XNETHANDLE xhTable = 0;
@@ -203,15 +203,15 @@ XBOOL CModuleDatabase_XLog::ModuleDatabase_XLog_Query(XENGINE_XLOGINFO*** pppSt_
 	_stprintf_s(tszSQLStatement, _T("SELECT * FROM `%s` WHERE tszLogTime BETWEEN  '%s' AND '%s'"), lpszTableName, lpszTimeStart, lpszTimeEnd);
 	if (!DataBase_MySQL_ExecuteQuery(xhDBSQL, &xhTable, tszSQLStatement, &nllLine, &nllRow))
 	{
-		DBModule_IsErrorOccur = TRUE;
+		DBModule_IsErrorOccur = XTRUE;
 		DBModule_dwErrorCode = DataBase_GetLastError();
-		return FALSE;
+		return XFALSE;
 	}
 	if (nllLine <= 0)
 	{
-		DBModule_IsErrorOccur = TRUE;
+		DBModule_IsErrorOccur = XTRUE;
 		DBModule_dwErrorCode = ERROR_APISERVICE_MODULE_DATABASE_NOTFOUND;
-		return FALSE;
+		return XFALSE;
 	}
 	*pInt_ListCount = (int)nllLine;
 	BaseLib_OperatorMemory_Malloc((XPPPMEM)pppSt_XLogInfo, (int)nllLine, sizeof(XENGINE_XLOGINFO));
@@ -246,7 +246,7 @@ XBOOL CModuleDatabase_XLog::ModuleDatabase_XLog_Query(XENGINE_XLOGINFO*** pppSt_
 		}
 	}
 	DataBase_MySQL_FreeResult(xhDBSQL, xhTable);
-	return TRUE;
+	return XTRUE;
 }
 /********************************************************************
 函数名称：ModuleDatabase_XLog_Delete
@@ -263,13 +263,13 @@ XBOOL CModuleDatabase_XLog::ModuleDatabase_XLog_Query(XENGINE_XLOGINFO*** pppSt_
 *********************************************************************/
 XBOOL CModuleDatabase_XLog::ModuleDatabase_XLog_Delete(LPCXSTR lpszTableName)
 {
-	DBModule_IsErrorOccur = FALSE;
+	DBModule_IsErrorOccur = XFALSE;
 
 	if (NULL == lpszTableName)
 	{
-		DBModule_IsErrorOccur = TRUE;
+		DBModule_IsErrorOccur = XTRUE;
 		DBModule_dwErrorCode = ERROR_APISERVICE_MODULE_DATABASE_PARAMENT;
-		return FALSE;
+		return XFALSE;
 	}
 	XCHAR tszSQLStatement[10240];
 	memset(tszSQLStatement, '\0', sizeof(tszSQLStatement));
@@ -277,9 +277,9 @@ XBOOL CModuleDatabase_XLog::ModuleDatabase_XLog_Delete(LPCXSTR lpszTableName)
 	_stprintf(tszSQLStatement, _T("DROP TABLE IF EXISTS '%s'"), lpszTableName);
 	if (!DataBase_MySQL_Execute(xhDBSQL, tszSQLStatement))
 	{
-		DBModule_IsErrorOccur = TRUE;
+		DBModule_IsErrorOccur = XTRUE;
 		DBModule_dwErrorCode = DataBase_GetLastError();
-		return FALSE;
+		return XFALSE;
 	}
-	return TRUE;
+	return XTRUE;
 }

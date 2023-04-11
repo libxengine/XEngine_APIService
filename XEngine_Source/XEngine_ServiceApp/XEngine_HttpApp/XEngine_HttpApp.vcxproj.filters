@@ -78,6 +78,9 @@
     <ClCompile Include="XEngine_TaskPost\TaskPost_QRCode.cpp">
       <Filter>源文件\XEngine_TaskPost</Filter>
     </ClCompile>
+    <ClCompile Include="XEngine_TaskGet\TaskGet_ShortLink.cpp">
+      <Filter>源文件\XEngine_TaskGet</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="XEngine_Configure.h">
@@ -130,6 +133,9 @@
     </ClInclude>
     <ClInclude Include="XEngine_TaskPost\TaskPost_QRCode.h">
       <Filter>头文件\XEngine_TaskPost</Filter>
+    </ClInclude>
+    <ClInclude Include="XEngine_TaskGet\TaskGet_ShortLink.h">
+      <Filter>头文件\XEngine_TaskGet</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

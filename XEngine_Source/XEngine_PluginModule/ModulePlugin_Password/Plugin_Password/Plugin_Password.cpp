@@ -35,9 +35,9 @@ CPlugin_Password::~CPlugin_Password()
 *********************************************************************/
 XBOOL CPlugin_Password::PluginCore_Init(XPVOID lParam)
 {
-	Pass_IsErrorOccur = FALSE;
+	Pass_IsErrorOccur = XFALSE;
 
-    return TRUE;
+    return XTRUE;
 }
 /********************************************************************
 函数名称：PluginCore_UnInit
@@ -49,7 +49,7 @@ XBOOL CPlugin_Password::PluginCore_Init(XPVOID lParam)
 *********************************************************************/
 void CPlugin_Password::PluginCore_UnInit()
 {
-	Pass_IsErrorOccur = FALSE;
+	Pass_IsErrorOccur = XFALSE;
 }
 /********************************************************************
 函数名称：PluginCore_Call
@@ -61,13 +61,13 @@ void CPlugin_Password::PluginCore_UnInit()
 *********************************************************************/
 XBOOL CPlugin_Password::PluginCore_Call(XCHAR*** pppHDRList, int nListCount, int* pInt_HTTPCode, XCHAR* ptszMsgBuffer, int* pInt_MsgLen, LPCXSTR lpszMsgBuffer, int nMsgLen)
 {
-	Pass_IsErrorOccur = FALSE;
+	Pass_IsErrorOccur = XFALSE;
 
 	if ((NULL == pInt_HTTPCode) || (NULL == ptszMsgBuffer) || (NULL == pInt_MsgLen))
 	{
-		Pass_IsErrorOccur = TRUE;
+		Pass_IsErrorOccur = XTRUE;
 		Pass_dwErrorCode = ERROR_XENGINE_APISERVICE_PLUGIN_MODULE_PASS_PARAMENT;
-		return FALSE;
+		return XFALSE;
 	}
 	XCHAR tszKeyName[128];
 	XCHAR tszParamType[128];
@@ -97,14 +97,14 @@ XBOOL CPlugin_Password::PluginCore_Call(XCHAR*** pppHDRList, int nListCount, int
 	*pInt_HTTPCode = 200;
 	*pInt_MsgLen = Json::writeString(st_JsonBuilder, st_JsonRoot).length();
 	memcpy(ptszMsgBuffer, Json::writeString(st_JsonBuilder, st_JsonRoot).c_str(), *pInt_MsgLen);
-	return TRUE;
+	return XTRUE;
 }
 //////////////////////////////////////////////////////////////////////////
 //                       保护函数
 //////////////////////////////////////////////////////////////////////////
 XBOOL CPlugin_Password::Plugin_Password_Creator(LPCXSTR lpszPassType, LPCXSTR lpszLength, XCHAR* ptszPassStr)
 {
-	Pass_IsErrorOccur = FALSE;
+	Pass_IsErrorOccur = XFALSE;
 
 	int nType = _ttoi(lpszPassType);
 	int nLen = _ttoi(lpszLength);
@@ -129,5 +129,5 @@ XBOOL CPlugin_Password::Plugin_Password_Creator(LPCXSTR lpszPassType, LPCXSTR lp
 			_stprintf(&tszPassBuffer[i], _T("%c"), (rand() % 26) + 65);
 		}
 	}
-	return TRUE;
+	return XTRUE;
 }

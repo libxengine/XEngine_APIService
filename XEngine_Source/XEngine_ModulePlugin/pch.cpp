@@ -13,7 +13,7 @@
 //    Purpose:     插件核心导出函数实现
 //    History:
 *********************************************************************/
-XBOOL ModulePlugin_IsErrorOccur = FALSE;
+XBOOL ModulePlugin_IsErrorOccur = XFALSE;
 DWORD ModulePlugin_dwErrorCode = 0;
 //////////////////////////////////////////////////////////////////////////
 CModulePlugin_LibCore m_PluginLib;

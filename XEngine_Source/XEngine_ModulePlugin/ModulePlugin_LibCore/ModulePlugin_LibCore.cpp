@@ -13,7 +13,7 @@
 *********************************************************************/
 CModulePlugin_LibCore::CModulePlugin_LibCore()
 {
-    bIsInit = FALSE;
+    bIsInit = XFALSE;
 }
 CModulePlugin_LibCore::~CModulePlugin_LibCore()
 {
@@ -31,17 +31,17 @@ CModulePlugin_LibCore::~CModulePlugin_LibCore()
 *********************************************************************/
 XBOOL CModulePlugin_LibCore::ModulePlugin_LibCore_Init()
 {
-    ModulePlugin_IsErrorOccur = FALSE;
+    ModulePlugin_IsErrorOccur = XFALSE;
     //判断是否初始化
     if (bIsInit)
     {
-        ModulePlugin_IsErrorOccur = TRUE;
+        ModulePlugin_IsErrorOccur = XTRUE;
         ModulePlugin_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PLUGIN_ISINITED;
-        return FALSE;
+        return XFALSE;
     }
     //启动线程
-    bIsInit = TRUE;
-    return TRUE;
+    bIsInit = XTRUE;
+    return XTRUE;
 }
 /********************************************************************
 函数名称：ModulePlugin_LibCore_Push
@@ -68,19 +68,19 @@ XBOOL CModulePlugin_LibCore::ModulePlugin_LibCore_Init()
 *********************************************************************/
 XBOOL CModulePlugin_LibCore::ModulePlugin_LibCore_Push(XNETHANDLE* pxhModule, LPCXSTR lpszPluginFile, XPVOID lParam)
 {
-    ModulePlugin_IsErrorOccur = FALSE;
+    ModulePlugin_IsErrorOccur = XFALSE;
 
     if (!BaseLib_OperatorHandle_Create(pxhModule))
     {
-        ModulePlugin_IsErrorOccur = TRUE;
+        ModulePlugin_IsErrorOccur = XTRUE;
         ModulePlugin_dwErrorCode = BaseLib_GetLastError();
-        return FALSE;
+        return XFALSE;
     }
     if (!ModulePlugin_LibCore_Add(*pxhModule, lpszPluginFile, lParam))
     {
-        return FALSE;
+        return XFALSE;
     }
-    return TRUE;
+    return XTRUE;
 }
 /********************************************************************
 函数名称：ModulePlugin_LibCore_Exec
@@ -132,28 +132,28 @@ XBOOL CModulePlugin_LibCore::ModulePlugin_LibCore_Push(XNETHANDLE* pxhModule, LP
 *********************************************************************/
 XBOOL CModulePlugin_LibCore::ModulePlugin_LibCore_Exec(XNETHANDLE xhModule, XCHAR*** pppHDRList, int nListCount, int* pInt_HTTPCode, XCHAR* ptszMsgBuffer, int* pInt_MsgLen, LPCXSTR lpszMsgBufer /* = NULL */, int nMsgLen /* = 0 */)
 {
-    ModulePlugin_IsErrorOccur = FALSE;
+    ModulePlugin_IsErrorOccur = XFALSE;
 
     st_csStl.lock_shared();
 	//执行指定插件函数
 	unordered_map<XNETHANDLE, PLUGINCORE_FRAMEWORK>::const_iterator stl_MapIterator = stl_MapFrameWork.find(xhModule);
 	if (stl_MapIterator == stl_MapFrameWork.end())
 	{
-		ModulePlugin_IsErrorOccur = TRUE;
+		ModulePlugin_IsErrorOccur = XTRUE;
 		ModulePlugin_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PLUGIN_NOTFOUND;
 		st_csStl.unlock_shared();
-		return FALSE;
+		return XFALSE;
 	}
     if (!stl_MapIterator->second.fpCall_PluginCore_Call(pppHDRList, nListCount, pInt_HTTPCode, ptszMsgBuffer, pInt_MsgLen, lpszMsgBufer, nMsgLen))
 	{
-		ModulePlugin_IsErrorOccur = TRUE;
+		ModulePlugin_IsErrorOccur = XTRUE;
 		ModulePlugin_dwErrorCode = stl_MapIterator->second.fpCall_PluginCore_GetLastError();
 		st_csStl.unlock_shared();
-		return FALSE;
+		return XFALSE;
 	}
     st_csStl.unlock_shared();
 
-    return TRUE;
+    return XTRUE;
 }
 /********************************************************************
 函数名称：ModulePlugin_LibCore_Destroy
@@ -165,14 +165,14 @@ XBOOL CModulePlugin_LibCore::ModulePlugin_LibCore_Exec(XNETHANDLE xhModule, XCHA
 *********************************************************************/
 XBOOL CModulePlugin_LibCore::ModulePlugin_LibCore_Destroy()
 {
-    ModulePlugin_IsErrorOccur = FALSE;
+    ModulePlugin_IsErrorOccur = XFALSE;
 
     //判断是否初始化
     if (!bIsInit)
     {
-        return TRUE;
+        return XTRUE;
     }
-    bIsInit = FALSE;
+    bIsInit = XFALSE;
     //清理STL元素空间
     st_csStl.lock();
     unordered_map<XNETHANDLE, PLUGINCORE_FRAMEWORK>::iterator stl_MapIterator = stl_MapFrameWork.begin();
@@ -187,7 +187,7 @@ XBOOL CModulePlugin_LibCore::ModulePlugin_LibCore_Destroy()
     }
     stl_MapFrameWork.clear();
     st_csStl.unlock();
-    return TRUE;
+    return XTRUE;
 }
 //////////////////////////////////////////////////////////////////////////
 //                       保护函数
@@ -217,13 +217,13 @@ XBOOL CModulePlugin_LibCore::ModulePlugin_LibCore_Destroy()
 *********************************************************************/
 XBOOL CModulePlugin_LibCore::ModulePlugin_LibCore_Add(XNETHANDLE xhNet, LPCXSTR lpszPluginFile, XPVOID lParam)
 {
-    ModulePlugin_IsErrorOccur = FALSE;
+    ModulePlugin_IsErrorOccur = XFALSE;
 
     if (NULL == lpszPluginFile)
     {
-        ModulePlugin_IsErrorOccur = TRUE;
+        ModulePlugin_IsErrorOccur = XTRUE;
         ModulePlugin_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PLUGIN_PARAMENT;
-        return FALSE;
+        return XFALSE;
     }
     PLUGINCORE_FRAMEWORK st_FrameWork;
     st_FrameWork.mhFile = 0;
@@ -236,9 +236,9 @@ XBOOL CModulePlugin_LibCore::ModulePlugin_LibCore_Add(XNETHANDLE xhNet, LPCXSTR 
 #endif
     if (NULL == st_FrameWork.mhFile)
     {
-        ModulePlugin_IsErrorOccur = TRUE;
+        ModulePlugin_IsErrorOccur = XTRUE;
         ModulePlugin_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PLUGIN_OPENDL;
-        return FALSE;
+        return XFALSE;
     }
     //开始查找模块中的函数
 #ifdef _MSC_BUILD
@@ -253,9 +253,9 @@ XBOOL CModulePlugin_LibCore::ModulePlugin_LibCore_Add(XNETHANDLE xhNet, LPCXSTR 
 #else
         dlclose(st_FrameWork.mhFile);
 #endif
-        ModulePlugin_IsErrorOccur = TRUE;
+        ModulePlugin_IsErrorOccur = XTRUE;
         ModulePlugin_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PLUGIN_FPINIT;
-        return FALSE;
+        return XFALSE;
     }
 #ifdef _MSC_BUILD
     st_FrameWork.fpCall_PluginCore_UnInit = (FPCall_PluginCore_UnInit)GetProcAddress(st_FrameWork.mhFile, "PluginCore_UnInit");
@@ -269,9 +269,9 @@ XBOOL CModulePlugin_LibCore::ModulePlugin_LibCore_Add(XNETHANDLE xhNet, LPCXSTR 
 #else
         dlclose(st_FrameWork.mhFile);
 #endif
-        ModulePlugin_IsErrorOccur = TRUE;
+        ModulePlugin_IsErrorOccur = XTRUE;
         ModulePlugin_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PLUGIN_FPUNINIT;
-        return FALSE;
+        return XFALSE;
     }
 #ifdef _MSC_BUILD
     st_FrameWork.fpCall_PluginCore_Call = (FPCall_PluginCore_Call)GetProcAddress(st_FrameWork.mhFile, "PluginCore_Call");
@@ -285,9 +285,9 @@ XBOOL CModulePlugin_LibCore::ModulePlugin_LibCore_Add(XNETHANDLE xhNet, LPCXSTR 
 #else
         dlclose(st_FrameWork.mhFile);
 #endif
-        ModulePlugin_IsErrorOccur = TRUE;
+        ModulePlugin_IsErrorOccur = XTRUE;
         ModulePlugin_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PLUGIN_FPCALL;
-        return FALSE;
+        return XFALSE;
     }
 #ifdef _MSC_BUILD
     st_FrameWork.fpCall_PluginCore_GetLastError = (FPCall_PluginCore_GetLastError)GetProcAddress(st_FrameWork.mhFile, _T("PluginCore_GetLastError"));
@@ -301,9 +301,9 @@ XBOOL CModulePlugin_LibCore::ModulePlugin_LibCore_Add(XNETHANDLE xhNet, LPCXSTR 
 #else
         dlclose(st_FrameWork.mhFile);
 #endif
-        ModulePlugin_IsErrorOccur = TRUE;
+        ModulePlugin_IsErrorOccur = XTRUE;
         ModulePlugin_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PLUGIN_FPERROR;
-        return FALSE;
+        return XFALSE;
     }
     //初始化内部模块
     if (!st_FrameWork.fpCall_PluginCore_Init(lParam))
@@ -313,9 +313,9 @@ XBOOL CModulePlugin_LibCore::ModulePlugin_LibCore_Add(XNETHANDLE xhNet, LPCXSTR 
 #else
         dlclose(st_FrameWork.mhFile);
 #endif
-        ModulePlugin_IsErrorOccur = TRUE;
+        ModulePlugin_IsErrorOccur = XTRUE;
         ModulePlugin_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PLUGIN_INIT;
-        return FALSE;
+        return XFALSE;
     }
     _tcscpy(st_FrameWork.tszModuleFile, lpszPluginFile);
 
@@ -323,5 +323,5 @@ XBOOL CModulePlugin_LibCore::ModulePlugin_LibCore_Add(XNETHANDLE xhNet, LPCXSTR 
     st_csStl.lock();
     stl_MapFrameWork.insert(make_pair(xhNet, st_FrameWork));
     st_csStl.unlock();
-    return TRUE;
+    return XTRUE;
 }

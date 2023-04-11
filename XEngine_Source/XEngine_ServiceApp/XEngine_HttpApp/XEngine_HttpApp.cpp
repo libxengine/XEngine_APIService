@@ -10,7 +10,7 @@
 //    Purpose:     主要入口函数
 //    History:
 *********************************************************************/
-XBOOL bIsRun = FALSE;
+XBOOL bIsRun = XFALSE;
 XHANDLE xhLog = NULL;
 //HTTP服务器
 XHANDLE xhHTTPSocket = NULL;
@@ -29,7 +29,7 @@ void ServiceApp_Stop(int signo)
 	if (bIsRun)
 	{
 		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_WARN, _T("服务器退出..."));
-		bIsRun = FALSE;
+		bIsRun = XFALSE;
 		//销毁HTTP资源
 		NetCore_TCPXCore_DestroyEx(xhHTTPSocket);
 		SocketOpt_HeartBeat_DestoryEx(xhHTTPHeart);
@@ -89,7 +89,7 @@ int main(int argc, char** argv)
 	WSADATA st_WSAData;
 	WSAStartup(MAKEWORD(2, 2), &st_WSAData);
 #endif
-	bIsRun = TRUE;
+	bIsRun = XTRUE;
 	LPCXSTR lpszHTTPMime = _T("./XEngine_Config/HttpMime.types");
 	LPCXSTR lpszHTTPCode = _T("./XEngine_Config/HttpCode.types");
 	LPCXSTR lpszLogFile = _T("./XEngine_Log/XEngine_HttpApp.Log");
@@ -316,7 +316,7 @@ int main(int argc, char** argv)
 	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _T("启动服务中,加载的Lib插件:%d 个,Lua插件:%d 个"), st_PluginLibConfig.pStl_ListPlugin->size(), st_PluginLuaConfig.pStl_ListPlugin->size());
 
 	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _T("所有服务成功启动，服务运行中，XEngine版本:%s,发行版本次数:%d,当前版本：%s。。。"), BaseLib_OperatorVer_XGetStr(), st_ServiceConfig.st_XVer.pStl_ListVer->size(), st_ServiceConfig.st_XVer.pStl_ListVer->front().c_str());
-	while (TRUE)
+	while (XTRUE)
 	{
 		std::this_thread::sleep_for(std::chrono::seconds(1));
 	}
@@ -325,7 +325,7 @@ XENGINE_SERVICEAPP_EXIT:
 	if (bIsRun)
 	{
 		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _T("有服务启动失败,服务器退出..."));
-		bIsRun = FALSE;
+		bIsRun = XFALSE;
 		//销毁HTTP资源
 		NetCore_TCPXCore_DestroyEx(xhHTTPSocket);
 		SocketOpt_HeartBeat_DestoryEx(xhHTTPHeart);
