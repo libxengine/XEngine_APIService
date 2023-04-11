@@ -69,6 +69,7 @@ using namespace std;
 #include "XEngine_HTTPTask/HTTPTask_Log.h"
 #include "XEngine_HTTPTask/HTTPTask_QRCode.h"
 #include "XEngine_HTTPTask/HTTPTask_SocketTest.h"
+#include "XEngine_HTTPTask/HTTPTask_DTest.h"
 /********************************************************************
 //    Created:     2022/01/20  14:42:06
 //    File Name:   D:\XEngine_ServiceApp\XEngine_Source\XEngine_ServiceApp\XEngine_HttpApp\XEngine_Hdr.h

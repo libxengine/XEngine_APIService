@@ -69,6 +69,9 @@
     <ClCompile Include="XEngine_HTTPTask\HTTPTask_SocketTest.cpp">
       <Filter>源文件\XEngine_HTTPTask</Filter>
     </ClCompile>
+    <ClCompile Include="XEngine_HTTPTask\HTTPTask_DTest.cpp">
+      <Filter>源文件\XEngine_HTTPTask</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="XEngine_Configure.h">
@@ -117,6 +120,9 @@
       <Filter>头文件\XEngine_HTTPTask</Filter>
     </ClInclude>
     <ClInclude Include="XEngine_HTTPTask\HTTPTask_SocketTest.h">
+      <Filter>头文件\XEngine_HTTPTask</Filter>
+    </ClInclude>
+    <ClInclude Include="XEngine_HTTPTask\HTTPTask_DTest.h">
       <Filter>头文件\XEngine_HTTPTask</Filter>
     </ClInclude>
   </ItemGroup>

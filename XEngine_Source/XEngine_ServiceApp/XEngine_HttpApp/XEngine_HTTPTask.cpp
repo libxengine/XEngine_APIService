@@ -100,6 +100,7 @@ XBOOL XEngine_HTTPTask_Handle(RFCCOMPONENTS_HTTP_REQPARAM* pSt_HTTPParam, LPCXST
 	LPCXSTR lpszParamZIPCode = _T("zipcode");
 	LPCXSTR lpszParamXLog = _T("log");
 	LPCXSTR lpszParamSocket = _T("socket");
+	LPCXSTR lpszParamDTest = _T("dtest");
 
 	memset(tszKey, '\0', MAX_PATH);
 	memset(tszValue, '\0', MAX_PATH);
@@ -203,7 +204,7 @@ XBOOL XEngine_HTTPTask_Handle(RFCCOMPONENTS_HTTP_REQPARAM* pSt_HTTPParam, LPCXST
 		}
 		else if (0 == _tcsnicmp(lpszParamSocket, tszValue, _tcslen(lpszParamSocket)))
 		{
-			//二维码生成:http://app.xyry.org:5501/api?function=socket&params1=0 或者 1
+			//网络测试:http://app.xyry.org:5501/api?function=socket&params1=0 或者 1
 			memset(tszKey, '\0', sizeof(tszKey));
 			memset(tszValue, '\0', sizeof(tszValue));
 			BaseLib_OperatorString_GetKeyValue(pptszList[1], "=", tszKey, tszValue);
@@ -217,6 +218,23 @@ XBOOL XEngine_HTTPTask_Handle(RFCCOMPONENTS_HTTP_REQPARAM* pSt_HTTPParam, LPCXST
 				return FALSE;
 			}
 			XEngine_HTTPTask_SocketTest(lpszClientAddr, lpszRVBuffer, nRVLen, _ttoi(tszValue));
+		}
+		else if (0 == _tcsnicmp(lpszParamDTest, tszValue, _tcslen(lpszParamDTest)))
+		{
+			//数据测试:http://app.xyry.org:5501/api?function=dtest&params1=0 或者 1
+			memset(tszKey, '\0', sizeof(tszKey));
+			memset(tszValue, '\0', sizeof(tszValue));
+			BaseLib_OperatorString_GetKeyValue(pptszList[1], "=", tszKey, tszValue);
+			if (0 != _tcsnicmp(lpszParamName, tszKey, _tcslen(lpszParamName)))
+			{
+				st_HDRParam.nHttpCode = 404;
+				HttpProtocol_Server_SendMsgEx(xhHTTPPacket, tszMsgBuffer, &nMsgLen, &st_HDRParam);
+				XEngine_Network_Send(lpszClientAddr, tszMsgBuffer, nMsgLen);
+				BaseLib_OperatorMemory_Free((XPPPMEM)&pptszList, nListCount);
+				XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _T("HTTP客户端:%s,发送的URL请求参数不正确:%s"), lpszClientAddr, pSt_HTTPParam->tszHttpUri);
+				return FALSE;
+			}
+			XEngine_HTTPTask_DTest(lpszClientAddr, lpszRVBuffer, nRVLen, _ttoi(tszValue));
 		}
 		else
 		{
