@@ -622,3 +622,78 @@ XBOOL CModuleProtocol_Parse::ModuleProtocol_Parse_SocketTest(LPCXSTR lpszMsgBuff
 	}
 	return XTRUE;
 }
+/********************************************************************
+函数名称：ModuleProtocol_Parse_ShortLink
+函数功能：短连接协议解析
+ 参数.一：lpszMsgBuffer
+  In/Out：In
+  类型：常量字符指针
+  可空：N
+  意思：输入要解析的数据
+ 参数.二：nMsgLen
+  In/Out：In
+  类型：整数型
+  可空：N
+  意思：pSt_SocketTest
+ 参数.三：pSt_ShortLink
+  In/Out：Out
+  类型：数据结构指针
+  可空：N
+  意思：输出解析好的信息
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+XBOOL CModuleProtocol_Parse::ModuleProtocol_Parse_ShortLink(LPCXSTR lpszMsgBuffer, int nMsgLen, XENGINE_SHORTLINK* pSt_ShortLink)
+{
+	ModuleProtocol_IsErrorOccur = XFALSE;
+
+	if ((NULL == lpszMsgBuffer) || (NULL == pSt_ShortLink))
+	{
+		ModuleProtocol_IsErrorOccur = XTRUE;
+		ModuleProtocol_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PROTOCOL_PARSE_PARAMENT;
+		return XFALSE;
+	}
+	Json::Value st_JsonRoot;
+	JSONCPP_STRING st_JsonError;
+	Json::CharReaderBuilder st_ReaderBuilder;
+	//解析JSON
+	std::unique_ptr<Json::CharReader> const pSt_JsonReader(st_ReaderBuilder.newCharReader());
+	if (!pSt_JsonReader->parse(lpszMsgBuffer, lpszMsgBuffer + nMsgLen, &st_JsonRoot, &st_JsonError))
+	{
+		ModuleProtocol_IsErrorOccur = XTRUE;
+		ModuleProtocol_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PROTOCOL_PARSE_PARAMENT;
+		return XFALSE;
+	}
+
+	if (!st_JsonRoot["tszFullUrl"].isNull())
+	{
+		_tcscpy(pSt_ShortLink->tszFullUrl, st_JsonRoot["tszFullUrl"].asCString());
+	}
+	if (!st_JsonRoot["tszShotUrl"].isNull())
+	{
+		_tcscpy(pSt_ShortLink->tszShotUrl, st_JsonRoot["tszShotUrl"].asCString());
+	}
+	if (!st_JsonRoot["tszKeyUrl"].isNull())
+	{
+		_tcscpy(pSt_ShortLink->tszKeyUrl, st_JsonRoot["tszKeyUrl"].asCString());
+	}
+	if (!st_JsonRoot["tszMapUrl"].isNull())
+	{
+		_tcscpy(pSt_ShortLink->tszMapUrl, st_JsonRoot["tszMapUrl"].asCString());
+	}
+	if (!st_JsonRoot["tszCvtUrl"].isNull())
+	{
+		_tcscpy(pSt_ShortLink->tszCvtUrl, st_JsonRoot["tszCvtUrl"].asCString());
+	}
+	if (!st_JsonRoot["tszCreateTime"].isNull())
+	{
+		_tcscpy(pSt_ShortLink->tszCreateTime, st_JsonRoot["tszCreateTime"].asCString());
+	}
+	if (!st_JsonRoot["nLength"].isNull())
+	{
+		pSt_ShortLink->nLength = st_JsonRoot["nLength"].asInt();
+	}
+	return XTRUE;
+}

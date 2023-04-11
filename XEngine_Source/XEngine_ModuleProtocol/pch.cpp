@@ -67,6 +67,10 @@ extern "C" XBOOL ModuleProtocol_Packet_TestReply(XCHAR * ptszMsgBuffer, int* pIn
 {
 	return m_ProtocolPacket.ModuleProtocol_Packet_TestReply(ptszMsgBuffer, pInt_MsgLen, xhToken);
 }
+extern "C" XBOOL ModuleProtocol_Packet_ShortLink(XCHAR * ptszMsgBuffer, int* pInt_MsgLen, XENGINE_SHORTLINK * pSt_ShortLink)
+{
+	return m_ProtocolPacket.ModuleProtocol_Packet_ShortLink(ptszMsgBuffer, pInt_MsgLen, pSt_ShortLink);
+}
 extern "C" XBOOL ModuleProtocol_Packet_P2PLan(XCHAR * ptszMsgBuffer, int* pInt_MsgLen, XENGINE_P2XPPEER_PROTOCOL * **pppSt_ListClients, int nListCount)
 {
 	return m_ProtocolPacket.ModuleProtocol_Packet_P2PLan(ptszMsgBuffer, pInt_MsgLen, pppSt_ListClients, nListCount);
@@ -117,4 +121,8 @@ extern "C" XBOOL ModuleProtocol_Parse_QRCode(LPCXSTR lpszMsgBuffer, int nMsgLen,
 extern "C" XBOOL ModuleProtocol_Parse_SocketTest(LPCXSTR lpszMsgBuffer, int nMsgLen, XENGINE_SOCKETTEST * pSt_SocketTest)
 {
 	return m_ProtocolParse.ModuleProtocol_Parse_SocketTest(lpszMsgBuffer, nMsgLen, pSt_SocketTest);
+}
+extern "C" XBOOL ModuleProtocol_Parse_ShortLink(LPCXSTR lpszMsgBuffer, int nMsgLen, XENGINE_SHORTLINK * pSt_ShortLink)
+{
+	return m_ProtocolParse.ModuleProtocol_Parse_ShortLink(lpszMsgBuffer, nMsgLen, pSt_ShortLink);
 }
