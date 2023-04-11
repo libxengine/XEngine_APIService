@@ -1,6 +1,6 @@
 ﻿#include "../XEngine_Hdr.h"
 
-XBOOL XEngine_HTTPTask_PostCode(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer, int nMsgLen, int nType)
+XBOOL HTTPTask_TastPost_PostCode(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer, int nMsgLen, int nType)
 {
 	int nSDLen = 4096;
 	int nRVLen = 4096;

@@ -1,7 +1,7 @@
 ﻿#include "../XEngine_Hdr.h"
 
 
-XBOOL XEngine_HTTPTask_OPTions(LPCXSTR lpszClientAddr)
+XBOOL HTTPTask_TaskGet_OPTions(LPCXSTR lpszClientAddr)
 {
 	int nMsgLen = 4096;
 	int nPktLen = 4096;

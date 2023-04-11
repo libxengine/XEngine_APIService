@@ -1,6 +1,6 @@
 ﻿#include "../XEngine_Hdr.h"
 
-XBOOL XEngine_HTTPTask_Translation(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer, int nConvertType)
+XBOOL HTTPTask_TaskGet_Translation(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer, int nConvertType)
 {
 	int nMsgLen = 4096;
 	int nPktLen = 4096;

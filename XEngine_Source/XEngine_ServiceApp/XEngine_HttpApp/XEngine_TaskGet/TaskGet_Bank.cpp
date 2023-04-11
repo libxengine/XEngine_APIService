@@ -1,7 +1,7 @@
 ﻿#include "../XEngine_Hdr.h"
 
 
-XBOOL XEngine_HTTPTask_BankInfo(LPCXSTR lpszClientAddr, LPCXSTR lpszBankNumber)
+XBOOL HTTPTask_TaskGet_BankInfo(LPCXSTR lpszClientAddr, LPCXSTR lpszBankNumber)
 {
 	int nMsgLen = 4096;
 	int nPktLen = 4096;

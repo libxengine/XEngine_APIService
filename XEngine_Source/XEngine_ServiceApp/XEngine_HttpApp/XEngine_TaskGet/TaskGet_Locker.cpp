@@ -1,6 +1,6 @@
 ﻿#include "../XEngine_Hdr.h"
 
-XBOOL XEngine_HTTPTask_Locker(LPCXSTR lpszClientAddr, __int64x xhToken, ENUM_XENGINE_APISERVICE_LOCKER_TYPE enLockType)
+XBOOL HTTPTask_TaskGet_Locker(LPCXSTR lpszClientAddr, __int64x xhToken, ENUM_XENGINE_APISERVICE_LOCKER_TYPE enLockType)
 {
 	int nSDLen = 4096;
 	int nRVLen = 4096;

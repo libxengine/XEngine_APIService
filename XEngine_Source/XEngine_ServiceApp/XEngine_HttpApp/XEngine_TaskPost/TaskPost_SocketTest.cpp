@@ -1,6 +1,6 @@
 ﻿#include "../XEngine_Hdr.h"
 
-void CALLBACK XEngine_HTTPTask_CBSocketTest(XNETHANDLE xhToken, LPCSTR lpszAddr, int nPort, __int64x nNumber, __int64x nFailed, __int64x nSuccess, int nStatus, XPVOID lParam)
+void CALLBACK HTTPTask_TastPost_CBSocketTest(XNETHANDLE xhToken, LPCSTR lpszAddr, int nPort, __int64x nNumber, __int64x nFailed, __int64x nSuccess, int nStatus, XPVOID lParam)
 {
 	XENGINE_SOCKETTEST* pSt_SocketTest = (XENGINE_SOCKETTEST*)lParam;
 	int nMsgLen = 0;
@@ -47,7 +47,7 @@ void CALLBACK XEngine_HTTPTask_CBSocketTest(XNETHANDLE xhToken, LPCSTR lpszAddr,
 		}
 	}
 }
-XBOOL XEngine_HTTPTask_SocketTest(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer, int nMsgLen, int nType)
+XBOOL HTTPTask_TastPost_SocketTest(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer, int nMsgLen, int nType)
 {
 	int nSDLen = 0;
 	int nRVLen = 0;
@@ -70,12 +70,12 @@ XBOOL XEngine_HTTPTask_SocketTest(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer,
 	{
 		if (pSt_SocketTest->bConn)
 		{
-			ModuleHelp_SocketTest_StartConnect(&pSt_SocketTest->xhToken, &pSt_SocketTest->st_SocketConn, XEngine_HTTPTask_CBSocketTest, pSt_SocketTest);
+			ModuleHelp_SocketTest_StartConnect(&pSt_SocketTest->xhToken, &pSt_SocketTest->st_SocketConn, HTTPTask_TastPost_CBSocketTest, pSt_SocketTest);
 		}
 		else
 		{
 			memcpy(&pSt_SocketTest->st_SocketData.st_REConnect, &pSt_SocketTest->st_SocketConn, sizeof(MODULEHELP_SOCKETTEST_RECONNECT));
-			ModuleHelp_SocketTest_StartDatas(&pSt_SocketTest->xhToken, &pSt_SocketTest->st_SocketData, XEngine_HTTPTask_CBSocketTest, pSt_SocketTest->bTCP, pSt_SocketTest);
+			ModuleHelp_SocketTest_StartDatas(&pSt_SocketTest->xhToken, &pSt_SocketTest->st_SocketData, HTTPTask_TastPost_CBSocketTest, pSt_SocketTest->bTCP, pSt_SocketTest);
 		}
 		ModuleProtocol_Packet_TestReply(tszRVBuffer, &nRVLen, pSt_SocketTest->xhToken);
 		HttpProtocol_Server_SendMsgEx(xhHTTPPacket, tszSDBuffer, &nSDLen, &st_HDRParam, tszRVBuffer, nRVLen);

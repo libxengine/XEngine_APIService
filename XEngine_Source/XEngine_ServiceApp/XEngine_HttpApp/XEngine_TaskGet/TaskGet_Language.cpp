@@ -1,7 +1,7 @@
 ﻿#include "../XEngine_Hdr.h"
 
 
-XBOOL XEngine_HTTPTask_Language(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer, int nConvertType)
+XBOOL HTTPTask_TaskGet_Language(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer, int nConvertType)
 {
 	int nMsgLen = 4096;
 	int nPktLen = 4096;

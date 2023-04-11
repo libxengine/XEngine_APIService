@@ -58,18 +58,20 @@ using namespace std;
 #include "XEngine_Network.h"
 #include "XEngine_HTTPTask.h"
 #include "XEngine_PluginTask.h"
-#include "XEngine_HTTPTask/HTTPTask_IDCard.h"
-#include "XEngine_HTTPTask/HTTPTask_Bank.h"
-#include "XEngine_HTTPTask/HTTPTask_Language.h"
-#include "XEngine_HTTPTask/HTTPTask_Translation.h"
-#include "XEngine_HTTPTask/HTTPTask_Locker.h"
-#include "XEngine_HTTPTask/HTTPTask_OPtions.h"
-#include "XEngine_HTTPTask/HTTPTask_P2PClient.h"
-#include "XEngine_HTTPTask/HTTPTask_PostCode.h"
-#include "XEngine_HTTPTask/HTTPTask_Log.h"
-#include "XEngine_HTTPTask/HTTPTask_QRCode.h"
-#include "XEngine_HTTPTask/HTTPTask_SocketTest.h"
-#include "XEngine_HTTPTask/HTTPTask_DTest.h"
+//post
+#include "XEngine_TaskPost/TaskPost_DTest.h"
+#include "XEngine_TaskPost/TaskPost_Log.h"
+#include "XEngine_TaskPost/TaskPost_P2PClient.h"
+#include "XEngine_TaskPost/TaskPost_PostCode.h"
+#include "XEngine_TaskPost/TaskPost_SocketTest.h"
+#include "XEngine_TaskPost/TaskPost_QRCode.h"
+//get
+#include "XEngine_TaskGet/TaskGet_IDCard.h"
+#include "XEngine_TaskGet/TaskGet_Bank.h"
+#include "XEngine_TaskGet/TaskGet_Language.h"
+#include "XEngine_TaskGet/TaskGet_Translation.h"
+#include "XEngine_TaskGet/TaskGet_Locker.h"
+#include "XEngine_TaskGet/TaskGet_OPtions.h"
 /********************************************************************
 //    Created:     2022/01/20  14:42:06
 //    File Name:   D:\XEngine_ServiceApp\XEngine_Source\XEngine_ServiceApp\XEngine_HttpApp\XEngine_Hdr.h

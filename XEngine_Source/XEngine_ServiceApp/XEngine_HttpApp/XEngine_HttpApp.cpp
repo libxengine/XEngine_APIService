@@ -234,7 +234,7 @@ int main(int argc, char** argv)
 
 			*pInt_Pos = i;
 			ppSt_ListHTTPParam[i]->lParam = pInt_Pos;
-			ppSt_ListHTTPParam[i]->fpCall_ThreadsTask = XEngine_HTTPTask_Thread;
+			ppSt_ListHTTPParam[i]->fpCall_ThreadsTask = HTTPTask_TastPost_Thread;
 		}
 		xhHTTPPool = ManagePool_Thread_NQCreate(&ppSt_ListHTTPParam, st_ServiceConfig.st_XMax.nHTTPThread);
 		if (NULL == xhHTTPPool)
@@ -249,7 +249,7 @@ int main(int argc, char** argv)
 		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_WARN, _T("启动服务中,HTTP消息服务没有被启用"));
 	}
 	//初始化P2P
-	if (!ModuleHelp_P2PClient_Init(st_ServiceConfig.st_XTime.nP2PTimeOut, XEngine_HTTPTask_P2PCallback))
+	if (!ModuleHelp_P2PClient_Init(st_ServiceConfig.st_XTime.nP2PTimeOut, HTTPTask_TastPost_P2PCallback))
 	{
 		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _T("启动服务中,启动P2P客户端管理器失败,错误：%lX"), ModuleHelp_GetLastError());
 		goto XENGINE_SERVICEAPP_EXIT;

@@ -10,7 +10,7 @@
 //    Purpose:     HTTP任务处理代码
 //    History:
 *********************************************************************/
-XHTHREAD CALLBACK XEngine_HTTPTask_Thread(XPVOID lParam)
+XHTHREAD CALLBACK HTTPTask_TastPost_Thread(XPVOID lParam)
 {
 	//任务池是编号1开始的.
 	int nThreadPos = *(int*)lParam;
@@ -42,7 +42,7 @@ XHTHREAD CALLBACK XEngine_HTTPTask_Thread(XPVOID lParam)
 				if (HttpProtocol_Server_GetMemoryEx(xhHTTPPacket, ppSst_ListAddr[i]->tszClientAddr, &ptszMsgBuffer, &nMsgLen, &st_HTTPReqparam))
 				{
 					//在另外一个函数里面处理数据
-					XEngine_HTTPTask_Handle(&st_HTTPReqparam, ppSst_ListAddr[i]->tszClientAddr, ptszMsgBuffer, nMsgLen);
+					HTTPTask_TastPost_Handle(&st_HTTPReqparam, ppSst_ListAddr[i]->tszClientAddr, ptszMsgBuffer, nMsgLen);
 					//释放内存
 					BaseLib_OperatorMemory_FreeCStyle((VOID**)&ptszMsgBuffer);
 				}
@@ -52,7 +52,7 @@ XHTHREAD CALLBACK XEngine_HTTPTask_Thread(XPVOID lParam)
 	}
 	return 0;
 }
-XBOOL XEngine_HTTPTask_Handle(RFCCOMPONENTS_HTTP_REQPARAM* pSt_HTTPParam, LPCXSTR lpszClientAddr, LPCXSTR lpszRVBuffer, int nRVLen)
+XBOOL HTTPTask_TastPost_Handle(RFCCOMPONENTS_HTTP_REQPARAM* pSt_HTTPParam, LPCXSTR lpszClientAddr, LPCXSTR lpszRVBuffer, int nRVLen)
 {
 	int nMsgLen = 4096;
 	LPCXSTR lpszMethodPost = _T("POST");
@@ -149,7 +149,7 @@ XBOOL XEngine_HTTPTask_Handle(RFCCOMPONENTS_HTTP_REQPARAM* pSt_HTTPParam, LPCXST
 				XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _T("HTTP客户端:%s,发送的URL请求参数不正确:%s"), lpszClientAddr, pSt_HTTPParam->tszHttpUri);
 				return FALSE;
 			}
-			XEngine_HTTPTask_P2PClient(lpszClientAddr, lpszRVBuffer, nRVLen, _ttoi(tszValue));
+			HTTPTask_TastPost_P2PClient(lpszClientAddr, lpszRVBuffer, nRVLen, _ttoi(tszValue));
 		}
 		else if (0 == _tcsnicmp(lpszParamZIPCode, tszValue, _tcslen(lpszParamZIPCode)))
 		{
@@ -166,7 +166,7 @@ XBOOL XEngine_HTTPTask_Handle(RFCCOMPONENTS_HTTP_REQPARAM* pSt_HTTPParam, LPCXST
 				XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _T("HTTP客户端:%s,发送的URL请求参数不正确:%s"), lpszClientAddr, pSt_HTTPParam->tszHttpUri);
 				return FALSE;
 			}
-			XEngine_HTTPTask_PostCode(lpszClientAddr, lpszRVBuffer, nRVLen, _ttoi(tszValue));
+			HTTPTask_TastPost_PostCode(lpszClientAddr, lpszRVBuffer, nRVLen, _ttoi(tszValue));
 		}
 		else if (0 == _tcsnicmp(lpszParamXLog, tszValue, _tcslen(lpszParamXLog)))
 		{
@@ -183,7 +183,7 @@ XBOOL XEngine_HTTPTask_Handle(RFCCOMPONENTS_HTTP_REQPARAM* pSt_HTTPParam, LPCXST
 				XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _T("HTTP客户端:%s,发送的URL请求参数不正确:%s"), lpszClientAddr, pSt_HTTPParam->tszHttpUri);
 				return FALSE;
 			}
-			XEngine_HTTPTask_LogInfo(lpszClientAddr, lpszRVBuffer, nRVLen, _ttoi(tszValue));
+			HTTPTask_TastPost_LogInfo(lpszClientAddr, lpszRVBuffer, nRVLen, _ttoi(tszValue));
 		}
 		else if (0 == _tcsnicmp(lpszParamQRCode, tszValue, _tcslen(lpszParamQRCode)))
 		{
@@ -200,7 +200,7 @@ XBOOL XEngine_HTTPTask_Handle(RFCCOMPONENTS_HTTP_REQPARAM* pSt_HTTPParam, LPCXST
 				XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _T("HTTP客户端:%s,发送的URL请求参数不正确:%s"), lpszClientAddr, pSt_HTTPParam->tszHttpUri);
 				return FALSE;
 			}
-			XEngine_HTTPTask_QRCode(lpszClientAddr, lpszRVBuffer, nRVLen, _ttoi(tszValue));
+			HTTPTask_TaskPost_QRCode(lpszClientAddr, lpszRVBuffer, nRVLen, _ttoi(tszValue));
 		}
 		else if (0 == _tcsnicmp(lpszParamSocket, tszValue, _tcslen(lpszParamSocket)))
 		{
@@ -217,7 +217,7 @@ XBOOL XEngine_HTTPTask_Handle(RFCCOMPONENTS_HTTP_REQPARAM* pSt_HTTPParam, LPCXST
 				XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _T("HTTP客户端:%s,发送的URL请求参数不正确:%s"), lpszClientAddr, pSt_HTTPParam->tszHttpUri);
 				return FALSE;
 			}
-			XEngine_HTTPTask_SocketTest(lpszClientAddr, lpszRVBuffer, nRVLen, _ttoi(tszValue));
+			HTTPTask_TastPost_SocketTest(lpszClientAddr, lpszRVBuffer, nRVLen, _ttoi(tszValue));
 		}
 		else if (0 == _tcsnicmp(lpszParamDTest, tszValue, _tcslen(lpszParamDTest)))
 		{
@@ -234,7 +234,7 @@ XBOOL XEngine_HTTPTask_Handle(RFCCOMPONENTS_HTTP_REQPARAM* pSt_HTTPParam, LPCXST
 				XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _T("HTTP客户端:%s,发送的URL请求参数不正确:%s"), lpszClientAddr, pSt_HTTPParam->tszHttpUri);
 				return FALSE;
 			}
-			XEngine_HTTPTask_DTest(lpszClientAddr, lpszRVBuffer, nRVLen, _ttoi(tszValue));
+			HTTPTask_TastPost_DTest(lpszClientAddr, lpszRVBuffer, nRVLen, _ttoi(tszValue));
 		}
 		else
 		{
@@ -249,7 +249,7 @@ XBOOL XEngine_HTTPTask_Handle(RFCCOMPONENTS_HTTP_REQPARAM* pSt_HTTPParam, LPCXST
 		if (0 == _tcsnicmp(lpszParamOPtions, tszValue, _tcslen(lpszParamOPtions)))
 		{
 			//HTTP能力查询
-			XEngine_HTTPTask_OPTions(lpszClientAddr);
+			HTTPTask_TaskGet_OPTions(lpszClientAddr);
 		}
 		else if (0 == _tcsnicmp(lpszParamIDCard, tszValue, _tcslen(lpszParamIDCard)))
 		{
@@ -266,7 +266,7 @@ XBOOL XEngine_HTTPTask_Handle(RFCCOMPONENTS_HTTP_REQPARAM* pSt_HTTPParam, LPCXST
 				XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _T("HTTP客户端:%s,发送的URL请求参数不正确:%s"), lpszClientAddr, pSt_HTTPParam->tszHttpUri);
 				return FALSE;
 			}
-			XEngine_HTTPTask_IDCard(lpszClientAddr, tszValue);
+			HTTPTask_TaskGet_IDCard(lpszClientAddr, tszValue);
 		}
 		else if (0 == _tcsnicmp(lpszParamBank, tszValue, _tcslen(lpszParamBank)))
 		{
@@ -283,7 +283,7 @@ XBOOL XEngine_HTTPTask_Handle(RFCCOMPONENTS_HTTP_REQPARAM* pSt_HTTPParam, LPCXST
 				XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _T("HTTP客户端:%s,发送的URL请求参数不正确:%s"), lpszClientAddr, pSt_HTTPParam->tszHttpUri);
 				return FALSE;
 			}
-			XEngine_HTTPTask_BankInfo(lpszClientAddr, tszValue);
+			HTTPTask_TaskGet_BankInfo(lpszClientAddr, tszValue);
 		}
 		else if (0 == _tcsnicmp(lpszParamLanguage, tszValue, _tcslen(lpszParamLanguage)))
 		{
@@ -307,7 +307,7 @@ XBOOL XEngine_HTTPTask_Handle(RFCCOMPONENTS_HTTP_REQPARAM* pSt_HTTPParam, LPCXST
 			memset(tszKey, '\0', sizeof(tszKey));
 
 			BaseLib_OperatorString_GetKeyValue(pptszList[2], "=", tszKey, tszCvtType);
-			XEngine_HTTPTask_Language(lpszClientAddr, tszValue, _ttoi(tszCvtType));
+			HTTPTask_TaskGet_Language(lpszClientAddr, tszValue, _ttoi(tszCvtType));
 		}
 		else if (0 == _tcsnicmp(lpszParamTranslation, tszValue, _tcslen(lpszParamTranslation)))
 		{
@@ -331,7 +331,7 @@ XBOOL XEngine_HTTPTask_Handle(RFCCOMPONENTS_HTTP_REQPARAM* pSt_HTTPParam, LPCXST
 			memset(tszKey, '\0', sizeof(tszKey));
 
 			BaseLib_OperatorString_GetKeyValue(pptszList[2], "=", tszKey, tszCvtType);
-			XEngine_HTTPTask_Translation(lpszClientAddr, tszValue, _ttoi(tszCvtType));
+			HTTPTask_TaskGet_Translation(lpszClientAddr, tszValue, _ttoi(tszCvtType));
 		}
 		else if (0 == _tcsnicmp(lpszParamLocker, tszValue, _tcslen(lpszParamLocker)))
 		{
@@ -345,7 +345,7 @@ XBOOL XEngine_HTTPTask_Handle(RFCCOMPONENTS_HTTP_REQPARAM* pSt_HTTPParam, LPCXST
 
 			BaseLib_OperatorString_GetKeyValue(pptszList[1], "=", tszKey, tszLockToken);
 			BaseLib_OperatorString_GetKeyValue(pptszList[2], "=", tszKey, tszLockType);
-			XEngine_HTTPTask_Locker(lpszClientAddr, _ttoi64(tszLockToken), (ENUM_XENGINE_APISERVICE_LOCKER_TYPE)_ttoi(tszLockType));
+			HTTPTask_TaskGet_Locker(lpszClientAddr, _ttoi64(tszLockToken), (ENUM_XENGINE_APISERVICE_LOCKER_TYPE)_ttoi(tszLockType));
 		}
 		else
 		{

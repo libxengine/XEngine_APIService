@@ -1,6 +1,6 @@
 ﻿#include "../XEngine_Hdr.h"
 
-XBOOL XEngine_HTTPTask_IDCard(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer)
+XBOOL HTTPTask_TaskGet_IDCard(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer)
 {
 	int nMsgLen = 4096;
 	int nPktLen = 4096;
