@@ -92,7 +92,7 @@ XBOOL CModuleDatabase_ShortLink::ModuleDatabase_ShortLink_Insert(XENGINE_SHORTLI
 		DBModule_dwErrorCode = ERROR_APISERVICE_MODULE_DATABASE_PARAMENT;
 		return XFALSE;
 	}
-	XCHAR tszSQLStatement[1024];
+	XCHAR tszSQLStatement[2024];
 	memset(tszSQLStatement, '\0', sizeof(tszSQLStatement));
 
 	_stprintf(tszSQLStatement, _T("INSERT INTO `XEngine_ShortLink` (tszFullUrl,tszShortUrl,tszKeyUrl,tszMapUrl,tszCreateTime) VALUES('%s','%s','%s','%s','%s')"), pSt_SLinkInfo->tszFullUrl, pSt_SLinkInfo->tszShotUrl, pSt_SLinkInfo->tszKeyUrl, pSt_SLinkInfo->tszMapUrl, pSt_SLinkInfo->tszCreateTime);

@@ -15,7 +15,7 @@
 //    Purpose:     导出函数实现
 //    History:
 *********************************************************************/
-DWORD DBModule_IsErrorOccur = XFALSE;
+XLONG DBModule_IsErrorOccur = XFALSE;
 XBOOL DBModule_dwErrorCode = 0;
 //////////////////////////////////////////////////////////////////////////
 CModuleDatabase_IDCard m_IDCard;
@@ -26,7 +26,7 @@ CModuleDatabase_ShortLink m_ShortLink;
 //////////////////////////////////////////////////////////////////////////
 ///                        导出的函数
 //////////////////////////////////////////////////////////////////////////
-extern "C" DWORD ModuleDB_GetLastError(int* pInt_SysError)
+extern "C" XLONG ModuleDB_GetLastError(int* pInt_SysError)
 {
 	if (NULL != pInt_SysError)
 	{

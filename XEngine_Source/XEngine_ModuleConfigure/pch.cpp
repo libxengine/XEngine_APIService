@@ -12,13 +12,13 @@
 //    History:
 *********************************************************************/
 XBOOL Config_IsErrorOccur = XFALSE;
-DWORD Config_dwErrorCode = 0;
+XLONG Config_dwErrorCode = 0;
 //////////////////////////////////////////////////////////////////////
 CModuleConfigure_Json m_ConfigJson;
 //////////////////////////////////////////////////////////////////////
 //                        导出函数定义
 //////////////////////////////////////////////////////////////////////
-extern "C" DWORD ModuleConfigure_GetLastError(int* pInt_ErrorCode)
+extern "C" XLONG ModuleConfigure_GetLastError(int* pInt_ErrorCode)
 {
 	if (pInt_ErrorCode != NULL)
 	{

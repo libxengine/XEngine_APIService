@@ -34,7 +34,7 @@ XHTHREAD CALLBACK HTTPTask_TastPost_Thread(XPVOID lParam)
 			for (int j = 0; j < ppSst_ListAddr[i]->nPktCount; j++)
 			{
 				int nMsgLen = 0;                                    //客户端发送的数据大小,不包括头
-				CHAR* ptszMsgBuffer = NULL;                         //客户端发送的数据
+				XCHAR* ptszMsgBuffer = NULL;                         //客户端发送的数据
 				RFCCOMPONENTS_HTTP_REQPARAM st_HTTPReqparam;        //客户端的请求参数
 
 				memset(&st_HTTPReqparam, '\0', sizeof(RFCCOMPONENTS_HTTP_REQPARAM));

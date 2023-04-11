@@ -12,13 +12,13 @@
 //    History:
 *********************************************************************/
 XBOOL Phone_IsErrorOccur = XFALSE;
-DWORD Phone_dwErrorCode = 0;
+XLONG Phone_dwErrorCode = 0;
 //////////////////////////////////////////////////////////////////////////
 CModulePlugin_APIPhone m_PluginPhone;
 //////////////////////////////////////////////////////////////////////////
 //                       导出函数定义
 //////////////////////////////////////////////////////////////////////////
-extern "C" DWORD PluginCore_GetLastError()
+extern "C" XLONG PluginCore_GetLastError()
 {
 	return Phone_dwErrorCode;
 }

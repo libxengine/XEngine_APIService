@@ -38,7 +38,7 @@ using namespace std;
 //    History:
 *********************************************************************/
 extern XBOOL BMIndex_IsErrorOccur;
-extern DWORD BMIndex_dwErrorCode;
+extern XLONG BMIndex_dwErrorCode;
 
 
 #ifdef _MSC_BUILD

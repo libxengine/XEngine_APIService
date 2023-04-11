@@ -36,7 +36,7 @@ using namespace std;
 //    History:
 *********************************************************************/
 extern XBOOL Zodiac_IsErrorOccur;
-extern DWORD Zodiac_dwErrorCode;
+extern XLONG Zodiac_dwErrorCode;
 
 
 #ifdef _MSC_BUILD

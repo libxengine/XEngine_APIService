@@ -15,7 +15,7 @@
 
 typedef struct 
 {
-	BYTE byVersion[4];
+	XBYTE byVersion[4];
 	unsigned int nOffset;
 }XENGINE_DBPHONEHDR;
 
@@ -23,7 +23,7 @@ typedef struct
 {
 	unsigned int nPhone;
 	unsigned int nOffset;
-	BYTE byType;
+	XBYTE byType;
 }XENGINE_DBPHONERECORD;
 
 class CModulePlugin_DBPhone

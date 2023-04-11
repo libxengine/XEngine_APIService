@@ -56,7 +56,7 @@ using namespace std;
 //    History:
 *********************************************************************/
 extern XBOOL ModulePlugin_IsErrorOccur;
-extern DWORD ModulePlugin_dwErrorCode;
+extern XLONG ModulePlugin_dwErrorCode;
 
 #ifdef _MSC_BUILD
 #pragma comment(lib,"XEngine_BaseLib/XEngine_BaseLib")

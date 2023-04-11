@@ -34,7 +34,7 @@ using namespace std;
 //    History:
 *********************************************************************/
 extern XBOOL Pass_IsErrorOccur;
-extern DWORD Pass_dwErrorCode;
+extern XLONG Pass_dwErrorCode;
 
 
 #ifdef _MSC_BUILD

@@ -17,7 +17,7 @@
 //    History:
 *********************************************************************/
 XBOOL ModuleHelp_IsErrorOccur = XFALSE;
-DWORD ModuleHelp_dwErrorCode = 0;
+XLONG ModuleHelp_dwErrorCode = 0;
 //////////////////////////////////////////////////////////////////////////
 CModuleHelp_IDCard m_IDCard;
 CModuleHelp_Language m_Language;
@@ -28,7 +28,7 @@ CModuleHelp_SocketTest m_SocketTest;
 //////////////////////////////////////////////////////////////////////////
 ///                        导出的函数
 //////////////////////////////////////////////////////////////////////////
-extern "C" DWORD ModuleHelp_GetLastError(int* pInt_SysError)
+extern "C" XLONG ModuleHelp_GetLastError(int* pInt_SysError)
 {
 	if (NULL != pInt_SysError)
 	{
@@ -147,7 +147,7 @@ extern "C" XBOOL ModuleHelp_QRCode_QRDecodecFile(LPCXSTR lpszFileName, XCHAR * p
 {
 	return m_QRCode.ModuleHelp_QRCode_QRDecodecFile(lpszFileName, ptszMsgBuffer, lpszDetectProto, lpszDetectModel, lpszSrProto, lpszSrModel);
 }
-extern "C" XBOOL ModuleHelp_QRCode_QRDecodecMemory(LPCSTR lpszMsgBuffer, int nMsgLen, XCHAR * ptszMsgBuffer, LPCXSTR lpszDetectProto, LPCXSTR lpszDetectModel, LPCXSTR lpszSrProto, LPCXSTR lpszSrModel)
+extern "C" XBOOL ModuleHelp_QRCode_QRDecodecMemory(LPCXSTR lpszMsgBuffer, int nMsgLen, XCHAR * ptszMsgBuffer, LPCXSTR lpszDetectProto, LPCXSTR lpszDetectModel, LPCXSTR lpszSrProto, LPCXSTR lpszSrModel)
 {
 	return m_QRCode.ModuleHelp_QRCode_QRDecodecMemory(lpszMsgBuffer, nMsgLen, ptszMsgBuffer, lpszDetectProto, lpszDetectModel, lpszSrProto, lpszSrModel);
 }

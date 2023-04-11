@@ -43,7 +43,7 @@
 //    Purpose:     
 //    History:
 *********************************************************************/
-extern DWORD DBModule_IsErrorOccur;
+extern XLONG DBModule_IsErrorOccur;
 extern XBOOL DBModule_dwErrorCode;
 
 #ifdef _MSC_BUILD

@@ -12,13 +12,13 @@
 //    History:
 *********************************************************************/
 XBOOL BMIndex_IsErrorOccur = XFALSE;
-DWORD BMIndex_dwErrorCode = 0;
+XLONG BMIndex_dwErrorCode = 0;
 //////////////////////////////////////////////////////////////////////////
 CPlugin_BMIndex m_PluginBMIndex;
 //////////////////////////////////////////////////////////////////////////
 //                       导出函数定义
 //////////////////////////////////////////////////////////////////////////
-extern "C" DWORD PluginCore_GetLastError()
+extern "C" XLONG PluginCore_GetLastError()
 {
 	return BMIndex_dwErrorCode;
 }

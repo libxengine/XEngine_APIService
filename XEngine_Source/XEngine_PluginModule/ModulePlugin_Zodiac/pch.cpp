@@ -12,13 +12,13 @@
 //    History:
 *********************************************************************/
 XBOOL Zodiac_IsErrorOccur = XFALSE;
-DWORD Zodiac_dwErrorCode = 0;
+XLONG Zodiac_dwErrorCode = 0;
 //////////////////////////////////////////////////////////////////////////
 CPlugin_Zodiac m_PluginZodiac;
 //////////////////////////////////////////////////////////////////////////
 //                       导出函数定义
 //////////////////////////////////////////////////////////////////////////
-extern "C" DWORD PluginCore_GetLastError()
+extern "C" XLONG PluginCore_GetLastError()
 {
 	return Zodiac_dwErrorCode;
 }

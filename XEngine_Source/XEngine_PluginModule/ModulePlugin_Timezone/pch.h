@@ -38,7 +38,7 @@ using namespace std;
 //    History:
 *********************************************************************/
 extern XBOOL Timezone_IsErrorOccur;
-extern DWORD Timezone_dwErrorCode;
+extern XLONG Timezone_dwErrorCode;
 
 
 #ifdef _MSC_BUILD

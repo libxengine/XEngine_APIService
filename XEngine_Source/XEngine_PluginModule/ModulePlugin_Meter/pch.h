@@ -36,7 +36,7 @@
 //    History:
 *********************************************************************/
 extern XBOOL Meter_IsErrorOccur;
-extern DWORD Meter_dwErrorCode;
+extern XLONG Meter_dwErrorCode;
 
 
 #ifdef _MSC_BUILD

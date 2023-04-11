@@ -12,13 +12,13 @@
 //    History:
 *********************************************************************/
 XBOOL Meter_IsErrorOccur = XFALSE;
-DWORD Meter_dwErrorCode = 0;
+XLONG Meter_dwErrorCode = 0;
 //////////////////////////////////////////////////////////////////////////
 CPlugin_Meter m_PluginMeter;
 //////////////////////////////////////////////////////////////////////////
 //                       导出函数定义
 //////////////////////////////////////////////////////////////////////////
-extern "C" DWORD PluginCore_GetLastError()
+extern "C" XLONG PluginCore_GetLastError()
 {
 	return Meter_dwErrorCode;
 }

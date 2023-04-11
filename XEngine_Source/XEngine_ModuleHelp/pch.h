@@ -20,6 +20,7 @@
 #include <list>
 #include <vector>
 #include <atomic>
+#include <memory>
 #include <shared_mutex>
 #include <unordered_map>
 #include <opencc/opencc.h>
@@ -52,7 +53,7 @@ using namespace std;
 //    History:
 *********************************************************************/
 extern XBOOL ModuleHelp_IsErrorOccur;
-extern DWORD ModuleHelp_dwErrorCode;
+extern XLONG ModuleHelp_dwErrorCode;
 
 #ifdef _MSC_BUILD
 #pragma comment(lib,"XEngine_BaseLib/XEngine_BaseLib")

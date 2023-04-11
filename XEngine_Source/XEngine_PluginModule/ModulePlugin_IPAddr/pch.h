@@ -34,7 +34,7 @@ using namespace std;
 //    History:
 *********************************************************************/
 extern XBOOL IPAddr_IsErrorOccur;
-extern DWORD IPAddr_dwErrorCode;
+extern XLONG IPAddr_dwErrorCode;
 
 #include "ModulePlugin_IPAddr/ModulePlugin_IPAddr.h"
 

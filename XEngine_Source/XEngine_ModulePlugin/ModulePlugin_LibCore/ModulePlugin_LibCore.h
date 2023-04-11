@@ -13,17 +13,21 @@
 typedef XBOOL(*FPCall_PluginCore_Init)(XPVOID lParam);
 typedef void(*FPCall_PluginCore_UnInit)();
 typedef XBOOL(*FPCall_PluginCore_Call)(XCHAR*** pppHDRList, int nListCount, int* pInt_HTTPCode, XCHAR* ptszMsgBuffer, int* pInt_MsgLen, LPCXSTR lpszMsgBufer, int nMsgLen);
-typedef DWORD(*FPCall_PluginCore_GetLastError)();
+typedef XLONG(*FPCall_PluginCore_GetLastError)();
 
 typedef struct 
 {
+#ifdef _MSC_BUILD
 	HMODULE mhFile;
+#else
+	void* mhFile;
+#endif
 	XCHAR tszModuleFile[MAX_PATH];
 
 	XBOOL(*fpCall_PluginCore_Init)(XPVOID lParam);
 	void(*fpCall_PluginCore_UnInit)();
 	XBOOL(*fpCall_PluginCore_Call)(XCHAR*** pppHDRList, int nListCount, int* pInt_HTTPCode, XCHAR* ptszMsgBuffer, int* pInt_MsgLen, LPCXSTR lpszMsgBufer, int nMsgLen);
-	DWORD(*fpCall_PluginCore_GetLastError)();
+	XLONG(*fpCall_PluginCore_GetLastError)();
 }PLUGINCORE_FRAMEWORK, * LPPLUGINCORE_FRAMEWORK;
 
 class CModulePlugin_LibCore

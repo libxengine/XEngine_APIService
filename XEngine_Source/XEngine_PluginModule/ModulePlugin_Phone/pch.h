@@ -34,7 +34,7 @@ using namespace std;
 //    History:
 *********************************************************************/
 extern XBOOL Phone_IsErrorOccur;
-extern DWORD Phone_dwErrorCode;
+extern XLONG Phone_dwErrorCode;
 
 #include "ModulePlugin_DBPhone/ModulePlugin_DBPhone.h"
 

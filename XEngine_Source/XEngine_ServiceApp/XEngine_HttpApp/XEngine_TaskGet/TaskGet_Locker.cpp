@@ -29,7 +29,7 @@ XBOOL HTTPTask_TaskGet_Locker(LPCXSTR lpszClientAddr, __int64x xhToken, ENUM_XEN
 		//打开
 		if (!ModuleHelp_Locker_OPen(xhToken))
 		{
-			DWORD dwRet = ModuleHelp_GetLastError();
+			XLONG dwRet = ModuleHelp_GetLastError();
 			ModuleProtocol_Packet_Locker(tszRVBuffer, &nRVLen, xhToken, dwRet, "request is failed");
 			HttpProtocol_Server_SendMsgEx(xhHTTPPacket, tszSDBuffer, &nSDLen, &st_HDRParam, tszRVBuffer, nRVLen);
 			XEngine_Network_Send(lpszClientAddr, tszSDBuffer, nSDLen);
@@ -53,7 +53,7 @@ XBOOL HTTPTask_TaskGet_Locker(LPCXSTR lpszClientAddr, __int64x xhToken, ENUM_XEN
 	{
 		if (!ModuleHelp_Locker_ReadLock(xhToken))
 		{
-			DWORD dwRet = ModuleHelp_GetLastError();
+			XLONG dwRet = ModuleHelp_GetLastError();
 			ModuleProtocol_Packet_Locker(tszRVBuffer, &nRVLen, xhToken, dwRet, "request is failed");
 			HttpProtocol_Server_SendMsgEx(xhHTTPPacket, tszSDBuffer, &nSDLen, &st_HDRParam, tszRVBuffer, nRVLen);
 			XEngine_Network_Send(lpszClientAddr, tszSDBuffer, nSDLen);
@@ -69,7 +69,7 @@ XBOOL HTTPTask_TaskGet_Locker(LPCXSTR lpszClientAddr, __int64x xhToken, ENUM_XEN
 	{
 		if (!ModuleHelp_Locker_ReadUNLock(xhToken))
 		{
-			DWORD dwRet = ModuleHelp_GetLastError();
+			XLONG dwRet = ModuleHelp_GetLastError();
 			ModuleProtocol_Packet_Locker(tszRVBuffer, &nRVLen, xhToken, dwRet, "request is failed");
 			HttpProtocol_Server_SendMsgEx(xhHTTPPacket, tszSDBuffer, &nSDLen, &st_HDRParam, tszRVBuffer, nRVLen);
 			XEngine_Network_Send(lpszClientAddr, tszSDBuffer, nSDLen);
@@ -85,7 +85,7 @@ XBOOL HTTPTask_TaskGet_Locker(LPCXSTR lpszClientAddr, __int64x xhToken, ENUM_XEN
 	{
 		if (!ModuleHelp_Locker_WriteLock(xhToken))
 		{
-			DWORD dwRet = ModuleHelp_GetLastError();
+			XLONG dwRet = ModuleHelp_GetLastError();
 			ModuleProtocol_Packet_Locker(tszRVBuffer, &nRVLen, xhToken, dwRet, "request is failed");
 			HttpProtocol_Server_SendMsgEx(xhHTTPPacket, tszSDBuffer, &nSDLen, &st_HDRParam, tszRVBuffer, nRVLen);
 			XEngine_Network_Send(lpszClientAddr, tszSDBuffer, nSDLen);
@@ -101,7 +101,7 @@ XBOOL HTTPTask_TaskGet_Locker(LPCXSTR lpszClientAddr, __int64x xhToken, ENUM_XEN
 	{
 		if (!ModuleHelp_Locker_WriteUNLock(xhToken))
 		{
-			DWORD dwRet = ModuleHelp_GetLastError();
+			XLONG dwRet = ModuleHelp_GetLastError();
 			ModuleProtocol_Packet_Locker(tszRVBuffer, &nRVLen, xhToken, dwRet, "request is failed");
 			HttpProtocol_Server_SendMsgEx(xhHTTPPacket, tszSDBuffer, &nSDLen, &st_HDRParam, tszRVBuffer, nRVLen);
 			XEngine_Network_Send(lpszClientAddr, tszSDBuffer, nSDLen);

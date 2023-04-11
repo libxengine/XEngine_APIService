@@ -1,6 +1,6 @@
 ﻿#include "../XEngine_Hdr.h"
 
-void CALLBACK HTTPTask_TastPost_CBSocketTest(XNETHANDLE xhToken, LPCSTR lpszAddr, int nPort, __int64x nNumber, __int64x nFailed, __int64x nSuccess, int nStatus, XPVOID lParam)
+void CALLBACK HTTPTask_TastPost_CBSocketTest(XNETHANDLE xhToken, LPCXSTR lpszAddr, int nPort, __int64x nNumber, __int64x nFailed, __int64x nSuccess, int nStatus, XPVOID lParam)
 {
 	XENGINE_SOCKETTEST* pSt_SocketTest = (XENGINE_SOCKETTEST*)lParam;
 	int nMsgLen = 0;

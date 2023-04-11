@@ -12,13 +12,13 @@
 //    History:
 *********************************************************************/
 XBOOL Pass_IsErrorOccur = XFALSE;
-DWORD Pass_dwErrorCode = 0;
+XLONG Pass_dwErrorCode = 0;
 //////////////////////////////////////////////////////////////////////////
 CPlugin_Password m_PluginPass;
 //////////////////////////////////////////////////////////////////////////
 //                       导出函数定义
 //////////////////////////////////////////////////////////////////////////
-extern "C" DWORD PluginCore_GetLastError()
+extern "C" XLONG PluginCore_GetLastError()
 {
 	return Pass_dwErrorCode;
 }

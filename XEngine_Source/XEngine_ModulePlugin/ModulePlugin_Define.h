@@ -13,7 +13,7 @@
 //////////////////////////////////////////////////////////////////////////
 //                       导出函数定义
 //////////////////////////////////////////////////////////////////////////
-extern "C" DWORD ModulePlugin_GetLastError(int* pInt_SysError = NULL);
+extern "C" XLONG ModulePlugin_GetLastError(int* pInt_SysError = NULL);
 /*********************************************************************************
 *                        LIB库插件框架导出函数定义                               *
 *********************************************************************************/
@@ -49,7 +49,7 @@ extern "C" XBOOL ModulePlugin_LibCore_Init();
   意思：是否成功添加
 备注：
 *********************************************************************/
-extern "C" XBOOL ModulePlugin_LibCore_Push(XNETHANDLE * pxhNet, LPCSTR lpszPluginFile, XPVOID lParam = NULL);
+extern "C" XBOOL ModulePlugin_LibCore_Push(XNETHANDLE * pxhNet, LPCXSTR lpszPluginFile, XPVOID lParam = NULL);
 /********************************************************************
 函数名称：ModulePlugin_LibCore_Exec
 函数功能：执行一次

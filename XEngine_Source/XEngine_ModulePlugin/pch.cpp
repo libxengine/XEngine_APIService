@@ -14,7 +14,7 @@
 //    History:
 *********************************************************************/
 XBOOL ModulePlugin_IsErrorOccur = XFALSE;
-DWORD ModulePlugin_dwErrorCode = 0;
+XLONG ModulePlugin_dwErrorCode = 0;
 //////////////////////////////////////////////////////////////////////////
 CModulePlugin_LibCore m_PluginLib;
 CModulePlugin_LuaCore m_PluginLua;
@@ -22,7 +22,7 @@ CModulePlugin_Loader m_PluginLoader;
 //////////////////////////////////////////////////////////////////////////
 //                       导出函数实现
 //////////////////////////////////////////////////////////////////////////
-extern "C" DWORD ModulePlugin_GetLastError(int* pInt_SysError)
+extern "C" XLONG ModulePlugin_GetLastError(int* pInt_SysError)
 {
 	if (NULL != pInt_SysError)
 	{

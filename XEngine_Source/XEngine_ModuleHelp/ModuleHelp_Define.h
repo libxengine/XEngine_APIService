@@ -15,7 +15,7 @@
 //////////////////////////////////////////////////////////////////////////
 typedef void(CALLBACK* CALLBACK_APISERVICE_MODULE_HELP_P2PCLIENT)(XENGINE_P2XPPEER_PROTOCOL* pSt_P2PProtocol, XPVOID lParam);
 //套接字测试回调:测试句柄，测试的服务器地址，测试的端口，当前测试次数，失败次数,成功次数,状态:0成功报告,1失败报告,2结束报告,自定义参数
-typedef void(CALLBACK* CALLBACK_APISERVICE_MODULE_HELP_SOCKETTEST)(XNETHANDLE xhToken, LPCSTR lpszAddr, int nPort, __int64x nNumber, __int64x nFailed, __int64x nSuccess, int nStatus, XPVOID lParam);
+typedef void(CALLBACK* CALLBACK_APISERVICE_MODULE_HELP_SOCKETTEST)(XNETHANDLE xhToken, LPCXSTR lpszAddr, int nPort, __int64x nNumber, __int64x nFailed, __int64x nSuccess, int nStatus, XPVOID lParam);
 //////////////////////////////////////////////////////////////////////////
 //                       导出数据结构
 //////////////////////////////////////////////////////////////////////////
@@ -37,7 +37,7 @@ typedef struct
 //////////////////////////////////////////////////////////////////////////
 ///                        导出的函数
 //////////////////////////////////////////////////////////////////////////
-extern "C" DWORD ModuleHelp_GetLastError(int *pInt_SysError = NULL);
+extern "C" XLONG ModuleHelp_GetLastError(int *pInt_SysError = NULL);
 /************************************************************************/
 /*                         导出的身份证帮助函数                         */
 /************************************************************************/
@@ -231,7 +231,7 @@ extern "C" XBOOL ModuleHelp_P2PClient_GetLan(XENGINE_P2XPPEER_PROTOCOL * pSt_P2P
   意思：是否成功
 备注：参数二需要调用基础库的BaseLib_OperatorMemory_Free函数进行内存释放
 *********************************************************************/
-extern "C" XBOOL ModuleHelp_P2PClient_GetLList(LPCSTR lpszPubAddr, CHAR * **pppszP2XPClient, int* pInt_ListCount);
+extern "C" XBOOL ModuleHelp_P2PClient_GetLList(LPCXSTR lpszPubAddr, XCHAR * **pppszP2XPClient, int* pInt_ListCount);
 /********************************************************************
 函数名称：ModuleHelp_P2PClient_GetWList
 函数功能：获取所有连接到的公网地址列表
@@ -250,7 +250,7 @@ extern "C" XBOOL ModuleHelp_P2PClient_GetLList(LPCSTR lpszPubAddr, CHAR * **ppps
   意思：是否成功
 备注：
 *********************************************************************/
-extern "C" XBOOL ModuleHelp_P2PClient_GetWList(CHAR * **pppszP2XPClient, int* pInt_ListCount);
+extern "C" XBOOL ModuleHelp_P2PClient_GetWList(XCHAR * **pppszP2XPClient, int* pInt_ListCount);
 /********************************************************************
 函数名称：ModuleHelp_P2PClient_Delete
 函数功能：删除一个指定的节点
@@ -523,7 +523,7 @@ extern "C" XBOOL ModuleHelp_QRCode_QRDecodecFile(LPCXSTR lpszFileName, XCHAR* pt
   意思：是否成功
 备注：
 *********************************************************************/
-extern "C" XBOOL ModuleHelp_QRCode_QRDecodecMemory(LPCSTR lpszMsgBuffer, int nMsgLen, XCHAR* ptszMsgBuffer, LPCXSTR lpszDetectProto, LPCXSTR lpszDetectModel, LPCXSTR lpszSrProto, LPCXSTR lpszSrModel);
+extern "C" XBOOL ModuleHelp_QRCode_QRDecodecMemory(LPCXSTR lpszMsgBuffer, int nMsgLen, XCHAR* ptszMsgBuffer, LPCXSTR lpszDetectProto, LPCXSTR lpszDetectModel, LPCXSTR lpszSrProto, LPCXSTR lpszSrModel);
 /************************************************************************/
 /*                       网络测试导出函数                               */
 /************************************************************************/

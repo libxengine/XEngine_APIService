@@ -2,7 +2,7 @@
 #include "pch.h"
 
 XBOOL APIENTRY DllMain( HMODULE hModule,
-                       DWORD  ul_reason_for_call,
+                       XLONG  ul_reason_for_call,
                        XPVOID lpReserved
                      )
 {

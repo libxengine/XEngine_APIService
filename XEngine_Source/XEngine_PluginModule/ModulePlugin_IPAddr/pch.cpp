@@ -12,13 +12,13 @@
 //    History:
 *********************************************************************/
 XBOOL IPAddr_IsErrorOccur = XFALSE;
-DWORD IPAddr_dwErrorCode = 0;
+XLONG IPAddr_dwErrorCode = 0;
 //////////////////////////////////////////////////////////////////////////
 CModulePlugin_Interface m_PluginIPAddr;
 //////////////////////////////////////////////////////////////////////////
 //                       导出函数定义
 //////////////////////////////////////////////////////////////////////////
-extern "C" DWORD PluginCore_GetLastError()
+extern "C" XLONG PluginCore_GetLastError()
 {
 	return IPAddr_dwErrorCode;
 }

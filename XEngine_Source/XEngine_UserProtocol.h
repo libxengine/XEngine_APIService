@@ -96,15 +96,15 @@ typedef enum
 typedef struct  
 {
 	XCHAR tszIDNumber[20];
-	WORD nIDProvince;           //省/自治区/直辖市
-	WORD nIDCity;               //市/区
-	WORD nIDCounty;             //县
-	WORD nBirthYear;            //出生年
-	WORD nBirthMonth;           //出生月
-	WORD nBirthDay;             //出生日
-	WORD nPoliceID;             //派出所编码
-	WORD nSex;                  //性别
-	WORD nCheck;                //校验码
+	XSHOT nIDProvince;           //省/自治区/直辖市
+	XSHOT nIDCity;               //市/区
+	XSHOT nIDCounty;             //县
+	XSHOT nBirthYear;            //出生年
+	XSHOT nBirthMonth;           //出生月
+	XSHOT nBirthDay;             //出生日
+	XSHOT nPoliceID;             //派出所编码
+	XSHOT nSex;                  //性别
+	XSHOT nCheck;                //校验码
 }XENGINE_IDCARDINFO;
 //行政区域
 typedef struct
@@ -131,19 +131,19 @@ typedef struct
 //连接信息
 typedef struct
 {
-	CHAR tszUserName[64];                                                 //用户信息
-	CHAR tszPrivateAddr[32];                                              //私有本地地址，内网地址
-	CHAR tszPublicAddr[32];                                               //外网地址
-	CHAR tszConnectAddr[32];                                              //链接地址
-	WORD dwConnectType;                                                   //连接类型
-	WORD dwPeerType;                                                      //节点类型
+	XCHAR tszUserName[64];                                                 //用户信息
+	XCHAR tszPrivateAddr[32];                                              //私有本地地址，内网地址
+	XCHAR tszPublicAddr[32];                                               //外网地址
+	XCHAR tszConnectAddr[32];                                              //链接地址
+	XSHOT dwConnectType;                                                   //连接类型
+	XSHOT dwPeerType;                                                      //节点类型
 }XENGINE_P2XPPEER_PROTOCOL, * LPXENGINE_P2XPPEER_PROTOCOL;
 //P2XP通道连接命令
 typedef struct tag_XEngine_P2XPIO_Protocol
 {
-	CHAR tszSourceUser[32];                                               //请求连接的用户
-	CHAR tszDestUser[32];                                                 //要连接的用户
-	CHAR tszConnectAddr[32];                                              //连接的IP地址
+	XCHAR tszSourceUser[32];                                               //请求连接的用户
+	XCHAR tszDestUser[32];                                                 //要连接的用户
+	XCHAR tszConnectAddr[32];                                              //连接的IP地址
 	int nDestPort;                                                        //要连接的端口
 	XBOOL bIsTcp;                                                          //连接类型TCP,否则为UDP
 }XENGINE_P2XPIO_PROTOCOL, * LPXENGINE_P2XPIO_PROTOCOL;
@@ -179,7 +179,7 @@ typedef struct
 //网络测试
 typedef struct
 {
-	CHAR tszAddr[64];                                                     //要测试的IP地址
+	XCHAR tszAddr[64];                                                     //要测试的IP地址
 	int nPort;                                                            //端口号码
 	//单位毫秒
 	int nConnectCount;                                                    //要测试的客户端个数
@@ -193,8 +193,8 @@ typedef struct
 	MODULEHELP_SOCKETTEST_RECONNECT st_REConnect;
 	int nSDLen;                                                           //发送数据包大小，如果ptszSDBuffer的值为NULL，那么这个值表示测试端允许发送的大小，否则表示缓冲区大小
 	int nRVLen;                                                           //接收端大小,表示ptszRVBuffer缓冲区大小,ptszRVBuffer的值匹配接受数据才表示成功,如果ptszRVBuffer为NULL,不做数据验证只接受.
-	CHAR tszSDBuffer[4096];                                               //如果你的服务器有特殊数据测试，请填写这个参数，否则测试端将自定义数据发送,内存需要由用户管理
-	CHAR tszRVBuffer[4096];
+	XCHAR tszSDBuffer[4096];                                               //如果你的服务器有特殊数据测试，请填写这个参数，否则测试端将自定义数据发送,内存需要由用户管理
+	XCHAR tszRVBuffer[4096];
 }MODULEHELP_SOCKETTEST_DATAS, * LPMODULEHELP_SOCKETTEST_DATAS;
 typedef struct
 {
@@ -214,7 +214,7 @@ typedef struct
 	XCHAR tszKeyUrl[MAX_PATH];
 	XCHAR tszMapUrl[MAX_PATH];
 	XCHAR tszCvtUrl[MAX_PATH];
-	XCHAR tszCreateTime[128];
+	XCHAR tszCreateTime[64];
 	int nLength;
 	int nID;
 }XENGINE_SHORTLINK;
