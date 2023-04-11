@@ -16,13 +16,8 @@ ifeq ($(RELEASE),1)
 FLAGS = -c 
 DEBUG = 
 else
-ifeq ($(PLATFORM),android)
-FLAGS = -c
-DEBUG = -g
-else
 FLAGS = -c -lc_p
 DEBUG = -g -pg 
-endif
 endif
 
 ifeq ($(UNICODE),1)
@@ -43,28 +38,10 @@ ifeq ($(PLATFORM),linux)
 	LIBFLAG = -shared
 	LIBEX = -lpthread -lrt -ldl
 	LOADBIN = -Wl,-rpath=./,--disable-new-dtags
-else ifeq ($(PLATFORM),android)
-	NDK_ROOT = $(HOME)/android-ndk/toolchains/llvm/prebuilt/linux-x86_64/bin/clang++
-	CC = $(NDK_ROOT) -target aarch64-linux-android30 -Wall -std=c++17 -fPIC
-	PLATVER = -D __ANDROID__
-	PLATDIR = XEngine_Android
-	FILEEXT = so
-	LIBFLAG = -shared
-	LIBEX = -ldl
-	LOADBIN = -Wl,-rpath=./,--disable-new-dtags
 else ifeq ($(PLATFORM),mac)
 	CC += -Wno-deprecated-declarations
 	PLATVER = -D __MACOS__
 	PLATDIR = XEngine_Mac
-	FILEEXT = dylib
-	LIBFLAG = -dynamiclib
-	LIBEX = -lpthread -ldl
-	LOADBIN = -Wl,-rpath,@loader_path/./
-else ifeq ($(PLATFORM),ios)
-	SDKPATH = /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk
-	CC += -arch arm64 -Wno-deprecated-declarations -isysroot ${SDKPATH} -miphoneos-version-min=13.0
-	PLATVER = -D __IOS__
-	PLATDIR = XEngine_IOS
 	FILEEXT = dylib
 	LIBFLAG = -dynamiclib
 	LIBEX = -lpthread -ldl

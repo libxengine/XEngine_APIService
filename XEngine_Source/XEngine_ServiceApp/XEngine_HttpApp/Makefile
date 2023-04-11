@@ -15,19 +15,15 @@ LIB = -lXEngine_BaseLib -lXEngine_Algorithm -lXEngine_Core -lXEngine_ManagePool 
 	  -ljsoncpp
 LIBEX = 
 OBJECTS = XEngine_Configure.o XEngine_Network.o XEngine_HTTPTask.o XEngine_PluginTask.o XEngine_HttpApp.o        \
-          HTTPTask_IDCard.o HTTPTask_Bank.o HTTPTask_Language.o HTTPTask_Translation.o HTTPTask_P2PClient.o HTTPTask_OPtions.o HTTPTask_Locker.o HTTPTask_PostCode.o HTTPTask_Log.o HTTPTask_QRCode.o HTTPTask_SocketTest.o
+          TaskGet_Bank.o TaskGet_IDCard.o TaskGet_Language.o TaskGet_Locker.o TaskGet_OPtions.o TaskGet_Translation.o   \
+		  TaskPost_DTest.o TaskPost_Log.o TaskPost_P2PClient.o TaskPost_PostCode.o TaskPost_QRCode.o TaskPost_ShortLink.o TaskPost_SocketTest.o
 
 ifeq ($(RELEASE),1)
 FLAGS = -c 
 DEBUG = 
 else
-ifeq ($(PLATFORM),android)
-FLAGS = -c
-DEBUG = -g
-else
 FLAGS = -c -lc_p
 DEBUG = -g -pg 
-endif
 endif
 
 ifeq ($(UNICODE),1)
@@ -48,28 +44,10 @@ ifeq ($(PLATFORM),linux)
 	LIBFLAG = -shared
 	LIBEX = -lpthread -lrt -ldl
 	LOADBIN = -Wl,-rpath=./,--disable-new-dtags
-else ifeq ($(PLATFORM),android)
-	NDK_ROOT = $(HOME)/android-ndk/toolchains/llvm/prebuilt/linux-x86_64/bin/clang++
-	CC = $(NDK_ROOT) -target aarch64-linux-android30 -Wall -std=c++17 -fPIC
-	PLATVER = -D __ANDROID__
-	PLATDIR = XEngine_Android
-	FILEEXT = so
-	LIBFLAG = -shared
-	LIBEX = -ldl
-	LOADBIN = -Wl,-rpath=./,--disable-new-dtags
 else ifeq ($(PLATFORM),mac)
 	CC += -Wno-deprecated-declarations
 	PLATVER = -D __MACOS__
 	PLATDIR = XEngine_Mac
-	FILEEXT = dylib
-	LIBFLAG = -dynamiclib
-	LIBEX = -lpthread -ldl
-	LOADBIN = -Wl,-rpath,@loader_path/./
-else ifeq ($(PLATFORM),ios)
-	SDKPATH = /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk
-	CC += -arch arm64 -Wno-deprecated-declarations -isysroot ${SDKPATH} -miphoneos-version-min=13.0
-	PLATVER = -D __IOS__
-	PLATDIR = XEngine_IOS
 	FILEEXT = dylib
 	LIBFLAG = -dynamiclib
 	LIBEX = -lpthread -ldl
@@ -88,28 +66,33 @@ XEngine_HTTPTask.o:./XEngine_HTTPTask.cpp
 XEngine_PluginTask.o:./XEngine_PluginTask.cpp
 	$(CC) $(DEBUG) $(FLAGS) $(UNICODE) $(PLATVER) $(LOADHDR) ./XEngine_PluginTask.cpp
 
-HTTPTask_IDCard.o:./XEngine_HTTPTask/HTTPTask_IDCard.cpp
-	$(CC) $(DEBUG) $(FLAGS) $(UNICODE) $(PLATVER) $(LOADHDR) ./XEngine_HTTPTask/HTTPTask_IDCard.cpp
-HTTPTask_Bank.o:./XEngine_HTTPTask/HTTPTask_Bank.cpp
-	$(CC) $(DEBUG) $(FLAGS) $(UNICODE) $(PLATVER) $(LOADHDR) ./XEngine_HTTPTask/HTTPTask_Bank.cpp
-HTTPTask_Language.o:./XEngine_HTTPTask/HTTPTask_Language.cpp
-	$(CC) $(DEBUG) $(FLAGS) $(UNICODE) $(PLATVER) $(LOADHDR) ./XEngine_HTTPTask/HTTPTask_Language.cpp
-HTTPTask_Translation.o:./XEngine_HTTPTask/HTTPTask_Translation.cpp
-	$(CC) $(DEBUG) $(FLAGS) $(UNICODE) $(PLATVER) $(LOADHDR) ./XEngine_HTTPTask/HTTPTask_Translation.cpp
-HTTPTask_P2PClient.o:./XEngine_HTTPTask/HTTPTask_P2PClient.cpp
-	$(CC) $(DEBUG) $(FLAGS) $(UNICODE) $(PLATVER) $(LOADHDR) ./XEngine_HTTPTask/HTTPTask_P2PClient.cpp
-HTTPTask_OPtions.o:./XEngine_HTTPTask/HTTPTask_OPtions.cpp
-	$(CC) $(DEBUG) $(FLAGS) $(UNICODE) $(PLATVER) $(LOADHDR) ./XEngine_HTTPTask/HTTPTask_OPtions.cpp
-HTTPTask_Locker.o:./XEngine_HTTPTask/HTTPTask_Locker.cpp
-	$(CC) $(DEBUG) $(FLAGS) $(UNICODE) $(PLATVER) $(LOADHDR) ./XEngine_HTTPTask/HTTPTask_Locker.cpp
-HTTPTask_PostCode.o:./XEngine_HTTPTask/HTTPTask_PostCode.cpp
-	$(CC) $(DEBUG) $(FLAGS) $(UNICODE) $(PLATVER) $(LOADHDR) ./XEngine_HTTPTask/HTTPTask_PostCode.cpp
-HTTPTask_Log.o:./XEngine_HTTPTask/HTTPTask_Log.cpp
-	$(CC) $(DEBUG) $(FLAGS) $(UNICODE) $(PLATVER) $(LOADHDR) ./XEngine_HTTPTask/HTTPTask_Log.cpp
-HTTPTask_QRCode.o:./XEngine_HTTPTask/HTTPTask_QRCode.cpp
-	$(CC) $(DEBUG) $(FLAGS) $(UNICODE) $(PLATVER) $(LOADHDR) ./XEngine_HTTPTask/HTTPTask_QRCode.cpp
-HTTPTask_SocketTest.o:./XEngine_HTTPTask/HTTPTask_SocketTest.cpp
-	$(CC) $(DEBUG) $(FLAGS) $(UNICODE) $(PLATVER) $(LOADHDR) ./XEngine_HTTPTask/HTTPTask_SocketTest.cpp
+TaskGet_Bank.o:./XEngine_TaskGet/TaskGet_Bank.cpp
+	$(CC) $(DEBUG) $(FLAGS) $(UNICODE) $(PLATVER) $(LOADHDR) ./XEngine_TaskGet/TaskGet_Bank.cpp
+TaskGet_IDCard.o:./XEngine_TaskGet/TaskGet_IDCard.cpp
+	$(CC) $(DEBUG) $(FLAGS) $(UNICODE) $(PLATVER) $(LOADHDR) ./XEngine_TaskGet/TaskGet_IDCard.cpp
+TaskGet_Language.o:./XEngine_TaskGet/TaskGet_Language.cpp
+	$(CC) $(DEBUG) $(FLAGS) $(UNICODE) $(PLATVER) $(LOADHDR) ./XEngine_TaskGet/TaskGet_Language.cpp
+TaskGet_Locker.o:./XEngine_TaskGet/TaskGet_Locker.cpp
+	$(CC) $(DEBUG) $(FLAGS) $(UNICODE) $(PLATVER) $(LOADHDR) ./XEngine_TaskGet/TaskGet_Locker.cpp
+TaskGet_OPtions.o:./XEngine_TaskGet/TaskGet_OPtions.cpp
+	$(CC) $(DEBUG) $(FLAGS) $(UNICODE) $(PLATVER) $(LOADHDR) ./XEngine_TaskGet/TaskGet_OPtions.cpp
+TaskGet_Translation.o:./XEngine_TaskGet/TaskGet_Translation.cpp
+	$(CC) $(DEBUG) $(FLAGS) $(UNICODE) $(PLATVER) $(LOADHDR) ./XEngine_TaskGet/TaskGet_Translation.cpp
+
+TaskPost_DTest.o:./XEngine_TaskPost/TaskPost_DTest.cpp
+	$(CC) $(DEBUG) $(FLAGS) $(UNICODE) $(PLATVER) $(LOADHDR) ./XEngine_TaskPost/TaskPost_DTest.cpp
+TaskPost_Log.o:./XEngine_TaskPost/TaskPost_Log.cpp
+	$(CC) $(DEBUG) $(FLAGS) $(UNICODE) $(PLATVER) $(LOADHDR) ./XEngine_TaskPost/TaskPost_Log.cpp
+TaskPost_P2PClient.o:./XEngine_TaskPost/TaskPost_P2PClient.cpp
+	$(CC) $(DEBUG) $(FLAGS) $(UNICODE) $(PLATVER) $(LOADHDR) ./XEngine_TaskPost/TaskPost_P2PClient.cpp
+TaskPost_PostCode.o:./XEngine_TaskPost/TaskPost_PostCode.cpp
+	$(CC) $(DEBUG) $(FLAGS) $(UNICODE) $(PLATVER) $(LOADHDR) ./XEngine_TaskPost/TaskPost_PostCode.cpp
+TaskPost_QRCode.o:./XEngine_TaskPost/TaskPost_QRCode.cpp
+	$(CC) $(DEBUG) $(FLAGS) $(UNICODE) $(PLATVER) $(LOADHDR) ./XEngine_TaskPost/TaskPost_QRCode.cpp
+TaskPost_ShortLink.o:./XEngine_TaskPost/TaskPost_ShortLink.cpp
+	$(CC) $(DEBUG) $(FLAGS) $(UNICODE) $(PLATVER) $(LOADHDR) ./XEngine_TaskPost/TaskPost_ShortLink.cpp
+TaskPost_SocketTest.o:./XEngine_TaskPost/TaskPost_SocketTest.cpp
+	$(CC) $(DEBUG) $(FLAGS) $(UNICODE) $(PLATVER) $(LOADHDR) ./XEngine_TaskPost/TaskPost_SocketTest.cpp
 
 XEngine_HttpApp.o:./XEngine_HttpApp.cpp             
 	$(CC) $(DEBUG) $(FLAGS) $(UNICODE) $(PLATVER) $(LOADHDR) ./XEngine_HttpApp.cpp   
