@@ -99,7 +99,7 @@ XBOOL XEngine_HTTPTask_Handle(RFCCOMPONENTS_HTTP_REQPARAM* pSt_HTTPParam, LPCXST
 	LPCXSTR lpszParamP2PClient = _T("p2p");
 	LPCXSTR lpszParamZIPCode = _T("zipcode");
 	LPCXSTR lpszParamXLog = _T("log");
-	LPCXSTR lpszParamTest = _T("test");
+	LPCXSTR lpszParamSocket = _T("socket");
 
 	memset(tszKey, '\0', MAX_PATH);
 	memset(tszValue, '\0', MAX_PATH);
@@ -201,9 +201,9 @@ XBOOL XEngine_HTTPTask_Handle(RFCCOMPONENTS_HTTP_REQPARAM* pSt_HTTPParam, LPCXST
 			}
 			XEngine_HTTPTask_QRCode(lpszClientAddr, lpszRVBuffer, nRVLen, _ttoi(tszValue));
 		}
-		else if (0 == _tcsnicmp(lpszParamTest, tszValue, _tcslen(lpszParamTest)))
+		else if (0 == _tcsnicmp(lpszParamSocket, tszValue, _tcslen(lpszParamSocket)))
 		{
-			//二维码生成:http://app.xyry.org:5501/api?function=test&params1=0 或者 1
+			//二维码生成:http://app.xyry.org:5501/api?function=socket&params1=0 或者 1
 			memset(tszKey, '\0', sizeof(tszKey));
 			memset(tszValue, '\0', sizeof(tszValue));
 			BaseLib_OperatorString_GetKeyValue(pptszList[1], "=", tszKey, tszValue);
