@@ -64,6 +64,7 @@ typedef struct
 	struct  
 	{
 		XCHAR tszHostUrl[MAX_PATH];           //主机地址
+		int nHTTPCode;                        //转发模式,301 永久,302 临时
 	}st_XShortLink;
 	struct  
 	{

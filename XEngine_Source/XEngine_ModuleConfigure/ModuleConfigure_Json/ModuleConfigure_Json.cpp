@@ -162,7 +162,7 @@ XBOOL CModuleConfigure_Json::ModuleConfigure_Json_File(LPCXSTR lpszConfigFile, X
 	_tcscpy(pSt_ServerConfig->st_XConfig.tszConfigOPencc, st_JsonXConfig["tszConfigOPencc"].asCString());
 	_tcscpy(pSt_ServerConfig->st_XConfig.tszConfigQRCode, st_JsonXConfig["tszConfigQRCode"].asCString());
 
-	if (st_JsonRoot["XShortLink"].empty() || (1 != st_JsonRoot["XShortLink"].size()))
+	if (st_JsonRoot["XShortLink"].empty() || (2 != st_JsonRoot["XShortLink"].size()))
 	{
 		Config_IsErrorOccur = XTRUE;
 		Config_dwErrorCode = ERROR_MODULE_CONFIGURE_JSON_XSLINK;
@@ -170,6 +170,7 @@ XBOOL CModuleConfigure_Json::ModuleConfigure_Json_File(LPCXSTR lpszConfigFile, X
 	}
 	Json::Value st_JsonXShort = st_JsonRoot["XConfig"];
 	_tcscpy(pSt_ServerConfig->st_XShortLink.tszHostUrl, st_JsonXShort["tszHostUrl"].asCString());
+	pSt_ServerConfig->st_XShortLink.nHTTPCode = st_JsonXShort["nHTTPCode"].asInt();
 
 	if (st_JsonRoot["XVer"].empty())
 	{

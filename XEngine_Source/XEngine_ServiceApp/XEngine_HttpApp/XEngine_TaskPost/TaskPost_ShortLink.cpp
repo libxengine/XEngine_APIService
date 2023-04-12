@@ -39,7 +39,7 @@ XBOOL HTTPTask_TaskPost_SLProxy(LPCXSTR lpszClientAddr, LPCXSTR lpszUriStr, XCHA
 	{
 		return XFALSE;
 	}
-	st_HDRParam.nHttpCode = 301; 
+	st_HDRParam.nHttpCode = st_ServiceConfig.st_XShortLink.nHTTPCode; 
 	st_HDRParam.bIsClose = XTRUE; 
 
 	_stprintf(tszRVBuffer, _T("Location: %s\r\n"), st_ShortLink.tszFullUrl);
