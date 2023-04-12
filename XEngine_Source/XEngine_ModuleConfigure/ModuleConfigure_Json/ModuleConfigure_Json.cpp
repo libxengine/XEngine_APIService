@@ -168,7 +168,7 @@ XBOOL CModuleConfigure_Json::ModuleConfigure_Json_File(LPCXSTR lpszConfigFile, X
 		Config_dwErrorCode = ERROR_MODULE_CONFIGURE_JSON_XSLINK;
 		return XFALSE;
 	}
-	Json::Value st_JsonXShort = st_JsonRoot["XConfig"];
+	Json::Value st_JsonXShort = st_JsonRoot["XShortLink"];
 	_tcscpy(pSt_ServerConfig->st_XShortLink.tszHostUrl, st_JsonXShort["tszHostUrl"].asCString());
 	pSt_ServerConfig->st_XShortLink.nHTTPCode = st_JsonXShort["nHTTPCode"].asInt();
 

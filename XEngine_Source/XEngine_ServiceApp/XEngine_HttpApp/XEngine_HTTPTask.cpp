@@ -96,7 +96,6 @@ XBOOL HTTPTask_TastPost_Handle(RFCCOMPONENTS_HTTP_REQPARAM* pSt_HTTPParam, LPCXS
 	LPCXSTR lpszParamFuncKey = _T("function");
 	LPCXSTR lpszParamName = _T("params1");
 	//get
-	LPCXSTR lpszParamOPtions = _T("options");
 	LPCXSTR lpszParamIDCard = _T("id");
 	LPCXSTR lpszParamBank = _T("bank");
 	LPCXSTR lpszParamLanguage = _T("language");
@@ -264,12 +263,7 @@ XBOOL HTTPTask_TastPost_Handle(RFCCOMPONENTS_HTTP_REQPARAM* pSt_HTTPParam, LPCXS
 	}
 	else if (0 == _tcsnicmp(lpszMethodGet, pSt_HTTPParam->tszHttpMethod, _tcslen(lpszMethodGet)))
 	{
-		if (0 == _tcsnicmp(lpszParamOPtions, tszValue, _tcslen(lpszParamOPtions)))
-		{
-			//HTTP能力查询
-			HTTPTask_TaskGet_OPTions(lpszClientAddr);
-		}
-		else if (0 == _tcsnicmp(lpszParamIDCard, tszValue, _tcslen(lpszParamIDCard)))
+		if (0 == _tcsnicmp(lpszParamIDCard, tszValue, _tcslen(lpszParamIDCard)))
 		{
 			//是不是身份证查询
 			memset(tszKey, '\0', sizeof(tszKey));

@@ -69,9 +69,6 @@
     <ClCompile Include="XEngine_TaskGet\TaskGet_Locker.cpp">
       <Filter>源文件\XEngine_TaskGet</Filter>
     </ClCompile>
-    <ClCompile Include="XEngine_TaskGet\TaskGet_OPtions.cpp">
-      <Filter>源文件\XEngine_TaskGet</Filter>
-    </ClCompile>
     <ClCompile Include="XEngine_TaskGet\TaskGet_Translation.cpp">
       <Filter>源文件\XEngine_TaskGet</Filter>
     </ClCompile>
@@ -123,9 +120,6 @@
       <Filter>头文件\XEngine_TaskGet</Filter>
     </ClInclude>
     <ClInclude Include="XEngine_TaskGet\TaskGet_Locker.h">
-      <Filter>头文件\XEngine_TaskGet</Filter>
-    </ClInclude>
-    <ClInclude Include="XEngine_TaskGet\TaskGet_OPtions.h">
       <Filter>头文件\XEngine_TaskGet</Filter>
     </ClInclude>
     <ClInclude Include="XEngine_TaskGet\TaskGet_Translation.h">
