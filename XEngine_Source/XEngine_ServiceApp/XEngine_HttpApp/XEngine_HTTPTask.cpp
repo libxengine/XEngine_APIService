@@ -34,17 +34,20 @@ XHTHREAD CALLBACK HTTPTask_TastPost_Thread(XPVOID lParam)
 			for (int j = 0; j < ppSst_ListAddr[i]->nPktCount; j++)
 			{
 				int nMsgLen = 0;                                    //客户端发送的数据大小,不包括头
+				int nHDRCount = 0;
 				XCHAR* ptszMsgBuffer = NULL;                         //客户端发送的数据
+				XCHAR** pptszListHdr;
 				RFCCOMPONENTS_HTTP_REQPARAM st_HTTPReqparam;        //客户端的请求参数
 
 				memset(&st_HTTPReqparam, '\0', sizeof(RFCCOMPONENTS_HTTP_REQPARAM));
 				//得到一个指定客户端的完整数据包
-				if (HttpProtocol_Server_GetMemoryEx(xhHTTPPacket, ppSst_ListAddr[i]->tszClientAddr, &ptszMsgBuffer, &nMsgLen, &st_HTTPReqparam))
+				if (HttpProtocol_Server_GetMemoryEx(xhHTTPPacket, ppSst_ListAddr[i]->tszClientAddr, &ptszMsgBuffer, &nMsgLen, &st_HTTPReqparam, &pptszListHdr, &nHDRCount))
 				{
 					//在另外一个函数里面处理数据
-					HTTPTask_TastPost_Handle(&st_HTTPReqparam, ppSst_ListAddr[i]->tszClientAddr, ptszMsgBuffer, nMsgLen);
+					HTTPTask_TastPost_Handle(&st_HTTPReqparam, ppSst_ListAddr[i]->tszClientAddr, ptszMsgBuffer, nMsgLen, &pptszListHdr, nHDRCount);
 					//释放内存
-					BaseLib_OperatorMemory_FreeCStyle((VOID**)&ptszMsgBuffer);
+					BaseLib_OperatorMemory_FreeCStyle((XPPMEM)&ptszMsgBuffer);
+					BaseLib_OperatorMemory_Free((XPPPMEM)&pptszListHdr, nHDRCount);
 				}
 			}
 		}
@@ -52,7 +55,7 @@ XHTHREAD CALLBACK HTTPTask_TastPost_Thread(XPVOID lParam)
 	}
 	return 0;
 }
-XBOOL HTTPTask_TastPost_Handle(RFCCOMPONENTS_HTTP_REQPARAM* pSt_HTTPParam, LPCXSTR lpszClientAddr, LPCXSTR lpszRVBuffer, int nRVLen)
+XBOOL HTTPTask_TastPost_Handle(RFCCOMPONENTS_HTTP_REQPARAM* pSt_HTTPParam, LPCXSTR lpszClientAddr, LPCXSTR lpszRVBuffer, int nRVLen, XCHAR*** ppptszHDRList, int nHDRCount)
 {
 	int nMsgLen = 4096;
 	LPCXSTR lpszMethodPost = _T("POST");
@@ -75,6 +78,11 @@ XBOOL HTTPTask_TastPost_Handle(RFCCOMPONENTS_HTTP_REQPARAM* pSt_HTTPParam, LPCXS
 	HttpProtocol_ServerHelp_GetParament(pSt_HTTPParam->tszHttpUri, &pptszList, &nListCount, tszUrlName);
 	if (nListCount < 1)
 	{
+		//是不是代理转发
+		if (HTTPTask_TaskPost_SLProxy(lpszClientAddr, pSt_HTTPParam->tszHttpUri, ppptszHDRList, nHDRCount))
+		{
+			return XTRUE;
+		}
 		st_HDRParam.nHttpCode = 404;
 		HttpProtocol_Server_SendMsgEx(xhHTTPPacket, tszMsgBuffer, &nMsgLen, &st_HDRParam);
 		XEngine_Network_Send(lpszClientAddr, tszMsgBuffer, nMsgLen);

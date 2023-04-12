@@ -1,5 +1,53 @@
 ﻿#include "../XEngine_Hdr.h"
 
+XBOOL HTTPTask_TaskPost_SLProxy(LPCXSTR lpszClientAddr, LPCXSTR lpszUriStr, XCHAR*** ppptszHDRList, int nHDRCount)
+{
+	//是不是代理转发
+	XBOOL bFound = XFALSE;
+	for (int i = 0; i < nHDRCount; i++)
+	{
+		XCHAR tszKey[MAX_PATH];
+		XCHAR tszValue[MAX_PATH];
+
+		memset(tszKey, '\0', sizeof(tszKey));
+		memset(tszValue, '\0', sizeof(tszValue));
+
+		BaseLib_OperatorString_GetKeyValue((*ppptszHDRList)[i], ": ", tszKey, tszValue);
+		if (0 == _tcsnicmp(st_ServiceConfig.st_XShortLink.tszHostUrl, tszValue, _tcslen(st_ServiceConfig.st_XShortLink.tszHostUrl)))
+		{
+			bFound = XTRUE;
+			break;
+		}
+	}
+	if (!bFound)
+	{
+		return XFALSE;
+	}
+	int nSDLen = 0;
+	XCHAR tszSDBuffer[4096];
+	XCHAR tszRVBuffer[4096];
+	XENGINE_SHORTLINK st_ShortLink;
+	RFCCOMPONENTS_HTTP_HDRPARAM st_HDRParam; 
+
+	memset(tszSDBuffer, '\0', sizeof(tszSDBuffer));
+	memset(tszRVBuffer, '\0', sizeof(tszRVBuffer));
+	memset(&st_ShortLink, '\0', sizeof(XENGINE_SHORTLINK));
+	memset(&st_HDRParam, '\0', sizeof(RFCCOMPONENTS_HTTP_HDRPARAM));
+
+	_stprintf(st_ShortLink.tszMapUrl, _T("http://%s%s"), st_ServiceConfig.st_XShortLink.tszHostUrl, lpszUriStr);
+	if (!ModuleDatabase_ShortLink_Query(&st_ShortLink))
+	{
+		return XFALSE;
+	}
+	st_HDRParam.nHttpCode = 301; 
+	st_HDRParam.bIsClose = XTRUE; 
+
+	_stprintf(tszRVBuffer, _T("Location: %s\r\n"), st_ShortLink.tszFullUrl);
+	HttpProtocol_Server_SendMsgEx(xhHTTPPacket, tszSDBuffer, &nSDLen, &st_HDRParam, NULL, 0, tszRVBuffer);
+	XEngine_Network_Send(lpszClientAddr, tszSDBuffer, nSDLen);
+	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _T("HTTP客户端:%s,请求的短连接地址重定向成功,短连接:%s,长连接:%s"), lpszClientAddr, st_ShortLink.tszMapUrl, st_ShortLink.tszFullUrl);
+	return XTRUE;
+}
 XBOOL HTTPTask_TaskPost_ShortLink(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer, int nMsgLen, int nType)
 {
 	int nSDLen = 0;
@@ -27,7 +75,7 @@ XBOOL HTTPTask_TaskPost_ShortLink(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer,
 			st_HDRParam.nHttpCode = 400;
 			HttpProtocol_Server_SendMsgEx(xhHTTPPacket, tszSDBuffer, &nSDLen, &st_HDRParam);
 			XEngine_Network_Send(lpszClientAddr, tszSDBuffer, nSDLen);
-			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _T("HTTP客户端:%s,请求生成短连接生成错误,生成的连接:%s,替换的连接:%s,错误码:%lX"), lpszClientAddr, st_ShortLink.tszFullUrl, st_ShortLink.tszCvtUrl, HttpProtocol_GetLastError());
+			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _T("HTTP客户端:%s,请求生成短连接生成错误,生成的连接:%s,替换的连接:%s,错误码:%lX"), lpszClientAddr, st_ShortLink.tszFullUrl, st_ShortLink.tszCvtUrl, HttpProtocol_GetLastError());
 			return XFALSE;
 		}
 		_stprintf(st_ShortLink.tszMapUrl, _T("%s/%s"), st_ShortLink.tszShotUrl, st_ShortLink.tszKeyUrl);
@@ -36,7 +84,7 @@ XBOOL HTTPTask_TaskPost_ShortLink(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer,
 			st_HDRParam.nHttpCode = 400;
 			HttpProtocol_Server_SendMsgEx(xhHTTPPacket, tszSDBuffer, &nSDLen, &st_HDRParam);
 			XEngine_Network_Send(lpszClientAddr, tszSDBuffer, nSDLen);
-			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _T("HTTP客户端:%s,请求生成短连接插入数据库错误,生成的连接:%s,替换的连接:%s,错误码:%lX"), lpszClientAddr, st_ShortLink.tszFullUrl, st_ShortLink.tszCvtUrl, ModuleDB_GetLastError());
+			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _T("HTTP客户端:%s,请求生成短连接插入数据库错误,生成的连接:%s,替换的连接:%s,错误码:%lX"), lpszClientAddr, st_ShortLink.tszFullUrl, st_ShortLink.tszCvtUrl, ModuleDB_GetLastError());
 			return XFALSE;
 		}
 	}
@@ -47,7 +95,7 @@ XBOOL HTTPTask_TaskPost_ShortLink(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer,
 			st_HDRParam.nHttpCode = 400;
 			HttpProtocol_Server_SendMsgEx(xhHTTPPacket, tszSDBuffer, &nSDLen, &st_HDRParam);
 			XEngine_Network_Send(lpszClientAddr, tszSDBuffer, nSDLen);
-			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _T("HTTP客户端:%s,请求获取短连接错误,连接:%s,错误码:%lX"), lpszClientAddr, st_ShortLink.tszMapUrl, ModuleDB_GetLastError());
+			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _T("HTTP客户端:%s,请求获取短连接错误,连接:%s,错误码:%lX"), lpszClientAddr, st_ShortLink.tszMapUrl, ModuleDB_GetLastError());
 			return XFALSE;
 		}
 	}
@@ -58,7 +106,7 @@ XBOOL HTTPTask_TaskPost_ShortLink(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer,
 			st_HDRParam.nHttpCode = 400;
 			HttpProtocol_Server_SendMsgEx(xhHTTPPacket, tszSDBuffer, &nSDLen, &st_HDRParam);
 			XEngine_Network_Send(lpszClientAddr, tszSDBuffer, nSDLen);
-			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _T("HTTP客户端:%s,请求删除短连接错误,完整地址:%s,映射地址:%s,错误码:%lX"), lpszClientAddr, st_ShortLink.tszFullUrl, st_ShortLink.tszMapUrl, ModuleDB_GetLastError());
+			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _T("HTTP客户端:%s,请求删除短连接错误,完整地址:%s,映射地址:%s,错误码:%lX"), lpszClientAddr, st_ShortLink.tszFullUrl, st_ShortLink.tszMapUrl, ModuleDB_GetLastError());
 			return XFALSE;
 		}
 	}

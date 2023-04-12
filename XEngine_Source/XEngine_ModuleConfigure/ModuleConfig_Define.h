@@ -63,6 +63,10 @@ typedef struct
 	}st_XConfig;
 	struct  
 	{
+		XCHAR tszHostUrl[MAX_PATH];           //主机地址
+	}st_XShortLink;
+	struct  
+	{
 		list<string>* pStl_ListVer;
 	}st_XVer;
 }XENGINE_SERVICECONFIG;
