@@ -15,7 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="APPClient_TestExample.cpp">
+    <ClCompile Include="APPClient_SocketExample.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
