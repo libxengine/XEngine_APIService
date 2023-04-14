@@ -12,7 +12,7 @@
 //    Purpose:     导出协议模块实现
 //    History:
 *********************************************************************/
-XBOOL ModuleProtocol_IsErrorOccur = XFALSE;
+XBOOL ModuleProtocol_IsErrorOccur = FALSE;
 XLONG ModuleProtocol_dwErrorCode = 0;
 //////////////////////////////////////////////////////////////////////////
 CModuleProtocol_Packet m_ProtocolPacket;

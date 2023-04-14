@@ -13,18 +13,18 @@
 *********************************************************************/
 CPlugin_Zodiac::CPlugin_Zodiac()
 {
-	m_StrChinese[0] = _T("猴");
-	m_StrChinese[1] = _T("鸡");
-	m_StrChinese[2] = _T("狗");
-	m_StrChinese[3] = _T("猪");
-	m_StrChinese[4] = _T("鼠");
-	m_StrChinese[5] = _T("牛");
-	m_StrChinese[6] = _T("虎");
-	m_StrChinese[7] = _T("兔");
-	m_StrChinese[8] = _T("龙");
-	m_StrChinese[9] = _T("蛇");
-	m_StrChinese[10] = _T("马");
-	m_StrChinese[11] = _T("羊");
+	m_StrChinese[0] = _X("猴");
+	m_StrChinese[1] = _X("鸡");
+	m_StrChinese[2] = _X("狗");
+	m_StrChinese[3] = _X("猪");
+	m_StrChinese[4] = _X("鼠");
+	m_StrChinese[5] = _X("牛");
+	m_StrChinese[6] = _X("虎");
+	m_StrChinese[7] = _X("兔");
+	m_StrChinese[8] = _X("龙");
+	m_StrChinese[9] = _X("蛇");
+	m_StrChinese[10] = _X("马");
+	m_StrChinese[11] = _X("羊");
 }
 CPlugin_Zodiac::~CPlugin_Zodiac()
 {
@@ -47,9 +47,9 @@ CPlugin_Zodiac::~CPlugin_Zodiac()
 *********************************************************************/
 XBOOL CPlugin_Zodiac::PluginCore_Init(XPVOID lParam)
 {
-	Zodiac_IsErrorOccur = XFALSE;
+	Zodiac_IsErrorOccur = FALSE;
 
-    return XTRUE;
+    return TRUE;
 }
 /********************************************************************
 函数名称：PluginCore_UnInit
@@ -61,7 +61,7 @@ XBOOL CPlugin_Zodiac::PluginCore_Init(XPVOID lParam)
 *********************************************************************/
 void CPlugin_Zodiac::PluginCore_UnInit()
 {
-	Zodiac_IsErrorOccur = XFALSE;
+	Zodiac_IsErrorOccur = FALSE;
 }
 /********************************************************************
 函数名称：PluginCore_Call
@@ -73,13 +73,13 @@ void CPlugin_Zodiac::PluginCore_UnInit()
 *********************************************************************/
 XBOOL CPlugin_Zodiac::PluginCore_Call(XCHAR*** pppHDRList, int nListCount, int* pInt_HTTPCode, XCHAR* ptszMsgBuffer, int* pInt_MsgLen, LPCXSTR lpszMsgBuffer, int nMsgLen)
 {
-	Zodiac_IsErrorOccur = XFALSE;
+	Zodiac_IsErrorOccur = FALSE;
 
 	if ((NULL == pInt_HTTPCode) || (NULL == ptszMsgBuffer) || (NULL == pInt_MsgLen))
 	{
-		Zodiac_IsErrorOccur = XTRUE;
+		Zodiac_IsErrorOccur = TRUE;
 		Zodiac_dwErrorCode = ERROR_XENGINE_APISERVICE_PLUGIN_MODULE_ZODIAC_PARAMENT;
-		return XFALSE;
+		return FALSE;
 	}
 	XCHAR tszKeyName[128];
 	XCHAR tszValueName[128];
@@ -109,25 +109,25 @@ XBOOL CPlugin_Zodiac::PluginCore_Call(XCHAR*** pppHDRList, int nListCount, int* 
 	*pInt_HTTPCode = 200;
 	*pInt_MsgLen = Json::writeString(st_JsonBuilder, st_JsonRoot).length();
 	memcpy(ptszMsgBuffer, Json::writeString(st_JsonBuilder, st_JsonRoot).c_str(), *pInt_MsgLen);
-	return XTRUE;
+	return TRUE;
 }
 //////////////////////////////////////////////////////////////////////////
 //                       保护函数
 //////////////////////////////////////////////////////////////////////////
 XBOOL CPlugin_Zodiac::Plugin_Zodiac_Chinese(LPCXSTR lpszDate, XCHAR* ptszCZodiac)
 {
-	Zodiac_IsErrorOccur = XFALSE;
+	Zodiac_IsErrorOccur = FALSE;
 
-	int nDate = _ttoi(lpszDate);
+	int nDate = _ttxoi(lpszDate);
 	int nYear = nDate / 10000;
 	nYear = nYear % 12;
 
-	_tcscpy(ptszCZodiac, m_StrChinese[nYear].c_str());
-	return XTRUE;
+	_tcsxcpy(ptszCZodiac, m_StrChinese[nYear].c_str());
+	return TRUE;
 }
 XBOOL CPlugin_Zodiac::Plugin_Zodiac_English(LPCXSTR lpszDate, XCHAR* ptszEZodiac)
 {
-	Zodiac_IsErrorOccur = XFALSE;
+	Zodiac_IsErrorOccur = FALSE;
 
 	int nMonth = 0;
 	int nDay = 0;
@@ -154,6 +154,6 @@ XBOOL CPlugin_Zodiac::Plugin_Zodiac_English(LPCXSTR lpszDate, XCHAR* ptszEZodiac
 	/*第一维输出月份，第二维由生日的日期/每个月对应的分割日期（constell_dates）,
 	   为0就表示一个月中的前一个星座，否则为后一个星座，
 	比如生日为5月6号，则对应输出 constells[4][0] 对应金牛座*/
-	_tcscpy(ptszEZodiac, m_StrEnglish[nMonth - 1][nDay / nConstell[nMonth]].c_str());
-	return XTRUE;
+	_tcsxcpy(ptszEZodiac, m_StrEnglish[nMonth - 1][nDay / nConstell[nMonth]].c_str());
+	return TRUE;
 }

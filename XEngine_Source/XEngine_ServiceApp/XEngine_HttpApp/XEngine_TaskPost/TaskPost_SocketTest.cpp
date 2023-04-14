@@ -11,7 +11,7 @@ void CALLBACK HTTPTask_TastPost_CBSocketTest(XNETHANDLE xhToken, LPCXSTR lpszAdd
 	{
 		//每次都报告
 		ModuleProtocol_Packet_TestReport(tszMsgBuffer, &nMsgLen, xhToken, lpszAddr, nPort, nNumber, nFailed, nSuccess, nStatus);
-		if (_tcslen(pSt_SocketTest->tszAPIUrl) > 0)
+		if (_tcsxlen(pSt_SocketTest->tszAPIUrl) > 0)
 		{
 			APIClient_Http_Request("POST", pSt_SocketTest->tszAPIUrl, tszMsgBuffer);
 		}
@@ -20,7 +20,7 @@ void CALLBACK HTTPTask_TastPost_CBSocketTest(XNETHANDLE xhToken, LPCXSTR lpszAdd
 	{
 		//成功报告
 		ModuleProtocol_Packet_TestReport(tszMsgBuffer, &nMsgLen, xhToken, lpszAddr, nPort, nNumber, nFailed, nSuccess, nStatus);
-		if (_tcslen(pSt_SocketTest->tszAPIUrl) > 0)
+		if (_tcsxlen(pSt_SocketTest->tszAPIUrl) > 0)
 		{
 			APIClient_Http_Request("POST", pSt_SocketTest->tszAPIUrl, tszMsgBuffer);
 		}
@@ -29,7 +29,7 @@ void CALLBACK HTTPTask_TastPost_CBSocketTest(XNETHANDLE xhToken, LPCXSTR lpszAdd
 	{
 		//失败报告
 		ModuleProtocol_Packet_TestReport(tszMsgBuffer, &nMsgLen, xhToken, lpszAddr, nPort, nNumber, nFailed, nSuccess, nStatus);
-		if (_tcslen(pSt_SocketTest->tszAPIUrl) > 0)
+		if (_tcsxlen(pSt_SocketTest->tszAPIUrl) > 0)
 		{
 			APIClient_Http_Request("POST", pSt_SocketTest->tszAPIUrl, tszMsgBuffer);
 		}
@@ -40,7 +40,7 @@ void CALLBACK HTTPTask_TastPost_CBSocketTest(XNETHANDLE xhToken, LPCXSTR lpszAdd
 		{
 			//结束报告
 			ModuleProtocol_Packet_TestReport(tszMsgBuffer, &nMsgLen, xhToken, lpszAddr, nPort, nNumber, nFailed, nSuccess, nStatus);
-			if (_tcslen(pSt_SocketTest->tszAPIUrl) > 0)
+			if (_tcsxlen(pSt_SocketTest->tszAPIUrl) > 0)
 			{
 				APIClient_Http_Request("POST", pSt_SocketTest->tszAPIUrl, tszMsgBuffer);
 			}
@@ -62,7 +62,7 @@ XBOOL HTTPTask_TastPost_SocketTest(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer
 	memset(&st_HDRParam, '\0', sizeof(RFCCOMPONENTS_HTTP_HDRPARAM));
 
 	st_HDRParam.nHttpCode = 200; //HTTP CODE码
-	st_HDRParam.bIsClose = XTRUE; //收到回复后就关闭
+	st_HDRParam.bIsClose = TRUE; //收到回复后就关闭
 
 	ModuleProtocol_Parse_SocketTest(lpszMsgBuffer, nMsgLen, pSt_SocketTest);
 	//0创建,1删除
@@ -80,7 +80,7 @@ XBOOL HTTPTask_TastPost_SocketTest(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer
 		ModuleProtocol_Packet_TestReply(tszRVBuffer, &nRVLen, pSt_SocketTest->xhToken);
 		HttpProtocol_Server_SendMsgEx(xhHTTPPacket, tszSDBuffer, &nSDLen, &st_HDRParam, tszRVBuffer, nRVLen);
 		XEngine_Network_Send(lpszClientAddr, tszSDBuffer, nSDLen);
-		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _T("HTTP客户端:%s,请求创建套接字测试成功,句柄:%lld,地址:%s:%d,TCP:%d,测试类型:%d"), lpszClientAddr, pSt_SocketTest->xhToken, pSt_SocketTest->st_SocketConn.tszAddr, pSt_SocketTest->st_SocketConn.nPort, pSt_SocketTest->bTCP, pSt_SocketTest->bConn);
+		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("HTTP客户端:%s,请求创建套接字测试成功,句柄:%lld,地址:%s:%d,TCP:%d,测试类型:%d"), lpszClientAddr, pSt_SocketTest->xhToken, pSt_SocketTest->st_SocketConn.tszAddr, pSt_SocketTest->st_SocketConn.nPort, pSt_SocketTest->bTCP, pSt_SocketTest->bConn);
 	}
 	else
 	{
@@ -95,9 +95,9 @@ XBOOL HTTPTask_TastPost_SocketTest(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer
 		ModuleProtocol_Packet_Common(tszRVBuffer, &nRVLen);
 		HttpProtocol_Server_SendMsgEx(xhHTTPPacket, tszSDBuffer, &nSDLen, &st_HDRParam, tszRVBuffer, nRVLen);
 		XEngine_Network_Send(lpszClientAddr, tszSDBuffer, nSDLen);
-		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _T("HTTP客户端:%s,请求销毁套接字测试成功,句柄:%lld"), lpszClientAddr, pSt_SocketTest->xhToken);
+		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("HTTP客户端:%s,请求销毁套接字测试成功,句柄:%lld"), lpszClientAddr, pSt_SocketTest->xhToken);
 		delete pSt_SocketTest;
 		pSt_SocketTest = NULL;
 	}
-	return XTRUE;
+	return TRUE;
 }

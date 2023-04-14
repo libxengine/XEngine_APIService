@@ -16,7 +16,7 @@
 //    Purpose:     导出函数实现
 //    History:
 *********************************************************************/
-XBOOL ModuleHelp_IsErrorOccur = XFALSE;
+XBOOL ModuleHelp_IsErrorOccur = FALSE;
 XLONG ModuleHelp_dwErrorCode = 0;
 //////////////////////////////////////////////////////////////////////////
 CModuleHelp_IDCard m_IDCard;

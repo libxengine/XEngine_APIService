@@ -14,5 +14,5 @@ XBOOL APIENTRY DllMain( HMODULE hModule,
     case DLL_PROCESS_DETACH:
         break;
     }
-    return XTRUE;
+    return TRUE;
 }

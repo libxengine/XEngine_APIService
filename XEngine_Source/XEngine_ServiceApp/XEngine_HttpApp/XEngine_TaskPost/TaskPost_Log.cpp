@@ -15,7 +15,7 @@ XBOOL HTTPTask_TastPost_LogInfo(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer, i
 	memset(&st_HDRParam, '\0', sizeof(RFCCOMPONENTS_HTTP_HDRPARAM));
 
 	st_HDRParam.nHttpCode = 200; //HTTP CODE码
-	st_HDRParam.bIsClose = XTRUE; //收到回复后就关闭
+	st_HDRParam.bIsClose = TRUE; //收到回复后就关闭
 	ModuleProtocol_Parse_XLog(lpszMsgBuffer, nMsgLen, &st_XLogInfo);
 
 	if (0 == nType)
@@ -24,7 +24,7 @@ XBOOL HTTPTask_TastPost_LogInfo(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer, i
 		ModuleProtocol_Packet_Common(tszRVBuffer, &nRVLen);
 		HttpProtocol_Server_SendMsgEx(xhHTTPPacket, tszSDBuffer, &nSDLen, &st_HDRParam, tszRVBuffer, nRVLen);
 		XEngine_Network_Send(lpszClientAddr, tszSDBuffer, nSDLen);
-		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _T("HTTP客户端:%s,请求日志表创建成功,创建的表:%s,"), lpszClientAddr, st_XLogInfo.tszTableName);
+		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("HTTP客户端:%s,请求日志表创建成功,创建的表:%s,"), lpszClientAddr, st_XLogInfo.tszTableName);
 	}
 	else if (1 == nType)
 	{
@@ -32,7 +32,7 @@ XBOOL HTTPTask_TastPost_LogInfo(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer, i
 		ModuleProtocol_Packet_Common(tszRVBuffer, &nRVLen);
 		HttpProtocol_Server_SendMsgEx(xhHTTPPacket, tszSDBuffer, &nSDLen, &st_HDRParam, tszRVBuffer, nRVLen);
 		XEngine_Network_Send(lpszClientAddr, tszSDBuffer, nSDLen);
-		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _T("HTTP客户端:%s,请求日志插入成功,插入的表:%s,日志大小:%d"), lpszClientAddr, st_XLogInfo.tszTableName, st_XLogInfo.nLogSize);
+		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("HTTP客户端:%s,请求日志插入成功,插入的表:%s,日志大小:%d"), lpszClientAddr, st_XLogInfo.tszTableName, st_XLogInfo.nLogSize);
 	}
 	else if (2 == nType)
 	{
@@ -42,7 +42,7 @@ XBOOL HTTPTask_TastPost_LogInfo(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer, i
 		ModuleProtocol_Packet_Log(tszRVBuffer, &nRVLen, &ppSt_XLogInfo, nListCount);
 		HttpProtocol_Server_SendMsgEx(xhHTTPPacket, tszSDBuffer, &nSDLen, &st_HDRParam, tszRVBuffer, nRVLen);
 		XEngine_Network_Send(lpszClientAddr, tszSDBuffer, nSDLen);
-		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _T("HTTP客户端:%s,请求日志查询成功,查询的表:%s,查询日期:%s - %s,查询条数:%d"), lpszClientAddr, st_XLogInfo.tszTableName, st_XLogInfo.tszTimeStart, st_XLogInfo.tszTimeEnd, nListCount);
+		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("HTTP客户端:%s,请求日志查询成功,查询的表:%s,查询日期:%s - %s,查询条数:%d"), lpszClientAddr, st_XLogInfo.tszTableName, st_XLogInfo.tszTimeStart, st_XLogInfo.tszTimeEnd, nListCount);
 	}
 	else
 	{
@@ -50,7 +50,7 @@ XBOOL HTTPTask_TastPost_LogInfo(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer, i
 		ModuleProtocol_Packet_Common(tszRVBuffer, &nRVLen);
 		HttpProtocol_Server_SendMsgEx(xhHTTPPacket, tszSDBuffer, &nSDLen, &st_HDRParam, tszRVBuffer, nRVLen);
 		XEngine_Network_Send(lpszClientAddr, tszSDBuffer, nSDLen);
-		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _T("HTTP客户端:%s,请求日志删除成功,删除的表:%s"), lpszClientAddr, st_XLogInfo.tszTableName);
+		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("HTTP客户端:%s,请求日志删除成功,删除的表:%s"), lpszClientAddr, st_XLogInfo.tszTableName);
 	}
-	return XTRUE;
+	return TRUE;
 }

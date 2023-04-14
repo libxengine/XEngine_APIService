@@ -11,7 +11,7 @@
 //    Purpose:     导出实现
 //    History:
 *********************************************************************/
-XBOOL BMIndex_IsErrorOccur = XFALSE;
+XBOOL BMIndex_IsErrorOccur = FALSE;
 XLONG BMIndex_dwErrorCode = 0;
 //////////////////////////////////////////////////////////////////////////
 CPlugin_BMIndex m_PluginBMIndex;

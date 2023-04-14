@@ -11,7 +11,7 @@
 //    Purpose:     导出实现
 //    History:
 *********************************************************************/
-XBOOL Phone_IsErrorOccur = XFALSE;
+XBOOL Phone_IsErrorOccur = FALSE;
 XLONG Phone_dwErrorCode = 0;
 //////////////////////////////////////////////////////////////////////////
 CModulePlugin_APIPhone m_PluginPhone;

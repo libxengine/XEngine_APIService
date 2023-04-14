@@ -11,7 +11,7 @@
 //    Purpose:     导出实现
 //    History:
 *********************************************************************/
-XBOOL Timezone_IsErrorOccur = XFALSE;
+XBOOL Timezone_IsErrorOccur = FALSE;
 XLONG Timezone_dwErrorCode = 0;
 //////////////////////////////////////////////////////////////////////////
 CPlugin_Timezone m_PluginTimes;

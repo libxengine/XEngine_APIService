@@ -45,7 +45,7 @@ public:
 	XBOOL ModuleHelp_SocketTest_GetConnect(XNETHANDLE xhToken, XBOOL* pbRun);
 	XBOOL ModuleHelp_SocketTest_StopConnect(XNETHANDLE xhToken);
 	//数据包压力测试
-	XBOOL ModuleHelp_SocketTest_StartDatas(XNETHANDLE* pxhToken, MODULEHELP_SOCKETTEST_DATAS* pSt_SocketDatas, CALLBACK_APISERVICE_MODULE_HELP_SOCKETTEST fpCall_DataTest, XBOOL bTCP = XTRUE, XPVOID lParam = NULL);
+	XBOOL ModuleHelp_SocketTest_StartDatas(XNETHANDLE* pxhToken, MODULEHELP_SOCKETTEST_DATAS* pSt_SocketDatas, CALLBACK_APISERVICE_MODULE_HELP_SOCKETTEST fpCall_DataTest, XBOOL bTCP = TRUE, XPVOID lParam = NULL);
 	XBOOL ModuleHelp_SocketTest_GetDatas(XNETHANDLE xhToken, XBOOL* pbRun);
 	XBOOL ModuleHelp_SocketTest_StopDatas(XNETHANDLE xhToken);
 protected:

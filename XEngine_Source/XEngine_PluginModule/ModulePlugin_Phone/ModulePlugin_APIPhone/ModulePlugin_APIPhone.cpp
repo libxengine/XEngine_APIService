@@ -35,13 +35,13 @@ CModulePlugin_APIPhone::~CModulePlugin_APIPhone()
 *********************************************************************/
 XBOOL CModulePlugin_APIPhone::PluginCore_Init(XPVOID lParam)
 {
-	Phone_IsErrorOccur = XFALSE;
+	Phone_IsErrorOccur = FALSE;
 
-	if (!m_DBPhone.ModuleDatabase_Phone_Init(_T("./XEngine_DBFile/phone.dat")))
+	if (!m_DBPhone.ModuleDatabase_Phone_Init(_X("./XEngine_DBFile/phone.dat")))
 	{
-		return XFALSE;
+		return FALSE;
 	}
-    return XTRUE;
+    return TRUE;
 }
 /********************************************************************
 函数名称：PluginCore_UnInit
@@ -53,7 +53,7 @@ XBOOL CModulePlugin_APIPhone::PluginCore_Init(XPVOID lParam)
 *********************************************************************/
 void CModulePlugin_APIPhone::PluginCore_UnInit()
 {
-	Phone_IsErrorOccur = XFALSE;
+	Phone_IsErrorOccur = FALSE;
 
 	m_DBPhone.ModuleDatabase_Phone_Destory();
 }
@@ -67,13 +67,13 @@ void CModulePlugin_APIPhone::PluginCore_UnInit()
 *********************************************************************/
 XBOOL CModulePlugin_APIPhone::PluginCore_Call(XCHAR*** pppHDRList, int nListCount, int* pInt_HTTPCode, XCHAR* ptszMsgBuffer, int* pInt_MsgLen, LPCXSTR lpszMsgBuffer, int nMsgLen)
 {
-	Phone_IsErrorOccur = XFALSE;
+	Phone_IsErrorOccur = FALSE;
 
 	if ((NULL == pInt_HTTPCode) || (NULL == ptszMsgBuffer) || (NULL == pInt_MsgLen))
 	{
-		Phone_IsErrorOccur = XTRUE;
+		Phone_IsErrorOccur = TRUE;
 		Phone_dwErrorCode = ERROR_XENGINE_APISERVICE_PLUGIN_MODULE_PHONE_PARAMENT;
-		return XFALSE;
+		return FALSE;
 	}
 	XCHAR tszKeyName[128];
 	XCHAR tszKeyValue[128];
@@ -88,10 +88,10 @@ XBOOL CModulePlugin_APIPhone::PluginCore_Call(XCHAR*** pppHDRList, int nListCoun
 
 	BaseLib_OperatorString_GetKeyValue((*pppHDRList)[1], "=", tszKeyName, tszKeyValue);
 
-	st_PhoneInfo.nPhoneNumber = _ttoi64(tszKeyValue);
+	st_PhoneInfo.nPhoneNumber = _ttxoll(tszKeyValue);
 	if (!m_DBPhone.ModuleDatabase_Phone_Query(tszKeyValue, &st_PhoneInfo))
 	{
-		return XFALSE;
+		return FALSE;
 	}
 	st_JsonObject["nPhoneNumber"] = (Json::Value::Int64)st_PhoneInfo.nPhoneNumber;
 	st_JsonObject["tszProvincer"] = st_PhoneInfo.tszProvincer;
@@ -107,5 +107,5 @@ XBOOL CModulePlugin_APIPhone::PluginCore_Call(XCHAR*** pppHDRList, int nListCoun
 	*pInt_HTTPCode = 200;
 	*pInt_MsgLen = Json::writeString(st_JsonBuilder, st_JsonRoot).length();
 	memcpy(ptszMsgBuffer, Json::writeString(st_JsonBuilder, st_JsonRoot).c_str(), *pInt_MsgLen);
-	return XTRUE;
+	return TRUE;
 }

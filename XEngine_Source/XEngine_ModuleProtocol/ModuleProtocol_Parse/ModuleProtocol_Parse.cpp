@@ -41,19 +41,19 @@ CModuleProtocol_Parse::~CModuleProtocol_Parse()
 *********************************************************************/
 XBOOL CModuleProtocol_Parse::ModuleProtocol_Parse_IDCard(LPCXSTR lpszMsgBuffer, XENGINE_IDCARDINFO* pSt_IDInfo)
 {
-	ModuleProtocol_IsErrorOccur = XFALSE;
+	ModuleProtocol_IsErrorOccur = FALSE;
 
 	if ((NULL == lpszMsgBuffer) || (NULL == pSt_IDInfo))
 	{
-		ModuleProtocol_IsErrorOccur = XTRUE;
+		ModuleProtocol_IsErrorOccur = TRUE;
 		ModuleProtocol_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PROTOCOL_PARSE_PARAMENT;
-		return XFALSE;
+		return FALSE;
 	}
-	if (_tcslen(lpszMsgBuffer) != 18)
+	if (_tcsxlen(lpszMsgBuffer) != 18)
 	{
-		ModuleProtocol_IsErrorOccur = XTRUE;
+		ModuleProtocol_IsErrorOccur = TRUE;
 		ModuleProtocol_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PROTOCOL_PARSE_LEN;
-		return XFALSE;
+		return FALSE;
 	}
 	int nPos = 0;
 	XCHAR tszTmpBuffer[16];
@@ -62,58 +62,58 @@ XBOOL CModuleProtocol_Parse::ModuleProtocol_Parse_IDCard(LPCXSTR lpszMsgBuffer, 
 	{
 		if (!isdigit(lpszMsgBuffer[i]))
 		{
-			ModuleProtocol_IsErrorOccur = XTRUE;
+			ModuleProtocol_IsErrorOccur = TRUE;
 			ModuleProtocol_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PROTOCOL_PARSE_FMT;
-			return XFALSE;
+			return FALSE;
 		}
 	}
-	_tcscpy(pSt_IDInfo->tszIDNumber, lpszMsgBuffer);
+	_tcsxcpy(pSt_IDInfo->tszIDNumber, lpszMsgBuffer);
 	//提取行政区域
 	memset(tszTmpBuffer, '\0', sizeof(tszTmpBuffer));
 	memcpy(tszTmpBuffer, lpszMsgBuffer + nPos, 2);
-	pSt_IDInfo->nIDProvince = _ttoi(tszTmpBuffer);
+	pSt_IDInfo->nIDProvince = _ttxoi(tszTmpBuffer);
 	nPos += 2;
 
 	memset(tszTmpBuffer, '\0', sizeof(tszTmpBuffer));
 	memcpy(tszTmpBuffer, lpszMsgBuffer + nPos, 2);
-	pSt_IDInfo->nIDCity = _ttoi(tszTmpBuffer);
+	pSt_IDInfo->nIDCity = _ttxoi(tszTmpBuffer);
 	nPos += 2;
 
 	memset(tszTmpBuffer, '\0', sizeof(tszTmpBuffer));
 	memcpy(tszTmpBuffer, lpszMsgBuffer + nPos, 2);
-	pSt_IDInfo->nIDCounty = _ttoi(tszTmpBuffer);
+	pSt_IDInfo->nIDCounty = _ttxoi(tszTmpBuffer);
 	nPos += 2;
 	//提取生日
 	memset(tszTmpBuffer, '\0', sizeof(tszTmpBuffer));
 	memcpy(tszTmpBuffer, lpszMsgBuffer + nPos, 4);
-	pSt_IDInfo->nBirthYear = _ttoi(tszTmpBuffer);
+	pSt_IDInfo->nBirthYear = _ttxoi(tszTmpBuffer);
 	nPos += 4;
 
 	memset(tszTmpBuffer, '\0', sizeof(tszTmpBuffer));
 	memcpy(tszTmpBuffer, lpszMsgBuffer + nPos, 2);
-	pSt_IDInfo->nBirthMonth = _ttoi(tszTmpBuffer);
+	pSt_IDInfo->nBirthMonth = _ttxoi(tszTmpBuffer);
 	nPos += 2;
 
 	memset(tszTmpBuffer, '\0', sizeof(tszTmpBuffer));
 	memcpy(tszTmpBuffer, lpszMsgBuffer + nPos, 2);
-	pSt_IDInfo->nBirthDay = _ttoi(tszTmpBuffer);
+	pSt_IDInfo->nBirthDay = _ttxoi(tszTmpBuffer);
 	nPos += 2;
 	//提取派出所编码
 	memset(tszTmpBuffer, '\0', sizeof(tszTmpBuffer));
 	memcpy(tszTmpBuffer, lpszMsgBuffer + nPos, 2);
-	pSt_IDInfo->nPoliceID = _ttoi(tszTmpBuffer);
+	pSt_IDInfo->nPoliceID = _ttxoi(tszTmpBuffer);
 	nPos += 2;
 	//提取性别
 	memset(tszTmpBuffer, '\0', sizeof(tszTmpBuffer));
 	memcpy(tszTmpBuffer, lpszMsgBuffer + nPos, 1);
-	pSt_IDInfo->nSex = _ttoi(tszTmpBuffer);
+	pSt_IDInfo->nSex = _ttxoi(tszTmpBuffer);
 	nPos += 1;
 	//提取校验码
 	memset(tszTmpBuffer, '\0', sizeof(tszTmpBuffer));
 	memcpy(tszTmpBuffer, lpszMsgBuffer + nPos, 1);
-	pSt_IDInfo->nCheck = _ttoi(tszTmpBuffer);
+	pSt_IDInfo->nCheck = _ttxoi(tszTmpBuffer);
 	nPos += 1;
-	return XTRUE;
+	return TRUE;
 }
 /********************************************************************
 函数名称：ModuleProtocol_Parse_Bank
@@ -140,13 +140,13 @@ XBOOL CModuleProtocol_Parse::ModuleProtocol_Parse_IDCard(LPCXSTR lpszMsgBuffer, 
 *********************************************************************/
 XBOOL CModuleProtocol_Parse::ModuleProtocol_Parse_Bank(LPCXSTR lpszMsgBuffer, int nMsgLen, XENGINE_BANKINFO* pSt_BankInfo)
 {
-	ModuleProtocol_IsErrorOccur = XFALSE;
+	ModuleProtocol_IsErrorOccur = FALSE;
 
 	if ((NULL == lpszMsgBuffer) || (0 == nMsgLen))
 	{
-		ModuleProtocol_IsErrorOccur = XTRUE;
+		ModuleProtocol_IsErrorOccur = TRUE;
 		ModuleProtocol_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PROTOCOL_PARSE_PARAMENT;
-		return XFALSE;
+		return FALSE;
 	}
 	Json::Value st_JsonRoot;
 	JSONCPP_STRING st_JsonError;
@@ -155,25 +155,25 @@ XBOOL CModuleProtocol_Parse::ModuleProtocol_Parse_Bank(LPCXSTR lpszMsgBuffer, in
 	std::unique_ptr<Json::CharReader> const pSt_JsonReader(st_JsonBuilder.newCharReader());
 	if (!pSt_JsonReader->parse(lpszMsgBuffer, lpszMsgBuffer + nMsgLen, &st_JsonRoot, &st_JsonError))
 	{
-		ModuleProtocol_IsErrorOccur = XTRUE;
+		ModuleProtocol_IsErrorOccur = TRUE;
 		ModuleProtocol_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PROTOCOL_PARSE_JSON;
-		return XFALSE;
+		return FALSE;
 	}
 	//{"messages":[{"errorCodes":"CARD_BIN_NOT_MATCH","name":"cardNo"}],"validated":false,"stat":"ok","key":"62215546546546"}
 	//{"cardType":"DC","bank":"CMB","key":"62215546546546"messages":[],"validated":true,"stat":"ok"}
 	if (!st_JsonRoot["validated"].asBool())
 	{
-		ModuleProtocol_IsErrorOccur = XTRUE;
+		ModuleProtocol_IsErrorOccur = TRUE;
 		ModuleProtocol_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PROTOCOL_PARSE_VALIDATE;
-		return XFALSE;
+		return FALSE;
 	}
-	LPCXSTR lpszTypeDC = _T("DC");
-	LPCXSTR lpszTypeCC = _T("CC");
-	if (0 == _tcsncmp(lpszTypeDC, st_JsonRoot["cardType"].asCString(), _tcslen(lpszTypeDC)))
+	LPCXSTR lpszTypeDC = _X("DC");
+	LPCXSTR lpszTypeCC = _X("CC");
+	if (0 == _tcsxncmp(lpszTypeDC, st_JsonRoot["cardType"].asCString(), _tcsxlen(lpszTypeDC)))
 	{
 		pSt_BankInfo->enBankType = ENUM_XENGINE_APISERVICE_BANK_TYPE_DC;
 	}
-	else if (0 == _tcsncmp(lpszTypeCC, st_JsonRoot["cardType"].asCString(), _tcslen(lpszTypeCC)))
+	else if (0 == _tcsxncmp(lpszTypeCC, st_JsonRoot["cardType"].asCString(), _tcsxlen(lpszTypeCC)))
 	{
 		pSt_BankInfo->enBankType = ENUM_XENGINE_APISERVICE_BANK_TYPE_CC;
 	}
@@ -181,8 +181,8 @@ XBOOL CModuleProtocol_Parse::ModuleProtocol_Parse_Bank(LPCXSTR lpszMsgBuffer, in
 	{
 		pSt_BankInfo->enBankType = ENUM_XENGINE_APISERVICE_BANK_TYPE_BC;
 	}
-	_tcscpy(pSt_BankInfo->tszBankAbridge, st_JsonRoot["bank"].asCString());
-	return XTRUE;
+	_tcsxcpy(pSt_BankInfo->tszBankAbridge, st_JsonRoot["bank"].asCString());
+	return TRUE;
 }
 /********************************************************************
 函数名称：ModuleProtocol_Parse_Translation
@@ -209,13 +209,13 @@ XBOOL CModuleProtocol_Parse::ModuleProtocol_Parse_Bank(LPCXSTR lpszMsgBuffer, in
 *********************************************************************/
 XBOOL CModuleProtocol_Parse::ModuleProtocol_Parse_Translation(LPCXSTR lpszMsgBuffer, int nMsgLen, XENGINE_LANGUAGEINFO* pSt_LanguageInfo)
 {
-	ModuleProtocol_IsErrorOccur = XFALSE;
+	ModuleProtocol_IsErrorOccur = FALSE;
 
 	if ((NULL == lpszMsgBuffer) || (0 == nMsgLen))
 	{
-		ModuleProtocol_IsErrorOccur = XTRUE;
+		ModuleProtocol_IsErrorOccur = TRUE;
 		ModuleProtocol_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PROTOCOL_PARSE_PARAMENT;
-		return XFALSE;
+		return FALSE;
 	}
 	Json::Value st_JsonRoot;
 	JSONCPP_STRING st_JsonError;
@@ -224,22 +224,22 @@ XBOOL CModuleProtocol_Parse::ModuleProtocol_Parse_Translation(LPCXSTR lpszMsgBuf
 	std::unique_ptr<Json::CharReader> const pSt_JsonReader(st_JsonBuilder.newCharReader());
 	if (!pSt_JsonReader->parse(lpszMsgBuffer, lpszMsgBuffer + nMsgLen, &st_JsonRoot, &st_JsonError))
 	{
-		ModuleProtocol_IsErrorOccur = XTRUE;
+		ModuleProtocol_IsErrorOccur = TRUE;
 		ModuleProtocol_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PROTOCOL_PARSE_JSON;
-		return XFALSE;
+		return FALSE;
 	}
 	//{"type":"ZH_CN2EN","errorCode":0,"elapsedTime":1,"translateResult":[[{"src":"计算","tgt":"To calculate"}]]}
 	if (0 != st_JsonRoot["errorCode"].asInt())
 	{
-		ModuleProtocol_IsErrorOccur = XTRUE;
+		ModuleProtocol_IsErrorOccur = TRUE;
 		ModuleProtocol_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PROTOCOL_PARSE_VALIDATE;
-		return XFALSE;
+		return FALSE;
 	}
 	Json::Value st_JsonTranslation = st_JsonRoot["translateResult"];
 
-	_tcscpy(pSt_LanguageInfo->tszSourceStr, st_JsonTranslation[0][0]["src"].asCString());
-	_tcscpy(pSt_LanguageInfo->tszDestStr, st_JsonTranslation[0][0]["tgt"].asCString());
-	return XTRUE;
+	_tcsxcpy(pSt_LanguageInfo->tszSourceStr, st_JsonTranslation[0][0]["src"].asCString());
+	_tcsxcpy(pSt_LanguageInfo->tszDestStr, st_JsonTranslation[0][0]["tgt"].asCString());
+	return TRUE;
 }
 /********************************************************************
 函数名称：ModuleProtocol_Parse_P2PClient
@@ -266,13 +266,13 @@ XBOOL CModuleProtocol_Parse::ModuleProtocol_Parse_Translation(LPCXSTR lpszMsgBuf
 *********************************************************************/
 XBOOL CModuleProtocol_Parse::ModuleProtocol_Parse_P2PClient(LPCXSTR lpszMsgBuffer, int nMsgLen, XENGINE_P2XPPEER_PROTOCOL* pSt_P2XPPeer)
 {
-	ModuleProtocol_IsErrorOccur = XFALSE;
+	ModuleProtocol_IsErrorOccur = FALSE;
 
 	if ((NULL == lpszMsgBuffer) || (NULL == pSt_P2XPPeer))
 	{
-		ModuleProtocol_IsErrorOccur = XTRUE;
+		ModuleProtocol_IsErrorOccur = TRUE;
 		ModuleProtocol_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PROTOCOL_PARSE_PARAMENT;
-		return XFALSE;
+		return FALSE;
 	}
 	Json::Value st_JsonRoot;
 	Json::CharReaderBuilder st_JsonBuild;
@@ -282,24 +282,24 @@ XBOOL CModuleProtocol_Parse::ModuleProtocol_Parse_P2PClient(LPCXSTR lpszMsgBuffe
 	//解析JSON
 	if (!pSt_JsonReader->parse(lpszMsgBuffer, lpszMsgBuffer + nMsgLen, &st_JsonRoot, &st_JsonError))
 	{
-		ModuleProtocol_IsErrorOccur = XTRUE;
+		ModuleProtocol_IsErrorOccur = TRUE;
 		ModuleProtocol_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PROTOCOL_PARSE_JSON;
-		return XFALSE;
+		return FALSE;
 	}
 	delete pSt_JsonReader;
 	pSt_JsonReader = NULL;
 
 	if (!st_JsonRoot["tszUserName"].isNull())
 	{
-		_tcscpy(pSt_P2XPPeer->tszUserName, st_JsonRoot["tszUserName"].asCString());
+		_tcsxcpy(pSt_P2XPPeer->tszUserName, st_JsonRoot["tszUserName"].asCString());
 	}
 	if (!st_JsonRoot["tszPrivateAddr"].isNull())
 	{
-		_tcscpy(pSt_P2XPPeer->tszPrivateAddr, st_JsonRoot["tszPrivateAddr"].asCString());
+		_tcsxcpy(pSt_P2XPPeer->tszPrivateAddr, st_JsonRoot["tszPrivateAddr"].asCString());
 	}
 	if (!st_JsonRoot["tszPublicAddr"].isNull())
 	{
-		_tcscpy(pSt_P2XPPeer->tszPublicAddr, st_JsonRoot["tszPublicAddr"].asCString());
+		_tcsxcpy(pSt_P2XPPeer->tszPublicAddr, st_JsonRoot["tszPublicAddr"].asCString());
 	}
 	if (!st_JsonRoot["dwConnectType"].isNull())
 	{
@@ -309,7 +309,7 @@ XBOOL CModuleProtocol_Parse::ModuleProtocol_Parse_P2PClient(LPCXSTR lpszMsgBuffe
 	{
 		pSt_P2XPPeer->dwPeerType = st_JsonRoot["dwPeerType"].asInt();
 	}
-	return XTRUE;
+	return TRUE;
 }
 /********************************************************************
 函数名称：ModuleProtocol_Parse_ZIPCode
@@ -336,13 +336,13 @@ XBOOL CModuleProtocol_Parse::ModuleProtocol_Parse_P2PClient(LPCXSTR lpszMsgBuffe
 *********************************************************************/
 XBOOL CModuleProtocol_Parse::ModuleProtocol_Parse_ZIPCode(LPCXSTR lpszMsgBuffer, int nMsgLen, XENGINE_ZIPINFO* pSt_ZIPInfo)
 {
-	ModuleProtocol_IsErrorOccur = XFALSE;
+	ModuleProtocol_IsErrorOccur = FALSE;
 
 	if ((NULL == lpszMsgBuffer) || (NULL == pSt_ZIPInfo))
 	{
-		ModuleProtocol_IsErrorOccur = XTRUE;
+		ModuleProtocol_IsErrorOccur = TRUE;
 		ModuleProtocol_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PROTOCOL_PARSE_PARAMENT;
-		return XFALSE;
+		return FALSE;
 	}
 	Json::Value st_JsonRoot;
 	JSONCPP_STRING st_JsonError;
@@ -351,29 +351,29 @@ XBOOL CModuleProtocol_Parse::ModuleProtocol_Parse_ZIPCode(LPCXSTR lpszMsgBuffer,
 	std::unique_ptr<Json::CharReader> const pSt_JsonReader(st_ReaderBuilder.newCharReader());
 	if (!pSt_JsonReader->parse(lpszMsgBuffer, lpszMsgBuffer + nMsgLen, &st_JsonRoot, &st_JsonError))
 	{
-		ModuleProtocol_IsErrorOccur = XTRUE;
+		ModuleProtocol_IsErrorOccur = TRUE;
 		ModuleProtocol_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PROTOCOL_PARSE_PARAMENT;
-		return XFALSE;
+		return FALSE;
 	}
 
 	if (!st_JsonRoot["tszProvincer"].isNull())
 	{
-		_tcscpy(pSt_ZIPInfo->tszProvincer, st_JsonRoot["tszProvincer"].asCString());
+		_tcsxcpy(pSt_ZIPInfo->tszProvincer, st_JsonRoot["tszProvincer"].asCString());
 	}
 	if (!st_JsonRoot["tszCity"].isNull())
 	{
-		_tcscpy(pSt_ZIPInfo->tszCity, st_JsonRoot["tszCity"].asCString());
+		_tcsxcpy(pSt_ZIPInfo->tszCity, st_JsonRoot["tszCity"].asCString());
 	}
 	if (!st_JsonRoot["tszCounty"].isNull())
 	{
-		_tcscpy(pSt_ZIPInfo->tszCounty, st_JsonRoot["tszCounty"].asCString());
+		_tcsxcpy(pSt_ZIPInfo->tszCounty, st_JsonRoot["tszCounty"].asCString());
 	}
 
 	if (!st_JsonRoot["nZipCode"].isNull())
 	{
 		pSt_ZIPInfo->nZipCode = st_JsonRoot["nZipCode"].asInt();
 	}
-	return XTRUE;
+	return TRUE;
 }
 /********************************************************************
 函数名称：ModuleProtocol_Parse_XLog
@@ -400,13 +400,13 @@ XBOOL CModuleProtocol_Parse::ModuleProtocol_Parse_ZIPCode(LPCXSTR lpszMsgBuffer,
 *********************************************************************/
 XBOOL CModuleProtocol_Parse::ModuleProtocol_Parse_XLog(LPCXSTR lpszMsgBuffer, int nMsgLen, XENGINE_XLOGINFO* pSt_XLogInfo)
 {
-	ModuleProtocol_IsErrorOccur = XFALSE;
+	ModuleProtocol_IsErrorOccur = FALSE;
 
 	if ((NULL == lpszMsgBuffer) || (NULL == pSt_XLogInfo))
 	{
-		ModuleProtocol_IsErrorOccur = XTRUE;
+		ModuleProtocol_IsErrorOccur = TRUE;
 		ModuleProtocol_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PROTOCOL_PARSE_PARAMENT;
-		return XFALSE;
+		return FALSE;
 	}
 	Json::Value st_JsonRoot;
 	JSONCPP_STRING st_JsonError;
@@ -415,18 +415,18 @@ XBOOL CModuleProtocol_Parse::ModuleProtocol_Parse_XLog(LPCXSTR lpszMsgBuffer, in
 	std::unique_ptr<Json::CharReader> const pSt_JsonReader(st_ReaderBuilder.newCharReader());
 	if (!pSt_JsonReader->parse(lpszMsgBuffer, lpszMsgBuffer + nMsgLen, &st_JsonRoot, &st_JsonError))
 	{
-		ModuleProtocol_IsErrorOccur = XTRUE;
+		ModuleProtocol_IsErrorOccur = TRUE;
 		ModuleProtocol_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PROTOCOL_PARSE_PARAMENT;
-		return XFALSE;
+		return FALSE;
 	}
 
 	if (!st_JsonRoot["tszTableName"].isNull())
 	{
-		_tcscpy(pSt_XLogInfo->tszTableName, st_JsonRoot["tszTableName"].asCString());
+		_tcsxcpy(pSt_XLogInfo->tszTableName, st_JsonRoot["tszTableName"].asCString());
 	}
 	if (!st_JsonRoot["tszLogBuffer"].isNull())
 	{
-		_tcscpy(pSt_XLogInfo->tszLogBuffer, st_JsonRoot["tszLogBuffer"].asCString());
+		_tcsxcpy(pSt_XLogInfo->tszLogBuffer, st_JsonRoot["tszLogBuffer"].asCString());
 	}
 	if (!st_JsonRoot["nLogSize"].isNull())
 	{
@@ -434,23 +434,23 @@ XBOOL CModuleProtocol_Parse::ModuleProtocol_Parse_XLog(LPCXSTR lpszMsgBuffer, in
 	}
 	if (!st_JsonRoot["tszTimeStart"].isNull())
 	{
-		_tcscpy(pSt_XLogInfo->tszTimeStart, st_JsonRoot["tszTimeStart"].asCString());
+		_tcsxcpy(pSt_XLogInfo->tszTimeStart, st_JsonRoot["tszTimeStart"].asCString());
 	}
 	if (!st_JsonRoot["tszTimeEnd"].isNull())
 	{
-		_tcscpy(pSt_XLogInfo->tszTimeEnd, st_JsonRoot["tszTimeEnd"].asCString());
+		_tcsxcpy(pSt_XLogInfo->tszTimeEnd, st_JsonRoot["tszTimeEnd"].asCString());
 	}
 	if (!st_JsonRoot["tszFileName"].isNull())
 	{
-		_tcscpy(pSt_XLogInfo->st_ProtocolLog.tszFileName, st_JsonRoot["tszFileName"].asCString());
+		_tcsxcpy(pSt_XLogInfo->st_ProtocolLog.tszFileName, st_JsonRoot["tszFileName"].asCString());
 	}
 	if (!st_JsonRoot["tszFuncName"].isNull())
 	{
-		_tcscpy(pSt_XLogInfo->st_ProtocolLog.tszFuncName, st_JsonRoot["tszFuncName"].asCString());
+		_tcsxcpy(pSt_XLogInfo->st_ProtocolLog.tszFuncName, st_JsonRoot["tszFuncName"].asCString());
 	}
 	if (!st_JsonRoot["tszLogTimer"].isNull())
 	{
-		_tcscpy(pSt_XLogInfo->st_ProtocolLog.tszLogTimer, st_JsonRoot["tszLogTimer"].asCString());
+		_tcsxcpy(pSt_XLogInfo->st_ProtocolLog.tszLogTimer, st_JsonRoot["tszLogTimer"].asCString());
 	}
 	if (!st_JsonRoot["nLogLine"].isNull())
 	{
@@ -460,7 +460,7 @@ XBOOL CModuleProtocol_Parse::ModuleProtocol_Parse_XLog(LPCXSTR lpszMsgBuffer, in
 	{
 		pSt_XLogInfo->st_ProtocolLog.nLogLevel = st_JsonRoot["nLogLevel"].asInt();
 	}
-	return XTRUE;
+	return TRUE;
 }
 /********************************************************************
 函数名称：ModuleProtocol_Parse_QRCode
@@ -487,13 +487,13 @@ XBOOL CModuleProtocol_Parse::ModuleProtocol_Parse_XLog(LPCXSTR lpszMsgBuffer, in
 *********************************************************************/
 XBOOL CModuleProtocol_Parse::ModuleProtocol_Parse_QRCode(LPCXSTR lpszMsgBuffer, int nMsgLen, XENGINE_QRCODE* pSt_QRCode)
 {
-	ModuleProtocol_IsErrorOccur = XFALSE;
+	ModuleProtocol_IsErrorOccur = FALSE;
 
 	if ((NULL == lpszMsgBuffer) || (NULL == pSt_QRCode))
 	{
-		ModuleProtocol_IsErrorOccur = XTRUE;
+		ModuleProtocol_IsErrorOccur = TRUE;
 		ModuleProtocol_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PROTOCOL_PARSE_PARAMENT;
-		return XFALSE;
+		return FALSE;
 	}
 	Json::Value st_JsonRoot;
 	JSONCPP_STRING st_JsonError;
@@ -502,20 +502,20 @@ XBOOL CModuleProtocol_Parse::ModuleProtocol_Parse_QRCode(LPCXSTR lpszMsgBuffer, 
 	std::unique_ptr<Json::CharReader> const pSt_JsonReader(st_ReaderBuilder.newCharReader());
 	if (!pSt_JsonReader->parse(lpszMsgBuffer, lpszMsgBuffer + nMsgLen, &st_JsonRoot, &st_JsonError))
 	{
-		ModuleProtocol_IsErrorOccur = XTRUE;
+		ModuleProtocol_IsErrorOccur = TRUE;
 		ModuleProtocol_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PROTOCOL_PARSE_PARAMENT;
-		return XFALSE;
+		return FALSE;
 	}
 
 	if (!st_JsonRoot["tszMsgBuffer"].isNull())
 	{
-		_tcscpy(pSt_QRCode->tszMsgBuffer, st_JsonRoot["tszMsgBuffer"].asCString());
+		_tcsxcpy(pSt_QRCode->tszMsgBuffer, st_JsonRoot["tszMsgBuffer"].asCString());
 	}
 	if (!st_JsonRoot["tszFmtBuffer"].isNull())
 	{
-		_tcscpy(pSt_QRCode->tszFmtBuffer, st_JsonRoot["tszFmtBuffer"].asCString());
+		_tcsxcpy(pSt_QRCode->tszFmtBuffer, st_JsonRoot["tszFmtBuffer"].asCString());
 	}
-	return XTRUE;
+	return TRUE;
 }
 /********************************************************************
 函数名称：ModuleProtocol_Parse_SocketTest
@@ -542,13 +542,13 @@ XBOOL CModuleProtocol_Parse::ModuleProtocol_Parse_QRCode(LPCXSTR lpszMsgBuffer, 
 *********************************************************************/
 XBOOL CModuleProtocol_Parse::ModuleProtocol_Parse_SocketTest(LPCXSTR lpszMsgBuffer, int nMsgLen, XENGINE_SOCKETTEST* pSt_SocketTest)
 {
-	ModuleProtocol_IsErrorOccur = XFALSE;
+	ModuleProtocol_IsErrorOccur = FALSE;
 
 	if ((NULL == lpszMsgBuffer) || (NULL == pSt_SocketTest))
 	{
-		ModuleProtocol_IsErrorOccur = XTRUE;
+		ModuleProtocol_IsErrorOccur = TRUE;
 		ModuleProtocol_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PROTOCOL_PARSE_PARAMENT;
-		return XFALSE;
+		return FALSE;
 	}
 	Json::Value st_JsonRoot;
 	JSONCPP_STRING st_JsonError;
@@ -557,14 +557,14 @@ XBOOL CModuleProtocol_Parse::ModuleProtocol_Parse_SocketTest(LPCXSTR lpszMsgBuff
 	std::unique_ptr<Json::CharReader> const pSt_JsonReader(st_ReaderBuilder.newCharReader());
 	if (!pSt_JsonReader->parse(lpszMsgBuffer, lpszMsgBuffer + nMsgLen, &st_JsonRoot, &st_JsonError))
 	{
-		ModuleProtocol_IsErrorOccur = XTRUE;
+		ModuleProtocol_IsErrorOccur = TRUE;
 		ModuleProtocol_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PROTOCOL_PARSE_PARAMENT;
-		return XFALSE;
+		return FALSE;
 	}
 
 	if (!st_JsonRoot["tszAPIUrl"].isNull())
 	{
-		_tcscpy(pSt_SocketTest->tszAPIUrl, st_JsonRoot["tszAPIUrl"].asCString());
+		_tcsxcpy(pSt_SocketTest->tszAPIUrl, st_JsonRoot["tszAPIUrl"].asCString());
 	}
 	if (!st_JsonRoot["xhToken"].isNull())
 	{
@@ -581,7 +581,7 @@ XBOOL CModuleProtocol_Parse::ModuleProtocol_Parse_SocketTest(LPCXSTR lpszMsgBuff
 	//链接
 	if (!st_JsonRoot["tszAddr"].isNull())
 	{
-		_tcscpy(pSt_SocketTest->st_SocketConn.tszAddr, st_JsonRoot["tszAddr"].asCString());
+		_tcsxcpy(pSt_SocketTest->st_SocketConn.tszAddr, st_JsonRoot["tszAddr"].asCString());
 	}
 	if (!st_JsonRoot["nPort"].isNull())
 	{
@@ -606,11 +606,11 @@ XBOOL CModuleProtocol_Parse::ModuleProtocol_Parse_SocketTest(LPCXSTR lpszMsgBuff
 	//数据
 	if (!st_JsonRoot["tszSDBuffer"].isNull())
 	{
-		_tcscpy(pSt_SocketTest->st_SocketData.tszSDBuffer, st_JsonRoot["tszSDBuffer"].asCString());
+		_tcsxcpy(pSt_SocketTest->st_SocketData.tszSDBuffer, st_JsonRoot["tszSDBuffer"].asCString());
 	}
 	if (!st_JsonRoot["tszRVBuffer"].isNull())
 	{
-		_tcscpy(pSt_SocketTest->st_SocketData.tszRVBuffer, st_JsonRoot["tszRVBuffer"].asCString());
+		_tcsxcpy(pSt_SocketTest->st_SocketData.tszRVBuffer, st_JsonRoot["tszRVBuffer"].asCString());
 	}
 	if (!st_JsonRoot["nRVLen"].isNull())
 	{
@@ -620,7 +620,7 @@ XBOOL CModuleProtocol_Parse::ModuleProtocol_Parse_SocketTest(LPCXSTR lpszMsgBuff
 	{
 		pSt_SocketTest->st_SocketData.nSDLen = st_JsonRoot["nSDLen"].asInt();
 	}
-	return XTRUE;
+	return TRUE;
 }
 /********************************************************************
 函数名称：ModuleProtocol_Parse_ShortLink
@@ -647,13 +647,13 @@ XBOOL CModuleProtocol_Parse::ModuleProtocol_Parse_SocketTest(LPCXSTR lpszMsgBuff
 *********************************************************************/
 XBOOL CModuleProtocol_Parse::ModuleProtocol_Parse_ShortLink(LPCXSTR lpszMsgBuffer, int nMsgLen, XENGINE_SHORTLINK* pSt_ShortLink)
 {
-	ModuleProtocol_IsErrorOccur = XFALSE;
+	ModuleProtocol_IsErrorOccur = FALSE;
 
 	if ((NULL == lpszMsgBuffer) || (NULL == pSt_ShortLink))
 	{
-		ModuleProtocol_IsErrorOccur = XTRUE;
+		ModuleProtocol_IsErrorOccur = TRUE;
 		ModuleProtocol_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PROTOCOL_PARSE_PARAMENT;
-		return XFALSE;
+		return FALSE;
 	}
 	Json::Value st_JsonRoot;
 	JSONCPP_STRING st_JsonError;
@@ -662,38 +662,38 @@ XBOOL CModuleProtocol_Parse::ModuleProtocol_Parse_ShortLink(LPCXSTR lpszMsgBuffe
 	std::unique_ptr<Json::CharReader> const pSt_JsonReader(st_ReaderBuilder.newCharReader());
 	if (!pSt_JsonReader->parse(lpszMsgBuffer, lpszMsgBuffer + nMsgLen, &st_JsonRoot, &st_JsonError))
 	{
-		ModuleProtocol_IsErrorOccur = XTRUE;
+		ModuleProtocol_IsErrorOccur = TRUE;
 		ModuleProtocol_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PROTOCOL_PARSE_PARAMENT;
-		return XFALSE;
+		return FALSE;
 	}
 
 	if (!st_JsonRoot["tszFullUrl"].isNull())
 	{
-		_tcscpy(pSt_ShortLink->tszFullUrl, st_JsonRoot["tszFullUrl"].asCString());
+		_tcsxcpy(pSt_ShortLink->tszFullUrl, st_JsonRoot["tszFullUrl"].asCString());
 	}
 	if (!st_JsonRoot["tszShotUrl"].isNull())
 	{
-		_tcscpy(pSt_ShortLink->tszShotUrl, st_JsonRoot["tszShotUrl"].asCString());
+		_tcsxcpy(pSt_ShortLink->tszShotUrl, st_JsonRoot["tszShotUrl"].asCString());
 	}
 	if (!st_JsonRoot["tszKeyUrl"].isNull())
 	{
-		_tcscpy(pSt_ShortLink->tszKeyUrl, st_JsonRoot["tszKeyUrl"].asCString());
+		_tcsxcpy(pSt_ShortLink->tszKeyUrl, st_JsonRoot["tszKeyUrl"].asCString());
 	}
 	if (!st_JsonRoot["tszMapUrl"].isNull())
 	{
-		_tcscpy(pSt_ShortLink->tszMapUrl, st_JsonRoot["tszMapUrl"].asCString());
+		_tcsxcpy(pSt_ShortLink->tszMapUrl, st_JsonRoot["tszMapUrl"].asCString());
 	}
 	if (!st_JsonRoot["tszCvtUrl"].isNull())
 	{
-		_tcscpy(pSt_ShortLink->tszCvtUrl, st_JsonRoot["tszCvtUrl"].asCString());
+		_tcsxcpy(pSt_ShortLink->tszCvtUrl, st_JsonRoot["tszCvtUrl"].asCString());
 	}
 	if (!st_JsonRoot["tszCreateTime"].isNull())
 	{
-		_tcscpy(pSt_ShortLink->tszCreateTime, st_JsonRoot["tszCreateTime"].asCString());
+		_tcsxcpy(pSt_ShortLink->tszCreateTime, st_JsonRoot["tszCreateTime"].asCString());
 	}
 	if (!st_JsonRoot["nLength"].isNull())
 	{
 		pSt_ShortLink->nLength = st_JsonRoot["nLength"].asInt();
 	}
-	return XTRUE;
+	return TRUE;
 }

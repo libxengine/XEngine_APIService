@@ -20,35 +20,35 @@ XBOOL HTTPTask_TaskGet_BankInfo(LPCXSTR lpszClientAddr, LPCXSTR lpszBankNumber)
 	memset(&st_HDRParam, '\0', sizeof(RFCCOMPONENTS_HTTP_HDRPARAM));
 
 	st_HDRParam.nHttpCode = 200; //HTTP CODE码
-	st_HDRParam.bIsClose = XTRUE; //收到回复后就关闭
+	st_HDRParam.bIsClose = TRUE; //收到回复后就关闭
 
-	_tcscpy(st_BankInfo.tszBankNumber, lpszBankNumber);
-	_stprintf(tszUrlBuffer, st_ServiceConfig.st_XApi.tszBankUrl, lpszBankNumber);
-	APIClient_Http_Request(_T("GET"), tszUrlBuffer, NULL, NULL, &ptszBodyBuffer, &nBLen);
+	_tcsxcpy(st_BankInfo.tszBankNumber, lpszBankNumber);
+	_xstprintf(tszUrlBuffer, st_ServiceConfig.st_XApi.tszBankUrl, lpszBankNumber);
+	APIClient_Http_Request(_X("GET"), tszUrlBuffer, NULL, NULL, &ptszBodyBuffer, &nBLen);
 	//解析JSON信息
 	if (!ModuleProtocol_Parse_Bank(ptszBodyBuffer, nBLen, &st_BankInfo))
 	{
-		ModuleProtocol_Packet_BankQuery(tszPktBuffer, &nPktLen, NULL, 1001, _T("banknumber is corrent"));
+		ModuleProtocol_Packet_BankQuery(tszPktBuffer, &nPktLen, NULL, 1001, _X("banknumber is corrent"));
 		BaseLib_OperatorMemory_FreeCStyle((XPPMEM)&ptszBodyBuffer);
 		HttpProtocol_Server_SendMsgEx(xhHTTPPacket, tszMsgBuffer, &nMsgLen, &st_HDRParam, tszPktBuffer, nPktLen);
 		XEngine_Network_Send(lpszClientAddr, tszMsgBuffer, nMsgLen);
-		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _T("HTTP客户端:%s,请求的银行卡号码错误:%s"), lpszClientAddr, lpszBankNumber);
-		return XFALSE;
+		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("HTTP客户端:%s,请求的银行卡号码错误:%s"), lpszClientAddr, lpszBankNumber);
+		return FALSE;
 	}
 	BaseLib_OperatorMemory_FreeCStyle((XPPMEM)&ptszBodyBuffer);
 	//查询对应名称
 	if (!ModuleDatabase_Bank_Query(&st_BankInfo))
 	{
-		ModuleProtocol_Packet_BankQuery(tszPktBuffer, &nPktLen, NULL, 1010, _T("not found"));
+		ModuleProtocol_Packet_BankQuery(tszPktBuffer, &nPktLen, NULL, 1010, _X("not found"));
 		HttpProtocol_Server_SendMsgEx(xhHTTPPacket, tszMsgBuffer, &nMsgLen, &st_HDRParam, tszPktBuffer, nPktLen);
 		XEngine_Network_Send(lpszClientAddr, tszMsgBuffer, nMsgLen);
-		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _T("HTTP客户端:%s,请求的银行卡信息没有找到:%s"), lpszClientAddr, lpszBankNumber);
-		return XFALSE;
+		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("HTTP客户端:%s,请求的银行卡信息没有找到:%s"), lpszClientAddr, lpszBankNumber);
+		return FALSE;
 	}
 	//打包发送
 	ModuleProtocol_Packet_BankQuery(tszPktBuffer, &nPktLen, &st_BankInfo);
 	HttpProtocol_Server_SendMsgEx(xhHTTPPacket, tszMsgBuffer, &nMsgLen, &st_HDRParam, tszPktBuffer, nPktLen);
 	XEngine_Network_Send(lpszClientAddr, tszMsgBuffer, nMsgLen);
-	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _T("HTTP客户端:%s,发送银行卡信息获取请求给服务器,查询号码:%s"), lpszClientAddr, lpszBankNumber);
-	return XTRUE;
+	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("HTTP客户端:%s,发送银行卡信息获取请求给服务器,查询号码:%s"), lpszClientAddr, lpszBankNumber);
+	return TRUE;
 }

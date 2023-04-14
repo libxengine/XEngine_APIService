@@ -36,23 +36,23 @@ CModuleDatabase_ShortLink::~CModuleDatabase_ShortLink()
 *********************************************************************/
 XBOOL CModuleDatabase_ShortLink::ModuleDatabase_ShortLink_Init(DATABASE_MYSQL_CONNECTINFO* pSt_DBConnector)
 {
-	DBModule_IsErrorOccur = XFALSE;
+	DBModule_IsErrorOccur = FALSE;
 
 	if (NULL == pSt_DBConnector)
 	{
-		DBModule_IsErrorOccur = XTRUE;
+		DBModule_IsErrorOccur = TRUE;
 		DBModule_dwErrorCode = ERROR_APISERVICE_MODULE_DATABASE_PARAMENT;
-		return XFALSE;
+		return FALSE;
 	}
 	//连接数据库
-	_tcscpy(pSt_DBConnector->tszDBName, _T("XEngine_APISLink"));
+	_tcsxcpy(pSt_DBConnector->tszDBName, _X("XEngine_APISLink"));
 	if (!DataBase_MySQL_Connect(&xhDBSQL, pSt_DBConnector))
 	{
-		DBModule_IsErrorOccur = XTRUE;
+		DBModule_IsErrorOccur = TRUE;
 		DBModule_dwErrorCode = DataBase_GetLastError();
-		return XFALSE;
+		return FALSE;
 	}
-	return XTRUE;
+	return TRUE;
 }
 /********************************************************************
 函数名称：ModuleDatabase_ShortLink_Destory
@@ -64,10 +64,10 @@ XBOOL CModuleDatabase_ShortLink::ModuleDatabase_ShortLink_Init(DATABASE_MYSQL_CO
 *********************************************************************/
 XBOOL CModuleDatabase_ShortLink::ModuleDatabase_ShortLink_Destory()
 {
-	DBModule_IsErrorOccur = XFALSE;
+	DBModule_IsErrorOccur = FALSE;
 
 	DataBase_MySQL_Close(xhDBSQL);
-	return XTRUE;
+	return TRUE;
 }
 /********************************************************************
 函数名称：ModuleDatabase_ShortLink_Insert
@@ -84,25 +84,25 @@ XBOOL CModuleDatabase_ShortLink::ModuleDatabase_ShortLink_Destory()
 *********************************************************************/
 XBOOL CModuleDatabase_ShortLink::ModuleDatabase_ShortLink_Insert(XENGINE_SHORTLINK* pSt_SLinkInfo)
 {
-	DBModule_IsErrorOccur = XFALSE;
+	DBModule_IsErrorOccur = FALSE;
 
 	if (NULL == pSt_SLinkInfo)
 	{
-		DBModule_IsErrorOccur = XTRUE;
+		DBModule_IsErrorOccur = TRUE;
 		DBModule_dwErrorCode = ERROR_APISERVICE_MODULE_DATABASE_PARAMENT;
-		return XFALSE;
+		return FALSE;
 	}
 	XCHAR tszSQLStatement[2024];
 	memset(tszSQLStatement, '\0', sizeof(tszSQLStatement));
 
-	_stprintf(tszSQLStatement, _T("INSERT INTO `XEngine_ShortLink` (tszFullUrl,tszShortUrl,tszKeyUrl,tszMapUrl,tszCreateTime) VALUES('%s','%s','%s','%s','%s')"), pSt_SLinkInfo->tszFullUrl, pSt_SLinkInfo->tszShotUrl, pSt_SLinkInfo->tszKeyUrl, pSt_SLinkInfo->tszMapUrl, pSt_SLinkInfo->tszCreateTime);
+	_xstprintf(tszSQLStatement, _X("INSERT INTO `XEngine_ShortLink` (tszFullUrl,tszShortUrl,tszKeyUrl,tszMapUrl,tszCreateTime) VALUES('%s','%s','%s','%s','%s')"), pSt_SLinkInfo->tszFullUrl, pSt_SLinkInfo->tszShotUrl, pSt_SLinkInfo->tszKeyUrl, pSt_SLinkInfo->tszMapUrl, pSt_SLinkInfo->tszCreateTime);
 	if (!DataBase_MySQL_Execute(xhDBSQL, tszSQLStatement))
 	{
-		DBModule_IsErrorOccur = XTRUE;
+		DBModule_IsErrorOccur = TRUE;
 		DBModule_dwErrorCode = DataBase_GetLastError();
-		return XFALSE;
+		return FALSE;
 	}
-	return XTRUE;
+	return TRUE;
 }
 /********************************************************************
 函数名称：ModuleDatabase_ShortLink_Query
@@ -119,13 +119,13 @@ XBOOL CModuleDatabase_ShortLink::ModuleDatabase_ShortLink_Insert(XENGINE_SHORTLI
 *********************************************************************/
 XBOOL CModuleDatabase_ShortLink::ModuleDatabase_ShortLink_Query(XENGINE_SHORTLINK* pSt_SLinkInfo)
 {
-	DBModule_IsErrorOccur = XFALSE;
+	DBModule_IsErrorOccur = FALSE;
 
 	if ((NULL == pSt_SLinkInfo))
 	{
-		DBModule_IsErrorOccur = XTRUE;
+		DBModule_IsErrorOccur = TRUE;
 		DBModule_dwErrorCode = ERROR_APISERVICE_MODULE_DATABASE_PARAMENT;
-		return XFALSE;
+		return FALSE;
 	}
 	//查询
 	XNETHANDLE xhTable = 0;
@@ -135,18 +135,18 @@ XBOOL CModuleDatabase_ShortLink::ModuleDatabase_ShortLink_Query(XENGINE_SHORTLIN
 	XCHAR tszSQLStatement[1024];
 	memset(tszSQLStatement, '\0', sizeof(tszSQLStatement));
 	//名称为,消息名为必填
-	_stprintf_s(tszSQLStatement, _T("SELECT * FROM `XEngine_ShortLink` WHERE tszMapUrl = '%s'"), pSt_SLinkInfo->tszMapUrl);
+	_xstprintf(tszSQLStatement, _X("SELECT * FROM `XEngine_ShortLink` WHERE tszMapUrl = '%s'"), pSt_SLinkInfo->tszMapUrl);
 	if (!DataBase_MySQL_ExecuteQuery(xhDBSQL, &xhTable, tszSQLStatement, &nllLine, &nllRow))
 	{
-		DBModule_IsErrorOccur = XTRUE;
+		DBModule_IsErrorOccur = TRUE;
 		DBModule_dwErrorCode = DataBase_GetLastError();
-		return XFALSE;
+		return FALSE;
 	}
 	if (nllLine <= 0)
 	{
-		DBModule_IsErrorOccur = XTRUE;
+		DBModule_IsErrorOccur = TRUE;
 		DBModule_dwErrorCode = ERROR_APISERVICE_MODULE_DATABASE_NOTFOUND;
-		return XFALSE;
+		return FALSE;
 	}
 	for (__int64u i = 0; i < nllLine; i++)
 	{
@@ -154,31 +154,31 @@ XBOOL CModuleDatabase_ShortLink::ModuleDatabase_ShortLink_Query(XENGINE_SHORTLIN
 
 		if (NULL != pptszResult[0])
 		{
-			pSt_SLinkInfo->nID = _ttoi(pptszResult[0]);
+			pSt_SLinkInfo->nID = _ttxoi(pptszResult[0]);
 		}
 		if (NULL != pptszResult[1])
 		{
-			_tcscpy(pSt_SLinkInfo->tszFullUrl, pptszResult[1]);
+			_tcsxcpy(pSt_SLinkInfo->tszFullUrl, pptszResult[1]);
 		}
 		if (NULL != pptszResult[2])
 		{
-			_tcscpy(pSt_SLinkInfo->tszShotUrl, pptszResult[2]);
+			_tcsxcpy(pSt_SLinkInfo->tszShotUrl, pptszResult[2]);
 		}
 		if (NULL != pptszResult[3])
 		{
-			_tcscpy(pSt_SLinkInfo->tszKeyUrl, pptszResult[3]);
+			_tcsxcpy(pSt_SLinkInfo->tszKeyUrl, pptszResult[3]);
 		}
 		if (NULL != pptszResult[4])
 		{
-			_tcscpy(pSt_SLinkInfo->tszMapUrl, pptszResult[4]);
+			_tcsxcpy(pSt_SLinkInfo->tszMapUrl, pptszResult[4]);
 		}
 		if (NULL != pptszResult[5])
 		{
-			_tcscpy(pSt_SLinkInfo->tszCreateTime, pptszResult[5]);
+			_tcsxcpy(pSt_SLinkInfo->tszCreateTime, pptszResult[5]);
 		}
 	}
 	DataBase_MySQL_FreeResult(xhDBSQL, xhTable);
-	return XTRUE;
+	return TRUE;
 }
 /********************************************************************
 函数名称：ModuleDatabase_ShortLink_Delete
@@ -195,31 +195,31 @@ XBOOL CModuleDatabase_ShortLink::ModuleDatabase_ShortLink_Query(XENGINE_SHORTLIN
 *********************************************************************/
 XBOOL CModuleDatabase_ShortLink::ModuleDatabase_ShortLink_Delete(XENGINE_SHORTLINK* pSt_SLinkInfo)
 {
-	DBModule_IsErrorOccur = XFALSE;
+	DBModule_IsErrorOccur = FALSE;
 
 	if (NULL == pSt_SLinkInfo)
 	{
-		DBModule_IsErrorOccur = XTRUE;
+		DBModule_IsErrorOccur = TRUE;
 		DBModule_dwErrorCode = ERROR_APISERVICE_MODULE_DATABASE_PARAMENT;
-		return XFALSE;
+		return FALSE;
 	}
 	XCHAR tszSQLStatement[1024];
 	memset(tszSQLStatement, '\0', sizeof(tszSQLStatement));
 
-	if (_tcslen(pSt_SLinkInfo->tszFullUrl) > 0)
+	if (_tcsxlen(pSt_SLinkInfo->tszFullUrl) > 0)
 	{
-		_stprintf(tszSQLStatement, _T("DELETE FROM `XEngine_ShortLink` WHERE tszFullUrl = '%s'"), pSt_SLinkInfo->tszFullUrl);
+		_xstprintf(tszSQLStatement, _X("DELETE FROM `XEngine_ShortLink` WHERE tszFullUrl = '%s'"), pSt_SLinkInfo->tszFullUrl);
 	}
 	else
 	{
-		_stprintf(tszSQLStatement, _T("DELETE FROM `XEngine_ShortLink` WHERE tszMapUrl = '%s'"), pSt_SLinkInfo->tszMapUrl);
+		_xstprintf(tszSQLStatement, _X("DELETE FROM `XEngine_ShortLink` WHERE tszMapUrl = '%s'"), pSt_SLinkInfo->tszMapUrl);
 	}
 	
 	if (!DataBase_MySQL_Execute(xhDBSQL, tszSQLStatement))
 	{
-		DBModule_IsErrorOccur = XTRUE;
+		DBModule_IsErrorOccur = TRUE;
 		DBModule_dwErrorCode = DataBase_GetLastError();
-		return XFALSE;
+		return FALSE;
 	}
-	return XTRUE;
+	return TRUE;
 }

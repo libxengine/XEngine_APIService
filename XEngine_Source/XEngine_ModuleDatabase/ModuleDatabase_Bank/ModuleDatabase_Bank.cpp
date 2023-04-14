@@ -36,23 +36,23 @@ CModuleDatabase_Bank::~CModuleDatabase_Bank()
 *********************************************************************/
 XBOOL CModuleDatabase_Bank::ModuleDatabase_Bank_Init(DATABASE_MYSQL_CONNECTINFO* pSt_DBConnector)
 {
-	DBModule_IsErrorOccur = XFALSE;
+	DBModule_IsErrorOccur = FALSE;
 
 	if (NULL == pSt_DBConnector)
 	{
-		DBModule_IsErrorOccur = XTRUE;
+		DBModule_IsErrorOccur = TRUE;
 		DBModule_dwErrorCode = ERROR_APISERVICE_MODULE_DATABASE_PARAMENT;
-		return XFALSE;
+		return FALSE;
 	}
 	//连接数据库
-	_tcscpy(pSt_DBConnector->tszDBName, _T("XEngine_APIInfo"));
+	_tcsxcpy(pSt_DBConnector->tszDBName, _X("XEngine_APIInfo"));
 	if (!DataBase_MySQL_Connect(&xhDBSQL, pSt_DBConnector))
 	{
-		DBModule_IsErrorOccur = XTRUE;
+		DBModule_IsErrorOccur = TRUE;
 		DBModule_dwErrorCode = DataBase_GetLastError();
-		return XFALSE;
+		return FALSE;
 	}
-	return XTRUE;
+	return TRUE;
 }
 /********************************************************************
 函数名称：ModuleDatabase_Bank_Destory
@@ -64,10 +64,10 @@ XBOOL CModuleDatabase_Bank::ModuleDatabase_Bank_Init(DATABASE_MYSQL_CONNECTINFO*
 *********************************************************************/
 XBOOL CModuleDatabase_Bank::ModuleDatabase_Bank_Destory()
 {
-	DBModule_IsErrorOccur = XFALSE;
+	DBModule_IsErrorOccur = FALSE;
 
 	DataBase_MySQL_Close(xhDBSQL);
-	return XTRUE;
+	return TRUE;
 }
 /********************************************************************
 函数名称：ModuleDatabase_Bank_Query
@@ -84,13 +84,13 @@ XBOOL CModuleDatabase_Bank::ModuleDatabase_Bank_Destory()
 *********************************************************************/
 XBOOL CModuleDatabase_Bank::ModuleDatabase_Bank_Query(XENGINE_BANKINFO* pSt_BankInfo)
 {
-    DBModule_IsErrorOccur = XFALSE;
+    DBModule_IsErrorOccur = FALSE;
 
     if (NULL == pSt_BankInfo)
     {
-        DBModule_IsErrorOccur = XTRUE;
+        DBModule_IsErrorOccur = TRUE;
         DBModule_dwErrorCode = ERROR_APISERVICE_MODULE_DATABASE_PARAMENT;
-        return XFALSE;
+        return FALSE;
     }
     //查询
 	__int64u nLine = 0;
@@ -99,22 +99,22 @@ XBOOL CModuleDatabase_Bank::ModuleDatabase_Bank_Query(XENGINE_BANKINFO* pSt_Bank
     XCHAR tszSQLStatement[1024];
 
     memset(tszSQLStatement, '\0', sizeof(tszSQLStatement));
-	_stprintf(tszSQLStatement, _T("SELECT * FROM `BankList` WHERE tszBankAbridge = '%s'"), pSt_BankInfo->tszBankAbridge);
+	_xstprintf(tszSQLStatement, _X("SELECT * FROM `BankList` WHERE tszBankAbridge = '%s'"), pSt_BankInfo->tszBankAbridge);
 	if (!DataBase_MySQL_ExecuteQuery(xhDBSQL, &xhTable, tszSQLStatement, &nLine, &nRow))
 	{
-		DBModule_IsErrorOccur = XTRUE;
+		DBModule_IsErrorOccur = TRUE;
 		DBModule_dwErrorCode = DataBase_GetLastError();
-		return XFALSE;
+		return FALSE;
 	}
 	if (nLine <= 0)
 	{
-		DBModule_IsErrorOccur = XTRUE;
+		DBModule_IsErrorOccur = TRUE;
 		DBModule_dwErrorCode = ERROR_APISERVICE_MODULE_DATABASE_NOTFOUND;
-		return XFALSE;
+		return FALSE;
 	}
 	XCHAR** pptszResult = DataBase_MySQL_GetResult(xhDBSQL, xhTable);
-	_tcscpy(pSt_BankInfo->tszBankName, pptszResult[2]);
+	_tcsxcpy(pSt_BankInfo->tszBankName, pptszResult[2]);
 
 	DataBase_MySQL_FreeResult(xhDBSQL, xhTable);
-	return XTRUE;
+	return TRUE;
 }

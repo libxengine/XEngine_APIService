@@ -36,33 +36,33 @@ CModulePlugin_DBPhone::~CModulePlugin_DBPhone()
 *********************************************************************/
 XBOOL CModulePlugin_DBPhone::ModuleDatabase_Phone_Init(LPCXSTR lpszSQLFile)
 {
-	Phone_IsErrorOccur = XFALSE;
+	Phone_IsErrorOccur = FALSE;
 
 	if (NULL == lpszSQLFile)
 	{
-		Phone_IsErrorOccur = XTRUE;
+		Phone_IsErrorOccur = TRUE;
 		Phone_dwErrorCode = ERROR_XENGINE_APISERVICE_PLUGIN_MODULE_PHONE_PARAMENT;
-		return XFALSE;
+		return FALSE;
 	}
 	//打开数据库
-	FILE* pSt_File = _tfopen(lpszSQLFile, _T("rb"));
+	FILE* pSt_File = _xtfopen(lpszSQLFile, _X("rb"));
 	if (NULL == pSt_File)
 	{
-		Phone_IsErrorOccur = XTRUE;
+		Phone_IsErrorOccur = TRUE;
 		Phone_dwErrorCode = ERROR_XENGINE_APISERVICE_PLUGIN_MODULE_PHONE_NOTFOUND;
-		return XFALSE;
+		return FALSE;
 	}
 	//申请内存
 	ptszMsgBuffer = (XCHAR*)malloc(XENGINE_APISERVICE_DATABASE_PHONE_BUFFER_SIZE);
 	if (NULL == ptszMsgBuffer)
 	{
-		Phone_IsErrorOccur = XTRUE;
+		Phone_IsErrorOccur = TRUE;
 		Phone_dwErrorCode = ERROR_XENGINE_APISERVICE_PLUGIN_MODULE_PHONE_MALLOC;
-		return XFALSE;
+		return FALSE;
 	}
 	memset(ptszMsgBuffer, '\0', XENGINE_APISERVICE_DATABASE_PHONE_BUFFER_SIZE);
 	//读取内容
-	while (XTRUE)
+	while (TRUE)
 	{
 		int nRet = fread(ptszMsgBuffer + nFLen, 1, 2048, pSt_File);
 		if (nRet <= 0)
@@ -74,7 +74,7 @@ XBOOL CModulePlugin_DBPhone::ModuleDatabase_Phone_Init(LPCXSTR lpszSQLFile)
 	fclose(pSt_File);
 	memcpy(&st_PhoneHdr, ptszMsgBuffer, sizeof(XENGINE_DBPHONEHDR));
 	nCount = (nFLen - st_PhoneHdr.nOffset) / XENGINE_APISERVICE_DATABASE_PHONE_INDEX_LEN;
-	return XTRUE;
+	return TRUE;
 }
 /********************************************************************
 函数名称：ModuleDatabase_Phone_Destory
@@ -86,11 +86,11 @@ XBOOL CModulePlugin_DBPhone::ModuleDatabase_Phone_Init(LPCXSTR lpszSQLFile)
 *********************************************************************/
 XBOOL CModulePlugin_DBPhone::ModuleDatabase_Phone_Destory()
 {
-	Phone_IsErrorOccur = XFALSE;
+	Phone_IsErrorOccur = FALSE;
 
 	free(ptszMsgBuffer);
 	ptszMsgBuffer = NULL;
-	return XTRUE;
+	return TRUE;
 }
 /********************************************************************
 函数名称：ModuleDatabase_Phone_Query
@@ -112,15 +112,15 @@ XBOOL CModulePlugin_DBPhone::ModuleDatabase_Phone_Destory()
 *********************************************************************/
 XBOOL CModulePlugin_DBPhone::ModuleDatabase_Phone_Query(LPCXSTR lpszPhoneNumber, XENGINE_PHONEINFO* pSt_PhoneInfo)
 {
-	Phone_IsErrorOccur = XFALSE;
+	Phone_IsErrorOccur = FALSE;
 
 	if ((NULL == lpszPhoneNumber) || (NULL == pSt_PhoneInfo))
 	{
-		Phone_IsErrorOccur = XTRUE;
+		Phone_IsErrorOccur = TRUE;
 		Phone_dwErrorCode = ERROR_XENGINE_APISERVICE_PLUGIN_MODULE_PHONE_PARAMENT;
-		return XFALSE;
+		return FALSE;
 	}
-	size_t nPLen = _tcslen(lpszPhoneNumber);
+	size_t nPLen = _tcsxlen(lpszPhoneNumber);
 	size_t nPhone = 0;
 	//不能超过7
 	if (nPLen > 7)
@@ -129,11 +129,11 @@ XBOOL CModulePlugin_DBPhone::ModuleDatabase_Phone_Query(LPCXSTR lpszPhoneNumber,
 		memset(tszPhone, '\0', sizeof(tszPhone));
 
 		memcpy(tszPhone, lpszPhoneNumber, 7);
-		nPhone = _ttoi(tszPhone);
+		nPhone = _ttxoi(tszPhone);
 	}
 	else
 	{
-		nPhone = _ttoi(lpszPhoneNumber);
+		nPhone = _ttxoi(lpszPhoneNumber);
 	}
 	
 	size_t nLeft = 0;
@@ -162,7 +162,7 @@ XBOOL CModulePlugin_DBPhone::ModuleDatabase_Phone_Query(LPCXSTR lpszPhoneNumber,
 		else
 		{
 			int i = 0;
-			while (XTRUE)
+			while (TRUE)
 			{
 				if (ptszMsgBuffer[i + st_DBRecord.nOffset] == '\0')
 				{
@@ -174,12 +174,12 @@ XBOOL CModulePlugin_DBPhone::ModuleDatabase_Phone_Query(LPCXSTR lpszPhoneNumber,
 			//转换数据
 			if (!ModuleDatabase_Phone_Convert(ptszMsgBuffer + st_DBRecord.nOffset, i, pSt_PhoneInfo))
 			{
-				return XFALSE;
+				return FALSE;
 			}
 			break;
 		}
 	}	
-	return XTRUE;
+	return TRUE;
 }
 //////////////////////////////////////////////////////////////////////////
 //                             保护函数
@@ -209,47 +209,47 @@ XBOOL CModulePlugin_DBPhone::ModuleDatabase_Phone_Query(LPCXSTR lpszPhoneNumber,
 *********************************************************************/
 XBOOL CModulePlugin_DBPhone::ModuleDatabase_Phone_Convert(LPCXSTR lpszPhoneInfo, int nMsgLen, XENGINE_PHONEINFO* pSt_PhoneInfo)
 {
-	Phone_IsErrorOccur = XFALSE;
+	Phone_IsErrorOccur = FALSE;
 
 	XCHAR tszMsgBuffer[128];
 	memset(tszMsgBuffer, '\0', sizeof(tszMsgBuffer));
 	memcpy(tszMsgBuffer, lpszPhoneInfo, nMsgLen);
 	//省
-	XCHAR* ptszTokStr = _tcstok(tszMsgBuffer, _T("|"));
+	XCHAR* ptszTokStr = _tcsxtok(tszMsgBuffer, _X("|"));
 	if (NULL == ptszTokStr)
 	{
-		Phone_IsErrorOccur = XTRUE;
+		Phone_IsErrorOccur = TRUE;
 		Phone_dwErrorCode = ERROR_XENGINE_APISERVICE_PLUGIN_MODULE_PHONE_NOTFOUND;
-		return XFALSE;
+		return FALSE;
 	}
-	_tcscpy(pSt_PhoneInfo->tszProvincer, ptszTokStr);
+	_tcsxcpy(pSt_PhoneInfo->tszProvincer, ptszTokStr);
 	//市区
-	ptszTokStr = _tcstok(NULL, _T("|"));
+	ptszTokStr = _tcsxtok(NULL, _X("|"));
 	if (NULL == ptszTokStr)
 	{
-		Phone_IsErrorOccur = XTRUE;
+		Phone_IsErrorOccur = TRUE;
 		Phone_dwErrorCode = ERROR_XENGINE_APISERVICE_PLUGIN_MODULE_PHONE_NOTFOUND;
-		return XFALSE;
+		return FALSE;
 	}
-	_tcscpy(pSt_PhoneInfo->tszCity, ptszTokStr);
+	_tcsxcpy(pSt_PhoneInfo->tszCity, ptszTokStr);
 	//邮编
-	ptszTokStr = _tcstok(NULL, _T("|"));
+	ptszTokStr = _tcsxtok(NULL, _X("|"));
 	if (NULL == ptszTokStr)
 	{
-		Phone_IsErrorOccur = XTRUE;
+		Phone_IsErrorOccur = TRUE;
 		Phone_dwErrorCode = ERROR_XENGINE_APISERVICE_PLUGIN_MODULE_PHONE_NOTFOUND;
-		return XFALSE;
+		return FALSE;
 	}
-	pSt_PhoneInfo->nZipCode = _ttoi(ptszTokStr);
+	pSt_PhoneInfo->nZipCode = _ttxoi(ptszTokStr);
 	//区号
-	ptszTokStr = _tcstok(NULL, _T("|"));
+	ptszTokStr = _tcsxtok(NULL, _X("|"));
 	if (NULL == ptszTokStr)
 	{
-		Phone_IsErrorOccur = XTRUE;
+		Phone_IsErrorOccur = TRUE;
 		Phone_dwErrorCode = ERROR_XENGINE_APISERVICE_PLUGIN_MODULE_PHONE_NOTFOUND;
-		return XFALSE;
+		return FALSE;
 	}
-	pSt_PhoneInfo->nAreaCode = _ttoi(ptszTokStr);
+	pSt_PhoneInfo->nAreaCode = _ttxoi(ptszTokStr);
 
-	return XTRUE;
+	return TRUE;
 }

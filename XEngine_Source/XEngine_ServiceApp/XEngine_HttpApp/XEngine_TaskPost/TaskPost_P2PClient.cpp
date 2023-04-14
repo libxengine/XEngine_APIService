@@ -2,7 +2,7 @@
 
 void CALLBACK HTTPTask_TastPost_P2PCallback(XENGINE_P2XPPEER_PROTOCOL* pSt_P2PProtocol, XPVOID lParam)
 {
-	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_WARN, _T("HTTP客户端:公网:%s,私网:%s,连接:%s P2P离开"), pSt_P2PProtocol->tszPublicAddr, pSt_P2PProtocol->tszPrivateAddr, pSt_P2PProtocol->tszConnectAddr);
+	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_WARN, _X("HTTP客户端:公网:%s,私网:%s,连接:%s P2P离开"), pSt_P2PProtocol->tszPublicAddr, pSt_P2PProtocol->tszPrivateAddr, pSt_P2PProtocol->tszConnectAddr);
 }
 XBOOL HTTPTask_TastPost_P2PClient(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer, int nMsgLen, int unOperatorCode)
 {
@@ -17,7 +17,7 @@ XBOOL HTTPTask_TastPost_P2PClient(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer,
 	memset(&st_HDRParam, '\0', sizeof(RFCCOMPONENTS_HTTP_HDRPARAM));
 
 	st_HDRParam.nHttpCode = 200; //HTTP CODE码
-	st_HDRParam.bIsClose = XTRUE; //收到回复后就关闭
+	st_HDRParam.bIsClose = TRUE; //收到回复后就关闭
 	if (XENGINE_COMMUNICATION_PROTOCOL_OPERATOR_CODE_P2XP_REQLOGIN == unOperatorCode)
 	{
 		XENGINE_P2XP_PEERINFO st_ClientPeer;
@@ -28,13 +28,13 @@ XBOOL HTTPTask_TastPost_P2PClient(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer,
 			ModuleProtocol_Packet_Common(tszRVBuffer, &nRVLen, 400, "协议错误");
 			HttpProtocol_Server_SendMsgEx(xhHTTPPacket, tszSDBuffer, &nSDLen, &st_HDRParam, tszRVBuffer, nRVLen);
 			XEngine_Network_Send(lpszClientAddr, tszSDBuffer, nSDLen);
-			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _T("HTTP客户端:%s,处理登录错误,解析协议失败,错误码:%lX"), lpszClientAddr, ModuleProtocol_GetLastError());
-			return XFALSE;
+			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("HTTP客户端:%s,处理登录错误,解析协议失败,错误码:%lX"), lpszClientAddr, ModuleProtocol_GetLastError());
+			return FALSE;
 		}
 		//如果没有填充公用地址,用他的连接地址代替,外网服务器都可以这样做
-		if (_tcslen(st_ClientPeer.st_PeerAddr.tszPublicAddr) <= 0)
+		if (_tcsxlen(st_ClientPeer.st_PeerAddr.tszPublicAddr) <= 0)
 		{
-			_tcscpy(st_ClientPeer.st_PeerAddr.tszPublicAddr, lpszClientAddr);
+			_tcsxcpy(st_ClientPeer.st_PeerAddr.tszPublicAddr, lpszClientAddr);
 			BaseLib_OperatorIPAddr_SegAddr(st_ClientPeer.st_PeerAddr.tszPublicAddr, NULL);
 		}
 		//获取外网IP所在位置
@@ -42,20 +42,20 @@ XBOOL HTTPTask_TastPost_P2PClient(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer,
 
 		st_ClientPeer.st_PeerTimer.dwUserTime = time(NULL);
 		st_ClientPeer.st_PeerTimer.dwKeepAlive = time(NULL);
-		st_ClientPeer.bIsLogin = XTRUE;
-		_tcscpy(st_ClientPeer.st_PeerAddr.tszConnectAddr, lpszClientAddr);
+		st_ClientPeer.bIsLogin = TRUE;
+		_tcsxcpy(st_ClientPeer.st_PeerAddr.tszConnectAddr, lpszClientAddr);
 		if (!ModuleHelp_P2PClient_Add(&st_ClientPeer))
 		{
 			ModuleProtocol_Packet_Common(tszRVBuffer, &nRVLen, 500, "内部错误");
 			HttpProtocol_Server_SendMsgEx(xhHTTPPacket, tszSDBuffer, &nSDLen, &st_HDRParam, tszRVBuffer, nRVLen);
 			XEngine_Network_Send(lpszClientAddr, tszSDBuffer, nSDLen);
-			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _T("HTTP客户端:%s,处理登录错误,设置用户信息失败,错误码:%lX"), lpszClientAddr, ModuleHelp_GetLastError());
-			return XFALSE;
+			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("HTTP客户端:%s,处理登录错误,设置用户信息失败,错误码:%lX"), lpszClientAddr, ModuleHelp_GetLastError());
+			return FALSE;
 		}
 		ModuleProtocol_Packet_Common(tszRVBuffer, &nRVLen);
 		HttpProtocol_Server_SendMsgEx(xhHTTPPacket, tszSDBuffer, &nSDLen, &st_HDRParam, tszRVBuffer, nRVLen);
 		XEngine_Network_Send(lpszClientAddr, tszSDBuffer, nSDLen);
-		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _T("HTTP客户端:%s,处理用户登录请求成功,用户名:%s"), lpszClientAddr, st_ClientPeer.st_PeerAddr.tszUserName);
+		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("HTTP客户端:%s,处理用户登录请求成功,用户名:%s"), lpszClientAddr, st_ClientPeer.st_PeerAddr.tszUserName);
 	}
 	else if (XENGINE_COMMUNICATION_PROTOCOL_OPERATOR_CODE_P2XP_REQLANLIST == unOperatorCode)
 	{
@@ -67,11 +67,11 @@ XBOOL HTTPTask_TastPost_P2PClient(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer,
 			ModuleProtocol_Packet_Common(tszRVBuffer, &nRVLen, 400, "协议错误");
 			HttpProtocol_Server_SendMsgEx(xhHTTPPacket, tszSDBuffer, &nSDLen, &st_HDRParam, tszRVBuffer, nRVLen);
 			XEngine_Network_Send(lpszClientAddr, tszSDBuffer, nSDLen);
-			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _T("HTTP客户端:%s,列表请求失败,协议解析错误,错误码:%lX"), lpszClientAddr, ModuleProtocol_GetLastError());
-			return XFALSE;
+			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("HTTP客户端:%s,列表请求失败,协议解析错误,错误码:%lX"), lpszClientAddr, ModuleProtocol_GetLastError());
+			return FALSE;
 		}
 		//请求同步列表
-		if (_tcslen(st_P2PProtocol.tszPrivateAddr) > 0)
+		if (_tcsxlen(st_P2PProtocol.tszPrivateAddr) > 0)
 		{
 			int nListCount = 0;
 			XENGINE_P2XPPEER_PROTOCOL** ppSt_ListClients;
@@ -80,14 +80,14 @@ XBOOL HTTPTask_TastPost_P2PClient(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer,
 				ModuleProtocol_Packet_Common(tszRVBuffer, &nRVLen, 500, "内部错误");
 				HttpProtocol_Server_SendMsgEx(xhHTTPPacket, tszSDBuffer, &nSDLen, &st_HDRParam, tszRVBuffer, nRVLen);
 				XEngine_Network_Send(lpszClientAddr, tszSDBuffer, nSDLen);
-				XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _T("HTTP客户端:%s,列表请求失败,请求同步局域网列表失败,公有地址:%s,私有地址:%s,错误码:%lX"), lpszClientAddr, st_P2PProtocol.tszPublicAddr, st_P2PProtocol.tszPrivateAddr, ModuleHelp_GetLastError());
-				return XFALSE;
+				XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("HTTP客户端:%s,列表请求失败,请求同步局域网列表失败,公有地址:%s,私有地址:%s,错误码:%lX"), lpszClientAddr, st_P2PProtocol.tszPublicAddr, st_P2PProtocol.tszPrivateAddr, ModuleHelp_GetLastError());
+				return FALSE;
 			}
 			ModuleProtocol_Packet_P2PLan(tszRVBuffer, &nRVLen, &ppSt_ListClients, nListCount);
 			HttpProtocol_Server_SendMsgEx(xhHTTPPacket, tszSDBuffer, &nSDLen, &st_HDRParam, tszRVBuffer, nRVLen);
 			XEngine_Network_Send(lpszClientAddr, tszSDBuffer, nSDLen);
 			BaseLib_OperatorMemory_Free((XPPPMEM)&ppSt_ListClients, nListCount);
-			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _T("HTTP客户端:%s,请求同步局域网列表成功,公有地址:%s,私有地址:%s"), lpszClientAddr, st_P2PProtocol.tszPublicAddr, st_P2PProtocol.tszPrivateAddr);
+			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("HTTP客户端:%s,请求同步局域网列表成功,公有地址:%s,私有地址:%s"), lpszClientAddr, st_P2PProtocol.tszPublicAddr, st_P2PProtocol.tszPrivateAddr);
 		}
 		else
 		{
@@ -103,7 +103,7 @@ XBOOL HTTPTask_TastPost_P2PClient(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer,
 					XENGINE_P2XPPEER_PROTOCOL** ppSt_ListClients;
 					memset(st_P2PProtocol.tszPrivateAddr, '\0', sizeof(st_P2PProtocol.tszPrivateAddr));
 
-					_tcscpy(st_P2PProtocol.tszPrivateAddr, ppszClientList[i]);
+					_tcsxcpy(st_P2PProtocol.tszPrivateAddr, ppszClientList[i]);
 
 					if (ModuleHelp_P2PClient_GetLan(&st_P2PProtocol, &ppSt_ListClients, &nLanCount))
 					{
@@ -119,7 +119,7 @@ XBOOL HTTPTask_TastPost_P2PClient(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer,
 			ModuleProtocol_Packet_P2PWLan(tszRVBuffer, &nRVLen, &stl_ListClient);
 			HttpProtocol_Server_SendMsgEx(xhHTTPPacket, tszSDBuffer, &nSDLen, &st_HDRParam, tszRVBuffer, nRVLen);
 			XEngine_Network_Send(lpszClientAddr, tszSDBuffer, nSDLen);
-			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _T("HTTP客户端:%s,请求同步公有局域网列表成功,公有地址:%s"), lpszClientAddr, st_P2PProtocol.tszPublicAddr);
+			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("HTTP客户端:%s,请求同步公有局域网列表成功,公有地址:%s"), lpszClientAddr, st_P2PProtocol.tszPublicAddr);
 		}
 	}
 	else
@@ -127,7 +127,7 @@ XBOOL HTTPTask_TastPost_P2PClient(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer,
 		st_HDRParam.nHttpCode = 404;
 		HttpProtocol_Server_SendMsgEx(xhHTTPPacket, tszSDBuffer, &nSDLen, &st_HDRParam);
 		XEngine_Network_Send(lpszClientAddr, tszSDBuffer, nSDLen);
-		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_WARN, _T("客户端:%s,请求了一条未知的子协议：%lX"), lpszClientAddr, unOperatorCode);
+		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_WARN, _X("客户端:%s,请求了一条未知的子协议：%lX"), lpszClientAddr, unOperatorCode);
 	}
-	return XTRUE;
+	return TRUE;
 }

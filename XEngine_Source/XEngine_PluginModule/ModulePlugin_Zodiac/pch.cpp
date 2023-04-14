@@ -11,7 +11,7 @@
 //    Purpose:     导出实现
 //    History:
 *********************************************************************/
-XBOOL Zodiac_IsErrorOccur = XFALSE;
+XBOOL Zodiac_IsErrorOccur = FALSE;
 XLONG Zodiac_dwErrorCode = 0;
 //////////////////////////////////////////////////////////////////////////
 CPlugin_Zodiac m_PluginZodiac;

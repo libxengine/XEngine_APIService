@@ -35,9 +35,9 @@ CPlugin_BMIndex::~CPlugin_BMIndex()
 *********************************************************************/
 XBOOL CPlugin_BMIndex::PluginCore_Init(XPVOID lParam)
 {
-	BMIndex_IsErrorOccur = XFALSE;
+	BMIndex_IsErrorOccur = FALSE;
 
-    return XTRUE;
+    return TRUE;
 }
 /********************************************************************
 函数名称：PluginCore_UnInit
@@ -49,7 +49,7 @@ XBOOL CPlugin_BMIndex::PluginCore_Init(XPVOID lParam)
 *********************************************************************/
 void CPlugin_BMIndex::PluginCore_UnInit()
 {
-	BMIndex_IsErrorOccur = XFALSE;
+	BMIndex_IsErrorOccur = FALSE;
 }
 /********************************************************************
 函数名称：PluginCore_Call
@@ -61,13 +61,13 @@ void CPlugin_BMIndex::PluginCore_UnInit()
 *********************************************************************/
 XBOOL CPlugin_BMIndex::PluginCore_Call(XCHAR*** pppHDRList, int nListCount, int* pInt_HTTPCode, XCHAR* ptszMsgBuffer, int* pInt_MsgLen, LPCXSTR lpszMsgBuffer, int nMsgLen)
 {
-	BMIndex_IsErrorOccur = XFALSE;
+	BMIndex_IsErrorOccur = FALSE;
 
 	if ((NULL == pInt_HTTPCode) || (NULL == ptszMsgBuffer) || (NULL == pInt_MsgLen))
 	{
-		BMIndex_IsErrorOccur = XTRUE;
+		BMIndex_IsErrorOccur = TRUE;
 		BMIndex_dwErrorCode = ERROR_XENGINE_APISERVICE_PLUGIN_MODULE_BMINDEX_PARAMENT;
-		return XFALSE;
+		return FALSE;
 	}
 	XCHAR tszKeyName[128];
 	XCHAR tszParamHigh[128];
@@ -82,21 +82,21 @@ XBOOL CPlugin_BMIndex::PluginCore_Call(XCHAR*** pppHDRList, int nListCount, int*
 	Plugin_Timezone_BMIndex(tszParamHigh, tszParamWeight, ptszMsgBuffer, pInt_MsgLen);
 	*pInt_HTTPCode = 200;
 	
-	return XTRUE;
+	return TRUE;
 }
 //////////////////////////////////////////////////////////////////////////
 //                       保护函数
 //////////////////////////////////////////////////////////////////////////
 XBOOL CPlugin_BMIndex::Plugin_Timezone_BMIndex(LPCXSTR lpszHigh, LPCXSTR lpszWeight, XCHAR* ptszMsgBufer, int* pInt_Len)
 {
-	BMIndex_IsErrorOccur = XFALSE;
+	BMIndex_IsErrorOccur = FALSE;
 
 	Json::Value st_JsonRoot;
 	Json::Value st_JsonObject;
 	Json::StreamWriterBuilder st_JsonBuilder;
 
-	double dlHigh = _ttof(lpszHigh);
-	double dlWeight = _ttof(lpszWeight);
+	double dlHigh = _ttxof(lpszHigh);
+	double dlWeight = _ttxof(lpszWeight);
 	double dlValue = dlWeight / (dlHigh * dlHigh);
 	if (dlValue < 18.5)
 	{
@@ -133,5 +133,5 @@ XBOOL CPlugin_BMIndex::Plugin_Timezone_BMIndex(LPCXSTR lpszHigh, LPCXSTR lpszWei
 
 	*pInt_Len = Json::writeString(st_JsonBuilder, st_JsonRoot).length();
 	memcpy(ptszMsgBufer, Json::writeString(st_JsonBuilder, st_JsonRoot).c_str(), *pInt_Len);
-	return XTRUE;
+	return TRUE;
 }

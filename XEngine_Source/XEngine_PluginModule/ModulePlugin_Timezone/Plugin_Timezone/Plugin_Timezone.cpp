@@ -35,469 +35,469 @@ CPlugin_Timezone::~CPlugin_Timezone()
 *********************************************************************/
 XBOOL CPlugin_Timezone::PluginCore_Init(XPVOID lParam)
 {
-	Timezone_IsErrorOccur = XFALSE;
+	Timezone_IsErrorOccur = FALSE;
 
 	MODULEPLUGIN_TIMEZONE st_TimeZone;
 	memset(&st_TimeZone, '\0', sizeof(MODULEPLUGIN_TIMEZONE));
 
 	st_TimeZone.st_TimeZone.wHour = -12;
-	_tcscpy(st_TimeZone.tszTimeCountry, _T("国际日期变更线，西边"));
-	stl_MapTimezone.insert(make_pair(_T("IDLE"), st_TimeZone));
+	_tcsxcpy(st_TimeZone.tszTimeCountry, _X("国际日期变更线，西边"));
+	stl_MapTimezone.insert(make_pair(_X("IDLE"), st_TimeZone));
 
 	memset(&st_TimeZone, '\0', sizeof(MODULEPLUGIN_TIMEZONE));
 	st_TimeZone.st_TimeZone.wHour = -11;
-	_tcscpy(st_TimeZone.tszTimeCountry, _T("阿拉斯加诺姆时间"));
-	stl_MapTimezone.insert(make_pair(_T("NT"), st_TimeZone));
+	_tcsxcpy(st_TimeZone.tszTimeCountry, _X("阿拉斯加诺姆时间"));
+	stl_MapTimezone.insert(make_pair(_X("NT"), st_TimeZone));
 
 	memset(&st_TimeZone, '\0', sizeof(MODULEPLUGIN_TIMEZONE));
 	st_TimeZone.st_TimeZone.wHour = -10;
-	_tcscpy(st_TimeZone.tszTimeCountry, _T("中阿拉斯加时间"));
-	stl_MapTimezone.insert(make_pair(_T("CAT"), st_TimeZone));
+	_tcsxcpy(st_TimeZone.tszTimeCountry, _X("中阿拉斯加时间"));
+	stl_MapTimezone.insert(make_pair(_X("CAT"), st_TimeZone));
 
 	memset(&st_TimeZone, '\0', sizeof(MODULEPLUGIN_TIMEZONE));
 	st_TimeZone.st_TimeZone.wHour = -10;
-	_tcscpy(st_TimeZone.tszTimeCountry, _T("夏威夷标准时间"));
-	stl_MapTimezone.insert(make_pair(_T("HST"), st_TimeZone));
+	_tcsxcpy(st_TimeZone.tszTimeCountry, _X("夏威夷标准时间"));
+	stl_MapTimezone.insert(make_pair(_X("HST"), st_TimeZone));
 
 	memset(&st_TimeZone, '\0', sizeof(MODULEPLUGIN_TIMEZONE));
 	st_TimeZone.st_TimeZone.wHour = -10;
-	_tcscpy(st_TimeZone.tszTimeCountry, _T("夏威夷-阿拉斯加标准时间"));
-	stl_MapTimezone.insert(make_pair(_T("AHST"), st_TimeZone));
+	_tcsxcpy(st_TimeZone.tszTimeCountry, _X("夏威夷-阿拉斯加标准时间"));
+	stl_MapTimezone.insert(make_pair(_X("AHST"), st_TimeZone));
 
 	memset(&st_TimeZone, '\0', sizeof(MODULEPLUGIN_TIMEZONE));
 	st_TimeZone.st_TimeZone.wHour = -9;
 	st_TimeZone.st_TimeZone.wMinute = -30;
-	_tcscpy(st_TimeZone.tszTimeCountry, _T("马克萨斯群岛时间"));
-	stl_MapTimezone.insert(make_pair(_T("MART"), st_TimeZone));
+	_tcsxcpy(st_TimeZone.tszTimeCountry, _X("马克萨斯群岛时间"));
+	stl_MapTimezone.insert(make_pair(_X("MART"), st_TimeZone));
 
 	memset(&st_TimeZone, '\0', sizeof(MODULEPLUGIN_TIMEZONE));
 	st_TimeZone.st_TimeZone.wHour = -9;
-	_tcscpy(st_TimeZone.tszTimeCountry, _T("夏威夷/阿拉斯加夏时制"));
-	stl_MapTimezone.insert(make_pair(_T("HDT"), st_TimeZone));
+	_tcsxcpy(st_TimeZone.tszTimeCountry, _X("夏威夷/阿拉斯加夏时制"));
+	stl_MapTimezone.insert(make_pair(_X("HDT"), st_TimeZone));
 
 	memset(&st_TimeZone, '\0', sizeof(MODULEPLUGIN_TIMEZONE));
 	st_TimeZone.st_TimeZone.wHour = -9;
-	_tcscpy(st_TimeZone.tszTimeCountry, _T("阿拉斯加标准时间"));
-	stl_MapTimezone.insert(make_pair(_T("AKST"), st_TimeZone));
+	_tcsxcpy(st_TimeZone.tszTimeCountry, _X("阿拉斯加标准时间"));
+	stl_MapTimezone.insert(make_pair(_X("AKST"), st_TimeZone));
 
 	memset(&st_TimeZone, '\0', sizeof(MODULEPLUGIN_TIMEZONE));
 	st_TimeZone.st_TimeZone.wHour = -8;
-	_tcscpy(st_TimeZone.tszTimeCountry, _T("育空地区标准时"));
-	stl_MapTimezone.insert(make_pair(_T("YST"), st_TimeZone));
+	_tcsxcpy(st_TimeZone.tszTimeCountry, _X("育空地区标准时"));
+	stl_MapTimezone.insert(make_pair(_X("YST"), st_TimeZone));
 
 	memset(&st_TimeZone, '\0', sizeof(MODULEPLUGIN_TIMEZONE));
 	st_TimeZone.st_TimeZone.wHour = -8;
-	_tcscpy(st_TimeZone.tszTimeCountry, _T("太平洋标准时间"));
-	stl_MapTimezone.insert(make_pair(_T("PST"), st_TimeZone));
+	_tcsxcpy(st_TimeZone.tszTimeCountry, _X("太平洋标准时间"));
+	stl_MapTimezone.insert(make_pair(_X("PST"), st_TimeZone));
 
 	memset(&st_TimeZone, '\0', sizeof(MODULEPLUGIN_TIMEZONE));
 	st_TimeZone.st_TimeZone.wHour = -8;
-	_tcscpy(st_TimeZone.tszTimeCountry, _T("阿拉斯加白昼时间"));
-	stl_MapTimezone.insert(make_pair(_T("AKDT"), st_TimeZone));
+	_tcsxcpy(st_TimeZone.tszTimeCountry, _X("阿拉斯加白昼时间"));
+	stl_MapTimezone.insert(make_pair(_X("AKDT"), st_TimeZone));
 
 	memset(&st_TimeZone, '\0', sizeof(MODULEPLUGIN_TIMEZONE));
 	st_TimeZone.st_TimeZone.wHour = -7;
-	_tcscpy(st_TimeZone.tszTimeCountry, _T("太平洋夏时制"));
-	stl_MapTimezone.insert(make_pair(_T("PDT"), st_TimeZone));
+	_tcsxcpy(st_TimeZone.tszTimeCountry, _X("太平洋夏时制"));
+	stl_MapTimezone.insert(make_pair(_X("PDT"), st_TimeZone));
 
 	memset(&st_TimeZone, '\0', sizeof(MODULEPLUGIN_TIMEZONE));
 	st_TimeZone.st_TimeZone.wHour = -7;
-	_tcscpy(st_TimeZone.tszTimeCountry, _T("山地标准时间"));
-	stl_MapTimezone.insert(make_pair(_T("MST"), st_TimeZone));
+	_tcsxcpy(st_TimeZone.tszTimeCountry, _X("山地标准时间"));
+	stl_MapTimezone.insert(make_pair(_X("MST"), st_TimeZone));
 
 	memset(&st_TimeZone, '\0', sizeof(MODULEPLUGIN_TIMEZONE));
 	st_TimeZone.st_TimeZone.wHour = -6;
-	_tcscpy(st_TimeZone.tszTimeCountry, _T("山地夏时制"));
-	stl_MapTimezone.insert(make_pair(_T("MDT"), st_TimeZone));
+	_tcsxcpy(st_TimeZone.tszTimeCountry, _X("山地夏时制"));
+	stl_MapTimezone.insert(make_pair(_X("MDT"), st_TimeZone));
 
 	memset(&st_TimeZone, '\0', sizeof(MODULEPLUGIN_TIMEZONE));
 	st_TimeZone.st_TimeZone.wHour = -6;
-	_tcscpy(st_TimeZone.tszTimeCountry, _T("中部标准时间"));
-	stl_MapTimezone.insert(make_pair(_T("CST"), st_TimeZone));
+	_tcsxcpy(st_TimeZone.tszTimeCountry, _X("中部标准时间"));
+	stl_MapTimezone.insert(make_pair(_X("CST"), st_TimeZone));
 
 	memset(&st_TimeZone, '\0', sizeof(MODULEPLUGIN_TIMEZONE));
 	st_TimeZone.st_TimeZone.wHour = -5;
-	_tcscpy(st_TimeZone.tszTimeCountry, _T("东部标准时间"));
-	stl_MapTimezone.insert(make_pair(_T("EST"), st_TimeZone));
+	_tcsxcpy(st_TimeZone.tszTimeCountry, _X("东部标准时间"));
+	stl_MapTimezone.insert(make_pair(_X("EST"), st_TimeZone));
 
 	memset(&st_TimeZone, '\0', sizeof(MODULEPLUGIN_TIMEZONE));
 	st_TimeZone.st_TimeZone.wHour = -5;
-	_tcscpy(st_TimeZone.tszTimeCountry, _T("中部夏时制"));
-	stl_MapTimezone.insert(make_pair(_T("CDT"), st_TimeZone));
+	_tcsxcpy(st_TimeZone.tszTimeCountry, _X("中部夏时制"));
+	stl_MapTimezone.insert(make_pair(_X("CDT"), st_TimeZone));
 
 	memset(&st_TimeZone, '\0', sizeof(MODULEPLUGIN_TIMEZONE));
 	st_TimeZone.st_TimeZone.wHour = -5;
-	_tcscpy(st_TimeZone.tszTimeCountry, _T("大西洋阿雷格里港 标准时间"));
-	stl_MapTimezone.insert(make_pair(_T("ACT"), st_TimeZone));
+	_tcsxcpy(st_TimeZone.tszTimeCountry, _X("大西洋阿雷格里港 标准时间"));
+	stl_MapTimezone.insert(make_pair(_X("ACT"), st_TimeZone));
 
 	memset(&st_TimeZone, '\0', sizeof(MODULEPLUGIN_TIMEZONE));
 	st_TimeZone.st_TimeZone.wHour = -4;
-	_tcscpy(st_TimeZone.tszTimeCountry, _T("东部夏时制"));
-	stl_MapTimezone.insert(make_pair(_T("EDT"), st_TimeZone));
+	_tcsxcpy(st_TimeZone.tszTimeCountry, _X("东部夏时制"));
+	stl_MapTimezone.insert(make_pair(_X("EDT"), st_TimeZone));
 
 	memset(&st_TimeZone, '\0', sizeof(MODULEPLUGIN_TIMEZONE));
 	st_TimeZone.st_TimeZone.wHour = -4;
-	_tcscpy(st_TimeZone.tszTimeCountry, _T("大西洋阿雷格里港夏令时"));
-	stl_MapTimezone.insert(make_pair(_T("ACST"), st_TimeZone));
+	_tcsxcpy(st_TimeZone.tszTimeCountry, _X("大西洋阿雷格里港夏令时"));
+	stl_MapTimezone.insert(make_pair(_X("ACST"), st_TimeZone));
 
 	memset(&st_TimeZone, '\0', sizeof(MODULEPLUGIN_TIMEZONE));
 	st_TimeZone.st_TimeZone.wHour = -4;
-	_tcscpy(st_TimeZone.tszTimeCountry, _T("大西洋标准时间（加拿大）"));
-	stl_MapTimezone.insert(make_pair(_T("AST"), st_TimeZone));
+	_tcsxcpy(st_TimeZone.tszTimeCountry, _X("大西洋标准时间（加拿大）"));
+	stl_MapTimezone.insert(make_pair(_X("AST"), st_TimeZone));
 
 	memset(&st_TimeZone, '\0', sizeof(MODULEPLUGIN_TIMEZONE));
 	st_TimeZone.st_TimeZone.wHour = -3;
 	st_TimeZone.st_TimeZone.wMinute = -30;
-	_tcscpy(st_TimeZone.tszTimeCountry, _T("纽芬兰（Newfoundland）标准时间"));
-	stl_MapTimezone.insert(make_pair(_T("NST"), st_TimeZone));
-	stl_MapTimezone.insert(make_pair(_T("NFT"), st_TimeZone));
+	_tcsxcpy(st_TimeZone.tszTimeCountry, _X("纽芬兰（Newfoundland）标准时间"));
+	stl_MapTimezone.insert(make_pair(_X("NST"), st_TimeZone));
+	stl_MapTimezone.insert(make_pair(_X("NFT"), st_TimeZone));
 
 	memset(&st_TimeZone, '\0', sizeof(MODULEPLUGIN_TIMEZONE));
 	st_TimeZone.st_TimeZone.wHour = -3;
-	_tcscpy(st_TimeZone.tszTimeCountry, _T("巴西利亚时间"));
-	stl_MapTimezone.insert(make_pair(_T("BRT"), st_TimeZone));
+	_tcsxcpy(st_TimeZone.tszTimeCountry, _X("巴西利亚时间"));
+	stl_MapTimezone.insert(make_pair(_X("BRT"), st_TimeZone));
 
 	memset(&st_TimeZone, '\0', sizeof(MODULEPLUGIN_TIMEZONE));
 	st_TimeZone.st_TimeZone.wHour = -3;
-	_tcscpy(st_TimeZone.tszTimeCountry, _T("大西洋夏时制"));
-	stl_MapTimezone.insert(make_pair(_T("ADT"), st_TimeZone));
+	_tcsxcpy(st_TimeZone.tszTimeCountry, _X("大西洋夏时制"));
+	stl_MapTimezone.insert(make_pair(_X("ADT"), st_TimeZone));
 
 	memset(&st_TimeZone, '\0', sizeof(MODULEPLUGIN_TIMEZONE));
 	st_TimeZone.st_TimeZone.wHour = -2;
 	st_TimeZone.st_TimeZone.wMinute = -30;
-	_tcscpy(st_TimeZone.tszTimeCountry, _T("纽芬兰夏时制"));
-	stl_MapTimezone.insert(make_pair(_T("NDT"), st_TimeZone));
+	_tcsxcpy(st_TimeZone.tszTimeCountry, _X("纽芬兰夏时制"));
+	stl_MapTimezone.insert(make_pair(_X("NDT"), st_TimeZone));
 
 	memset(&st_TimeZone, '\0', sizeof(MODULEPLUGIN_TIMEZONE));
 	st_TimeZone.st_TimeZone.wHour = -2;
-	_tcscpy(st_TimeZone.tszTimeCountry, _T("巴西利亚夏令时"));
-	stl_MapTimezone.insert(make_pair(_T("BRST"), st_TimeZone));
+	_tcsxcpy(st_TimeZone.tszTimeCountry, _X("巴西利亚夏令时"));
+	stl_MapTimezone.insert(make_pair(_X("BRST"), st_TimeZone));
 
 	memset(&st_TimeZone, '\0', sizeof(MODULEPLUGIN_TIMEZONE));
 	st_TimeZone.st_TimeZone.wHour = -2;
-	_tcscpy(st_TimeZone.tszTimeCountry, _T("巴西费尔南多·迪诺罗尼亚岛时间"));
-	stl_MapTimezone.insert(make_pair(_T("FNT"), st_TimeZone));
+	_tcsxcpy(st_TimeZone.tszTimeCountry, _X("巴西费尔南多·迪诺罗尼亚岛时间"));
+	stl_MapTimezone.insert(make_pair(_X("FNT"), st_TimeZone));
 
 	memset(&st_TimeZone, '\0', sizeof(MODULEPLUGIN_TIMEZONE));
 	st_TimeZone.st_TimeZone.wHour = -1;
-	_tcscpy(st_TimeZone.tszTimeCountry, _T("巴西费尔南多·迪诺罗尼亚岛 夏令时"));
-	stl_MapTimezone.insert(make_pair(_T("FNST"), st_TimeZone));
+	_tcsxcpy(st_TimeZone.tszTimeCountry, _X("巴西费尔南多·迪诺罗尼亚岛 夏令时"));
+	stl_MapTimezone.insert(make_pair(_X("FNST"), st_TimeZone));
 
 	memset(&st_TimeZone, '\0', sizeof(MODULEPLUGIN_TIMEZONE));
 	st_TimeZone.st_TimeZone.wHour = -1;
-	_tcscpy(st_TimeZone.tszTimeCountry, _T("西非时间"));
-	stl_MapTimezone.insert(make_pair(_T("WAT"), st_TimeZone));
+	_tcsxcpy(st_TimeZone.tszTimeCountry, _X("西非时间"));
+	stl_MapTimezone.insert(make_pair(_X("WAT"), st_TimeZone));
 
 	memset(&st_TimeZone, '\0', sizeof(MODULEPLUGIN_TIMEZONE));
-	_tcscpy(st_TimeZone.tszTimeCountry, _T("西欧"));
-	stl_MapTimezone.insert(make_pair(_T("WET"), st_TimeZone));
+	_tcsxcpy(st_TimeZone.tszTimeCountry, _X("西欧"));
+	stl_MapTimezone.insert(make_pair(_X("WET"), st_TimeZone));
 
 	memset(&st_TimeZone, '\0', sizeof(MODULEPLUGIN_TIMEZONE));
-	_tcscpy(st_TimeZone.tszTimeCountry, _T("和 UTC 相同"));
-	stl_MapTimezone.insert(make_pair(_T("ZULU"), st_TimeZone));
+	_tcsxcpy(st_TimeZone.tszTimeCountry, _X("和 UTC 相同"));
+	stl_MapTimezone.insert(make_pair(_X("ZULU"), st_TimeZone));
 
 	memset(&st_TimeZone, '\0', sizeof(MODULEPLUGIN_TIMEZONE));
-	_tcscpy(st_TimeZone.tszTimeCountry, _T("校准的全球时间"));
-	stl_MapTimezone.insert(make_pair(_T("UTC"), st_TimeZone));
+	_tcsxcpy(st_TimeZone.tszTimeCountry, _X("校准的全球时间"));
+	stl_MapTimezone.insert(make_pair(_X("UTC"), st_TimeZone));
 
 	memset(&st_TimeZone, '\0', sizeof(MODULEPLUGIN_TIMEZONE));
-	_tcscpy(st_TimeZone.tszTimeCountry, _T("全球时间"));
-	stl_MapTimezone.insert(make_pair(_T("UT"), st_TimeZone));
+	_tcsxcpy(st_TimeZone.tszTimeCountry, _X("全球时间"));
+	stl_MapTimezone.insert(make_pair(_X("UT"), st_TimeZone));
 
 	memset(&st_TimeZone, '\0', sizeof(MODULEPLUGIN_TIMEZONE));
-	_tcscpy(st_TimeZone.tszTimeCountry, _T("格林尼治标准时间"));
-	stl_MapTimezone.insert(make_pair(_T("GMT"), st_TimeZone));
-
-	memset(&st_TimeZone, '\0', sizeof(MODULEPLUGIN_TIMEZONE));
-	st_TimeZone.st_TimeZone.wHour = 1;
-	_tcscpy(st_TimeZone.tszTimeCountry, _T("西欧光照利用时间"));
-	stl_MapTimezone.insert(make_pair(_T("WETDST"), st_TimeZone));
+	_tcsxcpy(st_TimeZone.tszTimeCountry, _X("格林尼治标准时间"));
+	stl_MapTimezone.insert(make_pair(_X("GMT"), st_TimeZone));
 
 	memset(&st_TimeZone, '\0', sizeof(MODULEPLUGIN_TIMEZONE));
 	st_TimeZone.st_TimeZone.wHour = 1;
-	_tcscpy(st_TimeZone.tszTimeCountry, _T("瑞典冬时制"));
-	stl_MapTimezone.insert(make_pair(_T("SWT"), st_TimeZone));
+	_tcsxcpy(st_TimeZone.tszTimeCountry, _X("西欧光照利用时间"));
+	stl_MapTimezone.insert(make_pair(_X("WETDST"), st_TimeZone));
 
 	memset(&st_TimeZone, '\0', sizeof(MODULEPLUGIN_TIMEZONE));
 	st_TimeZone.st_TimeZone.wHour = 1;
-	_tcscpy(st_TimeZone.tszTimeCountry, _T("挪威标准时间"));
-	stl_MapTimezone.insert(make_pair(_T("NOR"), st_TimeZone));
+	_tcsxcpy(st_TimeZone.tszTimeCountry, _X("瑞典冬时制"));
+	stl_MapTimezone.insert(make_pair(_X("SWT"), st_TimeZone));
 
 	memset(&st_TimeZone, '\0', sizeof(MODULEPLUGIN_TIMEZONE));
 	st_TimeZone.st_TimeZone.wHour = 1;
-	_tcscpy(st_TimeZone.tszTimeCountry, _T("中欧时间"));
-	stl_MapTimezone.insert(make_pair(_T("MET"), st_TimeZone));
+	_tcsxcpy(st_TimeZone.tszTimeCountry, _X("挪威标准时间"));
+	stl_MapTimezone.insert(make_pair(_X("NOR"), st_TimeZone));
 
 	memset(&st_TimeZone, '\0', sizeof(MODULEPLUGIN_TIMEZONE));
 	st_TimeZone.st_TimeZone.wHour = 1;
-	_tcscpy(st_TimeZone.tszTimeCountry, _T("法国夏时制"));
-	stl_MapTimezone.insert(make_pair(_T("FST"), st_TimeZone));
+	_tcsxcpy(st_TimeZone.tszTimeCountry, _X("中欧时间"));
+	stl_MapTimezone.insert(make_pair(_X("MET"), st_TimeZone));
 
 	memset(&st_TimeZone, '\0', sizeof(MODULEPLUGIN_TIMEZONE));
 	st_TimeZone.st_TimeZone.wHour = 1;
-	_tcscpy(st_TimeZone.tszTimeCountry, _T("丹麦正规时间"));
-	stl_MapTimezone.insert(make_pair(_T("DNT"), st_TimeZone));
+	_tcsxcpy(st_TimeZone.tszTimeCountry, _X("法国夏时制"));
+	stl_MapTimezone.insert(make_pair(_X("FST"), st_TimeZone));
 
 	memset(&st_TimeZone, '\0', sizeof(MODULEPLUGIN_TIMEZONE));
 	st_TimeZone.st_TimeZone.wHour = 1;
-	_tcscpy(st_TimeZone.tszTimeCountry, _T("中欧时间"));
-	stl_MapTimezone.insert(make_pair(_T("CET"), st_TimeZone));
+	_tcsxcpy(st_TimeZone.tszTimeCountry, _X("丹麦正规时间"));
+	stl_MapTimezone.insert(make_pair(_X("DNT"), st_TimeZone));
 
 	memset(&st_TimeZone, '\0', sizeof(MODULEPLUGIN_TIMEZONE));
 	st_TimeZone.st_TimeZone.wHour = 1;
-	_tcscpy(st_TimeZone.tszTimeCountry, _T("英国夏时制"));
-	stl_MapTimezone.insert(make_pair(_T("BST"), st_TimeZone));
+	_tcsxcpy(st_TimeZone.tszTimeCountry, _X("中欧时间"));
+	stl_MapTimezone.insert(make_pair(_X("CET"), st_TimeZone));
+
+	memset(&st_TimeZone, '\0', sizeof(MODULEPLUGIN_TIMEZONE));
+	st_TimeZone.st_TimeZone.wHour = 1;
+	_tcsxcpy(st_TimeZone.tszTimeCountry, _X("英国夏时制"));
+	stl_MapTimezone.insert(make_pair(_X("BST"), st_TimeZone));
 
 	memset(&st_TimeZone, '\0', sizeof(MODULEPLUGIN_TIMEZONE));
 	st_TimeZone.st_TimeZone.wHour = 2;
-	_tcscpy(st_TimeZone.tszTimeCountry, _T("瑞典夏时制"));
-	stl_MapTimezone.insert(make_pair(_T("SST"), st_TimeZone));
+	_tcsxcpy(st_TimeZone.tszTimeCountry, _X("瑞典夏时制"));
+	stl_MapTimezone.insert(make_pair(_X("SST"), st_TimeZone));
 
 	memset(&st_TimeZone, '\0', sizeof(MODULEPLUGIN_TIMEZONE));
 	st_TimeZone.st_TimeZone.wHour = 2;
-	_tcscpy(st_TimeZone.tszTimeCountry, _T("中欧白昼时间"));
-	stl_MapTimezone.insert(make_pair(_T("METDST"), st_TimeZone));
+	_tcsxcpy(st_TimeZone.tszTimeCountry, _X("中欧白昼时间"));
+	stl_MapTimezone.insert(make_pair(_X("METDST"), st_TimeZone));
 
 	memset(&st_TimeZone, '\0', sizeof(MODULEPLUGIN_TIMEZONE));
 	st_TimeZone.st_TimeZone.wHour = 2;
-	_tcscpy(st_TimeZone.tszTimeCountry, _T("中欧夏时制"));
-	stl_MapTimezone.insert(make_pair(_T("MEST"), st_TimeZone));
+	_tcsxcpy(st_TimeZone.tszTimeCountry, _X("中欧夏时制"));
+	stl_MapTimezone.insert(make_pair(_X("MEST"), st_TimeZone));
 
 	memset(&st_TimeZone, '\0', sizeof(MODULEPLUGIN_TIMEZONE));
 	st_TimeZone.st_TimeZone.wHour = 2;
-	_tcscpy(st_TimeZone.tszTimeCountry, _T("以色列标准时间"));
-	stl_MapTimezone.insert(make_pair(_T("IST"), st_TimeZone));
+	_tcsxcpy(st_TimeZone.tszTimeCountry, _X("以色列标准时间"));
+	stl_MapTimezone.insert(make_pair(_X("IST"), st_TimeZone));
 
 	memset(&st_TimeZone, '\0', sizeof(MODULEPLUGIN_TIMEZONE));
 	st_TimeZone.st_TimeZone.wHour = 2;
-	_tcscpy(st_TimeZone.tszTimeCountry, _T("法国冬时制"));
-	stl_MapTimezone.insert(make_pair(_T("FWT"), st_TimeZone));
+	_tcsxcpy(st_TimeZone.tszTimeCountry, _X("法国冬时制"));
+	stl_MapTimezone.insert(make_pair(_X("FWT"), st_TimeZone));
 
 	memset(&st_TimeZone, '\0', sizeof(MODULEPLUGIN_TIMEZONE));
 	st_TimeZone.st_TimeZone.wHour = 2;
-	_tcscpy(st_TimeZone.tszTimeCountry, _T("东欧"));
-	stl_MapTimezone.insert(make_pair(_T("EET"), st_TimeZone));
+	_tcsxcpy(st_TimeZone.tszTimeCountry, _X("东欧"));
+	stl_MapTimezone.insert(make_pair(_X("EET"), st_TimeZone));
 
 	memset(&st_TimeZone, '\0', sizeof(MODULEPLUGIN_TIMEZONE));
 	st_TimeZone.st_TimeZone.wHour = 2;
-	_tcscpy(st_TimeZone.tszTimeCountry, _T("中欧夏时制"));
-	stl_MapTimezone.insert(make_pair(_T("CETDST"), st_TimeZone));
+	_tcsxcpy(st_TimeZone.tszTimeCountry, _X("中欧夏时制"));
+	stl_MapTimezone.insert(make_pair(_X("CETDST"), st_TimeZone));
 
 	memset(&st_TimeZone, '\0', sizeof(MODULEPLUGIN_TIMEZONE));
 	st_TimeZone.st_TimeZone.wHour = 2;
-	_tcscpy(st_TimeZone.tszTimeCountry, _T("中欧夏令时"));
-	stl_MapTimezone.insert(make_pair(_T("CEST"), st_TimeZone));
+	_tcsxcpy(st_TimeZone.tszTimeCountry, _X("中欧夏令时"));
+	stl_MapTimezone.insert(make_pair(_X("CEST"), st_TimeZone));
 
 	memset(&st_TimeZone, '\0', sizeof(MODULEPLUGIN_TIMEZONE));
 	st_TimeZone.st_TimeZone.wHour = 2;
-	_tcscpy(st_TimeZone.tszTimeCountry, _T("英国双重标准时间"));
-	stl_MapTimezone.insert(make_pair(_T("BDST"), st_TimeZone));
+	_tcsxcpy(st_TimeZone.tszTimeCountry, _X("英国双重标准时间"));
+	stl_MapTimezone.insert(make_pair(_X("BDST"), st_TimeZone));
 
 	memset(&st_TimeZone, '\0', sizeof(MODULEPLUGIN_TIMEZONE));
 	st_TimeZone.st_TimeZone.wHour = 3;
-	_tcscpy(st_TimeZone.tszTimeCountry, _T("希腊地中海时间"));
-	stl_MapTimezone.insert(make_pair(_T("HMT"), st_TimeZone));
+	_tcsxcpy(st_TimeZone.tszTimeCountry, _X("希腊地中海时间"));
+	stl_MapTimezone.insert(make_pair(_X("HMT"), st_TimeZone));
 
 	memset(&st_TimeZone, '\0', sizeof(MODULEPLUGIN_TIMEZONE));
 	st_TimeZone.st_TimeZone.wHour = 3;
-	_tcscpy(st_TimeZone.tszTimeCountry, _T("东欧夏时制"));
-	stl_MapTimezone.insert(make_pair(_T("EETDST"), st_TimeZone));
+	_tcsxcpy(st_TimeZone.tszTimeCountry, _X("东欧夏时制"));
+	stl_MapTimezone.insert(make_pair(_X("EETDST"), st_TimeZone));
 
 	memset(&st_TimeZone, '\0', sizeof(MODULEPLUGIN_TIMEZONE));
 	st_TimeZone.st_TimeZone.wHour = 3;
-	_tcscpy(st_TimeZone.tszTimeCountry, _T("巴格达时间"));
-	stl_MapTimezone.insert(make_pair(_T("BT"), st_TimeZone));
+	_tcsxcpy(st_TimeZone.tszTimeCountry, _X("巴格达时间"));
+	stl_MapTimezone.insert(make_pair(_X("BT"), st_TimeZone));
 
 	memset(&st_TimeZone, '\0', sizeof(MODULEPLUGIN_TIMEZONE));
 	st_TimeZone.st_TimeZone.wHour = 3;
-	_tcscpy(st_TimeZone.tszTimeCountry, _T("科摩罗时间"));
-	stl_MapTimezone.insert(make_pair(_T("EAT"), st_TimeZone));
+	_tcsxcpy(st_TimeZone.tszTimeCountry, _X("科摩罗时间"));
+	stl_MapTimezone.insert(make_pair(_X("EAT"), st_TimeZone));
 
 	memset(&st_TimeZone, '\0', sizeof(MODULEPLUGIN_TIMEZONE));
 	st_TimeZone.st_TimeZone.wHour = 3;
 	st_TimeZone.st_TimeZone.wMinute = 30;
-	_tcscpy(st_TimeZone.tszTimeCountry, _T("伊朗时间"));
-	stl_MapTimezone.insert(make_pair(_T("IRT"), st_TimeZone));
-	stl_MapTimezone.insert(make_pair(_T("IT"), st_TimeZone));
+	_tcsxcpy(st_TimeZone.tszTimeCountry, _X("伊朗时间"));
+	stl_MapTimezone.insert(make_pair(_X("IRT"), st_TimeZone));
+	stl_MapTimezone.insert(make_pair(_X("IT"), st_TimeZone));
 
 	memset(&st_TimeZone, '\0', sizeof(MODULEPLUGIN_TIMEZONE));
 	st_TimeZone.st_TimeZone.wHour = 4;
-	_tcscpy(st_TimeZone.tszTimeCountry, _T("塞舌尔马埃岛时间"));
-	stl_MapTimezone.insert(make_pair(_T("SCT"), st_TimeZone));
+	_tcsxcpy(st_TimeZone.tszTimeCountry, _X("塞舌尔马埃岛时间"));
+	stl_MapTimezone.insert(make_pair(_X("SCT"), st_TimeZone));
 
 	memset(&st_TimeZone, '\0', sizeof(MODULEPLUGIN_TIMEZONE));
 	st_TimeZone.st_TimeZone.wHour = 4;
-	_tcscpy(st_TimeZone.tszTimeCountry, _T("法属留尼汪岛时间"));
-	stl_MapTimezone.insert(make_pair(_T("RET"), st_TimeZone));
+	_tcsxcpy(st_TimeZone.tszTimeCountry, _X("法属留尼汪岛时间"));
+	stl_MapTimezone.insert(make_pair(_X("RET"), st_TimeZone));
 
 	memset(&st_TimeZone, '\0', sizeof(MODULEPLUGIN_TIMEZONE));
 	st_TimeZone.st_TimeZone.wHour = 4;
-	_tcscpy(st_TimeZone.tszTimeCountry, _T("毛里求斯时间"));
-	stl_MapTimezone.insert(make_pair(_T("MUT"), st_TimeZone));
+	_tcsxcpy(st_TimeZone.tszTimeCountry, _X("毛里求斯时间"));
+	stl_MapTimezone.insert(make_pair(_X("MUT"), st_TimeZone));
 
 	memset(&st_TimeZone, '\0', sizeof(MODULEPLUGIN_TIMEZONE));
 	st_TimeZone.st_TimeZone.wHour = 4;
-	_tcscpy(st_TimeZone.tszTimeCountry, _T("马达加斯加塔那那利佛时间"));
-	stl_MapTimezone.insert(make_pair(_T("EAST"), st_TimeZone));
+	_tcsxcpy(st_TimeZone.tszTimeCountry, _X("马达加斯加塔那那利佛时间"));
+	stl_MapTimezone.insert(make_pair(_X("EAST"), st_TimeZone));
 
 	memset(&st_TimeZone, '\0', sizeof(MODULEPLUGIN_TIMEZONE));
 	st_TimeZone.st_TimeZone.wHour = 4;
 	st_TimeZone.st_TimeZone.wMinute = 30;
-	_tcscpy(st_TimeZone.tszTimeCountry, _T("阿富汗时间"));
-	stl_MapTimezone.insert(make_pair(_T("AFT"), st_TimeZone));
+	_tcsxcpy(st_TimeZone.tszTimeCountry, _X("阿富汗时间"));
+	stl_MapTimezone.insert(make_pair(_X("AFT"), st_TimeZone));
 
 	memset(&st_TimeZone, '\0', sizeof(MODULEPLUGIN_TIMEZONE));
 	st_TimeZone.st_TimeZone.wHour = 5;
-	_tcscpy(st_TimeZone.tszTimeCountry, _T("法属凯尔盖朗岛时间"));
-	stl_MapTimezone.insert(make_pair(_T("TFT"), st_TimeZone));
+	_tcsxcpy(st_TimeZone.tszTimeCountry, _X("法属凯尔盖朗岛时间"));
+	stl_MapTimezone.insert(make_pair(_X("TFT"), st_TimeZone));
 
 	memset(&st_TimeZone, '\0', sizeof(MODULEPLUGIN_TIMEZONE));
 	st_TimeZone.st_TimeZone.wHour = 5;
-	_tcscpy(st_TimeZone.tszTimeCountry, _T("马尔代夫时间"));
-	stl_MapTimezone.insert(make_pair(_T("MVT"), st_TimeZone));
+	_tcsxcpy(st_TimeZone.tszTimeCountry, _X("马尔代夫时间"));
+	stl_MapTimezone.insert(make_pair(_X("MVT"), st_TimeZone));
 
 	memset(&st_TimeZone, '\0', sizeof(MODULEPLUGIN_TIMEZONE));
 	st_TimeZone.st_TimeZone.wHour = 5;
-	_tcscpy(st_TimeZone.tszTimeCountry, _T("英属印度洋领地时间"));
-	stl_MapTimezone.insert(make_pair(_T("IOT"), st_TimeZone));
+	_tcsxcpy(st_TimeZone.tszTimeCountry, _X("英属印度洋领地时间"));
+	stl_MapTimezone.insert(make_pair(_X("IOT"), st_TimeZone));
 
 	memset(&st_TimeZone, '\0', sizeof(MODULEPLUGIN_TIMEZONE));
 	st_TimeZone.st_TimeZone.wHour = 6;
-	_tcscpy(st_TimeZone.tszTimeCountry, _T("哈萨克斯坦阿拉木图"));
-	stl_MapTimezone.insert(make_pair(_T("ALMT"), st_TimeZone));
+	_tcsxcpy(st_TimeZone.tszTimeCountry, _X("哈萨克斯坦阿拉木图"));
+	stl_MapTimezone.insert(make_pair(_X("ALMT"), st_TimeZone));
 
 	memset(&st_TimeZone, '\0', sizeof(MODULEPLUGIN_TIMEZONE));
 	st_TimeZone.st_TimeZone.wHour = 6;
 	st_TimeZone.st_TimeZone.wMinute = 30;
-	_tcscpy(st_TimeZone.tszTimeCountry, _T("缅甸时间"));
-	stl_MapTimezone.insert(make_pair(_T("MMT"), st_TimeZone));
+	_tcsxcpy(st_TimeZone.tszTimeCountry, _X("缅甸时间"));
+	stl_MapTimezone.insert(make_pair(_X("MMT"), st_TimeZone));
 
 	memset(&st_TimeZone, '\0', sizeof(MODULEPLUGIN_TIMEZONE));
 	st_TimeZone.st_TimeZone.wHour = 7;
-	_tcscpy(st_TimeZone.tszTimeCountry, _T("澳大利亚圣诞岛时间"));
-	stl_MapTimezone.insert(make_pair(_T("CXT"), st_TimeZone));
+	_tcsxcpy(st_TimeZone.tszTimeCountry, _X("澳大利亚圣诞岛时间"));
+	stl_MapTimezone.insert(make_pair(_X("CXT"), st_TimeZone));
 
 	memset(&st_TimeZone, '\0', sizeof(MODULEPLUGIN_TIMEZONE));
 	st_TimeZone.st_TimeZone.wHour = 7;
-	_tcscpy(st_TimeZone.tszTimeCountry, _T("阿拉木图"));
-	stl_MapTimezone.insert(make_pair(_T("ALMST"), st_TimeZone));
+	_tcsxcpy(st_TimeZone.tszTimeCountry, _X("阿拉木图"));
+	stl_MapTimezone.insert(make_pair(_X("ALMST"), st_TimeZone));
 
 	memset(&st_TimeZone, '\0', sizeof(MODULEPLUGIN_TIMEZONE));
 	st_TimeZone.st_TimeZone.wHour = 7;
 	st_TimeZone.st_TimeZone.wMinute = 30;
-	_tcscpy(st_TimeZone.tszTimeCountry, _T("爪哇时间"));
-	stl_MapTimezone.insert(make_pair(_T("JT"), st_TimeZone));
+	_tcsxcpy(st_TimeZone.tszTimeCountry, _X("爪哇时间"));
+	stl_MapTimezone.insert(make_pair(_X("JT"), st_TimeZone));
 
 	memset(&st_TimeZone, '\0', sizeof(MODULEPLUGIN_TIMEZONE));
 	st_TimeZone.st_TimeZone.wHour = 8;
-	_tcscpy(st_TimeZone.tszTimeCountry, _T("西澳大利亚标准时间"));
-	stl_MapTimezone.insert(make_pair(_T("WST"), st_TimeZone));
+	_tcsxcpy(st_TimeZone.tszTimeCountry, _X("西澳大利亚标准时间"));
+	stl_MapTimezone.insert(make_pair(_X("WST"), st_TimeZone));
 
 	memset(&st_TimeZone, '\0', sizeof(MODULEPLUGIN_TIMEZONE));
 	st_TimeZone.st_TimeZone.wHour = 8;
-	_tcscpy(st_TimeZone.tszTimeCountry, _T("中国北京时间"));
-	stl_MapTimezone.insert(make_pair(_T("CCT"), st_TimeZone));
+	_tcsxcpy(st_TimeZone.tszTimeCountry, _X("中国北京时间"));
+	stl_MapTimezone.insert(make_pair(_X("CCT"), st_TimeZone));
 
 	memset(&st_TimeZone, '\0', sizeof(MODULEPLUGIN_TIMEZONE));
 	st_TimeZone.st_TimeZone.wHour = 8;
-	_tcscpy(st_TimeZone.tszTimeCountry, _T("澳大利亚西部标准时间"));
-	stl_MapTimezone.insert(make_pair(_T("AWST"), st_TimeZone));
+	_tcsxcpy(st_TimeZone.tszTimeCountry, _X("澳大利亚西部标准时间"));
+	stl_MapTimezone.insert(make_pair(_X("AWST"), st_TimeZone));
 
 	memset(&st_TimeZone, '\0', sizeof(MODULEPLUGIN_TIMEZONE));
 	st_TimeZone.st_TimeZone.wHour = 9;
-	_tcscpy(st_TimeZone.tszTimeCountry, _T("韩国朝鲜标准时间"));
-	stl_MapTimezone.insert(make_pair(_T("KST"), st_TimeZone));
+	_tcsxcpy(st_TimeZone.tszTimeCountry, _X("韩国朝鲜标准时间"));
+	stl_MapTimezone.insert(make_pair(_X("KST"), st_TimeZone));
 
 	memset(&st_TimeZone, '\0', sizeof(MODULEPLUGIN_TIMEZONE));
 	st_TimeZone.st_TimeZone.wHour = 9;
-	_tcscpy(st_TimeZone.tszTimeCountry, _T("日本标准时间"));
-	stl_MapTimezone.insert(make_pair(_T("JST"), st_TimeZone));
+	_tcsxcpy(st_TimeZone.tszTimeCountry, _X("日本标准时间"));
+	stl_MapTimezone.insert(make_pair(_X("JST"), st_TimeZone));
 
 	memset(&st_TimeZone, '\0', sizeof(MODULEPLUGIN_TIMEZONE));
 	st_TimeZone.st_TimeZone.wHour = 9;
-	_tcscpy(st_TimeZone.tszTimeCountry, _T("马绍尔群岛瓜加林岛时间"));
-	stl_MapTimezone.insert(make_pair(_T("MHT"), st_TimeZone));
-
-	memset(&st_TimeZone, '\0', sizeof(MODULEPLUGIN_TIMEZONE));
-	st_TimeZone.st_TimeZone.wHour = 9;
-	st_TimeZone.st_TimeZone.wMinute = 30;
-	_tcscpy(st_TimeZone.tszTimeCountry, _T("中澳大利亚标准时间"));
-	stl_MapTimezone.insert(make_pair(_T("CAST"), st_TimeZone));
+	_tcsxcpy(st_TimeZone.tszTimeCountry, _X("马绍尔群岛瓜加林岛时间"));
+	stl_MapTimezone.insert(make_pair(_X("MHT"), st_TimeZone));
 
 	memset(&st_TimeZone, '\0', sizeof(MODULEPLUGIN_TIMEZONE));
 	st_TimeZone.st_TimeZone.wHour = 9;
 	st_TimeZone.st_TimeZone.wMinute = 30;
-	_tcscpy(st_TimeZone.tszTimeCountry, _T("南澳大利亚标准时间"));
-	stl_MapTimezone.insert(make_pair(_T("SAST"), st_TimeZone));
+	_tcsxcpy(st_TimeZone.tszTimeCountry, _X("中澳大利亚标准时间"));
+	stl_MapTimezone.insert(make_pair(_X("CAST"), st_TimeZone));
+
+	memset(&st_TimeZone, '\0', sizeof(MODULEPLUGIN_TIMEZONE));
+	st_TimeZone.st_TimeZone.wHour = 9;
+	st_TimeZone.st_TimeZone.wMinute = 30;
+	_tcsxcpy(st_TimeZone.tszTimeCountry, _X("南澳大利亚标准时间"));
+	stl_MapTimezone.insert(make_pair(_X("SAST"), st_TimeZone));
 
 	memset(&st_TimeZone, '\0', sizeof(MODULEPLUGIN_TIMEZONE));
 	st_TimeZone.st_TimeZone.wHour = 10;
-	_tcscpy(st_TimeZone.tszTimeCountry, _T("澳大利亚墨尔本"));
-	stl_MapTimezone.insert(make_pair(_T("LIGT"), st_TimeZone));
+	_tcsxcpy(st_TimeZone.tszTimeCountry, _X("澳大利亚墨尔本"));
+	stl_MapTimezone.insert(make_pair(_X("LIGT"), st_TimeZone));
 
 	memset(&st_TimeZone, '\0', sizeof(MODULEPLUGIN_TIMEZONE));
 	st_TimeZone.st_TimeZone.wHour = 10;
-	_tcscpy(st_TimeZone.tszTimeCountry, _T("关岛标准时间"));
-	stl_MapTimezone.insert(make_pair(_T("GST"), st_TimeZone));
+	_tcsxcpy(st_TimeZone.tszTimeCountry, _X("关岛标准时间"));
+	stl_MapTimezone.insert(make_pair(_X("GST"), st_TimeZone));
 
 	memset(&st_TimeZone, '\0', sizeof(MODULEPLUGIN_TIMEZONE));
 	st_TimeZone.st_TimeZone.wHour = 10;
-	_tcscpy(st_TimeZone.tszTimeCountry, _T("东澳大利亚标准时间"));
-	stl_MapTimezone.insert(make_pair(_T("EAST"), st_TimeZone));
+	_tcsxcpy(st_TimeZone.tszTimeCountry, _X("东澳大利亚标准时间"));
+	stl_MapTimezone.insert(make_pair(_X("EAST"), st_TimeZone));
 
 	memset(&st_TimeZone, '\0', sizeof(MODULEPLUGIN_TIMEZONE));
 	st_TimeZone.st_TimeZone.wHour = 10;
-	_tcscpy(st_TimeZone.tszTimeCountry, _T("澳大利亚东部标准时间"));
-	stl_MapTimezone.insert(make_pair(_T("AEST"), st_TimeZone));
+	_tcsxcpy(st_TimeZone.tszTimeCountry, _X("澳大利亚东部标准时间"));
+	stl_MapTimezone.insert(make_pair(_X("AEST"), st_TimeZone));
 
 	memset(&st_TimeZone, '\0', sizeof(MODULEPLUGIN_TIMEZONE));
 	st_TimeZone.st_TimeZone.wHour = 10;
 	st_TimeZone.st_TimeZone.wMinute = 30;
-	_tcscpy(st_TimeZone.tszTimeCountry, _T("南澳大利亚夏时制"));
-	stl_MapTimezone.insert(make_pair(_T("SADT"), st_TimeZone));
+	_tcsxcpy(st_TimeZone.tszTimeCountry, _X("南澳大利亚夏时制"));
+	stl_MapTimezone.insert(make_pair(_X("SADT"), st_TimeZone));
 
 	memset(&st_TimeZone, '\0', sizeof(MODULEPLUGIN_TIMEZONE));
 	st_TimeZone.st_TimeZone.wHour = 10;
 	st_TimeZone.st_TimeZone.wMinute = 30;
-	_tcscpy(st_TimeZone.tszTimeCountry, _T("中澳大利亚夏时制"));
-	stl_MapTimezone.insert(make_pair(_T("CADT"), st_TimeZone));
+	_tcsxcpy(st_TimeZone.tszTimeCountry, _X("中澳大利亚夏时制"));
+	stl_MapTimezone.insert(make_pair(_X("CADT"), st_TimeZone));
 
 	memset(&st_TimeZone, '\0', sizeof(MODULEPLUGIN_TIMEZONE));
 	st_TimeZone.st_TimeZone.wHour = 10;
 	st_TimeZone.st_TimeZone.wMinute = 30;
-	_tcscpy(st_TimeZone.tszTimeCountry, _T("中澳大利亚标准夏时制"));
-	stl_MapTimezone.insert(make_pair(_T("ACSST"), st_TimeZone));
+	_tcsxcpy(st_TimeZone.tszTimeCountry, _X("中澳大利亚标准夏时制"));
+	stl_MapTimezone.insert(make_pair(_X("ACSST"), st_TimeZone));
 
 	memset(&st_TimeZone, '\0', sizeof(MODULEPLUGIN_TIMEZONE));
 	st_TimeZone.st_TimeZone.wHour = 11;
-	_tcscpy(st_TimeZone.tszTimeCountry, _T("澳大利亚东部标准夏时制"));
-	stl_MapTimezone.insert(make_pair(_T("AESST"), st_TimeZone));
+	_tcsxcpy(st_TimeZone.tszTimeCountry, _X("澳大利亚东部标准夏时制"));
+	stl_MapTimezone.insert(make_pair(_X("AESST"), st_TimeZone));
 
 	memset(&st_TimeZone, '\0', sizeof(MODULEPLUGIN_TIMEZONE));
 	st_TimeZone.st_TimeZone.wHour = 12;
-	_tcscpy(st_TimeZone.tszTimeCountry, _T("新西兰标准时间"));
-	stl_MapTimezone.insert(make_pair(_T("NZST"), st_TimeZone));
+	_tcsxcpy(st_TimeZone.tszTimeCountry, _X("新西兰标准时间"));
+	stl_MapTimezone.insert(make_pair(_X("NZST"), st_TimeZone));
 
 	memset(&st_TimeZone, '\0', sizeof(MODULEPLUGIN_TIMEZONE));
 	st_TimeZone.st_TimeZone.wHour = 12;
-	_tcscpy(st_TimeZone.tszTimeCountry, _T("新西兰时间"));
-	stl_MapTimezone.insert(make_pair(_T("NZT"), st_TimeZone));
+	_tcsxcpy(st_TimeZone.tszTimeCountry, _X("新西兰时间"));
+	stl_MapTimezone.insert(make_pair(_X("NZT"), st_TimeZone));
 
 	memset(&st_TimeZone, '\0', sizeof(MODULEPLUGIN_TIMEZONE));
 	st_TimeZone.st_TimeZone.wHour = 12;
-	_tcscpy(st_TimeZone.tszTimeCountry, _T("国际日期变更线，东边"));
-	stl_MapTimezone.insert(make_pair(_T("IDLW"), st_TimeZone));
+	_tcsxcpy(st_TimeZone.tszTimeCountry, _X("国际日期变更线，东边"));
+	stl_MapTimezone.insert(make_pair(_X("IDLW"), st_TimeZone));
 
 	memset(&st_TimeZone, '\0', sizeof(MODULEPLUGIN_TIMEZONE));
 	st_TimeZone.st_TimeZone.wHour = 13;
-	_tcscpy(st_TimeZone.tszTimeCountry, _T("新西兰夏时制"));
-	stl_MapTimezone.insert(make_pair(_T("NZDT"), st_TimeZone));
+	_tcsxcpy(st_TimeZone.tszTimeCountry, _X("新西兰夏时制"));
+	stl_MapTimezone.insert(make_pair(_X("NZDT"), st_TimeZone));
 
 	memset(&st_TimeZone, '\0', sizeof(MODULEPLUGIN_TIMEZONE));
 	st_TimeZone.st_TimeZone.wHour = 14;
-	_tcscpy(st_TimeZone.tszTimeCountry, _T("基里巴斯线岛时间"));
-	stl_MapTimezone.insert(make_pair(_T("KLT"), st_TimeZone));
-    return XTRUE;
+	_tcsxcpy(st_TimeZone.tszTimeCountry, _X("基里巴斯线岛时间"));
+	stl_MapTimezone.insert(make_pair(_X("KLT"), st_TimeZone));
+    return TRUE;
 }
 /********************************************************************
 函数名称：PluginCore_UnInit
@@ -509,7 +509,7 @@ XBOOL CPlugin_Timezone::PluginCore_Init(XPVOID lParam)
 *********************************************************************/
 void CPlugin_Timezone::PluginCore_UnInit()
 {
-	Timezone_IsErrorOccur = XFALSE;
+	Timezone_IsErrorOccur = FALSE;
 
 	stl_MapTimezone.clear();
 }
@@ -523,13 +523,13 @@ void CPlugin_Timezone::PluginCore_UnInit()
 *********************************************************************/
 XBOOL CPlugin_Timezone::PluginCore_Call(XCHAR*** pppHDRList, int nListCount, int* pInt_HTTPCode, XCHAR* ptszMsgBuffer, int* pInt_MsgLen, LPCXSTR lpszMsgBuffer, int nMsgLen)
 {
-	Timezone_IsErrorOccur = XFALSE;
+	Timezone_IsErrorOccur = FALSE;
 
 	if ((NULL == pInt_HTTPCode) || (NULL == ptszMsgBuffer) || (NULL == pInt_MsgLen))
 	{
-		Timezone_IsErrorOccur = XTRUE;
+		Timezone_IsErrorOccur = TRUE;
 		Timezone_dwErrorCode = ERROR_XENGINE_APISERVICE_PLUGIN_MODULE_TIMEZONE_PARAMENT;
-		return XFALSE;
+		return FALSE;
 	}
 	XCHAR tszKeyName[128];
 	XCHAR tszParamType[128];
@@ -542,18 +542,18 @@ XBOOL CPlugin_Timezone::PluginCore_Call(XCHAR*** pppHDRList, int nListCount, int
 	memset(tszParamTime, '\0', sizeof(tszParamTime));
 
 	BaseLib_OperatorString_GetKeyValue((*pppHDRList)[1], "=", tszKeyName, tszParamType);
-	if (0 == _ttoi(tszParamType))
+	if (0 == _ttxoi(tszParamType))
 	{
 		//如果是统计
 		Plugin_Timezone_Count(ptszMsgBuffer, pInt_MsgLen);
 	}
-	else if (1 == _ttoi(tszParamType))
+	else if (1 == _ttxoi(tszParamType))
 	{
 		//如果是列举
 		BaseLib_OperatorString_GetKeyValue((*pppHDRList)[2], "=", tszKeyName, tszParamCvt);
 		Plugin_Timezone_List(tszParamCvt, ptszMsgBuffer, pInt_MsgLen);
 	}
-	else if (2 == _ttoi(tszParamType))
+	else if (2 == _ttxoi(tszParamType))
 	{
 		//如果是转换
 		BaseLib_OperatorString_GetKeyValue((*pppHDRList)[2], "=", tszKeyName, tszParamCvt);
@@ -561,19 +561,19 @@ XBOOL CPlugin_Timezone::PluginCore_Call(XCHAR*** pppHDRList, int nListCount, int
 		if (!Plugin_Timezone_Convert(tszParamCvt, tszParamTime, ptszMsgBuffer, pInt_MsgLen))
 		{
 			*pInt_HTTPCode = 404;
-			return XFALSE;
+			return FALSE;
 		}
 	}
 	*pInt_HTTPCode = 200;
 	
-	return XTRUE;
+	return TRUE;
 }
 //////////////////////////////////////////////////////////////////////////
 //                       保护函数
 //////////////////////////////////////////////////////////////////////////
 XBOOL CPlugin_Timezone::Plugin_Timezone_Count(XCHAR* ptszMsgBufer, int* pInt_Len)
 {
-	Timezone_IsErrorOccur = XFALSE;
+	Timezone_IsErrorOccur = FALSE;
 
 	Json::Value st_JsonRoot;
 	Json::Value st_JsonObject;
@@ -587,11 +587,11 @@ XBOOL CPlugin_Timezone::Plugin_Timezone_Count(XCHAR* ptszMsgBufer, int* pInt_Len
 
 	*pInt_Len = Json::writeString(st_JsonBuilder, st_JsonRoot).length();
 	memcpy(ptszMsgBufer, Json::writeString(st_JsonBuilder, st_JsonRoot).c_str(), *pInt_Len);
-	return XTRUE;
+	return TRUE;
 }
 XBOOL CPlugin_Timezone::Plugin_Timezone_List(LPCXSTR lpszConvert, XCHAR* ptszMsgBufer, int* pInt_Len)
 {
-	Timezone_IsErrorOccur = XFALSE;
+	Timezone_IsErrorOccur = FALSE;
 
 	int nPosStart = 0;
 	int nPosEnd = 0;
@@ -599,7 +599,7 @@ XBOOL CPlugin_Timezone::Plugin_Timezone_List(LPCXSTR lpszConvert, XCHAR* ptszMsg
 	Json::Value st_JsonObject;
 	Json::StreamWriterBuilder st_JsonBuilder;
 
-	_stscanf(lpszConvert, _T("%d-%d"), &nPosStart, &nPosEnd);
+	_stxscanf(lpszConvert, _X("%d-%d"), &nPosStart, &nPosEnd);
 
 	unordered_map<string, MODULEPLUGIN_TIMEZONE>::const_iterator stl_MapIterator = stl_MapTimezone.cbegin();
 	for (int i = 0; stl_MapIterator != stl_MapTimezone.cend(); stl_MapIterator++, i++)
@@ -622,11 +622,11 @@ XBOOL CPlugin_Timezone::Plugin_Timezone_List(LPCXSTR lpszConvert, XCHAR* ptszMsg
 
 	*pInt_Len = Json::writeString(st_JsonBuilder, st_JsonRoot).length();
 	memcpy(ptszMsgBufer, Json::writeString(st_JsonBuilder, st_JsonRoot).c_str(), *pInt_Len);
-	return XTRUE;
+	return TRUE;
 }
 XBOOL CPlugin_Timezone::Plugin_Timezone_Convert(LPCXSTR lpszConvert, LPCXSTR lpszTimeStr, XCHAR* ptszMsgBufer, int* pInt_Len)
 {
-	Timezone_IsErrorOccur = XFALSE;
+	Timezone_IsErrorOccur = FALSE;
 
 	Json::Value st_JsonRoot;
 	Json::Value st_JsonObject;
@@ -635,7 +635,7 @@ XBOOL CPlugin_Timezone::Plugin_Timezone_Convert(LPCXSTR lpszConvert, LPCXSTR lps
 	unordered_map<string, MODULEPLUGIN_TIMEZONE>::const_iterator stl_MapIterator = stl_MapTimezone.find(lpszConvert);
 	if (stl_MapIterator == stl_MapTimezone.end())
 	{
-		return XFALSE;
+		return FALSE;
 	}
 	XCHAR tszTimeStr[64];
 	XENGINE_LIBTIMER st_TimeStart;
@@ -647,9 +647,9 @@ XBOOL CPlugin_Timezone::Plugin_Timezone_Convert(LPCXSTR lpszConvert, LPCXSTR lps
 
 	st_TimeEnd = stl_MapIterator->second.st_TimeZone;
 
-	_stscanf(lpszTimeStr, _T("%04d-%02d-%02d_%02d:%02d:%02d"), &st_TimeStart.wYear, &st_TimeStart.wMonth, &st_TimeStart.wDay, &st_TimeStart.wHour, &st_TimeStart.wMinute, &st_TimeStart.wSecond);
+	_stxscanf(lpszTimeStr, _X("%04d-%02d-%02d_%02d:%02d:%02d"), &st_TimeStart.wYear, &st_TimeStart.wMonth, &st_TimeStart.wDay, &st_TimeStart.wHour, &st_TimeStart.wMinute, &st_TimeStart.wSecond);
 	BaseLib_OperatorTimeSpan_CalForStu(&st_TimeStart, &st_TimeEnd);
-	_stprintf(tszTimeStr, _T("%04d-%02d-%02d %02d:%02d:%02d"), st_TimeEnd.wYear, st_TimeEnd.wMonth, st_TimeEnd.wDay, st_TimeEnd.wHour, st_TimeEnd.wMinute, st_TimeEnd.wSecond);
+	_xstprintf(tszTimeStr, _X("%04d-%02d-%02d %02d:%02d:%02d"), st_TimeEnd.wYear, st_TimeEnd.wMonth, st_TimeEnd.wDay, st_TimeEnd.wHour, st_TimeEnd.wMinute, st_TimeEnd.wSecond);
 
 	st_JsonObject["tszTimeStr"] = tszTimeStr;
 	st_JsonObject["tszTimeZone"] = stl_MapIterator->first.c_str();
@@ -661,5 +661,5 @@ XBOOL CPlugin_Timezone::Plugin_Timezone_Convert(LPCXSTR lpszConvert, LPCXSTR lps
 
 	*pInt_Len = Json::writeString(st_JsonBuilder, st_JsonRoot).length();
 	memcpy(ptszMsgBufer, Json::writeString(st_JsonBuilder, st_JsonRoot).c_str(), *pInt_Len);
-	return XTRUE;
+	return TRUE;
 }

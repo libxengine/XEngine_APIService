@@ -36,33 +36,33 @@ CModuleHelp_IDCard::~CModuleHelp_IDCard()
 *********************************************************************/
 XBOOL CModuleHelp_IDCard::ModuleHelp_IDCard_CheckBirth(XENGINE_IDCARDINFO *pSt_IDInfo)
 {
-	ModuleHelp_IsErrorOccur = XFALSE;
+	ModuleHelp_IsErrorOccur = FALSE;
 
 	if (NULL == pSt_IDInfo)
 	{
-		ModuleHelp_IsErrorOccur = XTRUE;
+		ModuleHelp_IsErrorOccur = TRUE;
 		ModuleHelp_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_HELP_IDCARD_PARAMENT;
-		return XFALSE;
+		return FALSE;
 	}
 	if (pSt_IDInfo->nBirthYear < 1949 || pSt_IDInfo->nBirthYear > 2999)
 	{
-		ModuleHelp_IsErrorOccur = XTRUE;
+		ModuleHelp_IsErrorOccur = TRUE;
 		ModuleHelp_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_HELP_IDCARD_FMT;
-		return XFALSE;
+		return FALSE;
 	}
 	if (pSt_IDInfo->nBirthMonth < 1 || pSt_IDInfo->nBirthMonth > 12)
 	{
-		ModuleHelp_IsErrorOccur = XTRUE;
+		ModuleHelp_IsErrorOccur = TRUE;
 		ModuleHelp_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_HELP_IDCARD_FMT;
-		return XFALSE;
+		return FALSE;
 	}
 	if (pSt_IDInfo->nBirthDay < 1 || pSt_IDInfo->nBirthDay > 31)
 	{
-		ModuleHelp_IsErrorOccur = XTRUE;
+		ModuleHelp_IsErrorOccur = TRUE;
 		ModuleHelp_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_HELP_IDCARD_FMT;
-		return XFALSE;
+		return FALSE;
 	}
-	return XTRUE;
+	return TRUE;
 }
 /********************************************************************
 函数名称：ModuleHelp_IDCard_CheckBirth
@@ -79,13 +79,13 @@ XBOOL CModuleHelp_IDCard::ModuleHelp_IDCard_CheckBirth(XENGINE_IDCARDINFO *pSt_I
 *********************************************************************/
 XBOOL CModuleHelp_IDCard::ModuleHelp_IDCard_CheckSum(XENGINE_IDCARDINFO* pSt_IDInfo)
 {
-	ModuleHelp_IsErrorOccur = XFALSE;
+	ModuleHelp_IsErrorOccur = FALSE;
 
 	if (NULL == pSt_IDInfo)
 	{
-		ModuleHelp_IsErrorOccur = XTRUE;
+		ModuleHelp_IsErrorOccur = TRUE;
 		ModuleHelp_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_HELP_IDCARD_PARAMENT;
-		return XFALSE;
+		return FALSE;
 	}
 	int nCheck = 0;
 	int nIDArray[18];
@@ -103,9 +103,9 @@ XBOOL CModuleHelp_IDCard::ModuleHelp_IDCard_CheckSum(XENGINE_IDCARDINFO* pSt_IDI
 	}
 	if ((nIDArray[17] != nTable[nCheck % 11]) && (pSt_IDInfo->nCheck != 'x' || nTable[nCheck % 11] != 2))
 	{
-		ModuleHelp_IsErrorOccur = XTRUE;
+		ModuleHelp_IsErrorOccur = TRUE;
 		ModuleHelp_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_HELP_IDCARD_SUM;
-		return XFALSE;
+		return FALSE;
 	}
-	return XTRUE;
+	return TRUE;
 }

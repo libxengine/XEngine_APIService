@@ -45,40 +45,40 @@ CModulePlugin_Loader::~CModulePlugin_Loader()
 *********************************************************************/
 XBOOL CModulePlugin_Loader::ModulePlugin_Loader_Insert(LPCXSTR lpszModuleMethod, LPCXSTR lpszModuleName, int nType /* = 0 */)
 {
-    ModulePlugin_IsErrorOccur = XFALSE;
+    ModulePlugin_IsErrorOccur = FALSE;
 
     if ((NULL == lpszModuleMethod) || (NULL == lpszModuleName))
     {
-        ModulePlugin_IsErrorOccur = XTRUE;
+        ModulePlugin_IsErrorOccur = TRUE;
         ModulePlugin_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PLUGIN_PARAMENT;
-        return XFALSE;
+        return FALSE;
     }
     PLUGINCORE_LOADER st_PluginLoader;
     memset(&st_PluginLoader, '\0', sizeof(PLUGINCORE_LOADER));
 
 	st_PluginLoader.nType = nType;
-    _tcscpy(st_PluginLoader.tszModuleFile, lpszModuleName);
-    _tcscpy(st_PluginLoader.tszModuleMethod, lpszModuleMethod);
+    _tcsxcpy(st_PluginLoader.tszModuleFile, lpszModuleName);
+    _tcsxcpy(st_PluginLoader.tszModuleMethod, lpszModuleMethod);
 
 	if (0 == nType)
 	{
 		if (!ModulePlugin_LibCore_Push(&st_PluginLoader.xhToken, lpszModuleName))
 		{
-			return XFALSE;
+			return FALSE;
 		}
 	}
 	else
 	{
 		if (!ModulePlugin_LuaCore_Push(&st_PluginLoader.xhToken, lpszModuleName))
 		{
-			return XFALSE;
+			return FALSE;
 		}
 	}
 	
     st_Locker.lock();
     stl_MapLoader.insert(make_pair(lpszModuleMethod, st_PluginLoader));
     st_Locker.unlock();
-    return XTRUE;
+    return TRUE;
 }
 /********************************************************************
 函数名称：ModulePlugin_Loader_Find
@@ -100,29 +100,29 @@ XBOOL CModulePlugin_Loader::ModulePlugin_Loader_Insert(LPCXSTR lpszModuleMethod,
 *********************************************************************/
 XBOOL CModulePlugin_Loader::ModulePlugin_Loader_Find(LPCXSTR lpszMethodName, int* pInt_Type)
 {
-	ModulePlugin_IsErrorOccur = XFALSE;
+	ModulePlugin_IsErrorOccur = FALSE;
 
 	if (NULL == lpszMethodName)
 	{
-		ModulePlugin_IsErrorOccur = XTRUE;
+		ModulePlugin_IsErrorOccur = TRUE;
 		ModulePlugin_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PLUGIN_PARAMENT;
-		return XFALSE;
+		return FALSE;
 	}
 	st_Locker.lock_shared();
 	unordered_map<string, PLUGINCORE_LOADER>::const_iterator stl_MapIterator = stl_MapLoader.find(lpszMethodName);
 	if (stl_MapIterator == stl_MapLoader.end())
 	{
-		ModulePlugin_IsErrorOccur = XTRUE;
+		ModulePlugin_IsErrorOccur = TRUE;
 		ModulePlugin_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PLUGIN_NOTFOUND;
 		st_Locker.unlock_shared();
-		return XFALSE;
+		return FALSE;
 	}
 	if (NULL != pInt_Type)
 	{
 		*pInt_Type = stl_MapIterator->second.nType;
 	}
 	st_Locker.unlock_shared();
-	return XTRUE;
+	return TRUE;
 }
 /********************************************************************
 函数名称：ModulePlugin_Loader_Exec
@@ -164,22 +164,22 @@ XBOOL CModulePlugin_Loader::ModulePlugin_Loader_Find(LPCXSTR lpszMethodName, int
 *********************************************************************/
 XBOOL CModulePlugin_Loader::ModulePlugin_Loader_Exec(LPCXSTR lpszMethodName, XCHAR*** pppHDRList, int nListCount, int* pInt_HTTPCode, XCHAR* ptszMsgBuffer, int* pInt_MsgLen)
 {
-	ModulePlugin_IsErrorOccur = XFALSE;
+	ModulePlugin_IsErrorOccur = FALSE;
 
 	if (NULL == lpszMethodName)
 	{
-		ModulePlugin_IsErrorOccur = XTRUE;
+		ModulePlugin_IsErrorOccur = TRUE;
 		ModulePlugin_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PLUGIN_PARAMENT;
-		return XFALSE;
+		return FALSE;
 	}
 	st_Locker.lock_shared();
 	unordered_map<string, PLUGINCORE_LOADER>::const_iterator stl_MapIterator = stl_MapLoader.find(lpszMethodName);
 	if (stl_MapIterator == stl_MapLoader.end())
 	{
-		ModulePlugin_IsErrorOccur = XTRUE;
+		ModulePlugin_IsErrorOccur = TRUE;
 		ModulePlugin_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PLUGIN_NOTFOUND;
 		st_Locker.unlock_shared();
-		return XFALSE;
+		return FALSE;
 	}
 
 	if (0 == stl_MapIterator->second.nType)
@@ -187,7 +187,7 @@ XBOOL CModulePlugin_Loader::ModulePlugin_Loader_Exec(LPCXSTR lpszMethodName, XCH
 		if (!ModulePlugin_LibCore_Exec(stl_MapIterator->second.xhToken, pppHDRList, nListCount, pInt_HTTPCode, ptszMsgBuffer, pInt_MsgLen))
 		{
 			st_Locker.unlock_shared();
-			return XFALSE;
+			return FALSE;
 		}
 	}
 	else
@@ -195,11 +195,11 @@ XBOOL CModulePlugin_Loader::ModulePlugin_Loader_Exec(LPCXSTR lpszMethodName, XCH
 		if (!ModulePlugin_LuaCore_Exec(stl_MapIterator->second.xhToken, pppHDRList, nListCount, pInt_HTTPCode, ptszMsgBuffer, pInt_MsgLen))
 		{
 			st_Locker.unlock_shared();
-			return XFALSE;
+			return FALSE;
 		}
 	}
 	st_Locker.unlock_shared();
-	return XTRUE;
+	return TRUE;
 }
 /********************************************************************
 函数名称：ModulePlugin_Loader_Destory
@@ -211,10 +211,10 @@ XBOOL CModulePlugin_Loader::ModulePlugin_Loader_Exec(LPCXSTR lpszMethodName, XCH
 *********************************************************************/
 XBOOL CModulePlugin_Loader::ModulePlugin_Loader_Destory()
 {
-	ModulePlugin_IsErrorOccur = XFALSE;
+	ModulePlugin_IsErrorOccur = FALSE;
 
 	st_Locker.lock();
 	stl_MapLoader.clear();
 	st_Locker.unlock_shared();
-	return XTRUE;
+	return TRUE;
 }

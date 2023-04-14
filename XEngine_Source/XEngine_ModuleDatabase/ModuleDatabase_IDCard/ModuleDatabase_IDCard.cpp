@@ -36,23 +36,23 @@ CModuleDatabase_IDCard::~CModuleDatabase_IDCard()
 *********************************************************************/
 XBOOL CModuleDatabase_IDCard::ModuleDatabase_IDCard_Init(DATABASE_MYSQL_CONNECTINFO* pSt_DBConnector)
 {
-	DBModule_IsErrorOccur = XFALSE;
+	DBModule_IsErrorOccur = FALSE;
 
 	if (NULL == pSt_DBConnector)
 	{
-		DBModule_IsErrorOccur = XTRUE;
+		DBModule_IsErrorOccur = TRUE;
 		DBModule_dwErrorCode = ERROR_APISERVICE_MODULE_DATABASE_PARAMENT;
-		return XFALSE;
+		return FALSE;
 	}
 	//连接数据库
-	_tcscpy(pSt_DBConnector->tszDBName, _T("XEngine_APIInfo"));
+	_tcsxcpy(pSt_DBConnector->tszDBName, _X("XEngine_APIInfo"));
 	if (!DataBase_MySQL_Connect(&xhDBSQL, pSt_DBConnector))
 	{
-		DBModule_IsErrorOccur = XTRUE;
+		DBModule_IsErrorOccur = TRUE;
 		DBModule_dwErrorCode = DataBase_GetLastError();
-		return XFALSE;
+		return FALSE;
 	}
-	return XTRUE;
+	return TRUE;
 }
 /********************************************************************
 函数名称：ModuleDatabase_IDCard_Destory
@@ -64,10 +64,10 @@ XBOOL CModuleDatabase_IDCard::ModuleDatabase_IDCard_Init(DATABASE_MYSQL_CONNECTI
 *********************************************************************/
 XBOOL CModuleDatabase_IDCard::ModuleDatabase_IDCard_Destory()
 {
-	DBModule_IsErrorOccur = XFALSE;
+	DBModule_IsErrorOccur = FALSE;
 
 	DataBase_MySQL_Close(xhDBSQL);
-	return XTRUE;
+	return TRUE;
 }
 /********************************************************************
 函数名称：ModuleDatabase_IDCard_QueryRegion
@@ -89,12 +89,12 @@ XBOOL CModuleDatabase_IDCard::ModuleDatabase_IDCard_Destory()
 *********************************************************************/
 XBOOL CModuleDatabase_IDCard::ModuleDatabase_IDCard_QueryRegion(XENGINE_IDREGION* pSt_IDRegion, XENGINE_IDCARDINFO* pSt_IDInfo)
 {
-	DBModule_IsErrorOccur = XFALSE;
+	DBModule_IsErrorOccur = FALSE;
 
 	ModuleDatabase_IDCard_QueryProvincer(pSt_IDRegion, pSt_IDInfo);
 	ModuleDatabase_IDCard_QueryCity(pSt_IDRegion, pSt_IDInfo);
 	ModuleDatabase_IDCard_QueryCounty(pSt_IDRegion, pSt_IDInfo);
-	return XTRUE;
+	return TRUE;
 }
 /********************************************************************
 函数名称：ModuleDatabase_IDCard_QueryProvincer
@@ -116,13 +116,13 @@ XBOOL CModuleDatabase_IDCard::ModuleDatabase_IDCard_QueryRegion(XENGINE_IDREGION
 *********************************************************************/
 XBOOL CModuleDatabase_IDCard::ModuleDatabase_IDCard_QueryProvincer(XENGINE_IDREGION* pSt_IDRegion, XENGINE_IDCARDINFO* pSt_IDInfo)
 {
-    DBModule_IsErrorOccur = XFALSE;
+    DBModule_IsErrorOccur = FALSE;
 
     if ((NULL == pSt_IDRegion) || (NULL == pSt_IDInfo))
     {
-        DBModule_IsErrorOccur = XTRUE;
+        DBModule_IsErrorOccur = TRUE;
         DBModule_dwErrorCode = ERROR_APISERVICE_MODULE_DATABASE_PARAMENT;
-        return XFALSE;
+        return FALSE;
     }
     //查询
 	__int64u nLine = 0;
@@ -131,24 +131,24 @@ XBOOL CModuleDatabase_IDCard::ModuleDatabase_IDCard_QueryProvincer(XENGINE_IDREG
     XCHAR tszSQLStatement[1024];
 
     memset(tszSQLStatement, '\0', sizeof(tszSQLStatement));
-	_stprintf(tszSQLStatement, _T("SELECT * FROM `RegionID` WHERE code = '%02d0000'"), pSt_IDInfo->nIDProvince);
+	_xstprintf(tszSQLStatement, _X("SELECT * FROM `RegionID` WHERE code = '%02d0000'"), pSt_IDInfo->nIDProvince);
 	if (!DataBase_MySQL_ExecuteQuery(xhDBSQL, &xhTable, tszSQLStatement, &nLine, &nRow))
 	{
-		DBModule_IsErrorOccur = XTRUE;
+		DBModule_IsErrorOccur = TRUE;
 		DBModule_dwErrorCode = DataBase_GetLastError();
-		return XFALSE;
+		return FALSE;
 	}
 	if (nLine <= 0)
 	{
-		DBModule_IsErrorOccur = XTRUE;
+		DBModule_IsErrorOccur = TRUE;
 		DBModule_dwErrorCode = ERROR_APISERVICE_MODULE_DATABASE_NOTFOUND;
-		return XFALSE;
+		return FALSE;
 	}
 	XCHAR** pptszResult = DataBase_MySQL_GetResult(xhDBSQL, xhTable);
-	_tcscpy(pSt_IDRegion->tszProvincer, pptszResult[1]);
+	_tcsxcpy(pSt_IDRegion->tszProvincer, pptszResult[1]);
 
 	DataBase_MySQL_FreeResult(xhDBSQL, xhTable);
-	return XTRUE;
+	return TRUE;
 }
 /********************************************************************
 函数名称：ModuleDatabase_IDCard_QueryCity
@@ -170,13 +170,13 @@ XBOOL CModuleDatabase_IDCard::ModuleDatabase_IDCard_QueryProvincer(XENGINE_IDREG
 *********************************************************************/
 XBOOL CModuleDatabase_IDCard::ModuleDatabase_IDCard_QueryCity(XENGINE_IDREGION* pSt_IDRegion, XENGINE_IDCARDINFO* pSt_IDInfo)
 {
-	DBModule_IsErrorOccur = XFALSE;
+	DBModule_IsErrorOccur = FALSE;
 
 	if ((NULL == pSt_IDRegion) || (NULL == pSt_IDInfo))
 	{
-		DBModule_IsErrorOccur = XTRUE;
+		DBModule_IsErrorOccur = TRUE;
 		DBModule_dwErrorCode = ERROR_APISERVICE_MODULE_DATABASE_PARAMENT;
-		return XFALSE;
+		return FALSE;
 	}
 	//查询
 	__int64u nLine = 0;
@@ -185,24 +185,24 @@ XBOOL CModuleDatabase_IDCard::ModuleDatabase_IDCard_QueryCity(XENGINE_IDREGION* 
 	XCHAR tszSQLStatement[1024];
 
 	memset(tszSQLStatement, '\0', sizeof(tszSQLStatement));
-	_stprintf(tszSQLStatement, _T("SELECT * FROM `RegionID` WHERE code = '%02d%02d00'"), pSt_IDInfo->nIDProvince, pSt_IDInfo->nIDCity);
+	_xstprintf(tszSQLStatement, _X("SELECT * FROM `RegionID` WHERE code = '%02d%02d00'"), pSt_IDInfo->nIDProvince, pSt_IDInfo->nIDCity);
 	if (!DataBase_MySQL_ExecuteQuery(xhDBSQL, &xhTable, tszSQLStatement, &nLine, &nRow))
 	{
-		DBModule_IsErrorOccur = XTRUE;
+		DBModule_IsErrorOccur = TRUE;
 		DBModule_dwErrorCode = DataBase_GetLastError();
-		return XFALSE;
+		return FALSE;
 	}
 	if (nLine <= 0)
 	{
-		DBModule_IsErrorOccur = XTRUE;
+		DBModule_IsErrorOccur = TRUE;
 		DBModule_dwErrorCode = ERROR_APISERVICE_MODULE_DATABASE_NOTFOUND;
-		return XFALSE;
+		return FALSE;
 	}
 	XCHAR** pptszResult = DataBase_MySQL_GetResult(xhDBSQL, xhTable);
-	_tcscpy(pSt_IDRegion->tszCity, pptszResult[1]);
+	_tcsxcpy(pSt_IDRegion->tszCity, pptszResult[1]);
 
 	DataBase_MySQL_FreeResult(xhDBSQL, xhTable);
-	return XTRUE;
+	return TRUE;
 }
 /********************************************************************
 函数名称：ModuleDatabase_IDCard_QueryCounty
@@ -224,13 +224,13 @@ XBOOL CModuleDatabase_IDCard::ModuleDatabase_IDCard_QueryCity(XENGINE_IDREGION* 
 *********************************************************************/
 XBOOL CModuleDatabase_IDCard::ModuleDatabase_IDCard_QueryCounty(XENGINE_IDREGION* pSt_IDRegion, XENGINE_IDCARDINFO* pSt_IDInfo)
 {
-	DBModule_IsErrorOccur = XFALSE;
+	DBModule_IsErrorOccur = FALSE;
 
 	if ((NULL == pSt_IDRegion) || (NULL == pSt_IDInfo))
 	{
-		DBModule_IsErrorOccur = XTRUE;
+		DBModule_IsErrorOccur = TRUE;
 		DBModule_dwErrorCode = ERROR_APISERVICE_MODULE_DATABASE_PARAMENT;
-		return XFALSE;
+		return FALSE;
 	}
 	//查询
 	__int64u nLine = 0;
@@ -239,22 +239,22 @@ XBOOL CModuleDatabase_IDCard::ModuleDatabase_IDCard_QueryCounty(XENGINE_IDREGION
 	XCHAR tszSQLStatement[1024];
 
 	memset(tszSQLStatement, '\0', sizeof(tszSQLStatement));
-	_stprintf(tszSQLStatement, _T("SELECT * FROM `RegionID` WHERE code = '%02d%02d%02d'"), pSt_IDInfo->nIDProvince, pSt_IDInfo->nIDCity, pSt_IDInfo->nIDCounty);
+	_xstprintf(tszSQLStatement, _X("SELECT * FROM `RegionID` WHERE code = '%02d%02d%02d'"), pSt_IDInfo->nIDProvince, pSt_IDInfo->nIDCity, pSt_IDInfo->nIDCounty);
 	if (!DataBase_MySQL_ExecuteQuery(xhDBSQL, &xhTable, tszSQLStatement, &nLine, &nRow))
 	{
-		DBModule_IsErrorOccur = XTRUE;
+		DBModule_IsErrorOccur = TRUE;
 		DBModule_dwErrorCode = DataBase_GetLastError();
-		return XFALSE;
+		return FALSE;
 	}
 	if (nLine <= 0)
 	{
-		DBModule_IsErrorOccur = XTRUE;
+		DBModule_IsErrorOccur = TRUE;
 		DBModule_dwErrorCode = ERROR_APISERVICE_MODULE_DATABASE_NOTFOUND;
-		return XFALSE;
+		return FALSE;
 	}
 	XCHAR** pptszResult = DataBase_MySQL_GetResult(xhDBSQL, xhTable);
-	_tcscpy(pSt_IDRegion->tszCounty, pptszResult[1]);
+	_tcsxcpy(pSt_IDRegion->tszCounty, pptszResult[1]);
 
 	DataBase_MySQL_FreeResult(xhDBSQL, xhTable);
-	return XTRUE;
+	return TRUE;
 }
