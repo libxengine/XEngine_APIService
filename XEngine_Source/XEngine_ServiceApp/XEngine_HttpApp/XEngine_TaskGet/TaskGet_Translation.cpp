@@ -1,6 +1,6 @@
 ﻿#include "../XEngine_Hdr.h"
 
-XBOOL HTTPTask_TaskGet_Translation(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer, int nConvertType)
+bool HTTPTask_TaskGet_Translation(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer, int nConvertType)
 {
 	int nMsgLen = 4096;
 	int nPktLen = 4096;
@@ -21,7 +21,7 @@ XBOOL HTTPTask_TaskGet_Translation(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer
 	memset(&st_HDRParam, '\0', sizeof(RFCCOMPONENTS_HTTP_HDRPARAM));
 
 	st_HDRParam.nHttpCode = 200; //HTTP CODE码
-	st_HDRParam.bIsClose = TRUE; //收到回复后就关闭
+	st_HDRParam.bIsClose = true; //收到回复后就关闭
 	
 	st_LanguageInfo.enType = nConvertType;
 	//转换类型
@@ -32,7 +32,7 @@ XBOOL HTTPTask_TaskGet_Translation(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer
 		HttpProtocol_Server_SendMsgEx(xhHTTPPacket, tszMsgBuffer, &nMsgLen, &st_HDRParam, tszPktBuffer, nPktLen);
 		XEngine_Network_Send(lpszClientAddr, tszMsgBuffer, nMsgLen);
 		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("HTTP客户端:%s,请求的翻译类型不正确:%d,原始字符串:%s"), lpszClientAddr, nConvertType, lpszMsgBuffer);
-		return FALSE;
+		return false;
 	}
 	_xstprintf(tszUrlBuffer, st_ServiceConfig.st_XApi.tszTranslationUrl, tszTypeBuffer, lpszMsgBuffer);
 	APIClient_Http_Request(_X("GET"), tszUrlBuffer, NULL, NULL, &ptszBodyBuffer, &nBLen);
@@ -44,7 +44,7 @@ XBOOL HTTPTask_TaskGet_Translation(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer
 		HttpProtocol_Server_SendMsgEx(xhHTTPPacket, tszMsgBuffer, &nMsgLen, &st_HDRParam, tszPktBuffer, nPktLen);
 		XEngine_Network_Send(lpszClientAddr, tszMsgBuffer, nMsgLen);
 		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("HTTP客户端:%s,请求的翻译失败,类型:%d,原始字符串:%s"), lpszClientAddr, nConvertType, lpszMsgBuffer);
-		return FALSE;
+		return false;
 	}
 	//打包发送
 	ModuleProtocol_Packet_LanguageQuery(tszPktBuffer, &nPktLen, &st_LanguageInfo);
@@ -52,5 +52,5 @@ XBOOL HTTPTask_TaskGet_Translation(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer
 	XEngine_Network_Send(lpszClientAddr, tszMsgBuffer, nMsgLen);
 	BaseLib_OperatorMemory_FreeCStyle((XPPMEM)&ptszBodyBuffer);
 	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("HTTP客户端:%s,请求语言翻译成功,原始语言:%s,目标语言:%s"), lpszClientAddr, st_LanguageInfo.tszSourceStr, st_LanguageInfo.tszDestStr);
-	return TRUE;
+	return true;
 }

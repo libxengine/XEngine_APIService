@@ -10,14 +10,14 @@
 //    Purpose:     配置文件操作代码
 //    History:
 *********************************************************************/
-XBOOL XEngine_Configure_Parament(int argc, char** argv, XENGINE_SERVICECONFIG* pSt_Configure)
+bool XEngine_Configure_Parament(int argc, char** argv, XENGINE_SERVICECONFIG* pSt_Configure)
 {
 	LPCXSTR lpszConfigFile = _X("./XEngine_Config/XEngine_Config.json");
 
 	if (!ModuleConfigure_Json_File(lpszConfigFile, pSt_Configure))
 	{
 		printf("解析配置文件失败,ModuleConfigure_Json_File:%lX\n", ModuleConfigure_GetLastError());
-		return FALSE;
+		return false;
 	}
 
 	for (int i = 0; i < argc; i++)
@@ -25,7 +25,7 @@ XBOOL XEngine_Configure_Parament(int argc, char** argv, XENGINE_SERVICECONFIG* p
 		if ((0 == _tcsxcmp("-h", argv[i])) || (0 == _tcsxcmp("-H", argv[i])))
 		{
 			XEngine_Configure_Help();
-			return FALSE;
+			return false;
 		}
 		else if (0 == _tcsxcmp("-d", argv[i]))
 		{
@@ -33,7 +33,7 @@ XBOOL XEngine_Configure_Parament(int argc, char** argv, XENGINE_SERVICECONFIG* p
 		}
 	}
 
-	return TRUE;
+	return true;
 }
 
 void XEngine_Configure_Help()

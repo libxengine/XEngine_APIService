@@ -18,9 +18,9 @@ public:
 	CModuleDatabase_Bank();
 	~CModuleDatabase_Bank();
 public:
-	XBOOL ModuleDatabase_Bank_Init(DATABASE_MYSQL_CONNECTINFO* pSt_DBConnector);
-	XBOOL ModuleDatabase_Bank_Destory();
-	XBOOL ModuleDatabase_Bank_Query(XENGINE_BANKINFO* pSt_BankInfo);
+	bool ModuleDatabase_Bank_Init(DATABASE_MYSQL_CONNECTINFO* pSt_DBConnector);
+	bool ModuleDatabase_Bank_Destory();
+	bool ModuleDatabase_Bank_Query(XENGINE_BANKINFO* pSt_BankInfo);
 protected:
 private:
 	XNETHANDLE xhDBSQL;

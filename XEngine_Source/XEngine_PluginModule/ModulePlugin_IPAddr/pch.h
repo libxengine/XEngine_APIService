@@ -33,7 +33,7 @@ using namespace std;
 //    Purpose:     公用头文件
 //    History:
 *********************************************************************/
-extern XBOOL IPAddr_IsErrorOccur;
+extern bool IPAddr_IsErrorOccur;
 extern XLONG IPAddr_dwErrorCode;
 
 #include "ModulePlugin_IPAddr/ModulePlugin_IPAddr.h"

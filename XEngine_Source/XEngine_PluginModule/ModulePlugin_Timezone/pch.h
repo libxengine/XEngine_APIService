@@ -37,7 +37,7 @@ using namespace std;
 //    Purpose:     公用头文件
 //    History:
 *********************************************************************/
-extern XBOOL Timezone_IsErrorOccur;
+extern bool Timezone_IsErrorOccur;
 extern XLONG Timezone_dwErrorCode;
 
 

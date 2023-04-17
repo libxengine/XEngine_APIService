@@ -38,7 +38,7 @@ using namespace std;
 //    Purpose:     公用头文件
 //    History:
 *********************************************************************/
-extern XBOOL ModuleProtocol_IsErrorOccur;
+extern bool ModuleProtocol_IsErrorOccur;
 extern XLONG ModuleProtocol_dwErrorCode;
 
 #ifdef _MSC_BUILD

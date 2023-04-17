@@ -33,7 +33,7 @@ using namespace std;
 //    Purpose:     公用头文件
 //    History:
 *********************************************************************/
-extern XBOOL Phone_IsErrorOccur;
+extern bool Phone_IsErrorOccur;
 extern XLONG Phone_dwErrorCode;
 
 #include "ModulePlugin_DBPhone/ModulePlugin_DBPhone.h"

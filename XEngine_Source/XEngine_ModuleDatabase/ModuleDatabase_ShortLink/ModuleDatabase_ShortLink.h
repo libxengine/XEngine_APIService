@@ -18,11 +18,11 @@ public:
 	CModuleDatabase_ShortLink();
 	~CModuleDatabase_ShortLink();
 public:
-	XBOOL ModuleDatabase_ShortLink_Init(DATABASE_MYSQL_CONNECTINFO* pSt_DBConnector);
-	XBOOL ModuleDatabase_ShortLink_Destory();
-	XBOOL ModuleDatabase_ShortLink_Insert(XENGINE_SHORTLINK* pSt_SLinkInfo);
-	XBOOL ModuleDatabase_ShortLink_Query(XENGINE_SHORTLINK* pSt_SLinkInfo);
-	XBOOL ModuleDatabase_ShortLink_Delete(XENGINE_SHORTLINK* pSt_SLinkInfo);
+	bool ModuleDatabase_ShortLink_Init(DATABASE_MYSQL_CONNECTINFO* pSt_DBConnector);
+	bool ModuleDatabase_ShortLink_Destory();
+	bool ModuleDatabase_ShortLink_Insert(XENGINE_SHORTLINK* pSt_SLinkInfo);
+	bool ModuleDatabase_ShortLink_Query(XENGINE_SHORTLINK* pSt_SLinkInfo);
+	bool ModuleDatabase_ShortLink_Delete(XENGINE_SHORTLINK* pSt_SLinkInfo);
 protected:
 private:
 	XNETHANDLE xhDBSQL;

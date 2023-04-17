@@ -17,10 +17,10 @@ public:
 	CPlugin_Password();
 	~CPlugin_Password();
 public:
-	XBOOL PluginCore_Init(XPVOID lParam);
+	bool PluginCore_Init(XPVOID lParam);
 	void PluginCore_UnInit();
-	XBOOL PluginCore_Call(XCHAR*** pppHDRList, int nListCount, int* pInt_HTTPCode, XCHAR* ptszMsgBuffer, int* pInt_MsgLen, LPCXSTR lpszMsgBuffer, int nMsgLen);
+	bool PluginCore_Call(XCHAR*** pppHDRList, int nListCount, int* pInt_HTTPCode, XCHAR* ptszMsgBuffer, int* pInt_MsgLen, LPCXSTR lpszMsgBuffer, int nMsgLen);
 protected:
-	XBOOL Plugin_Password_Creator(LPCXSTR lpszPassType, LPCXSTR lpszLength, XCHAR* ptszPassStr);
+	bool Plugin_Password_Creator(LPCXSTR lpszPassType, LPCXSTR lpszLength, XCHAR* ptszPassStr);
 private:
 };

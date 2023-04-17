@@ -32,11 +32,11 @@ public:
 	CModulePlugin_DBPhone();
 	~CModulePlugin_DBPhone();
 public:
-	XBOOL ModuleDatabase_Phone_Init(LPCXSTR lpszSQLFile);
-	XBOOL ModuleDatabase_Phone_Destory();
-	XBOOL ModuleDatabase_Phone_Query(LPCXSTR lpszPhoneNumber, XENGINE_PHONEINFO* pSt_PhoneInfo);
+	bool ModuleDatabase_Phone_Init(LPCXSTR lpszSQLFile);
+	bool ModuleDatabase_Phone_Destory();
+	bool ModuleDatabase_Phone_Query(LPCXSTR lpszPhoneNumber, XENGINE_PHONEINFO* pSt_PhoneInfo);
 protected:
-	XBOOL ModuleDatabase_Phone_Convert(LPCXSTR lpszPhoneInfo, int nMsgLen, XENGINE_PHONEINFO* pSt_PhoneInfo);
+	bool ModuleDatabase_Phone_Convert(LPCXSTR lpszPhoneInfo, int nMsgLen, XENGINE_PHONEINFO* pSt_PhoneInfo);
 private:
 	XENGINE_DBPHONEHDR st_PhoneHdr;
 private:

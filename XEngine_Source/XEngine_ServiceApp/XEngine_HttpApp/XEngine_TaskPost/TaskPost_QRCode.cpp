@@ -1,6 +1,6 @@
 ﻿#include "../XEngine_Hdr.h"
 
-XBOOL HTTPTask_TaskPost_QRCode(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer, int nMsgLen, int nType)
+bool HTTPTask_TaskPost_QRCode(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer, int nMsgLen, int nType)
 {
 	int nSDLen = 0;
 	int nRVLen = 0;
@@ -15,7 +15,7 @@ XBOOL HTTPTask_TaskPost_QRCode(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer, in
 	memset(&st_HDRParam, '\0', sizeof(RFCCOMPONENTS_HTTP_HDRPARAM));
 
 	st_HDRParam.nHttpCode = 200; //HTTP CODE码
-	st_HDRParam.bIsClose = TRUE; //收到回复后就关闭
+	st_HDRParam.bIsClose = true; //收到回复后就关闭
 	//0创建,1解析
 	if (0 == nType)
 	{
@@ -38,5 +38,5 @@ XBOOL HTTPTask_TaskPost_QRCode(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer, in
 	free(ptszSDBuffer);
 	ptszRVBuffer = NULL;
 	ptszSDBuffer = NULL;
-	return TRUE;
+	return true;
 }

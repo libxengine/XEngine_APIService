@@ -25,7 +25,7 @@ extern "C" XLONG ModulePlugin_GetLastError(int* pInt_SysError = NULL);
   意思：是否成功初始化
 备注：
 *********************************************************************/
-extern "C" XBOOL ModulePlugin_LibCore_Init();
+extern "C" bool ModulePlugin_LibCore_Init();
 /********************************************************************
 函数名称：ModulePlugin_LibCore_Push
 函数功能：添加一个标准的插件到插件框架中
@@ -49,7 +49,7 @@ extern "C" XBOOL ModulePlugin_LibCore_Init();
   意思：是否成功添加
 备注：
 *********************************************************************/
-extern "C" XBOOL ModulePlugin_LibCore_Push(XNETHANDLE * pxhNet, LPCXSTR lpszPluginFile, XPVOID lParam = NULL);
+extern "C" bool ModulePlugin_LibCore_Push(XNETHANDLE * pxhNet, LPCXSTR lpszPluginFile, XPVOID lParam = NULL);
 /********************************************************************
 函数名称：ModulePlugin_LibCore_Exec
 函数功能：执行一次
@@ -98,7 +98,7 @@ extern "C" XBOOL ModulePlugin_LibCore_Push(XNETHANDLE * pxhNet, LPCXSTR lpszPlug
   意思：是否成功
 备注：
 *********************************************************************/
-extern "C" XBOOL ModulePlugin_LibCore_Exec(XNETHANDLE xhModule, XCHAR * **pppHDRList, int nListCount, int* pInt_HTTPCode, XCHAR * ptszMsgBuffer, int* pInt_MsgLen, LPCXSTR lpszMsgBufer = NULL, int nMsgLen = 0);
+extern "C" bool ModulePlugin_LibCore_Exec(XNETHANDLE xhModule, XCHAR * **pppHDRList, int nListCount, int* pInt_HTTPCode, XCHAR * ptszMsgBuffer, int* pInt_MsgLen, LPCXSTR lpszMsgBufer = NULL, int nMsgLen = 0);
 /********************************************************************
 函数名称：ModulePlugin_LibCore_Destroy
 函数功能：销毁插件核心并且清理资源
@@ -107,7 +107,7 @@ extern "C" XBOOL ModulePlugin_LibCore_Exec(XNETHANDLE xhModule, XCHAR * **pppHDR
   意思：是否成功销毁
 备注：
 *********************************************************************/
-extern "C" XBOOL ModulePlugin_LibCore_Destroy();
+extern "C" bool ModulePlugin_LibCore_Destroy();
 /*********************************************************************************
 *                        LUA插件框架导出函数定义                                 *
 *********************************************************************************/
@@ -119,7 +119,7 @@ extern "C" XBOOL ModulePlugin_LibCore_Destroy();
   意思：是否成功初始化
 备注：
 *********************************************************************/
-extern "C" XBOOL ModulePlugin_LuaCore_Init();
+extern "C" bool ModulePlugin_LuaCore_Init();
 /********************************************************************
 函数名称：ModulePlugin_LuaCore_Push
 函数功能：添加一个标准的插件到插件框架中
@@ -143,7 +143,7 @@ extern "C" XBOOL ModulePlugin_LuaCore_Init();
   意思：是否成功添加
 备注：
 *********************************************************************/
-extern "C" XBOOL ModulePlugin_LuaCore_Push(XNETHANDLE* pxhModule, LPCXSTR lpszPluginFile, XPVOID lParam = NULL);
+extern "C" bool ModulePlugin_LuaCore_Push(XNETHANDLE* pxhModule, LPCXSTR lpszPluginFile, XPVOID lParam = NULL);
 /********************************************************************
 函数名称：ModulePlugin_LuaCore_Exec
 函数功能：执行一次
@@ -192,7 +192,7 @@ extern "C" XBOOL ModulePlugin_LuaCore_Push(XNETHANDLE* pxhModule, LPCXSTR lpszPl
   意思：是否成功
 备注：
 *********************************************************************/
-extern "C" XBOOL ModulePlugin_LuaCore_Exec(XNETHANDLE xhModule, XCHAR*** pppHDRList, int nListCount, int* pInt_HTTPCode, XCHAR* ptszMsgBuffer, int* pInt_MsgLen, LPCXSTR lpszMsgBufer = NULL, int nMsgLen = 0);
+extern "C" bool ModulePlugin_LuaCore_Exec(XNETHANDLE xhModule, XCHAR*** pppHDRList, int nListCount, int* pInt_HTTPCode, XCHAR* ptszMsgBuffer, int* pInt_MsgLen, LPCXSTR lpszMsgBufer = NULL, int nMsgLen = 0);
 /********************************************************************
 函数名称：ModulePlugin_LuaCore_Destroy
 函数功能：销毁插件核心并且清理资源
@@ -201,7 +201,7 @@ extern "C" XBOOL ModulePlugin_LuaCore_Exec(XNETHANDLE xhModule, XCHAR*** pppHDRL
   意思：是否成功销毁
 备注：
 *********************************************************************/
-extern "C" XBOOL ModulePlugin_LuaCore_Destroy();
+extern "C" bool ModulePlugin_LuaCore_Destroy();
 /*********************************************************************************
 *                        加载器导出函数定义                                      *
 *********************************************************************************/
@@ -228,7 +228,7 @@ extern "C" XBOOL ModulePlugin_LuaCore_Destroy();
   意思：是否成功
 备注：
 *********************************************************************/
-extern "C" XBOOL ModulePlugin_Loader_Insert(LPCXSTR lpszModuleMethod, LPCXSTR lpszModuleName, int nType = 0);
+extern "C" bool ModulePlugin_Loader_Insert(LPCXSTR lpszModuleMethod, LPCXSTR lpszModuleName, int nType = 0);
 /********************************************************************
 函数名称：ModulePlugin_Loader_Find
 函数功能：查找方法是否注册
@@ -247,7 +247,7 @@ extern "C" XBOOL ModulePlugin_Loader_Insert(LPCXSTR lpszModuleMethod, LPCXSTR lp
   意思：是否成功
 备注：
 *********************************************************************/
-extern "C" XBOOL ModulePlugin_Loader_Find(LPCXSTR lpszMethodName, int* pInt_Type);
+extern "C" bool ModulePlugin_Loader_Find(LPCXSTR lpszMethodName, int* pInt_Type);
 /********************************************************************
 函数名称：ModulePlugin_Loader_Exec
 函数功能：执行一次插件
@@ -286,7 +286,7 @@ extern "C" XBOOL ModulePlugin_Loader_Find(LPCXSTR lpszMethodName, int* pInt_Type
   意思：是否成功
 备注：
 *********************************************************************/
-extern "C" XBOOL ModulePlugin_Loader_Exec(LPCXSTR lpszMethodName, XCHAR * **pppHDRList, int nListCount, int* pInt_HTTPCode, XCHAR * ptszMsgBuffer, int* pInt_MsgLen);
+extern "C" bool ModulePlugin_Loader_Exec(LPCXSTR lpszMethodName, XCHAR * **pppHDRList, int nListCount, int* pInt_HTTPCode, XCHAR * ptszMsgBuffer, int* pInt_MsgLen);
 /********************************************************************
 函数名称：ModulePlugin_Loader_Destory
 函数功能：销毁加载器
@@ -295,4 +295,4 @@ extern "C" XBOOL ModulePlugin_Loader_Exec(LPCXSTR lpszMethodName, XCHAR * **pppH
   意思：是否成功
 备注：
 *********************************************************************/
-extern "C" XBOOL ModulePlugin_Loader_Destory();
+extern "C" bool ModulePlugin_Loader_Destory();

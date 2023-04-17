@@ -1,6 +1,6 @@
 ﻿#include "../XEngine_Hdr.h"
 
-XBOOL HTTPTask_TastPost_LogInfo(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer, int nMsgLen, int nType)
+bool HTTPTask_TastPost_LogInfo(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer, int nMsgLen, int nType)
 {
 	int nSDLen = 0;
 	int nRVLen = 0;
@@ -15,7 +15,7 @@ XBOOL HTTPTask_TastPost_LogInfo(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer, i
 	memset(&st_HDRParam, '\0', sizeof(RFCCOMPONENTS_HTTP_HDRPARAM));
 
 	st_HDRParam.nHttpCode = 200; //HTTP CODE码
-	st_HDRParam.bIsClose = TRUE; //收到回复后就关闭
+	st_HDRParam.bIsClose = true; //收到回复后就关闭
 	ModuleProtocol_Parse_XLog(lpszMsgBuffer, nMsgLen, &st_XLogInfo);
 
 	if (0 == nType)
@@ -52,5 +52,5 @@ XBOOL HTTPTask_TastPost_LogInfo(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer, i
 		XEngine_Network_Send(lpszClientAddr, tszSDBuffer, nSDLen);
 		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("HTTP客户端:%s,请求日志删除成功,删除的表:%s"), lpszClientAddr, st_XLogInfo.tszTableName);
 	}
-	return TRUE;
+	return true;
 }

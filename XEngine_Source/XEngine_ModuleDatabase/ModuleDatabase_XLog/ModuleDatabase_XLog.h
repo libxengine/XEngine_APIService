@@ -18,12 +18,12 @@ public:
 	CModuleDatabase_XLog();
 	~CModuleDatabase_XLog();
 public:
-	XBOOL ModuleDatabase_XLog_Init(DATABASE_MYSQL_CONNECTINFO* pSt_DBConnector);
-	XBOOL ModuleDatabase_XLog_Destory();
-	XBOOL ModuleDatabase_XLog_Create(LPCXSTR lpszTableName);
-	XBOOL ModuleDatabase_XLog_Insert(XENGINE_XLOGINFO* pSt_XLogInfo);
-	XBOOL ModuleDatabase_XLog_Query(XENGINE_XLOGINFO*** pppSt_XLogInfo, int* pInt_ListCount, LPCXSTR lpszTableName, LPCXSTR lpszTimeStart, LPCXSTR lpszTimeEnd);
-	XBOOL ModuleDatabase_XLog_Delete(LPCXSTR lpszTableName);
+	bool ModuleDatabase_XLog_Init(DATABASE_MYSQL_CONNECTINFO* pSt_DBConnector);
+	bool ModuleDatabase_XLog_Destory();
+	bool ModuleDatabase_XLog_Create(LPCXSTR lpszTableName);
+	bool ModuleDatabase_XLog_Insert(XENGINE_XLOGINFO* pSt_XLogInfo);
+	bool ModuleDatabase_XLog_Query(XENGINE_XLOGINFO*** pppSt_XLogInfo, int* pInt_ListCount, LPCXSTR lpszTableName, LPCXSTR lpszTimeStart, LPCXSTR lpszTimeEnd);
+	bool ModuleDatabase_XLog_Delete(LPCXSTR lpszTableName);
 protected:
 private:
 	XNETHANDLE xhDBSQL;

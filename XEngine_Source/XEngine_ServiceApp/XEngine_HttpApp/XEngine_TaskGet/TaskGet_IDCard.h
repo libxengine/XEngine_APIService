@@ -1,3 +1,3 @@
 ﻿#pragma once
 
-XBOOL HTTPTask_TaskGet_IDCard(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer);
+bool HTTPTask_TaskGet_IDCard(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer);

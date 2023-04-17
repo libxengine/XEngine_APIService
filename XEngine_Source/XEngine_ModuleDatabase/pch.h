@@ -43,8 +43,8 @@
 //    Purpose:     
 //    History:
 *********************************************************************/
-extern XLONG DBModule_IsErrorOccur;
-extern XBOOL DBModule_dwErrorCode;
+extern bool DBModule_IsErrorOccur;
+extern XLONG DBModule_dwErrorCode;
 
 #ifdef _MSC_BUILD
 #pragma comment(lib,"Ws2_32")

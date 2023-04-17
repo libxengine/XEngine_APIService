@@ -145,7 +145,7 @@ typedef struct tag_XEngine_P2XPIO_Protocol
 	XCHAR tszDestUser[32];                                                 //要连接的用户
 	XCHAR tszConnectAddr[32];                                              //连接的IP地址
 	int nDestPort;                                                        //要连接的端口
-	XBOOL bIsTcp;                                                          //连接类型TCP,否则为UDP
+	bool bIsTcp;                                                          //连接类型TCP,否则为UDP
 }XENGINE_P2XPIO_PROTOCOL, * LPXENGINE_P2XPIO_PROTOCOL;
 //邮编信息
 typedef struct

@@ -39,21 +39,21 @@ CModuleProtocol_Parse::~CModuleProtocol_Parse()
   意思：是否成功
 备注：
 *********************************************************************/
-XBOOL CModuleProtocol_Parse::ModuleProtocol_Parse_IDCard(LPCXSTR lpszMsgBuffer, XENGINE_IDCARDINFO* pSt_IDInfo)
+bool CModuleProtocol_Parse::ModuleProtocol_Parse_IDCard(LPCXSTR lpszMsgBuffer, XENGINE_IDCARDINFO* pSt_IDInfo)
 {
-	ModuleProtocol_IsErrorOccur = FALSE;
+	ModuleProtocol_IsErrorOccur = false;
 
 	if ((NULL == lpszMsgBuffer) || (NULL == pSt_IDInfo))
 	{
-		ModuleProtocol_IsErrorOccur = TRUE;
+		ModuleProtocol_IsErrorOccur = true;
 		ModuleProtocol_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PROTOCOL_PARSE_PARAMENT;
-		return FALSE;
+		return false;
 	}
 	if (_tcsxlen(lpszMsgBuffer) != 18)
 	{
-		ModuleProtocol_IsErrorOccur = TRUE;
+		ModuleProtocol_IsErrorOccur = true;
 		ModuleProtocol_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PROTOCOL_PARSE_LEN;
-		return FALSE;
+		return false;
 	}
 	int nPos = 0;
 	XCHAR tszTmpBuffer[16];
@@ -62,9 +62,9 @@ XBOOL CModuleProtocol_Parse::ModuleProtocol_Parse_IDCard(LPCXSTR lpszMsgBuffer, 
 	{
 		if (!isdigit(lpszMsgBuffer[i]))
 		{
-			ModuleProtocol_IsErrorOccur = TRUE;
+			ModuleProtocol_IsErrorOccur = true;
 			ModuleProtocol_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PROTOCOL_PARSE_FMT;
-			return FALSE;
+			return false;
 		}
 	}
 	_tcsxcpy(pSt_IDInfo->tszIDNumber, lpszMsgBuffer);
@@ -113,7 +113,7 @@ XBOOL CModuleProtocol_Parse::ModuleProtocol_Parse_IDCard(LPCXSTR lpszMsgBuffer, 
 	memcpy(tszTmpBuffer, lpszMsgBuffer + nPos, 1);
 	pSt_IDInfo->nCheck = _ttxoi(tszTmpBuffer);
 	nPos += 1;
-	return TRUE;
+	return true;
 }
 /********************************************************************
 函数名称：ModuleProtocol_Parse_Bank
@@ -138,15 +138,15 @@ XBOOL CModuleProtocol_Parse::ModuleProtocol_Parse_IDCard(LPCXSTR lpszMsgBuffer, 
   意思：是否成功
 备注：
 *********************************************************************/
-XBOOL CModuleProtocol_Parse::ModuleProtocol_Parse_Bank(LPCXSTR lpszMsgBuffer, int nMsgLen, XENGINE_BANKINFO* pSt_BankInfo)
+bool CModuleProtocol_Parse::ModuleProtocol_Parse_Bank(LPCXSTR lpszMsgBuffer, int nMsgLen, XENGINE_BANKINFO* pSt_BankInfo)
 {
-	ModuleProtocol_IsErrorOccur = FALSE;
+	ModuleProtocol_IsErrorOccur = false;
 
 	if ((NULL == lpszMsgBuffer) || (0 == nMsgLen))
 	{
-		ModuleProtocol_IsErrorOccur = TRUE;
+		ModuleProtocol_IsErrorOccur = true;
 		ModuleProtocol_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PROTOCOL_PARSE_PARAMENT;
-		return FALSE;
+		return false;
 	}
 	Json::Value st_JsonRoot;
 	JSONCPP_STRING st_JsonError;
@@ -155,17 +155,17 @@ XBOOL CModuleProtocol_Parse::ModuleProtocol_Parse_Bank(LPCXSTR lpszMsgBuffer, in
 	std::unique_ptr<Json::CharReader> const pSt_JsonReader(st_JsonBuilder.newCharReader());
 	if (!pSt_JsonReader->parse(lpszMsgBuffer, lpszMsgBuffer + nMsgLen, &st_JsonRoot, &st_JsonError))
 	{
-		ModuleProtocol_IsErrorOccur = TRUE;
+		ModuleProtocol_IsErrorOccur = true;
 		ModuleProtocol_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PROTOCOL_PARSE_JSON;
-		return FALSE;
+		return false;
 	}
 	//{"messages":[{"errorCodes":"CARD_BIN_NOT_MATCH","name":"cardNo"}],"validated":false,"stat":"ok","key":"62215546546546"}
 	//{"cardType":"DC","bank":"CMB","key":"62215546546546"messages":[],"validated":true,"stat":"ok"}
 	if (!st_JsonRoot["validated"].asBool())
 	{
-		ModuleProtocol_IsErrorOccur = TRUE;
+		ModuleProtocol_IsErrorOccur = true;
 		ModuleProtocol_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PROTOCOL_PARSE_VALIDATE;
-		return FALSE;
+		return false;
 	}
 	LPCXSTR lpszTypeDC = _X("DC");
 	LPCXSTR lpszTypeCC = _X("CC");
@@ -182,7 +182,7 @@ XBOOL CModuleProtocol_Parse::ModuleProtocol_Parse_Bank(LPCXSTR lpszMsgBuffer, in
 		pSt_BankInfo->enBankType = ENUM_XENGINE_APISERVICE_BANK_TYPE_BC;
 	}
 	_tcsxcpy(pSt_BankInfo->tszBankAbridge, st_JsonRoot["bank"].asCString());
-	return TRUE;
+	return true;
 }
 /********************************************************************
 函数名称：ModuleProtocol_Parse_Translation
@@ -207,15 +207,15 @@ XBOOL CModuleProtocol_Parse::ModuleProtocol_Parse_Bank(LPCXSTR lpszMsgBuffer, in
   意思：是否成功
 备注：
 *********************************************************************/
-XBOOL CModuleProtocol_Parse::ModuleProtocol_Parse_Translation(LPCXSTR lpszMsgBuffer, int nMsgLen, XENGINE_LANGUAGEINFO* pSt_LanguageInfo)
+bool CModuleProtocol_Parse::ModuleProtocol_Parse_Translation(LPCXSTR lpszMsgBuffer, int nMsgLen, XENGINE_LANGUAGEINFO* pSt_LanguageInfo)
 {
-	ModuleProtocol_IsErrorOccur = FALSE;
+	ModuleProtocol_IsErrorOccur = false;
 
 	if ((NULL == lpszMsgBuffer) || (0 == nMsgLen))
 	{
-		ModuleProtocol_IsErrorOccur = TRUE;
+		ModuleProtocol_IsErrorOccur = true;
 		ModuleProtocol_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PROTOCOL_PARSE_PARAMENT;
-		return FALSE;
+		return false;
 	}
 	Json::Value st_JsonRoot;
 	JSONCPP_STRING st_JsonError;
@@ -224,22 +224,22 @@ XBOOL CModuleProtocol_Parse::ModuleProtocol_Parse_Translation(LPCXSTR lpszMsgBuf
 	std::unique_ptr<Json::CharReader> const pSt_JsonReader(st_JsonBuilder.newCharReader());
 	if (!pSt_JsonReader->parse(lpszMsgBuffer, lpszMsgBuffer + nMsgLen, &st_JsonRoot, &st_JsonError))
 	{
-		ModuleProtocol_IsErrorOccur = TRUE;
+		ModuleProtocol_IsErrorOccur = true;
 		ModuleProtocol_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PROTOCOL_PARSE_JSON;
-		return FALSE;
+		return false;
 	}
 	//{"type":"ZH_CN2EN","errorCode":0,"elapsedTime":1,"translateResult":[[{"src":"计算","tgt":"To calculate"}]]}
 	if (0 != st_JsonRoot["errorCode"].asInt())
 	{
-		ModuleProtocol_IsErrorOccur = TRUE;
+		ModuleProtocol_IsErrorOccur = true;
 		ModuleProtocol_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PROTOCOL_PARSE_VALIDATE;
-		return FALSE;
+		return false;
 	}
 	Json::Value st_JsonTranslation = st_JsonRoot["translateResult"];
 
 	_tcsxcpy(pSt_LanguageInfo->tszSourceStr, st_JsonTranslation[0][0]["src"].asCString());
 	_tcsxcpy(pSt_LanguageInfo->tszDestStr, st_JsonTranslation[0][0]["tgt"].asCString());
-	return TRUE;
+	return true;
 }
 /********************************************************************
 函数名称：ModuleProtocol_Parse_P2PClient
@@ -264,15 +264,15 @@ XBOOL CModuleProtocol_Parse::ModuleProtocol_Parse_Translation(LPCXSTR lpszMsgBuf
   意思：是否成功
 备注：
 *********************************************************************/
-XBOOL CModuleProtocol_Parse::ModuleProtocol_Parse_P2PClient(LPCXSTR lpszMsgBuffer, int nMsgLen, XENGINE_P2XPPEER_PROTOCOL* pSt_P2XPPeer)
+bool CModuleProtocol_Parse::ModuleProtocol_Parse_P2PClient(LPCXSTR lpszMsgBuffer, int nMsgLen, XENGINE_P2XPPEER_PROTOCOL* pSt_P2XPPeer)
 {
-	ModuleProtocol_IsErrorOccur = FALSE;
+	ModuleProtocol_IsErrorOccur = false;
 
 	if ((NULL == lpszMsgBuffer) || (NULL == pSt_P2XPPeer))
 	{
-		ModuleProtocol_IsErrorOccur = TRUE;
+		ModuleProtocol_IsErrorOccur = true;
 		ModuleProtocol_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PROTOCOL_PARSE_PARAMENT;
-		return FALSE;
+		return false;
 	}
 	Json::Value st_JsonRoot;
 	Json::CharReaderBuilder st_JsonBuild;
@@ -282,9 +282,9 @@ XBOOL CModuleProtocol_Parse::ModuleProtocol_Parse_P2PClient(LPCXSTR lpszMsgBuffe
 	//解析JSON
 	if (!pSt_JsonReader->parse(lpszMsgBuffer, lpszMsgBuffer + nMsgLen, &st_JsonRoot, &st_JsonError))
 	{
-		ModuleProtocol_IsErrorOccur = TRUE;
+		ModuleProtocol_IsErrorOccur = true;
 		ModuleProtocol_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PROTOCOL_PARSE_JSON;
-		return FALSE;
+		return false;
 	}
 	delete pSt_JsonReader;
 	pSt_JsonReader = NULL;
@@ -309,7 +309,7 @@ XBOOL CModuleProtocol_Parse::ModuleProtocol_Parse_P2PClient(LPCXSTR lpszMsgBuffe
 	{
 		pSt_P2XPPeer->dwPeerType = st_JsonRoot["dwPeerType"].asInt();
 	}
-	return TRUE;
+	return true;
 }
 /********************************************************************
 函数名称：ModuleProtocol_Parse_ZIPCode
@@ -334,15 +334,15 @@ XBOOL CModuleProtocol_Parse::ModuleProtocol_Parse_P2PClient(LPCXSTR lpszMsgBuffe
   意思：是否成功
 备注：
 *********************************************************************/
-XBOOL CModuleProtocol_Parse::ModuleProtocol_Parse_ZIPCode(LPCXSTR lpszMsgBuffer, int nMsgLen, XENGINE_ZIPINFO* pSt_ZIPInfo)
+bool CModuleProtocol_Parse::ModuleProtocol_Parse_ZIPCode(LPCXSTR lpszMsgBuffer, int nMsgLen, XENGINE_ZIPINFO* pSt_ZIPInfo)
 {
-	ModuleProtocol_IsErrorOccur = FALSE;
+	ModuleProtocol_IsErrorOccur = false;
 
 	if ((NULL == lpszMsgBuffer) || (NULL == pSt_ZIPInfo))
 	{
-		ModuleProtocol_IsErrorOccur = TRUE;
+		ModuleProtocol_IsErrorOccur = true;
 		ModuleProtocol_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PROTOCOL_PARSE_PARAMENT;
-		return FALSE;
+		return false;
 	}
 	Json::Value st_JsonRoot;
 	JSONCPP_STRING st_JsonError;
@@ -351,9 +351,9 @@ XBOOL CModuleProtocol_Parse::ModuleProtocol_Parse_ZIPCode(LPCXSTR lpszMsgBuffer,
 	std::unique_ptr<Json::CharReader> const pSt_JsonReader(st_ReaderBuilder.newCharReader());
 	if (!pSt_JsonReader->parse(lpszMsgBuffer, lpszMsgBuffer + nMsgLen, &st_JsonRoot, &st_JsonError))
 	{
-		ModuleProtocol_IsErrorOccur = TRUE;
+		ModuleProtocol_IsErrorOccur = true;
 		ModuleProtocol_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PROTOCOL_PARSE_PARAMENT;
-		return FALSE;
+		return false;
 	}
 
 	if (!st_JsonRoot["tszProvincer"].isNull())
@@ -373,7 +373,7 @@ XBOOL CModuleProtocol_Parse::ModuleProtocol_Parse_ZIPCode(LPCXSTR lpszMsgBuffer,
 	{
 		pSt_ZIPInfo->nZipCode = st_JsonRoot["nZipCode"].asInt();
 	}
-	return TRUE;
+	return true;
 }
 /********************************************************************
 函数名称：ModuleProtocol_Parse_XLog
@@ -398,15 +398,15 @@ XBOOL CModuleProtocol_Parse::ModuleProtocol_Parse_ZIPCode(LPCXSTR lpszMsgBuffer,
   意思：是否成功
 备注：
 *********************************************************************/
-XBOOL CModuleProtocol_Parse::ModuleProtocol_Parse_XLog(LPCXSTR lpszMsgBuffer, int nMsgLen, XENGINE_XLOGINFO* pSt_XLogInfo)
+bool CModuleProtocol_Parse::ModuleProtocol_Parse_XLog(LPCXSTR lpszMsgBuffer, int nMsgLen, XENGINE_XLOGINFO* pSt_XLogInfo)
 {
-	ModuleProtocol_IsErrorOccur = FALSE;
+	ModuleProtocol_IsErrorOccur = false;
 
 	if ((NULL == lpszMsgBuffer) || (NULL == pSt_XLogInfo))
 	{
-		ModuleProtocol_IsErrorOccur = TRUE;
+		ModuleProtocol_IsErrorOccur = true;
 		ModuleProtocol_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PROTOCOL_PARSE_PARAMENT;
-		return FALSE;
+		return false;
 	}
 	Json::Value st_JsonRoot;
 	JSONCPP_STRING st_JsonError;
@@ -415,9 +415,9 @@ XBOOL CModuleProtocol_Parse::ModuleProtocol_Parse_XLog(LPCXSTR lpszMsgBuffer, in
 	std::unique_ptr<Json::CharReader> const pSt_JsonReader(st_ReaderBuilder.newCharReader());
 	if (!pSt_JsonReader->parse(lpszMsgBuffer, lpszMsgBuffer + nMsgLen, &st_JsonRoot, &st_JsonError))
 	{
-		ModuleProtocol_IsErrorOccur = TRUE;
+		ModuleProtocol_IsErrorOccur = true;
 		ModuleProtocol_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PROTOCOL_PARSE_PARAMENT;
-		return FALSE;
+		return false;
 	}
 
 	if (!st_JsonRoot["tszTableName"].isNull())
@@ -460,7 +460,7 @@ XBOOL CModuleProtocol_Parse::ModuleProtocol_Parse_XLog(LPCXSTR lpszMsgBuffer, in
 	{
 		pSt_XLogInfo->st_ProtocolLog.nLogLevel = st_JsonRoot["nLogLevel"].asInt();
 	}
-	return TRUE;
+	return true;
 }
 /********************************************************************
 函数名称：ModuleProtocol_Parse_QRCode
@@ -485,15 +485,15 @@ XBOOL CModuleProtocol_Parse::ModuleProtocol_Parse_XLog(LPCXSTR lpszMsgBuffer, in
   意思：是否成功
 备注：
 *********************************************************************/
-XBOOL CModuleProtocol_Parse::ModuleProtocol_Parse_QRCode(LPCXSTR lpszMsgBuffer, int nMsgLen, XENGINE_QRCODE* pSt_QRCode)
+bool CModuleProtocol_Parse::ModuleProtocol_Parse_QRCode(LPCXSTR lpszMsgBuffer, int nMsgLen, XENGINE_QRCODE* pSt_QRCode)
 {
-	ModuleProtocol_IsErrorOccur = FALSE;
+	ModuleProtocol_IsErrorOccur = false;
 
 	if ((NULL == lpszMsgBuffer) || (NULL == pSt_QRCode))
 	{
-		ModuleProtocol_IsErrorOccur = TRUE;
+		ModuleProtocol_IsErrorOccur = true;
 		ModuleProtocol_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PROTOCOL_PARSE_PARAMENT;
-		return FALSE;
+		return false;
 	}
 	Json::Value st_JsonRoot;
 	JSONCPP_STRING st_JsonError;
@@ -502,9 +502,9 @@ XBOOL CModuleProtocol_Parse::ModuleProtocol_Parse_QRCode(LPCXSTR lpszMsgBuffer, 
 	std::unique_ptr<Json::CharReader> const pSt_JsonReader(st_ReaderBuilder.newCharReader());
 	if (!pSt_JsonReader->parse(lpszMsgBuffer, lpszMsgBuffer + nMsgLen, &st_JsonRoot, &st_JsonError))
 	{
-		ModuleProtocol_IsErrorOccur = TRUE;
+		ModuleProtocol_IsErrorOccur = true;
 		ModuleProtocol_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PROTOCOL_PARSE_PARAMENT;
-		return FALSE;
+		return false;
 	}
 
 	if (!st_JsonRoot["tszMsgBuffer"].isNull())
@@ -515,7 +515,7 @@ XBOOL CModuleProtocol_Parse::ModuleProtocol_Parse_QRCode(LPCXSTR lpszMsgBuffer, 
 	{
 		_tcsxcpy(pSt_QRCode->tszFmtBuffer, st_JsonRoot["tszFmtBuffer"].asCString());
 	}
-	return TRUE;
+	return true;
 }
 /********************************************************************
 函数名称：ModuleProtocol_Parse_SocketTest
@@ -540,15 +540,15 @@ XBOOL CModuleProtocol_Parse::ModuleProtocol_Parse_QRCode(LPCXSTR lpszMsgBuffer, 
   意思：是否成功
 备注：
 *********************************************************************/
-XBOOL CModuleProtocol_Parse::ModuleProtocol_Parse_SocketTest(LPCXSTR lpszMsgBuffer, int nMsgLen, XENGINE_SOCKETTEST* pSt_SocketTest)
+bool CModuleProtocol_Parse::ModuleProtocol_Parse_SocketTest(LPCXSTR lpszMsgBuffer, int nMsgLen, XENGINE_SOCKETTEST* pSt_SocketTest)
 {
-	ModuleProtocol_IsErrorOccur = FALSE;
+	ModuleProtocol_IsErrorOccur = false;
 
 	if ((NULL == lpszMsgBuffer) || (NULL == pSt_SocketTest))
 	{
-		ModuleProtocol_IsErrorOccur = TRUE;
+		ModuleProtocol_IsErrorOccur = true;
 		ModuleProtocol_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PROTOCOL_PARSE_PARAMENT;
-		return FALSE;
+		return false;
 	}
 	Json::Value st_JsonRoot;
 	JSONCPP_STRING st_JsonError;
@@ -557,9 +557,9 @@ XBOOL CModuleProtocol_Parse::ModuleProtocol_Parse_SocketTest(LPCXSTR lpszMsgBuff
 	std::unique_ptr<Json::CharReader> const pSt_JsonReader(st_ReaderBuilder.newCharReader());
 	if (!pSt_JsonReader->parse(lpszMsgBuffer, lpszMsgBuffer + nMsgLen, &st_JsonRoot, &st_JsonError))
 	{
-		ModuleProtocol_IsErrorOccur = TRUE;
+		ModuleProtocol_IsErrorOccur = true;
 		ModuleProtocol_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PROTOCOL_PARSE_PARAMENT;
-		return FALSE;
+		return false;
 	}
 
 	if (!st_JsonRoot["tszAPIUrl"].isNull())
@@ -620,7 +620,7 @@ XBOOL CModuleProtocol_Parse::ModuleProtocol_Parse_SocketTest(LPCXSTR lpszMsgBuff
 	{
 		pSt_SocketTest->st_SocketData.nSDLen = st_JsonRoot["nSDLen"].asInt();
 	}
-	return TRUE;
+	return true;
 }
 /********************************************************************
 函数名称：ModuleProtocol_Parse_ShortLink
@@ -645,15 +645,15 @@ XBOOL CModuleProtocol_Parse::ModuleProtocol_Parse_SocketTest(LPCXSTR lpszMsgBuff
   意思：是否成功
 备注：
 *********************************************************************/
-XBOOL CModuleProtocol_Parse::ModuleProtocol_Parse_ShortLink(LPCXSTR lpszMsgBuffer, int nMsgLen, XENGINE_SHORTLINK* pSt_ShortLink)
+bool CModuleProtocol_Parse::ModuleProtocol_Parse_ShortLink(LPCXSTR lpszMsgBuffer, int nMsgLen, XENGINE_SHORTLINK* pSt_ShortLink)
 {
-	ModuleProtocol_IsErrorOccur = FALSE;
+	ModuleProtocol_IsErrorOccur = false;
 
 	if ((NULL == lpszMsgBuffer) || (NULL == pSt_ShortLink))
 	{
-		ModuleProtocol_IsErrorOccur = TRUE;
+		ModuleProtocol_IsErrorOccur = true;
 		ModuleProtocol_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PROTOCOL_PARSE_PARAMENT;
-		return FALSE;
+		return false;
 	}
 	Json::Value st_JsonRoot;
 	JSONCPP_STRING st_JsonError;
@@ -662,9 +662,9 @@ XBOOL CModuleProtocol_Parse::ModuleProtocol_Parse_ShortLink(LPCXSTR lpszMsgBuffe
 	std::unique_ptr<Json::CharReader> const pSt_JsonReader(st_ReaderBuilder.newCharReader());
 	if (!pSt_JsonReader->parse(lpszMsgBuffer, lpszMsgBuffer + nMsgLen, &st_JsonRoot, &st_JsonError))
 	{
-		ModuleProtocol_IsErrorOccur = TRUE;
+		ModuleProtocol_IsErrorOccur = true;
 		ModuleProtocol_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PROTOCOL_PARSE_PARAMENT;
-		return FALSE;
+		return false;
 	}
 
 	if (!st_JsonRoot["tszFullUrl"].isNull())
@@ -695,5 +695,5 @@ XBOOL CModuleProtocol_Parse::ModuleProtocol_Parse_ShortLink(LPCXSTR lpszMsgBuffe
 	{
 		pSt_ShortLink->nLength = st_JsonRoot["nLength"].asInt();
 	}
-	return TRUE;
+	return true;
 }

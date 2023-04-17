@@ -11,7 +11,7 @@
 //    Purpose:     导出实现
 //    History:
 *********************************************************************/
-XBOOL Timezone_IsErrorOccur = FALSE;
+bool Timezone_IsErrorOccur = false;
 XLONG Timezone_dwErrorCode = 0;
 //////////////////////////////////////////////////////////////////////////
 CPlugin_Timezone m_PluginTimes;
@@ -25,7 +25,7 @@ extern "C" XLONG PluginCore_GetLastError()
 /*********************************************************************************
 *                                导出函数定义                                    *
 *********************************************************************************/
-extern "C" XBOOL PluginCore_Init(XPVOID lParam)
+extern "C" bool PluginCore_Init(XPVOID lParam)
 {
 	return m_PluginTimes.PluginCore_Init(lParam);
 }
@@ -33,7 +33,7 @@ extern "C" void PluginCore_UnInit()
 {
 	m_PluginTimes.PluginCore_UnInit();
 }
-extern "C" XBOOL PluginCore_Call(XCHAR * **pppHDRList, int nListCount, int* pInt_HTTPCode, XCHAR * ptszMsgBuffer, int* pInt_MsgLen, LPCXSTR lpszMsgBuffer, int nMsgLen)
+extern "C" bool PluginCore_Call(XCHAR * **pppHDRList, int nListCount, int* pInt_HTTPCode, XCHAR * ptszMsgBuffer, int* pInt_MsgLen, LPCXSTR lpszMsgBuffer, int nMsgLen)
 {
 	return m_PluginTimes.PluginCore_Call(pppHDRList, nListCount, pInt_HTTPCode, ptszMsgBuffer, pInt_MsgLen, lpszMsgBuffer, nMsgLen);
 }

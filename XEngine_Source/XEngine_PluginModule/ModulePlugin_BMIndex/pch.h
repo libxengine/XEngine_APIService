@@ -37,7 +37,7 @@ using namespace std;
 //    Purpose:     公用头文件
 //    History:
 *********************************************************************/
-extern XBOOL BMIndex_IsErrorOccur;
+extern bool BMIndex_IsErrorOccur;
 extern XLONG BMIndex_dwErrorCode;
 
 

@@ -16,7 +16,7 @@
 typedef struct 
 {
 	XCHAR tszIPAddr[128];                     //本机IP地址,根据需要配置
-	XBOOL bDeamon;                             //是否以守护进程启动,LINUX有效
+	bool bDeamon;                             //是否以守护进程启动,LINUX有效
 	int nHttpPort;                            //HTTP服务端口
 	struct
 	{
@@ -52,7 +52,7 @@ typedef struct
 	}st_XApi;
 	struct  
 	{
-		XBOOL bEnable;                         //是否启用
+		bool bEnable;                         //是否启用
 		XCHAR tszPluginLib[MAX_PATH];         //配置文件地址
 		XCHAR tszPluginLua[MAX_PATH];         //配置文件地址
 	}st_XPlugin;
@@ -100,7 +100,7 @@ typedef struct
 //插件
 typedef struct
 {
-	XBOOL bEnable;
+	bool bEnable;
 	XCHAR tszPluginMethod[MAX_PATH];
 	XCHAR tszPluginFile[MAX_PATH];
 }XENGINE_PLUGININFO;
@@ -111,7 +111,7 @@ typedef struct
 //////////////////////////////////////////////////////////////////////////
 typedef struct
 {
-	XBOOL bEnable;
+	bool bEnable;
 	XCHAR tszOPMethod[MAX_PATH];
 	XCHAR tszOPNote[MAX_PATH];
 	XCHAR tszOPExample[MAX_PATH];
@@ -145,7 +145,7 @@ extern "C" XLONG ModuleConfigure_GetLastError(int* pInt_ErrorCode = NULL);
   意思：是否成功
 备注：
 *********************************************************************/
-extern "C" XBOOL ModuleConfigure_Json_File(LPCXSTR lpszConfigFile, XENGINE_SERVICECONFIG* pSt_ServerConfig);
+extern "C" bool ModuleConfigure_Json_File(LPCXSTR lpszConfigFile, XENGINE_SERVICECONFIG* pSt_ServerConfig);
 /********************************************************************
 函数名称：ModuleConfigure_Json_OPenccFile
 函数功能：读取JSON配置文件
@@ -164,7 +164,7 @@ extern "C" XBOOL ModuleConfigure_Json_File(LPCXSTR lpszConfigFile, XENGINE_SERVI
   意思：是否成功
 备注：
 *********************************************************************/
-extern "C" XBOOL ModuleConfigure_Json_OPenccFile(LPCXSTR lpszConfigFile, XENGINE_OPENCCCONFIG* pSt_OPenccConfig);
+extern "C" bool ModuleConfigure_Json_OPenccFile(LPCXSTR lpszConfigFile, XENGINE_OPENCCCONFIG* pSt_OPenccConfig);
 /********************************************************************
 函数名称：ModuleConfigure_Json_QRCodeFile
 函数功能：读取JSON配置文件
@@ -183,7 +183,7 @@ extern "C" XBOOL ModuleConfigure_Json_OPenccFile(LPCXSTR lpszConfigFile, XENGINE
   意思：是否成功
 备注：
 *********************************************************************/
-extern "C" XBOOL ModuleConfigure_Json_QRCodeFile(LPCXSTR lpszConfigFile, XENGINE_QRCODECONFIG* pSt_QRCodeConfig);
+extern "C" bool ModuleConfigure_Json_QRCodeFile(LPCXSTR lpszConfigFile, XENGINE_QRCODECONFIG* pSt_QRCodeConfig);
 /********************************************************************
 函数名称：ModuleConfigure_Json_PluginFile
 函数功能：读取JSON配置文件
@@ -202,4 +202,4 @@ extern "C" XBOOL ModuleConfigure_Json_QRCodeFile(LPCXSTR lpszConfigFile, XENGINE
   意思：是否成功
 备注：
 *********************************************************************/
-extern "C" XBOOL ModuleConfigure_Json_PluginFile(LPCXSTR lpszConfigFile, XENGINE_PLUGINCONFIG* pSt_PluginConfig);
+extern "C" bool ModuleConfigure_Json_PluginFile(LPCXSTR lpszConfigFile, XENGINE_PLUGINCONFIG* pSt_PluginConfig);

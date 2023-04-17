@@ -23,13 +23,13 @@ public:
 	CPlugin_Timezone();
 	~CPlugin_Timezone();
 public:
-	XBOOL PluginCore_Init(XPVOID lParam);
+	bool PluginCore_Init(XPVOID lParam);
 	void PluginCore_UnInit();
-	XBOOL PluginCore_Call(XCHAR*** pppHDRList, int nListCount, int* pInt_HTTPCode, XCHAR* ptszMsgBuffer, int* pInt_MsgLen, LPCXSTR lpszMsgBuffer, int nMsgLen);
+	bool PluginCore_Call(XCHAR*** pppHDRList, int nListCount, int* pInt_HTTPCode, XCHAR* ptszMsgBuffer, int* pInt_MsgLen, LPCXSTR lpszMsgBuffer, int nMsgLen);
 protected:
-	XBOOL Plugin_Timezone_Count(XCHAR* ptszMsgBufer, int* pInt_Len);
-	XBOOL Plugin_Timezone_List(LPCXSTR lpszConvert, XCHAR* ptszMsgBufer, int* pInt_Len);
-	XBOOL Plugin_Timezone_Convert(LPCXSTR lpszConvert, LPCXSTR lpszTimeStr, XCHAR* ptszMsgBufer, int* pInt_Len);
+	bool Plugin_Timezone_Count(XCHAR* ptszMsgBufer, int* pInt_Len);
+	bool Plugin_Timezone_List(LPCXSTR lpszConvert, XCHAR* ptszMsgBufer, int* pInt_Len);
+	bool Plugin_Timezone_Convert(LPCXSTR lpszConvert, LPCXSTR lpszTimeStr, XCHAR* ptszMsgBufer, int* pInt_Len);
 private:
 	unordered_map<string, MODULEPLUGIN_TIMEZONE> stl_MapTimezone;
 };

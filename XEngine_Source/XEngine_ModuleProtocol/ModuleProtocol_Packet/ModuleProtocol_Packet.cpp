@@ -49,15 +49,15 @@ CModuleProtocol_Packet::~CModuleProtocol_Packet()
   意思：是否成功
 备注：
 *********************************************************************/
-XBOOL CModuleProtocol_Packet::ModuleProtocol_Packet_Common(XCHAR* ptszMsgBuffer, int* pInt_MsgLen, int nCode /* = 0 */, LPCXSTR lpszMsgBuffer /* = NULL */)
+bool CModuleProtocol_Packet::ModuleProtocol_Packet_Common(XCHAR* ptszMsgBuffer, int* pInt_MsgLen, int nCode /* = 0 */, LPCXSTR lpszMsgBuffer /* = NULL */)
 {
-	ModuleProtocol_IsErrorOccur = FALSE;
+	ModuleProtocol_IsErrorOccur = false;
 
 	if ((NULL == ptszMsgBuffer) || (NULL == pInt_MsgLen))
 	{
-		ModuleProtocol_IsErrorOccur = TRUE;
+		ModuleProtocol_IsErrorOccur = true;
 		ModuleProtocol_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PROTOCOL_PACKET_PARAMENT;
-		return FALSE;
+		return false;
 	}
 	Json::Value st_JsonRoot;
 
@@ -68,7 +68,7 @@ XBOOL CModuleProtocol_Packet::ModuleProtocol_Packet_Common(XCHAR* ptszMsgBuffer,
 	}
 	*pInt_MsgLen = st_JsonRoot.toStyledString().length();
 	memcpy(ptszMsgBuffer, st_JsonRoot.toStyledString().c_str(), *pInt_MsgLen);
-	return TRUE;
+	return true;
 }
 /********************************************************************
 函数名称：ModuleProtocol_Packet_IDQuery
@@ -108,15 +108,15 @@ XBOOL CModuleProtocol_Packet::ModuleProtocol_Packet_Common(XCHAR* ptszMsgBuffer,
   意思：是否成功
 备注：
 *********************************************************************/
-XBOOL CModuleProtocol_Packet::ModuleProtocol_Packet_IDQuery(XCHAR* ptszMsgBuffer, int* pInt_MsgLen, XENGINE_IDCARDINFO* pSt_IDInfo, XENGINE_IDREGION* pSt_IDRegion, int nCode /* = 0 */, LPCXSTR lpszMsgBuffer /* = NULL */)
+bool CModuleProtocol_Packet::ModuleProtocol_Packet_IDQuery(XCHAR* ptszMsgBuffer, int* pInt_MsgLen, XENGINE_IDCARDINFO* pSt_IDInfo, XENGINE_IDREGION* pSt_IDRegion, int nCode /* = 0 */, LPCXSTR lpszMsgBuffer /* = NULL */)
 {
-	ModuleProtocol_IsErrorOccur = FALSE;
+	ModuleProtocol_IsErrorOccur = false;
 
 	if ((NULL == ptszMsgBuffer) || (NULL == pInt_MsgLen))
 	{
-		ModuleProtocol_IsErrorOccur = TRUE;
+		ModuleProtocol_IsErrorOccur = true;
 		ModuleProtocol_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PROTOCOL_PACKET_PARAMENT;
-		return FALSE;
+		return false;
 	}
 	Json::Value st_JsonRoot;
 	Json::Value st_JsonObject;
@@ -170,7 +170,7 @@ XBOOL CModuleProtocol_Packet::ModuleProtocol_Packet_IDQuery(XCHAR* ptszMsgBuffer
 
 	*pInt_MsgLen = Json::writeString(st_JsonBuilder, st_JsonRoot).length();
 	memcpy(ptszMsgBuffer, Json::writeString(st_JsonBuilder, st_JsonRoot).c_str(), *pInt_MsgLen);
-	return TRUE;
+	return true;
 }
 /********************************************************************
 函数名称：ModuleProtocol_Packet_BankQuery
@@ -205,15 +205,15 @@ XBOOL CModuleProtocol_Packet::ModuleProtocol_Packet_IDQuery(XCHAR* ptszMsgBuffer
   意思：是否成功
 备注：
 *********************************************************************/
-XBOOL CModuleProtocol_Packet::ModuleProtocol_Packet_BankQuery(XCHAR* ptszMsgBuffer, int* pInt_MsgLen, XENGINE_BANKINFO* pSt_BankInfo, int nCode /* = 0 */, LPCXSTR lpszMsgBuffer /* = NULL */)
+bool CModuleProtocol_Packet::ModuleProtocol_Packet_BankQuery(XCHAR* ptszMsgBuffer, int* pInt_MsgLen, XENGINE_BANKINFO* pSt_BankInfo, int nCode /* = 0 */, LPCXSTR lpszMsgBuffer /* = NULL */)
 {
-	ModuleProtocol_IsErrorOccur = FALSE;
+	ModuleProtocol_IsErrorOccur = false;
 
 	if ((NULL == ptszMsgBuffer) || (NULL == pInt_MsgLen))
 	{
-		ModuleProtocol_IsErrorOccur = TRUE;
+		ModuleProtocol_IsErrorOccur = true;
 		ModuleProtocol_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PROTOCOL_PACKET_PARAMENT;
-		return FALSE;
+		return false;
 	}
 	Json::Value st_JsonRoot;
 	Json::Value st_JsonObject;
@@ -251,7 +251,7 @@ XBOOL CModuleProtocol_Packet::ModuleProtocol_Packet_BankQuery(XCHAR* ptszMsgBuff
 
 	*pInt_MsgLen = Json::writeString(st_JsonBuilder, st_JsonRoot).length();
 	memcpy(ptszMsgBuffer, Json::writeString(st_JsonBuilder, st_JsonRoot).c_str(), *pInt_MsgLen);
-	return TRUE;
+	return true;
 }
 /********************************************************************
 函数名称：ModuleProtocol_Packet_LanguageQuery
@@ -286,15 +286,15 @@ XBOOL CModuleProtocol_Packet::ModuleProtocol_Packet_BankQuery(XCHAR* ptszMsgBuff
   意思：是否成功
 备注：
 *********************************************************************/
-XBOOL CModuleProtocol_Packet::ModuleProtocol_Packet_LanguageQuery(XCHAR* ptszMsgBuffer, int* pInt_MsgLen, XENGINE_LANGUAGEINFO* pSt_LanguageInfo, int nCode /* = 0 */, LPCXSTR lpszMsgBuffer /* = NULL */)
+bool CModuleProtocol_Packet::ModuleProtocol_Packet_LanguageQuery(XCHAR* ptszMsgBuffer, int* pInt_MsgLen, XENGINE_LANGUAGEINFO* pSt_LanguageInfo, int nCode /* = 0 */, LPCXSTR lpszMsgBuffer /* = NULL */)
 {
-	ModuleProtocol_IsErrorOccur = FALSE;
+	ModuleProtocol_IsErrorOccur = false;
 
 	if ((NULL == ptszMsgBuffer) || (NULL == pInt_MsgLen))
 	{
-		ModuleProtocol_IsErrorOccur = TRUE;
+		ModuleProtocol_IsErrorOccur = true;
 		ModuleProtocol_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PROTOCOL_PACKET_PARAMENT;
-		return FALSE;
+		return false;
 	}
 	Json::Value st_JsonRoot;
 	Json::Value st_JsonObject;
@@ -321,7 +321,7 @@ XBOOL CModuleProtocol_Packet::ModuleProtocol_Packet_LanguageQuery(XCHAR* ptszMsg
 
 	*pInt_MsgLen = Json::writeString(st_JsonBuilder, st_JsonRoot).length();
 	memcpy(ptszMsgBuffer, Json::writeString(st_JsonBuilder, st_JsonRoot).c_str(), *pInt_MsgLen);
-	return TRUE;
+	return true;
 }
 /********************************************************************
 函数名称：ModuleProtocol_Packet_Locker
@@ -356,15 +356,15 @@ XBOOL CModuleProtocol_Packet::ModuleProtocol_Packet_LanguageQuery(XCHAR* ptszMsg
   意思：是否成功
 备注：
 *********************************************************************/
-XBOOL CModuleProtocol_Packet::ModuleProtocol_Packet_Locker(XCHAR* ptszMsgBuffer, int* pInt_MsgLen, XNETHANDLE xhToken, int nCode, LPCXSTR lpszMsgBuffer)
+bool CModuleProtocol_Packet::ModuleProtocol_Packet_Locker(XCHAR* ptszMsgBuffer, int* pInt_MsgLen, XNETHANDLE xhToken, int nCode, LPCXSTR lpszMsgBuffer)
 {
-	ModuleProtocol_IsErrorOccur = FALSE;
+	ModuleProtocol_IsErrorOccur = false;
 
 	if ((NULL == ptszMsgBuffer) || (NULL == pInt_MsgLen))
 	{
-		ModuleProtocol_IsErrorOccur = TRUE;
+		ModuleProtocol_IsErrorOccur = true;
 		ModuleProtocol_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PROTOCOL_PACKET_PARAMENT;
-		return FALSE;
+		return false;
 	}
 	Json::Value st_JsonRoot;
 	Json::Value st_JsonObject;
@@ -386,7 +386,7 @@ XBOOL CModuleProtocol_Packet::ModuleProtocol_Packet_Locker(XCHAR* ptszMsgBuffer,
 
 	*pInt_MsgLen = Json::writeString(st_JsonBuilder, st_JsonRoot).length();
 	memcpy(ptszMsgBuffer, Json::writeString(st_JsonBuilder, st_JsonRoot).c_str(), *pInt_MsgLen);
-	return TRUE;
+	return true;
 }
 /********************************************************************
 函数名称：ModuleProtocol_Packet_ZIPCode
@@ -421,15 +421,15 @@ XBOOL CModuleProtocol_Packet::ModuleProtocol_Packet_Locker(XCHAR* ptszMsgBuffer,
   意思：是否成功
 备注：
 *********************************************************************/
-XBOOL CModuleProtocol_Packet::ModuleProtocol_Packet_ZIPCode(XCHAR* ptszMsgBuffer, int* pInt_MsgLen, XENGINE_ZIPINFO* pSt_ZIPInfo, int nCode /* = 0 */, LPCXSTR lpszMsgBuffer /* = NULL */)
+bool CModuleProtocol_Packet::ModuleProtocol_Packet_ZIPCode(XCHAR* ptszMsgBuffer, int* pInt_MsgLen, XENGINE_ZIPINFO* pSt_ZIPInfo, int nCode /* = 0 */, LPCXSTR lpszMsgBuffer /* = NULL */)
 {
-	ModuleProtocol_IsErrorOccur = FALSE;
+	ModuleProtocol_IsErrorOccur = false;
 
 	if ((NULL == ptszMsgBuffer) || (NULL == pInt_MsgLen))
 	{
-		ModuleProtocol_IsErrorOccur = TRUE;
+		ModuleProtocol_IsErrorOccur = true;
 		ModuleProtocol_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PROTOCOL_PACKET_PARAMENT;
-		return FALSE;
+		return false;
 	}
 	Json::Value st_JsonRoot;
 	Json::Value st_JsonObject;
@@ -462,7 +462,7 @@ XBOOL CModuleProtocol_Packet::ModuleProtocol_Packet_ZIPCode(XCHAR* ptszMsgBuffer
 
 	*pInt_MsgLen = Json::writeString(st_JsonBuilder, st_JsonRoot).length();
 	memcpy(ptszMsgBuffer, Json::writeString(st_JsonBuilder, st_JsonRoot).c_str(), *pInt_MsgLen);
-	return TRUE;
+	return true;
 }
 /********************************************************************
 函数名称：ModuleProtocol_Packet_Log
@@ -492,15 +492,15 @@ XBOOL CModuleProtocol_Packet::ModuleProtocol_Packet_ZIPCode(XCHAR* ptszMsgBuffer
   意思：是否成功
 备注：
 *********************************************************************/
-XBOOL CModuleProtocol_Packet::ModuleProtocol_Packet_Log(XCHAR* ptszMsgBuffer, int* pInt_MsgLen, XENGINE_XLOGINFO*** pppSt_XLogList, int nListCount)
+bool CModuleProtocol_Packet::ModuleProtocol_Packet_Log(XCHAR* ptszMsgBuffer, int* pInt_MsgLen, XENGINE_XLOGINFO*** pppSt_XLogList, int nListCount)
 {
-	ModuleProtocol_IsErrorOccur = FALSE;
+	ModuleProtocol_IsErrorOccur = false;
 
 	if ((NULL == ptszMsgBuffer) || (NULL == pInt_MsgLen))
 	{
-		ModuleProtocol_IsErrorOccur = TRUE;
+		ModuleProtocol_IsErrorOccur = true;
 		ModuleProtocol_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PROTOCOL_PACKET_PARAMENT;
-		return FALSE;
+		return false;
 	}
 	Json::Value st_JsonRoot;
 	Json::Value st_JsonArray;
@@ -528,7 +528,7 @@ XBOOL CModuleProtocol_Packet::ModuleProtocol_Packet_Log(XCHAR* ptszMsgBuffer, in
 
 	*pInt_MsgLen = Json::writeString(st_JsonBuilder, st_JsonRoot).length();
 	memcpy(ptszMsgBuffer, Json::writeString(st_JsonBuilder, st_JsonRoot).c_str(), *pInt_MsgLen);
-	return TRUE;
+	return true;
 }
 /********************************************************************
 函数名称：ModuleProtocol_Packet_TestReport
@@ -582,15 +582,15 @@ XBOOL CModuleProtocol_Packet::ModuleProtocol_Packet_Log(XCHAR* ptszMsgBuffer, in
   意思：是否成功
 备注：
 *********************************************************************/
-XBOOL CModuleProtocol_Packet::ModuleProtocol_Packet_TestReport(XCHAR* ptszMsgBuffer, int* pInt_MsgLen, XNETHANDLE xhToken, LPCXSTR lpszIPAddr, int nIPPort, __int64x nNumber, __int64x nFailed, __int64x nSuccess, int nStatus)
+bool CModuleProtocol_Packet::ModuleProtocol_Packet_TestReport(XCHAR* ptszMsgBuffer, int* pInt_MsgLen, XNETHANDLE xhToken, LPCXSTR lpszIPAddr, int nIPPort, __int64x nNumber, __int64x nFailed, __int64x nSuccess, int nStatus)
 {
-	ModuleProtocol_IsErrorOccur = FALSE;
+	ModuleProtocol_IsErrorOccur = false;
 
 	if ((NULL == ptszMsgBuffer) || (NULL == pInt_MsgLen))
 	{
-		ModuleProtocol_IsErrorOccur = TRUE;
+		ModuleProtocol_IsErrorOccur = true;
 		ModuleProtocol_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PROTOCOL_PACKET_PARAMENT;
-		return FALSE;
+		return false;
 	}
 	Json::Value st_JsonRoot;
 	Json::Value st_JsonObject;
@@ -611,7 +611,7 @@ XBOOL CModuleProtocol_Packet::ModuleProtocol_Packet_TestReport(XCHAR* ptszMsgBuf
 
 	*pInt_MsgLen = Json::writeString(st_JsonBuilder, st_JsonRoot).length();
 	memcpy(ptszMsgBuffer, Json::writeString(st_JsonBuilder, st_JsonRoot).c_str(), *pInt_MsgLen);
-	return TRUE;
+	return true;
 }
 /********************************************************************
 函数名称：ModuleProtocol_Packet_TestReply
@@ -636,15 +636,15 @@ XBOOL CModuleProtocol_Packet::ModuleProtocol_Packet_TestReport(XCHAR* ptszMsgBuf
   意思：是否成功
 备注：
 *********************************************************************/
-XBOOL CModuleProtocol_Packet::ModuleProtocol_Packet_TestReply(XCHAR* ptszMsgBuffer, int* pInt_MsgLen, XNETHANDLE xhToken)
+bool CModuleProtocol_Packet::ModuleProtocol_Packet_TestReply(XCHAR* ptszMsgBuffer, int* pInt_MsgLen, XNETHANDLE xhToken)
 {
-	ModuleProtocol_IsErrorOccur = FALSE;
+	ModuleProtocol_IsErrorOccur = false;
 
 	if ((NULL == ptszMsgBuffer) || (NULL == pInt_MsgLen))
 	{
-		ModuleProtocol_IsErrorOccur = TRUE;
+		ModuleProtocol_IsErrorOccur = true;
 		ModuleProtocol_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PROTOCOL_PACKET_PARAMENT;
-		return FALSE;
+		return false;
 	}
 	Json::Value st_JsonRoot;
 	Json::Value st_JsonObject;
@@ -659,7 +659,7 @@ XBOOL CModuleProtocol_Packet::ModuleProtocol_Packet_TestReply(XCHAR* ptszMsgBuff
 
 	*pInt_MsgLen = Json::writeString(st_JsonBuilder, st_JsonRoot).length();
 	memcpy(ptszMsgBuffer, Json::writeString(st_JsonBuilder, st_JsonRoot).c_str(), *pInt_MsgLen);
-	return TRUE;
+	return true;
 }
 /********************************************************************
 函数名称：ModuleProtocol_Packet_ShortLink
@@ -684,15 +684,15 @@ XBOOL CModuleProtocol_Packet::ModuleProtocol_Packet_TestReply(XCHAR* ptszMsgBuff
   意思：是否成功
 备注：
 *********************************************************************/
-XBOOL CModuleProtocol_Packet::ModuleProtocol_Packet_ShortLink(XCHAR* ptszMsgBuffer, int* pInt_MsgLen, XENGINE_SHORTLINK* pSt_ShortLink)
+bool CModuleProtocol_Packet::ModuleProtocol_Packet_ShortLink(XCHAR* ptszMsgBuffer, int* pInt_MsgLen, XENGINE_SHORTLINK* pSt_ShortLink)
 {
-	ModuleProtocol_IsErrorOccur = FALSE;
+	ModuleProtocol_IsErrorOccur = false;
 
 	if ((NULL == ptszMsgBuffer) || (NULL == pInt_MsgLen))
 	{
-		ModuleProtocol_IsErrorOccur = TRUE;
+		ModuleProtocol_IsErrorOccur = true;
 		ModuleProtocol_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PROTOCOL_PACKET_PARAMENT;
-		return FALSE;
+		return false;
 	}
 	Json::Value st_JsonRoot;
 	Json::Value st_JsonObject;
@@ -712,7 +712,7 @@ XBOOL CModuleProtocol_Packet::ModuleProtocol_Packet_ShortLink(XCHAR* ptszMsgBuff
 
 	*pInt_MsgLen = Json::writeString(st_JsonBuilder, st_JsonRoot).length();
 	memcpy(ptszMsgBuffer, Json::writeString(st_JsonBuilder, st_JsonRoot).c_str(), *pInt_MsgLen);
-	return TRUE;
+	return true;
 }
 /********************************************************************
 函数名称：ModuleProtocol_Packet_P2PLan
@@ -742,15 +742,15 @@ XBOOL CModuleProtocol_Packet::ModuleProtocol_Packet_ShortLink(XCHAR* ptszMsgBuff
   意思：是否成功
 备注：
 *********************************************************************/
-XBOOL CModuleProtocol_Packet::ModuleProtocol_Packet_P2PLan(XCHAR* ptszMsgBuffer, int* pInt_MsgLen, XENGINE_P2XPPEER_PROTOCOL*** pppSt_ListClients, int nListCount)
+bool CModuleProtocol_Packet::ModuleProtocol_Packet_P2PLan(XCHAR* ptszMsgBuffer, int* pInt_MsgLen, XENGINE_P2XPPEER_PROTOCOL*** pppSt_ListClients, int nListCount)
 {
-	ModuleProtocol_IsErrorOccur = FALSE;
+	ModuleProtocol_IsErrorOccur = false;
 
 	if ((NULL == pppSt_ListClients) || (NULL == ptszMsgBuffer) || (NULL == pInt_MsgLen))
 	{
-		ModuleProtocol_IsErrorOccur = FALSE;
+		ModuleProtocol_IsErrorOccur = false;
 		ModuleProtocol_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PROTOCOL_PACKET_PARAMENT;
-		return FALSE;
+		return false;
 	}
 	Json::Value st_JsonRoot;
 	Json::Value st_JsonArray;
@@ -768,7 +768,7 @@ XBOOL CModuleProtocol_Packet::ModuleProtocol_Packet_P2PLan(XCHAR* ptszMsgBuffer,
 
 	*pInt_MsgLen = st_JsonRoot.toStyledString().length();
 	memcpy(ptszMsgBuffer, st_JsonRoot.toStyledString().c_str(), *pInt_MsgLen);
-	return TRUE;
+	return true;
 }
 /********************************************************************
 函数名称：ModuleProtocol_Packet_P2PWLan
@@ -793,15 +793,15 @@ XBOOL CModuleProtocol_Packet::ModuleProtocol_Packet_P2PLan(XCHAR* ptszMsgBuffer,
   意思：是否成功
 备注：
 *********************************************************************/
-XBOOL CModuleProtocol_Packet::ModuleProtocol_Packet_P2PWLan(XCHAR* ptszMsgBuffer, int* pInt_MsgLen, list<XENGINE_P2XPPEER_PROTOCOL>* pStl_ListClients)
+bool CModuleProtocol_Packet::ModuleProtocol_Packet_P2PWLan(XCHAR* ptszMsgBuffer, int* pInt_MsgLen, list<XENGINE_P2XPPEER_PROTOCOL>* pStl_ListClients)
 {
-	ModuleProtocol_IsErrorOccur = FALSE;
+	ModuleProtocol_IsErrorOccur = false;
 
 	if ((NULL == pStl_ListClients) || (NULL == ptszMsgBuffer) || (NULL == pInt_MsgLen))
 	{
-		ModuleProtocol_IsErrorOccur = FALSE;
+		ModuleProtocol_IsErrorOccur = false;
 		ModuleProtocol_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PROTOCOL_PACKET_PARAMENT;
-		return FALSE;
+		return false;
 	}
 	unordered_map<string, list<P2XPPROTOCOL_LANPACKET>> stl_MapClient;
 	//首先处理公网下的局域网网段列表
@@ -861,7 +861,7 @@ XBOOL CModuleProtocol_Packet::ModuleProtocol_Packet_P2PWLan(XCHAR* ptszMsgBuffer
 
 	*pInt_MsgLen = st_JsonRoot.toStyledString().length();
 	memcpy(ptszMsgBuffer, st_JsonRoot.toStyledString().c_str(), *pInt_MsgLen);
-	return TRUE;
+	return true;
 }
 /********************************************************************
 函数名称：ModuleProtocol_Packet_P2PUser
@@ -886,15 +886,15 @@ XBOOL CModuleProtocol_Packet::ModuleProtocol_Packet_P2PWLan(XCHAR* ptszMsgBuffer
   意思：是否成功
 备注：
 *********************************************************************/
-XBOOL CModuleProtocol_Packet::ModuleProtocol_Packet_P2PUser(XCHAR* ptszMsgBuffer, int* pInt_MsgLen, XENGINE_P2XPPEER_PROTOCOL* pSt_PeerInfo)
+bool CModuleProtocol_Packet::ModuleProtocol_Packet_P2PUser(XCHAR* ptszMsgBuffer, int* pInt_MsgLen, XENGINE_P2XPPEER_PROTOCOL* pSt_PeerInfo)
 {
-	ModuleProtocol_IsErrorOccur = FALSE;
+	ModuleProtocol_IsErrorOccur = false;
 
 	if ((NULL == pSt_PeerInfo) || (NULL == ptszMsgBuffer) || (NULL == pInt_MsgLen))
 	{
-		ModuleProtocol_IsErrorOccur = FALSE;
+		ModuleProtocol_IsErrorOccur = false;
 		ModuleProtocol_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PROTOCOL_PACKET_PARAMENT;
-		return FALSE;
+		return false;
 	}
 	Json::Value st_JsonRoot;
 	Json::Value st_JsonAddr;
@@ -912,7 +912,7 @@ XBOOL CModuleProtocol_Packet::ModuleProtocol_Packet_P2PUser(XCHAR* ptszMsgBuffer
 	st_JsonBuilder["emitUTF8"] = true;
 	*pInt_MsgLen = Json::writeString(st_JsonBuilder, st_JsonRoot).length();
 	memcpy(ptszMsgBuffer, Json::writeString(st_JsonBuilder, st_JsonRoot).c_str(), *pInt_MsgLen);
-	return TRUE;
+	return true;
 }
 /********************************************************************
 函数名称：ModuleProtocol_Packet_P2PConnect
@@ -942,15 +942,15 @@ XBOOL CModuleProtocol_Packet::ModuleProtocol_Packet_P2PUser(XCHAR* ptszMsgBuffer
   意思：是否成功
 备注：
 *********************************************************************/
-XBOOL CModuleProtocol_Packet::ModuleProtocol_Packet_P2PConnect(XCHAR* ptszMsgBuffer, int* pInt_MsgLen, XENGINE_P2XPIO_PROTOCOL* pSt_IOProtocol)
+bool CModuleProtocol_Packet::ModuleProtocol_Packet_P2PConnect(XCHAR* ptszMsgBuffer, int* pInt_MsgLen, XENGINE_P2XPIO_PROTOCOL* pSt_IOProtocol)
 {
-	ModuleProtocol_IsErrorOccur = FALSE;
+	ModuleProtocol_IsErrorOccur = false;
 
 	if ((NULL == ptszMsgBuffer) || (NULL == pInt_MsgLen))
 	{
-		ModuleProtocol_IsErrorOccur = FALSE;
+		ModuleProtocol_IsErrorOccur = false;
 		ModuleProtocol_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PROTOCOL_PACKET_PARAMENT;
-		return FALSE;
+		return false;
 	}
 	Json::Value st_JsonRoot;
 
@@ -962,5 +962,5 @@ XBOOL CModuleProtocol_Packet::ModuleProtocol_Packet_P2PConnect(XCHAR* ptszMsgBuf
 
 	*pInt_MsgLen = st_JsonRoot.toStyledString().length();
 	memcpy(ptszMsgBuffer, st_JsonRoot.toStyledString().c_str(), *pInt_MsgLen);
-	return TRUE;
+	return true;
 }

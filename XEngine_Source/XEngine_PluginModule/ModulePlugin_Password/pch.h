@@ -33,7 +33,7 @@ using namespace std;
 //    Purpose:     公用头文件
 //    History:
 *********************************************************************/
-extern XBOOL Pass_IsErrorOccur;
+extern bool Pass_IsErrorOccur;
 extern XLONG Pass_dwErrorCode;
 
 

@@ -24,10 +24,10 @@ public:
 	CModulePlugin_Loader();
 	~CModulePlugin_Loader();
 public:
-	XBOOL ModulePlugin_Loader_Insert(LPCXSTR lpszModuleMethod, LPCXSTR lpszModuleName, int nType = 0);
-	XBOOL ModulePlugin_Loader_Find(LPCXSTR lpszMethodName, int* pInt_Type);
-	XBOOL ModulePlugin_Loader_Exec(LPCXSTR lpszMethodName, XCHAR*** pppHDRList, int nListCount, int* pInt_HTTPCode, XCHAR* ptszMsgBuffer, int* pInt_MsgLen);
-	XBOOL ModulePlugin_Loader_Destory();
+	bool ModulePlugin_Loader_Insert(LPCXSTR lpszModuleMethod, LPCXSTR lpszModuleName, int nType = 0);
+	bool ModulePlugin_Loader_Find(LPCXSTR lpszMethodName, int* pInt_Type);
+	bool ModulePlugin_Loader_Exec(LPCXSTR lpszMethodName, XCHAR*** pppHDRList, int nListCount, int* pInt_HTTPCode, XCHAR* ptszMsgBuffer, int* pInt_MsgLen);
+	bool ModulePlugin_Loader_Destory();
 protected:
 private:
 	shared_mutex st_Locker;

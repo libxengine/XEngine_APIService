@@ -85,7 +85,7 @@ using namespace std;
 *********************************************************************/
 #define XENGIEN_APISERVICE_BUFFER_SIZE (1024 * 1024 * 10)
 
-extern XBOOL bIsRun;
+extern bool bIsRun;
 extern XHANDLE xhLog;
 //HTTP服务器
 extern XHANDLE xhHTTPSocket;

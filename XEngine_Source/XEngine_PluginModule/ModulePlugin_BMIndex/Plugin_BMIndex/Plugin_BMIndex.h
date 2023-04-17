@@ -17,10 +17,10 @@ public:
 	CPlugin_BMIndex();
 	~CPlugin_BMIndex();
 public:
-	XBOOL PluginCore_Init(XPVOID lParam);
+	bool PluginCore_Init(XPVOID lParam);
 	void PluginCore_UnInit();
-	XBOOL PluginCore_Call(XCHAR*** pppHDRList, int nListCount, int* pInt_HTTPCode, XCHAR* ptszMsgBuffer, int* pInt_MsgLen, LPCXSTR lpszMsgBuffer, int nMsgLen);
+	bool PluginCore_Call(XCHAR*** pppHDRList, int nListCount, int* pInt_HTTPCode, XCHAR* ptszMsgBuffer, int* pInt_MsgLen, LPCXSTR lpszMsgBuffer, int nMsgLen);
 protected:
-	XBOOL Plugin_Timezone_BMIndex(LPCXSTR lpszHigh, LPCXSTR lpszWeight, XCHAR* ptszMsgBufer, int* pInt_Len);
+	bool Plugin_Timezone_BMIndex(LPCXSTR lpszHigh, LPCXSTR lpszWeight, XCHAR* ptszMsgBufer, int* pInt_Len);
 private:
 };

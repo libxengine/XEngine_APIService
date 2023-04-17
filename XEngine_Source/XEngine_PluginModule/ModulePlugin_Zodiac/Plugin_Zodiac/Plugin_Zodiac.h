@@ -17,12 +17,12 @@ public:
 	CPlugin_Zodiac();
 	~CPlugin_Zodiac();
 public:
-	XBOOL PluginCore_Init(XPVOID lParam);
+	bool PluginCore_Init(XPVOID lParam);
 	void PluginCore_UnInit();
-	XBOOL PluginCore_Call(XCHAR*** pppHDRList, int nListCount, int* pInt_HTTPCode, XCHAR* ptszMsgBuffer, int* pInt_MsgLen, LPCXSTR lpszMsgBuffer, int nMsgLen);
+	bool PluginCore_Call(XCHAR*** pppHDRList, int nListCount, int* pInt_HTTPCode, XCHAR* ptszMsgBuffer, int* pInt_MsgLen, LPCXSTR lpszMsgBuffer, int nMsgLen);
 protected:
-	XBOOL Plugin_Zodiac_Chinese(LPCXSTR lpszDate, XCHAR* ptszCZodiac);
-	XBOOL Plugin_Zodiac_English(LPCXSTR lpszDate, XCHAR* ptszEZodiac);
+	bool Plugin_Zodiac_Chinese(LPCXSTR lpszDate, XCHAR* ptszCZodiac);
+	bool Plugin_Zodiac_English(LPCXSTR lpszDate, XCHAR* ptszEZodiac);
 private:
 	string m_StrChinese[12];
 };

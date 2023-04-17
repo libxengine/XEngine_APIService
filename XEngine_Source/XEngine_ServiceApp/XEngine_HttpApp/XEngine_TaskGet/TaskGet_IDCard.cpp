@@ -1,6 +1,6 @@
 ﻿#include "../XEngine_Hdr.h"
 
-XBOOL HTTPTask_TaskGet_IDCard(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer)
+bool HTTPTask_TaskGet_IDCard(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer)
 {
 	int nMsgLen = 4096;
 	int nPktLen = 4096;
@@ -17,7 +17,7 @@ XBOOL HTTPTask_TaskGet_IDCard(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer)
 	memset(&st_HDRParam, '\0', sizeof(RFCCOMPONENTS_HTTP_HDRPARAM));
 
 	st_HDRParam.nHttpCode = 200; //HTTP CODE码
-	st_HDRParam.bIsClose = TRUE; //收到回复后就关闭
+	st_HDRParam.bIsClose = true; //收到回复后就关闭
 
 	if (!ModuleProtocol_Parse_IDCard(lpszMsgBuffer, &st_IDCardInfo))
 	{
@@ -25,7 +25,7 @@ XBOOL HTTPTask_TaskGet_IDCard(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer)
 		HttpProtocol_Server_SendMsgEx(xhHTTPPacket, tszMsgBuffer, &nMsgLen, &st_HDRParam, tszPktBuffer, nPktLen);
 		XEngine_Network_Send(lpszClientAddr, tszMsgBuffer, nMsgLen);
 		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("HTTP客户端:%s,请求的身份证编号不正确:%s"), lpszClientAddr, lpszMsgBuffer);
-		return FALSE;
+		return false;
 	}
 	//验证身份证是否正确
 	if (!ModuleHelp_IDCard_CheckBirth(&st_IDCardInfo))
@@ -34,7 +34,7 @@ XBOOL HTTPTask_TaskGet_IDCard(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer)
 		HttpProtocol_Server_SendMsgEx(xhHTTPPacket, tszMsgBuffer, &nMsgLen, &st_HDRParam, tszPktBuffer, nPktLen);
 		XEngine_Network_Send(lpszClientAddr, tszMsgBuffer, nMsgLen);
 		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("HTTP客户端:%s,请求的身份证验证生日失败:%s"), lpszClientAddr, lpszMsgBuffer);
-		return FALSE;
+		return false;
 	}
 	if (!ModuleHelp_IDCard_CheckSum(&st_IDCardInfo))
 	{
@@ -42,12 +42,12 @@ XBOOL HTTPTask_TaskGet_IDCard(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer)
 		HttpProtocol_Server_SendMsgEx(xhHTTPPacket, tszMsgBuffer, &nMsgLen, &st_HDRParam, tszPktBuffer, nPktLen);
 		XEngine_Network_Send(lpszClientAddr, tszMsgBuffer, nMsgLen);
 		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("HTTP客户端:%s,请求的身份证验证校验码失败:%s"), lpszClientAddr, lpszMsgBuffer);
-		return FALSE;
+		return false;
 	}
 	ModuleDatabase_IDCard_QueryRegion(&st_IDRegion, &st_IDCardInfo);
 	ModuleProtocol_Packet_IDQuery(tszPktBuffer, &nPktLen, &st_IDCardInfo, &st_IDRegion);
 	HttpProtocol_Server_SendMsgEx(xhHTTPPacket, tszMsgBuffer, &nMsgLen, &st_HDRParam, tszPktBuffer, nPktLen);
 	XEngine_Network_Send(lpszClientAddr, tszMsgBuffer, nMsgLen);
 	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("HTTP客户端:%s,请求身份证号码验证与信息查询成功,号码:%s"), lpszClientAddr, lpszMsgBuffer);
-	return TRUE;
+	return true;
 }

@@ -35,7 +35,7 @@
 //    Purpose:     公用头文件
 //    History:
 *********************************************************************/
-extern XBOOL Meter_IsErrorOccur;
+extern bool Meter_IsErrorOccur;
 extern XLONG Meter_dwErrorCode;
 
 
