@@ -1,3 +1,21 @@
+XEngine_APIService V2.9.0.1001
+
+增加:短连接生成与转发功能支持
+增加:数据测试API接口
+更新:匹配XEngineV8.x版本
+更新:编译脚本现在对跨平台支持更好
+修改:测试函数名称改为socket
+修改:现在HTTP的任务代码区分get和post了
+修改:mysql默认使用utf8字符集了
+
+added:short link create and forward supported
+added:data test api interface
+update:match xengine v8.x
+update:makefile to support cross platform
+modify:test function name to socket
+modify:The http task now distinguishes between post and get
+modify:mysql used to utf8 charset
+======================================================================================
 XEngine_APIService V2.8.0.1001
 
 添加:二维码识别与创建功能
