@@ -15,7 +15,7 @@
 
 typedef struct 
 {
-	BYTE byVersion[4];
+	XBYTE byVersion[4];
 	unsigned int nOffset;
 }XENGINE_DBPHONEHDR;
 
@@ -23,7 +23,7 @@ typedef struct
 {
 	unsigned int nPhone;
 	unsigned int nOffset;
-	BYTE byType;
+	XBYTE byType;
 }XENGINE_DBPHONERECORD;
 
 class CModulePlugin_DBPhone
@@ -32,15 +32,15 @@ public:
 	CModulePlugin_DBPhone();
 	~CModulePlugin_DBPhone();
 public:
-	BOOL ModuleDatabase_Phone_Init(LPCTSTR lpszSQLFile);
-	BOOL ModuleDatabase_Phone_Destory();
-	BOOL ModuleDatabase_Phone_Query(LPCTSTR lpszPhoneNumber, XENGINE_PHONEINFO* pSt_PhoneInfo);
+	bool ModuleDatabase_Phone_Init(LPCXSTR lpszSQLFile);
+	bool ModuleDatabase_Phone_Destory();
+	bool ModuleDatabase_Phone_Query(LPCXSTR lpszPhoneNumber, XENGINE_PHONEINFO* pSt_PhoneInfo);
 protected:
-	BOOL ModuleDatabase_Phone_Convert(LPCTSTR lpszPhoneInfo, int nMsgLen, XENGINE_PHONEINFO* pSt_PhoneInfo);
+	bool ModuleDatabase_Phone_Convert(LPCXSTR lpszPhoneInfo, int nMsgLen, XENGINE_PHONEINFO* pSt_PhoneInfo);
 private:
 	XENGINE_DBPHONEHDR st_PhoneHdr;
 private:
 	size_t nFLen = 0;
 	size_t nCount = 0;
-	TCHAR* ptszMsgBuffer;
+	XCHAR* ptszMsgBuffer;
 };

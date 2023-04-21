@@ -13,18 +13,18 @@
 //IP地址信息
 typedef struct
 {
-	TCHAR tszIPAddr[128];       //IP地址
-	TCHAR tszIPCountry[128];    //国家/地区
-	TCHAR tszIPProvince[128];   //省/自治区
-	TCHAR tszIPCity[128];       //市
-	TCHAR tszIPCounty[128];     //县
-	TCHAR tszIPAddress[128];    //详细地址
-	TCHAR tszIPISP[128];        //运营商
+	XCHAR tszIPAddr[128];       //IP地址
+	XCHAR tszIPCountry[128];    //国家/地区
+	XCHAR tszIPProvince[128];   //省/自治区
+	XCHAR tszIPCity[128];       //市
+	XCHAR tszIPCounty[128];     //县
+	XCHAR tszIPAddress[128];    //详细地址
+	XCHAR tszIPISP[128];        //运营商
 }XENGINE_IPADDRINFO;
 //////////////////////////////////////////////////////////////////////////
 //                       导出函数定义
 //////////////////////////////////////////////////////////////////////////
-extern "C" DWORD PluginCore_GetLastError();
+extern "C" XLONG PluginCore_GetLastError();
 /*********************************************************************************
 *                                导出函数定义                                    *
 *********************************************************************************/
@@ -41,7 +41,7 @@ extern "C" DWORD PluginCore_GetLastError();
   意思：是否成功
 备注：
 *********************************************************************/
-extern "C" BOOL PluginCore_Init(LPVOID lParam = NULL);
+extern "C" bool PluginCore_Init(XPVOID lParam = NULL);
 /********************************************************************
 函数名称：PluginCore_UnInit
 函数功能：卸载插件
@@ -59,4 +59,4 @@ extern "C" void PluginCore_UnInit();
   意思：是否成功
 备注：
 *********************************************************************/
-extern "C" BOOL PluginCore_Call(TCHAR * **pppHDRList, int nListCount, int* pInt_HTTPCode, TCHAR * ptszMsgBuffer, int* pInt_MsgLen, LPCTSTR lpszMsgBuffer = NULL, int nMsgLen = 0);
+extern "C" bool PluginCore_Call(XCHAR * **pppHDRList, int nListCount, int* pInt_HTTPCode, XCHAR * ptszMsgBuffer, int* pInt_MsgLen, LPCXSTR lpszMsgBuffer = NULL, int nMsgLen = 0);

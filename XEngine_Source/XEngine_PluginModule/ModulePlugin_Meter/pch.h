@@ -35,8 +35,8 @@
 //    Purpose:     公用头文件
 //    History:
 *********************************************************************/
-extern BOOL Meter_IsErrorOccur;
-extern DWORD Meter_dwErrorCode;
+extern bool Meter_IsErrorOccur;
+extern XLONG Meter_dwErrorCode;
 
 
 #ifdef _MSC_BUILD

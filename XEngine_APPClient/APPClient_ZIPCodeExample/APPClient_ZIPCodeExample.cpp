@@ -31,15 +31,15 @@ int main()
 #endif
 	int nLen = 0;
 	int nCode = 0;
-	TCHAR tszMsgBuffer[1024];
-	LPCTSTR lpszCreateUrl = _T("http://127.0.0.1:5501/api?function=zipcode&params1=0");
+	XCHAR tszMsgBuffer[1024];
+	LPCXSTR lpszCreateUrl = _T("http://127.0.0.1:5501/api?function=zipcode&params1=0");
 
 	memset(tszMsgBuffer, '\0', sizeof(tszMsgBuffer));
 
 	Json::Value st_JsonRoot;
 	st_JsonRoot["nZipCode"] = 100010;
 
-	TCHAR* ptszMsgBuffer = NULL;
+	XCHAR* ptszMsgBuffer = NULL;
 	if (!APIClient_Http_Request(_T("POST"), lpszCreateUrl, st_JsonRoot.toStyledString().c_str(), &nCode, &ptszMsgBuffer, &nLen))
 	{
 		printf("发送投递失败！\n");

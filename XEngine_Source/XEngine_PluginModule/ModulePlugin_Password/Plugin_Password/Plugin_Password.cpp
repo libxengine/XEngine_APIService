@@ -33,11 +33,11 @@ CPlugin_Password::~CPlugin_Password()
   意思：是否成功
 备注：
 *********************************************************************/
-BOOL CPlugin_Password::PluginCore_Init(LPVOID lParam)
+bool CPlugin_Password::PluginCore_Init(XPVOID lParam)
 {
-	Pass_IsErrorOccur = FALSE;
+	Pass_IsErrorOccur = false;
 
-    return TRUE;
+    return true;
 }
 /********************************************************************
 函数名称：PluginCore_UnInit
@@ -49,7 +49,7 @@ BOOL CPlugin_Password::PluginCore_Init(LPVOID lParam)
 *********************************************************************/
 void CPlugin_Password::PluginCore_UnInit()
 {
-	Pass_IsErrorOccur = FALSE;
+	Pass_IsErrorOccur = false;
 }
 /********************************************************************
 函数名称：PluginCore_Call
@@ -59,20 +59,20 @@ void CPlugin_Password::PluginCore_UnInit()
   意思：是否成功
 备注：
 *********************************************************************/
-BOOL CPlugin_Password::PluginCore_Call(TCHAR*** pppHDRList, int nListCount, int* pInt_HTTPCode, TCHAR* ptszMsgBuffer, int* pInt_MsgLen, LPCTSTR lpszMsgBuffer, int nMsgLen)
+bool CPlugin_Password::PluginCore_Call(XCHAR*** pppHDRList, int nListCount, int* pInt_HTTPCode, XCHAR* ptszMsgBuffer, int* pInt_MsgLen, LPCXSTR lpszMsgBuffer, int nMsgLen)
 {
-	Pass_IsErrorOccur = FALSE;
+	Pass_IsErrorOccur = false;
 
 	if ((NULL == pInt_HTTPCode) || (NULL == ptszMsgBuffer) || (NULL == pInt_MsgLen))
 	{
-		Pass_IsErrorOccur = TRUE;
+		Pass_IsErrorOccur = true;
 		Pass_dwErrorCode = ERROR_XENGINE_APISERVICE_PLUGIN_MODULE_PASS_PARAMENT;
-		return FALSE;
+		return false;
 	}
-	TCHAR tszKeyName[128];
-	TCHAR tszParamType[128];
-	TCHAR tszParamLength[128];
-	TCHAR tszPassword[MAX_PATH];
+	XCHAR tszKeyName[128];
+	XCHAR tszParamType[128];
+	XCHAR tszParamLength[128];
+	XCHAR tszPassword[MAX_PATH];
 	Json::Value st_JsonRoot;
 	Json::Value st_JsonObject;
 	Json::StreamWriterBuilder st_JsonBuilder;
@@ -97,18 +97,18 @@ BOOL CPlugin_Password::PluginCore_Call(TCHAR*** pppHDRList, int nListCount, int*
 	*pInt_HTTPCode = 200;
 	*pInt_MsgLen = Json::writeString(st_JsonBuilder, st_JsonRoot).length();
 	memcpy(ptszMsgBuffer, Json::writeString(st_JsonBuilder, st_JsonRoot).c_str(), *pInt_MsgLen);
-	return TRUE;
+	return true;
 }
 //////////////////////////////////////////////////////////////////////////
 //                       保护函数
 //////////////////////////////////////////////////////////////////////////
-BOOL CPlugin_Password::Plugin_Password_Creator(LPCTSTR lpszPassType, LPCTSTR lpszLength, TCHAR* ptszPassStr)
+bool CPlugin_Password::Plugin_Password_Creator(LPCXSTR lpszPassType, LPCXSTR lpszLength, XCHAR* ptszPassStr)
 {
-	Pass_IsErrorOccur = FALSE;
+	Pass_IsErrorOccur = false;
 
-	int nType = _ttoi(lpszPassType);
-	int nLen = _ttoi(lpszLength);
-	TCHAR tszPassBuffer[MAX_PATH];
+	int nType = _ttxoi(lpszPassType);
+	int nLen = _ttxoi(lpszLength);
+	XCHAR tszPassBuffer[MAX_PATH];
 
 	memset(tszPassBuffer, '\0', MAX_PATH);
 	if (0 == nType)
@@ -119,15 +119,15 @@ BOOL CPlugin_Password::Plugin_Password_Creator(LPCTSTR lpszPassType, LPCTSTR lps
 	{
 		for (int i = 0; i < nLen; i++)
 		{
-			_stprintf(&tszPassBuffer[i], _T("%d"), rand() % 9);
+			_xstprintf(&tszPassBuffer[i], _X("%d"), rand() % 9);
 		}
 	}
 	else if (2 == nType)
 	{
 		for (int i = 0; i < nLen; i++)
 		{
-			_stprintf(&tszPassBuffer[i], _T("%c"), (rand() % 26) + 65);
+			_xstprintf(&tszPassBuffer[i], _X("%c"), (rand() % 26) + 65);
 		}
 	}
-	return TRUE;
+	return true;
 }

@@ -55,8 +55,8 @@ using namespace std;
 //    Purpose:     插件核心公有头文件
 //    History:
 *********************************************************************/
-extern BOOL ModulePlugin_IsErrorOccur;
-extern DWORD ModulePlugin_dwErrorCode;
+extern bool ModulePlugin_IsErrorOccur;
+extern XLONG ModulePlugin_dwErrorCode;
 
 #ifdef _MSC_BUILD
 #pragma comment(lib,"XEngine_BaseLib/XEngine_BaseLib")

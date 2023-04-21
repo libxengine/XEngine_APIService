@@ -17,9 +17,9 @@ public:
 	CModulePlugin_APIPhone();
 	~CModulePlugin_APIPhone();
 public:
-	BOOL PluginCore_Init(LPVOID lParam);
+	bool PluginCore_Init(XPVOID lParam);
 	void PluginCore_UnInit();
-	BOOL PluginCore_Call(TCHAR*** pppHDRList, int nListCount, int* pInt_HTTPCode, TCHAR* ptszMsgBuffer, int* pInt_MsgLen, LPCTSTR lpszMsgBuffer, int nMsgLen);
+	bool PluginCore_Call(XCHAR*** pppHDRList, int nListCount, int* pInt_HTTPCode, XCHAR* ptszMsgBuffer, int* pInt_MsgLen, LPCXSTR lpszMsgBuffer, int nMsgLen);
 protected:
 private:
 	CModulePlugin_DBPhone m_DBPhone;

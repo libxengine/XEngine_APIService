@@ -9,15 +9,21 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="头文件\XEngine_HTTPTask">
-      <UniqueIdentifier>{9bf2e74a-551b-4d8d-ad34-ccd13e64e985}</UniqueIdentifier>
-    </Filter>
     <Filter Include="源文件">
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
-    <Filter Include="源文件\XEngine_HTTPTask">
+    <Filter Include="头文件\XEngine_TaskGet">
+      <UniqueIdentifier>{9bf2e74a-551b-4d8d-ad34-ccd13e64e985}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\XEngine_TaskGet">
       <UniqueIdentifier>{a205153f-6995-49dc-ae5f-cd2bc0d31549}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\XEngine_TaskPost">
+      <UniqueIdentifier>{3d1f325b-4812-45f1-b04b-0056a7b2ce72}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\XEngine_TaskPost">
+      <UniqueIdentifier>{a904cf8f-7387-403f-8686-0f5c35c6b72c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -33,41 +39,44 @@
     <ClCompile Include="XEngine_Network.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="XEngine_HTTPTask\HTTPTask_IDCard.cpp">
-      <Filter>源文件\XEngine_HTTPTask</Filter>
-    </ClCompile>
-    <ClCompile Include="XEngine_HTTPTask\HTTPTask_Bank.cpp">
-      <Filter>源文件\XEngine_HTTPTask</Filter>
-    </ClCompile>
-    <ClCompile Include="XEngine_HTTPTask\HTTPTask_Language.cpp">
-      <Filter>源文件\XEngine_HTTPTask</Filter>
-    </ClCompile>
-    <ClCompile Include="XEngine_HTTPTask\HTTPTask_Translation.cpp">
-      <Filter>源文件\XEngine_HTTPTask</Filter>
-    </ClCompile>
     <ClCompile Include="XEngine_PluginTask.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="XEngine_HTTPTask\HTTPTask_P2PClient.cpp">
-      <Filter>源文件\XEngine_HTTPTask</Filter>
+    <ClCompile Include="XEngine_TaskPost\TaskPost_DTest.cpp">
+      <Filter>源文件\XEngine_TaskPost</Filter>
     </ClCompile>
-    <ClCompile Include="XEngine_HTTPTask\HTTPTask_OPtions.cpp">
-      <Filter>源文件\XEngine_HTTPTask</Filter>
+    <ClCompile Include="XEngine_TaskPost\TaskPost_Log.cpp">
+      <Filter>源文件\XEngine_TaskPost</Filter>
     </ClCompile>
-    <ClCompile Include="XEngine_HTTPTask\HTTPTask_Locker.cpp">
-      <Filter>源文件\XEngine_HTTPTask</Filter>
+    <ClCompile Include="XEngine_TaskPost\TaskPost_P2PClient.cpp">
+      <Filter>源文件\XEngine_TaskPost</Filter>
     </ClCompile>
-    <ClCompile Include="XEngine_HTTPTask\HTTPTask_PostCode.cpp">
-      <Filter>源文件\XEngine_HTTPTask</Filter>
+    <ClCompile Include="XEngine_TaskPost\TaskPost_PostCode.cpp">
+      <Filter>源文件\XEngine_TaskPost</Filter>
     </ClCompile>
-    <ClCompile Include="XEngine_HTTPTask\HTTPTask_Log.cpp">
-      <Filter>源文件\XEngine_HTTPTask</Filter>
+    <ClCompile Include="XEngine_TaskPost\TaskPost_SocketTest.cpp">
+      <Filter>源文件\XEngine_TaskPost</Filter>
     </ClCompile>
-    <ClCompile Include="XEngine_HTTPTask\HTTPTask_QRCode.cpp">
-      <Filter>源文件\XEngine_HTTPTask</Filter>
+    <ClCompile Include="XEngine_TaskGet\TaskGet_Bank.cpp">
+      <Filter>源文件\XEngine_TaskGet</Filter>
     </ClCompile>
-    <ClCompile Include="XEngine_HTTPTask\HTTPTask_SocketTest.cpp">
-      <Filter>源文件\XEngine_HTTPTask</Filter>
+    <ClCompile Include="XEngine_TaskGet\TaskGet_IDCard.cpp">
+      <Filter>源文件\XEngine_TaskGet</Filter>
+    </ClCompile>
+    <ClCompile Include="XEngine_TaskGet\TaskGet_Language.cpp">
+      <Filter>源文件\XEngine_TaskGet</Filter>
+    </ClCompile>
+    <ClCompile Include="XEngine_TaskGet\TaskGet_Locker.cpp">
+      <Filter>源文件\XEngine_TaskGet</Filter>
+    </ClCompile>
+    <ClCompile Include="XEngine_TaskGet\TaskGet_Translation.cpp">
+      <Filter>源文件\XEngine_TaskGet</Filter>
+    </ClCompile>
+    <ClCompile Include="XEngine_TaskPost\TaskPost_QRCode.cpp">
+      <Filter>源文件\XEngine_TaskPost</Filter>
+    </ClCompile>
+    <ClCompile Include="XEngine_TaskPost\TaskPost_ShortLink.cpp">
+      <Filter>源文件\XEngine_TaskPost</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -83,41 +92,44 @@
     <ClInclude Include="XEngine_Network.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="XEngine_HTTPTask\HTTPTask_IDCard.h">
-      <Filter>头文件\XEngine_HTTPTask</Filter>
-    </ClInclude>
-    <ClInclude Include="XEngine_HTTPTask\HTTPTask_Bank.h">
-      <Filter>头文件\XEngine_HTTPTask</Filter>
-    </ClInclude>
-    <ClInclude Include="XEngine_HTTPTask\HTTPTask_Language.h">
-      <Filter>头文件\XEngine_HTTPTask</Filter>
-    </ClInclude>
-    <ClInclude Include="XEngine_HTTPTask\HTTPTask_Translation.h">
-      <Filter>头文件\XEngine_HTTPTask</Filter>
-    </ClInclude>
     <ClInclude Include="XEngine_PluginTask.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="XEngine_HTTPTask\HTTPTask_P2PClient.h">
-      <Filter>头文件\XEngine_HTTPTask</Filter>
+    <ClInclude Include="XEngine_TaskPost\TaskPost_DTest.h">
+      <Filter>头文件\XEngine_TaskPost</Filter>
     </ClInclude>
-    <ClInclude Include="XEngine_HTTPTask\HTTPTask_OPtions.h">
-      <Filter>头文件\XEngine_HTTPTask</Filter>
+    <ClInclude Include="XEngine_TaskPost\TaskPost_Log.h">
+      <Filter>头文件\XEngine_TaskPost</Filter>
     </ClInclude>
-    <ClInclude Include="XEngine_HTTPTask\HTTPTask_Locker.h">
-      <Filter>头文件\XEngine_HTTPTask</Filter>
+    <ClInclude Include="XEngine_TaskPost\TaskPost_P2PClient.h">
+      <Filter>头文件\XEngine_TaskPost</Filter>
     </ClInclude>
-    <ClInclude Include="XEngine_HTTPTask\HTTPTask_PostCode.h">
-      <Filter>头文件\XEngine_HTTPTask</Filter>
+    <ClInclude Include="XEngine_TaskPost\TaskPost_PostCode.h">
+      <Filter>头文件\XEngine_TaskPost</Filter>
     </ClInclude>
-    <ClInclude Include="XEngine_HTTPTask\HTTPTask_Log.h">
-      <Filter>头文件\XEngine_HTTPTask</Filter>
+    <ClInclude Include="XEngine_TaskPost\TaskPost_SocketTest.h">
+      <Filter>头文件\XEngine_TaskPost</Filter>
     </ClInclude>
-    <ClInclude Include="XEngine_HTTPTask\HTTPTask_QRCode.h">
-      <Filter>头文件\XEngine_HTTPTask</Filter>
+    <ClInclude Include="XEngine_TaskGet\TaskGet_Bank.h">
+      <Filter>头文件\XEngine_TaskGet</Filter>
     </ClInclude>
-    <ClInclude Include="XEngine_HTTPTask\HTTPTask_SocketTest.h">
-      <Filter>头文件\XEngine_HTTPTask</Filter>
+    <ClInclude Include="XEngine_TaskGet\TaskGet_IDCard.h">
+      <Filter>头文件\XEngine_TaskGet</Filter>
+    </ClInclude>
+    <ClInclude Include="XEngine_TaskGet\TaskGet_Language.h">
+      <Filter>头文件\XEngine_TaskGet</Filter>
+    </ClInclude>
+    <ClInclude Include="XEngine_TaskGet\TaskGet_Locker.h">
+      <Filter>头文件\XEngine_TaskGet</Filter>
+    </ClInclude>
+    <ClInclude Include="XEngine_TaskGet\TaskGet_Translation.h">
+      <Filter>头文件\XEngine_TaskGet</Filter>
+    </ClInclude>
+    <ClInclude Include="XEngine_TaskPost\TaskPost_QRCode.h">
+      <Filter>头文件\XEngine_TaskPost</Filter>
+    </ClInclude>
+    <ClInclude Include="XEngine_TaskPost\TaskPost_ShortLink.h">
+      <Filter>头文件\XEngine_TaskPost</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

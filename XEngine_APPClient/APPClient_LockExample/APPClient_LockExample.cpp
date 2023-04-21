@@ -28,9 +28,9 @@ int main()
 	WSAStartup(MAKEWORD(2, 2), &st_WSAData);
 #endif
 	int nLen = 0;
-	LPCTSTR lpszOPenUrl = _T("http://127.0.0.1:5501/api?function=lock&params1=1000106561&params1=1");
+	LPCXSTR lpszOPenUrl = _T("http://127.0.0.1:5501/api?function=lock&params1=1000106561&params1=1");
 	//自己创建打开
-	TCHAR* ptszBuffer = NULL;
+	XCHAR* ptszBuffer = NULL;
 	if (!APIClient_Http_Request(_T("GET"), lpszOPenUrl, NULL, NULL, &ptszBuffer, &nLen))
 	{
 		printf("发送投递失败！\n");
@@ -39,7 +39,7 @@ int main()
 	printf("接受到数据,大小:%d,内容:%s\n", nLen, ptszBuffer);
 	BaseLib_OperatorMemory_FreeCStyle((XPPMEM)&ptszBuffer);
 	//打开读锁
-	LPCTSTR lpszReadUrl = _T("http://127.0.0.1:5501/api?function=lock&params1=1000106561&params2=3");
+	LPCXSTR lpszReadUrl = _T("http://127.0.0.1:5501/api?function=lock&params1=1000106561&params2=3");
 	if (!APIClient_Http_Request(_T("GET"), lpszReadUrl, NULL, NULL, &ptszBuffer, &nLen))
 	{
 		printf("发送投递失败！\n");
@@ -48,7 +48,7 @@ int main()
 	printf("接受到数据,大小:%d,内容:\n%s\n", nLen, ptszBuffer);
 	BaseLib_OperatorMemory_FreeCStyle((XPPMEM)&ptszBuffer);
 	//打开写锁
-	LPCTSTR lpszWriteUrl = _T("http://127.0.0.1:5501/api?function=lock&params1=1000106561&params2=5");
+	LPCXSTR lpszWriteUrl = _T("http://127.0.0.1:5501/api?function=lock&params1=1000106561&params2=5");
 	if (!APIClient_Http_Request(_T("GET"), lpszWriteUrl, NULL, NULL, &ptszBuffer, &nLen))
 	{
 		printf("发送投递失败！\n");
@@ -57,7 +57,7 @@ int main()
 	printf("接受到数据,大小:%d,内容:\n%s\n", nLen, ptszBuffer);
 	BaseLib_OperatorMemory_FreeCStyle((XPPMEM)&ptszBuffer);
 	//释放读锁
-	LPCTSTR lpszUNReadUrl = _T("http://127.0.0.1:5501/api?function=lock&params1=1000106561&params2=4");
+	LPCXSTR lpszUNReadUrl = _T("http://127.0.0.1:5501/api?function=lock&params1=1000106561&params2=4");
 	if (!APIClient_Http_Request(_T("GET"), lpszUNReadUrl, NULL, NULL, &ptszBuffer, &nLen))
 	{
 		printf("发送投递失败！\n");
@@ -74,7 +74,7 @@ int main()
 	printf("接受到数据,大小:%d,内容:\n%s\n", nLen, ptszBuffer);
 	BaseLib_OperatorMemory_FreeCStyle((XPPMEM)&ptszBuffer);
 	//关闭
-	LPCTSTR lpszCloseUrl = _T("http://127.0.0.1:5501/api?function=lock&params1=1000106561&params2=2");
+	LPCXSTR lpszCloseUrl = _T("http://127.0.0.1:5501/api?function=lock&params1=1000106561&params2=2");
 	if (!APIClient_Http_Request(_T("GET"), lpszCloseUrl, NULL, NULL, &ptszBuffer, &nLen))
 	{
 		printf("发送投递失败！\n");

@@ -23,18 +23,18 @@
 //linux::g++ -std=c++17 -Wall -g APPClient_XLogExample.cpp -o APPClient_XLogExample.exe -L /usr/local/lib/XEngine_Release/XEngine_BaseLib -L /usr/local/lib/XEngine_Release/XEngine_NetHelp -lXEngine_BaseLib -lNetHelp_APIClient
 //macos::g++ -std=c++17 -Wall -g APPClient_XLogExample.cpp -o APPClient_XLogExample.exe -lXEngine_BaseLib -lNetHelp_APIClient
 
-LPCTSTR lpszTableName = _T("xengine");
+LPCXSTR lpszTableName = _T("xengine");
 
 int test_create()
 {
 	int nLen = 0;
 	int nCode = 0;
-	LPCTSTR lpszAPIUrl = _T("http://127.0.0.1:5501/api?function=log&params1=0");
+	LPCXSTR lpszAPIUrl = _T("http://127.0.0.1:5501/api?function=log&params1=0");
 
 	Json::Value st_JsonRoot;
 	st_JsonRoot["tszTableName"] = lpszTableName;
 
-	TCHAR* ptszMsgBuffer = NULL;
+	XCHAR* ptszMsgBuffer = NULL;
 	if (!APIClient_Http_Request(_T("POST"), lpszAPIUrl, st_JsonRoot.toStyledString().c_str(), &nCode, &ptszMsgBuffer, &nLen))
 	{
 		printf("发送投递失败！\n");
@@ -49,8 +49,8 @@ int test_insert()
 {
 	int nLen = 0;
 	int nCode = 0;
-	LPCTSTR lpszAPIUrl = _T("http://127.0.0.1:5501/api?function=log&params1=1");
-	LPCTSTR lpszMsgBuffer = _T("adwdad12d21d123d132rd213d32f23df23rf");
+	LPCXSTR lpszAPIUrl = _T("http://127.0.0.1:5501/api?function=log&params1=1");
+	LPCXSTR lpszMsgBuffer = _T("adwdad12d21d123d132rd213d32f23df23rf");
 
 	Json::Value st_JsonRoot;
 	Json::StreamWriterBuilder st_JsonBuilder;
@@ -66,7 +66,7 @@ int test_insert()
 
 	st_JsonBuilder["emitUTF8"] = true;
 
-	TCHAR* ptszMsgBuffer = NULL;
+	XCHAR* ptszMsgBuffer = NULL;
 	if (!APIClient_Http_Request(_T("POST"), lpszAPIUrl, Json::writeString(st_JsonBuilder, st_JsonRoot).c_str(), &nCode, &ptszMsgBuffer, &nLen))
 	{
 		printf("发送投递失败！\n");
@@ -81,14 +81,14 @@ int test_query()
 {
 	int nLen = 0;
 	int nCode = 0;
-	LPCTSTR lpszAPIUrl = _T("http://127.0.0.1:5501/api?function=log&params1=2");
+	LPCXSTR lpszAPIUrl = _T("http://127.0.0.1:5501/api?function=log&params1=2");
 
 	Json::Value st_JsonRoot;
 	st_JsonRoot["tszTableName"] = lpszTableName;
 	st_JsonRoot["tszTimeStart"] = "2023-01-13 22:10:00";
 	st_JsonRoot["tszTimeEnd"] = "2023-01-13 22:10:02";
 
-	TCHAR* ptszMsgBuffer = NULL;
+	XCHAR* ptszMsgBuffer = NULL;
 	if (!APIClient_Http_Request(_T("POST"), lpszAPIUrl, st_JsonRoot.toStyledString().c_str(), &nCode, &ptszMsgBuffer, &nLen))
 	{
 		printf("发送投递失败！\n");
@@ -103,12 +103,12 @@ int test_delete()
 {
 	int nLen = 0;
 	int nCode = 0;
-	LPCTSTR lpszAPIUrl = _T("http://127.0.0.1:5501/api?function=log&params1=3");
+	LPCXSTR lpszAPIUrl = _T("http://127.0.0.1:5501/api?function=log&params1=3");
 
 	Json::Value st_JsonRoot;
 	st_JsonRoot["tszTableName"] = lpszTableName;
 
-	TCHAR* ptszMsgBuffer = NULL;
+	XCHAR* ptszMsgBuffer = NULL;
 	if (!APIClient_Http_Request(_T("POST"), lpszAPIUrl, st_JsonRoot.toStyledString().c_str(), &nCode, &ptszMsgBuffer, &nLen))
 	{
 		printf("发送投递失败！\n");

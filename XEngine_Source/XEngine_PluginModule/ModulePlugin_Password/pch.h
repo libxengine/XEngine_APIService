@@ -33,8 +33,8 @@ using namespace std;
 //    Purpose:     公用头文件
 //    History:
 *********************************************************************/
-extern BOOL Pass_IsErrorOccur;
-extern DWORD Pass_dwErrorCode;
+extern bool Pass_IsErrorOccur;
+extern XLONG Pass_dwErrorCode;
 
 
 #ifdef _MSC_BUILD

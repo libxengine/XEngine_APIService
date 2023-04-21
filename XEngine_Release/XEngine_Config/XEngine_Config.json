@@ -19,10 +19,10 @@
         "LogLeave":32
     },
     "XSql":{
-        "SQLAddr":"192.168.1.10",
+        "SQLAddr":"42.194.178.57",
         "SQLPort":3306,
         "SQLUser":"root",
-        "SQLPass":"123123aa"
+        "SQLPass":"111"
     },
     "XApi":{
         "tszBankUrl":"https://ccdcapi.alipay.com/validateAndCacheCardInfo.json?cardNo=%s&cardBinCheck=true",
@@ -37,7 +37,12 @@
         "tszConfigOPencc":"./XEngine_Config/XEngine_OPenccConfig.json",
         "tszConfigQRCode":"./XEngine_Config/XEngine_QRCode.json"
     },
+    "XShortLink":{
+        "tszHostUrl":"url.xyry.org",
+        "nHTTPCode":301
+    },
     "XVer":[
+        "2.9.0.1001 Build20230421",
         "2.8.0.1001 Build20230207",
         "2.7.0.1001 Build20230117",
         "2.6.1.1001 Build20221213",

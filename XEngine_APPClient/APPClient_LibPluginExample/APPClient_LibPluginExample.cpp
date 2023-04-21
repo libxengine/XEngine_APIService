@@ -28,8 +28,8 @@ int main()
 	WSAStartup(MAKEWORD(2, 2), &st_WSAData);
 #endif
 	int nLen = 0;
-	TCHAR* ptszMsgBuffer = NULL;
-	LPCTSTR lpszPassUrl = _T("http://127.0.0.1:5501/api?function=pass&params1=1&params2=4");
+	XCHAR* ptszMsgBuffer = NULL;
+	LPCXSTR lpszPassUrl = _T("http://127.0.0.1:5501/api?function=pass&params1=1&params2=4");
 	if (!APIClient_Http_Request(_T("GET"), lpszPassUrl, NULL, NULL, &ptszMsgBuffer, &nLen))
 	{
 		printf("发送投递失败！\n");
@@ -38,7 +38,7 @@ int main()
 	printf("接受到数据,大小:%d,内容:%s\n", nLen, ptszMsgBuffer);
 	BaseLib_OperatorMemory_FreeCStyle((XPPMEM)&ptszMsgBuffer);
 
-	LPCTSTR lpszZodiacUrl = _T("http://127.0.0.1:5501/api?function=zodiac&params1=19880121");
+	LPCXSTR lpszZodiacUrl = _T("http://127.0.0.1:5501/api?function=zodiac&params1=19880121");
 	if (!APIClient_Http_Request(_T("GET"), lpszZodiacUrl, NULL, NULL, &ptszMsgBuffer, &nLen))
 	{
 		printf("发送投递失败！\n");
@@ -47,7 +47,7 @@ int main()
 	printf("接受到数据,大小:%d,内容:%s\n", nLen, ptszMsgBuffer);
 	BaseLib_OperatorMemory_FreeCStyle((XPPMEM)&ptszMsgBuffer);
 
-	LPCTSTR lpszTimeUrl = _T("http://127.0.0.1:5501/api?function=timezone&params1=1&params2=1-20");
+	LPCXSTR lpszTimeUrl = _T("http://127.0.0.1:5501/api?function=timezone&params1=1&params2=1-20");
 	if (!APIClient_Http_Request(_T("GET"), lpszTimeUrl, NULL, NULL, &ptszMsgBuffer, &nLen))
 	{
 		printf("发送投递失败！\n");
@@ -56,7 +56,7 @@ int main()
 	printf("接受到数据,大小:%d,内容:%s\n", nLen, ptszMsgBuffer);
 	BaseLib_OperatorMemory_FreeCStyle((XPPMEM)&ptszMsgBuffer);
 
-	LPCTSTR lpszBmiUrl = _T("http://127.0.0.1:5501/api?function=bmindex&params1=1.78&params2=62");
+	LPCXSTR lpszBmiUrl = _T("http://127.0.0.1:5501/api?function=bmindex&params1=1.78&params2=62");
 	if (!APIClient_Http_Request(_T("GET"), lpszBmiUrl, NULL, NULL, &ptszMsgBuffer, &nLen))
 	{
 		printf("发送投递失败！\n");

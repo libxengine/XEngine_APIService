@@ -33,9 +33,9 @@ CModulePlugin_Interface::~CModulePlugin_Interface()
   意思：是否成功
 备注：
 *********************************************************************/
-BOOL CModulePlugin_Interface::PluginCore_Init(LPVOID lParam)
+bool CModulePlugin_Interface::PluginCore_Init(XPVOID lParam)
 {
-	IPAddr_IsErrorOccur = FALSE;
+	IPAddr_IsErrorOccur = false;
 
 	const char* db_path = "./XEngine_DBFile/ip2region.xdb";
 	// 1、从 db_path 初始化 xdb 查询对象
@@ -43,9 +43,9 @@ BOOL CModulePlugin_Interface::PluginCore_Init(LPVOID lParam)
 	if (err != 0) 
 	{
 		printf("failed to create xdb searcher from `%s` with errno=%d\n", db_path, err);
-		return FALSE;
+		return false;
 	}
-	return TRUE;
+	return true;
 }
 /********************************************************************
 函数名称：PluginCore_UnInit
@@ -57,7 +57,7 @@ BOOL CModulePlugin_Interface::PluginCore_Init(LPVOID lParam)
 *********************************************************************/
 void CModulePlugin_Interface::PluginCore_UnInit()
 {
-	IPAddr_IsErrorOccur = FALSE;
+	IPAddr_IsErrorOccur = false;
 	xdb_close(&st_DBSearch);
 }
 /********************************************************************
@@ -68,18 +68,18 @@ void CModulePlugin_Interface::PluginCore_UnInit()
   意思：是否成功
 备注：
 *********************************************************************/
-BOOL CModulePlugin_Interface::PluginCore_Call(TCHAR*** pppHDRList, int nListCount, int* pInt_HTTPCode, TCHAR* ptszMsgBuffer, int* pInt_MsgLen, LPCTSTR lpszMsgBuffer, int nMsgLen)
+bool CModulePlugin_Interface::PluginCore_Call(XCHAR*** pppHDRList, int nListCount, int* pInt_HTTPCode, XCHAR* ptszMsgBuffer, int* pInt_MsgLen, LPCXSTR lpszMsgBuffer, int nMsgLen)
 {
-	IPAddr_IsErrorOccur = FALSE;
+	IPAddr_IsErrorOccur = false;
 
 	if ((NULL == pInt_HTTPCode) || (NULL == ptszMsgBuffer) || (NULL == pInt_MsgLen))
 	{
-		IPAddr_IsErrorOccur = TRUE;
+		IPAddr_IsErrorOccur = true;
 		IPAddr_dwErrorCode = ERROR_XENGINE_APISERVICE_PLUGIN_MODULE_IPADDR_PARAMENT;
-		return FALSE;
+		return false;
 	}
-	TCHAR tszKeyName[128];
-	TCHAR tszMsgBuffer[128];
+	XCHAR tszKeyName[128];
+	XCHAR tszMsgBuffer[128];
 	XENGINE_IPADDRINFO st_IPAddr;
 	Json::Value st_JsonRoot;
 	Json::Value st_JsonObject;
@@ -92,12 +92,12 @@ BOOL CModulePlugin_Interface::PluginCore_Call(TCHAR*** pppHDRList, int nListCoun
 	BaseLib_OperatorString_GetKeyValue((*pppHDRList)[1], "=", tszKeyName, st_IPAddr.tszIPAddr);
 	if (0 != xdb_search_by_string(&st_DBSearch, st_IPAddr.tszIPAddr, tszMsgBuffer, sizeof(tszMsgBuffer)))
 	{
-		IPAddr_IsErrorOccur = TRUE;
+		IPAddr_IsErrorOccur = true;
 		IPAddr_dwErrorCode = ERROR_XENGINE_APISERVICE_PLUGIN_MODULE_IPADDR_NOTFOUND;
-		return FALSE;
+		return false;
 	}
 	//中国|0|内蒙古|通辽市|联通
-	_stscanf(tszMsgBuffer, _T("%[^|]|%[^|]|%[^|]|%[^|]|%[^|]"), st_IPAddr.tszIPCountry, st_IPAddr.tszIPCounty, st_IPAddr.tszIPProvince, st_IPAddr.tszIPCity, st_IPAddr.tszIPISP);
+	_stxscanf(tszMsgBuffer, _X("%[^|]|%[^|]|%[^|]|%[^|]|%[^|]"), st_IPAddr.tszIPCountry, st_IPAddr.tszIPCounty, st_IPAddr.tszIPProvince, st_IPAddr.tszIPCity, st_IPAddr.tszIPISP);
 	st_JsonObject["tszIPAddr"] = st_IPAddr.tszIPAddr;
 	st_JsonObject["tszIPCountry"] = st_IPAddr.tszIPCountry;
 	st_JsonObject["tszIPProvince"] = st_IPAddr.tszIPProvince;
@@ -114,5 +114,5 @@ BOOL CModulePlugin_Interface::PluginCore_Call(TCHAR*** pppHDRList, int nListCoun
 	*pInt_HTTPCode = 200;
 	*pInt_MsgLen = Json::writeString(st_JsonBuilder, st_JsonRoot).length();
 	memcpy(ptszMsgBuffer, Json::writeString(st_JsonBuilder, st_JsonRoot).c_str(), *pInt_MsgLen);
-	return TRUE;
+	return true;
 }

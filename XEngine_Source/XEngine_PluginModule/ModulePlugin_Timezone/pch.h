@@ -37,8 +37,8 @@ using namespace std;
 //    Purpose:     公用头文件
 //    History:
 *********************************************************************/
-extern BOOL Timezone_IsErrorOccur;
-extern DWORD Timezone_dwErrorCode;
+extern bool Timezone_IsErrorOccur;
+extern XLONG Timezone_dwErrorCode;
 
 
 #ifdef _MSC_BUILD

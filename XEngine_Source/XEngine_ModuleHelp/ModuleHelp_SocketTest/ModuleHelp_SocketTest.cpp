@@ -48,26 +48,26 @@ CModuleHelp_SocketTest::~CModuleHelp_SocketTest()
   意思：成功返回连接的句柄,失败返回NULL
 备注：链接测试函数，链接一次后就关闭
 *********************************************************************/
-BOOL CModuleHelp_SocketTest::ModuleHelp_SocketTest_StartConnect(XNETHANDLE* pxhToken, MODULEHELP_SOCKETTEST_RECONNECT* pSt_ReConnect, CALLBACK_APISERVICE_MODULE_HELP_SOCKETTEST fpCall_ReConnect, LPVOID lParam /* = NULL */)
+bool CModuleHelp_SocketTest::ModuleHelp_SocketTest_StartConnect(XNETHANDLE* pxhToken, MODULEHELP_SOCKETTEST_RECONNECT* pSt_ReConnect, CALLBACK_APISERVICE_MODULE_HELP_SOCKETTEST fpCall_ReConnect, XPVOID lParam /* = NULL */)
 {
-    ModuleHelp_IsErrorOccur = FALSE;
+    ModuleHelp_IsErrorOccur = false;
 
     if ((NULL == pSt_ReConnect) || (NULL == fpCall_ReConnect))
     {
-        ModuleHelp_IsErrorOccur = TRUE;
+        ModuleHelp_IsErrorOccur = true;
         ModuleHelp_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_HELP_SOCKETTEST_PARAMRT;
-        return FALSE;
+        return false;
     }
     MODULEHELP_SOCKETTEST_CONNINFO* pSt_ConnSocket = new MODULEHELP_SOCKETTEST_CONNINFO;
     if (NULL == pSt_ConnSocket)
     {
-        ModuleHelp_IsErrorOccur = TRUE;
+        ModuleHelp_IsErrorOccur = true;
         ModuleHelp_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_HELP_SOCKETTEST_MALLOC;
-        return FALSE;
+        return false;
     }
     memset(pSt_ConnSocket, '\0', sizeof(MODULEHELP_SOCKETTEST_CONNINFO));
     //结构体赋值
-    pSt_ConnSocket->bIsRun = TRUE;
+    pSt_ConnSocket->bIsRun = true;
     pSt_ConnSocket->lParam = lParam;
     pSt_ConnSocket->lpCall_ReConnect = fpCall_ReConnect;
     BaseLib_OperatorHandle_Create(&pSt_ConnSocket->xhToken);
@@ -76,15 +76,15 @@ BOOL CModuleHelp_SocketTest::ModuleHelp_SocketTest_StartConnect(XNETHANDLE* pxhT
     pSt_ConnSocket->pSTDThread = make_shared<std::thread>(ModuleHelp_SocketTest_ThreadConn, pSt_ConnSocket);
     if (NULL == pSt_ConnSocket->pSTDThread)
     {
-        ModuleHelp_IsErrorOccur = TRUE;
+        ModuleHelp_IsErrorOccur = true;
         ModuleHelp_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_HELP_SOCKETTEST_THREAD;
-        return FALSE;
+        return false;
     }
 	*pxhToken = pSt_ConnSocket->xhToken;
     st_LockConn.lock();
     stl_MapConnTest.insert(make_pair(pSt_ConnSocket->xhToken, pSt_ConnSocket));
     st_LockConn.unlock();
-    return TRUE;
+    return true;
 }
 /********************************************************************
 函数名称：ModuleHelp_SocketTest_GetConnect
@@ -104,22 +104,22 @@ BOOL CModuleHelp_SocketTest::ModuleHelp_SocketTest_StartConnect(XNETHANDLE* pxhT
   意思：是否成功
 备注：
 *********************************************************************/
-BOOL CModuleHelp_SocketTest::ModuleHelp_SocketTest_GetConnect(XNETHANDLE xhToken, BOOL* pbRun)
+bool CModuleHelp_SocketTest::ModuleHelp_SocketTest_GetConnect(XNETHANDLE xhToken, bool* pbRun)
 {
-	ModuleHelp_IsErrorOccur = FALSE;
+	ModuleHelp_IsErrorOccur = false;
 
     st_LockConn.lock_shared();
     unordered_map<XNETHANDLE, MODULEHELP_SOCKETTEST_CONNINFO*>::iterator stl_MapIterator = stl_MapConnTest.find(xhToken);
     if (stl_MapIterator == stl_MapConnTest.end())
     {
-		ModuleHelp_IsErrorOccur = TRUE;
+		ModuleHelp_IsErrorOccur = true;
 		ModuleHelp_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_HELP_SOCKETTEST_NOTFOUND;
         st_LockConn.unlock_shared();
-		return FALSE;
+		return false;
     }
     *pbRun = stl_MapIterator->second->bIsRun;
     st_LockConn.unlock_shared();
-	return TRUE;
+	return true;
 }
 /********************************************************************
 函数名称：ModuleHelp_SocketTest_StopConnect
@@ -134,20 +134,20 @@ BOOL CModuleHelp_SocketTest::ModuleHelp_SocketTest_GetConnect(XNETHANDLE xhToken
   意思：是否成功
 备注：
 *********************************************************************/
-BOOL CModuleHelp_SocketTest::ModuleHelp_SocketTest_StopConnect(XNETHANDLE xhToken)
+bool CModuleHelp_SocketTest::ModuleHelp_SocketTest_StopConnect(XNETHANDLE xhToken)
 {
-    ModuleHelp_IsErrorOccur = FALSE;
+    ModuleHelp_IsErrorOccur = false;
 
     st_LockConn.lock();
 	unordered_map<XNETHANDLE, MODULEHELP_SOCKETTEST_CONNINFO*>::iterator stl_MapIterator = stl_MapConnTest.find(xhToken);
 	if (stl_MapIterator != stl_MapConnTest.end())
 	{
-		stl_MapIterator->second->bIsRun = FALSE;
+		stl_MapIterator->second->bIsRun = false;
 		stl_MapIterator->second->pSTDThread->join();
 		
 		if (NULL != stl_MapIterator->second->lParam)
 		{
-			delete (TCHAR*)stl_MapIterator->second->lParam;
+			delete (XCHAR*)stl_MapIterator->second->lParam;
 			stl_MapIterator->second->lParam = NULL;
 		}
 		
@@ -157,7 +157,7 @@ BOOL CModuleHelp_SocketTest::ModuleHelp_SocketTest_StopConnect(XNETHANDLE xhToke
 		stl_MapConnTest.erase(stl_MapIterator);
 	}
     st_LockConn.unlock();
-    return TRUE;
+    return true;
 }
 /********************************************************************
 函数名称：ModuleHelp_SocketTest_StartDatas
@@ -187,24 +187,24 @@ BOOL CModuleHelp_SocketTest::ModuleHelp_SocketTest_StopConnect(XNETHANDLE xhToke
   意思：是否成功
 备注：
 *********************************************************************/
-BOOL CModuleHelp_SocketTest::ModuleHelp_SocketTest_StartDatas(XNETHANDLE* pxhToken, MODULEHELP_SOCKETTEST_DATAS* pSt_SocketDatas, CALLBACK_APISERVICE_MODULE_HELP_SOCKETTEST fpCall_DataTest, BOOL bTCP /* = TRUE */, LPVOID lParam /* = NULL */)
+bool CModuleHelp_SocketTest::ModuleHelp_SocketTest_StartDatas(XNETHANDLE* pxhToken, MODULEHELP_SOCKETTEST_DATAS* pSt_SocketDatas, CALLBACK_APISERVICE_MODULE_HELP_SOCKETTEST fpCall_DataTest, bool bTCP /* = true */, XPVOID lParam /* = NULL */)
 {
-    ModuleHelp_IsErrorOccur = FALSE;
+    ModuleHelp_IsErrorOccur = false;
 
     if ((NULL == pSt_SocketDatas) || (NULL == fpCall_DataTest))
     {
-        ModuleHelp_IsErrorOccur = TRUE;
+        ModuleHelp_IsErrorOccur = true;
         ModuleHelp_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_HELP_SOCKETTEST_PARAMRT;
-        return FALSE;
+        return false;
     }
     MODULEHELP_SOCKETTEST_DATAINFO *pSt_DataSocket = new MODULEHELP_SOCKETTEST_DATAINFO;
     if (NULL == pSt_DataSocket)
     {
-		ModuleHelp_IsErrorOccur = TRUE;
+		ModuleHelp_IsErrorOccur = true;
 		ModuleHelp_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_HELP_SOCKETTEST_MALLOC;
-		return FALSE;
+		return false;
     }
-	pSt_DataSocket->bIsRun = TRUE;
+	pSt_DataSocket->bIsRun = true;
 	pSt_DataSocket->bIsTCP = bTCP;
 	pSt_DataSocket->lParam = lParam;
 	pSt_DataSocket->lpCall_TestDatas = fpCall_DataTest;
@@ -215,33 +215,33 @@ BOOL CModuleHelp_SocketTest::ModuleHelp_SocketTest_StartDatas(XNETHANDLE* pxhTok
 	{
 		if (!XClient_TCPSelect_Create(&pSt_DataSocket->hSocket, pSt_SocketDatas->st_REConnect.tszAddr, pSt_SocketDatas->st_REConnect.nPort))
 		{
-			ModuleHelp_IsErrorOccur = TRUE;
+			ModuleHelp_IsErrorOccur = true;
 			ModuleHelp_dwErrorCode = XClient_GetLastError();
-			return FALSE;
+			return false;
 		}
 	}
 	else
 	{
 		if (!XClient_UDPSelect_Create(&pSt_DataSocket->hSocket))
 		{
-			ModuleHelp_IsErrorOccur = TRUE;
+			ModuleHelp_IsErrorOccur = true;
 			ModuleHelp_dwErrorCode = XClient_GetLastError();
-			return FALSE;
+			return false;
 		}
 	}
 	//创建线程
 	pSt_DataSocket->pSTDThread = make_shared<std::thread>(ModuleHelp_SocketTest_ThreadData, pSt_DataSocket);
 	if (!pSt_DataSocket->pSTDThread->joinable())
 	{
-		ModuleHelp_IsErrorOccur = TRUE;
+		ModuleHelp_IsErrorOccur = true;
 		ModuleHelp_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_HELP_SOCKETTEST_THREAD;
-		return FALSE;
+		return false;
 	}
 	*pxhToken = pSt_DataSocket->xhToken;
     st_LockData.lock();
     stl_MapDataTest.insert(make_pair(pSt_DataSocket->xhToken, pSt_DataSocket));
     st_LockData.unlock();
-    return TRUE;
+    return true;
 }
 /********************************************************************
 函数名称：ModuleHelp_SocketTest_GetDatas
@@ -261,22 +261,22 @@ BOOL CModuleHelp_SocketTest::ModuleHelp_SocketTest_StartDatas(XNETHANDLE* pxhTok
   意思：是否成功
 备注：
 *********************************************************************/
-BOOL CModuleHelp_SocketTest::ModuleHelp_SocketTest_GetDatas(XNETHANDLE xhToken, BOOL* pbRun)
+bool CModuleHelp_SocketTest::ModuleHelp_SocketTest_GetDatas(XNETHANDLE xhToken, bool* pbRun)
 {
-	ModuleHelp_IsErrorOccur = FALSE;
+	ModuleHelp_IsErrorOccur = false;
 
     st_LockData.lock_shared();
     unordered_map<XNETHANDLE, MODULEHELP_SOCKETTEST_DATAINFO*>::iterator stl_MapIterator = stl_MapDataTest.find(xhToken);
     if (stl_MapIterator == stl_MapDataTest.end())
     {
-		ModuleHelp_IsErrorOccur = TRUE;
+		ModuleHelp_IsErrorOccur = true;
 		ModuleHelp_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_HELP_SOCKETTEST_NOTFOUND;
         st_LockData.unlock_shared();
-		return FALSE;
+		return false;
     }
 	*pbRun = stl_MapIterator->second->bIsRun;
     st_LockData.unlock_shared();
-	return TRUE;
+	return true;
 }
 /************************************************************************
 函数名称：ModuleHelp_SocketTest_DatasStop
@@ -291,22 +291,22 @@ BOOL CModuleHelp_SocketTest::ModuleHelp_SocketTest_GetDatas(XNETHANDLE xhToken, 
   意思：是否成功
 备注：
 ************************************************************************/
-BOOL CModuleHelp_SocketTest::ModuleHelp_SocketTest_StopDatas(XNETHANDLE xhToken)
+bool CModuleHelp_SocketTest::ModuleHelp_SocketTest_StopDatas(XNETHANDLE xhToken)
 {
-    ModuleHelp_IsErrorOccur = FALSE;
+    ModuleHelp_IsErrorOccur = false;
 
     st_LockData.unlock();
 	unordered_map<XNETHANDLE, MODULEHELP_SOCKETTEST_DATAINFO*>::iterator stl_MapIterator = stl_MapDataTest.find(xhToken);
 	if (stl_MapIterator != stl_MapDataTest.end())
 	{
 		//关闭客户端
-        stl_MapIterator->second->bIsRun = FALSE;
+        stl_MapIterator->second->bIsRun = false;
         stl_MapIterator->second->pSTDThread->join();
 		XClient_TCPSelect_Close(stl_MapIterator->second->hSocket);
 
 		if (NULL != stl_MapIterator->second->lParam)
 		{
-			delete (TCHAR*)stl_MapIterator->second->lParam;
+			delete (XCHAR*)stl_MapIterator->second->lParam;
 			stl_MapIterator->second->lParam = NULL;
 		}
 
@@ -316,19 +316,19 @@ BOOL CModuleHelp_SocketTest::ModuleHelp_SocketTest_StopDatas(XNETHANDLE xhToken)
         stl_MapDataTest.erase(stl_MapIterator);
 	}
     st_LockData.unlock();
-    return TRUE;
+    return true;
 }
 //////////////////////////////////////////////////////////////////////////
 //                    线程函数
 //////////////////////////////////////////////////////////////////////////
-XHTHREAD CModuleHelp_SocketTest::ModuleHelp_SocketTest_ThreadConn(LPVOID lParam)
+XHTHREAD CModuleHelp_SocketTest::ModuleHelp_SocketTest_ThreadConn(XPVOID lParam)
 {
     MODULEHELP_SOCKETTEST_CONNINFO* pSt_ReConnect = (MODULEHELP_SOCKETTEST_CONNINFO*)lParam;
     __int64x nFailed = 0;
     __int64x nSucess = 0;
 	__int64x nNumber = 0;
 
-    while (TRUE)
+    while (true)
     {
 		if ((nNumber >= pSt_ReConnect->st_SocketConn.nConnectTest) && (-1 != pSt_ReConnect->st_SocketConn.nConnectTest))
 		{
@@ -339,7 +339,7 @@ XHTHREAD CModuleHelp_SocketTest::ModuleHelp_SocketTest_ThreadConn(LPVOID lParam)
 			break;
 		}
 		//设置TCP
-		SOCKET hSocket = INVALID_SOCKET;
+		XSOCKET hSocket = INVALID_SOCKET;
 		if (XClient_TCPSelect_Create(&hSocket, pSt_ReConnect->st_SocketConn.tszAddr, pSt_ReConnect->st_SocketConn.nPort, 100))
 		{
 			pSt_ReConnect->lpCall_ReConnect(pSt_ReConnect->xhToken, pSt_ReConnect->st_SocketConn.tszAddr, pSt_ReConnect->st_SocketConn.nPort, ++nNumber, nFailed, ++nSucess, 0, pSt_ReConnect->lParam);
@@ -355,17 +355,17 @@ XHTHREAD CModuleHelp_SocketTest::ModuleHelp_SocketTest_ThreadConn(LPVOID lParam)
 		std::this_thread::sleep_for(std::chrono::milliseconds(pSt_ReConnect->st_SocketConn.nCloseWaitContTime));
     }
 	pSt_ReConnect->lpCall_ReConnect(pSt_ReConnect->xhToken, pSt_ReConnect->st_SocketConn.tszAddr, pSt_ReConnect->st_SocketConn.nPort, nNumber, nFailed, nSucess, 2, pSt_ReConnect->lParam);
-    pSt_ReConnect->bIsRun = FALSE;
+    pSt_ReConnect->bIsRun = false;
     return 0;
 }
-XHTHREAD CModuleHelp_SocketTest::ModuleHelp_SocketTest_ThreadData(LPVOID lParam)
+XHTHREAD CModuleHelp_SocketTest::ModuleHelp_SocketTest_ThreadData(XPVOID lParam)
 {
     MODULEHELP_SOCKETTEST_DATAINFO* pSt_DataSocket = (MODULEHELP_SOCKETTEST_DATAINFO*)lParam;
 	__int64x nFailed = 0;
 	__int64x nSucess = 0;
 	__int64x nNumber = 0;
 
-	while (TRUE)
+	while (true)
 	{
 		if ((nNumber >= pSt_DataSocket->st_SocketData.st_REConnect.nConnectTest) && (-1 != pSt_DataSocket->st_SocketData.st_REConnect.nConnectTest))
 		{
@@ -376,7 +376,7 @@ XHTHREAD CModuleHelp_SocketTest::ModuleHelp_SocketTest_ThreadData(LPVOID lParam)
 			break;
 		}
 		//发送数据
-		BOOL bRet = FALSE;
+		bool bRet = false;
 		if (pSt_DataSocket->bIsTCP)
 		{
 			bRet = XClient_TCPSelect_SendMsg(pSt_DataSocket->hSocket, pSt_DataSocket->st_SocketData.tszSDBuffer, pSt_DataSocket->st_SocketData.nSDLen);
@@ -391,11 +391,11 @@ XHTHREAD CModuleHelp_SocketTest::ModuleHelp_SocketTest_ThreadData(LPVOID lParam)
 			if (pSt_DataSocket->st_SocketData.nRVLen > 0)
 			{
 				//是否需要可读判断
-				if (XClient_OPTSocket_IOSelect(pSt_DataSocket->hSocket, TRUE, pSt_DataSocket->st_SocketData.st_REConnect.nContWaitTime))
+				if (XClient_OPTSocket_IOSelect(pSt_DataSocket->hSocket, true, pSt_DataSocket->st_SocketData.st_REConnect.nContWaitTime))
 				{
 					//接受数据
 					int nMsgLen = pSt_DataSocket->st_SocketData.nRVLen;
-					TCHAR tszMsgBuffer[4096];
+					XCHAR tszMsgBuffer[4096];
 					memset(tszMsgBuffer, '\0', sizeof(tszMsgBuffer));
 
 					if (pSt_DataSocket->bIsTCP)
@@ -429,6 +429,6 @@ XHTHREAD CModuleHelp_SocketTest::ModuleHelp_SocketTest_ThreadData(LPVOID lParam)
 		std::this_thread::sleep_for(std::chrono::milliseconds(pSt_DataSocket->st_SocketData.st_REConnect.nCloseWaitContTime));
 	}
 	pSt_DataSocket->lpCall_TestDatas(pSt_DataSocket->xhToken, pSt_DataSocket->st_SocketData.st_REConnect.tszAddr, pSt_DataSocket->st_SocketData.st_REConnect.nPort, nNumber, nFailed, nSucess, 2, pSt_DataSocket->lParam);
-    pSt_DataSocket->bIsRun = FALSE;
+    pSt_DataSocket->bIsRun = false;
     return 0;
 }

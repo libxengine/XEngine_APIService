@@ -41,29 +41,24 @@ CModuleHelp_QRCode::~CModuleHelp_QRCode()
   意思：是否成功
 备注：
 *********************************************************************/
-BOOL CModuleHelp_QRCode::ModuleHelp_QRCode_QREncodecFile(LPCTSTR lpszFileName, LPCTSTR lpszMsgBuffer)
+bool CModuleHelp_QRCode::ModuleHelp_QRCode_QREncodecFile(LPCXSTR lpszFileName, LPCXSTR lpszMsgBuffer)
 {
-	ModuleHelp_IsErrorOccur = FALSE;
+	ModuleHelp_IsErrorOccur = false;
 
 	if ((NULL == lpszFileName) || (NULL == lpszMsgBuffer))
 	{
-		ModuleHelp_IsErrorOccur = TRUE;
+		ModuleHelp_IsErrorOccur = true;
 		ModuleHelp_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_HELP_QRCODE_PARAMENT;
-		return FALSE;
+		return false;
 	}
 #ifdef _MSC_BUILD
 	//使用qrencode进行字符串编码
-#ifdef _UNICODE
-	USES_CONVERSION;
-	QRcode* pSt_QRCodec = QRcode_encodeString(W2A(lpszMsgBuffer), 0, QR_ECLEVEL_H, QR_MODE_8, 1);
-#else
 	QRcode* pSt_QRCodec = QRcode_encodeString(lpszMsgBuffer, 0, QR_ECLEVEL_H, QR_MODE_8, 1);
-#endif
 	if (NULL == pSt_QRCodec)
 	{
-		ModuleHelp_IsErrorOccur = TRUE;
+		ModuleHelp_IsErrorOccur = true;
 		ModuleHelp_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_HELP_QRCODE_FAILED;
-		return FALSE;
+		return false;
 	}
 	cv::Mat m_SrcFrame;
 	//转换数据
@@ -79,23 +74,18 @@ BOOL CModuleHelp_QRCode::ModuleHelp_QRCode_QREncodecFile(LPCTSTR lpszFileName, L
 	cv::resize(m_SrcFrame, m_SrcFrame, cv::Size(m_SrcFrame.rows * 10, m_SrcFrame.cols * 10), 0, 0, cv::INTER_NEAREST);
 	//转换成彩色
 	cv::cvtColor(m_SrcFrame, m_SrcFrame, cv::COLOR_GRAY2BGR);
-#ifdef _UNICODE
-	//USES_CONVERSION;
-	if (!cv::imwrite(W2A(lpszFileName), m_SrcFrame))
-#else
 	if (!cv::imwrite(lpszFileName, m_SrcFrame))
-#endif
 	{
-		ModuleHelp_IsErrorOccur = TRUE;
+		ModuleHelp_IsErrorOccur = true;
 		ModuleHelp_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_HELP_QRCODE_WRITE;
-		return FALSE;
+		return false;
 	}
 #else 
-	ModuleHelp_IsErrorOccur = TRUE;
+	ModuleHelp_IsErrorOccur = true;
 	ModuleHelp_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_HELP_QRCODE_NOTSUPPORT;
-	return FALSE;
+	return false;
 #endif
-	return TRUE;
+	return true;
 }
 /********************************************************************
 函数名称：ModuleHelp_QRCode_QREncodecMemory
@@ -125,29 +115,24 @@ BOOL CModuleHelp_QRCode::ModuleHelp_QRCode_QREncodecFile(LPCTSTR lpszFileName, L
   意思：是否成功
 备注：
 *********************************************************************/
-BOOL CModuleHelp_QRCode::ModuleHelp_QRCode_QREncodecMemory(LPCTSTR lpszMsgBuffer, TCHAR* ptszMsgBuffer, int* pInt_MsgLen, LPCTSTR lpszFmt)
+bool CModuleHelp_QRCode::ModuleHelp_QRCode_QREncodecMemory(LPCXSTR lpszMsgBuffer, XCHAR* ptszMsgBuffer, int* pInt_MsgLen, LPCXSTR lpszFmt)
 {
-	ModuleHelp_IsErrorOccur = FALSE;
+	ModuleHelp_IsErrorOccur = false;
 
 	if ((NULL == lpszMsgBuffer) || (NULL == ptszMsgBuffer))
 	{
-		ModuleHelp_IsErrorOccur = TRUE;
+		ModuleHelp_IsErrorOccur = true;
 		ModuleHelp_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_HELP_QRCODE_PARAMENT;
-		return FALSE;
+		return false;
 	}
 #ifdef _MSC_BUILD
 	//使用qrencode进行字符串编码
-#ifdef _UNICODE
-	USES_CONVERSION;
-	QRcode* pSt_QRCodec = QRcode_encodeString(W2A(lpszMsgBuffer), 0, QR_ECLEVEL_H, QR_MODE_8, 1);
-#else
 	QRcode* pSt_QRCodec = QRcode_encodeString(lpszMsgBuffer, 0, QR_ECLEVEL_H, QR_MODE_8, 1);
-#endif
 	if (NULL == pSt_QRCodec)
 	{
-		ModuleHelp_IsErrorOccur = TRUE;
+		ModuleHelp_IsErrorOccur = true;
 		ModuleHelp_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_HELP_QRCODE_FAILED;
-		return FALSE;
+		return false;
 	}
 	cv::Mat m_SrcFrame;
 	vector<uchar> stl_VecImg;
@@ -167,9 +152,9 @@ BOOL CModuleHelp_QRCode::ModuleHelp_QRCode_QREncodecMemory(LPCTSTR lpszMsgBuffer
 	//是否成功
 	if (!cv::imencode(lpszFmt, m_SrcFrame, stl_VecImg))
 	{
-		ModuleHelp_IsErrorOccur = TRUE;
+		ModuleHelp_IsErrorOccur = true;
 		ModuleHelp_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_HELP_QRCODE_FAILED;
-		return FALSE;
+		return false;
 	}
 	*pInt_MsgLen = stl_VecImg.size();
 	for (int i = 0; i < (*pInt_MsgLen); i++)
@@ -177,11 +162,11 @@ BOOL CModuleHelp_QRCode::ModuleHelp_QRCode_QREncodecMemory(LPCTSTR lpszMsgBuffer
 		ptszMsgBuffer[i] = stl_VecImg[i];
 	}
 #else 
-	ModuleHelp_IsErrorOccur = TRUE;
+	ModuleHelp_IsErrorOccur = true;
 	ModuleHelp_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_HELP_QRCODE_NOTSUPPORT;
-	return FALSE;
+	return false;
 #endif
-	return TRUE;
+	return true;
 }
 /********************************************************************
 函数名称：ModuleHelp_QRCode_QRDecodecFile
@@ -221,58 +206,44 @@ BOOL CModuleHelp_QRCode::ModuleHelp_QRCode_QREncodecMemory(LPCTSTR lpszMsgBuffer
   意思：是否成功
 备注：
 *********************************************************************/
-BOOL CModuleHelp_QRCode::ModuleHelp_QRCode_QRDecodecFile(LPCTSTR lpszFileName, TCHAR* ptszMsgBuffer, LPCTSTR lpszDetectProto, LPCTSTR lpszDetectModel, LPCTSTR lpszSrProto, LPCTSTR lpszSrModel)
+bool CModuleHelp_QRCode::ModuleHelp_QRCode_QRDecodecFile(LPCXSTR lpszFileName, XCHAR* ptszMsgBuffer, LPCXSTR lpszDetectProto, LPCXSTR lpszDetectModel, LPCXSTR lpszSrProto, LPCXSTR lpszSrModel)
 {
-	ModuleHelp_IsErrorOccur = FALSE;
+	ModuleHelp_IsErrorOccur = false;
 
 	if ((NULL == lpszFileName) || (NULL == ptszMsgBuffer))
 	{
-		ModuleHelp_IsErrorOccur = TRUE;
+		ModuleHelp_IsErrorOccur = true;
 		ModuleHelp_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_HELP_QRCODE_PARAMENT;
-		return FALSE;
+		return false;
 	}
 #ifdef _MSC_BUILD
 	cv::Mat m_Frame;
 	vector<cv::Mat> m_MatPoint;
 	cv::Ptr<cv::wechat_qrcode::WeChatQRCode> m_QRDetector;
-
-#ifdef _UNICODE
-	USES_CONVERSION;
-	m_Frame = cv::imread(W2A(lpszFileName));
-#else
 	m_Frame = cv::imread(lpszFileName);
-#endif // _UNICODE
 	//是否成功
 	if (m_Frame.empty())
 	{
-		ModuleHelp_IsErrorOccur = TRUE;
+		ModuleHelp_IsErrorOccur = true;
 		ModuleHelp_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_HELP_QRCODE_EMPTY;
-		return FALSE;
+		return false;
 	}
-#ifdef _UNICODE
-	m_QRDetector = cv::makePtr<cv::wechat_qrcode::WeChatQRCode>(W2A(lpszDetectProto), W2A(lpszDetectModel), W2A(lpszSrProto), W2A(lpszSrModel));
-#else
 	m_QRDetector = cv::makePtr<cv::wechat_qrcode::WeChatQRCode>(lpszDetectProto, lpszDetectModel, lpszSrProto, lpszSrModel);
-#endif
 	vector<string> stl_VectorQRList = m_QRDetector->detectAndDecode(m_Frame, m_MatPoint);
 
 	if (stl_VectorQRList.empty())
 	{
-		ModuleHelp_IsErrorOccur = TRUE;
+		ModuleHelp_IsErrorOccur = true;
 		ModuleHelp_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_HELP_QRCODE_NOTQR;
-		return FALSE;
+		return false;
 	}
-#ifdef _UNICODE
-	wcscpy(ptszMsgBuffer, A2W(stl_VectorQRList[0].c_str()));
-#else
 	strcpy(ptszMsgBuffer, stl_VectorQRList[0].c_str());
-#endif
 #else 
-	ModuleHelp_IsErrorOccur = TRUE;
+	ModuleHelp_IsErrorOccur = true;
 	ModuleHelp_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_HELP_QRCODE_NOTSUPPORT;
-	return FALSE;
+	return false;
 #endif
-	return TRUE;
+	return true;
 }
 /********************************************************************
 函数名称：ModuleHelp_QRCode_QRDecodecMemory
@@ -317,15 +288,15 @@ BOOL CModuleHelp_QRCode::ModuleHelp_QRCode_QRDecodecFile(LPCTSTR lpszFileName, T
   意思：是否成功
 备注：
 *********************************************************************/
-BOOL CModuleHelp_QRCode::ModuleHelp_QRCode_QRDecodecMemory(LPCSTR lpszMsgBuffer, int nMsgLen, TCHAR* ptszMsgBuffer, LPCTSTR lpszDetectProto, LPCTSTR lpszDetectModel, LPCTSTR lpszSrProto, LPCTSTR lpszSrModel)
+bool CModuleHelp_QRCode::ModuleHelp_QRCode_QRDecodecMemory(LPCXSTR lpszMsgBuffer, int nMsgLen, XCHAR* ptszMsgBuffer, LPCXSTR lpszDetectProto, LPCXSTR lpszDetectModel, LPCXSTR lpszSrProto, LPCXSTR lpszSrModel)
 {
-	ModuleHelp_IsErrorOccur = FALSE;
+	ModuleHelp_IsErrorOccur = false;
 
 	if ((NULL == lpszMsgBuffer) || (NULL == ptszMsgBuffer))
 	{
-		ModuleHelp_IsErrorOccur = TRUE;
+		ModuleHelp_IsErrorOccur = true;
 		ModuleHelp_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_HELP_QRCODE_PARAMENT;
-		return FALSE;
+		return false;
 	}
 #ifdef _MSC_BUILD
 	cv::Mat m_Frame;
@@ -337,33 +308,24 @@ BOOL CModuleHelp_QRCode::ModuleHelp_QRCode_QRDecodecMemory(LPCSTR lpszMsgBuffer,
 	//是否成功
 	if (m_Frame.empty())
 	{
-		ModuleHelp_IsErrorOccur = TRUE;
+		ModuleHelp_IsErrorOccur = true;
 		ModuleHelp_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_HELP_QRCODE_EMPTY;
-		return FALSE;
+		return false;
 	}
-#ifdef _UNICODE
-	USES_CONVERSION;
-	m_QRDetector = cv::makePtr<cv::wechat_qrcode::WeChatQRCode>(W2A(lpszDetectProto), W2A(lpszDetectModel), W2A(lpszSrProto), W2A(lpszSrModel));
-#else
 	m_QRDetector = cv::makePtr<cv::wechat_qrcode::WeChatQRCode>(lpszDetectProto, lpszDetectModel, lpszSrProto, lpszSrModel);
-#endif
 	vector<string> stl_VectorQRList = m_QRDetector->detectAndDecode(m_Frame, m_MatPoint);
 
 	if (stl_VectorQRList.empty())
 	{
-		ModuleHelp_IsErrorOccur = TRUE;
+		ModuleHelp_IsErrorOccur = true;
 		ModuleHelp_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_HELP_QRCODE_NOTQR;
-		return FALSE;
+		return false;
 	}
-#ifdef _UNICODE
-	wcscpy(ptszMsgBuffer, A2W(stl_VectorQRList[0].c_str()));
-#else
 	strcpy(ptszMsgBuffer, stl_VectorQRList[0].c_str());
-#endif
 #else 
-	ModuleHelp_IsErrorOccur = TRUE;
+	ModuleHelp_IsErrorOccur = true;
 	ModuleHelp_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_HELP_QRCODE_NOTSUPPORT;
-	return FALSE;
+	return false;
 #endif
-	return TRUE;
+	return true;
 }

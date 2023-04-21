@@ -40,16 +40,17 @@ c c++ interface api service
 20. 计量转换
 21. 网络测试
 22. 分布式锁API
-23. 短连接生成(计划中)
+23. 短连接生成和转发
 24. 本地标准时间
 25. 数学计算
 26. 日志服务
 27. 插件脚本热重载(计划中)
+28. 敏感词检测(计划中)
 
 ## 安装教程
 
 #### XEngine环境
-必须安装XEngine,版本需要V7.38或者以上版本,安装XEngine可以参考其Readme文档  
+必须安装XEngine,版本需要V8.x或者以上版本,安装XEngine可以参考其Readme文档  
 GITEE:https://gitee.com/xyry/libxengine  
 GITHUB:https://github.com/libxengine/xengine
 
@@ -60,7 +61,7 @@ Linux执行:sudo ./XEngine_LINEnv.sh -i 3
 macos执行:./XEngine_LINEnv.sh -i 3  
 
 #### 数据库环境
-需要MYSQL数据库8.0以上版本.通过CreateDatabase.sql创建表,然后XEngine_APIInfo.sql导入表  
+需要MYSQL数据库8.0以上版本.通过CreateDatabase.sql创建表,然后导入剩余的表  
 修改配置文件里面XSQL里面的数据库配置为你的  
 
 #### Windows
@@ -71,12 +72,12 @@ macos执行:./XEngine_LINEnv.sh -i 3
 #### Linux
 ubuntu:sudo apt install liblua5.3-dev libopencc-dev libopencv-dev libopencv-contrib-dev libqrencode-dev  
 centos:需要自己编译  
-Linux使用Makefile编译,UBUNTU20.04 x64或者CENTOS8 x64  
+Linux使用Makefile编译,UBUNTU22.04 x64或者RockyLinux 9 x64
 在控制台运行
 
 #### Macos
 安装opencc,执行命令:brew install lua opencc  
-使用makefile编译,控制台运行,需要mac 12以及以上版本  
+使用makefile编译,控制台运行,需要mac 13以及以上版本  
 在控制台运行
 
 ##### 编译命令

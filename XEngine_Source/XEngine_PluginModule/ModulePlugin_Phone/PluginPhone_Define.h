@@ -26,8 +26,8 @@ typedef enum
 //////////////////////////////////////////////////////////////////////////
 typedef struct
 {
-	TCHAR tszProvincer[64];     //省/自治区/直辖市
-	TCHAR tszCity[64];          //市/区     
+	XCHAR tszProvincer[64];     //省/自治区/直辖市
+	XCHAR tszCity[64];          //市/区     
 	__int64x nPhoneNumber;      //电话号码
 	int nZipCode;               //邮编
 	int nAreaCode;              //区号
@@ -36,7 +36,7 @@ typedef struct
 //////////////////////////////////////////////////////////////////////////
 //                       导出函数定义
 //////////////////////////////////////////////////////////////////////////
-extern "C" DWORD PluginCore_GetLastError();
+extern "C" XLONG PluginCore_GetLastError();
 /*********************************************************************************
 *                                导出函数定义                                    *
 *********************************************************************************/
@@ -53,7 +53,7 @@ extern "C" DWORD PluginCore_GetLastError();
   意思：是否成功
 备注：
 *********************************************************************/
-extern "C" BOOL PluginCore_Init(LPVOID lParam = NULL);
+extern "C" bool PluginCore_Init(XPVOID lParam = NULL);
 /********************************************************************
 函数名称：PluginCore_UnInit
 函数功能：卸载插件
@@ -71,4 +71,4 @@ extern "C" void PluginCore_UnInit();
   意思：是否成功
 备注：
 *********************************************************************/
-extern "C" BOOL PluginCore_Call(TCHAR * **pppHDRList, int nListCount, int* pInt_HTTPCode, TCHAR * ptszMsgBuffer, int* pInt_MsgLen, LPCTSTR lpszMsgBuffer = NULL, int nMsgLen = 0);
+extern "C" bool PluginCore_Call(XCHAR * **pppHDRList, int nListCount, int* pInt_HTTPCode, XCHAR * ptszMsgBuffer, int* pInt_MsgLen, LPCXSTR lpszMsgBuffer = NULL, int nMsgLen = 0);

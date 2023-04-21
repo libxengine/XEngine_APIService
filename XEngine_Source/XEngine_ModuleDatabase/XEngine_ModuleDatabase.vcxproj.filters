@@ -37,6 +37,12 @@
     <Filter Include="源文件\ModuleDatabase_XLog">
       <UniqueIdentifier>{a88dc16d-2168-4784-9f3b-8c2e924f49f3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="头文件\ModuleDatabase_ShortLink">
+      <UniqueIdentifier>{092178a8-793e-4724-9249-09912b3e6cba}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\ModuleDatabase_ShortLink">
+      <UniqueIdentifier>{358aae26-1704-4e1e-bca3-b48c05449281}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -63,6 +69,9 @@
     <ClInclude Include="ModuleDatabase_XLog\ModuleDatabase_XLog.h">
       <Filter>头文件\ModuleDatabase_XLog</Filter>
     </ClInclude>
+    <ClInclude Include="ModuleDatabase_ShortLink\ModuleDatabase_ShortLink.h">
+      <Filter>头文件\ModuleDatabase_ShortLink</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp">
@@ -82,6 +91,9 @@
     </ClCompile>
     <ClCompile Include="ModuleDatabase_XLog\ModuleDatabase_XLog.cpp">
       <Filter>源文件\ModuleDatabase_XLog</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleDatabase_ShortLink\ModuleDatabase_ShortLink.cpp">
+      <Filter>源文件\ModuleDatabase_ShortLink</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

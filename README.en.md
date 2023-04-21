@@ -40,16 +40,17 @@ Support privatization deployment, free, safe, open source, controllable
 20. Metering Conversion
 21. network test
 22. Distributed lock
-23. short url creator(planned)
+23. short url creator and forward
 24. local system time
 25. math Calculation
 26. log service
 27. Plugin hot reload(planned)
+28. Sensitive word detection(planned)
 
 ## install
 
 #### XEngine Evn
-you must install XEngine,need V7.38 or above,install XEngine can be refer to xengine Readme docment  
+you must install XEngine,need V8.x or above,install XEngine can be refer to xengine Readme docment  
 GITEE:https://gitee.com/xyry/libxengine  
 GITHUB:https://github.com/libxengine/xengine
 
@@ -60,7 +61,7 @@ Linux Exection:sudo ./XEngine_LINEnv.sh -i 3
 Macos Exection:./XEngine_LINEnv.sh -i 3
 
 #### Database Env
-MYSQL database version 8.0 or above is required. Create a table through CreateDatabase.sql, and then import the table with XEngine_APIInfo.sql  
+MYSQL database version 8.0 or above is required. Create a table through CreateDatabase.sql, and then import other sql table
 Modify the database configuration in XSQL in the configuration file to your  
 
 #### Windows
@@ -71,12 +72,12 @@ Just Run it
 #### Linux
 ubuntu:sudo apt install libopencc-dev  
 centos:compile by self  
-use makefile compile,UBUNTU20.04 x64 or CENTOS8 x64  
+use makefile compile,UBUNTU22.04 x64 or RockyLinux 9 x64
 Run it on the terminal
 
 #### Macos
 install opencc:brew install opencc  
-use makefile compile,mac 12 and above  
+use makefile compile,mac 13 and above  
 Run it on the terminal
 
 ##### complie

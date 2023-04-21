@@ -11,21 +11,21 @@
 //    Purpose:     导出实现
 //    History:
 *********************************************************************/
-BOOL BMIndex_IsErrorOccur = FALSE;
-DWORD BMIndex_dwErrorCode = 0;
+bool BMIndex_IsErrorOccur = false;
+XLONG BMIndex_dwErrorCode = 0;
 //////////////////////////////////////////////////////////////////////////
 CPlugin_BMIndex m_PluginBMIndex;
 //////////////////////////////////////////////////////////////////////////
 //                       导出函数定义
 //////////////////////////////////////////////////////////////////////////
-extern "C" DWORD PluginCore_GetLastError()
+extern "C" XLONG PluginCore_GetLastError()
 {
 	return BMIndex_dwErrorCode;
 }
 /*********************************************************************************
 *                                导出函数定义                                    *
 *********************************************************************************/
-extern "C" BOOL PluginCore_Init(LPVOID lParam)
+extern "C" bool PluginCore_Init(XPVOID lParam)
 {
 	return m_PluginBMIndex.PluginCore_Init(lParam);
 }
@@ -33,7 +33,7 @@ extern "C" void PluginCore_UnInit()
 {
 	m_PluginBMIndex.PluginCore_UnInit();
 }
-extern "C" BOOL PluginCore_Call(TCHAR * **pppHDRList, int nListCount, int* pInt_HTTPCode, TCHAR * ptszMsgBuffer, int* pInt_MsgLen, LPCTSTR lpszMsgBuffer, int nMsgLen)
+extern "C" bool PluginCore_Call(XCHAR * **pppHDRList, int nListCount, int* pInt_HTTPCode, XCHAR * ptszMsgBuffer, int* pInt_MsgLen, LPCXSTR lpszMsgBuffer, int nMsgLen)
 {
 	return m_PluginBMIndex.PluginCore_Call(pppHDRList, nListCount, pInt_HTTPCode, ptszMsgBuffer, pInt_MsgLen, lpszMsgBuffer, nMsgLen);
 }

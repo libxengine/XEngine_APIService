@@ -11,21 +11,21 @@
 //    Purpose:     导出实现
 //    History:
 *********************************************************************/
-BOOL Zodiac_IsErrorOccur = FALSE;
-DWORD Zodiac_dwErrorCode = 0;
+bool Zodiac_IsErrorOccur = false;
+XLONG Zodiac_dwErrorCode = 0;
 //////////////////////////////////////////////////////////////////////////
 CPlugin_Zodiac m_PluginZodiac;
 //////////////////////////////////////////////////////////////////////////
 //                       导出函数定义
 //////////////////////////////////////////////////////////////////////////
-extern "C" DWORD PluginCore_GetLastError()
+extern "C" XLONG PluginCore_GetLastError()
 {
 	return Zodiac_dwErrorCode;
 }
 /*********************************************************************************
 *                                导出函数定义                                    *
 *********************************************************************************/
-extern "C" BOOL PluginCore_Init(LPVOID lParam)
+extern "C" bool PluginCore_Init(XPVOID lParam)
 {
 	return m_PluginZodiac.PluginCore_Init(lParam);
 }
@@ -33,7 +33,7 @@ extern "C" void PluginCore_UnInit()
 {
 	m_PluginZodiac.PluginCore_UnInit();
 }
-extern "C" BOOL PluginCore_Call(TCHAR * **pppHDRList, int nListCount, int* pInt_HTTPCode, TCHAR * ptszMsgBuffer, int* pInt_MsgLen, LPCTSTR lpszMsgBuffer, int nMsgLen)
+extern "C" bool PluginCore_Call(XCHAR * **pppHDRList, int nListCount, int* pInt_HTTPCode, XCHAR * ptszMsgBuffer, int* pInt_MsgLen, LPCXSTR lpszMsgBuffer, int nMsgLen)
 {
 	return m_PluginZodiac.PluginCore_Call(pppHDRList, nListCount, pInt_HTTPCode, ptszMsgBuffer, pInt_MsgLen, lpszMsgBuffer, nMsgLen);
 }

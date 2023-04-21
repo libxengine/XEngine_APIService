@@ -44,32 +44,32 @@ CModuleHelp_Language::~CModuleHelp_Language()
   意思：是否成功
 备注：
 *********************************************************************/
-BOOL CModuleHelp_Language::ModuleHelp_Language_ConvertZh(LPCTSTR lpszJsonFile, LPCTSTR lpszSourceStr, TCHAR* ptszDestStr)
+bool CModuleHelp_Language::ModuleHelp_Language_ConvertZh(LPCXSTR lpszJsonFile, LPCXSTR lpszSourceStr, XCHAR* ptszDestStr)
 {
-	ModuleHelp_IsErrorOccur = FALSE;
+	ModuleHelp_IsErrorOccur = false;
 
 	if ((NULL == lpszJsonFile) || (NULL == lpszSourceStr) || (NULL == ptszDestStr))
 	{
-		ModuleHelp_IsErrorOccur = TRUE;
+		ModuleHelp_IsErrorOccur = true;
 		ModuleHelp_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_HELP_LANGUAGE_PARAMENT;
-		return FALSE;
+		return false;
 	}
 	opencc_t m_OPencc = opencc_open(lpszJsonFile);
 	if ((opencc_t)-1 == m_OPencc)
 	{
-		ModuleHelp_IsErrorOccur = TRUE;
+		ModuleHelp_IsErrorOccur = true;
 		ModuleHelp_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_HELP_LANGUAGE_FAILED;
-		return FALSE;
+		return false;
 	}
 	if ((size_t)-1 == opencc_convert_utf8_to_buffer(m_OPencc, lpszSourceStr, strlen(lpszSourceStr), ptszDestStr))
 	{
-		ModuleHelp_IsErrorOccur = TRUE;
+		ModuleHelp_IsErrorOccur = true;
 		ModuleHelp_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_HELP_LANGUAGE_NOTSUPPORT;
-		return FALSE;
+		return false;
 	}
 	opencc_close(m_OPencc);
 
-	return TRUE;
+	return true;
 }
 /********************************************************************
 函数名称：ModuleHelp_Translation_Convert
@@ -89,74 +89,74 @@ BOOL CModuleHelp_Language::ModuleHelp_Language_ConvertZh(LPCTSTR lpszJsonFile, L
   意思：是否成功
 备注：
 *********************************************************************/
-BOOL CModuleHelp_Language::ModuleHelp_Translation_Convert(ENUM_XENGINE_APISERVICE_TRANSLATION_TYPE enTranslationType, TCHAR* ptszTranslationType)
+bool CModuleHelp_Language::ModuleHelp_Translation_Convert(ENUM_XENGINE_APISERVICE_TRANSLATION_TYPE enTranslationType, XCHAR* ptszTranslationType)
 {
-	ModuleHelp_IsErrorOccur = FALSE;
+	ModuleHelp_IsErrorOccur = false;
 
 	if (NULL == ptszTranslationType)
 	{
-		ModuleHelp_IsErrorOccur = TRUE;
+		ModuleHelp_IsErrorOccur = true;
 		ModuleHelp_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_HELP_LANGUAGE_PARAMENT;
-		return FALSE;
+		return false;
 	}
 	//转换为服务需要的类型
 	if (ENUM_XENGINE_APISERVICE_TRANSLATION_TYPE_AUTO == enTranslationType)
 	{
-		_tcscpy(ptszTranslationType, _T("auto"));
+		_tcsxcpy(ptszTranslationType, _X("auto"));
 	}
 	else if (ENUM_XENGINE_APISERVICE_TRANSLATION_TYPE_ZH_CN2EN == enTranslationType)
 	{
-		_tcscpy(ptszTranslationType, _T("ZH_CN2EN"));
+		_tcsxcpy(ptszTranslationType, _X("ZH_CN2EN"));
 	}
 	else if (ENUM_XENGINE_APISERVICE_TRANSLATION_TYPE_ZH_CN2JA == enTranslationType)
 	{
-		_tcscpy(ptszTranslationType, _T("ZH_CN2JA"));
+		_tcsxcpy(ptszTranslationType, _X("ZH_CN2JA"));
 	}
 	else if (ENUM_XENGINE_APISERVICE_TRANSLATION_TYPE_ZH_CN2KR == enTranslationType)
 	{
-		_tcscpy(ptszTranslationType, _T("ZH_CN2KR"));
+		_tcsxcpy(ptszTranslationType, _X("ZH_CN2KR"));
 	}
 	else if (ENUM_XENGINE_APISERVICE_TRANSLATION_TYPE_ZH_CN2FR == enTranslationType)
 	{
-		_tcscpy(ptszTranslationType, _T("ZH_CN2FR"));
+		_tcsxcpy(ptszTranslationType, _X("ZH_CN2FR"));
 	}
 	else if (ENUM_XENGINE_APISERVICE_TRANSLATION_TYPE_ZH_CN2RU == enTranslationType)
 	{
-		_tcscpy(ptszTranslationType, _T("ZH_CN2RU"));
+		_tcsxcpy(ptszTranslationType, _X("ZH_CN2RU"));
 	}
 	else if (ENUM_XENGINE_APISERVICE_TRANSLATION_TYPE_ZH_CN2SP == enTranslationType)
 	{
-		_tcscpy(ptszTranslationType, _T("ZH_CN2SP"));
+		_tcsxcpy(ptszTranslationType, _X("ZH_CN2SP"));
 	}
 	else if (ENUM_XENGINE_APISERVICE_TRANSLATION_TYPE_EN2ZH_CN == enTranslationType)
 	{
-		_tcscpy(ptszTranslationType, _T("EN2ZH_CN"));
+		_tcsxcpy(ptszTranslationType, _X("EN2ZH_CN"));
 	}
 	else if (ENUM_XENGINE_APISERVICE_TRANSLATION_TYPE_JA2ZH_CN == enTranslationType)
 	{
-		_tcscpy(ptszTranslationType, _T("JA2ZH_CN"));
+		_tcsxcpy(ptszTranslationType, _X("JA2ZH_CN"));
 	}
 	else if (ENUM_XENGINE_APISERVICE_TRANSLATION_TYPE_KR2ZH_CN == enTranslationType)
 	{
-		_tcscpy(ptszTranslationType, _T("KR2ZH_CN"));
+		_tcsxcpy(ptszTranslationType, _X("KR2ZH_CN"));
 	}
 	else if (ENUM_XENGINE_APISERVICE_TRANSLATION_TYPE_FR2ZH_CN == enTranslationType)
 	{
-		_tcscpy(ptszTranslationType, _T("FR2ZH_CN"));
+		_tcsxcpy(ptszTranslationType, _X("FR2ZH_CN"));
 	}
 	else if (ENUM_XENGINE_APISERVICE_TRANSLATION_TYPE_RU2ZH_CN == enTranslationType)
 	{
-		_tcscpy(ptszTranslationType, _T("RU2ZH_CN"));
+		_tcsxcpy(ptszTranslationType, _X("RU2ZH_CN"));
 	}
 	else if (ENUM_XENGINE_APISERVICE_TRANSLATION_TYPE_SP2ZH_CN == enTranslationType)
 	{
-		_tcscpy(ptszTranslationType, _T("SP2ZH_CN"));
+		_tcsxcpy(ptszTranslationType, _X("SP2ZH_CN"));
 	}
 	else
 	{
-		ModuleHelp_IsErrorOccur = TRUE;
+		ModuleHelp_IsErrorOccur = true;
 		ModuleHelp_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_HELP_LANGUAGE_NOTSUPPORT;
-		return FALSE;
+		return false;
 	}
-	return TRUE;
+	return true;
 }

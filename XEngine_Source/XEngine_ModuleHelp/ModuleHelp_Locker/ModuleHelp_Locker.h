@@ -29,13 +29,13 @@ public:
 	CModuleHelp_Locker();
 	~CModuleHelp_Locker();
 public:
-	BOOL ModuleHelp_Locker_Create(XNETHANDLE* pxhToken);
-	BOOL ModuleHelp_Locker_OPen(XNETHANDLE xhToken);
-	BOOL ModuleHelp_Locker_ReadLock(XNETHANDLE xhToken);
-	BOOL ModuleHelp_Locker_ReadUNLock(XNETHANDLE xhToken);
-	BOOL ModuleHelp_Locker_WriteLock(XNETHANDLE xhToken);
-	BOOL ModuleHelp_Locker_WriteUNLock(XNETHANDLE xhToken);
-	BOOL ModuleHelp_Locker_Close(XNETHANDLE xhToken);
+	bool ModuleHelp_Locker_Create(XNETHANDLE* pxhToken);
+	bool ModuleHelp_Locker_OPen(XNETHANDLE xhToken);
+	bool ModuleHelp_Locker_ReadLock(XNETHANDLE xhToken);
+	bool ModuleHelp_Locker_ReadUNLock(XNETHANDLE xhToken);
+	bool ModuleHelp_Locker_WriteLock(XNETHANDLE xhToken);
+	bool ModuleHelp_Locker_WriteUNLock(XNETHANDLE xhToken);
+	bool ModuleHelp_Locker_Close(XNETHANDLE xhToken);
 private:
 	shared_mutex st_Locker;
 private:

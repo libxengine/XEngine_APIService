@@ -37,8 +37,8 @@ using namespace std;
 //    Purpose:     公用头文件
 //    History:
 *********************************************************************/
-extern BOOL BMIndex_IsErrorOccur;
-extern DWORD BMIndex_dwErrorCode;
+extern bool BMIndex_IsErrorOccur;
+extern XLONG BMIndex_dwErrorCode;
 
 
 #ifdef _MSC_BUILD

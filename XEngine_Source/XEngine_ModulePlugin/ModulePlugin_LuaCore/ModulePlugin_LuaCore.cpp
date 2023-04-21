@@ -13,7 +13,7 @@
 *********************************************************************/
 CModulePlugin_LuaCore::CModulePlugin_LuaCore()
 {
-    bIsInit = FALSE;
+    bIsInit = false;
 }
 CModulePlugin_LuaCore::~CModulePlugin_LuaCore()
 {
@@ -29,19 +29,19 @@ CModulePlugin_LuaCore::~CModulePlugin_LuaCore()
   意思：是否成功初始化
 备注：
 *********************************************************************/
-BOOL CModulePlugin_LuaCore::ModulePlugin_LuaCore_Init()
+bool CModulePlugin_LuaCore::ModulePlugin_LuaCore_Init()
 {
-    ModulePlugin_IsErrorOccur = FALSE;
+    ModulePlugin_IsErrorOccur = false;
     //判断是否初始化
     if (bIsInit)
     {
-        ModulePlugin_IsErrorOccur = TRUE;
+        ModulePlugin_IsErrorOccur = true;
         ModulePlugin_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PLUGIN_ISINITED;
-        return FALSE;
+        return false;
     }
     //启动线程
-    bIsInit = TRUE;
-    return TRUE;
+    bIsInit = true;
+    return true;
 }
 /********************************************************************
 函数名称：ModulePlugin_LuaCore_Push
@@ -66,21 +66,21 @@ BOOL CModulePlugin_LuaCore::ModulePlugin_LuaCore_Init()
   意思：是否成功添加
 备注：
 *********************************************************************/
-BOOL CModulePlugin_LuaCore::ModulePlugin_LuaCore_Push(XNETHANDLE* pxhModule, LPCTSTR lpszPluginFile, LPVOID lParam)
+bool CModulePlugin_LuaCore::ModulePlugin_LuaCore_Push(XNETHANDLE* pxhModule, LPCXSTR lpszPluginFile, XPVOID lParam)
 {
-    ModulePlugin_IsErrorOccur = FALSE;
+    ModulePlugin_IsErrorOccur = false;
 
     if (!BaseLib_OperatorHandle_Create(pxhModule))
     {
-        ModulePlugin_IsErrorOccur = TRUE;
+        ModulePlugin_IsErrorOccur = true;
         ModulePlugin_dwErrorCode = BaseLib_GetLastError();
-        return FALSE;
+        return false;
     }
     if (!ModulePlugin_LuaCore_Add(*pxhModule, lpszPluginFile, lParam))
     {
-        return FALSE;
+        return false;
     }
-    return TRUE;
+    return true;
 }
 /********************************************************************
 函数名称：ModulePlugin_LuaCore_Exec
@@ -130,37 +130,37 @@ BOOL CModulePlugin_LuaCore::ModulePlugin_LuaCore_Push(XNETHANDLE* pxhModule, LPC
   意思：是否成功
 备注：
 *********************************************************************/
-BOOL CModulePlugin_LuaCore::ModulePlugin_LuaCore_Exec(XNETHANDLE xhModule, TCHAR*** pppHDRList, int nListCount, int* pInt_HTTPCode, TCHAR* ptszMsgBuffer, int* pInt_MsgLen, LPCTSTR lpszMsgBufer /* = NULL */, int nMsgLen /* = 0 */)
+bool CModulePlugin_LuaCore::ModulePlugin_LuaCore_Exec(XNETHANDLE xhModule, XCHAR*** pppHDRList, int nListCount, int* pInt_HTTPCode, XCHAR* ptszMsgBuffer, int* pInt_MsgLen, LPCXSTR lpszMsgBufer /* = NULL */, int nMsgLen /* = 0 */)
 {
-    ModulePlugin_IsErrorOccur = FALSE;
+    ModulePlugin_IsErrorOccur = false;
 
     st_csStl.lock_shared();
 	//执行指定插件函数
 	unordered_map<XNETHANDLE, PLUGINCORE_LUAFRAMEWORK>::const_iterator stl_MapIterator = stl_MapFrameWork.find(xhModule);
 	if (stl_MapIterator == stl_MapFrameWork.end())
 	{
-		ModulePlugin_IsErrorOccur = TRUE;
+		ModulePlugin_IsErrorOccur = true;
 		ModulePlugin_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PLUGIN_NOTFOUND;
 		st_csStl.unlock_shared();
-		return FALSE;
+		return false;
 	}
 	if (0 == lua_getglobal(stl_MapIterator->second.pSt_LuaState, "PluginCore_Call"))
 	{
-		ModulePlugin_IsErrorOccur = TRUE;
+		ModulePlugin_IsErrorOccur = true;
 		ModulePlugin_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PLUGIN_FPCALL;
 		st_csStl.unlock_shared();
-		return FALSE;
+		return false;
 	}
-    TCHAR tszURLParam[MAX_PATH];
+    XCHAR tszURLParam[MAX_PATH];
     memset(tszURLParam, '\0', MAX_PATH);
 
     for (int i = 1; i < nListCount; i++)
     {
         if (i > 1)
         {
-            _tcscat(tszURLParam, "&");
+            _tcsxcat(tszURLParam, "&");
         }
-        _tcscat(tszURLParam, (*pppHDRList)[i]);
+        _tcsxcat(tszURLParam, (*pppHDRList)[i]);
     }
     lua_pushstring(stl_MapIterator->second.pSt_LuaState, tszURLParam);
     lua_pushinteger(stl_MapIterator->second.pSt_LuaState, nListCount - 1);
@@ -168,17 +168,17 @@ BOOL CModulePlugin_LuaCore::ModulePlugin_LuaCore_Exec(XNETHANDLE xhModule, TCHAR
     lua_pushinteger(stl_MapIterator->second.pSt_LuaState, nMsgLen);
     if (LUA_OK != lua_pcall(stl_MapIterator->second.pSt_LuaState, 4, 1, 0))
     {
-		ModulePlugin_IsErrorOccur = TRUE;
+		ModulePlugin_IsErrorOccur = true;
 		ModulePlugin_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PLUGIN_EXECTION;
 		st_csStl.unlock_shared();
-		return FALSE;
+		return false;
     }
     lua_getglobal(stl_MapIterator->second.pSt_LuaState, "PInt_HTTPCode");
     *pInt_HTTPCode = (int)lua_tonumber(stl_MapIterator->second.pSt_LuaState, -1);
     lua_pop(stl_MapIterator->second.pSt_LuaState, -1);
 
 	lua_getglobal(stl_MapIterator->second.pSt_LuaState, "PtszMsgBuffer");
-	_tcscpy(ptszMsgBuffer, lua_tostring(stl_MapIterator->second.pSt_LuaState, -1));
+	_tcsxcpy(ptszMsgBuffer, lua_tostring(stl_MapIterator->second.pSt_LuaState, -1));
 	lua_pop(stl_MapIterator->second.pSt_LuaState, -1);
 
 	lua_getglobal(stl_MapIterator->second.pSt_LuaState, "PInt_MsgLen");
@@ -187,7 +187,7 @@ BOOL CModulePlugin_LuaCore::ModulePlugin_LuaCore_Exec(XNETHANDLE xhModule, TCHAR
 
 	st_csStl.unlock_shared();
 
-    return TRUE;
+    return true;
 }
 /********************************************************************
 函数名称：ModulePlugin_LuaCore_Destroy
@@ -197,16 +197,16 @@ BOOL CModulePlugin_LuaCore::ModulePlugin_LuaCore_Exec(XNETHANDLE xhModule, TCHAR
   意思：是否成功销毁
 备注：
 *********************************************************************/
-BOOL CModulePlugin_LuaCore::ModulePlugin_LuaCore_Destroy()
+bool CModulePlugin_LuaCore::ModulePlugin_LuaCore_Destroy()
 {
-    ModulePlugin_IsErrorOccur = FALSE;
+    ModulePlugin_IsErrorOccur = false;
 
     //判断是否初始化
     if (!bIsInit)
     {
-        return TRUE;
+        return true;
     }
-    bIsInit = FALSE;
+    bIsInit = false;
     //清理STL元素空间
     st_csStl.lock();
     unordered_map<XNETHANDLE, PLUGINCORE_LUAFRAMEWORK>::iterator stl_MapIterator = stl_MapFrameWork.begin();
@@ -220,7 +220,7 @@ BOOL CModulePlugin_LuaCore::ModulePlugin_LuaCore_Destroy()
     stl_MapFrameWork.clear();
     st_csStl.unlock();
 
-    return TRUE;
+    return true;
 }
 //////////////////////////////////////////////////////////////////////////
 //                       保护函数
@@ -248,66 +248,66 @@ BOOL CModulePlugin_LuaCore::ModulePlugin_LuaCore_Destroy()
   意思：是否成功执行
 备注：
 *********************************************************************/
-BOOL CModulePlugin_LuaCore::ModulePlugin_LuaCore_Add(XNETHANDLE xhNet, LPCTSTR lpszPluginFile, LPVOID lParam)
+bool CModulePlugin_LuaCore::ModulePlugin_LuaCore_Add(XNETHANDLE xhNet, LPCXSTR lpszPluginFile, XPVOID lParam)
 {
-    ModulePlugin_IsErrorOccur = FALSE;
+    ModulePlugin_IsErrorOccur = false;
 
     if (NULL == lpszPluginFile)
     {
-        ModulePlugin_IsErrorOccur = TRUE;
+        ModulePlugin_IsErrorOccur = true;
         ModulePlugin_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PLUGIN_PARAMENT;
-        return FALSE;
+        return false;
     }
     PLUGINCORE_LUAFRAMEWORK st_LuaCore;
     memset(&st_LuaCore, '\0', sizeof(PLUGINCORE_LUAFRAMEWORK));
 
     st_LuaCore.pSt_LuaState = luaL_newstate();
-    _tcscpy(st_LuaCore.tszModuleFile, lpszPluginFile);
+    _tcsxcpy(st_LuaCore.tszModuleFile, lpszPluginFile);
 
     if (NULL == st_LuaCore.pSt_LuaState)
 	{
-		ModulePlugin_IsErrorOccur = TRUE;
+		ModulePlugin_IsErrorOccur = true;
 		ModulePlugin_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PLUGIN_MALLOC;
-		return FALSE;
+		return false;
 	}
 	luaL_openlibs(st_LuaCore.pSt_LuaState);
 
     if (LUA_OK != luaL_loadfile(st_LuaCore.pSt_LuaState, lpszPluginFile))
     {
-		ModulePlugin_IsErrorOccur = TRUE;
+		ModulePlugin_IsErrorOccur = true;
 		ModulePlugin_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PLUGIN_OPENDL;
-		return FALSE;
+		return false;
     }
 	if (LUA_OK != lua_pcall(st_LuaCore.pSt_LuaState, 0, 0, 0))
 	{
-		ModulePlugin_IsErrorOccur = TRUE;
+		ModulePlugin_IsErrorOccur = true;
 		ModulePlugin_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PLUGIN_EXECTION;
-		return FALSE;
+		return false;
 	}
 
     if (0 == lua_getglobal(st_LuaCore.pSt_LuaState, "PluginCore_Init"))
     {
-		ModulePlugin_IsErrorOccur = TRUE;
+		ModulePlugin_IsErrorOccur = true;
 		ModulePlugin_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PLUGIN_FPINIT;
-		return FALSE;
+		return false;
     }
 
 	if (LUA_OK != lua_pcall(st_LuaCore.pSt_LuaState, 0, 1, 0))
 	{
-		ModulePlugin_IsErrorOccur = TRUE;
+		ModulePlugin_IsErrorOccur = true;
 		ModulePlugin_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PLUGIN_EXECTION;
-		return FALSE;
+		return false;
 	}
     if (!lua_toboolean(st_LuaCore.pSt_LuaState, -1))
     {
-		ModulePlugin_IsErrorOccur = TRUE;
+		ModulePlugin_IsErrorOccur = true;
 		ModulePlugin_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PLUGIN_EXECTION;
-		return FALSE;
+		return false;
     }
     lua_pop(st_LuaCore.pSt_LuaState, -1);
 
     st_csStl.lock();
     stl_MapFrameWork.insert(make_pair(xhNet, st_LuaCore));
     st_csStl.unlock();
-    return TRUE;
+    return true;
 }

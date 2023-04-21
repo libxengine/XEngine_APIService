@@ -11,4 +11,4 @@
 //    History:
 *********************************************************************/
 //插件处理函数
-BOOL XEngine_PluginTask_Handle(LPCTSTR lpszMethodName, LPCTSTR lpszClientAddr, LPCTSTR lpszRVBuffer, int nRVLen, TCHAR*** ppptszList, int nListCount, int nPluginType);
+bool XEngine_PluginTask_Handle(LPCXSTR lpszMethodName, LPCXSTR lpszClientAddr, LPCXSTR lpszRVBuffer, int nRVLen, XCHAR*** ppptszList, int nListCount, int nPluginType);

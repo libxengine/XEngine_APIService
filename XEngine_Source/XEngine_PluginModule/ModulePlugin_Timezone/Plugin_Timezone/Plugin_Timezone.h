@@ -13,7 +13,7 @@
 typedef struct  
 {
 	XENGINE_LIBTIMER st_TimeZone;
-	TCHAR tszTimeCountry[MAX_PATH];
+	XCHAR tszTimeCountry[MAX_PATH];
 }MODULEPLUGIN_TIMEZONE;
 
 
@@ -23,13 +23,13 @@ public:
 	CPlugin_Timezone();
 	~CPlugin_Timezone();
 public:
-	BOOL PluginCore_Init(LPVOID lParam);
+	bool PluginCore_Init(XPVOID lParam);
 	void PluginCore_UnInit();
-	BOOL PluginCore_Call(TCHAR*** pppHDRList, int nListCount, int* pInt_HTTPCode, TCHAR* ptszMsgBuffer, int* pInt_MsgLen, LPCTSTR lpszMsgBuffer, int nMsgLen);
+	bool PluginCore_Call(XCHAR*** pppHDRList, int nListCount, int* pInt_HTTPCode, XCHAR* ptszMsgBuffer, int* pInt_MsgLen, LPCXSTR lpszMsgBuffer, int nMsgLen);
 protected:
-	BOOL Plugin_Timezone_Count(TCHAR* ptszMsgBufer, int* pInt_Len);
-	BOOL Plugin_Timezone_List(LPCTSTR lpszConvert, TCHAR* ptszMsgBufer, int* pInt_Len);
-	BOOL Plugin_Timezone_Convert(LPCTSTR lpszConvert, LPCTSTR lpszTimeStr, TCHAR* ptszMsgBufer, int* pInt_Len);
+	bool Plugin_Timezone_Count(XCHAR* ptszMsgBufer, int* pInt_Len);
+	bool Plugin_Timezone_List(LPCXSTR lpszConvert, XCHAR* ptszMsgBufer, int* pInt_Len);
+	bool Plugin_Timezone_Convert(LPCXSTR lpszConvert, LPCXSTR lpszTimeStr, XCHAR* ptszMsgBufer, int* pInt_Len);
 private:
 	unordered_map<string, MODULEPLUGIN_TIMEZONE> stl_MapTimezone;
 };

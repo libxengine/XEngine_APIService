@@ -28,8 +28,8 @@ int main()
 	WSAStartup(MAKEWORD(2, 2), &st_WSAData);
 #endif
 	int nLen = 0;
-	TCHAR* ptszMsgBuffer = NULL;
-	LPCTSTR lpszPassUrl = _T("http://127.0.0.1:5501/api?function=cal&params1=1&params2=2&type=0");
+	XCHAR* ptszMsgBuffer = NULL;
+	LPCXSTR lpszPassUrl = _T("http://127.0.0.1:5501/api?function=cal&params1=1&params2=2&type=0");
 	if (!APIClient_Http_Request(_T("GET"), lpszPassUrl, NULL, NULL, &ptszMsgBuffer, &nLen))
 	{
 		printf("发送投递失败！\n");

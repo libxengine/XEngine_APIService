@@ -17,13 +17,13 @@ public:
 	CPlugin_Meter();
 	~CPlugin_Meter();
 public:
-	BOOL PluginCore_Init(LPVOID lParam);
+	bool PluginCore_Init(XPVOID lParam);
 	void PluginCore_UnInit();
-	BOOL PluginCore_Call(TCHAR*** pppHDRList, int nListCount, int* pInt_HTTPCode, TCHAR* ptszMsgBuffer, int* pInt_MsgLen, LPCTSTR lpszMsgBuffer, int nMsgLen);
+	bool PluginCore_Call(XCHAR*** pppHDRList, int nListCount, int* pInt_HTTPCode, XCHAR* ptszMsgBuffer, int* pInt_MsgLen, LPCXSTR lpszMsgBuffer, int nMsgLen);
 protected:
-	BOOL Plugin_Meter_LengthConvert(int nSource, __int64x nValue, Json::Value *pSt_JsonObject);
-	BOOL Plugin_Meter_TemperatureConvert(int nSource, __int64x nValue, Json::Value* pSt_JsonObject);
-	BOOL Plugin_Meter_PowerConvert(int nSource, __int64x nValue, Json::Value* pSt_JsonObject);
-	BOOL Plugin_Meter_SpeedConvert(int nSource, __int64x nValue, Json::Value* pSt_JsonObject);
+	bool Plugin_Meter_LengthConvert(int nSource, __int64x nValue, Json::Value *pSt_JsonObject);
+	bool Plugin_Meter_TemperatureConvert(int nSource, __int64x nValue, Json::Value* pSt_JsonObject);
+	bool Plugin_Meter_PowerConvert(int nSource, __int64x nValue, Json::Value* pSt_JsonObject);
+	bool Plugin_Meter_SpeedConvert(int nSource, __int64x nValue, Json::Value* pSt_JsonObject);
 private:
 };

@@ -33,11 +33,11 @@ CPlugin_BMIndex::~CPlugin_BMIndex()
   意思：是否成功
 备注：
 *********************************************************************/
-BOOL CPlugin_BMIndex::PluginCore_Init(LPVOID lParam)
+bool CPlugin_BMIndex::PluginCore_Init(XPVOID lParam)
 {
-	BMIndex_IsErrorOccur = FALSE;
+	BMIndex_IsErrorOccur = false;
 
-    return TRUE;
+    return true;
 }
 /********************************************************************
 函数名称：PluginCore_UnInit
@@ -49,7 +49,7 @@ BOOL CPlugin_BMIndex::PluginCore_Init(LPVOID lParam)
 *********************************************************************/
 void CPlugin_BMIndex::PluginCore_UnInit()
 {
-	BMIndex_IsErrorOccur = FALSE;
+	BMIndex_IsErrorOccur = false;
 }
 /********************************************************************
 函数名称：PluginCore_Call
@@ -59,19 +59,19 @@ void CPlugin_BMIndex::PluginCore_UnInit()
   意思：是否成功
 备注：
 *********************************************************************/
-BOOL CPlugin_BMIndex::PluginCore_Call(TCHAR*** pppHDRList, int nListCount, int* pInt_HTTPCode, TCHAR* ptszMsgBuffer, int* pInt_MsgLen, LPCTSTR lpszMsgBuffer, int nMsgLen)
+bool CPlugin_BMIndex::PluginCore_Call(XCHAR*** pppHDRList, int nListCount, int* pInt_HTTPCode, XCHAR* ptszMsgBuffer, int* pInt_MsgLen, LPCXSTR lpszMsgBuffer, int nMsgLen)
 {
-	BMIndex_IsErrorOccur = FALSE;
+	BMIndex_IsErrorOccur = false;
 
 	if ((NULL == pInt_HTTPCode) || (NULL == ptszMsgBuffer) || (NULL == pInt_MsgLen))
 	{
-		BMIndex_IsErrorOccur = TRUE;
+		BMIndex_IsErrorOccur = true;
 		BMIndex_dwErrorCode = ERROR_XENGINE_APISERVICE_PLUGIN_MODULE_BMINDEX_PARAMENT;
-		return FALSE;
+		return false;
 	}
-	TCHAR tszKeyName[128];
-	TCHAR tszParamHigh[128];
-	TCHAR tszParamWeight[128];
+	XCHAR tszKeyName[128];
+	XCHAR tszParamHigh[128];
+	XCHAR tszParamWeight[128];
 
 	memset(tszKeyName, '\0', sizeof(tszKeyName));
 	memset(tszParamHigh, '\0', sizeof(tszParamHigh));
@@ -82,21 +82,21 @@ BOOL CPlugin_BMIndex::PluginCore_Call(TCHAR*** pppHDRList, int nListCount, int* 
 	Plugin_Timezone_BMIndex(tszParamHigh, tszParamWeight, ptszMsgBuffer, pInt_MsgLen);
 	*pInt_HTTPCode = 200;
 	
-	return TRUE;
+	return true;
 }
 //////////////////////////////////////////////////////////////////////////
 //                       保护函数
 //////////////////////////////////////////////////////////////////////////
-BOOL CPlugin_BMIndex::Plugin_Timezone_BMIndex(LPCTSTR lpszHigh, LPCTSTR lpszWeight, TCHAR* ptszMsgBufer, int* pInt_Len)
+bool CPlugin_BMIndex::Plugin_Timezone_BMIndex(LPCXSTR lpszHigh, LPCXSTR lpszWeight, XCHAR* ptszMsgBufer, int* pInt_Len)
 {
-	BMIndex_IsErrorOccur = FALSE;
+	BMIndex_IsErrorOccur = false;
 
 	Json::Value st_JsonRoot;
 	Json::Value st_JsonObject;
 	Json::StreamWriterBuilder st_JsonBuilder;
 
-	double dlHigh = _ttof(lpszHigh);
-	double dlWeight = _ttof(lpszWeight);
+	double dlHigh = _ttxof(lpszHigh);
+	double dlWeight = _ttxof(lpszWeight);
 	double dlValue = dlWeight / (dlHigh * dlHigh);
 	if (dlValue < 18.5)
 	{
@@ -133,5 +133,5 @@ BOOL CPlugin_BMIndex::Plugin_Timezone_BMIndex(LPCTSTR lpszHigh, LPCTSTR lpszWeig
 
 	*pInt_Len = Json::writeString(st_JsonBuilder, st_JsonRoot).length();
 	memcpy(ptszMsgBufer, Json::writeString(st_JsonBuilder, st_JsonRoot).c_str(), *pInt_Len);
-	return TRUE;
+	return true;
 }
