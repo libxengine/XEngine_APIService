@@ -162,6 +162,7 @@
     <ClCompile Include="XEngine_TaskGet\TaskGet_IDCard.cpp" />
     <ClCompile Include="XEngine_TaskGet\TaskGet_Language.cpp" />
     <ClCompile Include="XEngine_TaskGet\TaskGet_Locker.cpp" />
+    <ClCompile Include="XEngine_TaskGet\TaskGet_Reload.cpp" />
     <ClCompile Include="XEngine_TaskGet\TaskGet_Translation.cpp" />
     <ClCompile Include="XEngine_TaskPost\TaskPost_DTest.cpp" />
     <ClCompile Include="XEngine_TaskPost\TaskPost_Log.cpp" />
@@ -181,6 +182,7 @@
     <ClInclude Include="XEngine_TaskGet\TaskGet_IDCard.h" />
     <ClInclude Include="XEngine_TaskGet\TaskGet_Language.h" />
     <ClInclude Include="XEngine_TaskGet\TaskGet_Locker.h" />
+    <ClInclude Include="XEngine_TaskGet\TaskGet_Reload.h" />
     <ClInclude Include="XEngine_TaskGet\TaskGet_Translation.h" />
     <ClInclude Include="XEngine_TaskPost\TaskPost_ShortLink.h" />
     <ClInclude Include="XEngine_TaskPost\TaskPost_DTest.h" />

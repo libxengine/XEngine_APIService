@@ -112,6 +112,17 @@ int main(int argc, char** argv)
 	{
 		return -1;
 	}
+	//配置重载
+	if (st_ServiceConfig.st_XReload.bReload)
+	{
+		//重载配置文件后退出
+		XCHAR tszAddr[128];
+		memset(tszAddr, '\0', sizeof(tszAddr));
+		//http://127.0.0.1:5501/api?function=reload&opcode=1
+		_xstprintf(tszAddr, _X("http://127.0.0.1:%d/api?function=reload&opcode=%d"), st_ServiceConfig.nHttpPort, st_ServiceConfig.st_XReload.byCode);
+		APIClient_Http_Request(_X("GET"), tszAddr);
+		return 0;
+	}
 	//判断是否以守护进程启动
 	if (st_ServiceConfig.bDeamon)
 	{

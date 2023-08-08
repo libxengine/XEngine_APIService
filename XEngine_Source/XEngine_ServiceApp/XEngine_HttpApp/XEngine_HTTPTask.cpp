@@ -101,6 +101,7 @@ bool HTTPTask_TastPost_Handle(RFCCOMPONENTS_HTTP_REQPARAM* pSt_HTTPParam, LPCXST
 	LPCXSTR lpszParamLanguage = _X("language");
 	LPCXSTR lpszParamTranslation = _X("translation");
 	LPCXSTR lpszParamLocker = _X("lock");
+	LPCXSTR lpszParamReload = _X("reload");
 	//post
 	LPCXSTR lpszParamP2PClient = _X("p2p");
 	LPCXSTR lpszParamZIPCode = _X("zipcode");
@@ -263,7 +264,14 @@ bool HTTPTask_TastPost_Handle(RFCCOMPONENTS_HTTP_REQPARAM* pSt_HTTPParam, LPCXST
 	}
 	else if (0 == _tcsxnicmp(lpszMethodGet, pSt_HTTPParam->tszHttpMethod, _tcsxlen(lpszMethodGet)))
 	{
-		if (0 == _tcsxnicmp(lpszParamIDCard, tszValue, _tcsxlen(lpszParamIDCard)))
+		if (0 == _tcsxnicmp(lpszParamReload, tszValue, _tcsxlen(lpszParamReload)))
+		{
+			//是不是配置重载
+			memset(tszKey, '\0', sizeof(tszKey));
+			BaseLib_OperatorString_GetKeyValue(pptszList[1], "=", tszKey, tszValue);
+			HTTPTask_TaskGet_Reload(lpszClientAddr, tszValue);
+		}
+		else if (0 == _tcsxnicmp(lpszParamIDCard, tszValue, _tcsxlen(lpszParamIDCard)))
 		{
 			//是不是身份证查询
 			memset(tszKey, '\0', sizeof(tszKey));
