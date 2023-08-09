@@ -25,7 +25,69 @@ bool HTTPTask_TaskGet_Reload(LPCXSTR lpszClientAddr, LPCXSTR lpszOPCode)
 	}
 	else if (1 == _ttxoi(lpszOPCode))
 	{
+		ModulePlugin_Loader_Destory();
+		delete st_PluginLibConfig.pStl_ListPlugin;
+		delete st_PluginLuaConfig.pStl_ListPlugin;
+		st_PluginLibConfig.pStl_ListPlugin = NULL;
+		st_PluginLuaConfig.pStl_ListPlugin = NULL;
 
+		ModulePlugin_Loader_Init();
+		if (!ModuleConfigure_Json_PluginFile(st_ServiceConfig.st_XPlugin.tszPluginLib, &st_PluginLibConfig))
+		{
+			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("HTTP客户端:%s,请求操作配置重载失败,加载Lib插件配置失败,错误：%lX"), lpszClientAddr, ModuleConfigure_GetLastError());
+			return false;
+		}
+		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("HTTP客户端:%s,请求操作配置重载成功,加载Lib插件配置成功"), lpszClientAddr);
+		if (!ModuleConfigure_Json_PluginFile(st_ServiceConfig.st_XPlugin.tszPluginLua, &st_PluginLuaConfig))
+		{
+			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("HTTP客户端:%s,请求操作配置重载失败,加载Lua插件配置失败,错误：%lX"), lpszClientAddr, ModuleConfigure_GetLastError());
+			return false;
+		}
+		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("HTTP客户端:%s,请求操作配置重载成功,加载lua插件配置成功"), lpszClientAddr);
+
+		{
+			list<XENGINE_PLUGININFO>::const_iterator stl_ListIterator = st_PluginLibConfig.pStl_ListPlugin->begin();
+			for (int i = 1; stl_ListIterator != st_PluginLibConfig.pStl_ListPlugin->end(); stl_ListIterator++, i++)
+			{
+				if (stl_ListIterator->bEnable)
+				{
+					if (ModulePlugin_Loader_Insert(stl_ListIterator->tszPluginMethod, stl_ListIterator->tszPluginFile, 0))
+					{
+						XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("HTTP客户端:%s,重载Lib模块插件中,当前第:%d 个加载成功,方法:%s,路径:%s"), lpszClientAddr, i, stl_ListIterator->tszPluginMethod, stl_ListIterator->tszPluginFile);
+					}
+					else
+					{
+						XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("HTTP客户端:%s,重载Lib模块插件中,当前第:%d 个加载失败,方法:%s,路径:%s,错误:%lX"), lpszClientAddr, i, stl_ListIterator->tszPluginMethod, stl_ListIterator->tszPluginFile, ModulePlugin_GetLastError());
+					}
+				}
+				else
+				{
+					XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_WARN, _X("HTTP客户端:%s,重载Lib模块插件中,当前第:%d 个加载失败,因为没有启用,方法:%s,路径:%s"), lpszClientAddr, i, stl_ListIterator->tszPluginMethod, stl_ListIterator->tszPluginFile);
+				}
+			}
+		}
+		{
+			list<XENGINE_PLUGININFO>::const_iterator stl_ListIterator = st_PluginLuaConfig.pStl_ListPlugin->begin();
+			for (int i = 1; stl_ListIterator != st_PluginLuaConfig.pStl_ListPlugin->end(); stl_ListIterator++, i++)
+			{
+				if (stl_ListIterator->bEnable)
+				{
+					if (ModulePlugin_Loader_Insert(stl_ListIterator->tszPluginMethod, stl_ListIterator->tszPluginFile, 1))
+					{
+						XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("HTTP客户端:%s,重载Lua模块插件中,当前第:%d 个加载成功,方法:%s,路径:%s"), lpszClientAddr, i, stl_ListIterator->tszPluginMethod, stl_ListIterator->tszPluginFile);
+					}
+					else
+					{
+						XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("HTTP客户端:%s,重载Lua模块插件中,当前第:%d 个加载失败,方法:%s,路径:%s,错误:%lX"), lpszClientAddr, i, stl_ListIterator->tszPluginMethod, stl_ListIterator->tszPluginFile, ModulePlugin_GetLastError());
+					}
+				}
+				else
+				{
+					XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_WARN, _X("HTTP客户端:%s,重载Lua模块插件中,当前第:%d 个加载失败,因为没有启用,方法:%s,路径:%s"), lpszClientAddr, i, stl_ListIterator->tszPluginMethod, stl_ListIterator->tszPluginFile);
+				}
+			}
+		}
+		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("HTTP客户端:%s,请求重载插件成功,Lib插件:%d 个,Lua插件:%d 个"), lpszClientAddr, st_PluginLibConfig.pStl_ListPlugin->size(), st_PluginLuaConfig.pStl_ListPlugin->size());
 	}
 	return true;
 }

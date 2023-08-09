@@ -233,6 +233,6 @@ bool CModulePlugin_Loader::ModulePlugin_Loader_Destory()
 
 	st_Locker.lock();
 	stl_MapLoader.clear();
-	st_Locker.unlock_shared();
+	st_Locker.unlock();
 	return true;
 }
