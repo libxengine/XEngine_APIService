@@ -13,6 +13,7 @@ EXPORTS
 	ModulePlugin_LuaCore_Exec
 	ModulePlugin_LuaCore_Destroy
 
+	ModulePlugin_Loader_Init
 	ModulePlugin_Loader_Insert
 	ModulePlugin_Loader_Find
 	ModulePlugin_Loader_Exec

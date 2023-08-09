@@ -24,6 +24,7 @@ public:
 	CModulePlugin_Loader();
 	~CModulePlugin_Loader();
 public:
+	bool ModulePlugin_Loader_Init();
 	bool ModulePlugin_Loader_Insert(LPCXSTR lpszModuleMethod, LPCXSTR lpszModuleName, int nType = 0);
 	bool ModulePlugin_Loader_Find(LPCXSTR lpszMethodName, int* pInt_Type);
 	bool ModulePlugin_Loader_Exec(LPCXSTR lpszMethodName, XCHAR*** pppHDRList, int nListCount, int* pInt_HTTPCode, XCHAR* ptszMsgBuffer, int* pInt_MsgLen);

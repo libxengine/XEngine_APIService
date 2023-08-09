@@ -52,6 +52,10 @@ extern "C" bool ModulePlugin_LibCore_Destroy()
 /*********************************************************************************
 *                        LUA插件框架导出函数定义                                 *
 *********************************************************************************/
+extern "C" bool ModulePlugin_Loader_Init()
+{
+	return m_PluginLoader.ModulePlugin_Loader_Init();
+}
 extern "C" bool ModulePlugin_LuaCore_Init()
 {
 	return m_PluginLua.ModulePlugin_LuaCore_Init();

@@ -21,6 +21,21 @@ CModulePlugin_Loader::~CModulePlugin_Loader()
 //                       公有函数
 //////////////////////////////////////////////////////////////////////////
 /********************************************************************
+函数名称：ModulePlugin_Loader_Init
+函数功能：初始化插件加载器
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+bool CModulePlugin_Loader::ModulePlugin_Loader_Init()
+{
+	ModulePlugin_LibCore_Init();
+	ModulePlugin_LuaCore_Init();
+
+	return true;
+}
+/********************************************************************
 函数名称：ModulePlugin_Loader_Insert
 函数功能：插入一个模块到加载器
  参数.一：lpszModuleMethod
@@ -212,6 +227,9 @@ bool CModulePlugin_Loader::ModulePlugin_Loader_Exec(LPCXSTR lpszMethodName, XCHA
 bool CModulePlugin_Loader::ModulePlugin_Loader_Destory()
 {
 	ModulePlugin_IsErrorOccur = false;
+
+	ModulePlugin_LibCore_Destroy();
+	ModulePlugin_LuaCore_Destroy();
 
 	st_Locker.lock();
 	stl_MapLoader.clear();
