@@ -1,16 +1,12 @@
 ﻿#include "../XEngine_Hdr.h"
 
-
 bool HTTPTask_TaskGet_Reload(LPCXSTR lpszClientAddr, LPCXSTR lpszOPCode)
 {
 	int nMsgLen = 4096;
-	int nPktLen = 4096;
 	XCHAR tszMsgBuffer[4096];
-	XCHAR tszPktBuffer[4096];
 	RFCCOMPONENTS_HTTP_HDRPARAM st_HDRParam;    //发送给客户端的参数
 
 	memset(tszMsgBuffer, '\0', sizeof(tszMsgBuffer));
-	memset(tszPktBuffer, '\0', sizeof(tszPktBuffer));
 	memset(&st_HDRParam, '\0', sizeof(RFCCOMPONENTS_HTTP_HDRPARAM));
 
 	st_HDRParam.nHttpCode = 200; //HTTP CODE码

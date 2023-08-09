@@ -10,7 +10,7 @@ LOADHDR = -I ./
 LOADSO = -L /usr/local/lib/XEngine_Release/XEngine_BaseLib -L /usr/local/lib/XEngine_Release/XEngine_HelpComponents
 LIB = -lXEngine_BaseLib -lHelpComponents_DataBase
 LIBEX = 
-OBJECTS = ModuleDatabase_IDCard.o ModuleDatabase_Bank.o ModuleDatabase_ZIPCode.o ModuleDatabase_XLog.o ModuleDatabase_ShortLink.o pch.o
+OBJECTS = ModuleDatabase_IDCard.o ModuleDatabase_Bank.o ModuleDatabase_ZIPCode.o ModuleDatabase_XLog.o ModuleDatabase_ShortLink.o ModuleDatabase_WordFilter.o pch.o
 
 ifeq ($(RELEASE),1)
 FLAGS = -c 
@@ -62,6 +62,8 @@ ModuleDatabase_XLog.o:./ModuleDatabase_XLog/ModuleDatabase_XLog.cpp
 	$(CC) $(DEBUG) $(FLAGS) $(UNICODE) $(PLATVER) $(LOADHDR) ./ModuleDatabase_XLog/ModuleDatabase_XLog.cpp
 ModuleDatabase_ShortLink.o:./ModuleDatabase_ShortLink/ModuleDatabase_ShortLink.cpp             
 	$(CC) $(DEBUG) $(FLAGS) $(UNICODE) $(PLATVER) $(LOADHDR) ./ModuleDatabase_ShortLink/ModuleDatabase_ShortLink.cpp
+ModuleDatabase_WordFilter.o:./ModuleDatabase_WordFilter/ModuleDatabase_WordFilter.cpp             
+	$(CC) $(DEBUG) $(FLAGS) $(UNICODE) $(PLATVER) $(LOADHDR) ./ModuleDatabase_WordFilter/ModuleDatabase_WordFilter.cpp
 
 pch.o:./pch.cpp                 		       	    
 	$(CC) $(DEBUG) $(FLAGS) $(UNICODE) $(PLATVER) $(LOADHDR) ./pch.cpp

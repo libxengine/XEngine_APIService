@@ -15,8 +15,8 @@ LIB = -lXEngine_BaseLib -lXEngine_Algorithm -lXEngine_Core -lXEngine_ManagePool 
 	  -ljsoncpp
 LIBEX = 
 OBJECTS = XEngine_Configure.o XEngine_Network.o XEngine_HTTPTask.o XEngine_PluginTask.o XEngine_HttpApp.o        \
-          TaskGet_Bank.o TaskGet_IDCard.o TaskGet_Language.o TaskGet_Locker.o TaskGet_Translation.o   \
-		  TaskPost_DTest.o TaskPost_Log.o TaskPost_P2PClient.o TaskPost_PostCode.o TaskPost_QRCode.o TaskPost_ShortLink.o TaskPost_SocketTest.o
+          TaskGet_Bank.o TaskGet_IDCard.o TaskGet_Language.o TaskGet_Locker.o TaskGet_Translation.o TaskGet_Reload.o  \
+		  TaskPost_DTest.o TaskPost_Log.o TaskPost_P2PClient.o TaskPost_PostCode.o TaskPost_QRCode.o TaskPost_ShortLink.o TaskPost_SocketTest.o TaskPost_WordFilter.o
 
 ifeq ($(RELEASE),1)
 FLAGS = -c 
@@ -76,6 +76,8 @@ TaskGet_Locker.o:./XEngine_TaskGet/TaskGet_Locker.cpp
 	$(CC) $(DEBUG) $(FLAGS) $(UNICODE) $(PLATVER) $(LOADHDR) ./XEngine_TaskGet/TaskGet_Locker.cpp
 TaskGet_Translation.o:./XEngine_TaskGet/TaskGet_Translation.cpp
 	$(CC) $(DEBUG) $(FLAGS) $(UNICODE) $(PLATVER) $(LOADHDR) ./XEngine_TaskGet/TaskGet_Translation.cpp
+TaskGet_Reload.o:./XEngine_TaskGet/TaskGet_Reload.cpp
+	$(CC) $(DEBUG) $(FLAGS) $(UNICODE) $(PLATVER) $(LOADHDR) ./XEngine_TaskGet/TaskGet_Reload.cpp
 
 TaskPost_DTest.o:./XEngine_TaskPost/TaskPost_DTest.cpp
 	$(CC) $(DEBUG) $(FLAGS) $(UNICODE) $(PLATVER) $(LOADHDR) ./XEngine_TaskPost/TaskPost_DTest.cpp
@@ -91,6 +93,8 @@ TaskPost_ShortLink.o:./XEngine_TaskPost/TaskPost_ShortLink.cpp
 	$(CC) $(DEBUG) $(FLAGS) $(UNICODE) $(PLATVER) $(LOADHDR) ./XEngine_TaskPost/TaskPost_ShortLink.cpp
 TaskPost_SocketTest.o:./XEngine_TaskPost/TaskPost_SocketTest.cpp
 	$(CC) $(DEBUG) $(FLAGS) $(UNICODE) $(PLATVER) $(LOADHDR) ./XEngine_TaskPost/TaskPost_SocketTest.cpp
+TaskPost_WordFilter.o:./XEngine_TaskPost/TaskPost_WordFilter.cpp
+	$(CC) $(DEBUG) $(FLAGS) $(UNICODE) $(PLATVER) $(LOADHDR) ./XEngine_TaskPost/TaskPost_WordFilter.cpp
 
 XEngine_HttpApp.o:./XEngine_HttpApp.cpp             
 	$(CC) $(DEBUG) $(FLAGS) $(UNICODE) $(PLATVER) $(LOADHDR) ./XEngine_HttpApp.cpp   
