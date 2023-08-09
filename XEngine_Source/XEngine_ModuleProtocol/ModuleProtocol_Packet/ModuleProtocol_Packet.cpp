@@ -61,7 +61,7 @@ bool CModuleProtocol_Packet::ModuleProtocol_Packet_Common(XCHAR* ptszMsgBuffer, 
 	}
 	Json::Value st_JsonRoot;
 
-	st_JsonRoot["code"] = 0;
+	st_JsonRoot["code"] = nCode;
 	if (NULL != lpszMsgBuffer)
 	{
 		st_JsonRoot["msg"] = lpszMsgBuffer;
