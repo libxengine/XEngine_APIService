@@ -71,6 +71,10 @@ extern "C" bool ModuleProtocol_Packet_ShortLink(XCHAR * ptszMsgBuffer, int* pInt
 {
 	return m_ProtocolPacket.ModuleProtocol_Packet_ShortLink(ptszMsgBuffer, pInt_MsgLen, pSt_ShortLink);
 }
+extern "C" bool ModuleProtocol_Packet_WordFilter(XCHAR * ptszMsgBuffer, int* pInt_MsgLen, XENGINE_WORDFILTER * pSt_WordFilter)
+{
+	return m_ProtocolPacket.ModuleProtocol_Packet_WordFilter(ptszMsgBuffer, pInt_MsgLen, pSt_WordFilter);
+}
 extern "C" bool ModuleProtocol_Packet_P2PLan(XCHAR * ptszMsgBuffer, int* pInt_MsgLen, XENGINE_P2XPPEER_PROTOCOL * **pppSt_ListClients, int nListCount)
 {
 	return m_ProtocolPacket.ModuleProtocol_Packet_P2PLan(ptszMsgBuffer, pInt_MsgLen, pppSt_ListClients, nListCount);
@@ -125,4 +129,8 @@ extern "C" bool ModuleProtocol_Parse_SocketTest(LPCXSTR lpszMsgBuffer, int nMsgL
 extern "C" bool ModuleProtocol_Parse_ShortLink(LPCXSTR lpszMsgBuffer, int nMsgLen, XENGINE_SHORTLINK * pSt_ShortLink)
 {
 	return m_ProtocolParse.ModuleProtocol_Parse_ShortLink(lpszMsgBuffer, nMsgLen, pSt_ShortLink);
+}
+extern "C" bool ModuleProtocol_Parse_WordFilter(LPCXSTR lpszMsgBuffer, int nMsgLen, XENGINE_WORDFILTER * pSt_WordFilter)
+{
+	return m_ProtocolParse.ModuleProtocol_Parse_WordFilter(lpszMsgBuffer, nMsgLen, pSt_WordFilter);
 }

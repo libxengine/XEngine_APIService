@@ -41,6 +41,7 @@ void ServiceApp_Stop(int signo)
 		ModuleDatabase_ZIPCode_Destory();
 		ModuleDatabase_XLog_Destory();
 		ModuleDatabase_ShortLink_Destory();
+		ModuleDatabase_WordFilter_Destory();
 		//销毁其他
 		ModulePlugin_Loader_Destory();
 		ModuleHelp_P2PClient_Destory();
@@ -207,6 +208,12 @@ int main(int argc, char** argv)
 		goto XENGINE_SERVICEAPP_EXIT;
 	}
 	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("启动服务中,初始化短连接数据库成功"));
+	if (!ModuleDatabase_WordFilter_Init((DATABASE_MYSQL_CONNECTINFO*)&st_ServiceConfig.st_XSql))
+	{
+		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("启动服务中,初始化敏感词数据库失败,错误：%lX"), ModuleDB_GetLastError());
+		goto XENGINE_SERVICEAPP_EXIT;
+	}
+	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("启动服务中,初始化敏感词数据库成功"));
 	//启动HTTP服务相关代码
 	if (st_ServiceConfig.nHttpPort > 0)
 	{
@@ -349,6 +356,7 @@ XENGINE_SERVICEAPP_EXIT:
 		ModuleDatabase_ZIPCode_Destory();
 		ModuleDatabase_XLog_Destory();
 		ModuleDatabase_ShortLink_Destory();
+		ModuleDatabase_WordFilter_Destory();
 		//销毁其他
 		ModulePlugin_Loader_Destory();
 		ModuleHelp_P2PClient_Destory();

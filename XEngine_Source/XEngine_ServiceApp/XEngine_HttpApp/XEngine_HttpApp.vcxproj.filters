@@ -81,6 +81,9 @@
     <ClCompile Include="XEngine_TaskGet\TaskGet_Reload.cpp">
       <Filter>源文件\XEngine_TaskGet</Filter>
     </ClCompile>
+    <ClCompile Include="XEngine_TaskPost\TaskPost_WordFilter.cpp">
+      <Filter>源文件\XEngine_TaskPost</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="XEngine_Configure.h">
@@ -136,6 +139,9 @@
     </ClInclude>
     <ClInclude Include="XEngine_TaskGet\TaskGet_Reload.h">
       <Filter>头文件\XEngine_TaskGet</Filter>
+    </ClInclude>
+    <ClInclude Include="XEngine_TaskPost\TaskPost_WordFilter.h">
+      <Filter>头文件\XEngine_TaskPost</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

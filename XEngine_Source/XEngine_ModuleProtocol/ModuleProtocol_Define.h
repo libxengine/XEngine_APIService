@@ -457,6 +457,30 @@ extern "C" bool ModuleProtocol_Packet_Log(XCHAR* ptszMsgBuffer, int* pInt_MsgLen
 备注：
 *********************************************************************/
 extern "C" bool ModuleProtocol_Packet_ShortLink(XCHAR* ptszMsgBuffer, int* pInt_MsgLen, XENGINE_SHORTLINK* pSt_ShortLink);
+/********************************************************************
+函数名称：ModuleProtocol_Packet_WordFilter
+函数功能：敏感词生成协议打包函数
+ 参数.一：ptszMsgBuffer
+  In/Out：Out
+  类型：字符指针
+  可空：N
+  意思：输出打包的数据信息
+ 参数.二：pInt_MsgLen
+  In/Out：Out
+  类型：整数型指针
+  可空：N
+  意思：输出打包大小
+ 参数.三：pSt_WordFilter
+  In/Out：In
+  类型：数据结构
+  可空：N
+  意思：输入要打包的信息
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+extern "C" bool ModuleProtocol_Packet_WordFilter(XCHAR* ptszMsgBuffer, int* pInt_MsgLen, XENGINE_WORDFILTER* pSt_WordFilter);
 /************************************************************************/
 /*                         导出的协议解析函数                           */
 /************************************************************************/
@@ -671,3 +695,27 @@ extern "C" bool ModuleProtocol_Parse_SocketTest(LPCXSTR lpszMsgBuffer, int nMsgL
 备注：
 *********************************************************************/
 extern "C" bool ModuleProtocol_Parse_ShortLink(LPCXSTR lpszMsgBuffer, int nMsgLen, XENGINE_SHORTLINK* pSt_ShortLink);
+/********************************************************************
+函数名称：ModuleProtocol_Parse_WordFilter
+函数功能：敏感词协议解析
+ 参数.一：lpszMsgBuffer
+  In/Out：In
+  类型：常量字符指针
+  可空：N
+  意思：输入要解析的数据
+ 参数.二：nMsgLen
+  In/Out：In
+  类型：整数型
+  可空：N
+  意思：要解析的大小
+ 参数.三：pSt_ShortLink
+  In/Out：Out
+  类型：数据结构指针
+  可空：N
+  意思：输出解析好的信息
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+extern "C" bool ModuleProtocol_Parse_WordFilter(LPCXSTR lpszMsgBuffer, int nMsgLen, XENGINE_WORDFILTER* pSt_WordFilter);

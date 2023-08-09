@@ -13,6 +13,7 @@ EXPORTS
 	ModuleProtocol_Packet_TestReport
 	ModuleProtocol_Packet_TestReply
 	ModuleProtocol_Packet_ShortLink
+	ModuleProtocol_Packet_WordFilter
 	ModuleProtocol_Packet_P2PLan
 	ModuleProtocol_Packet_P2PWLan
 	ModuleProtocol_Packet_P2PUser
@@ -27,3 +28,4 @@ EXPORTS
 	ModuleProtocol_Parse_QRCode
 	ModuleProtocol_Parse_SocketTest
 	ModuleProtocol_Parse_ShortLink
+	ModuleProtocol_Parse_WordFilter

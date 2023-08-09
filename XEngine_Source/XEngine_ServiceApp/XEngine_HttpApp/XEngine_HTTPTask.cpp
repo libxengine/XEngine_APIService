@@ -110,6 +110,7 @@ bool HTTPTask_TastPost_Handle(RFCCOMPONENTS_HTTP_REQPARAM* pSt_HTTPParam, LPCXST
 	LPCXSTR lpszParamSocket = _X("socket");
 	LPCXSTR lpszParamDTest = _X("dtest");
 	LPCXSTR lpszParamShortLink = _X("slink");
+	LPCXSTR lpszParamWordFilter = _X("wordfilter");
 
 	memset(tszKey, '\0', MAX_PATH);
 	memset(tszValue, '\0', MAX_PATH);
@@ -253,6 +254,15 @@ bool HTTPTask_TastPost_Handle(RFCCOMPONENTS_HTTP_REQPARAM* pSt_HTTPParam, LPCXST
 
 			BaseLib_OperatorString_GetKeyValue(pptszList[1], "=", tszKey, tszType);
 			HTTPTask_TaskPost_ShortLink(lpszClientAddr, lpszRVBuffer, nRVLen, _ttxoi(tszType));
+		}
+		else if (0 == _tcsxnicmp(lpszParamWordFilter, tszValue, _tcsxlen(lpszParamWordFilter)))
+		{
+			//敏感词:http://app.xyry.org:5501/api?function=wordfilter&params1=0 
+			XCHAR tszType[64];
+			memset(tszType, '\0', sizeof(tszType));
+
+			BaseLib_OperatorString_GetKeyValue(pptszList[1], "=", tszKey, tszType);
+			HTTPTask_TastPost_WordFilter(lpszClientAddr, lpszRVBuffer, nRVLen, _ttxoi(tszType));
 		}
 		else
 		{

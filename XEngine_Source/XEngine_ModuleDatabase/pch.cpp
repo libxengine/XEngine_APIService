@@ -4,6 +4,7 @@
 #include "ModuleDatabase_ZIPCode/ModuleDatabase_ZIPCode.h"
 #include "ModuleDatabase_XLog/ModuleDatabase_XLog.h"
 #include "ModuleDatabase_ShortLink/ModuleDatabase_ShortLink.h"
+#include "ModuleDatabase_WordFilter/ModuleDatabase_WordFilter.h"
 /********************************************************************
 //    Created:     2022/02/28  13:26:15
 //    File Name:   D:\XEngine_IPInfo\XEngine_Source\XEngine_ModuleDatabase\pch.cpp
@@ -23,6 +24,7 @@ CModuleDatabase_Bank m_Bank;
 CModuleDatabase_ZIPCode m_ZIPCode;
 CModuleDatabase_XLog m_XLog;
 CModuleDatabase_ShortLink m_ShortLink;
+CModuleDatabase_WordFilter m_WordFilter;
 //////////////////////////////////////////////////////////////////////////
 ///                        导出的函数
 //////////////////////////////////////////////////////////////////////////
@@ -132,4 +134,27 @@ extern "C" bool ModuleDatabase_ShortLink_Query(XENGINE_SHORTLINK * pSt_SLinkInfo
 extern "C" bool ModuleDatabase_ShortLink_Delete(XENGINE_SHORTLINK * pSt_SLinkInfo)
 {
 	return m_ShortLink.ModuleDatabase_ShortLink_Delete(pSt_SLinkInfo);
+}
+/************************************************************************/
+/*                         导出的敏感词过滤数据库函数                   */
+/************************************************************************/
+extern "C" bool ModuleDatabase_WordFilter_Init(DATABASE_MYSQL_CONNECTINFO * pSt_DBConnector)
+{
+	return m_WordFilter.ModuleDatabase_WordFilter_Init(pSt_DBConnector);
+}
+extern "C" bool ModuleDatabase_WordFilter_Destory()
+{
+	return m_WordFilter.ModuleDatabase_WordFilter_Destory();
+}
+extern "C" bool ModuleDatabase_WordFilter_Query(XENGINE_WORDFILTER * pSt_WordFilter)
+{
+	return m_WordFilter.ModuleDatabase_WordFilter_Query(pSt_WordFilter);
+}
+extern "C" bool ModuleDatabase_WordFilter_Insert(XENGINE_WORDFILTER * pSt_WordFilter)
+{
+	return m_WordFilter.ModuleDatabase_WordFilter_Insert(pSt_WordFilter);
+}
+extern "C" bool ModuleDatabase_WordFilter_Delete(XENGINE_WORDFILTER * pSt_WordFilter)
+{
+	return m_WordFilter.ModuleDatabase_WordFilter_Delete(pSt_WordFilter);
 }

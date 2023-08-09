@@ -66,6 +66,7 @@ using namespace std;
 #include "XEngine_TaskPost/TaskPost_SocketTest.h"
 #include "XEngine_TaskPost/TaskPost_QRCode.h"
 #include "XEngine_TaskPost/TaskPost_ShortLink.h"
+#include "XEngine_TaskPost/TaskPost_WordFilter.h"
 //get
 #include "XEngine_TaskGet/TaskGet_IDCard.h"
 #include "XEngine_TaskGet/TaskGet_Bank.h"
