@@ -14,6 +14,12 @@ bool XEngine_Configure_Parament(int argc, char** argv, XENGINE_SERVICECONFIG* pS
 {
 	LPCXSTR lpszConfigFile = _X("./XEngine_Config/XEngine_Config.json");
 
+	if (NULL != pSt_Configure->st_XVer.pStl_ListVer)
+	{
+		delete pSt_Configure->st_XVer.pStl_ListVer;
+		pSt_Configure->st_XVer.pStl_ListVer = NULL;
+	}
+	memset(pSt_Configure, '\0', sizeof(XENGINE_SERVICECONFIG));
 	if (!ModuleConfigure_Json_File(lpszConfigFile, pSt_Configure))
 	{
 		printf("解析配置文件失败,ModuleConfigure_Json_File:%lX\n", ModuleConfigure_GetLastError());
@@ -30,6 +36,11 @@ bool XEngine_Configure_Parament(int argc, char** argv, XENGINE_SERVICECONFIG* pS
 		else if (0 == _tcsxcmp("-d", argv[i]))
 		{
 			pSt_Configure->bDeamon = _ttxoi(argv[i + 1]);
+		}
+		else if (0 == _tcsxcmp("-r", argv[i]))
+		{
+			pSt_Configure->st_XReload.bReload = true;
+			pSt_Configure->st_XReload.byCode = _ttxoi(argv[i + 1]);
 		}
 	}
 

@@ -44,8 +44,8 @@ Support privatization deployment, free, safe, open source, controllable
 24. local system time
 25. math Calculation
 26. log service
-27. Plugin hot reload(planned)
-28. Sensitive word detection(planned)
+27. Plugin hot reload
+28. Sensitive word detection
 
 ## install
 
@@ -92,8 +92,7 @@ make FLAGS=CleanAll clear
 2.  download code
 3.  complie
 4.  install
-5.  uncompress /XEngine_Release/XEngine_DBFile/ipdata.rar into current dir
-6.  run
+5.  run
 
 ## directory struct
 - XEngine_Docment   docment directory

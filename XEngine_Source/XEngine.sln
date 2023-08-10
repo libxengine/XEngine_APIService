@@ -40,7 +40,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libModulePlugin_Meter", "XE
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libModulePlugin_Phone", "XEngine_PluginModule\ModulePlugin_Phone\ModulePlugin_Phone.vcxproj", "{8FBC495D-C05E-49A4-B938-A81C9DFC1E5A}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ModulePlugin_IPAddr", "XEngine_PluginModule\ModulePlugin_IPAddr\ModulePlugin_IPAddr.vcxproj", "{D549160C-CC16-47F8-8345-1F4CF7A25CA2}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libModulePlugin_IPAddr", "XEngine_PluginModule\ModulePlugin_IPAddr\ModulePlugin_IPAddr.vcxproj", "{D549160C-CC16-47F8-8345-1F4CF7A25CA2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

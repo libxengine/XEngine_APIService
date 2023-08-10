@@ -323,3 +323,71 @@ extern "C" bool ModuleDatabase_ShortLink_Query(XENGINE_SHORTLINK* pSt_SLinkInfo)
 备注：
 *********************************************************************/
 extern "C" bool ModuleDatabase_ShortLink_Delete(XENGINE_SHORTLINK* pSt_SLinkInfo);
+/************************************************************************/
+/*                         导出的敏感词过滤数据库函数                   */
+/************************************************************************/
+/********************************************************************
+函数名称：ModuleDatabase_WordFilter_Init
+函数功能：初始化SQLITE文件系统
+ 参数.一：pSt_DBConnector
+  In/Out：In
+  类型：数据结构指针
+  可空：N
+  意思：输入要操作的数据库
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+extern "C" bool ModuleDatabase_WordFilter_Init(DATABASE_MYSQL_CONNECTINFO* pSt_DBConnector);
+/********************************************************************
+函数名称：ModuleDatabase_WordFilter_Destory
+函数功能：销毁
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+extern "C" bool ModuleDatabase_WordFilter_Destory();
+/********************************************************************
+函数名称：ModuleDatabase_WordFilter_Query
+函数功能：获取敏感词系统
+ 参数.一：pSt_WordFilter
+  In/Out：In/Out
+  类型：数据结构指针
+  可空：N
+  意思：输入要查询的词,输出查询到的敏感词
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+extern "C" bool ModuleDatabase_WordFilter_Query(XENGINE_WORDFILTER* pSt_WordFilter);
+/********************************************************************
+函数名称：ModuleDatabase_WordFilter_Insert
+函数功能：查询一条敏感词
+ 参数.一：pSt_WordFilter
+  In/Out：In/Out
+  类型：数据结构指针
+  可空：N
+  意思：输入要操作的数据
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+extern "C" bool ModuleDatabase_WordFilter_Insert(XENGINE_WORDFILTER* pSt_WordFilter);
+/********************************************************************
+函数名称：ModuleDatabase_WordFilter_Delete
+函数功能：删除一条敏感词
+ 参数.一：pSt_WordFilter
+  In/Out：In
+  类型：数据结构指针
+  可空：N
+  意思：输入要操作的数据
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+extern "C" bool ModuleDatabase_WordFilter_Delete(XENGINE_WORDFILTER* pSt_WordFilter);

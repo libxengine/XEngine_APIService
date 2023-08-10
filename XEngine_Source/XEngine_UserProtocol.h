@@ -218,4 +218,11 @@ typedef struct
 	int nLength;
 	int nID;
 }XENGINE_SHORTLINK;
+//敏感词过滤器
+typedef struct
+{
+	XCHAR tszWordsFrom[MAX_PATH];       
+	XCHAR tszWordsTo[MAX_PATH];    
+	XBYTE nLevel;                                  //过滤级别,0替换,1删除,2禁止
+}XENGINE_WORDFILTER;
 #pragma pack(pop)

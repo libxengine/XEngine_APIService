@@ -24,7 +24,7 @@ XHTHREAD CALLBACK HTTPTask_TastPost_Thread(XPVOID lParam)
 			continue;
 		}
 		int nListCount = 0;
-		RFCCOMPONENTS_HTTP_PKTCLIENT** ppSst_ListAddr;
+		XENGINE_MANAGEPOOL_TASKEVENT** ppSst_ListAddr;
 		//获得编号1的所有待处理任务的客户端列表(也就是客户端发送过来的数据已经组好了一个包,需要我们处理)
 		HttpProtocol_Server_GetPoolEx(xhHTTPPacket, nThreadPos, &ppSst_ListAddr, &nListCount);
 		//先循环客户端
@@ -101,6 +101,7 @@ bool HTTPTask_TastPost_Handle(RFCCOMPONENTS_HTTP_REQPARAM* pSt_HTTPParam, LPCXST
 	LPCXSTR lpszParamLanguage = _X("language");
 	LPCXSTR lpszParamTranslation = _X("translation");
 	LPCXSTR lpszParamLocker = _X("lock");
+	LPCXSTR lpszParamReload = _X("reload");
 	//post
 	LPCXSTR lpszParamP2PClient = _X("p2p");
 	LPCXSTR lpszParamZIPCode = _X("zipcode");
@@ -109,6 +110,7 @@ bool HTTPTask_TastPost_Handle(RFCCOMPONENTS_HTTP_REQPARAM* pSt_HTTPParam, LPCXST
 	LPCXSTR lpszParamSocket = _X("socket");
 	LPCXSTR lpszParamDTest = _X("dtest");
 	LPCXSTR lpszParamShortLink = _X("slink");
+	LPCXSTR lpszParamWordFilter = _X("wordfilter");
 
 	memset(tszKey, '\0', MAX_PATH);
 	memset(tszValue, '\0', MAX_PATH);
@@ -253,6 +255,15 @@ bool HTTPTask_TastPost_Handle(RFCCOMPONENTS_HTTP_REQPARAM* pSt_HTTPParam, LPCXST
 			BaseLib_OperatorString_GetKeyValue(pptszList[1], "=", tszKey, tszType);
 			HTTPTask_TaskPost_ShortLink(lpszClientAddr, lpszRVBuffer, nRVLen, _ttxoi(tszType));
 		}
+		else if (0 == _tcsxnicmp(lpszParamWordFilter, tszValue, _tcsxlen(lpszParamWordFilter)))
+		{
+			//敏感词:http://app.xyry.org:5501/api?function=wordfilter&params1=0 
+			XCHAR tszType[64];
+			memset(tszType, '\0', sizeof(tszType));
+
+			BaseLib_OperatorString_GetKeyValue(pptszList[1], "=", tszKey, tszType);
+			HTTPTask_TastPost_WordFilter(lpszClientAddr, lpszRVBuffer, nRVLen, _ttxoi(tszType));
+		}
 		else
 		{
 			st_HDRParam.nHttpCode = 404;
@@ -263,7 +274,14 @@ bool HTTPTask_TastPost_Handle(RFCCOMPONENTS_HTTP_REQPARAM* pSt_HTTPParam, LPCXST
 	}
 	else if (0 == _tcsxnicmp(lpszMethodGet, pSt_HTTPParam->tszHttpMethod, _tcsxlen(lpszMethodGet)))
 	{
-		if (0 == _tcsxnicmp(lpszParamIDCard, tszValue, _tcsxlen(lpszParamIDCard)))
+		if (0 == _tcsxnicmp(lpszParamReload, tszValue, _tcsxlen(lpszParamReload)))
+		{
+			//是不是配置重载
+			memset(tszKey, '\0', sizeof(tszKey));
+			BaseLib_OperatorString_GetKeyValue(pptszList[1], "=", tszKey, tszValue);
+			HTTPTask_TaskGet_Reload(lpszClientAddr, tszValue);
+		}
+		else if (0 == _tcsxnicmp(lpszParamIDCard, tszValue, _tcsxlen(lpszParamIDCard)))
 		{
 			//是不是身份证查询
 			memset(tszKey, '\0', sizeof(tszKey));

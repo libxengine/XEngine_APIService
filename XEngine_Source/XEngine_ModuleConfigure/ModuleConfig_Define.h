@@ -68,6 +68,11 @@ typedef struct
 	}st_XShortLink;
 	struct  
 	{
+		bool bReload;                         //配置重载
+		XBYTE byCode;                         //1基本配置,2插件,3全部     
+	}st_XReload;
+	struct  
+	{
 		list<string>* pStl_ListVer;
 	}st_XVer;
 }XENGINE_SERVICECONFIG;

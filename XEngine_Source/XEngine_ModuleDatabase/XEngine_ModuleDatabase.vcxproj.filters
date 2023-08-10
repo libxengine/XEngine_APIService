@@ -43,6 +43,12 @@
     <Filter Include="源文件\ModuleDatabase_ShortLink">
       <UniqueIdentifier>{358aae26-1704-4e1e-bca3-b48c05449281}</UniqueIdentifier>
     </Filter>
+    <Filter Include="头文件\ModuleDatabase_WordFilter">
+      <UniqueIdentifier>{ffc19ee5-eece-4bb5-8678-8d0ec04d3371}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\ModuleDatabase_WordFilter">
+      <UniqueIdentifier>{b4156605-0cb0-4272-a5ef-d109f2b20126}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -72,6 +78,9 @@
     <ClInclude Include="ModuleDatabase_ShortLink\ModuleDatabase_ShortLink.h">
       <Filter>头文件\ModuleDatabase_ShortLink</Filter>
     </ClInclude>
+    <ClInclude Include="ModuleDatabase_WordFilter\ModuleDatabase_WordFilter.h">
+      <Filter>头文件\ModuleDatabase_WordFilter</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp">
@@ -94,6 +103,9 @@
     </ClCompile>
     <ClCompile Include="ModuleDatabase_ShortLink\ModuleDatabase_ShortLink.cpp">
       <Filter>源文件\ModuleDatabase_ShortLink</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleDatabase_WordFilter\ModuleDatabase_WordFilter.cpp">
+      <Filter>源文件\ModuleDatabase_WordFilter</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

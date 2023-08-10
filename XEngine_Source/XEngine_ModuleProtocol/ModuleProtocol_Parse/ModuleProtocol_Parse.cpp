@@ -697,3 +697,62 @@ bool CModuleProtocol_Parse::ModuleProtocol_Parse_ShortLink(LPCXSTR lpszMsgBuffer
 	}
 	return true;
 }
+/********************************************************************
+函数名称：ModuleProtocol_Parse_WordFilter
+函数功能：敏感词协议解析
+ 参数.一：lpszMsgBuffer
+  In/Out：In
+  类型：常量字符指针
+  可空：N
+  意思：输入要解析的数据
+ 参数.二：nMsgLen
+  In/Out：In
+  类型：整数型
+  可空：N
+  意思：要解析的大小
+ 参数.三：pSt_ShortLink
+  In/Out：Out
+  类型：数据结构指针
+  可空：N
+  意思：输出解析好的信息
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+bool CModuleProtocol_Parse::ModuleProtocol_Parse_WordFilter(LPCXSTR lpszMsgBuffer, int nMsgLen, XENGINE_WORDFILTER* pSt_WordFilter)
+{
+	ModuleProtocol_IsErrorOccur = false;
+
+	if ((NULL == lpszMsgBuffer) || (NULL == pSt_WordFilter))
+	{
+		ModuleProtocol_IsErrorOccur = true;
+		ModuleProtocol_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PROTOCOL_PARSE_PARAMENT;
+		return false;
+	}
+	Json::Value st_JsonRoot;
+	JSONCPP_STRING st_JsonError;
+	Json::CharReaderBuilder st_ReaderBuilder;
+	//解析JSON
+	std::unique_ptr<Json::CharReader> const pSt_JsonReader(st_ReaderBuilder.newCharReader());
+	if (!pSt_JsonReader->parse(lpszMsgBuffer, lpszMsgBuffer + nMsgLen, &st_JsonRoot, &st_JsonError))
+	{
+		ModuleProtocol_IsErrorOccur = true;
+		ModuleProtocol_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PROTOCOL_PARSE_PARAMENT;
+		return false;
+	}
+
+	if (!st_JsonRoot["tszWordsFrom"].isNull())
+	{
+		_tcsxcpy(pSt_WordFilter->tszWordsFrom, st_JsonRoot["tszWordsFrom"].asCString());
+	}
+	if (!st_JsonRoot["tszWordsTo"].isNull())
+	{
+		_tcsxcpy(pSt_WordFilter->tszWordsTo, st_JsonRoot["tszWordsTo"].asCString());
+	}
+	if (!st_JsonRoot["nLevel"].isNull())
+	{
+		pSt_WordFilter->nLevel = st_JsonRoot["byLevel"].asInt();
+	}
+	return true;
+}

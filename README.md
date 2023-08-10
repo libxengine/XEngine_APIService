@@ -44,8 +44,8 @@ c c++ interface api service
 24. 本地标准时间
 25. 数学计算
 26. 日志服务
-27. 插件脚本热重载(计划中)
-28. 敏感词检测(计划中)
+27. 插件脚本热重载
+28. 敏感词检测
 
 ## 安装教程
 
@@ -96,8 +96,7 @@ make FLAGS=CleanAll 清理编译
 2.  下载代码
 3.  编译
 4.  安装
-5.  解压/XEngine_Release/XEngine_DBFile/ipdata.rar 到当前目录
-6.  运行
+5.  运行
 
 ## 目录结构
 - XEngine_Docment    文档目录结构  

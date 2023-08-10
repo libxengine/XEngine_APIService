@@ -41,9 +41,9 @@ void ServiceApp_Stop(int signo)
 		ModuleDatabase_ZIPCode_Destory();
 		ModuleDatabase_XLog_Destory();
 		ModuleDatabase_ShortLink_Destory();
+		ModuleDatabase_WordFilter_Destory();
 		//销毁其他
-		ModulePlugin_LibCore_Destroy();
-		ModulePlugin_LuaCore_Destroy();
+		ModulePlugin_Loader_Destory();
 		ModuleHelp_P2PClient_Destory();
 		//销毁日志资源
 		HelpComponents_XLog_Destroy(xhLog);
@@ -111,6 +111,17 @@ int main(int argc, char** argv)
 	if (!XEngine_Configure_Parament(argc, argv, &st_ServiceConfig))
 	{
 		return -1;
+	}
+	//配置重载
+	if (st_ServiceConfig.st_XReload.bReload)
+	{
+		//重载配置文件后退出
+		XCHAR tszAddr[128];
+		memset(tszAddr, '\0', sizeof(tszAddr));
+		//http://127.0.0.1:5501/api?function=reload&opcode=0
+		_xstprintf(tszAddr, _X("http://127.0.0.1:%d/api?function=reload&opcode=%d"), st_ServiceConfig.nHttpPort, st_ServiceConfig.st_XReload.byCode);
+		APIClient_Http_Request(_X("GET"), tszAddr);
+		return 0;
 	}
 	//判断是否以守护进程启动
 	if (st_ServiceConfig.bDeamon)
@@ -197,6 +208,12 @@ int main(int argc, char** argv)
 		goto XENGINE_SERVICEAPP_EXIT;
 	}
 	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("启动服务中,初始化短连接数据库成功"));
+	if (!ModuleDatabase_WordFilter_Init((DATABASE_MYSQL_CONNECTINFO*)&st_ServiceConfig.st_XSql))
+	{
+		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("启动服务中,初始化敏感词数据库失败,错误：%lX"), ModuleDB_GetLastError());
+		goto XENGINE_SERVICEAPP_EXIT;
+	}
+	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("启动服务中,初始化敏感词数据库成功"));
 	//启动HTTP服务相关代码
 	if (st_ServiceConfig.nHttpPort > 0)
 	{
@@ -264,13 +281,13 @@ int main(int argc, char** argv)
 	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("启动服务中,启动P2P客户端管理器成功,超时时间设置:%d 秒"), st_ServiceConfig.st_XTime.nP2PTimeOut);
 
 	//启动插件
-	if (!ModulePlugin_LibCore_Init())
+	if (!ModulePlugin_Loader_Init())
 	{
-		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("启动服务中,初始化Lib插件系统失败,错误：%lX"), ModulePlugin_GetLastError());
+		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("启动服务中,初始化插件系统失败,错误：%lX"), ModulePlugin_GetLastError());
 		goto XENGINE_SERVICEAPP_EXIT;
 	}
+	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("启动服务中,初始化插件系统成功,开始加载插件"));
 	//加载插件
-	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("启动服务中,初始化Lib插件系统成功,开始加载插件"));
 	{
 		list<XENGINE_PLUGININFO>::const_iterator stl_ListIterator = st_PluginLibConfig.pStl_ListPlugin->begin();
 		for (int i = 1; stl_ListIterator != st_PluginLibConfig.pStl_ListPlugin->end(); stl_ListIterator++, i++)
@@ -292,12 +309,7 @@ int main(int argc, char** argv)
 			}
 		}
 	}
-	if (!ModulePlugin_LuaCore_Init())
-	{
-		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("启动服务中,初始化Lua插件系统失败,错误：%lX"), ModulePlugin_GetLastError());
-		goto XENGINE_SERVICEAPP_EXIT;
-	}
-	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("启动服务中,初始化Lua插件系统成功,开始加载插件"));
+	
 	{
 		list<XENGINE_PLUGININFO>::const_iterator stl_ListIterator = st_PluginLuaConfig.pStl_ListPlugin->begin();
 		for (int i = 1; stl_ListIterator != st_PluginLuaConfig.pStl_ListPlugin->end(); stl_ListIterator++, i++)
@@ -344,9 +356,9 @@ XENGINE_SERVICEAPP_EXIT:
 		ModuleDatabase_ZIPCode_Destory();
 		ModuleDatabase_XLog_Destory();
 		ModuleDatabase_ShortLink_Destory();
+		ModuleDatabase_WordFilter_Destory();
 		//销毁其他
-		ModulePlugin_LibCore_Destroy();
-		ModulePlugin_LuaCore_Destroy();
+		ModulePlugin_Loader_Destory();
 		ModuleHelp_P2PClient_Destory();
 		//销毁日志资源
 		HelpComponents_XLog_Destroy(xhLog);
