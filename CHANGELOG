@@ -1,3 +1,17 @@
+XEngine_APIService V2.10.0.1001
+
+增加:敏感词过滤系统
+增加:配置热重载功能,支持基本配置和插件配置热重载
+修正:ModulePlugin_Loader_Destory 释放锁不正确的问题
+修正:http json的返回CODE值不正确的问题
+更新:匹配XEngineV8.15版本
+
+added:words filter supported
+added:basic and plugin configure hot reload support
+fixed:ModulePlugin_Loader_Destory unlock is incorrent
+fixed:code of http json for packet protocol is incorrent
+update:match xengine v8.15
+======================================================================================
 XEngine_APIService V2.9.0.1001
 
 增加:短连接生成与转发功能支持
