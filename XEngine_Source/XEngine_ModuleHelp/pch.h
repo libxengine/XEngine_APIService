@@ -11,6 +11,7 @@
 // 添加要在此处预编译的标头
 #include "framework.h"
 #include <tchar.h>
+#include <atlconv.h>
 #include <WinSock2.h>
 #endif
 #endif //PCH_H

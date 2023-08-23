@@ -49,6 +49,12 @@
     <Filter Include="源文件\ModuleHelp_SocketTest">
       <UniqueIdentifier>{55b22eea-ccd0-48d4-96e7-232b15fdb0dc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="头文件\ModuleHelp_Image">
+      <UniqueIdentifier>{7dfedbcf-073a-499c-8150-526f502e38fb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\ModuleHelp_Image">
+      <UniqueIdentifier>{660ce380-2906-43e5-a33c-ef5f97f1f585}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -81,6 +87,12 @@
     <ClInclude Include="ModuleHelp_SocketTest\ModuleHelp_SocketTest.h">
       <Filter>头文件\ModuleHelp_SocketTest</Filter>
     </ClInclude>
+    <ClInclude Include="ModuleHelp_Image\ModuleHelp_ImageSet.h">
+      <Filter>头文件\ModuleHelp_Image</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleHelp_Image\ModuleHelp_ImageGet.h">
+      <Filter>头文件\ModuleHelp_Image</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp">
@@ -106,6 +118,12 @@
     </ClCompile>
     <ClCompile Include="ModuleHelp_SocketTest\ModuleHelp_SocketTest.cpp">
       <Filter>源文件\ModuleHelp_SocketTest</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleHelp_Image\ModuleHelp_ImageSet.cpp">
+      <Filter>源文件\ModuleHelp_Image</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleHelp_Image\ModuleHelp_ImageGet.cpp">
+      <Filter>源文件\ModuleHelp_Image</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

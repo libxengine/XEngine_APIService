@@ -58,3 +58,10 @@
 #define ERROR_XENGINE_APISERVICE_MODULE_HELP_SOCKETTEST_MALLOC 0xD5002    //申请内存失败
 #define ERROR_XENGINE_APISERVICE_MODULE_HELP_SOCKETTEST_THREAD 0xD5003    //创建线程失败
 #define ERROR_XENGINE_APISERVICE_MODULE_HELP_SOCKETTEST_NOTFOUND 0xD5004  //没有找到
+//////////////////////////////////////////////////////////////////////////
+//                       图像处理错误
+//////////////////////////////////////////////////////////////////////////
+#define ERROR_XENGINE_APISERVICE_MODULE_HELP_IAMGE_PARAMRT 0xD6001        //参数错误
+#define ERROR_XENGINE_APISERVICE_MODULE_HELP_IAMGE_OPEN 0xD6002           //打开文件失败
+#define ERROR_XENGINE_APISERVICE_MODULE_HELP_IAMGE_WRITE 0xD6003          //写入数据失败
+#define ERROR_XENGINE_APISERVICE_MODULE_HELP_IAMGE_MALLOC 0xD6004         //申请内存失败
