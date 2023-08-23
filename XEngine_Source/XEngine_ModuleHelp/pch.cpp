@@ -185,7 +185,7 @@ extern "C" bool ModuleHelp_SocketTest_StopDatas(XNETHANDLE xhToken)
 /************************************************************************/
 /*                       图像处理导出函数                               */
 /************************************************************************/
-extern "C" bool ModuleHelp_ImageGet_Attr(LPCXSTR lpszMsgBuffer, int nMsgLen, IMAGEINFO_BASEATTR * pSt_BaseInfo, IMAGEINFO_EXTENDATTR * pSt_ExtAttr)
+extern "C" bool ModuleHelp_ImageGet_Attr(LPCXSTR lpszMsgBuffer, int nMsgLen, XENGINE_IMGBASEATTR * pSt_BaseInfo, XENGINE_IMGEXTATTR * pSt_ExtAttr)
 {
 	return m_ImageGet.ModuleHelp_ImageGet_Attr(lpszMsgBuffer, nMsgLen, pSt_BaseInfo, pSt_ExtAttr);
 }

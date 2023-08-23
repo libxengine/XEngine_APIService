@@ -75,6 +75,10 @@ extern "C" bool ModuleProtocol_Packet_WordFilter(XCHAR * ptszMsgBuffer, int* pIn
 {
 	return m_ProtocolPacket.ModuleProtocol_Packet_WordFilter(ptszMsgBuffer, pInt_MsgLen, pSt_WordFilter);
 }
+extern "C" bool ModuleProtocol_Packet_ImageAttr(XCHAR * ptszMsgBuffer, int* pInt_MsgLen, XENGINE_IMGBASEATTR * pSt_BaseInfo, XENGINE_IMGEXTATTR * pSt_ExtAttr)
+{
+	return m_ProtocolPacket.ModuleProtocol_Packet_ImageAttr(ptszMsgBuffer, pInt_MsgLen, pSt_BaseInfo, pSt_ExtAttr);
+}
 extern "C" bool ModuleProtocol_Packet_EnumDevice(XCHAR * ptszMsgBuffer, int* pInt_MsgLen, AVHELP_DEVICEINFO * **pppSt_AudioList, AVHELP_DEVICEINFO * **pppSt_VideoList, int nACount, int nVCount)
 {
 	return m_ProtocolPacket.ModuleProtocol_Packet_EnumDevice(ptszMsgBuffer, pInt_MsgLen, pppSt_AudioList, pppSt_VideoList, nACount, nVCount);

@@ -482,6 +482,35 @@ extern "C" bool ModuleProtocol_Packet_ShortLink(XCHAR* ptszMsgBuffer, int* pInt_
 *********************************************************************/
 extern "C" bool ModuleProtocol_Packet_WordFilter(XCHAR* ptszMsgBuffer, int* pInt_MsgLen, XENGINE_WORDFILTER* pSt_WordFilter);
 /********************************************************************
+函数名称：ModuleProtocol_Packet_ImageAttr
+函数功能：图片属性打包
+ 参数.一：ptszMsgBuffer
+  In/Out：Out
+  类型：字符指针
+  可空：N
+  意思：输出打包的数据信息
+ 参数.二：pInt_MsgLen
+  In/Out：Out
+  类型：整数型指针
+  可空：N
+  意思：输出打包大小
+ 参数.三：pSt_BaseInfo
+  In/Out：In
+  类型：数据结构
+  可空：N
+  意思：输入要打包的信息
+ 参数.四：pSt_ExtAttr
+  In/Out：In
+  类型：数据结构
+  可空：N
+  意思：输入要打包的信息
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+extern "C" bool ModuleProtocol_Packet_ImageAttr(XCHAR* ptszMsgBuffer, int* pInt_MsgLen, XENGINE_IMGBASEATTR* pSt_BaseInfo, XENGINE_IMGEXTATTR* pSt_ExtAttr);
+/********************************************************************
 函数名称：ModuleProtocol_Packet_EnumDevice
 函数功能：打包枚举的设备信息
  参数.一：ptszMsgBuffer

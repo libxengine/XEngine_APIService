@@ -7,16 +7,16 @@ LIBFLAG =
 RELEASE = 0
 UNICODE = 0
 LOADHDR = -I ./ -I ../XEngine_ThirdPart/jsoncpp
-LOADSO = -L /usr/local/lib/XEngine_Release/XEngine_BaseLib -L /usr/local/lib/XEngine_Release/XEngine_Core -L /usr/local/lib/XEngine_Release/XEngine_HelpComponents -L /usr/local/lib/XEngine_Release/XEngine_RfcComponents -L /usr/local/lib/XEngine_Release/XEngine_NetHelp  \
+LOADSO = -L /usr/local/lib/XEngine_Release/XEngine_BaseLib -L /usr/local/lib/XEngine_Release/XEngine_Core -L /usr/local/lib/XEngine_Release/XEngine_HelpComponents -L /usr/local/lib/XEngine_Release/XEngine_RfcComponents -L /usr/local/lib/XEngine_Release/XEngine_NetHelp -L /usr/local/lib/XEngine_Release/XEngine_SystemSdk -L /usr/local/lib/XEngine_Release/XEngine_AVCodec  \
 		 -L ../../XEngine_ModuleConfigure -L ../../XEngine_ModuleDatabase -L ../../XEngine_ModuleProtocol -L ../../XEngine_ModuleHelp -L ../../XEngine_ModulePlugin   \
 		 -L ../../XEngine_ThirdPart/jsoncpp
-LIB = -lXEngine_BaseLib -lXEngine_Algorithm -lXEngine_Core -lXEngine_ManagePool -lXEngine_OPenSsl -lHelpComponents_XLog -lRfcComponents_HttpProtocol -lNetHelp_APIClient \
+LIB = -lXEngine_BaseLib -lXEngine_Algorithm -lXEngine_Core -lXEngine_ManagePool -lXEngine_OPenSsl -lHelpComponents_XLog -lRfcComponents_HttpProtocol -lNetHelp_APIClient -lXEngine_ProcFile -lXEngine_SystemApi -lXEngine_AVHelp \
 	  -lXEngine_ModuleConfigure -lXEngine_ModuleDatabase -lXEngine_ModuleProtocol -lXEngine_ModuleHelp -lXEngine_ModulePlugin                          \
 	  -ljsoncpp
 LIBEX = 
 OBJECTS = XEngine_Configure.o XEngine_Network.o XEngine_HTTPTask.o XEngine_PluginTask.o XEngine_HttpApp.o        \
           TaskGet_Bank.o TaskGet_IDCard.o TaskGet_Language.o TaskGet_Locker.o TaskGet_Translation.o TaskGet_Reload.o  \
-		  TaskPost_DTest.o TaskPost_Log.o TaskPost_P2PClient.o TaskPost_PostCode.o TaskPost_QRCode.o TaskPost_ShortLink.o TaskPost_SocketTest.o TaskPost_WordFilter.o
+		  TaskPost_DTest.o TaskPost_Log.o TaskPost_P2PClient.o TaskPost_PostCode.o TaskPost_QRCode.o TaskPost_ShortLink.o TaskPost_SocketTest.o TaskPost_WordFilter.o TaskPost_Image.o TaskPost_BackService.o
 
 ifeq ($(RELEASE),1)
 FLAGS = -c 
@@ -95,6 +95,10 @@ TaskPost_SocketTest.o:./XEngine_TaskPost/TaskPost_SocketTest.cpp
 	$(CC) $(DEBUG) $(FLAGS) $(UNICODE) $(PLATVER) $(LOADHDR) ./XEngine_TaskPost/TaskPost_SocketTest.cpp
 TaskPost_WordFilter.o:./XEngine_TaskPost/TaskPost_WordFilter.cpp
 	$(CC) $(DEBUG) $(FLAGS) $(UNICODE) $(PLATVER) $(LOADHDR) ./XEngine_TaskPost/TaskPost_WordFilter.cpp
+TaskPost_Image.o:./XEngine_TaskPost/TaskPost_Image.cpp
+	$(CC) $(DEBUG) $(FLAGS) $(UNICODE) $(PLATVER) $(LOADHDR) ./XEngine_TaskPost/TaskPost_Image.cpp
+TaskPost_BackService.o:./XEngine_TaskPost/TaskPost_BackService.cpp
+	$(CC) $(DEBUG) $(FLAGS) $(UNICODE) $(PLATVER) $(LOADHDR) ./XEngine_TaskPost/TaskPost_BackService.cpp
 
 XEngine_HttpApp.o:./XEngine_HttpApp.cpp             
 	$(CC) $(DEBUG) $(FLAGS) $(UNICODE) $(PLATVER) $(LOADHDR) ./XEngine_HttpApp.cpp   

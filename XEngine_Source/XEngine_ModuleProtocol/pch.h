@@ -11,6 +11,10 @@
 // 添加要在此处预编译的标头
 #include "framework.h"
 #include <tchar.h>
+#else
+#include <pwd.h>
+#include <unistd.h>
+#include <sys/types.h>
 #endif
 #endif //PCH_H
 #include <stdio.h>

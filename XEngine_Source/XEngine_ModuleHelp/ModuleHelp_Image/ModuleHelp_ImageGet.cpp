@@ -48,15 +48,15 @@ CModuleHelp_ImageGet::~CModuleHelp_ImageGet()
   意思：是否成功
 备注：
 *********************************************************************/
-bool CModuleHelp_ImageGet::ModuleHelp_ImageGet_Attr(LPCXSTR lpszMsgBuffer, int nMsgLen, IMAGEINFO_BASEATTR* pSt_BaseInfo /* = NULL */, IMAGEINFO_EXTENDATTR* pSt_ExtAttr /* = NULL */)
+bool CModuleHelp_ImageGet::ModuleHelp_ImageGet_Attr(LPCXSTR lpszMsgBuffer, int nMsgLen, XENGINE_IMGBASEATTR* pSt_BaseInfo /* = NULL */, XENGINE_IMGEXTATTR* pSt_ExtAttr /* = NULL */)
 {
-	ModuleHelp_IsErrorOccur = FALSE;
+	ModuleHelp_IsErrorOccur = false;
 
 	if (NULL == lpszMsgBuffer)
 	{
-		ModuleHelp_IsErrorOccur = TRUE;
+		ModuleHelp_IsErrorOccur = true;
 		ModuleHelp_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_HELP_IAMGE_PARAMRT;
-		return FALSE;
+		return false;
 	}
 	//读取到内存
 	cv::_InputArray m_InputArray(lpszMsgBuffer, nMsgLen);
@@ -64,9 +64,9 @@ bool CModuleHelp_ImageGet::ModuleHelp_ImageGet_Attr(LPCXSTR lpszMsgBuffer, int n
 
 	if (m_Frame.empty())
 	{
-		ModuleHelp_IsErrorOccur = TRUE;
+		ModuleHelp_IsErrorOccur = true;
 		ModuleHelp_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_HELP_IAMGE_OPEN;
-		return FALSE;
+		return false;
 	}
 	//获取信息
 	if (NULL != pSt_BaseInfo)
@@ -82,5 +82,5 @@ bool CModuleHelp_ImageGet::ModuleHelp_ImageGet_Attr(LPCXSTR lpszMsgBuffer, int n
 		pSt_ExtAttr->nDepth = m_Frame.depth();
 		pSt_ExtAttr->nType = m_Frame.type();
 	}
-	return TRUE;
+	return true;
 }

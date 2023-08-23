@@ -17,7 +17,7 @@ public:
 	CModuleHelp_ImageGet();
 	~CModuleHelp_ImageGet();
 public:
-	bool ModuleHelp_ImageGet_Attr(LPCXSTR lpszMsgBuffer, int nMsgLen, IMAGEINFO_BASEATTR* pSt_BaseInfo = NULL, IMAGEINFO_EXTENDATTR* pSt_ExtAttr = NULL);
+	bool ModuleHelp_ImageGet_Attr(LPCXSTR lpszMsgBuffer, int nMsgLen, XENGINE_IMGBASEATTR* pSt_BaseInfo = NULL, XENGINE_IMGEXTATTR* pSt_ExtAttr = NULL);
 protected:
 private:
 };

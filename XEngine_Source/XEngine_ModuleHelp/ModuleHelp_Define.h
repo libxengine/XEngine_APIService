@@ -349,21 +349,6 @@ typedef struct
 	P2XP_TIMER_INFOMATION st_PeerTimer;                                   //节点时间信息
 	bool bIsLogin;
 }XENGINE_P2XP_PEERINFO, * LPNETENGINE_P2XP_PEERINFO;
-//图像基本属性
-typedef struct
-{
-	int nWidth;                      //宽
-	int nHeigth;                     //高
-	int nChannel;                    //通道
-}IMAGEINFO_BASEATTR;
-//图像高级属性
-typedef struct
-{
-	int nSize;                       //文件大小
-	int nDepth;                      //位深度
-	int nItem;                       //单个数据长度
-	int nType;                       //数据类型，字符串形式
-}IMAGEINFO_EXTENDATTR;
 //////////////////////////////////////////////////////////////////////////
 ///                        导出的函数
 //////////////////////////////////////////////////////////////////////////
@@ -1012,7 +997,7 @@ extern "C" bool ModuleHelp_SocketTest_StopDatas(XNETHANDLE xhToken);
   意思：是否成功
 备注：
 *********************************************************************/
-extern "C" bool ModuleHelp_ImageGet_Attr(LPCXSTR lpszMsgBuffer, int nMsgLen, IMAGEINFO_BASEATTR* pSt_BaseInfo = NULL, IMAGEINFO_EXTENDATTR* pSt_ExtAttr = NULL);
+extern "C" bool ModuleHelp_ImageGet_Attr(LPCXSTR lpszMsgBuffer, int nMsgLen, XENGINE_IMGBASEATTR* pSt_BaseInfo = NULL, XENGINE_IMGEXTATTR* pSt_ExtAttr = NULL);
 /********************************************************************
 函数名称：ModuleHelp_ImageSet_Resolution
 函数功能：分辨率调整

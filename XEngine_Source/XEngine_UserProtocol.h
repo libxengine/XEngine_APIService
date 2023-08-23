@@ -238,4 +238,19 @@ typedef struct
 	XCHAR tszWordsTo[MAX_PATH];    
 	XBYTE nLevel;                                  //过滤级别,0替换,1删除,2禁止
 }XENGINE_WORDFILTER;
+//图像基本属性
+typedef struct
+{
+	int nWidth;                      //宽
+	int nHeigth;                     //高
+	int nChannel;                    //通道
+}XENGINE_IMGBASEATTR;
+//图像高级属性
+typedef struct
+{
+	int nSize;                       //文件大小
+	int nDepth;                      //位深度
+	int nItem;                       //单个数据长度
+	int nType;                       //数据类型，字符串形式
+}XENGINE_IMGEXTATTR;
 #pragma pack(pop)
