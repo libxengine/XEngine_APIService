@@ -84,6 +84,12 @@
     <ClCompile Include="XEngine_TaskPost\TaskPost_WordFilter.cpp">
       <Filter>源文件\XEngine_TaskPost</Filter>
     </ClCompile>
+    <ClCompile Include="XEngine_TaskPost\TaskPost_Image.cpp">
+      <Filter>源文件\XEngine_TaskPost</Filter>
+    </ClCompile>
+    <ClCompile Include="XEngine_TaskPost\TaskPost_BackService.cpp">
+      <Filter>源文件\XEngine_TaskPost</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="XEngine_Configure.h">
@@ -141,6 +147,12 @@
       <Filter>头文件\XEngine_TaskGet</Filter>
     </ClInclude>
     <ClInclude Include="XEngine_TaskPost\TaskPost_WordFilter.h">
+      <Filter>头文件\XEngine_TaskPost</Filter>
+    </ClInclude>
+    <ClInclude Include="XEngine_TaskPost\TaskPost_Image.h">
+      <Filter>头文件\XEngine_TaskPost</Filter>
+    </ClInclude>
+    <ClInclude Include="XEngine_TaskPost\TaskPost_BackService.h">
       <Filter>头文件\XEngine_TaskPost</Filter>
     </ClInclude>
   </ItemGroup>

@@ -75,6 +75,22 @@ extern "C" bool ModuleProtocol_Packet_WordFilter(XCHAR * ptszMsgBuffer, int* pIn
 {
 	return m_ProtocolPacket.ModuleProtocol_Packet_WordFilter(ptszMsgBuffer, pInt_MsgLen, pSt_WordFilter);
 }
+extern "C" bool ModuleProtocol_Packet_EnumDevice(XCHAR * ptszMsgBuffer, int* pInt_MsgLen, AVHELP_DEVICEINFO * **pppSt_AudioList, AVHELP_DEVICEINFO * **pppSt_VideoList, int nACount, int nVCount)
+{
+	return m_ProtocolPacket.ModuleProtocol_Packet_EnumDevice(ptszMsgBuffer, pInt_MsgLen, pppSt_AudioList, pppSt_VideoList, nACount, nVCount);
+}
+extern "C" bool ModuleProtocol_Packet_ListFile(XCHAR * ptszMsgBuffer, int* pInt_MsgLen, XCHAR * **pppszFileList, int nListCount)
+{
+	return m_ProtocolPacket.ModuleProtocol_Packet_ListFile(ptszMsgBuffer, pInt_MsgLen, pppszFileList, nListCount);
+}
+extern "C" bool ModuleProtocol_Packet_HardWare(XCHAR * ptszHWInfo, int* pInt_Len)
+{
+	return m_ProtocolPacket.ModuleProtocol_Packet_HardWare(ptszHWInfo, pInt_Len);
+}
+extern "C" bool ModuleProtocol_Packet_SoftWare(XCHAR * ptszSWInfo, int* pInt_Len)
+{
+	return m_ProtocolPacket.ModuleProtocol_Packet_SoftWare(ptszSWInfo, pInt_Len);
+}
 extern "C" bool ModuleProtocol_Packet_P2PLan(XCHAR * ptszMsgBuffer, int* pInt_MsgLen, XENGINE_P2XPPEER_PROTOCOL * **pppSt_ListClients, int nListCount)
 {
 	return m_ProtocolPacket.ModuleProtocol_Packet_P2PLan(ptszMsgBuffer, pInt_MsgLen, pppSt_ListClients, nListCount);
@@ -133,4 +149,8 @@ extern "C" bool ModuleProtocol_Parse_ShortLink(LPCXSTR lpszMsgBuffer, int nMsgLe
 extern "C" bool ModuleProtocol_Parse_WordFilter(LPCXSTR lpszMsgBuffer, int nMsgLen, XENGINE_WORDFILTER * pSt_WordFilter)
 {
 	return m_ProtocolParse.ModuleProtocol_Parse_WordFilter(lpszMsgBuffer, nMsgLen, pSt_WordFilter);
+}
+extern "C" bool ModuleProtocol_Parse_BackService(LPCXSTR lpszMsgBuffer, int nMsgLen, XCHAR * ptszSrcBuffer, XCHAR * ptszDstBuffer, int* pInt_BSType)
+{
+	return m_ProtocolParse.ModuleProtocol_Parse_BackService(lpszMsgBuffer, nMsgLen, ptszSrcBuffer, ptszDstBuffer, pInt_BSType);
 }

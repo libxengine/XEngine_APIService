@@ -164,7 +164,9 @@
     <ClCompile Include="XEngine_TaskGet\TaskGet_Locker.cpp" />
     <ClCompile Include="XEngine_TaskGet\TaskGet_Reload.cpp" />
     <ClCompile Include="XEngine_TaskGet\TaskGet_Translation.cpp" />
+    <ClCompile Include="XEngine_TaskPost\TaskPost_BackService.cpp" />
     <ClCompile Include="XEngine_TaskPost\TaskPost_DTest.cpp" />
+    <ClCompile Include="XEngine_TaskPost\TaskPost_Image.cpp" />
     <ClCompile Include="XEngine_TaskPost\TaskPost_Log.cpp" />
     <ClCompile Include="XEngine_TaskPost\TaskPost_P2PClient.cpp" />
     <ClCompile Include="XEngine_TaskPost\TaskPost_PostCode.cpp" />
@@ -185,6 +187,8 @@
     <ClInclude Include="XEngine_TaskGet\TaskGet_Locker.h" />
     <ClInclude Include="XEngine_TaskGet\TaskGet_Reload.h" />
     <ClInclude Include="XEngine_TaskGet\TaskGet_Translation.h" />
+    <ClInclude Include="XEngine_TaskPost\TaskPost_BackService.h" />
+    <ClInclude Include="XEngine_TaskPost\TaskPost_Image.h" />
     <ClInclude Include="XEngine_TaskPost\TaskPost_ShortLink.h" />
     <ClInclude Include="XEngine_TaskPost\TaskPost_DTest.h" />
     <ClInclude Include="XEngine_TaskPost\TaskPost_Log.h" />
