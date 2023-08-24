@@ -5,8 +5,8 @@ bool HTTPTask_TaskPost_BackService(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer
 	int nSDLen = 0;
 	int nRVLen = 0;
 	int nBSType = 0;
-	XCHAR tszSDBuffer[4096];
-	XCHAR tszRVBuffer[4096];
+	XCHAR tszSDBuffer[10240];
+	XCHAR tszRVBuffer[10240];
 	XCHAR tszSrcBuffer[MAX_PATH];
 	XCHAR tszDstBuffer[MAX_PATH];
 	RFCCOMPONENTS_HTTP_HDRPARAM st_HDRParam;    //发送给客户端的参数
@@ -121,6 +121,7 @@ bool HTTPTask_TaskPost_BackService(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer
 	{
 		int nListCount = 0;
 		XCHAR** ppszFileList;
+
 		if (!SystemApi_File_EnumFile(tszSrcBuffer, &ppszFileList, &nListCount))
 		{
 			st_HDRParam.nHttpCode = 400;
@@ -129,10 +130,14 @@ bool HTTPTask_TaskPost_BackService(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer
 			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("HTTP客户端:%s:请求文件列表:%s 失败,错误码:%lX"), lpszClientAddr, tszSrcBuffer, SystemApi_GetLastError());
 			return false;
 		}
-		ModuleProtocol_Packet_ListFile(tszRVBuffer, &nRVLen, &ppszFileList, nListCount);
-		HttpProtocol_Server_SendMsgEx(xhHTTPPacket, tszSDBuffer, &nSDLen, &st_HDRParam, tszRVBuffer, nRVLen);
-		XEngine_Network_Send(lpszClientAddr, tszSDBuffer, nSDLen);
+		XCHAR* ptszRVBuffer = (XCHAR*)malloc(XENGINE_MEMORY_SIZE_MAX);
+		XCHAR* ptszSDBuffer = (XCHAR*)malloc(XENGINE_MEMORY_SIZE_MAX);
+		ModuleProtocol_Packet_ListFile(ptszRVBuffer, &nRVLen, &ppszFileList, nListCount);
+		HttpProtocol_Server_SendMsgEx(xhHTTPPacket, ptszSDBuffer, &nSDLen, &st_HDRParam, ptszRVBuffer, nRVLen);
+		XEngine_Network_Send(lpszClientAddr, ptszSDBuffer, nSDLen);
 		BaseLib_OperatorMemory_Free((XPPPMEM)&ppszFileList, nListCount);
+		free(ptszRVBuffer);
+		free(ptszSDBuffer);
 		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("HTTP客户端:%s:获取文件列表成功,回复个数:%d"), lpszClientAddr, nListCount);
 	}
 	break;

@@ -954,7 +954,6 @@ bool CModuleProtocol_Packet::ModuleProtocol_Packet_ListFile(XCHAR* ptszMsgBuffer
 	{
 		Json::Value st_JsonObject;
 		st_JsonObject["FileName"] = (*pppszFileList)[i];
-		st_JsonObject["FileDir"] = (*pppszFileList)[i];
 		st_JsonArray.append(st_JsonObject);
 	}
 	st_JsonRoot["Count"] = nListCount;
