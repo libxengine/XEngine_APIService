@@ -202,29 +202,25 @@ bool HTTPTask_TaskPost_BackService(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer
 		{
 			ModuleProtocol_Packet_HardWare(ptszRVBuffer, &nRVLen);
 		}
-		else
+		else if (1 == nBSType)
 		{
 			ModuleProtocol_Packet_SoftWare(ptszRVBuffer, &nRVLen);
 		}
-		HttpProtocol_Server_SendMsgEx(xhHTTPPacket, ptszSDBuffer, &nSDLen, &st_HDRParam, ptszRVBuffer, nRVLen);
-		XEngine_Network_Send(lpszClientAddr, ptszSDBuffer, nSDLen);
-		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("HTTP客户端:%s:请求上报信息成功"), lpszClientAddr);
-	}
-	break;
-	case XENGINE_COMMUNICATION_PROTOCOL_OPERATOR_CODE_BS_ENUMDEVICE:
-	{
-		int nACount = 0;
-		int nVCount = 0;
-		AVHELP_DEVICEINFO** ppSt_AudioList;
-		AVHELP_DEVICEINFO** ppSt_VideoList;
+		else if (2 == nBSType)
+		{
+			int nACount = 0;
+			int nVCount = 0;
+			AVHELP_DEVICEINFO** ppSt_AudioList;
+			AVHELP_DEVICEINFO** ppSt_VideoList;
 
-		AVHelp_Device_EnumDevice(&ppSt_AudioList, &ppSt_VideoList, &nACount, &nVCount);
-		ModuleProtocol_Packet_EnumDevice(ptszRVBuffer, &nRVLen, &ppSt_AudioList, &ppSt_VideoList, nACount, nVCount);
+			AVHelp_Device_EnumDevice(&ppSt_AudioList, &ppSt_VideoList, &nACount, &nVCount);
+			ModuleProtocol_Packet_EnumDevice(ptszRVBuffer, &nRVLen, &ppSt_AudioList, &ppSt_VideoList, nACount, nVCount);
+			BaseLib_OperatorMemory_Free((void***)&ppSt_AudioList, nACount);
+			BaseLib_OperatorMemory_Free((void***)&ppSt_VideoList, nVCount);
+		}
 		HttpProtocol_Server_SendMsgEx(xhHTTPPacket, ptszSDBuffer, &nSDLen, &st_HDRParam, ptszRVBuffer, nRVLen);
 		XEngine_Network_Send(lpszClientAddr, ptszSDBuffer, nSDLen);
-		BaseLib_OperatorMemory_Free((void***)&ppSt_AudioList, nACount);
-		BaseLib_OperatorMemory_Free((void***)&ppSt_VideoList, nVCount);
-		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("HTTP客户端:%s:请求枚举音视频设备成功,音频设备个数:%d,视频设备个数:%d"), nACount, nVCount);
+		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("HTTP客户端:%s:请求上报信息成功,上报类型:%d"), lpszClientAddr, nBSType);
 	}
 	break;
 	case XENGINE_COMMUNICATION_PROTOCOL_OPERATOR_CODE_BS_NOTHINGTODO:
@@ -233,7 +229,7 @@ bool HTTPTask_TaskPost_BackService(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer
 		st_HDRParam.nHttpCode = 400;
 		HttpProtocol_Server_SendMsgEx(xhHTTPPacket, ptszSDBuffer, &nSDLen, &st_HDRParam);
 		XEngine_Network_Send(lpszClientAddr, ptszSDBuffer, nSDLen);
-		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("HTTP客户端:%s:请求的操作码不支持,操作码:%d"), nType);
+		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("HTTP客户端:%s:请求的操作码不支持,操作码:%d"), lpszClientAddr, nType);
 		return false;
 	}
 	free(ptszRVBuffer);
