@@ -1113,13 +1113,6 @@ bool CModuleProtocol_Packet::ModuleProtocol_Packet_HardWare(XCHAR* ptszHWInfo, i
 	sprintf(tszOSInfo, "%s %s %s %lu", tszOSName, tszOSVersion, tszOSBuild, nOSPro);
 	st_JsonRoot["Platfrom"] = tszOSInfo;
 
-	if (*pInt_Len < (int)st_JsonRoot.toStyledString().length())
-	{
-		*pInt_Len = st_JsonRoot.toStyledString().length();
-		ModuleProtocol_IsErrorOccur = true;
-		ModuleProtocol_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PROTOCOL_PARSE_LEN;
-		return false;
-	}
 	*pInt_Len = st_JsonRoot.toStyledString().length();
 	memcpy(ptszHWInfo, st_JsonRoot.toStyledString().c_str(), *pInt_Len);
 
@@ -1219,13 +1212,6 @@ bool CModuleProtocol_Packet::ModuleProtocol_Packet_SoftWare(XCHAR* ptszSWInfo, i
 	st_JsonSystem["OSProcessCount"] = nProcessCount;
 	st_JsonRoot["OSInfo"] = st_JsonSystem;
 
-	if (*pInt_Len < (int)st_JsonRoot.toStyledString().length())
-	{
-		*pInt_Len = st_JsonRoot.toStyledString().length();
-		ModuleProtocol_IsErrorOccur = true;
-		ModuleProtocol_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PROTOCOL_PARSE_LEN;
-		return false;
-	}
 	*pInt_Len = st_JsonRoot.toStyledString().length();
 	memcpy(ptszSWInfo, st_JsonRoot.toStyledString().c_str(), *pInt_Len);
 
