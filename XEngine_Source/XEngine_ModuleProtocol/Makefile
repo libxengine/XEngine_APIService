@@ -7,8 +7,8 @@ LIBFLAG =
 RELEASE = 0
 UNICODE = 0
 LOADHDR = -I ./ -I ../XEngine_ThirdPart/jsoncpp
-LOADSO = -L /usr/local/lib/XEngine_Release/XEngine_BaseLib -L ../XEngine_ThirdPart/jsoncpp
-LIB = -lXEngine_BaseLib -ljsoncpp
+LOADSO = -L /usr/local/lib/XEngine_Release/XEngine_BaseLib -L /usr/local/lib/XEngine_Release/XEngine_Core -L ../XEngine_ThirdPart/jsoncpp
+LIB = -lXEngine_BaseLib -lXEngine_NetXApi -ljsoncpp
 LIBEX = 
 OBJECTS = ModuleProtocol_Packet.o ModuleProtocol_Parse.o pch.o
 

@@ -14,6 +14,11 @@ EXPORTS
 	ModuleProtocol_Packet_TestReply
 	ModuleProtocol_Packet_ShortLink
 	ModuleProtocol_Packet_WordFilter
+	ModuleProtocol_Packet_ImageAttr
+	ModuleProtocol_Packet_EnumDevice
+	ModuleProtocol_Packet_ListFile
+	ModuleProtocol_Packet_HardWare
+	ModuleProtocol_Packet_SoftWare
 	ModuleProtocol_Packet_P2PLan
 	ModuleProtocol_Packet_P2PWLan
 	ModuleProtocol_Packet_P2PUser
@@ -29,3 +34,5 @@ EXPORTS
 	ModuleProtocol_Parse_SocketTest
 	ModuleProtocol_Parse_ShortLink
 	ModuleProtocol_Parse_WordFilter
+	ModuleProtocol_Parse_BackService
+	ModuleProtocol_Parse_Verifcation

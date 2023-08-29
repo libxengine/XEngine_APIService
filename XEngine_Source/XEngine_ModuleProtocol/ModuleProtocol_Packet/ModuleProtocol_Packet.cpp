@@ -765,6 +765,459 @@ bool CModuleProtocol_Packet::ModuleProtocol_Packet_WordFilter(XCHAR* ptszMsgBuff
 	return true;
 }
 /********************************************************************
+函数名称：ModuleProtocol_Packet_ImageAttr
+函数功能：图片属性打包
+ 参数.一：ptszMsgBuffer
+  In/Out：Out
+  类型：字符指针
+  可空：N
+  意思：输出打包的数据信息
+ 参数.二：pInt_MsgLen
+  In/Out：Out
+  类型：整数型指针
+  可空：N
+  意思：输出打包大小
+ 参数.三：pSt_BaseInfo
+  In/Out：In
+  类型：数据结构
+  可空：N
+  意思：输入要打包的信息
+ 参数.四：pSt_ExtAttr
+  In/Out：In
+  类型：数据结构
+  可空：N
+  意思：输入要打包的信息
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+bool CModuleProtocol_Packet::ModuleProtocol_Packet_ImageAttr(XCHAR* ptszMsgBuffer, int* pInt_MsgLen, XENGINE_IMGBASEATTR* pSt_BaseInfo, XENGINE_IMGEXTATTR* pSt_ExtAttr)
+{
+	ModuleProtocol_IsErrorOccur = false;
+
+	if ((NULL == ptszMsgBuffer) || (NULL == pInt_MsgLen))
+	{
+		ModuleProtocol_IsErrorOccur = true;
+		ModuleProtocol_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PROTOCOL_PACKET_PARAMENT;
+		return false;
+	}
+	Json::Value st_JsonRoot;
+	Json::Value st_JsonBase;
+	Json::Value st_JsonExt;
+	Json::StreamWriterBuilder st_JsonBuilder;
+
+	st_JsonBase["nWidth"] = pSt_BaseInfo->nWidth;
+	st_JsonBase["nHeigth"] = pSt_BaseInfo->nHeigth;
+	st_JsonBase["nChannel"] = pSt_BaseInfo->nChannel;
+
+	st_JsonExt["nDepth"] = pSt_ExtAttr->nDepth;
+	st_JsonExt["nItem"] = pSt_ExtAttr->nItem;
+	st_JsonExt["nSize"] = pSt_ExtAttr->nSize;
+	st_JsonExt["nType"] = pSt_ExtAttr->nType;
+
+	st_JsonRoot["st_BaseInfo"] = st_JsonBase;
+	st_JsonRoot["st_ExtInfo"] = st_JsonExt;
+
+	st_JsonRoot["code"] = 0;
+	st_JsonRoot["msg"] = "success";
+	st_JsonBuilder["emitUTF8"] = true;
+
+	*pInt_MsgLen = Json::writeString(st_JsonBuilder, st_JsonRoot).length();
+	memcpy(ptszMsgBuffer, Json::writeString(st_JsonBuilder, st_JsonRoot).c_str(), *pInt_MsgLen);
+	return true;
+}
+/********************************************************************
+函数名称：ModuleProtocol_Packet_EnumDevice
+函数功能：打包枚举的设备信息
+ 参数.一：ptszMsgBuffer
+  In/Out：Out
+  类型：字符指针
+  可空：N
+  意思：输出打包的数据信息
+ 参数.二：pInt_MsgLen
+  In/Out：Out
+  类型：整数型指针
+  可空：N
+  意思：输出打包大小
+ 参数.三：pppSt_AudioList
+  In/Out：In
+  类型：三级指针
+  可空：N
+  意思：输入要打包的音频设备信息
+ 参数.四：pppSt_VideoList
+  In/Out：In
+  类型：三级指针
+  可空：N
+  意思：输入要打包的视频设备信息
+ 参数.五：nACount
+  In/Out：In
+  类型：整数型
+  可空：Y
+  意思：输入音频设备个数
+ 参数.六：nVCount
+  In/Out：In
+  类型：整数型
+  可空：Y
+  意思：输入视频设备个数
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+bool CModuleProtocol_Packet::ModuleProtocol_Packet_EnumDevice(XCHAR* ptszMsgBuffer, int* pInt_MsgLen, AVHELP_DEVICEINFO*** pppSt_AudioList, AVHELP_DEVICEINFO*** pppSt_VideoList, int nACount, int nVCount)
+{
+	ModuleProtocol_IsErrorOccur = false;
+
+	if ((NULL == ptszMsgBuffer) || (NULL == pInt_MsgLen))
+	{
+		ModuleProtocol_IsErrorOccur = true;
+		ModuleProtocol_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PROTOCOL_PACKET_PARAMENT;
+		return false;
+	}
+	Json::Value st_JsonRoot;
+	Json::Value st_JsonArray;
+	Json::Value st_JsonVideo;
+	Json::Value st_JsonAudio;
+	Json::StreamWriterBuilder st_JsonBuilder;
+
+	for (int i = 0; i < nACount; i++)
+	{
+		Json::Value st_JsonObject;
+		st_JsonObject["nDeviceInout"] = (*pppSt_AudioList)[i]->nDeviceInout;
+		st_JsonObject["nDeviceType"] = (*pppSt_AudioList)[i]->nDeviceType;
+		st_JsonObject["tszName"] = (*pppSt_AudioList)[i]->st_MetaInfo.tszKey;
+		st_JsonAudio.append(st_JsonObject);
+	}
+	for (int i = 0; i < nVCount; i++)
+	{
+		Json::Value st_JsonObject;
+		st_JsonObject["nDeviceInout"] = (*pppSt_VideoList)[i]->nDeviceInout;
+		st_JsonObject["nDeviceType"] = (*pppSt_VideoList)[i]->nDeviceType;
+		st_JsonObject["tszName"] = (*pppSt_VideoList)[i]->st_MetaInfo.tszKey;
+		st_JsonVideo.append(st_JsonObject);
+	}
+	st_JsonArray["AArray"] = st_JsonAudio;
+	st_JsonArray["VArray"] = st_JsonVideo;
+	st_JsonRoot["code"] = 0;
+	st_JsonRoot["msg"] = "success";
+	st_JsonRoot["data"] = st_JsonArray;
+	st_JsonBuilder["emitUTF8"] = true;
+
+	*pInt_MsgLen = Json::writeString(st_JsonBuilder, st_JsonRoot).length();
+	memcpy(ptszMsgBuffer, Json::writeString(st_JsonBuilder, st_JsonRoot).c_str(), *pInt_MsgLen);
+	return true;
+}
+/********************************************************************
+函数名称：ModuleProtocol_Packet_ListFile
+函数功能：打包文件列表信息
+ 参数.一：ptszMsgBuffer
+  In/Out：Out
+  类型：字符指针
+  可空：N
+  意思：输出打包的数据信息
+ 参数.二：pInt_MsgLen
+  In/Out：Out
+  类型：整数型指针
+  可空：N
+  意思：输出打包大小
+ 参数.三：pppszFileList
+  In/Out：In
+  类型：三级指针
+  可空：N
+  意思：输入要打包的文件列表
+ 参数.四：nListCount
+  In/Out：In
+  类型：三级指针
+  可空：N
+  意思：输入要列表个数
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+bool CModuleProtocol_Packet::ModuleProtocol_Packet_ListFile(XCHAR* ptszMsgBuffer, int* pInt_MsgLen, XCHAR*** pppszFileList, int nListCount)
+{
+	ModuleProtocol_IsErrorOccur = false;
+
+	if ((NULL == ptszMsgBuffer) || (NULL == pInt_MsgLen))
+	{
+		ModuleProtocol_IsErrorOccur = true;
+		ModuleProtocol_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PROTOCOL_PACKET_PARAMENT;
+		return false;
+	}
+	Json::Value st_JsonRoot;
+	Json::Value st_JsonArray;
+	Json::StreamWriterBuilder st_JsonBuilder;
+
+	for (int i = 0; i < nListCount; i++)
+	{
+		Json::Value st_JsonObject;
+		st_JsonObject["FileName"] = (*pppszFileList)[i];
+		st_JsonArray.append(st_JsonObject);
+	}
+	st_JsonRoot["Count"] = nListCount;
+	st_JsonRoot["data"] = st_JsonArray;
+	st_JsonRoot["code"] = 0;
+	st_JsonRoot["msg"] = "success";
+	st_JsonBuilder["emitUTF8"] = true;
+
+	*pInt_MsgLen = Json::writeString(st_JsonBuilder, st_JsonRoot).length();
+	memcpy(ptszMsgBuffer, Json::writeString(st_JsonBuilder, st_JsonRoot).c_str(), *pInt_MsgLen);
+
+	return true;
+}
+/********************************************************************
+函数名称：ModuleProtocol_Packet_HardWare
+函数功能：获取硬件信息
+ 参数.一：ptszHWInfo
+  In/Out：Out
+  类型：字符指针
+  可空：N
+  意思：导出获取到的数据,这个数据是JSON格式
+ 参数.二：pInt_Len
+  In/Out：Out
+  类型：整数型指针
+  可空：N
+  意思：导出数据的长度
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+bool CModuleProtocol_Packet::ModuleProtocol_Packet_HardWare(XCHAR* ptszHWInfo, int* pInt_Len)
+{
+	ModuleProtocol_IsErrorOccur = false;
+
+	if ((NULL == ptszHWInfo) || (NULL == pInt_Len))
+	{
+		ModuleProtocol_IsErrorOccur = true;
+		ModuleProtocol_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PROTOCOL_PARSE_PARAMENT;
+		return false;
+	}
+	int nDiskNumber = 0;
+	XCHAR** pptszRootName;
+	XCHAR tszOSName[MAX_PATH];
+	XCHAR tszOSVersion[MAX_PATH];
+	XCHAR tszOSBuild[MAX_PATH];
+	XLONG nOSPro = 0;
+	XCHAR tszOSInfo[2048];
+	SYSTEMAPI_DISK_INFOMATION st_DiskInfo;
+	SYSTEMAPI_CPU_INFOMATION st_CPUInfo;
+	SYSTEMAPI_MEMORY_INFOMATION st_MemoryInfo;
+	SYSTEMAPI_SERIAL_INFOMATION st_SDKSerial;
+
+	memset(tszOSName, '\0', sizeof(tszOSName));
+	memset(tszOSVersion, '\0', sizeof(tszOSVersion));
+	memset(tszOSBuild, '\0', sizeof(tszOSBuild));
+	memset(tszOSInfo, '\0', sizeof(tszOSInfo));
+	memset(&st_MemoryInfo, '\0', sizeof(SYSTEMAPI_MEMORY_INFOMATION));
+	memset(&st_CPUInfo, '\0', sizeof(SYSTEMAPI_CPU_INFOMATION));
+	memset(&st_DiskInfo, '\0', sizeof(SYSTEMAPI_DISK_INFOMATION));
+	memset(&st_SDKSerial, '\0', sizeof(SYSTEMAPI_SERIAL_INFOMATION));
+
+	if (!SystemApi_HardWare_GetDiskNumber(&pptszRootName, &nDiskNumber))
+	{
+		ModuleProtocol_IsErrorOccur = true;
+		ModuleProtocol_dwErrorCode = SystemApi_GetLastError();
+		return false;
+	}
+	BaseLib_OperatorMemory_Free((XPPPMEM)&pptszRootName, nDiskNumber);
+
+	XCHAR tszDriveStr[MAX_PATH];
+	memset(tszDriveStr, '\0', MAX_PATH);
+
+#ifdef _MSC_BUILD
+	GetLogicalDriveStringsA(MAX_PATH, tszDriveStr);
+#else
+	LPCXSTR lpszDir = _X("/");
+	strcpy(tszDriveStr, lpszDir);
+#endif
+
+	if (!SystemApi_HardWare_GetDiskInfomation(tszDriveStr, &st_DiskInfo, XENGINE_SYSTEMSDK_API_SYSTEM_SIZE_MB))
+	{
+		ModuleProtocol_IsErrorOccur = true;
+		ModuleProtocol_dwErrorCode = SystemApi_GetLastError();
+		return false;
+	}
+	if (!SystemApi_HardWare_GetCpuInfomation(&st_CPUInfo))
+	{
+		ModuleProtocol_IsErrorOccur = true;
+		ModuleProtocol_dwErrorCode = SystemApi_GetLastError();
+		return false;
+	}
+	if (!SystemApi_System_GetMemoryUsage(&st_MemoryInfo, XENGINE_SYSTEMSDK_API_SYSTEM_SIZE_MB))
+	{
+		ModuleProtocol_IsErrorOccur = true;
+		ModuleProtocol_dwErrorCode = SystemApi_GetLastError();
+		return false;
+	}
+	if (!SystemApi_HardWare_GetSerial(&st_SDKSerial))
+	{
+		ModuleProtocol_IsErrorOccur = true;
+		ModuleProtocol_dwErrorCode = SystemApi_GetLastError();
+		return false;
+	}
+	if (!SystemApi_System_GetSystemVer(tszOSName, tszOSVersion, tszOSBuild, &nOSPro))
+	{
+		ModuleProtocol_IsErrorOccur = true;
+		ModuleProtocol_dwErrorCode = SystemApi_GetLastError();
+		return false;
+	}
+
+	Json::Value st_JsonRoot;
+	Json::Value st_JsonDisk;
+	Json::Value st_JsonCpu;
+	Json::Value st_JsonSerial;
+	Json::Value st_JsonMemory;
+	Json::Value st_JsonNetCard;
+
+	st_JsonDisk["DiskNumber"] = nDiskNumber;
+	st_JsonDisk["DiskFree"] = (Json::UInt64)st_DiskInfo.dwDiskFree;
+	st_JsonDisk["DiskTotal"] = (Json::UInt64)st_DiskInfo.dwDiskTotal;
+	st_JsonDisk["DiskName"] = tszDriveStr;
+
+	st_JsonCpu["CpuNumber"] = st_CPUInfo.nCpuNumber;
+	st_JsonCpu["CpuSpeed"] = st_CPUInfo.nCpuSpeed;
+	st_JsonCpu["CpuName"] = st_CPUInfo.tszCpuName;
+
+	st_JsonMemory["MemoryFree"] = (Json::UInt64)st_MemoryInfo.dwMemory_Free;
+	st_JsonMemory["MemoryTotal"] = (Json::UInt64)st_MemoryInfo.dwMemory_Total;
+
+	st_JsonSerial["DiskSerial"] = st_SDKSerial.tszDiskSerial;
+	st_JsonSerial["CpuSerial"] = st_SDKSerial.tszCpuSerial;
+	st_JsonSerial["BoardSerial"] = st_SDKSerial.tszBoardSerial;
+	st_JsonSerial["SystemSerail"] = st_SDKSerial.tszSystemSerail;
+
+	int nListCount = 0;
+	NETXAPI_CARDINFO** ppSt_ListIFInfo;
+	NetXApi_Socket_GetCardInfo(&ppSt_ListIFInfo, &nListCount);
+	for (int i = 0; i < nListCount; i++)
+	{
+		Json::Value st_JsonIPAddr;
+		st_JsonIPAddr["tszIFName"] = ppSt_ListIFInfo[i]->tszIFName;
+		st_JsonIPAddr["tszIPAddr"] = ppSt_ListIFInfo[i]->tszIPAddr;
+		st_JsonIPAddr["tszBroadAddr"] = ppSt_ListIFInfo[i]->tszBroadAddr;
+		st_JsonIPAddr["tszDnsAddr"] = ppSt_ListIFInfo[i]->tszDnsAddr;
+		st_JsonIPAddr["tszMacAddr"] = ppSt_ListIFInfo[i]->tszMacAddr;
+		st_JsonNetCard.append(st_JsonIPAddr);
+	}
+	BaseLib_OperatorMemory_Free((XPPPMEM)&ppSt_ListIFInfo, nListCount);
+
+	st_JsonRoot["Disk"] = st_JsonDisk;
+	st_JsonRoot["Cpu"] = st_JsonCpu;
+	st_JsonRoot["Memory"] = st_JsonMemory;
+	st_JsonRoot["Serial"] = st_JsonSerial;
+	st_JsonRoot["NetCard"] = st_JsonNetCard;
+
+	sprintf(tszOSInfo, "%s %s %s %lu", tszOSName, tszOSVersion, tszOSBuild, nOSPro);
+	st_JsonRoot["Platfrom"] = tszOSInfo;
+
+	*pInt_Len = st_JsonRoot.toStyledString().length();
+	memcpy(ptszHWInfo, st_JsonRoot.toStyledString().c_str(), *pInt_Len);
+
+	return true;
+}
+/********************************************************************
+函数名称：XControl_Info_SoftWare
+函数功能：获取软件系统信息
+ 参数.一：ptszSWInfo
+  In/Out：Out
+  类型：字符指针
+  可空：N
+  意思：导出系统信息JSON结构
+ 参数.二：pInt_Len
+  In/Out：Out
+  类型：整数型指针
+  可空：N
+  意思：导出系统信息长度
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+bool CModuleProtocol_Packet::ModuleProtocol_Packet_SoftWare(XCHAR* ptszSWInfo, int* pInt_Len)
+{
+	ModuleProtocol_IsErrorOccur = false;
+
+	if ((NULL == ptszSWInfo) || (NULL == pInt_Len))
+	{
+		ModuleProtocol_IsErrorOccur = true;
+		ModuleProtocol_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PROTOCOL_PARSE_PARAMENT;
+		return false;
+	}
+	int nProcessCount;
+	XLONG nOSProcessor;
+	XCHAR tszOSBuild[MAX_PATH];
+	XCHAR tszOSVersion[MAX_PATH];
+	XCHAR tszOSInfo[MAX_PATH];
+	XCHAR tszUPTime[MAX_PATH];
+	XCHAR tszOSUser[MAX_PATH];
+	XCHAR tszServicePacket[MAX_PATH];
+	XENGINE_LIBTIMER st_LibTimer;
+
+	memset(tszOSBuild, '\0', MAX_PATH);
+	memset(tszOSVersion, '\0', MAX_PATH);
+	memset(tszOSInfo, '\0', MAX_PATH);
+	memset(tszUPTime, '\0', MAX_PATH);
+	memset(tszOSUser, '\0', MAX_PATH);
+	memset(tszServicePacket, '\0', MAX_PATH);
+	memset(&st_LibTimer, '\0', sizeof(XENGINE_LIBTIMER));
+
+#ifdef _MSC_BUILD
+	XLONG dwMaxSize = MAX_PATH;
+	if (!GetComputerNameA(tszOSUser, &dwMaxSize))
+	{
+		ModuleProtocol_IsErrorOccur = true;
+		ModuleProtocol_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PROTOCOL_PARSE_GETNAME;
+		return false;
+	}
+#else
+	struct passwd* pSt_Passwd = NULL;
+	pSt_Passwd = getpwuid(getuid());
+	if (NULL == pSt_Passwd)
+	{
+		ModuleProtocol_IsErrorOccur = true;
+		ModuleProtocol_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PROTOCOL_PARSE_GETNAME;
+		return false;
+	}
+	strcpy(tszOSUser, pSt_Passwd->pw_name);
+#endif
+	if (!SystemApi_System_GetSystemVer(tszOSInfo, tszOSVersion, tszOSBuild, &nOSProcessor))
+	{
+		ModuleProtocol_IsErrorOccur = true;
+		ModuleProtocol_dwErrorCode = SystemApi_GetLastError();
+		return false;
+	}
+	if (!SystemApi_System_GetProcessCount(&nProcessCount))
+	{
+		ModuleProtocol_IsErrorOccur = true;
+		ModuleProtocol_dwErrorCode = SystemApi_GetLastError();
+		return false;
+	}
+	if (!SystemApi_System_GetUpTime(&st_LibTimer))
+	{
+		ModuleProtocol_IsErrorOccur = true;
+		ModuleProtocol_dwErrorCode = SystemApi_GetLastError();
+		return false;
+	}
+	sprintf(tszUPTime, "%04d-%02d-%02d %02d:%02d:%02d", st_LibTimer.wYear, st_LibTimer.wMonth, st_LibTimer.wDay, st_LibTimer.wHour, st_LibTimer.wMinute, st_LibTimer.wSecond);
+
+	Json::Value st_JsonRoot;
+	Json::Value st_JsonSystem;
+
+	st_JsonSystem["OSUser"] = tszOSUser;
+	st_JsonSystem["OSUPTime"] = tszUPTime;
+	st_JsonSystem["OSVersion"] = tszOSInfo;
+	st_JsonSystem["OSProcessCount"] = nProcessCount;
+	st_JsonRoot["OSInfo"] = st_JsonSystem;
+
+	*pInt_Len = st_JsonRoot.toStyledString().length();
+	memcpy(ptszSWInfo, st_JsonRoot.toStyledString().c_str(), *pInt_Len);
+
+	return true;
+}
+/********************************************************************
 函数名称：ModuleProtocol_Packet_P2PLan
 函数功能：响应同步局域网地址列表
  参数.一：ptszMsgBuffer

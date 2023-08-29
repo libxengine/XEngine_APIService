@@ -11,6 +11,10 @@
 // 添加要在此处预编译的标头
 #include "framework.h"
 #include <tchar.h>
+#else
+#include <pwd.h>
+#include <unistd.h>
+#include <sys/types.h>
 #endif
 #endif //PCH_H
 #include <stdio.h>
@@ -23,6 +27,14 @@
 #include <XEngine_Include/XEngine_ProtocolHdr.h>
 #include <XEngine_Include/XEngine_BaseLib/BaseLib_Define.h>
 #include <XEngine_Include/XEngine_BaseLib/BaseLib_Error.h>
+#include <XEngine_Include/XEngine_Core/NetXApi_Define.h>
+#include <XEngine_Include/XEngine_Core/NetXApi_Error.h>
+#include <XEngine_Include/XEngine_SystemSdk/ProcFile_Define.h>
+#include <XEngine_Include/XEngine_SystemSdk/SystemApi_Define.h>
+#include <XEngine_Include/XEngine_SystemSdk/SystemApi_Error.h>
+#include <XEngine_Include/XEngine_AVCodec/AVCollect_Define.h>
+#include <XEngine_Include/XEngine_AVCodec/VideoCodec_Define.h>
+#include <XEngine_Include/XEngine_AVCodec/AVHelp_Define.h>
 using namespace std;
 #include "../XEngine_UserProtocol.h"
 #include "ModuleProtocol_Define.h"
@@ -43,6 +55,8 @@ extern XLONG ModuleProtocol_dwErrorCode;
 
 #ifdef _MSC_BUILD
 #pragma comment(lib,"XEngine_BaseLib/XEngine_BaseLib")
+#pragma comment(lib,"XEngine_Core/XEngine_NetXApi")
+#pragma comment(lib,"XEngine_SystemSdk/XEngine_SystemApi")
 #ifdef _DEBUG
 #ifdef _WIN64
 #pragma comment(lib,"../x64/Debug/jsoncpp")

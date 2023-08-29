@@ -73,6 +73,12 @@ typedef struct
 	}st_XReload;
 	struct  
 	{
+		bool bBackService;
+		XCHAR tszUserName[MAX_PATH];
+		XCHAR tszUserPass[MAX_PATH];
+	}st_XVerifcation;
+	struct  
+	{
 		list<string>* pStl_ListVer;
 	}st_XVer;
 }XENGINE_SERVICECONFIG;

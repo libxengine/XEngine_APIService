@@ -481,6 +481,141 @@ extern "C" bool ModuleProtocol_Packet_ShortLink(XCHAR* ptszMsgBuffer, int* pInt_
 备注：
 *********************************************************************/
 extern "C" bool ModuleProtocol_Packet_WordFilter(XCHAR* ptszMsgBuffer, int* pInt_MsgLen, XENGINE_WORDFILTER* pSt_WordFilter);
+/********************************************************************
+函数名称：ModuleProtocol_Packet_ImageAttr
+函数功能：图片属性打包
+ 参数.一：ptszMsgBuffer
+  In/Out：Out
+  类型：字符指针
+  可空：N
+  意思：输出打包的数据信息
+ 参数.二：pInt_MsgLen
+  In/Out：Out
+  类型：整数型指针
+  可空：N
+  意思：输出打包大小
+ 参数.三：pSt_BaseInfo
+  In/Out：In
+  类型：数据结构
+  可空：N
+  意思：输入要打包的信息
+ 参数.四：pSt_ExtAttr
+  In/Out：In
+  类型：数据结构
+  可空：N
+  意思：输入要打包的信息
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+extern "C" bool ModuleProtocol_Packet_ImageAttr(XCHAR* ptszMsgBuffer, int* pInt_MsgLen, XENGINE_IMGBASEATTR* pSt_BaseInfo, XENGINE_IMGEXTATTR* pSt_ExtAttr);
+/********************************************************************
+函数名称：ModuleProtocol_Packet_EnumDevice
+函数功能：打包枚举的设备信息
+ 参数.一：ptszMsgBuffer
+  In/Out：Out
+  类型：字符指针
+  可空：N
+  意思：输出打包的数据信息
+ 参数.二：pInt_MsgLen
+  In/Out：Out
+  类型：整数型指针
+  可空：N
+  意思：输出打包大小
+ 参数.三：pppSt_AudioList
+  In/Out：In
+  类型：三级指针
+  可空：N
+  意思：输入要打包的音频设备信息
+ 参数.四：pppSt_VideoList
+  In/Out：In
+  类型：三级指针
+  可空：N
+  意思：输入要打包的视频设备信息
+ 参数.五：nACount
+  In/Out：In
+  类型：整数型
+  可空：Y
+  意思：输入音频设备个数
+ 参数.六：nVCount
+  In/Out：In
+  类型：整数型
+  可空：Y
+  意思：输入视频设备个数
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+extern "C" bool ModuleProtocol_Packet_EnumDevice(XCHAR* ptszMsgBuffer, int* pInt_MsgLen, AVHELP_DEVICEINFO*** pppSt_AudioList, AVHELP_DEVICEINFO*** pppSt_VideoList, int nACount, int nVCount);
+/********************************************************************
+函数名称：ModuleProtocol_Packet_ListFile
+函数功能：打包文件列表信息
+ 参数.一：ptszMsgBuffer
+  In/Out：Out
+  类型：字符指针
+  可空：N
+  意思：输出打包的数据信息
+ 参数.二：pInt_MsgLen
+  In/Out：Out
+  类型：整数型指针
+  可空：N
+  意思：输出打包大小
+ 参数.三：pppszFileList
+  In/Out：In
+  类型：三级指针
+  可空：N
+  意思：输入要打包的文件列表
+ 参数.四：nListCount
+  In/Out：In
+  类型：三级指针
+  可空：N
+  意思：输入要列表个数
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+extern "C" bool ModuleProtocol_Packet_ListFile(XCHAR* ptszMsgBuffer, int* pInt_MsgLen, XCHAR*** pppszFileList, int nListCount);
+/********************************************************************
+函数名称：ModuleProtocol_Packet_HardWare
+函数功能：获取硬件信息
+ 参数.一：ptszHWInfo
+  In/Out：Out
+  类型：字符指针
+  可空：N
+  意思：导出获取到的数据,这个数据是JSON格式
+ 参数.二：pInt_Len
+  In/Out：Out
+  类型：整数型指针
+  可空：N
+  意思：导出数据的长度
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+extern "C" bool ModuleProtocol_Packet_HardWare(XCHAR* ptszHWInfo, int* pInt_Len);
+/********************************************************************
+函数名称：XControl_Info_SoftWare
+函数功能：获取软件系统信息
+ 参数.一：ptszSWInfo
+  In/Out：Out
+  类型：字符指针
+  可空：N
+  意思：导出系统信息JSON结构
+ 参数.二：pInt_Len
+  In/Out：Out
+  类型：整数型指针
+  可空：N
+  意思：导出系统信息长度
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+extern "C" bool ModuleProtocol_Packet_SoftWare(XCHAR* ptszSWInfo, int* pInt_Len);
 /************************************************************************/
 /*                         导出的协议解析函数                           */
 /************************************************************************/
@@ -719,3 +854,66 @@ extern "C" bool ModuleProtocol_Parse_ShortLink(LPCXSTR lpszMsgBuffer, int nMsgLe
 备注：
 *********************************************************************/
 extern "C" bool ModuleProtocol_Parse_WordFilter(LPCXSTR lpszMsgBuffer, int nMsgLen, XENGINE_WORDFILTER* pSt_WordFilter);
+/********************************************************************
+函数名称：ModuleProtocol_Parse_BackService
+函数功能：后台控制协议
+ 参数.一：lpszMsgBuffer
+  In/Out：In
+  类型：常量字符指针
+  可空：N
+  意思：输入要解析的数据
+ 参数.二：nMsgLen
+  In/Out：In
+  类型：整数型
+  可空：N
+  意思：要解析的大小
+ 参数.三：ptszSrcBuffer
+  In/Out：Out
+  类型：字符指针
+  可空：N
+  意思：输出解析好的信息
+ 参数.四：ptszDstBuffer
+  In/Out：Out
+  类型：字符指针
+  可空：N
+  意思：输出解析好的信息
+ 参数.五：pInt_BSType
+  In/Out：Out
+  类型：整数型指针
+  可空：N
+  意思：输出解析好的信息
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：输出的内容具体参考协议文档
+*********************************************************************/
+extern "C" bool ModuleProtocol_Parse_BackService(LPCXSTR lpszMsgBuffer, int nMsgLen, XCHAR* ptszSrcBuffer = NULL, XCHAR* ptszDstBuffer = NULL, int* pInt_BSType = NULL);
+/********************************************************************
+函数名称：ModuleProtocol_Parse_Verifcation
+函数功能：解析验证协议
+ 参数.一：lpszMsgBuffer
+  In/Out：In
+  类型：常量字符指针
+  可空：N
+  意思：输入要解析的数据
+ 参数.二：nMsgLen
+  In/Out：In
+  类型：整数型
+  可空：N
+  意思：要解析的大小
+ 参数.三：ptszUserName
+  In/Out：Out
+  类型：字符指针
+  可空：N
+  意思：输出解析好的信息
+ 参数.四：ptszUserPass
+  In/Out：Out
+  类型：字符指针
+  可空：N
+  意思：输出解析好的信息
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+extern "C" bool ModuleProtocol_Parse_Verifcation(LPCXSTR lpszMsgBuffer, int nMsgLen, XCHAR* ptszUserName, XCHAR* ptszUserPass);

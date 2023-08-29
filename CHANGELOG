@@ -1,3 +1,13 @@
+XEngine_APIService V2.11.0.1001
+
+增加:用户验证功能
+增加:图像信息获取和设置接口
+增加:后台管理服务接口
+
+added:user verifacation function supported
+added:image set and get info
+added:back service management api
+======================================================================================
 XEngine_APIService V2.10.0.1001
 
 增加:敏感词过滤系统

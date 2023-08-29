@@ -167,6 +167,8 @@
     <ClInclude Include="ModuleHelp_Define.h" />
     <ClInclude Include="ModuleHelp_Error.h" />
     <ClInclude Include="ModuleHelp_IDCard\ModuleHelp_IDCard.h" />
+    <ClInclude Include="ModuleHelp_Image\ModuleHelp_ImageGet.h" />
+    <ClInclude Include="ModuleHelp_Image\ModuleHelp_ImageSet.h" />
     <ClInclude Include="ModuleHelp_Language\ModuleHelp_Language.h" />
     <ClInclude Include="ModuleHelp_Locker\ModuleHelp_Locker.h" />
     <ClInclude Include="ModuleHelp_P2PClient\ModuleHelp_P2PClient.h" />
@@ -177,6 +179,8 @@
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="ModuleHelp_IDCard\ModuleHelp_IDCard.cpp" />
+    <ClCompile Include="ModuleHelp_Image\ModuleHelp_ImageGet.cpp" />
+    <ClCompile Include="ModuleHelp_Image\ModuleHelp_ImageSet.cpp" />
     <ClCompile Include="ModuleHelp_Language\ModuleHelp_Language.cpp" />
     <ClCompile Include="ModuleHelp_Locker\ModuleHelp_Locker.cpp" />
     <ClCompile Include="ModuleHelp_P2PClient\ModuleHelp_P2PClient.cpp" />

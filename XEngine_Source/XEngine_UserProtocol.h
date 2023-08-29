@@ -78,6 +78,18 @@ typedef enum
 //////////////////////////////////////////////////////////////////////////
 #define XENGINE_COMMUNICATION_PROTOCOL_OPERATOR_CODE_MSG_TEXTREQ 0x0001   //发送消息
 #define XENGINE_COMMUNICATION_PROTOCOL_OPERATOR_CODE_MSG_TEXTREP 0x0002   //回复消息
+//后台服务协议
+#define XENGINE_COMMUNICATION_PROTOCOL_OPERATOR_CODE_BS_NOTHINGTODO 0x5000       //没有需要执行的任务
+#define XENGINE_COMMUNICATION_PROTOCOL_OPERATOR_CODE_BS_DOWNFILE 0x5001          //下载
+#define XENGINE_COMMUNICATION_PROTOCOL_OPERATOR_CODE_BS_DELETEFILE 0x5002        //删除指定文件
+#define XENGINE_COMMUNICATION_PROTOCOL_OPERATOR_CODE_BS_DELETEDIR 0x5003         //删除指定目录
+#define XENGINE_COMMUNICATION_PROTOCOL_OPERATOR_CODE_BS_UPFILE 0x5004            //上传一个文件到指定FTP
+#define XENGINE_COMMUNICATION_PROTOCOL_OPERATOR_CODE_BS_GETLIST 0x5005           //请求获取文件夹中的文件列表
+#define XENGINE_COMMUNICATION_PROTOCOL_OPERATOR_CODE_BS_EXEC 0x5006              //执行指定程序
+#define XENGINE_COMMUNICATION_PROTOCOL_OPERATOR_CODE_BS_STOPPROCESS 0x5007       //结束指定进程
+#define XENGINE_COMMUNICATION_PROTOCOL_OPERATOR_CODE_BS_SHUTDOWN 0x5008          //远程关闭计算机
+#define XENGINE_COMMUNICATION_PROTOCOL_OPERATOR_CODE_BS_ECMD 0x5009              //执行命令
+#define XENGINE_COMMUNICATION_PROTOCOL_OPERATOR_CODE_BS_REPORT 0x5010            //报告信息
 //P2XP协议
 #define XENGINE_COMMUNICATION_PROTOCOL_OPERATOR_CODE_P2XP_REQLOGIN 0x6001        //登录
 #define XENGINE_COMMUNICATION_PROTOCOL_OPERATOR_CODE_P2XP_REPLOGIN 0x6002
@@ -225,4 +237,19 @@ typedef struct
 	XCHAR tszWordsTo[MAX_PATH];    
 	XBYTE nLevel;                                  //过滤级别,0替换,1删除,2禁止
 }XENGINE_WORDFILTER;
+//图像基本属性
+typedef struct
+{
+	int nWidth;                      //宽
+	int nHeigth;                     //高
+	int nChannel;                    //通道
+}XENGINE_IMGBASEATTR;
+//图像高级属性
+typedef struct
+{
+	int nSize;                       //文件大小
+	int nDepth;                      //位深度
+	int nItem;                       //单个数据长度
+	int nType;                       //数据类型，字符串形式
+}XENGINE_IMGEXTATTR;
 #pragma pack(pop)

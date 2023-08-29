@@ -5,6 +5,8 @@
 #include "ModuleHelp_Locker/ModuleHelp_Locker.h"
 #include "ModuleHelp_QRCode/ModuleHelp_QRCode.h"
 #include "ModuleHelp_SocketTest/ModuleHelp_SocketTest.h"
+#include "ModuleHelp_Image/ModuleHelp_ImageGet.h"
+#include "ModuleHelp_Image/ModuleHelp_ImageSet.h"
 /********************************************************************
 //    Created:     2022/03/04  13:37:38
 //    File Name:   D:\XEngine_APIService\XEngine_Source\XEngine_ModuleHelp\pch.cpp
@@ -25,6 +27,8 @@ CModuleHelp_P2PClient m_P2PClient;
 CModuleHelp_Locker m_Locker;
 CModuleHelp_QRCode m_QRCode;
 CModuleHelp_SocketTest m_SocketTest;
+CModuleHelp_ImageGet m_ImageGet;
+CModuleHelp_ImageSet m_ImageSet;
 //////////////////////////////////////////////////////////////////////////
 ///                        导出的函数
 //////////////////////////////////////////////////////////////////////////
@@ -177,4 +181,27 @@ extern "C" bool ModuleHelp_SocketTest_GetDatas(XNETHANDLE xhToken, bool * pbRun)
 extern "C" bool ModuleHelp_SocketTest_StopDatas(XNETHANDLE xhToken)
 {
 	return m_SocketTest.ModuleHelp_SocketTest_StopDatas(xhToken);
+}
+/************************************************************************/
+/*                       图像处理导出函数                               */
+/************************************************************************/
+extern "C" bool ModuleHelp_ImageGet_Attr(LPCXSTR lpszMsgBuffer, int nMsgLen, XENGINE_IMGBASEATTR * pSt_BaseInfo, XENGINE_IMGEXTATTR * pSt_ExtAttr)
+{
+	return m_ImageGet.ModuleHelp_ImageGet_Attr(lpszMsgBuffer, nMsgLen, pSt_BaseInfo, pSt_ExtAttr);
+}
+extern "C" bool ModuleHelp_ImageSet_Resolution(LPCXSTR lpszSrcBuffer, int nSLen, LPCXSTR lpszExtFile, XCHAR * ptszDstBuffer, int* pInt_DLen, int nWidth, int nHeight)
+{
+	return m_ImageSet.ModuleHelp_ImageSet_Resolution(lpszSrcBuffer, nSLen, lpszExtFile, ptszDstBuffer, pInt_DLen, nWidth, nHeight);
+}
+extern "C" bool ModuleHelp_ImageSet_Flip(LPCXSTR lpszSrcBuffer, int nSLen, LPCXSTR lpszExtFile, XCHAR * ptszDstBuffer, int* pInt_DLen, int nOPMethod)
+{
+	return m_ImageSet.ModuleHelp_ImageSet_Flip(lpszSrcBuffer, nSLen, lpszExtFile, ptszDstBuffer, pInt_DLen, nOPMethod);
+}
+extern "C" bool ModuleHelp_ImageSet_ColorCvt(LPCXSTR lpszSrcBuffer, int nSLen, LPCXSTR lpszExtFile, XCHAR * ptszDstBuffer, int* pInt_DLen, ENUM_XENGINE_IMAGE_COLOR_INFO enColorInfo)
+{
+	return m_ImageSet.ModuleHelp_ImageSet_ColorCvt(lpszSrcBuffer, nSLen, lpszExtFile, ptszDstBuffer, pInt_DLen, enColorInfo);
+}
+extern "C" bool ModuleHelp_ImageSet_Ligth(LPCXSTR lpszSrcBuffer, int nSLen, LPCXSTR lpszExtFile, XCHAR * ptszDstBuffer, int* pInt_DLen, int nGamma)
+{
+	return m_ImageSet.ModuleHelp_ImageSet_Ligth(lpszSrcBuffer, nSLen, lpszExtFile, ptszDstBuffer, pInt_DLen, nGamma);
 }

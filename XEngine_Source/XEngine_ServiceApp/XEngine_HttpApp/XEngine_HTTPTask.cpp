@@ -111,6 +111,8 @@ bool HTTPTask_TastPost_Handle(RFCCOMPONENTS_HTTP_REQPARAM* pSt_HTTPParam, LPCXST
 	LPCXSTR lpszParamDTest = _X("dtest");
 	LPCXSTR lpszParamShortLink = _X("slink");
 	LPCXSTR lpszParamWordFilter = _X("wordfilter");
+	LPCXSTR lpszParamBack = _X("back");
+	LPCXSTR lpszParamImage = _X("image");
 
 	memset(tszKey, '\0', MAX_PATH);
 	memset(tszValue, '\0', MAX_PATH);
@@ -263,6 +265,20 @@ bool HTTPTask_TastPost_Handle(RFCCOMPONENTS_HTTP_REQPARAM* pSt_HTTPParam, LPCXST
 
 			BaseLib_OperatorString_GetKeyValue(pptszList[1], "=", tszKey, tszType);
 			HTTPTask_TastPost_WordFilter(lpszClientAddr, lpszRVBuffer, nRVLen, _ttxoi(tszType));
+		}
+		else if (0 == _tcsxnicmp(lpszParamBack, tszValue, _tcsxlen(lpszParamBack)))
+		{
+			//后台管理接口:http://app.xyry.org:5501/api?function=back&params1=0
+			XCHAR tszType[64];
+			memset(tszType, '\0', sizeof(tszType));
+
+			BaseLib_OperatorString_GetKeyValue(pptszList[1], "=", tszKey, tszType);
+			HTTPTask_TaskPost_BackService(lpszClientAddr, lpszRVBuffer, nRVLen, _ttxoi(tszType));
+		}
+		else if (0 == _tcsxnicmp(lpszParamImage, tszValue, _tcsxlen(lpszParamImage)))
+		{
+			//图像处理接口:http://app.xyry.org:5501/api?function=image&params1=0
+			HTTPTask_TaskPost_Image(lpszClientAddr, lpszRVBuffer, nRVLen, &pptszList, nListCount);
 		}
 		else
 		{

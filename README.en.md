@@ -46,6 +46,8 @@ Support privatization deployment, free, safe, open source, controllable
 26. log service
 27. Plugin hot reload
 28. Sensitive word detection
+29. remote control(back management)
+30. Image Process
 
 ## install
 
@@ -84,7 +86,18 @@ Run it on the terminal
 execute command in XEngine_Source path  
 make complie  
 make FLAGS=InstallAll install  
-make FLAGS=CleanAll clear  
+make FLAGS=CleanAll clear 
+
+## system task list
+delete file  
+delete dir  
+upload a file to ftp  
+Request a list of files in the folder  
+execute program  
+terminal process  
+remote shutdown computre  
+execute command  
+information report  
 
 #### use
 
