@@ -41,6 +41,11 @@
         "tszHostUrl":"url.xyry.org",
         "nHTTPCode":301
     },
+    "XVerification":{
+        "bBackService":false,
+        "tszUserName":"xyry",
+        "tszUserPass":"11"
+    },
     "XVer":[
         "2.11.0.1001 Build20230829",
         "2.10.0.1001 Build20230810",

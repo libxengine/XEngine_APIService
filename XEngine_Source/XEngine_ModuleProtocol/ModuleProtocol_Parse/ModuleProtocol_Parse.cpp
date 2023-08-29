@@ -834,3 +834,69 @@ bool CModuleProtocol_Parse::ModuleProtocol_Parse_BackService(LPCXSTR lpszMsgBuff
 	}
 	return true;
 }
+/********************************************************************
+函数名称：ModuleProtocol_Parse_Verifcation
+函数功能：解析验证协议
+ 参数.一：lpszMsgBuffer
+  In/Out：In
+  类型：常量字符指针
+  可空：N
+  意思：输入要解析的数据
+ 参数.二：nMsgLen
+  In/Out：In
+  类型：整数型
+  可空：N
+  意思：要解析的大小
+ 参数.三：ptszUserName
+  In/Out：Out
+  类型：字符指针
+  可空：N
+  意思：输出解析好的信息
+ 参数.四：ptszUserPass
+  In/Out：Out
+  类型：字符指针
+  可空：N
+  意思：输出解析好的信息
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+bool CModuleProtocol_Parse::ModuleProtocol_Parse_Verifcation(LPCXSTR lpszMsgBuffer, int nMsgLen, XCHAR* ptszUserName, XCHAR* ptszUserPass)
+{
+	ModuleProtocol_IsErrorOccur = false;
+
+	if ((NULL == lpszMsgBuffer) || (0 == nMsgLen))
+	{
+		ModuleProtocol_IsErrorOccur = true;
+		ModuleProtocol_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PROTOCOL_PARSE_PARAMENT;
+		return false;
+	}
+	Json::Value st_JsonRoot;
+	JSONCPP_STRING st_JsonError;
+	Json::CharReaderBuilder st_JsonBuilder;
+
+	std::unique_ptr<Json::CharReader> const pSt_JsonReader(st_JsonBuilder.newCharReader());
+	if (!pSt_JsonReader->parse(lpszMsgBuffer, lpszMsgBuffer + nMsgLen, &st_JsonRoot, &st_JsonError))
+	{
+		ModuleProtocol_IsErrorOccur = true;
+		ModuleProtocol_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PROTOCOL_PARSE_PARAMENT;
+		return false;
+	}
+
+	if (!st_JsonRoot["tszUserName"].isNull())
+	{
+		if (NULL != ptszUserName)
+		{
+			_tcsxcpy(ptszUserName, st_JsonRoot["tszUserName"].asCString());
+		}
+	}
+	if (!st_JsonRoot["tszUserPass"].isNull())
+	{
+		if (NULL != ptszUserPass)
+		{
+			_tcsxcpy(ptszUserPass, st_JsonRoot["tszUserPass"].asCString());
+		}
+	}
+	return true;
+}

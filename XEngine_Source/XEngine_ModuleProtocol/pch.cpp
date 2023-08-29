@@ -158,3 +158,7 @@ extern "C" bool ModuleProtocol_Parse_BackService(LPCXSTR lpszMsgBuffer, int nMsg
 {
 	return m_ProtocolParse.ModuleProtocol_Parse_BackService(lpszMsgBuffer, nMsgLen, ptszSrcBuffer, ptszDstBuffer, pInt_BSType);
 }
+extern "C" bool ModuleProtocol_Parse_Verifcation(LPCXSTR lpszMsgBuffer, int nMsgLen, XCHAR * ptszUserName, XCHAR * ptszUserPass)
+{
+	return m_ProtocolParse.ModuleProtocol_Parse_Verifcation(lpszMsgBuffer, nMsgLen, ptszUserName, ptszUserPass);
+}
