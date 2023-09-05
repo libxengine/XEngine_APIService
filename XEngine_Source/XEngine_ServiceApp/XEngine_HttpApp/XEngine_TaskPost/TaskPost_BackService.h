@@ -1,5 +1,6 @@
 ﻿#pragma once
 
+static bool bRecord = false;
 static XHANDLE xhSound = NULL;
 static XHANDLE xhScreen = NULL;
 static XNETHANDLE xhAudio = 0;
