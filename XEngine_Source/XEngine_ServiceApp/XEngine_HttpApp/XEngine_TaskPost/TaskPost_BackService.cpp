@@ -282,7 +282,7 @@ bool HTTPTask_TaskPost_BackService(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer
 #endif
 			if (NULL == xhSound)
 			{
-				XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("音频采集器请求失败,错误码:%lX"), AVCollect_GetLastError());
+				XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("HTTP客户端:%s,初始化音频采集器请求失败,错误码:%lX"), lpszClientAddr, AVCollect_GetLastError());
 				return false;
 			}
 			st_AVInfo.st_AudioInfo.bEnable = true;
@@ -292,13 +292,13 @@ bool HTTPTask_TaskPost_BackService(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer
 			st_AVInfo.st_AudioInfo.nSampleFmt = ENUM_AVCOLLECT_AUDIO_SAMPLE_FMT_FLTP;
 			if (!AudioCodec_Stream_EnInit(&xhAudio, &st_AVInfo.st_AudioInfo))
 			{
-				XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("音频采集器请求失败,错误码:%lX"), AudioCodec_GetLastError());
+				XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("HTTP客户端:%s,初始化音频编码器失败,错误码:%lX"), lpszClientAddr, AudioCodec_GetLastError());
 				return false;
 			}
 			int nLen = 0;
 			if (!AudioCodec_Stream_SetResample(xhAudio, &nLen, st_AVInfo.st_AudioInfo.nSampleRate, st_AVInfo.st_AudioInfo.nSampleRate, (ENUM_AVCOLLECT_AUDIOSAMPLEFORMAT)st_AVInfo.st_AudioInfo.nSampleFmt, ENUM_AVCOLLECT_AUDIO_SAMPLE_FMT_FLTP, st_AVInfo.st_AudioInfo.nChannel, st_AVInfo.st_AudioInfo.nChannel))
 			{
-				XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("初始化重采样工具失败,错误码:%lX"), AudioCodec_GetLastError());
+				XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("HTTP客户端:%s,初始化音频重采样工具失败,错误码:%lX"), lpszClientAddr, AudioCodec_GetLastError());
 				return false;
 			}
 		}
@@ -309,16 +309,14 @@ bool HTTPTask_TaskPost_BackService(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer
 		st_AVScreen.nFrameRate = 24;
 		st_AVScreen.nPosX = 0;
 		st_AVScreen.nPosY = 0;
-		strcpy(st_AVScreen.tszVideoSize, "1920x1080");
-
 #ifdef _MSC_BUILD
-		xhScreen = AVCollect_Video_Init("dshow", "video=screen-capture-recorder", &st_AVScreen, HTTPTask_TaskPost_CBVideo);
+		xhScreen = AVCollect_Video_Init("gdigrab", "desktop", &st_AVScreen, HTTPTask_TaskPost_CBVideo);
 #else
 		xhScreen = AVCollect_Video_Init("x11grab", ":0", &st_AVScreen, HTTPTask_TaskPost_CBVideo);
 #endif
 		if (NULL == xhScreen)
 		{
-			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, "屏幕采集器请求失败,错误码:%lX", AVCollect_GetLastError());
+			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("HTTP客户端:%s,屏幕采集器请求失败,错误码:%lX"), lpszClientAddr, AVCollect_GetLastError());
 			return false;
 		}
 		AVCollect_Video_GetInfo(xhScreen, &st_AVInfo);
@@ -326,14 +324,14 @@ bool HTTPTask_TaskPost_BackService(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer
 		st_AVInfo.st_VideoInfo.enAVCodec = ENUM_XENGINE_AVCODEC_VIDEO_TYPE_H264;
 		if (!VideoCodec_Stream_EnInit(&xhVideo, &st_AVInfo.st_VideoInfo))
 		{
-			printf(_X("初始化失败"));
-			return -1;
+			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("HTTP客户端:%s,初始化视频编码器失败,错误码:%lX"), lpszClientAddr, VideoCodec_GetLastError());
+			return false;
 		}
 
 		xhStream = StreamClient_StreamPush_Init(tszSrcBuffer, &st_AVInfo);
 		if (NULL == xhStream)
 		{
-			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("推流请求失败,错误码:%lX"), StreamClient_GetLastError());
+			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("HTTP客户端:%s,推流:%s 请求失败,错误码:%lX"), lpszClientAddr, tszSrcBuffer, StreamClient_GetLastError());
 			return false;
 		}
 		AVCollect_Audio_Start(xhSound);
