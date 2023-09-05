@@ -16,6 +16,11 @@ copy /y "%XEngine_Lib32%\XEngine_HelpComponents\HelpComponents_Authorize.dll" ".
 copy /y "%XEngine_Lib32%\XEngine_RfcComponents\RfcComponents_HttpProtocol.dll" "./"
 
 copy /y "%XEngine_Lib32%\XEngine_AVCodec\XEngine_AVHelp.dll" "./"
+copy /y "%XEngine_Lib32%\XEngine_AVCodec\XEngine_VideoCodec.dll" "./"
+copy /y "%XEngine_Lib32%\XEngine_AVCodec\XEngine_AudioCodec.dll" "./"
+copy /y "%XEngine_Lib32%\XEngine_AVCodec\XEngine_AVCollect.dll" "./"
+
+copy /y "%XEngine_Lib32%\XEngine_StreamMedia\StreamMedia_StreamClient.dll" "./"
 
 copy /y "%XEngine_Lib32%\XEngine_HelpComponents\bson-1.0.dll" "./"
 copy /y "%XEngine_Lib32%\XEngine_HelpComponents\mongoc-1.0.dll" "./"
@@ -23,7 +28,6 @@ copy /y "%XEngine_Lib32%\XEngine_HelpComponents\libmariadb.dll" "./"
 copy /y "%XEngine_Lib32%\XEngine_HelpComponents\libpq.dll" "./"
 copy /y "%XEngine_Lib32%\XEngine_HelpComponents\sqlite3.dll" "./"
 copy /y "%XEngine_Lib32%\XEngine_HelpComponents\zlib1.dll" "./"
-copy /y "%XEngine_Lib32%\XEngine_HelpComponents\plugin\caching_sha2_password.dll" "./"
 copy /y "%XEngine_Lib32%\XEngine_NetHelp\libcurl.dll" "./"
 copy /y "%XEngine_Lib32%\XEngine_NetHelp\nghttp2.dll" "./"
 copy /y "%XEngine_Lib32%\XEngine_LibEx\libcrypto-3.dll" "./"

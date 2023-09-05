@@ -16,6 +16,11 @@ copy /y "%XEngine_Lib64%\XEngine_HelpComponents\HelpComponents_Authorize.dll" ".
 copy /y "%XEngine_Lib64%\XEngine_RfcComponents\RfcComponents_HttpProtocol.dll" "./"
 
 copy /y "%XEngine_Lib64%\XEngine_AVCodec\XEngine_AVHelp.dll" "./"
+copy /y "%XEngine_Lib64%\XEngine_AVCodec\XEngine_VideoCodec.dll" "./"
+copy /y "%XEngine_Lib64%\XEngine_AVCodec\XEngine_AudioCodec.dll" "./"
+copy /y "%XEngine_Lib64%\XEngine_AVCodec\XEngine_AVCollect.dll" "./"
+
+copy /y "%XEngine_Lib64%\XEngine_StreamMedia\StreamMedia_StreamClient.dll" "./"
 
 copy /y "%XEngine_Lib64%\XEngine_HelpComponents\bson-1.0.dll" "./"
 copy /y "%XEngine_Lib64%\XEngine_HelpComponents\mongoc-1.0.dll" "./"
