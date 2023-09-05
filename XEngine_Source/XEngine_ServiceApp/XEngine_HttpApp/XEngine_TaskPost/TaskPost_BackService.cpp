@@ -1,5 +1,20 @@
 ﻿#include "../XEngine_Hdr.h"
 
+void CALLBACK HTTPTask_TaskPost_CBVideo(uint8_t* punStringY, int nYLen, uint8_t* punStringU, int nULen, uint8_t* punStringV, int nVLen, XPVOID lParam)
+{
+	if (!StreamClient_StreamPush_PushVideo(xhStream, punStringY, nYLen, punStringU, nULen, punStringV, nVLen))
+	{
+
+	}
+}
+void CALLBACK HTTPTask_TaskPost_CBAudio(uint8_t* punStringAudio, int nVLen, XPVOID lParam)
+{
+	if (!StreamClient_StreamPush_PushAudio(xhStream, punStringAudio, nVLen))
+	{
+
+	}
+}
+
 bool HTTPTask_TaskPost_BackService(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer, int nMsgLen, int nType)
 {
 	int nSDLen = 0;
@@ -249,6 +264,89 @@ bool HTTPTask_TaskPost_BackService(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer
 		HttpProtocol_Server_SendMsgEx(xhHTTPPacket, ptszSDBuffer, &nSDLen, &st_HDRParam, ptszRVBuffer, nRVLen);
 		XEngine_Network_Send(lpszClientAddr, ptszSDBuffer, nSDLen);
 		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("HTTP客户端:%s:请求上报信息成功,上报类型:%d"), lpszClientAddr, nBSType);
+	}
+	break;
+	case XENGINE_COMMUNICATION_PROTOCOL_OPERATOR_CODE_BS_RECORDSTART:
+	{
+		XENGINE_PROTOCOL_AVINFO st_AVInfo;
+		memset(&st_AVInfo, '\0', sizeof(XENGINE_PROTOCOL_AVINFO));
+		//启用音频
+		if (1 == nBSType)
+		{
+#ifdef _MSC_BUILD
+			xhSound = AVCollect_Audio_Init("dshow", "virtual-audio-capturer", HTTPTask_TaskPost_CBAudio);
+#elif __linux__
+			xhSound = AVCollect_Audio_Init("alsa", "virtual-audio-capturer", HTTPTask_TaskPost_CBAudio);
+#else
+			xhSound = AVCollect_Audio_Init("avfoundation", "virtual-audio-capturer", HTTPTask_TaskPost_CBAudio);
+#endif
+			if (NULL == xhSound)
+			{
+				XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("音频采集器请求失败,错误码:%lX"), AVCollect_GetLastError());
+				return false;
+			}
+			st_AVInfo.st_AudioInfo.bEnable = true;
+			AVCollect_Audio_GetInfo(xhSound, &st_AVInfo);
+			//音频编码参数
+			st_AVInfo.st_AudioInfo.enAVCodec = ENUM_XENGINE_AVCODEC_AUDIO_TYPE_AAC;
+			st_AVInfo.st_AudioInfo.nSampleFmt = ENUM_AVCOLLECT_AUDIO_SAMPLE_FMT_FLTP;
+			if (!AudioCodec_Stream_EnInit(&xhAudio, &st_AVInfo.st_AudioInfo))
+			{
+				XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("音频采集器请求失败,错误码:%lX"), AudioCodec_GetLastError());
+				return false;
+			}
+			int nLen = 0;
+			if (!AudioCodec_Stream_SetResample(xhAudio, &nLen, st_AVInfo.st_AudioInfo.nSampleRate, st_AVInfo.st_AudioInfo.nSampleRate, (ENUM_AVCOLLECT_AUDIOSAMPLEFORMAT)st_AVInfo.st_AudioInfo.nSampleFmt, ENUM_AVCOLLECT_AUDIO_SAMPLE_FMT_FLTP, st_AVInfo.st_AudioInfo.nChannel, st_AVInfo.st_AudioInfo.nChannel))
+			{
+				XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("初始化重采样工具失败,错误码:%lX"), AudioCodec_GetLastError());
+				return false;
+			}
+		}
+		//屏幕采集
+		AVCOLLECT_SCREENINFO st_AVScreen;
+		memset(&st_AVScreen, '\0', sizeof(AVCOLLECT_SCREENINFO));
+
+		st_AVScreen.nFrameRate = 24;
+		st_AVScreen.nPosX = 0;
+		st_AVScreen.nPosY = 0;
+		strcpy(st_AVScreen.tszVideoSize, "1920x1080");
+
+#ifdef _MSC_BUILD
+		xhScreen = AVCollect_Video_Init("dshow", "video=screen-capture-recorder", &st_AVScreen, HTTPTask_TaskPost_CBVideo);
+#else
+		xhScreen = AVCollect_Video_Init("x11grab", ":0", &st_AVScreen, HTTPTask_TaskPost_CBVideo);
+#endif
+		if (NULL == xhScreen)
+		{
+			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, "屏幕采集器请求失败,错误码:%lX", AVCollect_GetLastError());
+			return false;
+		}
+		AVCollect_Video_GetInfo(xhScreen, &st_AVInfo);
+
+		st_AVInfo.st_VideoInfo.enAVCodec = ENUM_XENGINE_AVCODEC_VIDEO_TYPE_H264;
+		if (!VideoCodec_Stream_EnInit(&xhVideo, &st_AVInfo.st_VideoInfo))
+		{
+			printf(_X("初始化失败"));
+			return -1;
+		}
+
+		xhStream = StreamClient_StreamPush_Init(tszSrcBuffer, &st_AVInfo);
+		if (NULL == xhStream)
+		{
+			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("推流请求失败,错误码:%lX"), StreamClient_GetLastError());
+			return false;
+		}
+		AVCollect_Audio_Start(xhSound);
+		AVCollect_Video_Start(xhScreen);
+	}
+	break;
+	case XENGINE_COMMUNICATION_PROTOCOL_OPERATOR_CODE_BS_RECORDSTOP:
+	{
+		StreamClient_StreamPush_Close(xhStream);
+		AVCollect_Video_Destory(xhScreen);
+		AVCollect_Audio_Destory(xhSound);
+		VideoCodec_Stream_Destroy(xhVideo);
+		AudioCodec_Stream_Destroy(xhAudio);
 	}
 	break;
 	case XENGINE_COMMUNICATION_PROTOCOL_OPERATOR_CODE_BS_NOTHINGTODO:

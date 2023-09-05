@@ -44,8 +44,13 @@ using namespace std;
 #include <XEngine_Include/XEngine_AVCodec/AVCollect_Define.h>
 #include <XEngine_Include/XEngine_AVCodec/AVCollect_Error.h>
 #include <XEngine_Include/XEngine_AVCodec/VideoCodec_Define.h>
+#include <XEngine_Include/XEngine_AVCodec/VideoCodec_Error.h>
+#include <XEngine_Include/XEngine_AVCodec/AudioCodec_Define.h>
+#include <XEngine_Include/XEngine_AVCodec/AudioCodec_Error.h>
 #include <XEngine_Include/XEngine_AVCodec/AVHelp_Define.h>
 #include <XEngine_Include/XEngine_AVCodec/AVHelp_Error.h>
+#include <XEngine_Include/XEngine_StreamMedia/StreamClient_Define.h>
+#include <XEngine_Include/XEngine_StreamMedia/StreamClient_Error.h>
 //加载项目相关头文件
 #include "../../XEngine_UserProtocol.h"
 #include "../../XEngine_ModuleConfigure/ModuleConfig_Define.h"
@@ -146,6 +151,10 @@ extern XENGINE_PLUGINCONFIG st_PluginLuaConfig;
 #pragma comment(lib,"XEngine_RfcComponents/RfcComponents_HttpProtocol.lib")
 #pragma comment(lib,"XEngine_NetHelp/NetHelp_APIClient.lib")
 #pragma comment(lib,"XEngine_SystemSdk/XEngine_SystemApi")
+#pragma comment(lib,"XEngine_AVCodec/XEngine_AVCollect.lib")
+#pragma comment(lib,"XEngine_AVCodec/XEngine_VideoCodec.lib")
+#pragma comment(lib,"XEngine_AVCodec/XEngine_AudioCodec.lib")
 #pragma comment(lib,"XEngine_AVCodec/XEngine_AVHelp.lib")
+#pragma comment(lib,"XEngine_StreamMedia/StreamMedia_StreamClient.lib")
 #pragma comment(lib,"Ws2_32.lib")
 #endif
