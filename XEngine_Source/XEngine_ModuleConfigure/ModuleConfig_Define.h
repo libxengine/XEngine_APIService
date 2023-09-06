@@ -32,6 +32,7 @@ typedef struct
 		int nTimeCheck;                       //检测次数
 		int nHTTPTimeOut;                     //HTTP超时时间
 		int nP2PTimeOut;                      //P2P客户端超时时间
+		int nDeamonTime;                      //进程守护失败执行次数
 	}st_XTime;                                //次数*时间=超时
 	struct
 	{
@@ -134,6 +135,22 @@ typedef struct
 	list<XENGINE_OPTIONINFO> stl_ListBase;
 }XENGINE_OPTIONLIST;
 //////////////////////////////////////////////////////////////////////////
+//用户进程列表
+typedef struct
+{
+	bool bEnable;                      //是否启用
+	XCHAR tszAPPName[MAX_PATH];        //应用程序名称
+	XCHAR tszAPPPath[MAX_PATH];        //应用程序路径
+	int nReTime;                       //是否自动重启
+	//自定义
+	int nErrorTime;
+	__int64x nStartTime;
+}XENGINE_DEAMONAPPINFO;
+typedef struct
+{
+	list<XENGINE_DEAMONAPPINFO> stl_ListDeamonApp;
+}XENGINE_DEAMONAPPLIST;
+//////////////////////////////////////////////////////////////////////////
 //                        导出函数定义
 //////////////////////////////////////////////////////////////////////////
 extern "C" XLONG ModuleConfigure_GetLastError(int* pInt_ErrorCode = NULL);
@@ -216,3 +233,22 @@ extern "C" bool ModuleConfigure_Json_QRCodeFile(LPCXSTR lpszConfigFile, XENGINE_
 备注：
 *********************************************************************/
 extern "C" bool ModuleConfigure_Json_PluginFile(LPCXSTR lpszConfigFile, XENGINE_PLUGINCONFIG* pSt_PluginConfig);
+/********************************************************************
+函数名称：ModuleConfigure_Json_DeamonList
+函数功能：读取JSON配置文件
+ 参数.一：lpszConfigFile
+  In/Out：In
+  类型：常量字符指针
+  可空：N
+  意思：输入要读取的配置文件
+ 参数.二：pSt_AppConfig
+  In/Out：Out
+  类型：数据结构指针
+  可空：N
+  意思：输出守护进程列表
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+extern "C" bool ModuleConfigure_Json_DeamonList(LPCXSTR lpszConfigFile, XENGINE_DEAMONAPPLIST* pSt_AppConfig);
