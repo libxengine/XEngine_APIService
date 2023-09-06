@@ -10,17 +10,17 @@
 //    Purpose:     配置文件操作代码
 //    History:
 *********************************************************************/
-bool XEngine_Configure_Parament(int argc, char** argv, XENGINE_SERVICECONFIG* pSt_Configure)
+bool XEngine_Configure_Parament(int argc, char** argv)
 {
 	LPCXSTR lpszConfigFile = _X("./XEngine_Config/XEngine_Config.json");
-
-	if (NULL != pSt_Configure->st_XVer.pStl_ListVer)
+	
+	if (NULL != st_ServiceConfig.st_XVer.pStl_ListVer)
 	{
-		delete pSt_Configure->st_XVer.pStl_ListVer;
-		pSt_Configure->st_XVer.pStl_ListVer = NULL;
+		delete st_ServiceConfig.st_XVer.pStl_ListVer;
+		st_ServiceConfig.st_XVer.pStl_ListVer = NULL;
 	}
-	memset(pSt_Configure, '\0', sizeof(XENGINE_SERVICECONFIG));
-	if (!ModuleConfigure_Json_File(lpszConfigFile, pSt_Configure))
+	memset(&st_ServiceConfig, '\0', sizeof(XENGINE_SERVICECONFIG));
+	if (!ModuleConfigure_Json_File(lpszConfigFile, &st_ServiceConfig))
 	{
 		printf("解析配置文件失败,ModuleConfigure_Json_File:%lX\n", ModuleConfigure_GetLastError());
 		return false;
@@ -35,12 +35,12 @@ bool XEngine_Configure_Parament(int argc, char** argv, XENGINE_SERVICECONFIG* pS
 		}
 		else if (0 == _tcsxcmp("-d", argv[i]))
 		{
-			pSt_Configure->bDeamon = _ttxoi(argv[i + 1]);
+			st_ServiceConfig.bDeamon = _ttxoi(argv[i + 1]);
 		}
 		else if (0 == _tcsxcmp("-r", argv[i]))
 		{
-			pSt_Configure->st_XReload.bReload = true;
-			pSt_Configure->st_XReload.byCode = _ttxoi(argv[i + 1]);
+			st_ServiceConfig.st_XReload.bReload = true;
+			st_ServiceConfig.st_XReload.byCode = _ttxoi(argv[i + 1]);
 		}
 	}
 

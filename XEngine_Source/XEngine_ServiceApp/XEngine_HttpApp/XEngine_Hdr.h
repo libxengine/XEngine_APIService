@@ -81,6 +81,7 @@ using namespace std;
 #include "XEngine_TaskPost/TaskPost_WordFilter.h"
 #include "XEngine_TaskPost/TaskPost_BackService.h"
 #include "XEngine_TaskPost/TaskPost_Image.h"
+#include "XEngine_TaskPost/TaskPost_Deamon.h"
 //get
 #include "XEngine_TaskGet/TaskGet_IDCard.h"
 #include "XEngine_TaskGet/TaskGet_Bank.h"
@@ -108,12 +109,15 @@ extern XHANDLE xhHTTPSocket;
 extern XHANDLE xhHTTPHeart;
 extern XHANDLE xhHTTPPacket;
 extern XHANDLE xhHTTPPool;
+//线程
+extern unique_ptr<thread> pSTDThread_Deamon;
 //配置文件
 extern XENGINE_SERVICECONFIG st_ServiceConfig;
 extern XENGINE_OPENCCCONFIG st_OPenccConfig;
 extern XENGINE_QRCODECONFIG st_QRCodeConfig;
 extern XENGINE_PLUGINCONFIG st_PluginLibConfig;
 extern XENGINE_PLUGINCONFIG st_PluginLuaConfig;
+extern XENGINE_DEAMONAPPLIST st_DeamonAppConfig;
 //连接库
 #ifdef _MSC_BUILD
 #ifdef _WIN64
