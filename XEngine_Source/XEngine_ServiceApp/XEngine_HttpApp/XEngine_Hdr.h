@@ -59,6 +59,8 @@ using namespace std;
 #include "../../XEngine_ModuleDatabase/ModuleDB_Error.h"
 #include "../../XEngine_ModuleProtocol/ModuleProtocol_Define.h"
 #include "../../XEngine_ModuleProtocol/ModuleProtocol_Error.h"
+#include "../../XEngine_ModuleSystem/ModuleSystem_Define.h"
+#include "../../XEngine_ModuleSystem/ModuleSystem_Error.h"
 #include "../../XEngine_ModuleHelp/ModuleHelp_Define.h"
 #include "../../XEngine_ModuleHelp/ModuleHelp_Error.h"
 #include "../../XEngine_ModulePlugin/ModulePlugin_Define.h"
@@ -119,12 +121,14 @@ extern XENGINE_PLUGINCONFIG st_PluginLuaConfig;
 #pragma comment(lib,"../../x64/Debug/XEngine_ModuleConfigure.lib")
 #pragma comment(lib,"../../x64/Debug/XEngine_ModuleDatabase.lib")
 #pragma comment(lib,"../../x64/Debug/XEngine_ModuleProtocol.lib")
+#pragma comment(lib,"../../x64/Debug/XEngine_ModuleSystem.lib")
 #pragma comment(lib,"../../x64/Debug/XEngine_ModuleHelp.lib")
 #pragma comment(lib,"../../x64/Debug/XEngine_ModulePlugin.lib")
 #else
 #pragma comment(lib,"../../x64/Release/XEngine_ModuleConfigure.lib")
 #pragma comment(lib,"../../x64/Release/XEngine_ModuleDatabase.lib")
 #pragma comment(lib,"../../x64/Release/XEngine_ModuleProtocol.lib")
+#pragma comment(lib,"../../x64/Release/XEngine_ModuleSystem.lib")
 #pragma comment(lib,"../../x64/Release/XEngine_ModuleHelp.lib")
 #pragma comment(lib,"../../x64/Release/XEngine_ModulePlugin.lib")
 #endif
@@ -133,12 +137,14 @@ extern XENGINE_PLUGINCONFIG st_PluginLuaConfig;
 #pragma comment(lib,"../../Debug/XEngine_ModuleConfigure.lib")
 #pragma comment(lib,"../../Debug/XEngine_ModuleDatabase.lib")
 #pragma comment(lib,"../../Debug/XEngine_ModuleProtocol.lib")
+#pragma comment(lib,"../../Debug/XEngine_ModuleSystem.lib")
 #pragma comment(lib,"../../Debug/XEngine_ModuleHelp.lib")
 #pragma comment(lib,"../../Debug/XEngine_ModulePlugin.lib")
 #else
 #pragma comment(lib,"../../Release/XEngine_ModuleConfigure.lib")
 #pragma comment(lib,"../../Release/XEngine_ModuleDatabase.lib")
 #pragma comment(lib,"../../Release/XEngine_ModuleProtocol.lib")
+#pragma comment(lib,"../../Release/XEngine_ModuleSystem.lib")
 #pragma comment(lib,"../../Release/XEngine_ModuleHelp.lib")
 #pragma comment(lib,"../../Release/XEngine_ModulePlugin.lib")
 #endif

@@ -144,6 +144,36 @@ int main(int argc, char** argv)
 	signal(SIGABRT, ServiceApp_Stop);
 	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("启动服务中,初始化信号量成功"));
 
+	if (!SystemApi_Process_IsAdmin())
+	{
+		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("启动服务中，权限验证失败,请切换管理员权限"));
+		goto XENGINE_SERVICEAPP_EXIT;
+	}
+	if (!ModuleSystem_API_AutoStart(st_ServiceConfig.bAutoStart))
+	{
+		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("启动服务中，注册软件开机启动失败!错误:%lX"), ModuleHelp_GetLastError());
+		goto XENGINE_SERVICEAPP_EXIT;
+	}
+	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("启动服务中，设置软件开机启动标志成功,标志位:%d"), st_ServiceConfig.bAutoStart);
+
+	if (st_ServiceConfig.bHideWnd)
+	{
+#ifdef _MSC_BUILD
+		LPCXSTR lpszWndName = _X("XEngine_DeamonApp");
+		SetConsoleTitleA(lpszWndName);
+		HWND hWnd = FindWindowA(NULL, lpszWndName);
+
+		if (NULL == hWnd)
+		{
+			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("启动服务中，设置窗口隐藏失败,没有找到句柄"));
+		}
+		else
+		{
+			ShowWindow(hWnd, SW_HIDE);
+			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("启动服务中，设置窗口隐藏成功"));
+		}
+#endif
+	}
 	//初始化OPENCC配置
 	if (!ModuleConfigure_Json_OPenccFile(st_ServiceConfig.st_XConfig.tszConfigOPencc, &st_OPenccConfig))
 	{
