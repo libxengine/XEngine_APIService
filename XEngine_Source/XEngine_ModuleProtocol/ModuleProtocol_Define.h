@@ -917,3 +917,42 @@ extern "C" bool ModuleProtocol_Parse_BackService(LPCXSTR lpszMsgBuffer, int nMsg
 备注：
 *********************************************************************/
 extern "C" bool ModuleProtocol_Parse_Verifcation(LPCXSTR lpszMsgBuffer, int nMsgLen, XCHAR* ptszUserName, XCHAR* ptszUserPass);
+/********************************************************************
+函数名称：ModuleProtocol_Parse_Deamon
+函数功能：守护进程协议
+ 参数.一：lpszMsgBuffer
+  In/Out：In
+  类型：常量字符指针
+  可空：N
+  意思：输入要解析的数据
+ 参数.二：nMsgLen
+  In/Out：In
+  类型：整数型
+  可空：N
+  意思：要解析的大小
+ 参数.三：ptszAPPName
+  In/Out：Out
+  类型：字符指针
+  可空：N
+  意思：输出进程名称
+ 参数.四：ptszAPPPath
+  In/Out：Out
+  类型：字符指针
+  可空：N
+  意思：输出进程路径
+ 参数.五：pInt_Retime
+  In/Out：Out
+  类型：整数型指针
+  可空：N
+  意思：输出重试次数
+ 参数.六：pbEnable
+  In/Out：Out
+  类型：整数型指针
+  可空：N
+  意思：输出是否启用
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+extern "C" bool ModuleProtocol_Parse_Deamon(LPCXSTR lpszMsgBuffer, int nMsgLen, XCHAR* ptszAPPName, XCHAR* ptszAPPPath, int* pInt_Retime, bool* pbEnable);

@@ -36,3 +36,4 @@ EXPORTS
 	ModuleProtocol_Parse_WordFilter
 	ModuleProtocol_Parse_BackService
 	ModuleProtocol_Parse_Verifcation
+	ModuleProtocol_Parse_Deamon

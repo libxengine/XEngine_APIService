@@ -113,6 +113,7 @@ bool HTTPTask_TastPost_Handle(RFCCOMPONENTS_HTTP_REQPARAM* pSt_HTTPParam, LPCXST
 	LPCXSTR lpszParamWordFilter = _X("wordfilter");
 	LPCXSTR lpszParamBack = _X("back");
 	LPCXSTR lpszParamImage = _X("image");
+	LPCXSTR lpszParamDeamon = _X("deamon");
 
 	memset(tszKey, '\0', MAX_PATH);
 	memset(tszValue, '\0', MAX_PATH);
@@ -280,6 +281,11 @@ bool HTTPTask_TastPost_Handle(RFCCOMPONENTS_HTTP_REQPARAM* pSt_HTTPParam, LPCXST
 			//图像处理接口:http://app.xyry.org:5501/api?function=image&params1=0
 			HTTPTask_TaskPost_Image(lpszClientAddr, lpszRVBuffer, nRVLen, &pptszList, nListCount);
 		}
+		else if (0 == _tcsxnicmp(lpszParamDeamon, tszValue, _tcsxlen(lpszParamDeamon)))
+		{
+			//守护进程接口:http://app.xyry.org:5501/api?function=deamon&params1=0
+			HTTPTask_TaskPost_Deamon(lpszClientAddr, lpszRVBuffer, nRVLen);
+			}
 		else
 		{
 			st_HDRParam.nHttpCode = 404;
