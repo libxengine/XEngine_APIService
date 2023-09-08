@@ -2,6 +2,9 @@
 XEngine:https://gitee.com/xyry/libxengine or https://github.com/libxengine/xengine
 jsoncpp:https://github.com/open-source-parsers/jsoncpp
 opencc:https://github.com/BYVoid/OpenCC
+opencv:https://github.com/opencv/opencv
+libqrencode:https://github.com/fukuchi/libqrencode
+lua:https://github.com/lua/lua
 
 data sources:
 IP:https://github.com/lionsoul2014/ip2region

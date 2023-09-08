@@ -7,6 +7,7 @@ As long as the repository is not in suspended state, we will maintain and develo
 c c++ 接口服务器  
 c c++ interface api service  
 This is an api interface for information query service,At present, the information search service on the market need to charge, and our information search service is free and open source.  
+Not only is it a query service, but it can also provide functions such as machine management and process deamon.  
 This service mainly uses HTTP/V1.1 to implement various interface services  
 This is a general information query service that does not contain any language attributes
 You can use this code to implement your own information query service, which supports querying any information  
@@ -48,6 +49,7 @@ Support privatization deployment, free, safe, open source, controllable
 28. Sensitive word detection
 29. remote control(back management)
 30. Image Process
+31. process deamon
 
 ## install
 
@@ -67,7 +69,7 @@ MYSQL database version 8.0 or above is required. Create a table through CreateDa
 Modify the database configuration in XSQL in the configuration file to your  
 
 #### Windows
-need to vcpkg configure third-part env.refer vcpkg install guide.after installed and execution:vcpkg.exe install lua lua:x64-windows opencc opencc:x64-windows opencv[contrib] libqrencode opencv[contrib]:x64-windows libqrencode:x64-windows  
+need to vcpkg configure third-part env.refer vcpkg install guide.after installed and execution:vcpkg.exe install lua:x84-windows lua:x64-windows opencc:x84-windows opencc:x64-windows opencv[contrib]:x84-windows libqrencode:x84-windows opencv[contrib]:x64-windows libqrencode:x64-windows  
 use vs open and compile,suport windows 7sp1 and above  
 Just Run it
 

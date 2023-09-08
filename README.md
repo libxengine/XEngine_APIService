@@ -7,6 +7,7 @@
 c c++ 接口服务器  
 c c++ interface api service  
 这是一个信息查询的API接口服务,目前市面上的信息查询服务都需要收费,而我们这个信息查询服务属于免费开源的.  
+或者说他不光是一个查询服务,他还可以提供机器管理进程守护等功能  
 这个服务主要使用HTTP/V1.1实现各种接口服务.  
 这是一个不包含任何语言属性的通用信息查询服务.  
 你可以使用此代码实现自己的信息查询服务,支持查询任何信息  
@@ -47,6 +48,7 @@ c c++ interface api service
 28. 敏感词检测
 29. 远程控制(后台管理)
 30. 图像处理
+31. 进程守护
 
 ## 安装教程
 
@@ -66,7 +68,7 @@ macos执行:./XEngine_LINEnv.sh -i 3
 修改配置文件里面XSQL里面的数据库配置为你的  
 
 #### Windows
-需要vcpkg配置第三方环境,具体参考vcpkg安装方式,安装好后执行:vcpkg.exe install lua lua:x64-windows opencc opencc:x64-windows opencv[contrib] libqrencode opencv[contrib]:x64-windows libqrencode:x64-windows  
+需要vcpkg配置第三方环境,具体参考vcpkg安装方式,安装好后执行:vcpkg.exe install lua:x84-windows lua:x64-windows opencc:x84-windows opencc:x64-windows opencv[contrib]:x84-windows libqrencode:x84-windows opencv[contrib]:x64-windows libqrencode:x64-windows  
 使用VS打开并且编译,支持WINDOWS 7SP1以上系统  
 直接运行即可
 
