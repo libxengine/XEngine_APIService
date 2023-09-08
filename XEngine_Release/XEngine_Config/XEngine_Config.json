@@ -1,6 +1,8 @@
 {
     "tszIPAddr":"192.168.1.8",
-    "bDeamon":0,
+    "bDeamon":false,
+    "bAutoStart":false,
+    "bHideWnd":false,
     "nHttpPort":5501,
     "XMax":{
         "nMaxClient":10000,
@@ -11,7 +13,8 @@
     "XTime":{
         "nTimeCheck":3,
         "nHttpTimeOut":5,
-        "nP2PTimeOut":60
+        "nP2PTimeOut":60,
+        "nDeamonTime":3
     },
     "XLog":{
         "MaxSize":1024000,
@@ -43,10 +46,12 @@
     },
     "XVerification":{
         "bBackService":false,
+        "bDeamon":false,
         "tszUserName":"xyry",
         "tszUserPass":"11"
     },
     "XVer":[
+        "3.0.0.1001 Build20230908",
         "2.11.0.1001 Build20230829",
         "2.10.0.1001 Build20230810",
         "2.9.0.1001 Build20230421",
