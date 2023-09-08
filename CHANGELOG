@@ -1,3 +1,25 @@
+XEngine_APIService V3.0.0.1001
+
+增加:系统API函数模块
+增加:进程守护功能和接口支持
+增加:启动隐藏窗口和自动启动的功能选项
+增加:对本地屏幕和声音录像推流的支持
+增加:停止推流协议
+增加:权限提示
+修改:初始化配置不在需要配置结构参数
+修改:启动失败不在直接退出
+修正:后台服务协议没有HTTP返回请求的问题
+
+added:system api module
+added:deamon process and http api interface for process deamon 
+added:hide windows when start and auto start option
+added:screen and sound push stream
+added:stop stream record protocol
+added:permission handle
+modify:init configure does not need configure parament
+modify:does not directly exit when configure init failed.
+fixed:does not http response for backservice
+======================================================================================
 XEngine_APIService V2.11.0.1001
 
 增加:用户验证功能

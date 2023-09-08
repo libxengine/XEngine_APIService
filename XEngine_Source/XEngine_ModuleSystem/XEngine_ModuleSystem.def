@@ -1,0 +1,6 @@
+LIBRARY
+
+EXPORTS
+	ModuleSystem_GetLastError
+
+	ModuleSystem_API_AutoStart

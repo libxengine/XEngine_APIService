@@ -16,6 +16,11 @@ copy /y "D:\XEngine\XEngine_SourceCode\Debug\HelpComponents_Authorize.dll" "./"
 copy /y "D:\XEngine\XEngine_SourceCode\Debug\RfcComponents_HttpProtocol.dll" "./"
 
 copy /y "D:\XEngine\XEngine_SourceCode\Debug\XEngine_AVHelp.dll" "./"
+copy /y "D:\XEngine\XEngine_SourceCode\Debug\XEngine_VideoCodec.dll" "./"
+copy /y "D:\XEngine\XEngine_SourceCode\Debug\XEngine_AudioCodec.dll" "./"
+copy /y "D:\XEngine\XEngine_SourceCode\Debug\XEngine_AVCollect.dll" "./"
+
+copy /y "D:\XEngine\XEngine_SourceCode\Debug\StreamMedia_StreamClient.dll" "./"
 
 copy /y "%XEngine_Lib32%\XEngine_LibEx\AVCodec\avcodec-59.dll" "./"
 copy /y "%XEngine_Lib32%\XEngine_LibEx\AVCodec\avdevice-59.dll" "./"

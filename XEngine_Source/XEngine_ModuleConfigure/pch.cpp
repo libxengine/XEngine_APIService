@@ -45,3 +45,7 @@ extern "C" bool ModuleConfigure_Json_PluginFile(LPCXSTR lpszConfigFile, XENGINE_
 {
 	return m_ConfigJson.ModuleConfigure_Json_PluginFile(lpszConfigFile, pSt_PluginConfig);
 }
+extern "C" bool ModuleConfigure_Json_DeamonList(LPCXSTR lpszConfigFile, XENGINE_DEAMONAPPLIST * pSt_AppConfig)
+{
+	return m_ConfigJson.ModuleConfigure_Json_DeamonList(lpszConfigFile, pSt_AppConfig);
+}

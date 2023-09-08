@@ -17,12 +17,15 @@ XHANDLE xhHTTPSocket = NULL;
 XHANDLE xhHTTPHeart = NULL;
 XHANDLE xhHTTPPacket = NULL;
 XHANDLE xhHTTPPool = 0;
+//线程
+unique_ptr<thread> pSTDThread_Deamon;
 //配置文件
 XENGINE_SERVICECONFIG st_ServiceConfig;
 XENGINE_OPENCCCONFIG st_OPenccConfig;
 XENGINE_QRCODECONFIG st_QRCodeConfig;
 XENGINE_PLUGINCONFIG st_PluginLibConfig;
 XENGINE_PLUGINCONFIG st_PluginLuaConfig;
+XENGINE_DEAMONAPPLIST st_DeamonAppConfig;
 
 void ServiceApp_Stop(int signo)
 {
@@ -47,6 +50,11 @@ void ServiceApp_Stop(int signo)
 		ModuleHelp_P2PClient_Destory();
 		//销毁日志资源
 		HelpComponents_XLog_Destroy(xhLog);
+		//销毁线程
+		if (NULL != pSTDThread_Deamon)
+		{
+			pSTDThread_Deamon->join();
+		}
 	}
 #ifdef _MSC_BUILD
 	WSACleanup();
@@ -94,6 +102,7 @@ int main(int argc, char** argv)
 	LPCXSTR lpszHTTPMime = _X("./XEngine_Config/HttpMime.types");
 	LPCXSTR lpszHTTPCode = _X("./XEngine_Config/HttpCode.types");
 	LPCXSTR lpszLogFile = _X("./XEngine_Log/XEngine_HttpApp.Log");
+	LPCXSTR lpszConfigDeamon = _X("./XEngine_Config/XEngine_DeamonConfig.json");
 	HELPCOMPONENTS_XLOG_CONFIGURE st_XLogConfig;
 	THREADPOOL_PARAMENT** ppSt_ListHTTPParam;
 
@@ -108,9 +117,9 @@ int main(int argc, char** argv)
 	st_XLogConfig.XLog_MaxSize = 1024000;
 	_tcsxcpy(st_XLogConfig.tszFileName, lpszLogFile);
 	//初始化参数
-	if (!XEngine_Configure_Parament(argc, argv, &st_ServiceConfig))
+	if (!XEngine_Configure_Parament(argc, argv))
 	{
-		return -1;
+		goto XENGINE_SERVICEAPP_EXIT;
 	}
 	//配置重载
 	if (st_ServiceConfig.st_XReload.bReload)
@@ -144,6 +153,35 @@ int main(int argc, char** argv)
 	signal(SIGABRT, ServiceApp_Stop);
 	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("启动服务中,初始化信号量成功"));
 
+	if (!SystemApi_Process_IsAdmin())
+	{
+		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_WARN, _X("启动服务中,启动权限不足,对于进程和后台服务任务可能会执行失败,请切换管理员权限"));
+	}
+	if (!ModuleSystem_API_AutoStart(st_ServiceConfig.bAutoStart))
+	{
+		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("启动服务中,注册软件开机启动失败!错误:%lX"), ModuleHelp_GetLastError());
+		goto XENGINE_SERVICEAPP_EXIT;
+	}
+	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("启动服务中,设置软件开机启动标志成功,标志位:%d"), st_ServiceConfig.bAutoStart);
+
+	if (st_ServiceConfig.bHideWnd)
+	{
+#ifdef _MSC_BUILD
+		LPCXSTR lpszWndName = _X("XEngine_DeamonApp");
+		SetConsoleTitleA(lpszWndName);
+		HWND hWnd = FindWindowA(NULL, lpszWndName);
+
+		if (NULL == hWnd)
+		{
+			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("启动服务中,设置窗口隐藏失败,没有找到句柄"));
+		}
+		else
+		{
+			ShowWindow(hWnd, SW_HIDE);
+			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("启动服务中,设置窗口隐藏成功"));
+		}
+#endif
+	}
 	//初始化OPENCC配置
 	if (!ModuleConfigure_Json_OPenccFile(st_ServiceConfig.st_XConfig.tszConfigOPencc, &st_OPenccConfig))
 	{
@@ -279,7 +317,32 @@ int main(int argc, char** argv)
 		goto XENGINE_SERVICEAPP_EXIT;
 	}
 	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("启动服务中,启动P2P客户端管理器成功,超时时间设置:%d 秒"), st_ServiceConfig.st_XTime.nP2PTimeOut);
-
+	//进程守护
+	if (!ModuleConfigure_Json_DeamonList(lpszConfigDeamon, &st_DeamonAppConfig))
+	{
+		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("启动服务中,启动加载进程守护配置文件失败,错误：%lX"), ModuleConfigure_GetLastError());
+		goto XENGINE_SERVICEAPP_EXIT;
+	}
+	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("启动服务中,启动加载进程守护配置文件成功"));
+	for (auto stl_ListIterator = st_DeamonAppConfig.stl_ListDeamonApp.begin(); stl_ListIterator != st_DeamonAppConfig.stl_ListDeamonApp.end(); stl_ListIterator++)
+	{
+		if (stl_ListIterator->bEnable)
+		{
+			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("启动服务中,加载守护进程:%s,成功,开始守护进程"), stl_ListIterator->tszAPPName);
+		}
+		else
+		{
+			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_WARN, _X("启动服务中,加载守护进程:%s,成功,此项目未启用"), stl_ListIterator->tszAPPName);
+		}
+	}
+	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("启动服务中,加载守护进程列表成功,加载的列表个数:%d"), st_DeamonAppConfig.stl_ListDeamonApp.size());
+	pSTDThread_Deamon = make_unique<thread>(HTTPTask_TaskPost_Thread);
+	if (NULL == pSTDThread_Deamon)
+	{
+		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("启动服务中,启动进程管理线程失败"));
+		goto XENGINE_SERVICEAPP_EXIT;
+	}
+	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("启动服务中,启动进程管理线程成功"));
 	//启动插件
 	if (!ModulePlugin_Loader_Init())
 	{
@@ -334,7 +397,7 @@ int main(int argc, char** argv)
 	//展示能力
 	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("启动服务中,加载的Lib插件:%d 个,Lua插件:%d 个"), st_PluginLibConfig.pStl_ListPlugin->size(), st_PluginLuaConfig.pStl_ListPlugin->size());
 
-	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("所有服务成功启动，服务运行中，XEngine版本:%s%s,发行版本次数:%d,当前版本：%s。。。"), BaseLib_OperatorVer_XNumberStr(), BaseLib_OperatorVer_XTypeStr(), st_ServiceConfig.st_XVer.pStl_ListVer->size(), st_ServiceConfig.st_XVer.pStl_ListVer->front().c_str());
+	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("所有服务成功启动,服务运行中,XEngine版本:%s%s,发行版本次数:%d,当前版本：%s。。。"), BaseLib_OperatorVer_XNumberStr(), BaseLib_OperatorVer_XTypeStr(), st_ServiceConfig.st_XVer.pStl_ListVer->size(), st_ServiceConfig.st_XVer.pStl_ListVer->front().c_str());
 	while (true)
 	{
 		std::this_thread::sleep_for(std::chrono::seconds(1));
@@ -362,9 +425,15 @@ XENGINE_SERVICEAPP_EXIT:
 		ModuleHelp_P2PClient_Destory();
 		//销毁日志资源
 		HelpComponents_XLog_Destroy(xhLog);
+		//销毁线程
+		if (NULL != pSTDThread_Deamon)
+		{
+			pSTDThread_Deamon->join();
+		}
 	}
 #ifdef _MSC_BUILD
 	WSACleanup();
 #endif
+	getchar();
 	return 0;
 }

@@ -44,8 +44,13 @@ using namespace std;
 #include <XEngine_Include/XEngine_AVCodec/AVCollect_Define.h>
 #include <XEngine_Include/XEngine_AVCodec/AVCollect_Error.h>
 #include <XEngine_Include/XEngine_AVCodec/VideoCodec_Define.h>
+#include <XEngine_Include/XEngine_AVCodec/VideoCodec_Error.h>
+#include <XEngine_Include/XEngine_AVCodec/AudioCodec_Define.h>
+#include <XEngine_Include/XEngine_AVCodec/AudioCodec_Error.h>
 #include <XEngine_Include/XEngine_AVCodec/AVHelp_Define.h>
 #include <XEngine_Include/XEngine_AVCodec/AVHelp_Error.h>
+#include <XEngine_Include/XEngine_StreamMedia/StreamClient_Define.h>
+#include <XEngine_Include/XEngine_StreamMedia/StreamClient_Error.h>
 //加载项目相关头文件
 #include "../../XEngine_UserProtocol.h"
 #include "../../XEngine_ModuleConfigure/ModuleConfig_Define.h"
@@ -54,6 +59,8 @@ using namespace std;
 #include "../../XEngine_ModuleDatabase/ModuleDB_Error.h"
 #include "../../XEngine_ModuleProtocol/ModuleProtocol_Define.h"
 #include "../../XEngine_ModuleProtocol/ModuleProtocol_Error.h"
+#include "../../XEngine_ModuleSystem/ModuleSystem_Define.h"
+#include "../../XEngine_ModuleSystem/ModuleSystem_Error.h"
 #include "../../XEngine_ModuleHelp/ModuleHelp_Define.h"
 #include "../../XEngine_ModuleHelp/ModuleHelp_Error.h"
 #include "../../XEngine_ModulePlugin/ModulePlugin_Define.h"
@@ -74,6 +81,7 @@ using namespace std;
 #include "XEngine_TaskPost/TaskPost_WordFilter.h"
 #include "XEngine_TaskPost/TaskPost_BackService.h"
 #include "XEngine_TaskPost/TaskPost_Image.h"
+#include "XEngine_TaskPost/TaskPost_Deamon.h"
 //get
 #include "XEngine_TaskGet/TaskGet_IDCard.h"
 #include "XEngine_TaskGet/TaskGet_Bank.h"
@@ -101,12 +109,15 @@ extern XHANDLE xhHTTPSocket;
 extern XHANDLE xhHTTPHeart;
 extern XHANDLE xhHTTPPacket;
 extern XHANDLE xhHTTPPool;
+//线程
+extern unique_ptr<thread> pSTDThread_Deamon;
 //配置文件
 extern XENGINE_SERVICECONFIG st_ServiceConfig;
 extern XENGINE_OPENCCCONFIG st_OPenccConfig;
 extern XENGINE_QRCODECONFIG st_QRCodeConfig;
 extern XENGINE_PLUGINCONFIG st_PluginLibConfig;
 extern XENGINE_PLUGINCONFIG st_PluginLuaConfig;
+extern XENGINE_DEAMONAPPLIST st_DeamonAppConfig;
 //连接库
 #ifdef _MSC_BUILD
 #ifdef _WIN64
@@ -114,12 +125,14 @@ extern XENGINE_PLUGINCONFIG st_PluginLuaConfig;
 #pragma comment(lib,"../../x64/Debug/XEngine_ModuleConfigure.lib")
 #pragma comment(lib,"../../x64/Debug/XEngine_ModuleDatabase.lib")
 #pragma comment(lib,"../../x64/Debug/XEngine_ModuleProtocol.lib")
+#pragma comment(lib,"../../x64/Debug/XEngine_ModuleSystem.lib")
 #pragma comment(lib,"../../x64/Debug/XEngine_ModuleHelp.lib")
 #pragma comment(lib,"../../x64/Debug/XEngine_ModulePlugin.lib")
 #else
 #pragma comment(lib,"../../x64/Release/XEngine_ModuleConfigure.lib")
 #pragma comment(lib,"../../x64/Release/XEngine_ModuleDatabase.lib")
 #pragma comment(lib,"../../x64/Release/XEngine_ModuleProtocol.lib")
+#pragma comment(lib,"../../x64/Release/XEngine_ModuleSystem.lib")
 #pragma comment(lib,"../../x64/Release/XEngine_ModuleHelp.lib")
 #pragma comment(lib,"../../x64/Release/XEngine_ModulePlugin.lib")
 #endif
@@ -128,12 +141,14 @@ extern XENGINE_PLUGINCONFIG st_PluginLuaConfig;
 #pragma comment(lib,"../../Debug/XEngine_ModuleConfigure.lib")
 #pragma comment(lib,"../../Debug/XEngine_ModuleDatabase.lib")
 #pragma comment(lib,"../../Debug/XEngine_ModuleProtocol.lib")
+#pragma comment(lib,"../../Debug/XEngine_ModuleSystem.lib")
 #pragma comment(lib,"../../Debug/XEngine_ModuleHelp.lib")
 #pragma comment(lib,"../../Debug/XEngine_ModulePlugin.lib")
 #else
 #pragma comment(lib,"../../Release/XEngine_ModuleConfigure.lib")
 #pragma comment(lib,"../../Release/XEngine_ModuleDatabase.lib")
 #pragma comment(lib,"../../Release/XEngine_ModuleProtocol.lib")
+#pragma comment(lib,"../../Release/XEngine_ModuleSystem.lib")
 #pragma comment(lib,"../../Release/XEngine_ModuleHelp.lib")
 #pragma comment(lib,"../../Release/XEngine_ModulePlugin.lib")
 #endif
@@ -146,6 +161,10 @@ extern XENGINE_PLUGINCONFIG st_PluginLuaConfig;
 #pragma comment(lib,"XEngine_RfcComponents/RfcComponents_HttpProtocol.lib")
 #pragma comment(lib,"XEngine_NetHelp/NetHelp_APIClient.lib")
 #pragma comment(lib,"XEngine_SystemSdk/XEngine_SystemApi")
+#pragma comment(lib,"XEngine_AVCodec/XEngine_AVCollect.lib")
+#pragma comment(lib,"XEngine_AVCodec/XEngine_VideoCodec.lib")
+#pragma comment(lib,"XEngine_AVCodec/XEngine_AudioCodec.lib")
 #pragma comment(lib,"XEngine_AVCodec/XEngine_AVHelp.lib")
+#pragma comment(lib,"XEngine_StreamMedia/StreamMedia_StreamClient.lib")
 #pragma comment(lib,"Ws2_32.lib")
 #endif

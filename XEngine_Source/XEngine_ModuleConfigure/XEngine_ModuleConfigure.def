@@ -7,3 +7,4 @@ EXPORTS
 	ModuleConfigure_Json_OPenccFile
 	ModuleConfigure_Json_QRCodeFile
 	ModuleConfigure_Json_PluginFile
+	ModuleConfigure_Json_DeamonList

@@ -900,3 +900,93 @@ bool CModuleProtocol_Parse::ModuleProtocol_Parse_Verifcation(LPCXSTR lpszMsgBuff
 	}
 	return true;
 }
+/********************************************************************
+函数名称：ModuleProtocol_Parse_Deamon
+函数功能：守护进程协议
+ 参数.一：lpszMsgBuffer
+  In/Out：In
+  类型：常量字符指针
+  可空：N
+  意思：输入要解析的数据
+ 参数.二：nMsgLen
+  In/Out：In
+  类型：整数型
+  可空：N
+  意思：要解析的大小
+ 参数.三：ptszAPPName
+  In/Out：Out
+  类型：字符指针
+  可空：N
+  意思：输出进程名称
+ 参数.四：ptszAPPPath
+  In/Out：Out
+  类型：字符指针
+  可空：N
+  意思：输出进程路径
+ 参数.五：pInt_Retime
+  In/Out：Out
+  类型：整数型指针
+  可空：N
+  意思：输出重试次数
+ 参数.六：pbEnable
+  In/Out：Out
+  类型：整数型指针
+  可空：N
+  意思：输出是否启用
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+bool CModuleProtocol_Parse::ModuleProtocol_Parse_Deamon(LPCXSTR lpszMsgBuffer, int nMsgLen, XCHAR* ptszAPPName, XCHAR* ptszAPPPath, int* pInt_Retime, bool* pbEnable)
+{
+	ModuleProtocol_IsErrorOccur = false;
+
+	if ((NULL == lpszMsgBuffer) || (0 == nMsgLen))
+	{
+		ModuleProtocol_IsErrorOccur = true;
+		ModuleProtocol_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PROTOCOL_PARSE_PARAMENT;
+		return false;
+	}
+	Json::Value st_JsonRoot;
+	JSONCPP_STRING st_JsonError;
+	Json::CharReaderBuilder st_JsonBuilder;
+
+	std::unique_ptr<Json::CharReader> const pSt_JsonReader(st_JsonBuilder.newCharReader());
+	if (!pSt_JsonReader->parse(lpszMsgBuffer, lpszMsgBuffer + nMsgLen, &st_JsonRoot, &st_JsonError))
+	{
+		ModuleProtocol_IsErrorOccur = true;
+		ModuleProtocol_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PROTOCOL_PARSE_PARAMENT;
+		return false;
+	}
+
+	if (!st_JsonRoot["tszAPPName"].isNull())
+	{
+		if (NULL != ptszAPPName)
+		{
+			_tcsxcpy(ptszAPPName, st_JsonRoot["tszAPPName"].asCString());
+		}
+	}
+	if (!st_JsonRoot["tszAPPPath"].isNull())
+	{
+		if (NULL != ptszAPPPath)
+		{
+			_tcsxcpy(ptszAPPPath, st_JsonRoot["tszAPPPath"].asCString());
+		}
+	}
+	if (!st_JsonRoot["nRetime"].isNull())
+	{
+		if (NULL != pInt_Retime)
+		{
+			*pInt_Retime = st_JsonRoot["nRetime"].asInt();
+		}
+	}
+	if (!st_JsonRoot["bEnable"].isNull())
+	{
+		if (NULL != pbEnable)
+		{
+			*pbEnable = st_JsonRoot["bEnable"].asBool();
+		}
+	}
+	return true;
+}

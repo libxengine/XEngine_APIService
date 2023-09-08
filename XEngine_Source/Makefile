@@ -9,6 +9,7 @@ THIRDPART_MODULE_JSONCPP = ./XEngine_ThirdPart/jsoncpp
 MODULE_CONFIGURE_PATH = ./XEngine_ModuleConfigure
 MODULE_DATABASE_PATH = ./XEngine_ModuleDatabase
 MODULE_PROTOCOL_PATH = ./XEngine_ModuleProtocol
+MODULE_SYSTEM_PATH = ./XEngine_ModuleSystem
 MODULE_HELP_PATH = ./XEngine_ModuleHelp
 MODULE_PLUGIN_PATH = ./XEngine_ModulePlugin
 
@@ -24,7 +25,7 @@ APP_CENTER_PATH = ./XEngine_ServiceApp/XEngine_CenterApp
 APP_HTTP_PATH = ./XEngine_ServiceApp/XEngine_HttpApp
 
 XENGINE_MODULES = libjsoncpp.so            \
-                  libXEngine_ModuleConfigure.so libXEngine_ModuleDatabase.so libXEngine_ModuleProtocol.so libXEngine_ModuleHelp.so libXEngine_ModulePlugin.so  \
+                  libXEngine_ModuleConfigure.so libXEngine_ModuleDatabase.so libXEngine_ModuleProtocol.so libXEngine_ModuleSystem.so libXEngine_ModuleHelp.so libXEngine_ModulePlugin.so  \
 				  libModulePlugin_Zodiac.so libModulePlugin_Password.so libModulePlugin_Timezone.so libModulePlugin_BMIndex.so  libModulePlugin_Meter.so libModulePlugin_Phone.so libModulePlugin_IPAddr.so \
 		   		  XEngine_HttpApp.exe
 
@@ -40,6 +41,8 @@ libXEngine_ModuleDatabase.so:
 	make -C $(MODULE_DATABASE_PATH) PLATFORM=$(PLATFORM) $(FLAGS)
 libXEngine_ModuleProtocol.so:
 	make -C $(MODULE_PROTOCOL_PATH) PLATFORM=$(PLATFORM) $(FLAGS)
+libXEngine_ModuleSystem.so:
+	make -C $(MODULE_SYSTEM_PATH) PLATFORM=$(PLATFORM) $(FLAGS)
 libXEngine_ModuleHelp.so:
 	make -C $(MODULE_HELP_PATH) PLATFORM=$(PLATFORM) $(FLAGS)
 libXEngine_ModulePlugin.so:
