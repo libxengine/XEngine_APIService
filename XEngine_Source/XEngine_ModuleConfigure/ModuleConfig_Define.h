@@ -77,6 +77,7 @@ typedef struct
 	struct  
 	{
 		bool bBackService;
+		bool bDeamon;
 		XCHAR tszUserName[MAX_PATH];
 		XCHAR tszUserPass[MAX_PATH];
 	}st_XVerifcation;

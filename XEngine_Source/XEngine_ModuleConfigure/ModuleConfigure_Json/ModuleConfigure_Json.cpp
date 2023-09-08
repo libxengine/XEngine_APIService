@@ -185,6 +185,7 @@ bool CModuleConfigure_Json::ModuleConfigure_Json_File(LPCXSTR lpszConfigFile, XE
 	_tcsxcpy(pSt_ServerConfig->st_XVerifcation.tszUserName, st_JsonXVerifcation["tszUserName"].asCString());
 	_tcsxcpy(pSt_ServerConfig->st_XVerifcation.tszUserPass, st_JsonXVerifcation["tszUserPass"].asCString());
 	pSt_ServerConfig->st_XVerifcation.bBackService = st_JsonXVerifcation["bBackService"].asBool();
+	pSt_ServerConfig->st_XVerifcation.bDeamon = st_JsonXVerifcation["bDeamon"].asBool();
 
 	if (st_JsonRoot["XVer"].empty())
 	{
