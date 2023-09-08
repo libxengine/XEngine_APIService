@@ -175,7 +175,7 @@ bool CModuleConfigure_Json::ModuleConfigure_Json_File(LPCXSTR lpszConfigFile, XE
 	_tcsxcpy(pSt_ServerConfig->st_XShortLink.tszHostUrl, st_JsonXShort["tszHostUrl"].asCString());
 	pSt_ServerConfig->st_XShortLink.nHTTPCode = st_JsonXShort["nHTTPCode"].asInt();
 
-	if (st_JsonRoot["XVerification"].empty() || (3 != st_JsonRoot["XVerification"].size()))
+	if (st_JsonRoot["XVerification"].empty() || (4 != st_JsonRoot["XVerification"].size()))
 	{
 		Config_IsErrorOccur = true;
 		Config_dwErrorCode = ERROR_MODULE_CONFIGURE_JSON_XVERICATION;
