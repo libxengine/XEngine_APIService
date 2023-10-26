@@ -153,16 +153,19 @@ int main(int argc, char** argv)
 	signal(SIGABRT, ServiceApp_Stop);
 	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("启动服务中,初始化信号量成功"));
 
-	if (!SystemApi_Process_IsAdmin())
+	if (SystemApi_Process_IsAdmin())
+	{
+		if (!ModuleSystem_API_AutoStart(st_ServiceConfig.bAutoStart))
+		{
+			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("启动服务中,注册软件开机启动失败!错误:%lX"), ModuleHelp_GetLastError());
+			goto XENGINE_SERVICEAPP_EXIT;
+		}
+		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("启动服务中,设置软件开机启动标志成功,标志位:%d"), st_ServiceConfig.bAutoStart);
+	}
+	else
 	{
 		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_WARN, _X("启动服务中,启动权限不足,对于进程和后台服务任务可能会执行失败,请切换管理员权限"));
 	}
-	if (!ModuleSystem_API_AutoStart(st_ServiceConfig.bAutoStart))
-	{
-		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("启动服务中,注册软件开机启动失败!错误:%lX"), ModuleHelp_GetLastError());
-		goto XENGINE_SERVICEAPP_EXIT;
-	}
-	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("启动服务中,设置软件开机启动标志成功,标志位:%d"), st_ServiceConfig.bAutoStart);
 
 	if (st_ServiceConfig.bHideWnd)
 	{
