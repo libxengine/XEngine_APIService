@@ -43,7 +43,7 @@ bool HTTPTask_TaskPost_BackService(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer
 	st_HDRParam.nHttpCode = 200; //HTTP CODE码
 	st_HDRParam.bIsClose = true; //收到回复后就关闭
 
-	if (st_ServiceConfig.st_XVerifcation.bBackService)
+	if (st_ServiceConfig.st_XVerifcation.st_VerSwitch.bBackService)
 	{
 		XCHAR tszUserName[MAX_PATH];
 		XCHAR tszUserPass[MAX_PATH];

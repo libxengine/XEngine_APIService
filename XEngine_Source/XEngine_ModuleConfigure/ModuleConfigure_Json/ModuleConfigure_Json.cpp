@@ -175,7 +175,7 @@ bool CModuleConfigure_Json::ModuleConfigure_Json_File(LPCXSTR lpszConfigFile, XE
 	_tcsxcpy(pSt_ServerConfig->st_XShortLink.tszHostUrl, st_JsonXShort["tszHostUrl"].asCString());
 	pSt_ServerConfig->st_XShortLink.nHTTPCode = st_JsonXShort["nHTTPCode"].asInt();
 
-	if (st_JsonRoot["XVerification"].empty() || (4 != st_JsonRoot["XVerification"].size()))
+	if (st_JsonRoot["XVerification"].empty() || (3 != st_JsonRoot["XVerification"].size()))
 	{
 		Config_IsErrorOccur = true;
 		Config_dwErrorCode = ERROR_MODULE_CONFIGURE_JSON_XVERICATION;
@@ -184,8 +184,10 @@ bool CModuleConfigure_Json::ModuleConfigure_Json_File(LPCXSTR lpszConfigFile, XE
 	Json::Value st_JsonXVerifcation = st_JsonRoot["XVerification"];
 	_tcsxcpy(pSt_ServerConfig->st_XVerifcation.tszUserName, st_JsonXVerifcation["tszUserName"].asCString());
 	_tcsxcpy(pSt_ServerConfig->st_XVerifcation.tszUserPass, st_JsonXVerifcation["tszUserPass"].asCString());
-	pSt_ServerConfig->st_XVerifcation.bBackService = st_JsonXVerifcation["bBackService"].asBool();
-	pSt_ServerConfig->st_XVerifcation.bDeamon = st_JsonXVerifcation["bDeamon"].asBool();
+	
+	Json::Value st_JsonVerSwitch = st_JsonXVerifcation["st_VerSwitch"];
+	pSt_ServerConfig->st_XVerifcation.st_VerSwitch.bBackService = st_JsonVerSwitch["bBackService"].asBool();
+	pSt_ServerConfig->st_XVerifcation.st_VerSwitch.bDeamon = st_JsonVerSwitch["bDeamon"].asBool();
 
 	if (st_JsonRoot["XVer"].empty())
 	{

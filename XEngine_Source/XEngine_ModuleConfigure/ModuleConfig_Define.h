@@ -76,10 +76,13 @@ typedef struct
 	}st_XReload;
 	struct  
 	{
-		bool bBackService;
-		bool bDeamon;
 		XCHAR tszUserName[MAX_PATH];
 		XCHAR tszUserPass[MAX_PATH];
+		struct  
+		{
+			bool bBackService;
+			bool bDeamon;
+		}st_VerSwitch;
 	}st_XVerifcation;
 	struct  
 	{

@@ -105,7 +105,7 @@ bool HTTPTask_TaskPost_Deamon(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer, int
 	st_HDRParam.nHttpCode = 200; //HTTP CODE码
 	st_HDRParam.bIsClose = true; //收到回复后就关闭
 
-	if (st_ServiceConfig.st_XVerifcation.bDeamon)
+	if (st_ServiceConfig.st_XVerifcation.st_VerSwitch.bDeamon)
 	{
 		XCHAR tszUserName[MAX_PATH];
 		XCHAR tszUserPass[MAX_PATH];
@@ -114,7 +114,6 @@ bool HTTPTask_TaskPost_Deamon(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer, int
 		memset(tszUserPass, '\0', sizeof(tszUserPass));
 
 		ModuleProtocol_Parse_Verifcation(lpszMsgBuffer, nMsgLen, tszUserName, tszUserPass);
-
 		if (0 != _tcsxnicmp(st_ServiceConfig.st_XVerifcation.tszUserName, tszUserName, _tcsxlen(st_ServiceConfig.st_XVerifcation.tszUserName)))
 		{
 			st_HDRParam.nHttpCode = 400;
