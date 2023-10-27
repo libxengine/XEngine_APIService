@@ -151,6 +151,7 @@ bool HTTPTask_TaskPost_Deamon(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer, int
 		{
 			if (0 == _tcsxnicmp(stl_ListIterator->tszAPPName, stl_ListIterator->tszAPPName, _tcsxlen(stl_ListIterator->tszAPPName)) && (0 == _tcsxnicmp(stl_ListIterator->tszAPPPath, st_DeamonApp.tszAPPPath, _tcsxlen(stl_ListIterator->tszAPPPath))))
 			{
+				SystemApi_Process_Stop(stl_ListIterator->tszAPPName);
 				st_DeamonAppConfig.stl_ListDeamonApp.erase(stl_ListIterator);
 				break;
 			}
