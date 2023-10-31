@@ -38,7 +38,11 @@ bool HTTPTask_TastPost_P2PClient(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer, 
 			BaseLib_OperatorIPAddr_SegAddr(st_ClientPeer.st_PeerAddr.tszPublicAddr, NULL);
 		}
 		//获取外网IP所在位置
-		//ModuleDatabase_IPInfo_IPV4Query(&st_ClientPeer.st_IPAddrInfo, st_ClientPeer.st_PeerAddr.tszPublicAddr);
+		XCHAR tszIPInfo[MAX_PATH];
+		memset(tszIPInfo, '\0', sizeof(tszIPInfo));
+
+		_xstprintf(tszIPInfo, _X("http://127.0.0.1:%d/api?function=ip&params1=%s"), st_ServiceConfig.nHttpPort, st_ClientPeer.st_PeerAddr.tszPublicAddr);
+		APIClient_Http_Request(_X("GET"), tszIPInfo);
 
 		st_ClientPeer.st_PeerTimer.dwUserTime = time(NULL);
 		st_ClientPeer.st_PeerTimer.dwKeepAlive = time(NULL);
