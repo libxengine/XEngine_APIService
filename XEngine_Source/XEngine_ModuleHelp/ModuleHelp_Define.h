@@ -481,25 +481,6 @@ extern "C" bool ModuleHelp_P2PClient_Destory();
 *********************************************************************/
 extern "C" bool ModuleHelp_P2PClient_Add(XENGINE_P2XP_PEERINFO * pSt_PeerInfo);
 /********************************************************************
-函数名称：ModuleHelp_P2PClient_Get
-函数功能：获取P2P节点对应信息
- 参数.一：pSt_P2PProtocol
-  In/Out：In
-  类型：数据结构指针
-  可空：N
-  意思：要查询的地址
- 参数.二：pSt_PeerInfo
-  In/Out：Out
-  类型：数据结构指针
-  可空：Y
-  意思：如果为空将不导出对应的数据
-返回值
-  类型：逻辑型
-  意思：是否查找成功
-备注：
-*********************************************************************/
-extern "C" bool ModuleHelp_P2PClient_Get(XENGINE_P2XPPEER_PROTOCOL * pSt_P2PProtocol, XENGINE_P2XP_PEERINFO * pSt_PeerInfo = NULL);
-/********************************************************************
 函数名称：ModuleHelp_P2PClient_GetLan
 函数功能：获取局域网IP地址列表
  参数.一：pSt_P2PProtocol

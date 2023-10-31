@@ -1367,8 +1367,8 @@ bool CModuleProtocol_Packet::ModuleProtocol_Packet_P2PWLan(XCHAR* ptszMsgBuffer,
 	return true;
 }
 /********************************************************************
-函数名称：ModuleProtocol_Packet_P2PUser
-函数功能：响应用户查询用户信息的请求协议封包函数
+函数名称：ModuleProtocol_Packet_P2PWList
+函数功能：打包公有地址列表
  参数.一：ptszMsgBuffer
   In/Out：Out
   类型：字符指针
@@ -1379,42 +1379,49 @@ bool CModuleProtocol_Packet::ModuleProtocol_Packet_P2PWLan(XCHAR* ptszMsgBuffer,
   类型：整数型指针
   可空：N
   意思：输入你的缓冲区大小,输出缓冲区真实大小
- 参数.三：pSt_PeerInfo
+ 参数.三：ppptszListAddr
   In/Out：In
-  类型：数据结构指针
+  类型：三级指针
   可空：N
-  意思：输入获取到的用户信息
+  意思：客户端列表
+ 参数.四：nListCount
+  In/Out：In
+  类型：整数型
+  可空：N
+  意思：列表个数
 返回值
   类型：逻辑型
   意思：是否成功
 备注：
 *********************************************************************/
-bool CModuleProtocol_Packet::ModuleProtocol_Packet_P2PUser(XCHAR* ptszMsgBuffer, int* pInt_MsgLen, XENGINE_P2XPPEER_PROTOCOL* pSt_PeerInfo)
+bool CModuleProtocol_Packet::ModuleProtocol_Packet_P2PWList(XCHAR* ptszMsgBuffer, int* pInt_MsgLen, XCHAR*** ppptszListAddr, int nListCount)
 {
 	ModuleProtocol_IsErrorOccur = false;
 
-	if ((NULL == pSt_PeerInfo) || (NULL == ptszMsgBuffer) || (NULL == pInt_MsgLen))
+	if ((NULL == ptszMsgBuffer) || (NULL == pInt_MsgLen))
 	{
 		ModuleProtocol_IsErrorOccur = false;
 		ModuleProtocol_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PROTOCOL_PACKET_PARAMENT;
 		return false;
 	}
+	//打包成JSON数据
+	int nCount = 0;
 	Json::Value st_JsonRoot;
-	Json::Value st_JsonAddr;
-	Json::StreamWriterBuilder st_JsonBuilder;
+	Json::Value st_JsonArray;
 
-	st_JsonRoot["Code"] = 0;
+	for (int i = 0; i < nListCount; i++)
+	{
+		Json::Value st_JsonObject;
+		st_JsonObject["tszWAddr"] = (*ppptszListAddr)[i];
+		st_JsonArray.append(st_JsonObject);
+	}
+	st_JsonRoot["code"] = 0;
 	st_JsonRoot["msg"] = "sucess";
-	st_JsonRoot["dwConnectType"] = (Json::Value::UInt)pSt_PeerInfo->dwConnectType;
-	st_JsonRoot["dwPeerType"] = pSt_PeerInfo->dwPeerType;
-	st_JsonRoot["tszConnectAddr"] = pSt_PeerInfo->tszConnectAddr;
-	st_JsonRoot["tszPrivateAddr"] = pSt_PeerInfo->tszPrivateAddr;
-	st_JsonRoot["tszPublicAddr"] = pSt_PeerInfo->tszPublicAddr;
-	st_JsonRoot["tszUserName"] = pSt_PeerInfo->tszUserName;
+	st_JsonRoot["ClientArray"] = st_JsonArray;
+	st_JsonRoot["ClientCount"] = nCount;
 
-	st_JsonBuilder["emitUTF8"] = true;
-	*pInt_MsgLen = Json::writeString(st_JsonBuilder, st_JsonRoot).length();
-	memcpy(ptszMsgBuffer, Json::writeString(st_JsonBuilder, st_JsonRoot).c_str(), *pInt_MsgLen);
+	*pInt_MsgLen = st_JsonRoot.toStyledString().length();
+	memcpy(ptszMsgBuffer, st_JsonRoot.toStyledString().c_str(), *pInt_MsgLen);
 	return true;
 }
 /********************************************************************

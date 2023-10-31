@@ -77,10 +77,6 @@ extern "C" bool ModuleHelp_P2PClient_Add(XENGINE_P2XP_PEERINFO * pSt_PeerInfo)
 {
 	return m_P2PClient.ModuleHelp_P2PClient_Add(pSt_PeerInfo);
 }
-extern "C" bool ModuleHelp_P2PClient_Get(XENGINE_P2XPPEER_PROTOCOL * pSt_P2PProtocol, XENGINE_P2XP_PEERINFO * pSt_PeerInfo /* = NULL */)
-{
-	return m_P2PClient.ModuleHelp_P2PClient_Get(pSt_P2PProtocol, pSt_PeerInfo);
-}
 extern "C" bool ModuleHelp_P2PClient_GetLan(XENGINE_P2XPPEER_PROTOCOL * pSt_P2PProtocol, XENGINE_P2XPPEER_PROTOCOL * **pppSt_P2XPClient, int* pInt_ListCount)
 {
 	return m_P2PClient.ModuleHelp_P2PClient_GetLan(pSt_P2PProtocol, pppSt_P2XPClient, pInt_ListCount);
