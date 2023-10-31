@@ -241,7 +241,7 @@ bool CModuleHelp_P2PClient::ModuleHelp_P2PClient_GetLan(XENGINE_P2XPPEER_PROTOCO
         {
             *(*pppSt_P2XPClient)[i] = stl_MapConnIterator->second.st_PeerAddr;
         }
-        *pInt_ListCount = stl_MapPriIterator->second.size();
+        *pInt_ListCount = (int)stl_MapPriIterator->second.size();
     }
     else
     {
@@ -266,7 +266,7 @@ bool CModuleHelp_P2PClient::ModuleHelp_P2PClient_GetLan(XENGINE_P2XPPEER_PROTOCO
         {
             *(*pppSt_P2XPClient)[i] = stl_MapConnIterator->second.st_PeerAddr;
         }
-        *pInt_ListCount = stl_MapPriIterator->second.size();
+        *pInt_ListCount = (int)stl_MapPriIterator->second.size();
     }
     st_Locker.unlock_shared();
     return true;
@@ -319,7 +319,7 @@ bool CModuleHelp_P2PClient::ModuleHelp_P2PClient_GetLList(LPCXSTR lpszPubAddr, X
     {
         _tcsxcpy((*pppszP2XPClient)[i], stl_MapPriIterator->first.c_str());
     }
-    *pInt_ListCount = stl_MapPubIterator->second.size();
+    *pInt_ListCount = (int)stl_MapPubIterator->second.size();
     st_Locker.unlock_shared();
     return true;
 }
@@ -365,7 +365,7 @@ bool CModuleHelp_P2PClient::ModuleHelp_P2PClient_GetWList(XCHAR*** pppszP2XPClie
     {
         _tcsxcpy((*pppszP2XPClient)[i], stl_MapIterator->first.c_str());
     }
-    *pInt_ListCount = stl_MapClients.size();
+    *pInt_ListCount = (int)stl_MapClients.size();
     st_Locker.unlock_shared();
     return true;
 }

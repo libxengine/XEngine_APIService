@@ -216,7 +216,7 @@ bool CModuleHelp_QRCode::ModuleHelp_QRCode_QRDecodecFile(LPCXSTR lpszFileName, X
 		ModuleHelp_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_HELP_QRCODE_PARAMENT;
 		return false;
 	}
-#if _XENGINE_BUILD_SWITCH_OPENCV == 1
+#if _XENGINE_BUILD_SWITCH_QRDECODEC == 1
 	cv::Mat m_Frame;
 	vector<cv::Mat> m_MatPoint;
 	cv::Ptr<cv::wechat_qrcode::WeChatQRCode> m_QRDetector;
@@ -298,7 +298,7 @@ bool CModuleHelp_QRCode::ModuleHelp_QRCode_QRDecodecMemory(LPCXSTR lpszMsgBuffer
 		ModuleHelp_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_HELP_QRCODE_PARAMENT;
 		return false;
 	}
-#if _XENGINE_BUILD_SWITCH_OPENCV == 1
+#if _XENGINE_BUILD_SWITCH_QRDECODEC == 1
 	cv::Mat m_Frame;
 	vector<cv::Mat> m_MatPoint;
 	cv::Ptr<cv::wechat_qrcode::WeChatQRCode> m_QRDetector;
