@@ -289,11 +289,11 @@ bool HTTPTask_TaskPost_BackService(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer
 		if (1 == nBSType)
 		{
 #ifdef _MSC_BUILD
-			xhSound = AVCollect_Audio_Init("dshow", "virtual-audio-capturer", HTTPTask_TaskPost_CBAudio);
+			xhSound = AVCollect_Audio_Init("dshow", tszSrcBuffer, HTTPTask_TaskPost_CBAudio);
 #elif __linux__
-			xhSound = AVCollect_Audio_Init("alsa", "virtual-audio-capturer", HTTPTask_TaskPost_CBAudio);
+			xhSound = AVCollect_Audio_Init("alsa", tszSrcBuffer, HTTPTask_TaskPost_CBAudio);
 #else
-			xhSound = AVCollect_Audio_Init("avfoundation", "virtual-audio-capturer", HTTPTask_TaskPost_CBAudio);
+			xhSound = AVCollect_Audio_Init("avfoundation", tszSrcBuffer, HTTPTask_TaskPost_CBAudio);
 #endif
 			if (NULL == xhSound)
 			{
@@ -358,13 +358,13 @@ bool HTTPTask_TaskPost_BackService(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer
 			return false;
 		}
 
-		xhStream = StreamClient_StreamPush_Init(tszSrcBuffer, &st_AVInfo);
+		xhStream = StreamClient_StreamPush_Init(tszDstBuffer, &st_AVInfo);
 		if (NULL == xhStream)
 		{
 			st_HDRParam.nHttpCode = 400;
 			HttpProtocol_Server_SendMsgEx(xhHTTPPacket, ptszSDBuffer, &nSDLen, &st_HDRParam);
 			XEngine_Network_Send(lpszClientAddr, ptszSDBuffer, nSDLen);
-			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("HTTP客户端:%s,推流:%s 请求失败,错误码:%lX"), lpszClientAddr, tszSrcBuffer, StreamClient_GetLastError());
+			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("HTTP客户端:%s,推流:%s 请求失败,错误码:%lX"), lpszClientAddr, tszDstBuffer, StreamClient_GetLastError());
 			return false;
 		}
 		bRecord = true;
@@ -372,7 +372,7 @@ bool HTTPTask_TaskPost_BackService(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer
 		AVCollect_Video_Start(xhScreen);
 		HttpProtocol_Server_SendMsgEx(xhHTTPPacket, ptszSDBuffer, &nSDLen, &st_HDRParam);
 		XEngine_Network_Send(lpszClientAddr, ptszSDBuffer, nSDLen);
-		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("HTTP客户端:%s,开始屏幕录制推流:%s 请求成功"), lpszClientAddr, tszSrcBuffer);
+		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("HTTP客户端:%s,开始屏幕录制推流:%s 请求成功"), lpszClientAddr, tszDstBuffer);
 	}
 	break;
 	case XENGINE_COMMUNICATION_PROTOCOL_OPERATOR_CODE_BS_RECORDSTOP:
