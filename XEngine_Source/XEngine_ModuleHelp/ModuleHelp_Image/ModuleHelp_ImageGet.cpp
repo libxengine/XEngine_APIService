@@ -72,8 +72,8 @@ bool CModuleHelp_ImageGet::ModuleHelp_ImageGet_Attr(LPCXSTR lpszMsgBuffer, int n
 	//获取信息
 	if (NULL != pSt_BaseInfo)
 	{
-		pSt_BaseInfo->nWidth = m_Frame.rows;
-		pSt_BaseInfo->nHeigth = m_Frame.cols;
+		pSt_BaseInfo->nWidth = m_Frame.cols;
+		pSt_BaseInfo->nHeigth = m_Frame.rows;
 		pSt_BaseInfo->nChannel = m_Frame.channels();
 	}
 	//获取其他信息

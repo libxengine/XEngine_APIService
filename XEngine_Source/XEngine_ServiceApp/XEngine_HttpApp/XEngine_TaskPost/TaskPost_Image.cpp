@@ -44,7 +44,7 @@ bool HTTPTask_TaskPost_Image(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer, int 
 	}
 	else
 	{
-		if (4 < nListCount)
+		if (nListCount < 4)
 		{
 			st_HDRParam.nHttpCode = 400;
 			HttpProtocol_Server_SendMsgEx(xhHTTPPacket, ptszSDBuffer, &nSDLen, &st_HDRParam);
