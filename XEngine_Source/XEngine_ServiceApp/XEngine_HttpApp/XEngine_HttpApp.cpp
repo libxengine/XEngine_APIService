@@ -99,10 +99,6 @@ int main(int argc, char** argv)
 	WSAStartup(MAKEWORD(2, 2), &st_WSAData);
 #endif
 	bIsRun = true;
-	LPCXSTR lpszHTTPMime = _X("./XEngine_Config/HttpMime.types");
-	LPCXSTR lpszHTTPCode = _X("./XEngine_Config/HttpCode.types");
-	LPCXSTR lpszLogFile = _X("./XEngine_Log/XEngine_HttpApp.Log");
-	LPCXSTR lpszConfigDeamon = _X("./XEngine_Config/XEngine_DeamonConfig.json");
 	HELPCOMPONENTS_XLOG_CONFIGURE st_XLogConfig;
 	THREADPOOL_PARAMENT** ppSt_ListHTTPParam;
 
@@ -113,9 +109,6 @@ int main(int argc, char** argv)
 	memset(&st_PluginLibConfig, '\0', sizeof(XENGINE_PLUGINCONFIG));
 	memset(&st_PluginLuaConfig, '\0', sizeof(XENGINE_PLUGINCONFIG));
 
-	st_XLogConfig.XLog_MaxBackupFile = 10;
-	st_XLogConfig.XLog_MaxSize = 1024000;
-	_tcsxcpy(st_XLogConfig.tszFileName, lpszLogFile);
 	//初始化参数
 	if (!XEngine_Configure_Parament(argc, argv))
 	{
@@ -138,6 +131,9 @@ int main(int argc, char** argv)
 		ServiceApp_Deamon();
 	}
 	//初始日志
+	st_XLogConfig.XLog_MaxBackupFile = 10;
+	st_XLogConfig.XLog_MaxSize = 1024000;
+	_tcsxcpy(st_XLogConfig.tszFileName, st_ServiceConfig.st_XLog.tszLogFile);
 	xhLog = HelpComponents_XLog_Init(HELPCOMPONENTS_XLOG_OUTTYPE_STD | HELPCOMPONENTS_XLOG_OUTTYPE_FILE, &st_XLogConfig);
 	if (NULL == xhLog)
 	{
@@ -259,7 +255,7 @@ int main(int argc, char** argv)
 	if (st_ServiceConfig.nHttpPort > 0)
 	{
 		//HTTP包处理器
-		xhHTTPPacket = HttpProtocol_Server_InitEx(lpszHTTPCode, lpszHTTPMime, st_ServiceConfig.st_XMax.nHTTPThread);
+		xhHTTPPacket = HttpProtocol_Server_InitEx(st_ServiceConfig.st_XConfig.tszConfigHTTPCode, st_ServiceConfig.st_XConfig.tszConfigHTTPMime, st_ServiceConfig.st_XMax.nHTTPThread);
 		if (NULL == xhHTTPPacket)
 		{
 			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("启动服务中,初始化HTTP组包失败,错误：%lX"), HttpProtocol_GetLastError());
@@ -321,7 +317,7 @@ int main(int argc, char** argv)
 	}
 	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("启动服务中,启动P2P客户端管理器成功,超时时间设置:%d 秒"), st_ServiceConfig.st_XTime.nP2PTimeOut);
 	//进程守护
-	if (!ModuleConfigure_Json_DeamonList(lpszConfigDeamon, &st_DeamonAppConfig))
+	if (!ModuleConfigure_Json_DeamonList(st_ServiceConfig.st_XConfig.tszConfigDeamon, &st_DeamonAppConfig))
 	{
 		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("启动服务中,启动加载进程守护配置文件失败,错误：%lX"), ModuleConfigure_GetLastError());
 		goto XENGINE_SERVICEAPP_EXIT;
