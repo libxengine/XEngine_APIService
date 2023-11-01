@@ -27,18 +27,20 @@ bool HTTPTask_TaskPost_Image(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer, int 
 		XENGINE_IMGBASEATTR st_BaseInfo;
 		XENGINE_IMGEXTATTR st_ExtAttr;
 
-		if (!ModuleHelp_ImageGet_Attr(lpszMsgBuffer, nMsgLen, &st_BaseInfo, &st_ExtAttr))
+		if (ModuleHelp_ImageGet_Attr(lpszMsgBuffer, nMsgLen, &st_BaseInfo, &st_ExtAttr))
+		{
+			ModuleProtocol_Packet_ImageAttr(ptszRVBuffer, &nRVLen, &st_BaseInfo, &st_ExtAttr);
+			HttpProtocol_Server_SendMsgEx(xhHTTPPacket, ptszSDBuffer, &nSDLen, &st_HDRParam, ptszRVBuffer, nRVLen);
+			XEngine_Network_Send(lpszClientAddr, ptszSDBuffer, nSDLen);
+			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("HTTP客户端:%s,请求获取图像信息成功,宽:%d,高:%d,通道:%d"), lpszClientAddr, st_BaseInfo.nWidth, st_BaseInfo.nHeigth, st_BaseInfo.nChannel);
+		}
+		else
 		{
 			st_HDRParam.nHttpCode = 501;
 			HttpProtocol_Server_SendMsgEx(xhHTTPPacket, ptszSDBuffer, &nSDLen, &st_HDRParam);
 			XEngine_Network_Send(lpszClientAddr, ptszSDBuffer, nSDLen);
 			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("HTTP客户端:%s,请求获取图片属性失败,错误:%lX"), lpszClientAddr, ModuleHelp_GetLastError());
-			return false;
 		}
-		ModuleProtocol_Packet_ImageAttr(ptszRVBuffer, &nRVLen, &st_BaseInfo, &st_ExtAttr);
-		HttpProtocol_Server_SendMsgEx(xhHTTPPacket, ptszSDBuffer, &nSDLen, &st_HDRParam, ptszRVBuffer, nRVLen);
-		XEngine_Network_Send(lpszClientAddr, ptszSDBuffer, nSDLen);
-		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("HTTP客户端:%s,请求获取图像信息成功,宽:%d,高:%d,通道:%d"), lpszClientAddr, st_BaseInfo.nWidth, st_BaseInfo.nHeigth, st_BaseInfo.nChannel);
 	}
 	else
 	{
@@ -65,54 +67,69 @@ bool HTTPTask_TaskPost_Image(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer, int 
 			BaseLib_OperatorString_GetKeyValue((*ppptszList)[4], "=", tszHTTPKey, tszHTTPVlu);
 			int nHeight = _ttxoi(tszHTTPVlu);
 
-			if (!ModuleHelp_ImageSet_Resolution(lpszMsgBuffer, nMsgLen, tszFileExt, ptszRVBuffer, &nRVLen, nWidth, nHeight))
+			if (ModuleHelp_ImageSet_Resolution(lpszMsgBuffer, nMsgLen, tszFileExt, ptszRVBuffer, &nRVLen, nWidth, nHeight))
+			{
+				HttpProtocol_Server_SendMsgEx(xhHTTPPacket, ptszSDBuffer, &nSDLen, &st_HDRParam, ptszRVBuffer, nRVLen);
+				XEngine_Network_Send(lpszClientAddr, ptszSDBuffer, nSDLen);
+				XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("HTTP客户端:%s,请求设置图像分辨率成功,宽:%d,高:%d"), lpszClientAddr, nWidth, nHeight);
+			}
+			else
 			{
 				st_HDRParam.nHttpCode = 501;
 				HttpProtocol_Server_SendMsgEx(xhHTTPPacket, ptszSDBuffer, &nSDLen, &st_HDRParam);
 				XEngine_Network_Send(lpszClientAddr, ptszSDBuffer, nSDLen);
 				XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("HTTP客户端:%s,请求设置图像分辨率失败,错误:%lX"), lpszClientAddr, ModuleHelp_GetLastError());
-				return false;
 			}
-			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("HTTP客户端:%s,请求设置图像分辨率成功,宽:%d,高:%d"), lpszClientAddr, nWidth, nHeight);
+			
 		}
 		else if (2 == nOPCode)
 		{
-			if (!ModuleHelp_ImageSet_ColorCvt(lpszMsgBuffer, nMsgLen, tszFileExt, ptszRVBuffer, &nRVLen, (ENUM_XENGINE_IMAGE_COLOR_INFO)nWidth))
+			if (ModuleHelp_ImageSet_ColorCvt(lpszMsgBuffer, nMsgLen, tszFileExt, ptszRVBuffer, &nRVLen, (ENUM_XENGINE_IMAGE_COLOR_INFO)nWidth))
+			{
+				HttpProtocol_Server_SendMsgEx(xhHTTPPacket, ptszSDBuffer, &nSDLen, &st_HDRParam, ptszRVBuffer, nRVLen);
+				XEngine_Network_Send(lpszClientAddr, ptszSDBuffer, nSDLen);
+				XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("HTTP客户端:%s,请求设置图像颜色空间转换成功,转换的值:%d"), lpszClientAddr, nWidth);
+			}
+			else
 			{
 				st_HDRParam.nHttpCode = 501;
 				HttpProtocol_Server_SendMsgEx(xhHTTPPacket, ptszSDBuffer, &nSDLen, &st_HDRParam);
 				XEngine_Network_Send(lpszClientAddr, ptszSDBuffer, nSDLen);
 				XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("HTTP客户端:%s,请求设置图像颜色空间转换失败,错误:%lX"), lpszClientAddr, ModuleHelp_GetLastError());
-				return false;
 			}
-			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("HTTP客户端:%s,请求设置图像颜色空间转换成功,转换的值:%d"), lpszClientAddr, nWidth);
 		}
 		else if (3 == nOPCode)
 		{
-			if (!ModuleHelp_ImageSet_Flip(lpszMsgBuffer, nMsgLen, tszFileExt, ptszRVBuffer, &nRVLen, nWidth))
+			if (ModuleHelp_ImageSet_Flip(lpszMsgBuffer, nMsgLen, tszFileExt, ptszRVBuffer, &nRVLen, nWidth))
+			{
+				HttpProtocol_Server_SendMsgEx(xhHTTPPacket, ptszSDBuffer, &nSDLen, &st_HDRParam, ptszRVBuffer, nRVLen);
+				XEngine_Network_Send(lpszClientAddr, ptszSDBuffer, nSDLen);
+				XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("HTTP客户端:%s,请求设置图像翻转成功,翻转的值:%d"), lpszClientAddr, nWidth);
+			}
+			else
 			{
 				st_HDRParam.nHttpCode = 501;
 				HttpProtocol_Server_SendMsgEx(xhHTTPPacket, ptszSDBuffer, &nSDLen, &st_HDRParam);
 				XEngine_Network_Send(lpszClientAddr, ptszSDBuffer, nSDLen);
 				XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("HTTP客户端:%s,请求设置图像翻转失败,错误:%lX"), lpszClientAddr, ModuleHelp_GetLastError());
-				return false;
 			}
-			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("HTTP客户端:%s,请求设置图像翻转成功,翻转的值:%d"), lpszClientAddr, nWidth);
 		}
 		else if (4 == nOPCode)
 		{
-			if (!ModuleHelp_ImageSet_Ligth(lpszMsgBuffer, nMsgLen, tszFileExt, ptszRVBuffer, &nRVLen, nWidth))
+			if (ModuleHelp_ImageSet_Ligth(lpszMsgBuffer, nMsgLen, tszFileExt, ptszRVBuffer, &nRVLen, nWidth))
+			{
+				HttpProtocol_Server_SendMsgEx(xhHTTPPacket, ptszSDBuffer, &nSDLen, &st_HDRParam, ptszRVBuffer, nRVLen);
+				XEngine_Network_Send(lpszClientAddr, ptszSDBuffer, nSDLen);
+				XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("HTTP客户端:%s,请求设置图像亮度,亮度的值:%d"), lpszClientAddr, nWidth);
+			}
+			else
 			{
 				st_HDRParam.nHttpCode = 501;
 				HttpProtocol_Server_SendMsgEx(xhHTTPPacket, ptszSDBuffer, &nSDLen, &st_HDRParam);
 				XEngine_Network_Send(lpszClientAddr, ptszSDBuffer, nSDLen);
 				XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("HTTP客户端:%s,请求设置图像亮度失败,错误:%lX"), lpszClientAddr, ModuleHelp_GetLastError());
-				return false;
 			}
-			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("HTTP客户端:%s,请求设置图像亮度,亮度的值:%d"), lpszClientAddr, nWidth);
 		}
-		HttpProtocol_Server_SendMsgEx(xhHTTPPacket, ptszSDBuffer, &nSDLen, &st_HDRParam, ptszRVBuffer, nRVLen);
-		XEngine_Network_Send(lpszClientAddr, ptszSDBuffer, nSDLen);
 	}
 	free(ptszRVBuffer);
 	free(ptszSDBuffer);
