@@ -17,15 +17,16 @@
         "nDeamonTime":3
     },
     "XLog":{
+        "tszLogFile":"./XEngine_Log/XEngine_HttpApp.Log",
         "MaxSize":1024000,
         "MaxCount":10,
-        "LogLeave":32
+        "LogLeave":17
     },
     "XSql":{
-        "SQLAddr":"42.194.178.57",
+        "SQLAddr":"10.0.3.155",
         "SQLPort":3306,
         "SQLUser":"root",
-        "SQLPass":"111"
+        "SQLPass":"123123"
     },
     "XApi":{
         "tszBankUrl":"https://ccdcapi.alipay.com/validateAndCacheCardInfo.json?cardNo=%s&cardBinCheck=true",
@@ -38,19 +39,25 @@
     },
     "XConfig":{
         "tszConfigOPencc":"./XEngine_Config/XEngine_OPenccConfig.json",
-        "tszConfigQRCode":"./XEngine_Config/XEngine_QRCode.json"
+        "tszConfigQRCode":"./XEngine_Config/XEngine_QRCode.json",
+        "tszConfigDeamon":"./XEngine_Config/XEngine_DeamonConfig.json",
+        "tszConfigHTTPMime":"./XEngine_Config/HttpMime.types",
+        "tszConfigHTTPCode":"./XEngine_Config/HttpCode.types"
     },
     "XShortLink":{
         "tszHostUrl":"url.xyry.org",
         "nHTTPCode":301
     },
     "XVerification":{
-        "bBackService":false,
-        "bDeamon":false,
         "tszUserName":"xyry",
-        "tszUserPass":"11"
+        "tszUserPass":"11",
+        "st_VerSwitch":{
+            "bBackService":false,
+            "bDeamon":false
+        }
     },
     "XVer":[
+        "3.1.0.1001 Build20231102",
         "3.0.0.1001 Build20230908",
         "2.11.0.1001 Build20230829",
         "2.10.0.1001 Build20230810",
