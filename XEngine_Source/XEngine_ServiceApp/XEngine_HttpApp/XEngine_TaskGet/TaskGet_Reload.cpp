@@ -85,5 +85,36 @@ bool HTTPTask_TaskGet_Reload(LPCXSTR lpszClientAddr, LPCXSTR lpszOPCode)
 		}
 		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("HTTP客户端:%s,请求重载插件成功,Lib插件:%d 个,Lua插件:%d 个"), lpszClientAddr, st_PluginLibConfig.pStl_ListPlugin->size(), st_PluginLuaConfig.pStl_ListPlugin->size());
 	}
+	else if (2 == _ttxoi(lpszOPCode))
+	{
+		memset(&st_OPenccConfig, '\0', sizeof(XENGINE_OPENCCCONFIG));
+		//重载OPENCC配置
+		if (!ModuleConfigure_Json_OPenccFile(st_ServiceConfig.st_XConfig.tszConfigOPencc, &st_OPenccConfig))
+		{
+			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("HTTP客户端:%s,请求重载OPenCC配置文件失败,错误：%lX"), lpszClientAddr, ModuleConfigure_GetLastError());
+			return false;
+		}
+		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("HTTP客户端:%s,请求重载OPenCC配置文件:%s 成功"), lpszClientAddr, st_ServiceConfig.st_XConfig.tszConfigOPencc);
+	}
+	else if (3 == _ttxoi(lpszOPCode))
+	{
+		memset(&st_QRCodeConfig, '\0', sizeof(XENGINE_QRCODECONFIG));
+		if (!ModuleConfigure_Json_QRCodeFile(st_ServiceConfig.st_XConfig.tszConfigQRCode, &st_QRCodeConfig))
+		{
+			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("HTTP客户端:%s,请求重载二维码配置文件失败,错误：%lX"), lpszClientAddr, ModuleConfigure_GetLastError());
+			return false;
+		}
+		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("HTTP客户端:%s,请求重载二维码配置文件:%s 成功"), lpszClientAddr, st_ServiceConfig.st_XConfig.tszConfigQRCode);
+	}
+	else if (4 == _ttxoi(lpszOPCode))
+	{
+		st_DeamonAppConfig.stl_ListDeamonApp.clear();
+		if (!ModuleConfigure_Json_DeamonList(st_ServiceConfig.st_XConfig.tszConfigDeamon, &st_DeamonAppConfig))
+		{
+			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("HTTP客户端:%s,请求重载进程守护配置文件失败,错误：%lX"), lpszClientAddr, ModuleConfigure_GetLastError());
+			return false;
+		}
+		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("HTTP客户端:%s,请求重载进程守护配置文件成功"));
+	}
 	return true;
 }
