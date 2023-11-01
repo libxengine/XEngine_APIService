@@ -101,6 +101,8 @@ typedef enum
 #define XENGINE_COMMUNICATION_PROTOCOL_OPERATOR_CODE_P2XP_REPLANLIST 0x6006      //同步列表回复确认协议
 #define XENGINE_COMMUNICATION_PROTOCOL_OPERATOR_CODE_P2XP_REQWLAN 0x6007       //登出
 #define XENGINE_COMMUNICATION_PROTOCOL_OPERATOR_CODE_P2XP_REPWLAN 0x6008
+#define XENGINE_COMMUNICATION_PROTOCOL_OPERATOR_CODE_P2XP_REQHEART 0x6009       //登出
+#define XENGINE_COMMUNICATION_PROTOCOL_OPERATOR_CODE_P2XP_REPHEART 0x600A
 ///////////////////////////////////////////////////////////////////////////
 //                          导出的数据结构
 ///////////////////////////////////////////////////////////////////////////

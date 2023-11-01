@@ -150,6 +150,25 @@ bool HTTPTask_TastPost_P2PClient(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer, 
 		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("HTTP客户端:%s,P2P请求公有地址列表成功,地址个数:%d"), lpszClientAddr, nListCount);
 		BaseLib_OperatorMemory_Free((XPPPMEM)&pptszListAddr, nListCount);
 	}
+	else if (XENGINE_COMMUNICATION_PROTOCOL_OPERATOR_CODE_P2XP_REQHEART == unOperatorCode)
+	{
+		XENGINE_P2XPPEER_PROTOCOL st_P2XPProtocol;
+		memset(&st_P2XPProtocol, '\0', sizeof(XENGINE_P2XPPEER_PROTOCOL));
+
+		if (!ModuleProtocol_Parse_P2PClient(lpszMsgBuffer, nMsgLen, &st_P2XPProtocol))
+		{
+			ModuleProtocol_Packet_Common(tszRVBuffer, &nRVLen, 400, "协议错误");
+			HttpProtocol_Server_SendMsgEx(xhHTTPPacket, tszSDBuffer, &nSDLen, &st_HDRParam, tszRVBuffer, nRVLen);
+			XEngine_Network_Send(lpszClientAddr, tszSDBuffer, nSDLen);
+			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("HTTP客户端:%s,P2P处理心跳协议错误,解析协议失败,错误码:%lX"), lpszClientAddr, ModuleProtocol_GetLastError());
+			return false;
+		}
+		ModuleHelp_P2PClient_Heart(&st_P2XPProtocol);
+		ModuleProtocol_Packet_Common(tszRVBuffer, &nRVLen);
+		HttpProtocol_Server_SendMsgEx(xhHTTPPacket, tszSDBuffer, &nSDLen, &st_HDRParam, tszRVBuffer, nRVLen);
+		XEngine_Network_Send(lpszClientAddr, tszSDBuffer, nSDLen);
+		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("HTTP客户端:%s,P2P请求心跳成功"), lpszClientAddr);
+	}
 	else
 	{
 		st_HDRParam.nHttpCode = 404;
