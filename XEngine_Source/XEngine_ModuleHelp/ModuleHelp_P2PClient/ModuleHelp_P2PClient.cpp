@@ -106,7 +106,7 @@ bool CModuleHelp_P2PClient::ModuleHelp_P2PClient_Add(XENGINE_P2XP_PEERINFO* pSt_
 	{
 		//没有找到,一个一个加入,首先加入私有同步网络
         unordered_map<string, XENGINE_P2XP_PEERINFO> stl_MapPrivate;
-        stl_MapPrivate.insert(make_pair(pSt_PeerInfo->st_PeerAddr.tszConnectAddr, *pSt_PeerInfo));
+        stl_MapPrivate.insert(make_pair(pSt_PeerInfo->st_PeerAddr.tszPrivateAddr, *pSt_PeerInfo));
 		//获取私有网络的路由地址
 		XENGINE_LIBADDR st_LibAddr;
 		XCHAR tszPrivateAddr[64];
@@ -150,18 +150,18 @@ bool CModuleHelp_P2PClient::ModuleHelp_P2PClient_Add(XENGINE_P2XP_PEERINFO* pSt_
 		{
             //没有私网地址
 			unordered_map<string, XENGINE_P2XP_PEERINFO> stl_MapPrivate;
-			stl_MapPrivate.insert(make_pair(pSt_PeerInfo->st_PeerAddr.tszConnectAddr, *pSt_PeerInfo));
+			stl_MapPrivate.insert(make_pair(pSt_PeerInfo->st_PeerAddr.tszPrivateAddr, *pSt_PeerInfo));
 
 			stl_MapIteratorAddr->second.insert(make_pair(tszPrivateAddr, stl_MapPrivate));
 		}
 		else
 		{
             //查找链接地址是否存在.存在表示已经加入过了,那么就什么都不做
-            unordered_map<string, XENGINE_P2XP_PEERINFO>::iterator stl_MapConnIterator = stl_MapPriIteartor->second.find(pSt_PeerInfo->st_PeerAddr.tszConnectAddr);
-            if (stl_MapConnIterator == stl_MapPriIteartor->second.find(pSt_PeerInfo->st_PeerAddr.tszConnectAddr))
+            unordered_map<string, XENGINE_P2XP_PEERINFO>::iterator stl_MapConnIterator = stl_MapPriIteartor->second.find(pSt_PeerInfo->st_PeerAddr.tszPrivateAddr);
+            if (stl_MapConnIterator == stl_MapPriIteartor->second.find(pSt_PeerInfo->st_PeerAddr.tszPrivateAddr))
 			{
                 //没有找到就加入
-                stl_MapPriIteartor->second.insert(make_pair(pSt_PeerInfo->st_PeerAddr.tszConnectAddr, *pSt_PeerInfo));
+                stl_MapPriIteartor->second.insert(make_pair(pSt_PeerInfo->st_PeerAddr.tszPrivateAddr, *pSt_PeerInfo));
 			}
 		}
 	}
@@ -402,7 +402,7 @@ bool CModuleHelp_P2PClient::ModuleHelp_P2PClient_Delete(XENGINE_P2XPPEER_PROTOCO
 			if (stl_MapPriIterator != stl_MapPubIteartor->second.end())
 			{
 				//查找局域网自身的IP地址是否存在
-                unordered_map<string, XENGINE_P2XP_PEERINFO>::iterator stl_MapConnIterator = stl_MapPriIterator->second.find(pSt_P2PProtocol->tszConnectAddr);
+                unordered_map<string, XENGINE_P2XP_PEERINFO>::iterator stl_MapConnIterator = stl_MapPriIterator->second.find(pSt_P2PProtocol->tszUserName);
 				if (stl_MapConnIterator != stl_MapPriIterator->second.end())
 				{
 					//找到了删除
@@ -491,7 +491,7 @@ bool CModuleHelp_P2PClient::ModuleHelp_P2PClient_Heart(XENGINE_P2XPPEER_PROTOCOL
 		st_Locker.unlock_shared();
 		return false;
 	}
-	unordered_map<string, XENGINE_P2XP_PEERINFO>::iterator stl_MapConnIterator = stl_MapPriIterator->second.find(pSt_P2PProtocol->tszConnectAddr);
+	unordered_map<string, XENGINE_P2XP_PEERINFO>::iterator stl_MapConnIterator = stl_MapPriIterator->second.find(pSt_P2PProtocol->tszPrivateAddr);
 	if (stl_MapConnIterator == stl_MapPriIterator->second.end())
 	{
 		ModuleHelp_IsErrorOccur = true;
@@ -536,8 +536,8 @@ XHTHREAD CALLBACK CModuleHelp_P2PClient::ModuleHelp_P2PClient_Thread(XPVOID lPar
 
         for (auto stl_ListIterator = stl_ListRemove.begin(); stl_ListIterator != stl_ListRemove.end(); stl_ListIterator++)
         {
-            pClass_This->ModuleHelp_P2PClient_Delete((XENGINE_P2XPPEER_PROTOCOL*) & stl_ListIterator);
-            pClass_This->lpCall_P2PClient((XENGINE_P2XPPEER_PROTOCOL*)&stl_ListIterator, pClass_This->m_lParam);
+            pClass_This->lpCall_P2PClient((XENGINE_P2XPPEER_PROTOCOL*)&stl_ListIterator->st_PeerAddr, pClass_This->m_lParam);
+            pClass_This->ModuleHelp_P2PClient_Delete((XENGINE_P2XPPEER_PROTOCOL*) &stl_ListIterator->st_PeerAddr);
         }
         stl_ListRemove.clear();
         std::this_thread::sleep_for(std::chrono::seconds(1));

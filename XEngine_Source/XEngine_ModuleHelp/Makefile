@@ -8,7 +8,7 @@ RELEASE = 0
 UNICODE = 0
 LOADHDR = -I ./ -I /usr/include/opencv4
 LOADSO = -L /usr/local/lib/XEngine_Release/XEngine_BaseLib -L /usr/local/lib/XEngine_Release/XEngine_Client 
-LIB = -lXEngine_BaseLib -lXClient_Socket -lopencc -lqrencode -llzma -lpng16 -lopencv_core -lopencv_imgcodecs -lopencv_imgproc -ltiff
+LIB = -lXEngine_BaseLib -lXClient_Socket -lopencc -lqrencode -llzma -lpng16 -lopencv_core -lopencv_imgcodecs -lopencv_imgproc -ltiff -lopencv_wechat_qrcode
 LIBEX = 
 OBJECTS = ModuleHelp_IDCard.o ModuleHelp_Language.o ModuleHelp_P2PClient.o ModuleHelp_Locker.o ModuleHelp_QRCode.o ModuleHelp_SocketTest.o ModuleHelp_ImageGet.o ModuleHelp_ImageSet.o pch.o
 
