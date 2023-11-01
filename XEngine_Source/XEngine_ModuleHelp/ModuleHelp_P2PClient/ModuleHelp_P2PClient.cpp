@@ -402,7 +402,7 @@ bool CModuleHelp_P2PClient::ModuleHelp_P2PClient_Delete(XENGINE_P2XPPEER_PROTOCO
 			if (stl_MapPriIterator != stl_MapPubIteartor->second.end())
 			{
 				//查找局域网自身的IP地址是否存在
-                unordered_map<string, XENGINE_P2XP_PEERINFO>::iterator stl_MapConnIterator = stl_MapPriIterator->second.find(pSt_P2PProtocol->tszUserName);
+                unordered_map<string, XENGINE_P2XP_PEERINFO>::iterator stl_MapConnIterator = stl_MapPriIterator->second.find(pSt_P2PProtocol->tszPrivateAddr);
 				if (stl_MapConnIterator != stl_MapPriIterator->second.end())
 				{
 					//找到了删除
