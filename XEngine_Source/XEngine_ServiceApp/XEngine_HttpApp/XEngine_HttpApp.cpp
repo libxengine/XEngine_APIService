@@ -166,10 +166,7 @@ int main(int argc, char** argv)
 	if (st_ServiceConfig.bHideWnd)
 	{
 #ifdef _MSC_BUILD
-		LPCXSTR lpszWndName = _X("XEngine_DeamonApp");
-		SetConsoleTitleA(lpszWndName);
-		HWND hWnd = FindWindowA(NULL, lpszWndName);
-
+		HWND hWnd = GetConsoleWindow();
 		if (NULL == hWnd)
 		{
 			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("启动服务中,设置窗口隐藏失败,没有找到句柄"));
