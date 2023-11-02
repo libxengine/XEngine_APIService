@@ -21,8 +21,7 @@ EXPORTS
 	ModuleProtocol_Packet_SoftWare
 	ModuleProtocol_Packet_P2PLan
 	ModuleProtocol_Packet_P2PWLan
-	ModuleProtocol_Packet_P2PUser
-	ModuleProtocol_Packet_P2PConnect
+	ModuleProtocol_Packet_P2PWList
 
 	ModuleProtocol_Parse_IDCard
 	ModuleProtocol_Parse_Bank

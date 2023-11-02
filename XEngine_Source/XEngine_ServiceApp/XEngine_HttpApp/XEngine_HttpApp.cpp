@@ -99,10 +99,6 @@ int main(int argc, char** argv)
 	WSAStartup(MAKEWORD(2, 2), &st_WSAData);
 #endif
 	bIsRun = true;
-	LPCXSTR lpszHTTPMime = _X("./XEngine_Config/HttpMime.types");
-	LPCXSTR lpszHTTPCode = _X("./XEngine_Config/HttpCode.types");
-	LPCXSTR lpszLogFile = _X("./XEngine_Log/XEngine_HttpApp.Log");
-	LPCXSTR lpszConfigDeamon = _X("./XEngine_Config/XEngine_DeamonConfig.json");
 	HELPCOMPONENTS_XLOG_CONFIGURE st_XLogConfig;
 	THREADPOOL_PARAMENT** ppSt_ListHTTPParam;
 
@@ -113,9 +109,6 @@ int main(int argc, char** argv)
 	memset(&st_PluginLibConfig, '\0', sizeof(XENGINE_PLUGINCONFIG));
 	memset(&st_PluginLuaConfig, '\0', sizeof(XENGINE_PLUGINCONFIG));
 
-	st_XLogConfig.XLog_MaxBackupFile = 10;
-	st_XLogConfig.XLog_MaxSize = 1024000;
-	_tcsxcpy(st_XLogConfig.tszFileName, lpszLogFile);
 	//初始化参数
 	if (!XEngine_Configure_Parament(argc, argv))
 	{
@@ -138,7 +131,10 @@ int main(int argc, char** argv)
 		ServiceApp_Deamon();
 	}
 	//初始日志
-	xhLog = HelpComponents_XLog_Init(HELPCOMPONENTS_XLOG_OUTTYPE_STD | HELPCOMPONENTS_XLOG_OUTTYPE_FILE, &st_XLogConfig);
+	st_XLogConfig.XLog_MaxBackupFile = st_ServiceConfig.st_XLog.nMaxCount;
+	st_XLogConfig.XLog_MaxSize = st_ServiceConfig.st_XLog.nMaxSize;
+	_tcsxcpy(st_XLogConfig.tszFileName, st_ServiceConfig.st_XLog.tszLogFile);
+	xhLog = HelpComponents_XLog_Init(st_ServiceConfig.st_XLog.nLogLeave, &st_XLogConfig);
 	if (NULL == xhLog)
 	{
 		printf("启动服务中,启动日志失败,错误：%lX", XLog_GetLastError());
@@ -153,24 +149,24 @@ int main(int argc, char** argv)
 	signal(SIGABRT, ServiceApp_Stop);
 	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("启动服务中,初始化信号量成功"));
 
-	if (!SystemApi_Process_IsAdmin())
+	if (SystemApi_Process_IsAdmin())
+	{
+		if (!ModuleSystem_API_AutoStart(st_ServiceConfig.bAutoStart))
+		{
+			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("启动服务中,注册软件开机启动失败!错误:%lX"), ModuleHelp_GetLastError());
+			goto XENGINE_SERVICEAPP_EXIT;
+		}
+		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("启动服务中,设置软件开机启动标志成功,标志位:%d"), st_ServiceConfig.bAutoStart);
+	}
+	else
 	{
 		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_WARN, _X("启动服务中,启动权限不足,对于进程和后台服务任务可能会执行失败,请切换管理员权限"));
 	}
-	if (!ModuleSystem_API_AutoStart(st_ServiceConfig.bAutoStart))
-	{
-		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("启动服务中,注册软件开机启动失败!错误:%lX"), ModuleHelp_GetLastError());
-		goto XENGINE_SERVICEAPP_EXIT;
-	}
-	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("启动服务中,设置软件开机启动标志成功,标志位:%d"), st_ServiceConfig.bAutoStart);
 
 	if (st_ServiceConfig.bHideWnd)
 	{
 #ifdef _MSC_BUILD
-		LPCXSTR lpszWndName = _X("XEngine_DeamonApp");
-		SetConsoleTitleA(lpszWndName);
-		HWND hWnd = FindWindowA(NULL, lpszWndName);
-
+		HWND hWnd = GetConsoleWindow();
 		if (NULL == hWnd)
 		{
 			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("启动服务中,设置窗口隐藏失败,没有找到句柄"));
@@ -256,7 +252,7 @@ int main(int argc, char** argv)
 	if (st_ServiceConfig.nHttpPort > 0)
 	{
 		//HTTP包处理器
-		xhHTTPPacket = HttpProtocol_Server_InitEx(lpszHTTPCode, lpszHTTPMime, st_ServiceConfig.st_XMax.nHTTPThread);
+		xhHTTPPacket = HttpProtocol_Server_InitEx(st_ServiceConfig.st_XConfig.tszConfigHTTPCode, st_ServiceConfig.st_XConfig.tszConfigHTTPMime, st_ServiceConfig.st_XMax.nHTTPThread);
 		if (NULL == xhHTTPPacket)
 		{
 			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("启动服务中,初始化HTTP组包失败,错误：%lX"), HttpProtocol_GetLastError());
@@ -318,7 +314,7 @@ int main(int argc, char** argv)
 	}
 	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("启动服务中,启动P2P客户端管理器成功,超时时间设置:%d 秒"), st_ServiceConfig.st_XTime.nP2PTimeOut);
 	//进程守护
-	if (!ModuleConfigure_Json_DeamonList(lpszConfigDeamon, &st_DeamonAppConfig))
+	if (!ModuleConfigure_Json_DeamonList(st_ServiceConfig.st_XConfig.tszConfigDeamon, &st_DeamonAppConfig))
 	{
 		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("启动服务中,启动加载进程守护配置文件失败,错误：%lX"), ModuleConfigure_GetLastError());
 		goto XENGINE_SERVICEAPP_EXIT;

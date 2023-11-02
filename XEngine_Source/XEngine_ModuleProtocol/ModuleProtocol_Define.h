@@ -352,8 +352,8 @@ extern "C" bool ModuleProtocol_Packet_P2PLan(XCHAR* ptszMsgBuffer, int* pInt_Msg
 *********************************************************************/
 extern "C" bool ModuleProtocol_Packet_P2PWLan(XCHAR* ptszMsgBuffer, int* pInt_MsgLen, list<XENGINE_P2XPPEER_PROTOCOL>* pStl_ListClients);
 /********************************************************************
-函数名称：ModuleProtocol_Packet_P2PUser
-函数功能：响应用户查询用户信息的请求协议封包函数
+函数名称：ModuleProtocol_Packet_P2PWList
+函数功能：打包公有地址列表
  参数.一：ptszMsgBuffer
   In/Out：Out
   类型：字符指针
@@ -364,46 +364,22 @@ extern "C" bool ModuleProtocol_Packet_P2PWLan(XCHAR* ptszMsgBuffer, int* pInt_Ms
   类型：整数型指针
   可空：N
   意思：输入你的缓冲区大小,输出缓冲区真实大小
- 参数.三：pSt_PeerInfo
+ 参数.三：ppptszListAddr
   In/Out：In
-  类型：数据结构指针
+  类型：三级指针
   可空：N
-  意思：输入获取到的用户信息
+  意思：客户端列表
+ 参数.四：nListCount
+  In/Out：In
+  类型：整数型
+  可空：N
+  意思：列表个数
 返回值
   类型：逻辑型
   意思：是否成功
 备注：
 *********************************************************************/
-extern "C" bool ModuleProtocol_Packet_P2PUser(XCHAR* ptszMsgBuffer, int* pInt_MsgLen, XENGINE_P2XPPEER_PROTOCOL* pSt_PeerInfo);
-/********************************************************************
-函数名称：ModuleProtocol_Packet_P2PConnect
-函数功能：请求连接打包函数
- 参数.一：pSt_ProtocolHdr
-  In/Out：In
-  类型：数据结构指针
-  可空：N
-  意思：输入要打包的协议头
- 参数.二：pSt_IOProtocol
-  In/Out：In
-  类型：数据结构指针
-  可空：N
-  意思：输入连接信息
- 参数.三：ptszMsgBuffer
-  In/Out：Out
-  类型：字符指针
-  可空：N
-  意思：导出封装好的缓冲区
- 参数.四：pInt_MsgLen
-  In/Out：In/Out
-  类型：整数型指针
-  可空：N
-  意思：输入你的缓冲区大小,输出缓冲区真实大小
-返回值
-  类型：逻辑型
-  意思：是否成功
-备注：
-*********************************************************************/
-extern "C" bool ModuleProtocol_Packet_P2PConnect(XCHAR* ptszMsgBuffer, int* pInt_MsgLen, XENGINE_P2XPIO_PROTOCOL* pSt_IOProtocol);
+extern "C" bool ModuleProtocol_Packet_P2PWList(XCHAR* ptszMsgBuffer, int* pInt_MsgLen, XCHAR*** ppptszListAddr, int nListCount);
 /********************************************************************
 函数名称：ModuleProtocol_Packet_Log
 函数功能：日志信息打包

@@ -73,6 +73,7 @@ bool CModuleHelp_ImageSet::ModuleHelp_ImageSet_Resolution(LPCXSTR lpszSrcBuffer,
 		ModuleHelp_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_HELP_IAMGE_PARAMRT;
 		return false;
 	}
+#if _XENGINE_BUILD_SWITCH_OPENCV == 1
 	//读取到内存
 	cv::_InputArray m_InputArray(lpszSrcBuffer, nSLen);
 	cv::Mat m_SrcFrame = cv::imdecode(m_InputArray, cv::IMREAD_UNCHANGED);
@@ -92,6 +93,11 @@ bool CModuleHelp_ImageSet::ModuleHelp_ImageSet_Resolution(LPCXSTR lpszSrcBuffer,
 
 	*pInt_DLen = stl_VectorImage.size();
 	memcpy(ptszDstBuffer, stl_VectorImage.data(), stl_VectorImage.size());
+#else
+	ModuleHelp_IsErrorOccur = true;
+	ModuleHelp_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_HELP_IAMGE_NOTSUPPORT;
+	return false;
+#endif
 	return true;
 }
 /********************************************************************
@@ -142,6 +148,7 @@ bool CModuleHelp_ImageSet::ModuleHelp_ImageSet_Flip(LPCXSTR lpszSrcBuffer, int n
 		ModuleHelp_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_HELP_IAMGE_PARAMRT;
 		return false;
 	}
+#if _XENGINE_BUILD_SWITCH_OPENCV == 1
 	cv::_InputArray m_InputArray(lpszSrcBuffer, nSLen);
 	cv::Mat m_SrcFrame = cv::imdecode(m_InputArray, cv::IMREAD_UNCHANGED);
 	cv::Mat m_DstFrame;
@@ -165,6 +172,11 @@ bool CModuleHelp_ImageSet::ModuleHelp_ImageSet_Flip(LPCXSTR lpszSrcBuffer, int n
 
 	*pInt_DLen = stl_VectorImage.size();
 	memcpy(ptszDstBuffer, stl_VectorImage.data(), stl_VectorImage.size());
+#else
+	ModuleHelp_IsErrorOccur = true;
+	ModuleHelp_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_HELP_IAMGE_NOTSUPPORT;
+	return false;
+#endif
 	return true;
 }
 /********************************************************************
@@ -215,6 +227,7 @@ bool CModuleHelp_ImageSet::ModuleHelp_ImageSet_ColorCvt(LPCXSTR lpszSrcBuffer, i
 		ModuleHelp_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_HELP_IAMGE_PARAMRT;
 		return false;
 	}
+#if _XENGINE_BUILD_SWITCH_OPENCV == 1
 	cv::_InputArray m_InputArray(lpszSrcBuffer, nSLen);
 	cv::Mat m_SrcFrame = cv::imdecode(m_InputArray, cv::IMREAD_UNCHANGED);
 	cv::Mat m_DstFrame;
@@ -237,6 +250,11 @@ bool CModuleHelp_ImageSet::ModuleHelp_ImageSet_ColorCvt(LPCXSTR lpszSrcBuffer, i
 
 	*pInt_DLen = stl_VectorImage.size();
 	memcpy(ptszDstBuffer, stl_VectorImage.data(), stl_VectorImage.size());
+#else
+	ModuleHelp_IsErrorOccur = true;
+	ModuleHelp_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_HELP_IAMGE_NOTSUPPORT;
+	return false;
+#endif
 	return true;
 }
 /********************************************************************
@@ -287,6 +305,7 @@ bool CModuleHelp_ImageSet::ModuleHelp_ImageSet_Ligth(LPCXSTR lpszSrcBuffer, int 
 		ModuleHelp_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_HELP_IAMGE_PARAMRT;
 		return false;
 	}
+#if _XENGINE_BUILD_SWITCH_OPENCV == 1
 	cv::_InputArray m_InputArray(lpszSrcBuffer, nSLen);
 	cv::Mat m_SrcFrame = cv::imdecode(m_InputArray, cv::IMREAD_UNCHANGED);
 	cv::Mat m_DstFrame;
@@ -311,5 +330,10 @@ bool CModuleHelp_ImageSet::ModuleHelp_ImageSet_Ligth(LPCXSTR lpszSrcBuffer, int 
 
 	*pInt_DLen = stl_VectorImage.size();
 	memcpy(ptszDstBuffer, stl_VectorImage.data(), stl_VectorImage.size());
+#else
+	ModuleHelp_IsErrorOccur = true;
+	ModuleHelp_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_HELP_IAMGE_NOTSUPPORT;
+	return false;
+#endif
 	return true;
 }

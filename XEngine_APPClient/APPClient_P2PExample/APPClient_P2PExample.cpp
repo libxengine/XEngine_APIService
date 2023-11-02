@@ -52,7 +52,7 @@ BOOL APIHelp_NetWork_GetIPNet(XCHAR* ptszIPAddr)
 int APPClient_P2XPLogin()
 {
 	Json::Value st_JsonRoot;
-	LPCXSTR lpszAddr = _T("http://192.168.1.8:5501/api?function=p2p&params1=24577");
+	LPCXSTR lpszAddr = _T("http://127.0.0.1:5501/api?function=p2p&params1=24577");
 	ENUM_XENGINE_NETXAPI_SOCKET_CONNECTTYPE dwNetType;
 
 	memset(tszPublicAddr, '\0', sizeof(tszPublicAddr));
@@ -95,7 +95,7 @@ int APPClient_P2XPLogin()
 int APPClient_P2XPList()
 {
 	Json::Value st_JsonRoot;
-	LPCXSTR lpszAddr = _T("http://192.168.1.8:5501/api?function=p2p&params1=24579");
+	LPCXSTR lpszAddr = _T("http://127.0.0.1:5501/api?function=p2p&params1=24581");
 
 	st_JsonRoot["tszUserName"] = lpszUserName;
 	st_JsonRoot["tszPrivateAddr"] = tszPrivateAddr;
@@ -113,31 +113,27 @@ int APPClient_P2XPList()
 	return 0;
 }
 
-int APPClient_P2XPGetUser()
+int APPClient_P2XPWan()
 {
 	Json::Value st_JsonRoot;
-	LPCXSTR lpszAddr = _T("http://192.168.1.8:5501/api?function=p2p&params1=24583");
-
-	st_JsonRoot["tszUserName"] = lpszUserName;
-	st_JsonRoot["tszPrivateAddr"] = tszPrivateAddr;
-	st_JsonRoot["tszPublicAddr"] = tszPublicAddr;
+	LPCXSTR lpszAddr = _T("http://127.0.0.1:5501/api?function=p2p&params1=24583");
 
 	int nMsgLen = 0;
 	int nHTTPCode = 0;
 	XCHAR* ptszMsgBuffer = NULL;
-	if (!APIClient_Http_Request(_T("POST"), lpszAddr, st_JsonRoot.toStyledString().c_str(), &nHTTPCode, &ptszMsgBuffer, &nMsgLen))
+	if (!APIClient_Http_Request(_T("POST"), lpszAddr, NULL, &nHTTPCode, &ptszMsgBuffer, &nMsgLen))
 	{
 		return -1;
 	}
-	printf("APPClient_P2XPGetUser,&nMsgLen:%d,%s\n", nMsgLen, ptszMsgBuffer);
+	printf("APPClient_P2XPWan,&nMsgLen:%d,%s\n", nMsgLen, ptszMsgBuffer);
 	BaseLib_OperatorMemory_FreeCStyle((XPPMEM)&ptszMsgBuffer);
 	return 0;
 }
 
-int APPClient_P2XPConnect()
+int APPClient_P2XPLogout()
 {
 	Json::Value st_JsonRoot;
-	LPCXSTR lpszAddr = _T("http://192.168.1.8:5501/api?function=p2p&params1=24581");
+	LPCXSTR lpszAddr = _T("http://127.0.0.1:5501/api?function=p2p&params1=24579");
 
 	st_JsonRoot["tszUserName"] = lpszUserName;
 	st_JsonRoot["tszPrivateAddr"] = tszPrivateAddr;
@@ -150,7 +146,7 @@ int APPClient_P2XPConnect()
 	{
 		return -1;
 	}
-	printf("APPClient_P2XPConnect,&nMsgLen:%d,%s\n", nMsgLen, ptszMsgBuffer);
+	printf("APPClient_P2XPLogout,&nMsgLen:%d,%s\n", nMsgLen, ptszMsgBuffer);
 	BaseLib_OperatorMemory_FreeCStyle((XPPMEM)&ptszMsgBuffer);
 	return 0;
 }
@@ -164,8 +160,8 @@ int main()
 
 	APPClient_P2XPLogin();
 	APPClient_P2XPList();
-	//APPClient_P2XPGetUser();
-	//APPClient_P2XPConnect();
+	APPClient_P2XPWan();
+	APPClient_P2XPLogout();
 
 #ifdef _MSC_BUILD
 	WSACleanup();

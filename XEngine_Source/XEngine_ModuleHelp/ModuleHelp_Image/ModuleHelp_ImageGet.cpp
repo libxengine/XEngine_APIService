@@ -58,6 +58,7 @@ bool CModuleHelp_ImageGet::ModuleHelp_ImageGet_Attr(LPCXSTR lpszMsgBuffer, int n
 		ModuleHelp_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_HELP_IAMGE_PARAMRT;
 		return false;
 	}
+#if _XENGINE_BUILD_SWITCH_OPENCV == 1
 	//读取到内存
 	cv::_InputArray m_InputArray(lpszMsgBuffer, nMsgLen);
 	cv::Mat m_Frame = cv::imdecode(m_InputArray, cv::IMREAD_UNCHANGED);
@@ -71,8 +72,8 @@ bool CModuleHelp_ImageGet::ModuleHelp_ImageGet_Attr(LPCXSTR lpszMsgBuffer, int n
 	//获取信息
 	if (NULL != pSt_BaseInfo)
 	{
-		pSt_BaseInfo->nWidth = m_Frame.rows;
-		pSt_BaseInfo->nHeigth = m_Frame.cols;
+		pSt_BaseInfo->nWidth = m_Frame.cols;
+		pSt_BaseInfo->nHeigth = m_Frame.rows;
 		pSt_BaseInfo->nChannel = m_Frame.channels();
 	}
 	//获取其他信息
@@ -82,5 +83,10 @@ bool CModuleHelp_ImageGet::ModuleHelp_ImageGet_Attr(LPCXSTR lpszMsgBuffer, int n
 		pSt_ExtAttr->nDepth = m_Frame.depth();
 		pSt_ExtAttr->nType = m_Frame.type();
 	}
+#else
+	ModuleHelp_IsErrorOccur = true;
+	ModuleHelp_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_HELP_IAMGE_NOTSUPPORT;
+	return false;
+#endif
 	return true;
 }

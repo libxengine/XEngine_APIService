@@ -1,6 +1,5 @@
 ﻿#include "../XEngine_Hdr.h"
 
-
 bool HTTPTask_TaskGet_Language(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer, int nConvertType)
 {
 	int nMsgLen = 4096;

@@ -30,12 +30,18 @@ bool HTTPTask_TaskGet_Reload(LPCXSTR lpszClientAddr, LPCXSTR lpszOPCode)
 		ModulePlugin_Loader_Init();
 		if (!ModuleConfigure_Json_PluginFile(st_ServiceConfig.st_XPlugin.tszPluginLib, &st_PluginLibConfig))
 		{
+			st_HDRParam.nHttpCode = 500;
+			HttpProtocol_Server_SendMsgEx(xhHTTPPacket, tszMsgBuffer, &nMsgLen, &st_HDRParam);
+			XEngine_Network_Send(lpszClientAddr, tszMsgBuffer, nMsgLen);
 			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("HTTP客户端:%s,请求操作配置重载失败,加载Lib插件配置失败,错误：%lX"), lpszClientAddr, ModuleConfigure_GetLastError());
 			return false;
 		}
 		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("HTTP客户端:%s,请求操作配置重载成功,加载Lib插件配置成功"), lpszClientAddr);
 		if (!ModuleConfigure_Json_PluginFile(st_ServiceConfig.st_XPlugin.tszPluginLua, &st_PluginLuaConfig))
 		{
+			st_HDRParam.nHttpCode = 500;
+			HttpProtocol_Server_SendMsgEx(xhHTTPPacket, tszMsgBuffer, &nMsgLen, &st_HDRParam);
+			XEngine_Network_Send(lpszClientAddr, tszMsgBuffer, nMsgLen);
 			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("HTTP客户端:%s,请求操作配置重载失败,加载Lua插件配置失败,错误：%lX"), lpszClientAddr, ModuleConfigure_GetLastError());
 			return false;
 		}
@@ -83,7 +89,55 @@ bool HTTPTask_TaskGet_Reload(LPCXSTR lpszClientAddr, LPCXSTR lpszOPCode)
 				}
 			}
 		}
+		HttpProtocol_Server_SendMsgEx(xhHTTPPacket, tszMsgBuffer, &nMsgLen, &st_HDRParam);
+		XEngine_Network_Send(lpszClientAddr, tszMsgBuffer, nMsgLen);
 		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("HTTP客户端:%s,请求重载插件成功,Lib插件:%d 个,Lua插件:%d 个"), lpszClientAddr, st_PluginLibConfig.pStl_ListPlugin->size(), st_PluginLuaConfig.pStl_ListPlugin->size());
+	}
+	else if (2 == _ttxoi(lpszOPCode))
+	{
+		memset(&st_OPenccConfig, '\0', sizeof(XENGINE_OPENCCCONFIG));
+		//重载OPENCC配置
+		if (!ModuleConfigure_Json_OPenccFile(st_ServiceConfig.st_XConfig.tszConfigOPencc, &st_OPenccConfig))
+		{
+			st_HDRParam.nHttpCode = 500;
+			HttpProtocol_Server_SendMsgEx(xhHTTPPacket, tszMsgBuffer, &nMsgLen, &st_HDRParam);
+			XEngine_Network_Send(lpszClientAddr, tszMsgBuffer, nMsgLen);
+			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("HTTP客户端:%s,请求重载OPenCC配置文件失败,错误：%lX"), lpszClientAddr, ModuleConfigure_GetLastError());
+			return false;
+		}
+		HttpProtocol_Server_SendMsgEx(xhHTTPPacket, tszMsgBuffer, &nMsgLen, &st_HDRParam);
+		XEngine_Network_Send(lpszClientAddr, tszMsgBuffer, nMsgLen);
+		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("HTTP客户端:%s,请求重载OPenCC配置文件:%s 成功"), lpszClientAddr, st_ServiceConfig.st_XConfig.tszConfigOPencc);
+	}
+	else if (3 == _ttxoi(lpszOPCode))
+	{
+		memset(&st_QRCodeConfig, '\0', sizeof(XENGINE_QRCODECONFIG));
+		if (!ModuleConfigure_Json_QRCodeFile(st_ServiceConfig.st_XConfig.tszConfigQRCode, &st_QRCodeConfig))
+		{
+			st_HDRParam.nHttpCode = 500;
+			HttpProtocol_Server_SendMsgEx(xhHTTPPacket, tszMsgBuffer, &nMsgLen, &st_HDRParam);
+			XEngine_Network_Send(lpszClientAddr, tszMsgBuffer, nMsgLen);
+			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("HTTP客户端:%s,请求重载二维码配置文件失败,错误：%lX"), lpszClientAddr, ModuleConfigure_GetLastError());
+			return false;
+		}
+		HttpProtocol_Server_SendMsgEx(xhHTTPPacket, tszMsgBuffer, &nMsgLen, &st_HDRParam);
+		XEngine_Network_Send(lpszClientAddr, tszMsgBuffer, nMsgLen);
+		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("HTTP客户端:%s,请求重载二维码配置文件:%s 成功"), lpszClientAddr, st_ServiceConfig.st_XConfig.tszConfigQRCode);
+	}
+	else if (4 == _ttxoi(lpszOPCode))
+	{
+		st_DeamonAppConfig.stl_ListDeamonApp.clear();
+		if (!ModuleConfigure_Json_DeamonList(st_ServiceConfig.st_XConfig.tszConfigDeamon, &st_DeamonAppConfig))
+		{
+			st_HDRParam.nHttpCode = 500;
+			HttpProtocol_Server_SendMsgEx(xhHTTPPacket, tszMsgBuffer, &nMsgLen, &st_HDRParam);
+			XEngine_Network_Send(lpszClientAddr, tszMsgBuffer, nMsgLen);
+			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("HTTP客户端:%s,请求重载进程守护配置文件失败,错误：%lX"), lpszClientAddr, ModuleConfigure_GetLastError());
+			return false;
+		}
+		HttpProtocol_Server_SendMsgEx(xhHTTPPacket, tszMsgBuffer, &nMsgLen, &st_HDRParam);
+		XEngine_Network_Send(lpszClientAddr, tszMsgBuffer, nMsgLen);
+		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("HTTP客户端:%s,请求重载进程守护配置文件成功"));
 	}
 	return true;
 }

@@ -90,13 +90,10 @@ void CALLBACK HTTPTask_TaskPost_Thread()
 bool HTTPTask_TaskPost_Deamon(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer, int nMsgLen)
 {
 	int nSDLen = 0;
-	int nRVLen = 0;
-	XCHAR* ptszRVBuffer = (XCHAR*)malloc(XENGINE_MEMORY_SIZE_MAX);
 	XCHAR* ptszSDBuffer = (XCHAR*)malloc(XENGINE_MEMORY_SIZE_MAX);
 	RFCCOMPONENTS_HTTP_HDRPARAM st_HDRParam;    //发送给客户端的参数
 	XENGINE_DEAMONAPPINFO st_DeamonApp;
 	
-	memset(ptszRVBuffer, '\0', XENGINE_MEMORY_SIZE_MAX);
 	memset(ptszSDBuffer, '\0', XENGINE_MEMORY_SIZE_MAX);
 	
 	memset(&st_HDRParam, '\0', sizeof(RFCCOMPONENTS_HTTP_HDRPARAM));
@@ -105,7 +102,7 @@ bool HTTPTask_TaskPost_Deamon(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer, int
 	st_HDRParam.nHttpCode = 200; //HTTP CODE码
 	st_HDRParam.bIsClose = true; //收到回复后就关闭
 
-	if (st_ServiceConfig.st_XVerifcation.bDeamon)
+	if (st_ServiceConfig.st_XVerifcation.st_VerSwitch.bDeamon)
 	{
 		XCHAR tszUserName[MAX_PATH];
 		XCHAR tszUserPass[MAX_PATH];
@@ -114,7 +111,6 @@ bool HTTPTask_TaskPost_Deamon(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer, int
 		memset(tszUserPass, '\0', sizeof(tszUserPass));
 
 		ModuleProtocol_Parse_Verifcation(lpszMsgBuffer, nMsgLen, tszUserName, tszUserPass);
-
 		if (0 != _tcsxnicmp(st_ServiceConfig.st_XVerifcation.tszUserName, tszUserName, _tcsxlen(st_ServiceConfig.st_XVerifcation.tszUserName)))
 		{
 			st_HDRParam.nHttpCode = 400;
@@ -152,6 +148,7 @@ bool HTTPTask_TaskPost_Deamon(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer, int
 		{
 			if (0 == _tcsxnicmp(stl_ListIterator->tszAPPName, stl_ListIterator->tszAPPName, _tcsxlen(stl_ListIterator->tszAPPName)) && (0 == _tcsxnicmp(stl_ListIterator->tszAPPPath, st_DeamonApp.tszAPPPath, _tcsxlen(stl_ListIterator->tszAPPPath))))
 			{
+				SystemApi_Process_Stop(stl_ListIterator->tszAPPName);
 				st_DeamonAppConfig.stl_ListDeamonApp.erase(stl_ListIterator);
 				break;
 			}
@@ -161,9 +158,7 @@ bool HTTPTask_TaskPost_Deamon(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer, int
 	XEngine_Network_Send(lpszClientAddr, ptszSDBuffer, nSDLen);
 	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("HTTP客户端:%s,请求解析守护协议成功,协议类型:%d,进程名称:%s"), lpszClientAddr, st_DeamonApp.bEnable, st_DeamonApp.tszAPPName);
 
-	free(ptszRVBuffer);
 	free(ptszSDBuffer);
 	ptszSDBuffer = NULL;
-	ptszRVBuffer = NULL;
 	return true;
 }

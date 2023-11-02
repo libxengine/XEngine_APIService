@@ -19,7 +19,6 @@ public:
 	bool ModuleHelp_P2PClient_Init(int nTimeout, CALLBACK_APISERVICE_MODULE_HELP_P2PCLIENT fpCall_P2PClient, XPVOID lParam = NULL);
 	bool ModuleHelp_P2PClient_Destory();
 	bool ModuleHelp_P2PClient_Add(XENGINE_P2XP_PEERINFO* pSt_PeerInfo);
-	bool ModuleHelp_P2PClient_Get(XENGINE_P2XPPEER_PROTOCOL* pSt_P2PProtocol, XENGINE_P2XP_PEERINFO* pSt_PeerInfo = NULL);
 	bool ModuleHelp_P2PClient_GetLan(XENGINE_P2XPPEER_PROTOCOL* pSt_P2PProtocol, XENGINE_P2XPPEER_PROTOCOL*** pppSt_P2XPClient, int* pInt_ListCount);
 	bool ModuleHelp_P2PClient_GetLList(LPCXSTR lpszPubAddr, XCHAR*** pppszP2XPClient, int* pInt_ListCount);
 	bool ModuleHelp_P2PClient_GetWList(XCHAR*** pppszP2XPClient, int* pInt_ListCount);

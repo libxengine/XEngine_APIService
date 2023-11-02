@@ -12,7 +12,6 @@ EXPORTS
 	ModuleHelp_P2PClient_Init
 	ModuleHelp_P2PClient_Destory
 	ModuleHelp_P2PClient_Add
-	ModuleHelp_P2PClient_Get
 	ModuleHelp_P2PClient_GetLan
 	ModuleHelp_P2PClient_GetLList
 	ModuleHelp_P2PClient_GetWList

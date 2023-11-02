@@ -68,7 +68,7 @@ macos执行:./XEngine_LINEnv.sh -i 3
 修改配置文件里面XSQL里面的数据库配置为你的  
 
 #### Windows
-需要vcpkg配置第三方环境,具体参考vcpkg安装方式,安装好后执行:vcpkg.exe install lua:x84-windows lua:x64-windows opencc:x84-windows opencc:x64-windows opencv[contrib]:x84-windows libqrencode:x84-windows opencv[contrib]:x64-windows libqrencode:x64-windows  
+需要vcpkg配置第三方环境,具体参考vcpkg安装方式,安装好后执行:vcpkg.exe install lua:x86-windows opencc:x86-windows opencv[contrib]:x86-windows libqrencode:x86-windows lua:x64-windows opencc:x64-windows opencv[contrib]:x64-windows libqrencode:x64-windows  
 使用VS打开并且编译,支持WINDOWS 7SP1以上系统  
 直接运行即可
 
@@ -79,7 +79,7 @@ Linux使用Makefile编译,UBUNTU22.04 x64或者RockyLinux 9 x64
 在控制台运行
 
 #### Macos
-安装opencc,执行命令:brew install lua opencc  
+安装opencc,执行命令:brew install lua opencc opencv qrencode  
 使用makefile编译,控制台运行,需要mac 13以及以上版本  
 在控制台运行
 

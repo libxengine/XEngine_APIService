@@ -13,7 +13,7 @@
 *********************************************************************/
 CModuleHelp_QRCode::CModuleHelp_QRCode()
 {
-#ifdef _MSC_BUILD
+#if _XENGINE_BUILD_SWITCH_OPENCV == 1
 	cv::utils::logging::setLogLevel(cv::utils::logging::LOG_LEVEL_SILENT);
 #endif
 }
@@ -51,7 +51,7 @@ bool CModuleHelp_QRCode::ModuleHelp_QRCode_QREncodecFile(LPCXSTR lpszFileName, L
 		ModuleHelp_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_HELP_QRCODE_PARAMENT;
 		return false;
 	}
-#ifdef _MSC_BUILD
+#if _XENGINE_BUILD_SWITCH_OPENCV == 1
 	//使用qrencode进行字符串编码
 	QRcode* pSt_QRCodec = QRcode_encodeString(lpszMsgBuffer, 0, QR_ECLEVEL_H, QR_MODE_8, 1);
 	if (NULL == pSt_QRCodec)
@@ -125,7 +125,7 @@ bool CModuleHelp_QRCode::ModuleHelp_QRCode_QREncodecMemory(LPCXSTR lpszMsgBuffer
 		ModuleHelp_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_HELP_QRCODE_PARAMENT;
 		return false;
 	}
-#ifdef _MSC_BUILD
+#if _XENGINE_BUILD_SWITCH_OPENCV == 1
 	//使用qrencode进行字符串编码
 	QRcode* pSt_QRCodec = QRcode_encodeString(lpszMsgBuffer, 0, QR_ECLEVEL_H, QR_MODE_8, 1);
 	if (NULL == pSt_QRCodec)
@@ -216,7 +216,7 @@ bool CModuleHelp_QRCode::ModuleHelp_QRCode_QRDecodecFile(LPCXSTR lpszFileName, X
 		ModuleHelp_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_HELP_QRCODE_PARAMENT;
 		return false;
 	}
-#ifdef _MSC_BUILD
+#if _XENGINE_BUILD_SWITCH_QRDECODEC == 1
 	cv::Mat m_Frame;
 	vector<cv::Mat> m_MatPoint;
 	cv::Ptr<cv::wechat_qrcode::WeChatQRCode> m_QRDetector;
@@ -298,7 +298,7 @@ bool CModuleHelp_QRCode::ModuleHelp_QRCode_QRDecodecMemory(LPCXSTR lpszMsgBuffer
 		ModuleHelp_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_HELP_QRCODE_PARAMENT;
 		return false;
 	}
-#ifdef _MSC_BUILD
+#if _XENGINE_BUILD_SWITCH_QRDECODEC == 1
 	cv::Mat m_Frame;
 	vector<cv::Mat> m_MatPoint;
 	cv::Ptr<cv::wechat_qrcode::WeChatQRCode> m_QRDetector;

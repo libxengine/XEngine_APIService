@@ -69,7 +69,7 @@ MYSQL database version 8.0 or above is required. Create a table through CreateDa
 Modify the database configuration in XSQL in the configuration file to your  
 
 #### Windows
-need to vcpkg configure third-part env.refer vcpkg install guide.after installed and execution:vcpkg.exe install lua:x84-windows lua:x64-windows opencc:x84-windows opencc:x64-windows opencv[contrib]:x84-windows libqrencode:x84-windows opencv[contrib]:x64-windows libqrencode:x64-windows  
+need to vcpkg configure third-part env.refer vcpkg install guide.after installed and execution:vcpkg.exe install lua:x86-windows opencc:x86-windows opencv[contrib]:x86-windows libqrencode:x86-windows lua:x64-windows opencc:x64-windows opencv[contrib]:x64-windows libqrencode:x64-windows  
 use vs open and compile,suport windows 7sp1 and above  
 Just Run it
 
@@ -80,7 +80,7 @@ use makefile compile,UBUNTU22.04 x64 or RockyLinux 9 x64
 Run it on the terminal
 
 #### Macos
-install opencc:brew install opencc  
+install opencc:brew install opencc opencc opencv qrencode  
 use makefile compile,mac 13 and above  
 Run it on the terminal
 

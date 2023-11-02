@@ -15,6 +15,7 @@
 #include <WinSock2.h>
 #endif
 #endif //PCH_H
+#include "../XEngine_BuildSwitch.h"
 #include <string.h>
 #include <errno.h>
 #include <thread>
@@ -25,11 +26,13 @@
 #include <shared_mutex>
 #include <unordered_map>
 #include <opencc/opencc.h>
+#if _XENGINE_BUILD_SWITCH_OPENCV == 1
 #include <opencv2/core.hpp>
 #include <opencv2/opencv.hpp>
 #include <opencv2/core/utils/logger.hpp>
 #include <opencv2/wechat_qrcode.hpp>
 #include <qrencode.h>
+#endif
 using namespace std;
 #include <XEngine_Include/XEngine_CommHdr.h>
 #include <XEngine_Include/XEngine_Types.h>

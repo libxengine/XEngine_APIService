@@ -103,13 +103,9 @@ extern "C" bool ModuleProtocol_Packet_P2PWLan(XCHAR * ptszMsgBuffer, int* pInt_M
 {
 	return m_ProtocolPacket.ModuleProtocol_Packet_P2PWLan(ptszMsgBuffer, pInt_MsgLen, pStl_ListClients);
 }
-extern "C" bool ModuleProtocol_Packet_P2PUser(XCHAR * ptszMsgBuffer, int* pInt_MsgLen, XENGINE_P2XPPEER_PROTOCOL * pSt_PeerInfo)
+extern "C" bool ModuleProtocol_Packet_P2PWList(XCHAR * ptszMsgBuffer, int* pInt_MsgLen, XCHAR * **ppptszListAddr, int nListCount)
 {
-	return m_ProtocolPacket.ModuleProtocol_Packet_P2PUser(ptszMsgBuffer, pInt_MsgLen, pSt_PeerInfo);
-}
-extern "C" bool ModuleProtocol_Packet_P2PConnect(XCHAR * ptszMsgBuffer, int* pInt_MsgLen, XENGINE_P2XPIO_PROTOCOL * pSt_IOProtocol)
-{
-	return m_ProtocolPacket.ModuleProtocol_Packet_P2PConnect(ptszMsgBuffer, pInt_MsgLen, pSt_IOProtocol);
+	return m_ProtocolPacket.ModuleProtocol_Packet_P2PWList(ptszMsgBuffer, pInt_MsgLen, ppptszListAddr, nListCount);
 }
 /************************************************************************/
 /*                         导出的协议解析函数                           */

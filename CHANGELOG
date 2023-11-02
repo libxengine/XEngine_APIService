@@ -1,3 +1,47 @@
+XEngine_APIService V3.1.0.1001
+
+增加:为opencv和qr增加自定义编译开关
+增加:p2xp用户离开和万维网ip地址获取,心跳协议支持
+修改:自动启动仅仅运行在管理员模式下
+修改:用户验证配置为子级别了
+修改:当禁用守护进程的时候会停止进程
+修改:屏幕录像现在可以设置设备名称了
+修改:当图像处理失败会回复消息
+修改:图像处理错误方法
+修改:所有配置文件被指定到主配置中了
+修改:配置重载支持opencc,qr,deamon了
+修改:p2xp协议的connect字段不在作为key使用
+修正:qr码识别不支持linux的问题
+修正:日志配置没有作用的问题
+修正:p2p的delete和心跳不争取的问题
+修正:图像设置http参数解析不正确的问题
+修正:图像的宽高参数解析错误
+修正:windows隐藏窗口不正确的问题
+删除:没有使用的p2p协议代码
+删除:p2p的获取用户信息协议和链接协议
+删除:没有使用的内存代码
+
+added:custom build switch for opencv and qr
+added:p2p delete client and wan address get and heartbeat supported
+modify:Autostart only run with administrator privileges
+modify:user ver configure node level
+modify:stop process when disable deamon process
+modify:screen record can be set device name
+modify:reply message when process failed for image
+modify:image process error way
+modify:All configuration files are specified by the master configuration
+modify:configure reload supports opencc and qr and deamon now
+modify:p2xp does not use connect address as a key.
+fixed:qr not support linux platform
+fixed:log configure does not work
+fixed:delete and heart p2xp not work
+fixed:image set http parament parse is incorrent
+fixed:image width and heigth parament is incorrent
+fixed:hide window is incorrent for windows
+delete:unused p2p protocol code
+delete:get user info and connect for p2p client
+delete:not used memory code for deamon
+======================================================================================
 XEngine_APIService V3.0.0.1001
 
 增加:系统API函数模块
