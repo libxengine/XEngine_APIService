@@ -52,7 +52,7 @@ void CALLBACK HTTPTask_TaskPost_Thread()
 				memset(&st_ProcessInfo, '\0', sizeof(SYSTEMAPI_PROCESS_INFOMATION));
 				if (SystemApi_Process_GetProcessInfo(&st_ProcessInfo, stl_ListIterator->tszAPPName))
 				{
-					if (ENUM_SYSTEMSDK_PROCFILE_PROCFILE_PROCESS_STATE_ZOMBIE == st_ProcessInfo.en_ProcessState)
+					if (ENUM_SYSTEMAPI_PROCESS_STATUS_ZOMBIE == st_ProcessInfo.en_ProcessState)
 					{
 #ifndef _MSC_BUILD
 						//僵尸进程必须使用waitpid退出
