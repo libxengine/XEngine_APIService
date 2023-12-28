@@ -14,4 +14,5 @@
 //                          自定义编译头开关
 //////////////////////////////////////////////////////////////////////////
 #define _XENGINE_BUILD_SWITCH_OPENCV 0                                    //1 打开OPENCV支持
-#define _XENGINE_BUILD_SWITCH_QRDECODEC 0                                  //1 打开二维码识别
+#define _XENGINE_BUILD_SWITCH_QRDECODEC 0                                 //1 打开二维码识别
+#define _XENGINE_BUILD_SWITCH_LUA 0                                       //1 打开LUA脚本支持

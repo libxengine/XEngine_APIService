@@ -11,23 +11,13 @@
 // 添加要在此处预编译的标头
 #include "framework.h"
 #include <tchar.h>
-#include <lua.hpp>
 #else
 #include <dlfcn.h>
-
-#ifdef __linux__
-#ifdef _CENTOS
-#include <lua/lua.hpp>
-#else
-#include <lua5.3/lua.hpp>
 #endif
-#else
-#include <lua/lua.hpp>
-#endif
-#endif
-
 #endif //PCH_H
-
+#if (1 == _XENGINE_BUILD_SWITCH_LUA)
+#include <lua.hpp>
+#endif
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>

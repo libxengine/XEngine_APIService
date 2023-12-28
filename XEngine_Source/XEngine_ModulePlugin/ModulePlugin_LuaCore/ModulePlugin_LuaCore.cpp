@@ -13,7 +13,6 @@
 *********************************************************************/
 CModulePlugin_LuaCore::CModulePlugin_LuaCore()
 {
-    bIsInit = false;
 }
 CModulePlugin_LuaCore::~CModulePlugin_LuaCore()
 {
@@ -32,15 +31,6 @@ CModulePlugin_LuaCore::~CModulePlugin_LuaCore()
 bool CModulePlugin_LuaCore::ModulePlugin_LuaCore_Init()
 {
     ModulePlugin_IsErrorOccur = false;
-    //判断是否初始化
-    if (bIsInit)
-    {
-        ModulePlugin_IsErrorOccur = true;
-        ModulePlugin_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PLUGIN_ISINITED;
-        return false;
-    }
-    //启动线程
-    bIsInit = true;
     return true;
 }
 /********************************************************************
@@ -144,6 +134,7 @@ bool CModulePlugin_LuaCore::ModulePlugin_LuaCore_Exec(XNETHANDLE xhModule, XCHAR
 		st_csStl.unlock_shared();
 		return false;
 	}
+#if (1 == _XENGINE_BUILD_SWITCH_LUA)
 	if (0 == lua_getglobal(stl_MapIterator->second.pSt_LuaState, "PluginCore_Call"))
 	{
 		ModulePlugin_IsErrorOccur = true;
@@ -186,7 +177,7 @@ bool CModulePlugin_LuaCore::ModulePlugin_LuaCore_Exec(XNETHANDLE xhModule, XCHAR
 	lua_pop(stl_MapIterator->second.pSt_LuaState, -1);
 
 	st_csStl.unlock_shared();
-
+#endif
     return true;
 }
 /********************************************************************
@@ -201,12 +192,7 @@ bool CModulePlugin_LuaCore::ModulePlugin_LuaCore_Destroy()
 {
     ModulePlugin_IsErrorOccur = false;
 
-    //判断是否初始化
-    if (!bIsInit)
-    {
-        return true;
-    }
-    bIsInit = false;
+#if (1 == _XENGINE_BUILD_SWITCH_LUA)
     //清理STL元素空间
     st_csStl.lock();
     unordered_map<XNETHANDLE, PLUGINCORE_LUAFRAMEWORK>::iterator stl_MapIterator = stl_MapFrameWork.begin();
@@ -219,7 +205,7 @@ bool CModulePlugin_LuaCore::ModulePlugin_LuaCore_Destroy()
     }
     stl_MapFrameWork.clear();
     st_csStl.unlock();
-
+#endif
     return true;
 }
 //////////////////////////////////////////////////////////////////////////
@@ -258,6 +244,7 @@ bool CModulePlugin_LuaCore::ModulePlugin_LuaCore_Add(XNETHANDLE xhNet, LPCXSTR l
         ModulePlugin_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PLUGIN_PARAMENT;
         return false;
     }
+#if (1 == _XENGINE_BUILD_SWITCH_LUA)
     PLUGINCORE_LUAFRAMEWORK st_LuaCore;
     memset(&st_LuaCore, '\0', sizeof(PLUGINCORE_LUAFRAMEWORK));
 
@@ -309,5 +296,6 @@ bool CModulePlugin_LuaCore::ModulePlugin_LuaCore_Add(XNETHANDLE xhNet, LPCXSTR l
     st_csStl.lock();
     stl_MapFrameWork.insert(make_pair(xhNet, st_LuaCore));
     st_csStl.unlock();
+#endif
     return true;
 }
