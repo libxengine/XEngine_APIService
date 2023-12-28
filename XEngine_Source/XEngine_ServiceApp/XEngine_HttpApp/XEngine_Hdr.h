@@ -52,6 +52,7 @@ using namespace std;
 #include <XEngine_Include/XEngine_StreamMedia/StreamClient_Define.h>
 #include <XEngine_Include/XEngine_StreamMedia/StreamClient_Error.h>
 //加载项目相关头文件
+#include "../../XEngine_BuildSwitch.h"
 #include "../../XEngine_UserProtocol.h"
 #include "../../XEngine_ModuleConfigure/ModuleConfig_Define.h"
 #include "../../XEngine_ModuleConfigure/ModuleConfig_Error.h"

@@ -15,6 +15,7 @@
 #include <dlfcn.h>
 #endif
 #endif //PCH_H
+#include "../XEngine_BuildSwitch.h"
 #if (1 == _XENGINE_BUILD_SWITCH_LUA)
 #include <lua.hpp>
 #endif

@@ -178,6 +178,8 @@ int main(int argc, char** argv)
 		}
 #endif
 	}
+
+#if (1 == _XENGINE_BUILD_SWITCH_OPENCC)
 	//初始化OPENCC配置
 	if (!ModuleConfigure_Json_OPenccFile(st_ServiceConfig.st_XConfig.tszConfigOPencc, &st_OPenccConfig))
 	{
@@ -185,12 +187,20 @@ int main(int argc, char** argv)
 		goto XENGINE_SERVICEAPP_EXIT;
 	}
 	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("启动服务中,初始化OPenCC配置文件:%s 成功"), st_ServiceConfig.st_XConfig.tszConfigOPencc);
+#else
+	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_WARN, _X("启动服务中,初始化OPenCC配置文件:%s 失败,因为OPENCC编译脚本被关闭"), st_ServiceConfig.st_XConfig.tszConfigOPencc);
+#endif
+
+#if (1 == _XENGINE_BUILD_SWITCH_QRDECODEC)
 	if (!ModuleConfigure_Json_QRCodeFile(st_ServiceConfig.st_XConfig.tszConfigQRCode, &st_QRCodeConfig))
 	{
 		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("启动服务中,初始化二维码配置文件失败,错误：%lX"), ModuleConfigure_GetLastError());
 		goto XENGINE_SERVICEAPP_EXIT;
 	}
 	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("启动服务中,初始化二维码配置文件:%s 成功"), st_ServiceConfig.st_XConfig.tszConfigQRCode);
+#else
+	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_WARN, _X("启动服务中,初始化二维码配置文件:%s 失败,因为QR编译脚本被关闭"), st_ServiceConfig.st_XConfig.tszConfigQRCode);
+#endif
 	//初始化插件配置
 	if (st_ServiceConfig.st_XPlugin.bEnable)
 	{
@@ -369,6 +379,7 @@ int main(int argc, char** argv)
 		}
 	}
 	
+#if (1 == _XENGINE_BUILD_SWITCH_LUA)
 	{
 		list<XENGINE_PLUGININFO>::const_iterator stl_ListIterator = st_PluginLuaConfig.pStl_ListPlugin->begin();
 		for (int i = 1; stl_ListIterator != st_PluginLuaConfig.pStl_ListPlugin->end(); stl_ListIterator++, i++)
@@ -390,6 +401,9 @@ int main(int argc, char** argv)
 			}
 		}
 	}
+#else
+	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_WARN, _X("启动服务中,加载Lua模块插件失败,因为LUA编译被关闭"));
+#endif
 	//展示能力
 	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("启动服务中,加载的Lib插件:%d 个,Lua插件:%d 个"), st_PluginLibConfig.pStl_ListPlugin->size(), st_PluginLuaConfig.pStl_ListPlugin->size());
 
