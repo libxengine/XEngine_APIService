@@ -2,30 +2,32 @@
 
 bool HTTPTask_TaskPost_Image(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer, int nMsgLen, XCHAR*** ppptszList, int nListCount)
 {
-	int nSDLen = 0;
-	int nRVLen = 0;
-	XCHAR tszHTTPKey[64];
-	XCHAR tszHTTPVlu[64];
-	XCHAR *ptszSDBuffer = (XCHAR *)malloc(XENGIEN_APISERVICE_BUFFER_SIZE);
-	XCHAR *ptszRVBuffer = (XCHAR *)malloc(XENGIEN_APISERVICE_BUFFER_SIZE);
 	RFCCOMPONENTS_HTTP_HDRPARAM st_HDRParam;    //发送给客户端的参数
-
-	memset(tszHTTPKey, '\0', sizeof(tszHTTPKey));
-	memset(tszHTTPVlu, '\0', sizeof(tszHTTPVlu));
-	memset(ptszSDBuffer, '\0', XENGIEN_APISERVICE_BUFFER_SIZE);
-	memset(ptszRVBuffer, '\0', XENGIEN_APISERVICE_BUFFER_SIZE);
 	memset(&st_HDRParam, '\0', sizeof(RFCCOMPONENTS_HTTP_HDRPARAM));
 
 	st_HDRParam.nHttpCode = 200; //HTTP CODE码
 	st_HDRParam.bIsClose = true; //收到回复后就关闭
-
 #if (0 == _XENGINE_BUILD_SWITCH_OPENCV)
-	st_HDRParam.nHttpCode = 501;
-	HttpProtocol_Server_SendMsgEx(xhHTTPPacket, ptszSDBuffer, &nSDLen, &st_HDRParam);
-	XEngine_Network_Send(lpszClientAddr, ptszSDBuffer, nSDLen);
-	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("HTTP客户端:%s,请求图片操作失败,服务器没有启用此功能"), lpszClientAddr);
-#endif
+	int nMLen = 0;
+	XCHAR tszMSGBuffer[MAX_PATH] = {};
 
+	st_HDRParam.nHttpCode = 501;
+	HttpProtocol_Server_SendMsgEx(xhHTTPPacket, tszMSGBuffer, &nMLen, &st_HDRParam);
+	XEngine_Network_Send(lpszClientAddr, tszMSGBuffer, nMLen);
+	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("HTTP客户端:%s,请求图片操作失败,服务器没有启用此功能"), lpszClientAddr);
+#else
+	int nSDLen = 0;
+	int nRVLen = 0;
+	XCHAR tszHTTPKey[64];
+	XCHAR tszHTTPVlu[64];
+	XCHAR* ptszSDBuffer = (XCHAR*)malloc(XENGIEN_APISERVICE_BUFFER_SIZE);
+	XCHAR* ptszRVBuffer = (XCHAR*)malloc(XENGIEN_APISERVICE_BUFFER_SIZE);
+	
+	memset(tszHTTPKey, '\0', sizeof(tszHTTPKey));
+	memset(tszHTTPVlu, '\0', sizeof(tszHTTPVlu));
+	memset(ptszSDBuffer, '\0', XENGIEN_APISERVICE_BUFFER_SIZE);
+	memset(ptszRVBuffer, '\0', XENGIEN_APISERVICE_BUFFER_SIZE);
+	
 	BaseLib_OperatorString_GetKeyValue((*ppptszList)[1], "=", tszHTTPKey, tszHTTPVlu);
 	int nOPCode = _ttxoi(tszHTTPVlu);
 	//0获取,1设置
@@ -87,7 +89,7 @@ bool HTTPTask_TaskPost_Image(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer, int 
 				XEngine_Network_Send(lpszClientAddr, ptszSDBuffer, nSDLen);
 				XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("HTTP客户端:%s,请求设置图像分辨率失败,错误:%lX"), lpszClientAddr, ModuleHelp_GetLastError());
 			}
-			
+
 		}
 		else if (2 == nOPCode)
 		{
@@ -142,5 +144,6 @@ bool HTTPTask_TaskPost_Image(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer, int 
 	free(ptszSDBuffer);
 	ptszRVBuffer = NULL;
 	ptszSDBuffer = NULL;
+#endif
 	return true;
 }

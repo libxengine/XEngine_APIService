@@ -2,34 +2,35 @@
 
 bool HTTPTask_TaskPost_QRCode(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer, int nMsgLen, int nType)
 {
-	int nSDLen = 0;
-	int nRVLen = 0;
-	XCHAR *ptszSDBuffer = (XCHAR *)malloc(XENGIEN_APISERVICE_BUFFER_SIZE);
-	XCHAR *ptszRVBuffer = (XCHAR *)malloc(XENGIEN_APISERVICE_BUFFER_SIZE);
-	XENGINE_QRCODE st_QRCode;
 	RFCCOMPONENTS_HTTP_HDRPARAM st_HDRParam;    //发送给客户端的参数
-
-	memset(ptszSDBuffer, '\0', XENGIEN_APISERVICE_BUFFER_SIZE);
-	memset(ptszRVBuffer, '\0', XENGIEN_APISERVICE_BUFFER_SIZE);
-	memset(&st_QRCode, '\0', sizeof(XENGINE_QRCODE));
 	memset(&st_HDRParam, '\0', sizeof(RFCCOMPONENTS_HTTP_HDRPARAM));
 
 	st_HDRParam.nHttpCode = 200; //HTTP CODE码
 	st_HDRParam.bIsClose = true; //收到回复后就关闭
-
 #if (0 == _XENGINE_BUILD_SWITCH_QRDECODEC)
-	st_HDRParam.nHttpCode = 501;
-	HttpProtocol_Server_SendMsgEx(xhHTTPPacket, ptszSDBuffer, &nSDLen, &st_HDRParam);
-	XEngine_Network_Send(lpszClientAddr, ptszSDBuffer, nSDLen);
-	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("HTTP客户端:%s,请求二维码操作失败,服务器没有启用此功能"), lpszClientAddr);
-#endif
+	int nMLen = 0;
+	XCHAR tszMSGBuffer[MAX_PATH] = {};
 
+	st_HDRParam.nHttpCode = 501;
+	HttpProtocol_Server_SendMsgEx(xhHTTPPacket, tszMSGBuffer, &nMLen, &st_HDRParam);
+	XEngine_Network_Send(lpszClientAddr, tszMSGBuffer, nMLen);
+	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("HTTP客户端:%s,请求二维码操作失败,服务器没有启用此功能"), lpszClientAddr);
+#else
+	int nSDLen = 0;
+	int nRVLen = 0;
+	XCHAR* ptszSDBuffer = (XCHAR*)malloc(XENGIEN_APISERVICE_BUFFER_SIZE);
+	XCHAR* ptszRVBuffer = (XCHAR*)malloc(XENGIEN_APISERVICE_BUFFER_SIZE);
+	XENGINE_QRCODE st_QRCode;
+	
+	memset(ptszSDBuffer, '\0', XENGIEN_APISERVICE_BUFFER_SIZE);
+	memset(ptszRVBuffer, '\0', XENGIEN_APISERVICE_BUFFER_SIZE);
+	memset(&st_QRCode, '\0', sizeof(XENGINE_QRCODE));
 	//0创建,1解析
 	if (0 == nType)
 	{
 		ModuleProtocol_Parse_QRCode(lpszMsgBuffer, nMsgLen, &st_QRCode);
 		_tcsxcpy(st_HDRParam.tszMimeType, st_QRCode.tszFmtBuffer + 1);
-		
+
 		if (ModuleHelp_QRCode_QREncodecMemory(st_QRCode.tszMsgBuffer, ptszRVBuffer, &nRVLen, st_QRCode.tszFmtBuffer))
 		{
 			HttpProtocol_Server_SendMsgEx(xhHTTPPacket, ptszSDBuffer, &nSDLen, &st_HDRParam, ptszRVBuffer, nRVLen);
@@ -65,5 +66,6 @@ bool HTTPTask_TaskPost_QRCode(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer, int
 	free(ptszSDBuffer);
 	ptszRVBuffer = NULL;
 	ptszSDBuffer = NULL;
+#endif
 	return true;
 }

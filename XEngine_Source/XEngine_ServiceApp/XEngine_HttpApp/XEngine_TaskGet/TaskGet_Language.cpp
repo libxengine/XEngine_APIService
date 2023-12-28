@@ -3,15 +3,8 @@
 bool HTTPTask_TaskGet_Language(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer, int nConvertType)
 {
 	int nMsgLen = 4096;
-	int nPktLen = 4096;
 	XCHAR tszMsgBuffer[4096];
-	XCHAR tszPktBuffer[4096];
-	XENGINE_LANGUAGEINFO st_LanguageInfo;
 	RFCCOMPONENTS_HTTP_HDRPARAM st_HDRParam;    //发送给客户端的参数
-
-	memset(tszMsgBuffer, '\0', sizeof(tszMsgBuffer));
-	memset(tszPktBuffer, '\0', sizeof(tszPktBuffer));
-	memset(&st_LanguageInfo, '\0', sizeof(XENGINE_LANGUAGEINFO));
 	memset(&st_HDRParam, '\0', sizeof(RFCCOMPONENTS_HTTP_HDRPARAM));
 
 	st_HDRParam.nHttpCode = 200; //HTTP CODE码
@@ -23,6 +16,13 @@ bool HTTPTask_TaskGet_Language(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer, in
 	XEngine_Network_Send(lpszClientAddr, tszMsgBuffer, nMsgLen);
 	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("HTTP客户端:%s,请求二维码操作失败,服务器没有启用此功能"), lpszClientAddr);
 #else
+	int nPktLen = 4096;
+	XCHAR tszPktBuffer[4096];
+	XENGINE_LANGUAGEINFO st_LanguageInfo;
+
+	memset(tszPktBuffer, '\0', sizeof(tszPktBuffer));
+	memset(&st_LanguageInfo, '\0', sizeof(XENGINE_LANGUAGEINFO));
+
 	st_LanguageInfo.enType = nConvertType;
 	OPenSsl_Codec_UrlDeCodec(lpszMsgBuffer, _tcsxlen(lpszMsgBuffer), st_LanguageInfo.tszSourceStr);
 	if (ENUM_XENGINE_APISERVICE_LANGUAGE_TYPE_S2T == nConvertType)

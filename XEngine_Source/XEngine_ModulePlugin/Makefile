@@ -6,7 +6,7 @@ FILEEXT =
 LIBFLAG = 
 RELEASE = 0
 UNICODE = 0
-LOADHDR = -I ./
+LOADHDR = -I ./ -I /usr/include/lua5.4
 LOADSO = -L /usr/local/lib/XEngine_Release/XEngine_BaseLib
 LIB = -lXEngine_BaseLib
 LIBEX = 
@@ -37,7 +37,7 @@ ifeq ($(PLATFORM),linux)
 	FILEEXT = so
 	LIBFLAG = -shared
 	ifeq ($(SWITCHLUA),1)
-		LIB += -llua5.3
+		LIB += -llua5.4
 	endif
 	LIBEX = -lpthread -lrt -ldl
 	LOADBIN = -Wl,-rpath=./,--disable-new-dtags
