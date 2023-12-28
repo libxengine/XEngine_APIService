@@ -131,29 +131,9 @@ bool CModuleProtocol_Packet::ModuleProtocol_Packet_IDQuery(XCHAR* ptszMsgBuffer,
 		st_JsonObject["nPoliceID"] = pSt_IDInfo->nPoliceID;
 		st_JsonObject["nSex"] = pSt_IDInfo->nSex / 2 == 0 ? 0 : 1;
 		st_JsonObject["nCheck"] = pSt_IDInfo->nCheck;
-
-#ifdef _MSC_BUILD
-		int nUTFLen = _tcsxlen(pSt_IDRegion->tszProvincer);
-		XCHAR tszUTFBuffer[MAX_PATH];
-		memset(tszUTFBuffer, '\0', MAX_PATH);
-
-		BaseLib_OperatorCharset_AnsiToUTF(pSt_IDRegion->tszProvincer, tszUTFBuffer, &nUTFLen);
-		st_JsonObject["tszProvincer"] = tszUTFBuffer;
-
-		nUTFLen = _tcsxlen(pSt_IDRegion->tszCity);
-		memset(tszUTFBuffer, '\0', MAX_PATH);
-		BaseLib_OperatorCharset_AnsiToUTF(pSt_IDRegion->tszCity, tszUTFBuffer, &nUTFLen);
-		st_JsonObject["tszCity"] = tszUTFBuffer;
-
-		nUTFLen = _tcsxlen(pSt_IDRegion->tszCounty);
-		memset(tszUTFBuffer, '\0', MAX_PATH);
-		BaseLib_OperatorCharset_AnsiToUTF(pSt_IDRegion->tszCounty, tszUTFBuffer, &nUTFLen);
-		st_JsonObject["tszCounty"] = tszUTFBuffer;
-#else
 		st_JsonObject["tszProvincer"] = pSt_IDRegion->tszProvincer;
 		st_JsonObject["tszCity"] = pSt_IDRegion->tszCity;
 		st_JsonObject["tszCounty"] = pSt_IDRegion->tszCounty;
-#endif
 	}
 
 	st_JsonRoot["code"] = nCode;
@@ -224,17 +204,7 @@ bool CModuleProtocol_Packet::ModuleProtocol_Packet_BankQuery(XCHAR* ptszMsgBuffe
 		st_JsonObject["tszBankNumber"] = pSt_BankInfo->tszBankNumber;
 		st_JsonObject["tszBankAbridge"] = pSt_BankInfo->tszBankAbridge;
 		st_JsonObject["enBankType"] = pSt_BankInfo->enBankType;
-
-#ifdef _MSC_BUILD
-		XCHAR tszUTFBuffer[MAX_PATH];
-		memset(tszUTFBuffer, '\0', MAX_PATH);
-
-		int nUTFLen = _tcsxlen(pSt_BankInfo->tszBankName);
-		BaseLib_OperatorCharset_AnsiToUTF(pSt_BankInfo->tszBankName, tszUTFBuffer, &nUTFLen);
-		st_JsonObject["tszBankName"] = tszUTFBuffer;
-#else
 		st_JsonObject["tszBankName"] = pSt_BankInfo->tszBankName;
-#endif
 	}
 
 	st_JsonRoot["code"] = nCode;
