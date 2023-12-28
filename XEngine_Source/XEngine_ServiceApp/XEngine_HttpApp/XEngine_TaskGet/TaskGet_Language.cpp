@@ -16,7 +16,13 @@ bool HTTPTask_TaskGet_Language(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer, in
 
 	st_HDRParam.nHttpCode = 200; //HTTP CODE码
 	st_HDRParam.bIsClose = true; //收到回复后就关闭
-	
+
+#if (0 == _XENGINE_BUILD_SWITCH_OPENCC)
+	st_HDRParam.nHttpCode = 501;
+	HttpProtocol_Server_SendMsgEx(xhHTTPPacket, tszMsgBuffer, &nMsgLen, &st_HDRParam);
+	XEngine_Network_Send(lpszClientAddr, tszMsgBuffer, nMsgLen);
+	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("HTTP客户端:%s,请求二维码操作失败,服务器没有启用此功能"), lpszClientAddr);
+#else
 	st_LanguageInfo.enType = nConvertType;
 	OPenSsl_Codec_UrlDeCodec(lpszMsgBuffer, _tcsxlen(lpszMsgBuffer), st_LanguageInfo.tszSourceStr);
 	if (ENUM_XENGINE_APISERVICE_LANGUAGE_TYPE_S2T == nConvertType)
@@ -80,5 +86,6 @@ bool HTTPTask_TaskGet_Language(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer, in
 	HttpProtocol_Server_SendMsgEx(xhHTTPPacket, tszMsgBuffer, &nMsgLen, &st_HDRParam, tszPktBuffer, nPktLen);
 	XEngine_Network_Send(lpszClientAddr, tszMsgBuffer, nMsgLen);
 	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("HTTP客户端:%s,请求语言转换成功,原始语言:%s,目标语言:%s"), lpszClientAddr, st_LanguageInfo.tszSourceStr, st_LanguageInfo.tszDestStr);
+#endif
 	return true;
 }

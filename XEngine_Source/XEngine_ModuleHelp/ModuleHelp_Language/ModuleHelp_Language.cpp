@@ -54,6 +54,7 @@ bool CModuleHelp_Language::ModuleHelp_Language_ConvertZh(LPCXSTR lpszJsonFile, L
 		ModuleHelp_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_HELP_LANGUAGE_PARAMENT;
 		return false;
 	}
+#if (1 == _XENGINE_BUILD_SWITCH_OPENCC)
 	opencc_t m_OPencc = opencc_open(lpszJsonFile);
 	if ((opencc_t)-1 == m_OPencc)
 	{
@@ -68,7 +69,7 @@ bool CModuleHelp_Language::ModuleHelp_Language_ConvertZh(LPCXSTR lpszJsonFile, L
 		return false;
 	}
 	opencc_close(m_OPencc);
-
+#endif
 	return true;
 }
 /********************************************************************
