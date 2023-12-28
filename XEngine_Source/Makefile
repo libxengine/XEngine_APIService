@@ -2,6 +2,10 @@ RELEASE = 0
 UNICODE = 0
 PLATFORM=linux
 FLAGS= 
+LUA=0
+QR=0
+OPENCC=0
+OPENCV=0
 
 #要编译的模块
 THIRDPART_MODULE_JSONCPP = ./XEngine_ThirdPart/jsoncpp
@@ -44,9 +48,9 @@ libXEngine_ModuleProtocol.so:
 libXEngine_ModuleSystem.so:
 	make -C $(MODULE_SYSTEM_PATH) PLATFORM=$(PLATFORM) $(FLAGS)
 libXEngine_ModuleHelp.so:
-	make -C $(MODULE_HELP_PATH) PLATFORM=$(PLATFORM) $(FLAGS)
+	make -C $(MODULE_HELP_PATH) SWITCHQR=$(QR) SWITCHCC=$(OPENCC) SWITCHCV=$(OPENCV) PLATFORM=$(PLATFORM) $(FLAGS)
 libXEngine_ModulePlugin.so:
-	make -C $(MODULE_PLUGIN_PATH) PLATFORM=$(PLATFORM) $(FLAGS)
+	make -C $(MODULE_PLUGIN_PATH) SWITCHLUA=$(LUA) PLATFORM=$(PLATFORM) $(FLAGS)
 
 libModulePlugin_Zodiac.so:
 	make -C $(PLUGIN_MODULE_ZODIAC) PLATFORM=$(PLATFORM) $(FLAGS)

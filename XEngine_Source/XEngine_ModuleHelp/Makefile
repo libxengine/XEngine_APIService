@@ -8,10 +8,19 @@ RELEASE = 0
 UNICODE = 0
 LOADHDR = -I ./ -I /usr/include/opencv4
 LOADSO = -L /usr/local/lib/XEngine_Release/XEngine_BaseLib -L /usr/local/lib/XEngine_Release/XEngine_Client 
-LIB = -lXEngine_BaseLib -lXClient_Socket -lopencc -lqrencode -llzma -lpng16 -lopencv_core -lopencv_imgcodecs -lopencv_imgproc -ltiff -lopencv_wechat_qrcode
+LIB = -lXEngine_BaseLib -lXClient_Socket 
 LIBEX = 
 OBJECTS = ModuleHelp_IDCard.o ModuleHelp_Language.o ModuleHelp_P2PClient.o ModuleHelp_Locker.o ModuleHelp_QRCode.o ModuleHelp_SocketTest.o ModuleHelp_ImageGet.o ModuleHelp_ImageSet.o pch.o
 
+ifeq ($(SWITCHCC),1)
+	LIB += -lopencc
+endif
+ifeq ($(SWITCHQR),1)
+	LIB += -lqrencode
+endif
+ifeq ($(SWITCHCV),1)
+	LIB += -llzma -lpng16 -lopencv_core -lopencv_imgcodecs -lopencv_imgproc -ltiff -lopencv_wechat_qrcode
+endif
 
 ifeq ($(RELEASE),1)
 FLAGS = -c 

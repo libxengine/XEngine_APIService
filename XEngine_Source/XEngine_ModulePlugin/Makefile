@@ -36,7 +36,9 @@ ifeq ($(PLATFORM),linux)
 	endif
 	FILEEXT = so
 	LIBFLAG = -shared
-	LIB += -llua5.3
+	ifeq ($(SWITCHLUA),1)
+		LIB += -llua5.3
+	endif
 	LIBEX = -lpthread -lrt -ldl
 	LOADBIN = -Wl,-rpath=./,--disable-new-dtags
 else ifeq ($(PLATFORM),mac)
@@ -45,7 +47,9 @@ else ifeq ($(PLATFORM),mac)
 	PLATDIR = XEngine_Mac
 	FILEEXT = dylib
 	LIBFLAG = -dynamiclib
-	LIB += -llua
+	ifeq ($(SWITCHLUA),1)
+		LIB += -llua
+	endif
 	LIBEX = -lpthread -ldl
 	LOADBIN = -Wl,-rpath,@loader_path/./
 endif
