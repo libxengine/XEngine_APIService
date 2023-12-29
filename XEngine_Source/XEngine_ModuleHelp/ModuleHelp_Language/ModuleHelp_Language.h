@@ -17,6 +17,6 @@ public:
 	CModuleHelp_Language();
 	~CModuleHelp_Language();
 public:
-	bool ModuleHelp_Language_ConvertZh(LPCXSTR lpszJsonFile, LPCXSTR lpszSourceStr, XCHAR* ptszDestStr);
+	bool ModuleHelp_Translation_Convert(ENUM_XENGINE_APISERVICE_TRANSLATION_TYPE enTranslationType, XCHAR* ptszTranslationType);
 private:
 };
