@@ -58,6 +58,6 @@ bool HTTPTask_TaskGet_Translation(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer,
 	HttpProtocol_Server_SendMsgEx(xhHTTPPacket, tszMsgBuffer, &nMsgLen, &st_HDRParam, tszPktBuffer, nPktLen);
 	XEngine_Network_Send(lpszClientAddr, tszMsgBuffer, nMsgLen);
 	BaseLib_OperatorMemory_FreeCStyle((XPPMEM)&ptszBodyBuffer);
-	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("HTTP客户端:%s,请求语言翻译成功,原始语言:%s,目标语言:%s"), lpszClientAddr, st_LanguageInfo.tszSourceStr, st_LanguageInfo.tszDestStr);
+	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("HTTP客户端:%s,请求语言翻译成功,原始语言:%s,目标语言:%s"), lpszClientAddr, st_LanguageInfo.tszFromStr, st_LanguageInfo.tszToStr);
 	return true;
 }
