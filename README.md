@@ -72,13 +72,13 @@ macos执行:./XEngine_LINEnv.sh -i 3
 直接运行即可
 
 #### Linux
-ubuntu:sudo apt install liblua5.3-dev libopencc-dev libopencv-dev libopencv-contrib-dev libqrencode-dev  
+ubuntu:sudo apt install liblua5.4-dev libopencv-dev libopencv-contrib-dev libqrencode-dev  
 centos:需要自己编译  
 Linux使用Makefile编译,UBUNTU22.04 x64或者RockyLinux 9 x64
 在控制台运行
 
 #### Macos
-安装opencc,执行命令:brew install lua opencc opencv qrencode  
+安装opencc,执行命令:brew install lua opencv qrencode  
 使用makefile编译,控制台运行,需要mac 13以及以上版本  
 在控制台运行
 

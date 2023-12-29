@@ -73,13 +73,13 @@ use vs open and compile,suport windows 7sp1 and above
 Just Run it
 
 #### Linux
-ubuntu:sudo apt install libopencc-dev  
+ubuntu:sudo apt install sudo apt install liblua5.4-dev libopencv-dev libopencv-contrib-dev libqrencode-dev  
 centos:compile by self  
 use makefile compile,UBUNTU22.04 x64 or RockyLinux 9 x64
 Run it on the terminal
 
 #### Macos
-install opencc:brew install opencc opencc opencv qrencode  
+install opencc:brew install lua opencv qrencode  
 use makefile compile,mac 13 and above  
 Run it on the terminal
 
