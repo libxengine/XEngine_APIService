@@ -160,7 +160,6 @@
     <ClCompile Include="XEngine_PluginTask.cpp" />
     <ClCompile Include="XEngine_TaskGet\TaskGet_Bank.cpp" />
     <ClCompile Include="XEngine_TaskGet\TaskGet_IDCard.cpp" />
-    <ClCompile Include="XEngine_TaskGet\TaskGet_Language.cpp" />
     <ClCompile Include="XEngine_TaskGet\TaskGet_Locker.cpp" />
     <ClCompile Include="XEngine_TaskGet\TaskGet_Reload.cpp" />
     <ClCompile Include="XEngine_TaskGet\TaskGet_Translation.cpp" />
@@ -184,7 +183,6 @@
     <ClInclude Include="XEngine_PluginTask.h" />
     <ClInclude Include="XEngine_TaskGet\TaskGet_Bank.h" />
     <ClInclude Include="XEngine_TaskGet\TaskGet_IDCard.h" />
-    <ClInclude Include="XEngine_TaskGet\TaskGet_Language.h" />
     <ClInclude Include="XEngine_TaskGet\TaskGet_Locker.h" />
     <ClInclude Include="XEngine_TaskGet\TaskGet_Reload.h" />
     <ClInclude Include="XEngine_TaskGet\TaskGet_Translation.h" />

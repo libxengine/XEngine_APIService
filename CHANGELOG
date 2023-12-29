@@ -1,3 +1,31 @@
+XEngine_APIService V3.2.0.1001
+
+增加:编译开关日志提示
+增加:lua脚本功能开关编译选项
+修改:LUA,二维码和图像处理现在默认关闭
+修改:LUA,二维码和图像处理没有启用的时候返回501了
+修改:现在makefile支持linux和macos的编译开关了
+修改:不在需要bank和id处理的utf转换了
+修改:重新设计了语言翻译从有道改为百度
+修改:翻译语言日志提示
+修改:翻译类型使用枚举型替代
+修复:没有启用音频还开始录制的问题
+删除:lua init 变量
+删除:OPENCC库和相关代码已经被移除使用翻译替代
+
+added:build switch tips
+added:lua buid switch
+modify:lua and qr and image switch defualt is close
+modify:lua and qr and image reply is 501 when they is disable
+modify:makefile support linux and macos for build switch
+modify:does not need utf convert for bank and idcard
+modify:Redesigning translation from youdao to baidu
+modify:translation language tips
+modify:translation type used enum instead.
+fixed:not enable audio then start
+delete:lua init value
+delete:opencc library and code,use translation instead
+======================================================================================
 XEngine_APIService V3.1.0.1001
 
 增加:为opencv和qr增加自定义编译开关

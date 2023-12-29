@@ -13,7 +13,9 @@
 typedef struct
 {
 	XCHAR tszModuleFile[MAX_PATH];
+#if (1 == _XENGINE_BUILD_SWITCH_LUA)
 	lua_State* pSt_LuaState;
+#endif
 }PLUGINCORE_LUAFRAMEWORK;
 
 class CModulePlugin_LuaCore
@@ -28,8 +30,6 @@ public:
 	bool ModulePlugin_LuaCore_Destroy();
 protected:
 	bool ModulePlugin_LuaCore_Add(XNETHANDLE xhNet, LPCXSTR lpszPluginFile, XPVOID lParam = NULL);
-private:
-	bool bIsInit;
 private:
 	shared_mutex st_csStl;
 private:

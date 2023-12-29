@@ -25,7 +25,6 @@
 #include <memory>
 #include <shared_mutex>
 #include <unordered_map>
-#include <opencc/opencc.h>
 #if _XENGINE_BUILD_SWITCH_OPENCV == 1
 #include <opencv2/core.hpp>
 #include <opencv2/opencv.hpp>

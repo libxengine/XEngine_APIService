@@ -15,7 +15,7 @@ LIB = -lXEngine_BaseLib -lXEngine_Algorithm -lXEngine_Core -lXEngine_ManagePool 
 	  -ljsoncpp
 LIBEX = 
 OBJECTS = XEngine_Configure.o XEngine_Network.o XEngine_HTTPTask.o XEngine_PluginTask.o XEngine_HttpApp.o        \
-          TaskGet_Bank.o TaskGet_IDCard.o TaskGet_Language.o TaskGet_Locker.o TaskGet_Translation.o TaskGet_Reload.o  \
+          TaskGet_Bank.o TaskGet_IDCard.o TaskGet_Locker.o TaskGet_Translation.o TaskGet_Reload.o  \
 		  TaskPost_DTest.o TaskPost_Log.o TaskPost_P2PClient.o TaskPost_PostCode.o TaskPost_QRCode.o TaskPost_ShortLink.o TaskPost_SocketTest.o TaskPost_WordFilter.o TaskPost_Image.o TaskPost_BackService.o TaskPost_Deamon.o
 
 ifeq ($(RELEASE),1)
@@ -70,8 +70,6 @@ TaskGet_Bank.o:./XEngine_TaskGet/TaskGet_Bank.cpp
 	$(CC) $(DEBUG) $(FLAGS) $(UNICODE) $(PLATVER) $(LOADHDR) ./XEngine_TaskGet/TaskGet_Bank.cpp
 TaskGet_IDCard.o:./XEngine_TaskGet/TaskGet_IDCard.cpp
 	$(CC) $(DEBUG) $(FLAGS) $(UNICODE) $(PLATVER) $(LOADHDR) ./XEngine_TaskGet/TaskGet_IDCard.cpp
-TaskGet_Language.o:./XEngine_TaskGet/TaskGet_Language.cpp
-	$(CC) $(DEBUG) $(FLAGS) $(UNICODE) $(PLATVER) $(LOADHDR) ./XEngine_TaskGet/TaskGet_Language.cpp
 TaskGet_Locker.o:./XEngine_TaskGet/TaskGet_Locker.cpp
 	$(CC) $(DEBUG) $(FLAGS) $(UNICODE) $(PLATVER) $(LOADHDR) ./XEngine_TaskGet/TaskGet_Locker.cpp
 TaskGet_Translation.o:./XEngine_TaskGet/TaskGet_Translation.cpp

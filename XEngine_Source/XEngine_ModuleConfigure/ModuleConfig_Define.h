@@ -53,6 +53,11 @@ typedef struct
 	{
 		XCHAR tszBankUrl[MAX_PATH];           //银行卡验证地址
 		XCHAR tszTranslationUrl[MAX_PATH];    //翻译接口
+		struct  
+		{
+			XCHAR tszAPPID[MAX_PATH];
+			XCHAR tszAPPKey[MAX_PATH];
+		}st_TranslationInfo;
 	}st_XApi;
 	struct  
 	{
@@ -62,7 +67,6 @@ typedef struct
 	}st_XPlugin;
 	struct
 	{   
-		XCHAR tszConfigOPencc[MAX_PATH];      //OPENCC配置地址
 		XCHAR tszConfigQRCode[MAX_PATH];      //二维码配置地址
 		XCHAR tszConfigDeamon[MAX_PATH];      //守护进程配置文件
 		XCHAR tszConfigHTTPMime[MAX_PATH];    //HTTPMINE配置文件
@@ -93,24 +97,6 @@ typedef struct
 		list<string>* pStl_ListVer;
 	}st_XVer;
 }XENGINE_SERVICECONFIG;
-//OPENCC语言转换配置文件
-typedef struct 
-{
-	XCHAR tszFiles2t[MAX_PATH];
-	XCHAR tszFilet2s[MAX_PATH];
-	XCHAR tszFiles2tw[MAX_PATH];
-	XCHAR tszFiletw2s[MAX_PATH];
-	XCHAR tszFiles2hk[MAX_PATH];
-	XCHAR tszFilehk2s[MAX_PATH];
-	XCHAR tszFiles2twp[MAX_PATH];
-	XCHAR tszFiletw2sp[MAX_PATH];
-	XCHAR tszFilet2tw[MAX_PATH];
-	XCHAR tszFilehk2t[MAX_PATH];
-	XCHAR tszFilet2hk[MAX_PATH];
-	XCHAR tszFilet2jp[MAX_PATH];
-	XCHAR tszFilejp2t[MAX_PATH];
-	XCHAR tszFiletw2t[MAX_PATH];
-}XENGINE_OPENCCCONFIG;
 //二维码模型库
 typedef struct
 {
@@ -184,25 +170,6 @@ extern "C" XLONG ModuleConfigure_GetLastError(int* pInt_ErrorCode = NULL);
 备注：
 *********************************************************************/
 extern "C" bool ModuleConfigure_Json_File(LPCXSTR lpszConfigFile, XENGINE_SERVICECONFIG* pSt_ServerConfig);
-/********************************************************************
-函数名称：ModuleConfigure_Json_OPenccFile
-函数功能：读取JSON配置文件
- 参数.一：lpszConfigFile
-  In/Out：In
-  类型：常量字符指针
-  可空：N
-  意思：输入要读取的配置文件
- 参数.二：pSt_OPenccConfig
-  In/Out：Out
-  类型：数据结构指针
-  可空：N
-  意思：输出OPENCC配置信息
-返回值
-  类型：逻辑型
-  意思：是否成功
-备注：
-*********************************************************************/
-extern "C" bool ModuleConfigure_Json_OPenccFile(LPCXSTR lpszConfigFile, XENGINE_OPENCCCONFIG* pSt_OPenccConfig);
 /********************************************************************
 函数名称：ModuleConfigure_Json_QRCodeFile
 函数功能：读取JSON配置文件

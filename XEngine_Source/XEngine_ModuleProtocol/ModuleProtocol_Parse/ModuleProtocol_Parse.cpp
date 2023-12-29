@@ -228,17 +228,18 @@ bool CModuleProtocol_Parse::ModuleProtocol_Parse_Translation(LPCXSTR lpszMsgBuff
 		ModuleProtocol_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PROTOCOL_PARSE_JSON;
 		return false;
 	}
-	//{"type":"ZH_CN2EN","errorCode":0,"elapsedTime":1,"translateResult":[[{"src":"计算","tgt":"To calculate"}]]}
-	if (0 != st_JsonRoot["errorCode"].asInt())
+	if (!st_JsonRoot["error_code"].isNull())
 	{
 		ModuleProtocol_IsErrorOccur = true;
 		ModuleProtocol_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PROTOCOL_PARSE_VALIDATE;
 		return false;
 	}
-	Json::Value st_JsonTranslation = st_JsonRoot["translateResult"];
+	Json::Value st_JsonTranslation = st_JsonRoot["trans_result"];
 
-	_tcsxcpy(pSt_LanguageInfo->tszSourceStr, st_JsonTranslation[0][0]["src"].asCString());
-	_tcsxcpy(pSt_LanguageInfo->tszDestStr, st_JsonTranslation[0][0]["tgt"].asCString());
+	_tcsxcpy(pSt_LanguageInfo->tszFromStr, st_JsonRoot["from"].asCString());
+	_tcsxcpy(pSt_LanguageInfo->tszToStr, st_JsonRoot["to"].asCString());
+	_tcsxcpy(pSt_LanguageInfo->tszSourceStr, st_JsonTranslation[0]["src"].asCString());
+	_tcsxcpy(pSt_LanguageInfo->tszDestStr, st_JsonTranslation[0]["dst"].asCString());
 	return true;
 }
 /********************************************************************

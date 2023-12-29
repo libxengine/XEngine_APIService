@@ -325,6 +325,7 @@ bool HTTPTask_TaskPost_BackService(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer
 				XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("HTTP客户端:%s,初始化音频重采样工具失败,错误码:%lX"), lpszClientAddr, AudioCodec_GetLastError());
 				return false;
 			}
+			AVCollect_Audio_Start(xhSound);
 		}
 		//屏幕采集
 		AVCOLLECT_SCREENINFO st_AVScreen;
@@ -368,7 +369,6 @@ bool HTTPTask_TaskPost_BackService(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer
 			return false;
 		}
 		bRecord = true;
-		AVCollect_Audio_Start(xhSound);
 		AVCollect_Video_Start(xhScreen);
 		HttpProtocol_Server_SendMsgEx(xhHTTPPacket, ptszSDBuffer, &nSDLen, &st_HDRParam);
 		XEngine_Network_Send(lpszClientAddr, ptszSDBuffer, nSDLen);

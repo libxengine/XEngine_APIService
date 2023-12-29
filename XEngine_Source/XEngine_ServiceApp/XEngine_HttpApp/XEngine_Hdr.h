@@ -52,6 +52,7 @@ using namespace std;
 #include <XEngine_Include/XEngine_StreamMedia/StreamClient_Define.h>
 #include <XEngine_Include/XEngine_StreamMedia/StreamClient_Error.h>
 //加载项目相关头文件
+#include "../../XEngine_BuildSwitch.h"
 #include "../../XEngine_UserProtocol.h"
 #include "../../XEngine_ModuleConfigure/ModuleConfig_Define.h"
 #include "../../XEngine_ModuleConfigure/ModuleConfig_Error.h"
@@ -85,7 +86,6 @@ using namespace std;
 //get
 #include "XEngine_TaskGet/TaskGet_IDCard.h"
 #include "XEngine_TaskGet/TaskGet_Bank.h"
-#include "XEngine_TaskGet/TaskGet_Language.h"
 #include "XEngine_TaskGet/TaskGet_Translation.h"
 #include "XEngine_TaskGet/TaskGet_Locker.h"
 #include "XEngine_TaskGet/TaskGet_Reload.h"
@@ -113,7 +113,6 @@ extern XHANDLE xhHTTPPool;
 extern unique_ptr<thread> pSTDThread_Deamon;
 //配置文件
 extern XENGINE_SERVICECONFIG st_ServiceConfig;
-extern XENGINE_OPENCCCONFIG st_OPenccConfig;
 extern XENGINE_QRCODECONFIG st_QRCodeConfig;
 extern XENGINE_PLUGINCONFIG st_PluginLibConfig;
 extern XENGINE_PLUGINCONFIG st_PluginLuaConfig;

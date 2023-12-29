@@ -54,10 +54,6 @@ extern "C" bool ModuleHelp_IDCard_CheckSum(XENGINE_IDCARDINFO * pSt_IDInfo)
 /************************************************************************/
 /*                         导出的语言转换帮助函数                       */
 /************************************************************************/
-extern "C" bool ModuleHelp_Language_ConvertZh(LPCXSTR lpszJsonFile, LPCXSTR lpszSourceStr, XCHAR * ptszDestStr)
-{
-	return m_Language.ModuleHelp_Language_ConvertZh(lpszJsonFile, lpszSourceStr, ptszDestStr);
-}
 extern "C" bool ModuleHelp_Translation_Convert(ENUM_XENGINE_APISERVICE_TRANSLATION_TYPE enTranslationType, XCHAR * ptszTranslationType)
 {
 	return m_Language.ModuleHelp_Translation_Convert(enTranslationType, ptszTranslationType);

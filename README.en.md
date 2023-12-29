@@ -35,21 +35,20 @@ Support privatization deployment, free, safe, open source, controllable
 14. Bank card verification
 15. Exchange rate calculation (planned)
 16. QR code generation and parse
-17. Simplified and Traditional Conversion
-18. Twenty-four solar terms (planned)
-19. Xinhua Dictionary
-20. Metering Conversion
-21. network test
-22. Distributed lock
-23. short url creator and forward
-24. local system time
-25. math Calculation
-26. log service
-27. Plugin hot reload
-28. Sensitive word detection
-29. remote control(back management)
-30. Image Process
-31. process deamon
+17. Twenty-four solar terms (planned)
+18. Translation
+19. Metering Conversion
+20. network test
+21. Distributed lock
+22. short url creator and forward
+23. local system time
+24. math Calculation
+25. log service
+26. Plugin hot reload
+27. Sensitive word detection
+28. remote control(back management)
+29. Image Process
+30. process deamon
 
 ## install
 
@@ -69,18 +68,18 @@ MYSQL database version 8.0 or above is required. Create a table through CreateDa
 Modify the database configuration in XSQL in the configuration file to your  
 
 #### Windows
-need to vcpkg configure third-part env.refer vcpkg install guide.after installed and execution:vcpkg.exe install lua:x86-windows opencc:x86-windows opencv[contrib]:x86-windows libqrencode:x86-windows lua:x64-windows opencc:x64-windows opencv[contrib]:x64-windows libqrencode:x64-windows  
+need to vcpkg configure third-part env.refer vcpkg install guide.after installed and execution:vcpkg.exe install lua:x86-windows opencv[contrib]:x86-windows libqrencode:x86-windows lua:x64-windows opencv[contrib]:x64-windows libqrencode:x64-windows  
 use vs open and compile,suport windows 7sp1 and above  
 Just Run it
 
 #### Linux
-ubuntu:sudo apt install libopencc-dev  
+ubuntu:sudo apt install sudo apt install liblua5.4-dev libopencv-dev libopencv-contrib-dev libqrencode-dev  
 centos:compile by self  
 use makefile compile,UBUNTU22.04 x64 or RockyLinux 9 x64
 Run it on the terminal
 
 #### Macos
-install opencc:brew install opencc opencc opencv qrencode  
+install opencc:brew install lua opencv qrencode  
 use makefile compile,mac 13 and above  
 Run it on the terminal
 
@@ -165,28 +164,16 @@ api:http://app.xyry.org:5501/api?function=bank&params1=6214832830000000
     "msg":"success"
 }
 ```
-language  
-api:http://app.xyry.org:5501/api?function=language&params1=简体到繁体&params2=1
-```json
-{
-    "code":0,
-    "data":{
-        "enType":1,
-        "tszDestStr":"簡體到繁體",
-        "tszSourceStr":"简体到繁体"
-    },
-    "msg":"success"
-}
-```
 translation  
-api:http://app.xyry.org:5501/api?function=translation&params1=中国&params2=0
+api:http://127.0.0.1:5501/api?function=translation&msg=中文翻译成英文&src=1&dst=2
 ```json
 {
     "code":0,
     "data":{
-        "enType":0,
-        "tszDestStr":"China",
-        "tszSourceStr":"中国"
+        "tszDestStr":"Translate from Chinese to English",
+        "tszFromStr":"zh",
+        "tszSourceStr":"中文翻译成英文",
+        "tszToStr":"en"
     },
     "msg":"success"
 }
