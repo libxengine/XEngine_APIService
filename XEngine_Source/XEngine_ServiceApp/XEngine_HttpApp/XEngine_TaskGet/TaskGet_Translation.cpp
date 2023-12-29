@@ -41,7 +41,13 @@ bool HTTPTask_TaskGet_Translation(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer,
 		_xstprintf(tszTmpStr, "%2.2x", (XBYTE)tszMD5Codec[i]);
 		_tcsxcat(tszMD5Str, tszTmpStr);
 	}
-	_xstprintf(tszURLStr, _X("%s?appid=%s&q=%s&from=%s&to=%s&salt=%d&sign=%s"), st_ServiceConfig.st_XApi.tszTranslationUrl, st_ServiceConfig.st_XApi.st_TranslationInfo.tszAPPID, lpszMsgBuffer, lpszSrcStr, lpszDstStr, nRandomNumber, tszMD5Str);
+	XCHAR tszLanguageSrc[64] = {};
+	XCHAR tszLanauageDst[64] = {};
+
+	ModuleHelp_Translation_Convert((ENUM_XENGINE_APISERVICE_TRANSLATION_TYPE)_ttxoi(lpszSrcStr), tszLanguageSrc);
+	ModuleHelp_Translation_Convert((ENUM_XENGINE_APISERVICE_TRANSLATION_TYPE)_ttxoi(lpszDstStr), tszLanauageDst);
+
+	_xstprintf(tszURLStr, _X("%s?appid=%s&q=%s&from=%s&to=%s&salt=%d&sign=%s"), st_ServiceConfig.st_XApi.tszTranslationUrl, st_ServiceConfig.st_XApi.st_TranslationInfo.tszAPPID, lpszMsgBuffer, tszLanguageSrc, tszLanauageDst, nRandomNumber, tszMD5Str);
 	APIClient_Http_Request(_X("GET"), tszURLStr, NULL, NULL, &ptszBodyBuffer, &nBLen);
 	//解析数据
 	if (!ModuleProtocol_Parse_Translation(ptszBodyBuffer, nBLen, &st_LanguageInfo))
