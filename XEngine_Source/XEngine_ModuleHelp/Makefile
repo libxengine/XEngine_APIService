@@ -12,9 +12,6 @@ LIB = -lXEngine_BaseLib -lXClient_Socket
 LIBEX = 
 OBJECTS = ModuleHelp_IDCard.o ModuleHelp_Language.o ModuleHelp_P2PClient.o ModuleHelp_Locker.o ModuleHelp_QRCode.o ModuleHelp_SocketTest.o ModuleHelp_ImageGet.o ModuleHelp_ImageSet.o pch.o
 
-ifeq ($(SWITCHCC),1)
-	LIB += -lopencc
-endif
 ifeq ($(SWITCHQR),1)
 	LIB += -lqrencode
 endif
