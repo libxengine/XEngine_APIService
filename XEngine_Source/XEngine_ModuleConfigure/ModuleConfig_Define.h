@@ -67,7 +67,6 @@ typedef struct
 	}st_XPlugin;
 	struct
 	{   
-		XCHAR tszConfigOPencc[MAX_PATH];      //OPENCC配置地址
 		XCHAR tszConfigQRCode[MAX_PATH];      //二维码配置地址
 		XCHAR tszConfigDeamon[MAX_PATH];      //守护进程配置文件
 		XCHAR tszConfigHTTPMime[MAX_PATH];    //HTTPMINE配置文件

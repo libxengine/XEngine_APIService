@@ -159,14 +159,13 @@ bool CModuleConfigure_Json::ModuleConfigure_Json_File(LPCXSTR lpszConfigFile, XE
 	_tcsxcpy(pSt_ServerConfig->st_XPlugin.tszPluginLib, st_JsonXPlugin["tszPluginLib"].asCString());
 	_tcsxcpy(pSt_ServerConfig->st_XPlugin.tszPluginLua, st_JsonXPlugin["tszPluginLua"].asCString());
 
-	if (st_JsonRoot["XConfig"].empty() || (5 != st_JsonRoot["XConfig"].size()))
+	if (st_JsonRoot["XConfig"].empty() || (4 != st_JsonRoot["XConfig"].size()))
 	{
 		Config_IsErrorOccur = true;
 		Config_dwErrorCode = ERROR_MODULE_CONFIGURE_JSON_XCONFIG;
 		return false;
 	}
 	Json::Value st_JsonXConfig = st_JsonRoot["XConfig"];
-	_tcsxcpy(pSt_ServerConfig->st_XConfig.tszConfigOPencc, st_JsonXConfig["tszConfigOPencc"].asCString());
 	_tcsxcpy(pSt_ServerConfig->st_XConfig.tszConfigQRCode, st_JsonXConfig["tszConfigQRCode"].asCString());
 	_tcsxcpy(pSt_ServerConfig->st_XConfig.tszConfigDeamon, st_JsonXConfig["tszConfigDeamon"].asCString());
 	_tcsxcpy(pSt_ServerConfig->st_XConfig.tszConfigHTTPMime, st_JsonXConfig["tszConfigHTTPMime"].asCString());
