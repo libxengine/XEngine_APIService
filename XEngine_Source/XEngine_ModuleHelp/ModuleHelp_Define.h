@@ -411,25 +411,6 @@ extern "C" bool ModuleHelp_IDCard_CheckSum(XENGINE_IDCARDINFO* pSt_IDInfo);
 备注：
 *********************************************************************/
 extern "C" bool ModuleHelp_Language_ConvertZh(LPCXSTR lpszJsonFile, LPCXSTR lpszSourceStr, XCHAR* ptszDestStr);
-/********************************************************************
-函数名称：ModuleHelp_Translation_Convert
-函数功能：翻译类型转换
- 参数.一：enTranslationType
-  In/Out：In
-  类型：枚举型
-  可空：N
-  意思：输入要转换的类型
- 参数.二：ptszTranslationType
-  In/Out：Out
-  类型：字符指针
-  可空：N
-  意思：输出转换后的类型
-返回值
-  类型：逻辑型
-  意思：是否成功
-备注：
-*********************************************************************/
-extern "C" bool ModuleHelp_Translation_Convert(ENUM_XENGINE_APISERVICE_TRANSLATION_TYPE enTranslationType, XCHAR* ptszTranslationType);
 /************************************************************************/
 /*                       节点管理器导出函数                             */
 /************************************************************************/

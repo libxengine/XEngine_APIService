@@ -23,7 +23,6 @@ bool HTTPTask_TaskGet_Language(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer, in
 	memset(tszPktBuffer, '\0', sizeof(tszPktBuffer));
 	memset(&st_LanguageInfo, '\0', sizeof(XENGINE_LANGUAGEINFO));
 
-	st_LanguageInfo.enType = nConvertType;
 	OPenSsl_Codec_UrlDeCodec(lpszMsgBuffer, _tcsxlen(lpszMsgBuffer), st_LanguageInfo.tszSourceStr);
 	if (ENUM_XENGINE_APISERVICE_LANGUAGE_TYPE_S2T == nConvertType)
 	{

@@ -58,10 +58,6 @@ extern "C" bool ModuleHelp_Language_ConvertZh(LPCXSTR lpszJsonFile, LPCXSTR lpsz
 {
 	return m_Language.ModuleHelp_Language_ConvertZh(lpszJsonFile, lpszSourceStr, ptszDestStr);
 }
-extern "C" bool ModuleHelp_Translation_Convert(ENUM_XENGINE_APISERVICE_TRANSLATION_TYPE enTranslationType, XCHAR * ptszTranslationType)
-{
-	return m_Language.ModuleHelp_Translation_Convert(enTranslationType, ptszTranslationType);
-}
 /************************************************************************/
 /*                         导出的P2P客户端帮助函数                      */
 /************************************************************************/

@@ -1,6 +1,6 @@
 ﻿#include "../XEngine_Hdr.h"
 
-bool HTTPTask_TaskGet_Translation(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer, int nConvertType)
+bool HTTPTask_TaskGet_Translation(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer, LPCXSTR lpszSrcStr, LPCXSTR lpszDstStr)
 {
 	int nMsgLen = 4096;
 	int nPktLen = 4096;
@@ -22,20 +22,27 @@ bool HTTPTask_TaskGet_Translation(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer,
 
 	st_HDRParam.nHttpCode = 200; //HTTP CODE码
 	st_HDRParam.bIsClose = true; //收到回复后就关闭
-	
-	st_LanguageInfo.enType = nConvertType;
-	//转换类型
-	if (!ModuleHelp_Translation_Convert((ENUM_XENGINE_APISERVICE_TRANSLATION_TYPE)nConvertType, tszTypeBuffer))
+
+	XCHAR tszURLBuffer[MAX_PATH] = {};
+	XCHAR tszSignStr[MAX_PATH] = {};
+	XCHAR tszMD5Codec[MAX_PATH] = {};
+	XCHAR tszMD5Str[MAX_PATH] = {};
+	XCHAR tszURLStr[4096] = {};
+
+	OPenSsl_Codec_UrlDeCodec(lpszMsgBuffer, _tcsxlen(lpszMsgBuffer), tszURLBuffer);
+
+	int nRandomNumber = rand();
+	int nLen = _xstprintf(tszSignStr, _X("%s%s%d%s"), st_ServiceConfig.st_XApi.st_TranslationInfo.tszAPPID, tszURLBuffer, nRandomNumber, st_ServiceConfig.st_XApi.st_TranslationInfo.tszAPPKey);
+
+	OPenSsl_Api_Digest(tszSignStr, (XBYTE*)tszMD5Codec, &nLen);
+	for (int i = 0; i < 16; i++)
 	{
-		ModuleProtocol_Packet_LanguageQuery(tszPktBuffer, &nPktLen, NULL, 1001, _X("type not support"));
-		BaseLib_OperatorMemory_FreeCStyle((XPPMEM)&ptszBodyBuffer);
-		HttpProtocol_Server_SendMsgEx(xhHTTPPacket, tszMsgBuffer, &nMsgLen, &st_HDRParam, tszPktBuffer, nPktLen);
-		XEngine_Network_Send(lpszClientAddr, tszMsgBuffer, nMsgLen);
-		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("HTTP客户端:%s,请求的翻译类型不正确:%d,原始字符串:%s"), lpszClientAddr, nConvertType, lpszMsgBuffer);
-		return false;
+		XCHAR tszTmpStr[4] = {};
+		_xstprintf(tszTmpStr, "%2.2x", (XBYTE)tszMD5Codec[i]);
+		_tcsxcat(tszMD5Str, tszTmpStr);
 	}
-	_xstprintf(tszUrlBuffer, st_ServiceConfig.st_XApi.tszTranslationUrl, tszTypeBuffer, lpszMsgBuffer);
-	APIClient_Http_Request(_X("GET"), tszUrlBuffer, NULL, NULL, &ptszBodyBuffer, &nBLen);
+	_xstprintf(tszURLStr, _X("%s?appid=%s&q=%s&from=%s&to=%s&salt=%d&sign=%s"), st_ServiceConfig.st_XApi.tszTranslationUrl, st_ServiceConfig.st_XApi.st_TranslationInfo.tszAPPID, lpszMsgBuffer, lpszSrcStr, lpszDstStr, nRandomNumber, tszMD5Str);
+	APIClient_Http_Request(_X("GET"), tszURLStr, NULL, NULL, &ptszBodyBuffer, &nBLen);
 	//解析数据
 	if (!ModuleProtocol_Parse_Translation(ptszBodyBuffer, nBLen, &st_LanguageInfo))
 	{
@@ -43,7 +50,7 @@ bool HTTPTask_TaskGet_Translation(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer,
 		BaseLib_OperatorMemory_FreeCStyle((XPPMEM)&ptszBodyBuffer);
 		HttpProtocol_Server_SendMsgEx(xhHTTPPacket, tszMsgBuffer, &nMsgLen, &st_HDRParam, tszPktBuffer, nPktLen);
 		XEngine_Network_Send(lpszClientAddr, tszMsgBuffer, nMsgLen);
-		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("HTTP客户端:%s,请求的翻译失败,类型:%d,原始字符串:%s"), lpszClientAddr, nConvertType, lpszMsgBuffer);
+		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("HTTP客户端:%s,请求的翻译失败,原始字符串:%s"), lpszClientAddr, lpszMsgBuffer);
 		return false;
 	}
 	//打包发送

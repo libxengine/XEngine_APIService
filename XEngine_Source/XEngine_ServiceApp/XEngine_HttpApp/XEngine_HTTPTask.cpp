@@ -364,26 +364,14 @@ bool HTTPTask_TastPost_Handle(RFCCOMPONENTS_HTTP_REQPARAM* pSt_HTTPParam, LPCXST
 		else if (0 == _tcsxnicmp(lpszParamTranslation, tszValue, _tcsxlen(lpszParamTranslation)))
 		{
 			//是不是翻译
-			XCHAR tszCvtType[64];
+			XCHAR tszMSGBuffer[2048] = {};
+			XCHAR tszSrcBuffer[64] = {};
+			XCHAR tszDstBuffer[64] = {};
 
-			memset(tszCvtType, '\0', sizeof(tszCvtType));
-			memset(tszKey, '\0', sizeof(tszKey));
-			memset(tszValue, '\0', sizeof(tszValue));
-
-			BaseLib_OperatorString_GetKeyValue(pptszList[1], "=", tszKey, tszValue);
-			if (0 != _tcsxnicmp(lpszParamName, tszKey, _tcsxlen(lpszParamName)))
-			{
-				st_HDRParam.nHttpCode = 404;
-				HttpProtocol_Server_SendMsgEx(xhHTTPPacket, tszMsgBuffer, &nMsgLen, &st_HDRParam);
-				XEngine_Network_Send(lpszClientAddr, tszMsgBuffer, nMsgLen);
-				BaseLib_OperatorMemory_Free((XPPPMEM)&pptszList, nListCount);
-				XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("HTTP客户端:%s,发送的URL请求参数不正确:%s"), lpszClientAddr, pSt_HTTPParam->tszHttpUri);
-				return false;
-			}
-			memset(tszKey, '\0', sizeof(tszKey));
-
-			BaseLib_OperatorString_GetKeyValue(pptszList[2], "=", tszKey, tszCvtType);
-			HTTPTask_TaskGet_Translation(lpszClientAddr, tszValue, _ttxoi(tszCvtType));
+			BaseLib_OperatorString_GetKeyValue(pptszList[1], "=", tszKey, tszMSGBuffer);
+			BaseLib_OperatorString_GetKeyValue(pptszList[2], "=", tszKey, tszSrcBuffer);
+			BaseLib_OperatorString_GetKeyValue(pptszList[2], "=", tszKey, tszDstBuffer);
+			HTTPTask_TaskGet_Translation(lpszClientAddr, tszMSGBuffer, tszSrcBuffer, tszDstBuffer);
 		}
 		else if (0 == _tcsxnicmp(lpszParamLocker, tszValue, _tcsxlen(lpszParamLocker)))
 		{

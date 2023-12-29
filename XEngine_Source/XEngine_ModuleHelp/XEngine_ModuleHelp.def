@@ -7,7 +7,6 @@ EXPORTS
 	ModuleHelp_IDCard_CheckSum
 
 	ModuleHelp_Language_ConvertZh
-	ModuleHelp_Translation_Convert
 
 	ModuleHelp_P2PClient_Init
 	ModuleHelp_P2PClient_Destory

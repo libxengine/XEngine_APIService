@@ -274,7 +274,8 @@ bool CModuleProtocol_Packet::ModuleProtocol_Packet_LanguageQuery(XCHAR* ptszMsgB
 	{
 		st_JsonObject["tszSourceStr"] = pSt_LanguageInfo->tszSourceStr;
 		st_JsonObject["tszDestStr"] = pSt_LanguageInfo->tszDestStr;
-		st_JsonObject["enType"] = pSt_LanguageInfo->enType;
+		st_JsonObject["tszFromStr"] = pSt_LanguageInfo->tszFromStr;
+		st_JsonObject["tszToStr"] = pSt_LanguageInfo->tszToStr;
 	}
 
 	st_JsonRoot["code"] = nCode;

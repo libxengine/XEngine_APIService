@@ -140,9 +140,10 @@ typedef struct
 //语言转换
 typedef struct
 {
-	XCHAR tszSourceStr[1024];                                //原始字符串
-	XCHAR tszDestStr[1024];                                  //转换字符串
-	int enType;                                              //简繁为ENUM_XENGINE_APISERVICE_LANGUAGE_TYPE 翻译为ENUM_XENGINE_APISERVICE_TRANSLATION_TYPE
+	XCHAR tszSourceStr[MAX_PATH];                            //原始字符串
+	XCHAR tszDestStr[MAX_PATH];                              //转换字符串
+	XCHAR tszFromStr[64];                                    //原始类型
+	XCHAR tszToStr[64];                                      //目标类型
 }XENGINE_LANGUAGEINFO;
 //连接信息
 typedef struct

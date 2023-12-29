@@ -53,6 +53,11 @@ typedef struct
 	{
 		XCHAR tszBankUrl[MAX_PATH];           //银行卡验证地址
 		XCHAR tszTranslationUrl[MAX_PATH];    //翻译接口
+		struct  
+		{
+			XCHAR tszAPPID[MAX_PATH];
+			XCHAR tszAPPKey[MAX_PATH];
+		}st_TranslationInfo;
 	}st_XApi;
 	struct  
 	{
