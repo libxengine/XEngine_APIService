@@ -2,7 +2,7 @@ RELEASE = 0
 UNICODE = 0
 PLATFORM=linux
 FLAGS=
-
+#编译开关
 QR=1
 LUA=1
 OPENCV=1

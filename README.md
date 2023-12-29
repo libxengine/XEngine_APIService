@@ -34,21 +34,20 @@ c c++ interface api service
 14. 银行卡验证
 15. 汇率计算(计划中)
 16. 二维码生成解析
-17. 简繁转换
-18. 二十四节气(计划中)
-19. 新华词典
-20. 计量转换
-21. 网络测试
-22. 分布式锁API
-23. 短连接生成和转发
-24. 本地标准时间
-25. 数学计算
-26. 日志服务
-27. 插件脚本热重载
-28. 敏感词检测
-29. 远程控制(后台管理)
-30. 图像处理
-31. 进程守护
+17. 二十四节气(计划中)
+18. 翻译
+19. 计量转换
+20. 网络测试
+21. 分布式锁API
+22. 短连接生成和转发
+23. 本地标准时间
+24. 数学计算
+25. 日志服务
+26. 插件脚本热重载
+27. 敏感词检测
+28. 远程控制(后台管理)
+29. 图像处理
+30. 进程守护
 
 ## 安装教程
 
@@ -68,7 +67,7 @@ macos执行:./XEngine_LINEnv.sh -i 3
 修改配置文件里面XSQL里面的数据库配置为你的  
 
 #### Windows
-需要vcpkg配置第三方环境,具体参考vcpkg安装方式,安装好后执行:vcpkg.exe install lua:x86-windows opencc:x86-windows opencv[contrib]:x86-windows libqrencode:x86-windows lua:x64-windows opencc:x64-windows opencv[contrib]:x64-windows libqrencode:x64-windows  
+需要vcpkg配置第三方环境,具体参考vcpkg安装方式,安装好后执行:vcpkg.exe install lua:x86-windows opencv[contrib]:x86-windows libqrencode:x86-windows lua:x64-windows opencv[contrib]:x64-windows libqrencode:x64-windows  
 使用VS打开并且编译,支持WINDOWS 7SP1以上系统  
 直接运行即可
 
@@ -163,28 +162,16 @@ make FLAGS=CleanAll 清理编译
     "msg":"success"
 }
 ```
-语言转换  
-接口:http://app.xyry.org:5501/api?function=language&params1=简体到繁体&params2=1
-```json
-{
-    "code":0,
-    "data":{
-        "enType":1,
-        "tszDestStr":"簡體到繁體",
-        "tszSourceStr":"简体到繁体"
-    },
-    "msg":"success"
-}
-```
 翻译  
-接口:http://app.xyry.org:5501/api?function=translation&params1=中国&params2=0
+接口:http://127.0.0.1:5501/api?function=translation&msg=中文翻译成英文&src=1&dst=2
 ```json
 {
     "code":0,
     "data":{
-        "enType":0,
-        "tszDestStr":"China",
-        "tszSourceStr":"中国"
+        "tszDestStr":"Translate from Chinese to English",
+        "tszFromStr":"zh",
+        "tszSourceStr":"中文翻译成英文",
+        "tszToStr":"en"
     },
     "msg":"success"
 }
