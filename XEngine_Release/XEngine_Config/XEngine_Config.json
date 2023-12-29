@@ -30,7 +30,11 @@
     },
     "XApi":{
         "tszBankUrl":"https://ccdcapi.alipay.com/validateAndCacheCardInfo.json?cardNo=%s&cardBinCheck=true",
-        "tszTranslationUrl":"http://fanyi.youdao.com/translate?&doctype=json&type=%s&i=%s"
+        "tszTranslationUrl":"https://fanyi-api.baidu.com/api/trans/vip/translate",
+        "st_TranslationInfo":{
+            "appid":"20231228001924304",
+            "key":"udXGjpmNVeQHml1FjT8E"
+        }
     },
     "XPlugin":{
         "bEnable":true,
@@ -38,7 +42,6 @@
         "tszPluginLua":"./XEngine_Config/XEngine_PluginLua.json"
     },
     "XConfig":{
-        "tszConfigOPencc":"./XEngine_Config/XEngine_OPenccConfig.json",
         "tszConfigQRCode":"./XEngine_Config/XEngine_QRCode.json",
         "tszConfigDeamon":"./XEngine_Config/XEngine_DeamonConfig.json",
         "tszConfigHTTPMime":"./XEngine_Config/HttpMime.types",
@@ -52,11 +55,12 @@
         "tszUserName":"xyry",
         "tszUserPass":"11",
         "st_VerSwitch":{
-            "bBackService":false,
-            "bDeamon":false
+            "bBackService":true,
+            "bDeamon":true
         }
     },
     "XVer":[
+        "3.2.0.1001 Build20231229",
         "3.1.0.1001 Build20231102",
         "3.0.0.1001 Build20230908",
         "2.11.0.1001 Build20230829",
