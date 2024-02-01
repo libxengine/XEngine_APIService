@@ -5,23 +5,20 @@ copy /y "D:\XEngine\XEngine_SourceCode\Debug\XEngine_ManagePool.dll" "./"
 copy /y "D:\XEngine\XEngine_SourceCode\Debug\XEngine_OPenSsl.dll" "./"
 copy /y "D:\XEngine\XEngine_SourceCode\Debug\XEngine_NetXApi.dll" "./"
 
+copy /y "D:\XEngine\XEngine_SourceCode\Debug\XClient_Socket.dll" "./"
+copy /y "D:\XEngine\XEngine_SourceCode\Debug\XClient_Stream.dll" "./"
+
 copy /y "D:\XEngine\XEngine_SourceCode\Debug\XEngine_SystemApi.dll" "./"
 copy /y "D:\XEngine\XEngine_SourceCode\Debug\NetHelp_APIHelp.dll" "./"
-copy /y "D:\XEngine\XEngine_SourceCode\Debug\XClient_Socket.dll" "./"
 
 copy /y "D:\XEngine\XEngine_SourceCode\Debug\HelpComponents_DataBase.dll" "./"
-copy /y "D:\XEngine\XEngine_SourceCode\Debug\HelpComponents_Packets.dll" "./"
 copy /y "D:\XEngine\XEngine_SourceCode\Debug\HelpComponents_XLog.dll" "./"
-copy /y "D:\XEngine\XEngine_SourceCode\Debug\HelpComponents_Authorize.dll" "./"
 copy /y "D:\XEngine\XEngine_SourceCode\Debug\RfcComponents_HttpProtocol.dll" "./"
 
 copy /y "D:\XEngine\XEngine_SourceCode\Debug\XEngine_AVHelp.dll" "./"
 copy /y "D:\XEngine\XEngine_SourceCode\Debug\XEngine_VideoCodec.dll" "./"
 copy /y "D:\XEngine\XEngine_SourceCode\Debug\XEngine_AudioCodec.dll" "./"
 copy /y "D:\XEngine\XEngine_SourceCode\Debug\XEngine_AVCollect.dll" "./"
-
-copy /y "D:\XEngine\XEngine_SourceCode\Debug\StreamMedia_StreamClient.dll" "./"
-
 copy /y "%XEngine_Lib32%\XEngine_LibEx\AVCodec\avcodec-59.dll" "./"
 copy /y "%XEngine_Lib32%\XEngine_LibEx\AVCodec\avdevice-59.dll" "./"
 copy /y "%XEngine_Lib32%\XEngine_LibEx\AVCodec\avfilter-8.dll" "./"

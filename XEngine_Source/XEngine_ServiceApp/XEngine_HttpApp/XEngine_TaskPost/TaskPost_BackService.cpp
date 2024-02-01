@@ -9,14 +9,14 @@ static XHANDLE xhStream = NULL;
 
 void CALLBACK HTTPTask_TaskPost_CBVideo(uint8_t* punStringY, int nYLen, uint8_t* punStringU, int nULen, uint8_t* punStringV, int nVLen, XPVOID lParam)
 {
-	if (!StreamClient_StreamPush_PushVideo(xhStream, punStringY, nYLen, punStringU, nULen, punStringV, nVLen))
+	if (!XClient_StreamPush_LiveVideo(xhStream, punStringY, nYLen, punStringU, nULen, punStringV, nVLen))
 	{
 		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("屏幕采集器,推流编码失败,需要关闭推流服务,错误码:%lX"), StreamClient_GetLastError());
 	}
 }
 void CALLBACK HTTPTask_TaskPost_CBAudio(uint8_t* punStringAudio, int nVLen, XPVOID lParam)
 {
-	if (!StreamClient_StreamPush_PushAudio(xhStream, punStringAudio, nVLen))
+	if (!XClient_StreamPush_LiveAudio(xhStream, punStringAudio, nVLen))
 	{
 		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("音频采集器,推流编码失败,需要关闭推流服务,错误码:%lX"), StreamClient_GetLastError());
 	}
@@ -359,7 +359,7 @@ bool HTTPTask_TaskPost_BackService(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer
 			return false;
 		}
 
-		xhStream = StreamClient_StreamPush_Init(tszDstBuffer, &st_AVInfo);
+		xhStream = XClient_StreamPush_LiveInit(tszDstBuffer, &st_AVInfo);
 		if (NULL == xhStream)
 		{
 			st_HDRParam.nHttpCode = 400;
@@ -381,7 +381,7 @@ bool HTTPTask_TaskPost_BackService(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer
 		{
 			AVCollect_Video_Destory(xhScreen);
 			AVCollect_Audio_Destory(xhSound);
-			StreamClient_StreamPush_Close(xhStream);
+			XClient_StreamPush_LiveClose(xhStream);
 			VideoCodec_Stream_Destroy(xhVideo);
 			AudioCodec_Stream_Destroy(xhAudio);
 			bRecord = false;
