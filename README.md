@@ -123,6 +123,9 @@ make FLAGS=CleanAll 清理编译
 ## 其他问题  
 你可以参考docment目录下的文档.里面包含了API协议和服务说明.
 
+## 视频教程
+你也可以观看视频教程来了解我们的代码框架情况:https://www.bilibili.com/video/BV13z421d7W8
+
 ## 测试服务器
 地址:app.xyry.org,端口:5501  
 
