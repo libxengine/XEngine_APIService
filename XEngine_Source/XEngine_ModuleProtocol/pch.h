@@ -27,8 +27,8 @@
 #include <XEngine_Include/XEngine_ProtocolHdr.h>
 #include <XEngine_Include/XEngine_BaseLib/BaseLib_Define.h>
 #include <XEngine_Include/XEngine_BaseLib/BaseLib_Error.h>
-#include <XEngine_Include/XEngine_Core/NetXApi_Define.h>
-#include <XEngine_Include/XEngine_Core/NetXApi_Error.h>
+#include <XEngine_Include/XEngine_NetHelp/XSocket_Define.h>
+#include <XEngine_Include/XEngine_NetHelp/XSocket_Error.h>
 #include <XEngine_Include/XEngine_SystemSdk/ProcFile_Define.h>
 #include <XEngine_Include/XEngine_SystemSdk/SystemApi_Define.h>
 #include <XEngine_Include/XEngine_SystemSdk/SystemApi_Error.h>
@@ -55,7 +55,7 @@ extern XLONG ModuleProtocol_dwErrorCode;
 
 #ifdef _MSC_BUILD
 #pragma comment(lib,"XEngine_BaseLib/XEngine_BaseLib")
-#pragma comment(lib,"XEngine_Core/XEngine_NetXApi")
+#pragma comment(lib,"XEngine_NetHelp/NetHelp_XSocket")
 #pragma comment(lib,"XEngine_SystemSdk/XEngine_SystemApi")
 #ifdef _DEBUG
 #ifdef _WIN64

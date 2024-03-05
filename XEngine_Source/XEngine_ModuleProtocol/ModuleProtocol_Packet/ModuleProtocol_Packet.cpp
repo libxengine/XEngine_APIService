@@ -1061,8 +1061,8 @@ bool CModuleProtocol_Packet::ModuleProtocol_Packet_HardWare(XCHAR* ptszHWInfo, i
 	st_JsonSerial["SystemSerail"] = st_SDKSerial.tszSystemSerail;
 
 	int nListCount = 0;
-	NETXAPI_CARDINFO** ppSt_ListIFInfo;
-	NetXApi_Socket_GetCardInfo(&ppSt_ListIFInfo, &nListCount);
+	XSOCKET_CARDINFO** ppSt_ListIFInfo;
+	XSocket_Api_GetCardInfo(&ppSt_ListIFInfo, &nListCount);
 	for (int i = 0; i < nListCount; i++)
 	{
 		Json::Value st_JsonIPAddr;

@@ -94,12 +94,12 @@ bool HTTPTask_TaskPost_BackService(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer
 		}
 		while (true)
 		{
-			NETHELP_FILEINFO st_TaskInfo;
-			memset(&st_TaskInfo, '\0', sizeof(NETHELP_FILEINFO));
+			XCLIENT_APIFILE st_TaskInfo;
+			memset(&st_TaskInfo, '\0', sizeof(XCLIENT_APIFILE));
 
 			if (APIClient_File_Query(xhTask, &st_TaskInfo))
 			{
-				if ((ENUM_NETHELP_APICLIENT_FILE_STATUS_INIT != st_TaskInfo.en_DownStatus) || (ENUM_NETHELP_APICLIENT_FILE_STATUS_DOWNLOADDING != st_TaskInfo.en_DownStatus))
+				if ((ENUM_XCLIENT_APIHELP_FILE_STATUS_INIT != st_TaskInfo.en_DownStatus) || (ENUM_XCLIENT_APIHELP_FILE_STATUS_DOWNLOADDING != st_TaskInfo.en_DownStatus))
 				{
 					break;
 				}
@@ -150,12 +150,12 @@ bool HTTPTask_TaskPost_BackService(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer
 		}
 		while (true)
 		{
-			NETHELP_FILEINFO st_TaskInfo;
-			memset(&st_TaskInfo, '\0', sizeof(NETHELP_FILEINFO));
+			XCLIENT_APIFILE st_TaskInfo;
+			memset(&st_TaskInfo, '\0', sizeof(XCLIENT_APIFILE));
 
 			if (APIClient_File_Query(xhTask, &st_TaskInfo))
 			{
-				if (ENUM_NETHELP_APICLIENT_FILE_STATUS_DOWNLOADDING != st_TaskInfo.en_DownStatus)
+				if (ENUM_XCLIENT_APIHELP_FILE_STATUS_DOWNLOADDING != st_TaskInfo.en_DownStatus)
 				{
 					break;
 				}
