@@ -21,6 +21,7 @@ public:
 	bool ModuleHelp_ImageSet_Flip(LPCXSTR lpszSrcBuffer, int nSLen, LPCXSTR lpszExtFile, XCHAR* ptszDstBuffer, int* pInt_DLen, int nOPMethod);
 	bool ModuleHelp_ImageSet_ColorCvt(LPCXSTR lpszSrcBuffer, int nSLen, LPCXSTR lpszExtFile, XCHAR* ptszDstBuffer, int* pInt_DLen, ENUM_XENGINE_IMAGE_COLOR_INFO enColorInfo);
 	bool ModuleHelp_ImageSet_Ligth(LPCXSTR lpszSrcBuffer, int nSLen, LPCXSTR lpszExtFile, XCHAR* ptszDstBuffer, int* pInt_DLen, int nGamma);
+	bool ModuleHelp_ImageSet_Level(LPCXSTR lpszSrcBuffer, int nSLen, LPCXSTR lpszExtFile, XCHAR* ptszDstBuffer, int* pInt_DLen, int nLevel);
 protected:
 private:
 };

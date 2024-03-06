@@ -43,3 +43,4 @@ EXPORTS
 	ModuleHelp_ImageSet_Flip
 	ModuleHelp_ImageSet_ColorCvt
 	ModuleHelp_ImageSet_Ligth
+	ModuleHelp_ImageSet_Level

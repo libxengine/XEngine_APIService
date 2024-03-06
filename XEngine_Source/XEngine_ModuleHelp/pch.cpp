@@ -197,3 +197,7 @@ extern "C" bool ModuleHelp_ImageSet_Ligth(LPCXSTR lpszSrcBuffer, int nSLen, LPCX
 {
 	return m_ImageSet.ModuleHelp_ImageSet_Ligth(lpszSrcBuffer, nSLen, lpszExtFile, ptszDstBuffer, pInt_DLen, nGamma);
 }
+extern "C" bool ModuleHelp_ImageSet_Level(LPCXSTR lpszSrcBuffer, int nSLen, LPCXSTR lpszExtFile, XCHAR * ptszDstBuffer, int* pInt_DLen, int nLevel)
+{
+	return m_ImageSet.ModuleHelp_ImageSet_Level(lpszSrcBuffer, nSLen, lpszExtFile, ptszDstBuffer, pInt_DLen, nLevel);
+}
