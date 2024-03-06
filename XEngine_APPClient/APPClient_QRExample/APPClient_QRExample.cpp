@@ -4,7 +4,7 @@
 #pragma comment(lib,"Ws2_32")
 #pragma comment(lib,"jsoncpp")
 #pragma comment(lib,"XEngine_BaseLib/XEngine_BaseLib")
-#pragma comment(lib,"XEngine_NetHelp/NetHelp_APIClient")
+#pragma comment(lib,"XEngine_Client/XClient_APIHelp")
 #endif
 #include <stdio.h>
 #include <stdlib.h>
@@ -15,30 +15,29 @@
 #include <XEngine_Include/XEngine_ProtocolHdr.h>
 #include <XEngine_Include/XEngine_BaseLib/BaseLib_Define.h>
 #include <XEngine_Include/XEngine_BaseLib/BaseLib_Error.h>
-#include <XEngine_Include/XEngine_NetHelp/APIClient_Define.h>
-#include <XEngine_Include/XEngine_NetHelp/APIClient_Error.h>
+#include <XEngine_Include/XEngine_Client/APIClient_Define.h>
+#include <XEngine_Include/XEngine_Client/APIClient_Error.h>
 
 //需要优先配置XEngine
 //WINDOWS支持VS2022 x64 debug 编译调试
-//linux::g++ -std=c++17 -Wall -g APPClient_QRExample.cpp -o APPClient_QRExample.exe -L /usr/local/lib/XEngine_Release/XEngine_BaseLib -L /usr/local/lib/XEngine_Release/XEngine_NetHelp -lXEngine_BaseLib -lNetHelp_APIClient
-//macos::g++ -std=c++17 -Wall -g APPClient_QRExample.cpp -o APPClient_QRExample.exe -lXEngine_BaseLib -lNetHelp_APIClient
+//macos::g++ -std=c++17 -Wall -g APPClient_QRExample.cpp -o APPClient_QRExample.exe -lXEngine_BaseLib -lXClient_APIHelp
 
 #define QRCODE_BUFFER_SIZE 1024 * 1024 * 10
 
-LPCXSTR lpszFileName = _T("D:\\XEngine_APIService\\XEngine_APPClient\\x64\\Debug\\1.png");
+LPCXSTR lpszFileName = _X("D:\\XEngine_APIService\\XEngine_APPClient\\x64\\Debug\\1.png");
 
 int test_create()
 {
 	int nLen = 0;
 	int nCode = 0;
-	LPCXSTR lpszAPIUrl = _T("http://127.0.0.1:5501/api?function=qrcode&params1=0");
+	LPCXSTR lpszAPIUrl = _X("http://127.0.0.1:5501/api?function=qrcode&params1=0");
 
 	Json::Value st_JsonRoot;
 	st_JsonRoot["tszMsgBuffer"] = lpszAPIUrl;
 	st_JsonRoot["tszFmtBuffer"] = ".png";
 
 	XCHAR* ptszMsgBuffer = NULL;
-	if (!APIClient_Http_Request(_T("POST"), lpszAPIUrl, st_JsonRoot.toStyledString().c_str(), &nCode, &ptszMsgBuffer, &nLen))
+	if (!APIClient_Http_Request(_X("POST"), lpszAPIUrl, st_JsonRoot.toStyledString().c_str(), &nCode, &ptszMsgBuffer, &nLen))
 	{
 		printf("发送投递失败！\n");
 		return 0;
@@ -59,16 +58,16 @@ int test_parse()
 	int nCode = 0;
 	XCHAR* ptszMsgBuffer = (XCHAR*)malloc(QRCODE_BUFFER_SIZE);
 
-	LPCXSTR lpszAPIUrl = _T("http://127.0.0.1:5501/api?function=qrcode&params1=1");
+	LPCXSTR lpszAPIUrl = _X("http://127.0.0.1:5501/api?function=qrcode&params1=1");
 	FILE* pSt_File = fopen(lpszFileName, "rb");
 	if (NULL != pSt_File)
 	{
-		LPCXSTR lpszCustomHdr = _T("Content-Type: image/png\r\n");
+		LPCXSTR lpszCustomHdr = _X("Content-Type: image/png\r\n");
 		memset(ptszMsgBuffer, '\0', QRCODE_BUFFER_SIZE);
 		int nRet = fread(ptszMsgBuffer, 1, QRCODE_BUFFER_SIZE, pSt_File);
 		
 		XCHAR* ptszBodyBuffer = NULL;
-		if (!APIClient_Http_Request(_T("POST"), lpszAPIUrl, ptszMsgBuffer, &nCode, &ptszBodyBuffer, &nRet, lpszCustomHdr))
+		if (!APIClient_Http_Request(_X("POST"), lpszAPIUrl, ptszMsgBuffer, &nCode, &ptszBodyBuffer, &nRet, lpszCustomHdr))
 		{
 			printf("发送投递失败！\n");
 			return 0;

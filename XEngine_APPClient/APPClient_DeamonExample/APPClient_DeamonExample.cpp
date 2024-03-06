@@ -4,7 +4,7 @@
 #pragma comment(lib,"Ws2_32")
 #pragma comment(lib,"jsoncpp")
 #pragma comment(lib,"XEngine_BaseLib/XEngine_BaseLib")
-#pragma comment(lib,"XEngine_NetHelp/NetHelp_APIClient")
+#pragma comment(lib,"XEngine_Client/XClient_APIHelp")
 #endif
 #include <stdio.h>
 #include <stdlib.h>
@@ -16,13 +16,12 @@
 #include <XEngine_Include/XEngine_ProtocolHdr.h>
 #include <XEngine_Include/XEngine_BaseLib/BaseLib_Define.h>
 #include <XEngine_Include/XEngine_BaseLib/BaseLib_Error.h>
-#include <XEngine_Include/XEngine_NetHelp/APIClient_Define.h>
-#include <XEngine_Include/XEngine_NetHelp/APIClient_Error.h>
+#include <XEngine_Include/XEngine_Client/APIClient_Define.h>
+#include <XEngine_Include/XEngine_Client/APIClient_Error.h>
 
 //需要优先配置XEngine
 //WINDOWS支持VS2022 x64 debug 编译调试
-//linux::g++ -std=c++17 -Wall -g APPClient_DeamonExample.cpp -o APPClient_DeamonExample.exe -L /usr/local/lib/XEngine_Release/XEngine_BaseLib -L /usr/local/lib/XEngine_Release/XEngine_NetHelp -lXEngine_BaseLib -lNetHelp_APIClient -ljsoncpp
-//macos::g++ -std=c++17 -Wall -g APPClient_DeamonExample.cpp -o APPClient_DeamonExample.exe -lXEngine_BaseLib -lNetHelp_APIClient -ljsoncpp
+//g++ -std=c++17 -Wall -g APPClient_DeamonExample.cpp -o APPClient_DeamonExample.exe -lXEngine_BaseLib -lXClient_APIHelp -ljsoncpp
 
 
 int test_insert()
@@ -35,8 +34,8 @@ int test_insert()
 	Json::Value st_JsonRoot;
 	st_JsonRoot["bEnable"] = true;
 	st_JsonRoot["nRetime"] = 3;
-	st_JsonRoot["tszAPPName"] = "1.exe";
-	st_JsonRoot["tszAPPPath"] = "D:\\path\\";
+	st_JsonRoot["tszAPPName"] = "Fairdell_HexCmp2.exe";
+	st_JsonRoot["tszAPPPath"] = "D:\\";
 
 	if (!APIClient_Http_Request(_X("POST"), lpszAPIUrl, st_JsonRoot.toStyledString().c_str(), &nCode, &ptszMsgBuffer, &nLen))
 	{

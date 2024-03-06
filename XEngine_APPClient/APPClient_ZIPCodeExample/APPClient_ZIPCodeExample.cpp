@@ -4,7 +4,7 @@
 #pragma comment(lib,"Ws2_32")
 #pragma comment(lib,"jsoncpp")
 #pragma comment(lib,"XEngine_BaseLib/XEngine_BaseLib")
-#pragma comment(lib,"XEngine_NetHelp/NetHelp_APIClient")
+#pragma comment(lib,"XEngine_Client/XClient_APIHelp")
 #endif
 #include <stdio.h>
 #include <stdlib.h>
@@ -15,13 +15,12 @@
 #include <XEngine_Include/XEngine_ProtocolHdr.h>
 #include <XEngine_Include/XEngine_BaseLib/BaseLib_Define.h>
 #include <XEngine_Include/XEngine_BaseLib/BaseLib_Error.h>
-#include <XEngine_Include/XEngine_NetHelp/APIClient_Define.h>
-#include <XEngine_Include/XEngine_NetHelp/APIClient_Error.h>
+#include <XEngine_Include/XEngine_Client/APIClient_Define.h>
+#include <XEngine_Include/XEngine_Client/APIClient_Error.h>
 
 //需要优先配置XEngine
 //WINDOWS支持VS2022 x64 debug 编译调试
-//linux::g++ -std=c++17 -Wall -g APPClient_ZIPCodeExample.cpp -o APPClient_ZIPCodeExample.exe -L /usr/local/lib/XEngine_Release/XEngine_BaseLib -L /usr/local/lib/XEngine_Release/XEngine_NetHelp -lXEngine_BaseLib -lNetHelp_APIClient
-//macos::g++ -std=c++17 -Wall -g APPClient_ZIPCodeExample.cpp -o APPClient_ZIPCodeExample.exe -lXEngine_BaseLib -lNetHelp_APIClient
+//g++ -std=c++17 -Wall -g APPClient_ZIPCodeExample.cpp -o APPClient_ZIPCodeExample.exe -lXEngine_BaseLib -lXClient_APIHelp
 
 int main()
 {
@@ -32,7 +31,7 @@ int main()
 	int nLen = 0;
 	int nCode = 0;
 	XCHAR tszMsgBuffer[1024];
-	LPCXSTR lpszCreateUrl = _T("http://127.0.0.1:5501/api?function=zipcode&params1=0");
+	LPCXSTR lpszCreateUrl = _X("http://127.0.0.1:5501/api?function=zipcode&params1=0");
 
 	memset(tszMsgBuffer, '\0', sizeof(tszMsgBuffer));
 
@@ -40,7 +39,7 @@ int main()
 	st_JsonRoot["nZipCode"] = 100010;
 
 	XCHAR* ptszMsgBuffer = NULL;
-	if (!APIClient_Http_Request(_T("POST"), lpszCreateUrl, st_JsonRoot.toStyledString().c_str(), &nCode, &ptszMsgBuffer, &nLen))
+	if (!APIClient_Http_Request(_X("POST"), lpszCreateUrl, st_JsonRoot.toStyledString().c_str(), &nCode, &ptszMsgBuffer, &nLen))
 	{
 		printf("发送投递失败！\n");
 		return 0;
