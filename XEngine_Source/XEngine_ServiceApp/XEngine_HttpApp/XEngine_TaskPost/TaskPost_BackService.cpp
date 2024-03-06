@@ -92,22 +92,23 @@ bool HTTPTask_TaskPost_BackService(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer
 			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("HTTP客户端:%s,下载任务处理失败,请求下载地址:%s,下载路径:%s,错误码:%lX"), lpszClientAddr, tszSrcBuffer, tszDstBuffer, APIClient_GetLastError());
 			return false;
 		}
+		HttpProtocol_Server_SendMsgEx(xhHTTPPacket, ptszSDBuffer, &nSDLen, &st_HDRParam);
+		XEngine_Network_Send(lpszClientAddr, ptszSDBuffer, nSDLen);
 		while (true)
 		{
 			XCLIENT_APIFILE st_TaskInfo;
 			memset(&st_TaskInfo, '\0', sizeof(XCLIENT_APIFILE));
 
-			if (APIClient_File_Query(xhTask, &st_TaskInfo))
+			if (!APIClient_File_Query(xhTask, &st_TaskInfo))
 			{
-				if ((ENUM_XCLIENT_APIHELP_FILE_STATUS_INIT != st_TaskInfo.en_DownStatus) || (ENUM_XCLIENT_APIHELP_FILE_STATUS_DOWNLOADDING != st_TaskInfo.en_DownStatus))
-				{
-					break;
-				}
+				break;
+			}
+			if ((ENUM_XCLIENT_APIHELP_FILE_STATUS_INIT != st_TaskInfo.en_DownStatus) || (ENUM_XCLIENT_APIHELP_FILE_STATUS_DOWNLOADDING != st_TaskInfo.en_DownStatus))
+			{
+				break;
 			}
 		}
 		APIClient_File_Delete(xhTask);
-		HttpProtocol_Server_SendMsgEx(xhHTTPPacket, ptszSDBuffer, &nSDLen, &st_HDRParam);
-		XEngine_Network_Send(lpszClientAddr, ptszSDBuffer, nSDLen);
 		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("HTTP客户端:%s:下载任务处理成功,下载地址:%s,保存地址:%s"),lpszClientAddr, tszSrcBuffer, tszDstBuffer);
 	}
 	break;
