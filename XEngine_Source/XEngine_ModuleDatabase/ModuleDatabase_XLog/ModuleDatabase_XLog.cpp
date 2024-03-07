@@ -281,7 +281,7 @@ bool CModuleDatabase_XLog::ModuleDatabase_XLog_Delete(LPCXSTR lpszTableName)
 	XCHAR tszSQLStatement[10240];
 	memset(tszSQLStatement, '\0', sizeof(tszSQLStatement));
 
-	_xstprintf(tszSQLStatement, _X("DROP TABLE IF EXISTS '%s'"), lpszTableName);
+	_xstprintf(tszSQLStatement, _X("DROP TABLE IF EXISTS `%s`"), lpszTableName);
 	if (!DataBase_MySQL_Execute(xhDBSQL, tszSQLStatement))
 	{
 		DBModule_IsErrorOccur = true;
