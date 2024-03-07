@@ -112,6 +112,10 @@ extern "C" bool ModuleDatabase_XLog_Delete(LPCXSTR lpszTableName)
 {
 	return m_XLog.ModuleDatabase_XLog_Delete(lpszTableName);
 }
+extern "C" bool ModuleDatabase_XLog_Show(XCHAR * **ppptszList, int* pInt_ListCount)
+{
+	return m_XLog.ModuleDatabase_XLog_Show(ppptszList, pInt_ListCount);
+}
 /************************************************************************/
 /*                         导出的短连接数据库函数                       */
 /************************************************************************/

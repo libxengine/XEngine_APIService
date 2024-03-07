@@ -22,6 +22,7 @@ EXPORTS
 	ModuleDatabase_XLog_Insert
 	ModuleDatabase_XLog_Query
 	ModuleDatabase_XLog_Delete
+	ModuleDatabase_XLog_Show
 
 	ModuleDatabase_ShortLink_Init
 	ModuleDatabase_ShortLink_Destory

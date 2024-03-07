@@ -410,6 +410,35 @@ extern "C" bool ModuleProtocol_Packet_P2PWList(XCHAR* ptszMsgBuffer, int* pInt_M
 *********************************************************************/
 extern "C" bool ModuleProtocol_Packet_Log(XCHAR* ptszMsgBuffer, int* pInt_MsgLen, XENGINE_XLOGINFO*** pppSt_XLogList, int nListCount);
 /********************************************************************
+函数名称：ModuleProtocol_Packet_LogShow
+函数功能：日志表名打包
+ 参数.一：ptszMsgBuffer
+  In/Out：Out
+  类型：字符指针
+  可空：N
+  意思：输出打包的数据信息
+ 参数.二：pInt_MsgLen
+  In/Out：Out
+  类型：整数型指针
+  可空：N
+  意思：输出打包大小
+ 参数.三：ppptszList
+  In/Out：In
+  类型：三级指针
+  可空：N
+  意思：输入要打包的数据
+ 参数.四：nListCount
+  In/Out：In
+  类型：整数型
+  可空：N
+  意思：输入打包数据个数
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+extern "C" bool ModuleProtocol_Packet_LogShow(XCHAR* ptszMsgBuffer, int* pInt_MsgLen, XCHAR*** ppptszList, int nListCount);
+/********************************************************************
 函数名称：ModuleProtocol_Packet_ShortLink
 函数功能：短连接生成协议打包函数
  参数.一：ptszMsgBuffer

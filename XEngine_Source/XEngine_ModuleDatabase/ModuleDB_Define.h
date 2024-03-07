@@ -255,6 +255,25 @@ extern "C" bool ModuleDatabase_XLog_Query(XENGINE_XLOGINFO*** pppSt_XLogInfo, in
 备注：
 *********************************************************************/
 extern "C" bool ModuleDatabase_XLog_Delete(LPCXSTR lpszTableName);
+/********************************************************************
+函数名称：ModuleDatabase_XLog_Show
+函数功能：日志表列举
+ 参数.一：ppptszList
+  In/Out：Out
+  类型：三级指针
+  可空：N
+  意思：输出日志数据库里面的表列
+ 参数.二：pInt_ListCount
+  In/Out：Out
+  类型：整数型指针
+  可空：N
+  意思：输出列个数
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+extern "C" bool ModuleDatabase_XLog_Show(XCHAR*** ppptszList, int* pInt_ListCount);
 /************************************************************************/
 /*                         导出的短连接数据库函数                       */
 /************************************************************************/

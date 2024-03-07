@@ -10,6 +10,7 @@ EXPORTS
 	ModuleProtocol_Packet_Locker
 	ModuleProtocol_Packet_ZIPCode
 	ModuleProtocol_Packet_Log
+	ModuleProtocol_Packet_LogShow
 	ModuleProtocol_Packet_TestReport
 	ModuleProtocol_Packet_TestReply
 	ModuleProtocol_Packet_ShortLink

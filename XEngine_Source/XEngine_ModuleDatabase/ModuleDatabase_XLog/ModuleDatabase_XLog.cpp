@@ -283,3 +283,56 @@ bool CModuleDatabase_XLog::ModuleDatabase_XLog_Delete(LPCXSTR lpszTableName)
 	}
 	return true;
 }
+/********************************************************************
+函数名称：ModuleDatabase_XLog_Show
+函数功能：日志表列举
+ 参数.一：ppptszList
+  In/Out：Out
+  类型：三级指针
+  可空：N
+  意思：输出日志数据库里面的表列
+ 参数.二：pInt_ListCount
+  In/Out：Out
+  类型：整数型指针
+  可空：N
+  意思：输出列个数
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+bool CModuleDatabase_XLog::ModuleDatabase_XLog_Show(XCHAR*** ppptszList, int* pInt_ListCount)
+{
+	DBModule_IsErrorOccur = false;
+
+	//查询
+	XNETHANDLE xhTable = 0;
+	__int64u nllLine = 0;
+	__int64u nllRow = 0;
+
+	XCHAR tszSQLStatement[1024];
+	memset(tszSQLStatement, '\0', sizeof(tszSQLStatement));
+	//名称为,消息名为必填
+	_xstprintf(tszSQLStatement, _X("SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'XEngine_APILog'"));
+	if (!DataBase_MySQL_ExecuteQuery(xhDBSQL, &xhTable, tszSQLStatement, &nllLine, &nllRow))
+	{
+		DBModule_IsErrorOccur = true;
+		DBModule_dwErrorCode = DataBase_GetLastError();
+		return false;
+	}
+	if (nllLine <= 0)
+	{
+		DBModule_IsErrorOccur = true;
+		DBModule_dwErrorCode = ERROR_APISERVICE_MODULE_DATABASE_NOTFOUND;
+		return false;
+	}
+	*pInt_ListCount = (int)nllLine;
+	BaseLib_OperatorMemory_Malloc((XPPPMEM)ppptszList, (int)nllLine, MAX_PATH);
+	for (__int64u i = 0; i < nllLine; i++)
+	{
+		XCHAR** pptszResult = DataBase_MySQL_GetResult(xhDBSQL, xhTable);
+		_tcsxcpy((*ppptszList)[i], pptszResult[0]);
+	}
+	DataBase_MySQL_FreeResult(xhDBSQL, xhTable);
+	return true;
+}
