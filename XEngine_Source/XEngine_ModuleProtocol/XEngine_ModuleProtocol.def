@@ -13,6 +13,7 @@ EXPORTS
 	ModuleProtocol_Packet_LogShow
 	ModuleProtocol_Packet_TestReport
 	ModuleProtocol_Packet_TestReply
+	ModuleProtocol_Packet_Weather
 	ModuleProtocol_Packet_ShortLink
 	ModuleProtocol_Packet_WordFilter
 	ModuleProtocol_Packet_ImageAttr
@@ -37,3 +38,4 @@ EXPORTS
 	ModuleProtocol_Parse_BackService
 	ModuleProtocol_Parse_Verifcation
 	ModuleProtocol_Parse_Deamon
+	ModuleProtocol_Parse_Weather

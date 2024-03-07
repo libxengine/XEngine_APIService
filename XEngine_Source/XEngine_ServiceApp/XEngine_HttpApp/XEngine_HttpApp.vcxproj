@@ -163,6 +163,7 @@
     <ClCompile Include="XEngine_TaskGet\TaskGet_Locker.cpp" />
     <ClCompile Include="XEngine_TaskGet\TaskGet_Reload.cpp" />
     <ClCompile Include="XEngine_TaskGet\TaskGet_Translation.cpp" />
+    <ClCompile Include="XEngine_TaskGet\TaskGet_Weather.cpp" />
     <ClCompile Include="XEngine_TaskPost\TaskPost_BackService.cpp" />
     <ClCompile Include="XEngine_TaskPost\TaskPost_Deamon.cpp" />
     <ClCompile Include="XEngine_TaskPost\TaskPost_DTest.cpp" />
@@ -186,6 +187,7 @@
     <ClInclude Include="XEngine_TaskGet\TaskGet_Locker.h" />
     <ClInclude Include="XEngine_TaskGet\TaskGet_Reload.h" />
     <ClInclude Include="XEngine_TaskGet\TaskGet_Translation.h" />
+    <ClInclude Include="XEngine_TaskGet\TaskGet_Weather.h" />
     <ClInclude Include="XEngine_TaskPost\TaskPost_BackService.h" />
     <ClInclude Include="XEngine_TaskPost\TaskPost_Deamon.h" />
     <ClInclude Include="XEngine_TaskPost\TaskPost_Image.h" />

@@ -101,6 +101,7 @@ bool HTTPTask_TastPost_Handle(RFCCOMPONENTS_HTTP_REQPARAM* pSt_HTTPParam, LPCXST
 	LPCXSTR lpszParamTranslation = _X("translation");
 	LPCXSTR lpszParamLocker = _X("lock");
 	LPCXSTR lpszParamReload = _X("reload");
+	LPCXSTR lpszParamWeather = _X("weather");
 	//post
 	LPCXSTR lpszParamP2PClient = _X("p2p");
 	LPCXSTR lpszParamZIPCode = _X("zipcode");
@@ -361,6 +362,14 @@ bool HTTPTask_TastPost_Handle(RFCCOMPONENTS_HTTP_REQPARAM* pSt_HTTPParam, LPCXST
 			BaseLib_OperatorString_GetKeyValue(pptszList[1], "=", tszKey, tszLockToken);
 			BaseLib_OperatorString_GetKeyValue(pptszList[2], "=", tszKey, tszLockType);
 			HTTPTask_TaskGet_Locker(lpszClientAddr, _ttxoll(tszLockToken), (ENUM_XENGINE_APISERVICE_LOCKER_TYPE)_ttxoi(tszLockType));
+		}
+		else if (0 == _tcsxnicmp(lpszParamWeather, tszValue, _tcsxlen(lpszParamWeather)))
+		{
+			//天气:http://127.0.0.1:5501/api?function=weather&params1=110101
+			XCHAR tszIDAddr[128] = {};
+
+			BaseLib_OperatorString_GetKeyValue(pptszList[1], "=", tszKey, tszIDAddr);
+			HTTPTask_TaskGet_WeatherInfo(lpszClientAddr, tszIDAddr);
 		}
 		else
 		{

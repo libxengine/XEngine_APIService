@@ -51,6 +51,7 @@ typedef struct
 	}st_XSql;
 	struct  
 	{
+		XCHAR tszWeatherUrl[MAX_PATH];        //天气接口
 		XCHAR tszBankUrl[MAX_PATH];           //银行卡验证地址
 		XCHAR tszTranslationUrl[MAX_PATH];    //翻译接口
 		struct  

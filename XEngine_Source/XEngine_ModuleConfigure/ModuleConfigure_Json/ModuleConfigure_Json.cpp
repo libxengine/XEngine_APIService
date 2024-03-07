@@ -123,13 +123,15 @@ bool CModuleConfigure_Json::ModuleConfigure_Json_File(LPCXSTR lpszConfigFile, XE
 	pSt_ServerConfig->st_XLog.nLogLeave = st_JsonXLog["LogLeave"].asInt();
 	_tcsxcpy(pSt_ServerConfig->st_XLog.tszLogFile, st_JsonXLog["tszLogFile"].asCString());
 
-	if (st_JsonRoot["XApi"].empty() || (3 != st_JsonRoot["XApi"].size()))
+	if (st_JsonRoot["XApi"].empty() || (4 != st_JsonRoot["XApi"].size()))
 	{
 		Config_IsErrorOccur = true;
 		Config_dwErrorCode = ERROR_MODULE_CONFIGURE_JSON_XAPI;
 		return false;
 	}
 	Json::Value st_JsonXApi = st_JsonRoot["XApi"];
+
+	_tcsxcpy(pSt_ServerConfig->st_XApi.tszWeatherUrl, st_JsonXApi["tszWeatherUrl"].asCString());
 	_tcsxcpy(pSt_ServerConfig->st_XApi.tszBankUrl, st_JsonXApi["tszBankUrl"].asCString());
 	_tcsxcpy(pSt_ServerConfig->st_XApi.tszTranslationUrl, st_JsonXApi["tszTranslationUrl"].asCString());
 	Json::Value st_JsonTranslationInfo = st_JsonXApi["st_TranslationInfo"];

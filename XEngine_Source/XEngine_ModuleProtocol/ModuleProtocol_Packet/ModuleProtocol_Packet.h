@@ -32,6 +32,7 @@ public:
 	bool ModuleProtocol_Packet_LogShow(XCHAR* ptszMsgBuffer, int* pInt_MsgLen, XCHAR*** ppptszList, int nListCount);
 	bool ModuleProtocol_Packet_TestReport(XCHAR* ptszMsgBuffer, int* pInt_MsgLen, XNETHANDLE xhToken, LPCXSTR lpszIPAddr, int nIPPort, __int64x nNumber, __int64x nFailed, __int64x nSuccess, int nStatus);
 	bool ModuleProtocol_Packet_TestReply(XCHAR* ptszMsgBuffer, int* pInt_MsgLen, XNETHANDLE xhToken);
+	bool ModuleProtocol_Packet_Weather(XCHAR* ptszMsgBuffer, int* pInt_MsgLen, XENGINE_WEATHERINFO* pSt_WeatherInfo);
 	bool ModuleProtocol_Packet_ShortLink(XCHAR* ptszMsgBuffer, int* pInt_MsgLen, XENGINE_SHORTLINK* pSt_ShortLink);
 	bool ModuleProtocol_Packet_WordFilter(XCHAR* ptszMsgBuffer, int* pInt_MsgLen, XENGINE_WORDFILTER* pSt_WordFilter);
 	bool ModuleProtocol_Packet_ImageAttr(XCHAR* ptszMsgBuffer, int* pInt_MsgLen, XENGINE_IMGBASEATTR* pSt_BaseInfo, XENGINE_IMGEXTATTR* pSt_ExtAttr);

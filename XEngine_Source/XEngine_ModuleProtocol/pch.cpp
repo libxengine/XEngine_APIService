@@ -63,6 +63,10 @@ extern "C" bool ModuleProtocol_Packet_LogShow(XCHAR * ptszMsgBuffer, int* pInt_M
 {
 	return m_ProtocolPacket.ModuleProtocol_Packet_LogShow(ptszMsgBuffer, pInt_MsgLen, ppptszList, nListCount);
 }
+extern "C" bool ModuleProtocol_Packet_Weather(XCHAR * ptszMsgBuffer, int* pInt_MsgLen, XENGINE_WEATHERINFO * pSt_WeatherInfo)
+{
+	return m_ProtocolPacket.ModuleProtocol_Packet_Weather(ptszMsgBuffer, pInt_MsgLen, pSt_WeatherInfo);
+}
 extern "C" bool ModuleProtocol_Packet_TestReport(XCHAR * ptszMsgBuffer, int* pInt_MsgLen, XNETHANDLE xhToken, LPCXSTR lpszIPAddr, int nIPPort, __int64x nNumber, __int64x nFailed, __int64x nSuccess, int nStatus)
 {
 	return m_ProtocolPacket.ModuleProtocol_Packet_TestReport(ptszMsgBuffer, pInt_MsgLen, xhToken, lpszIPAddr, nIPPort, nNumber, nFailed, nSuccess, nStatus);
@@ -165,4 +169,8 @@ extern "C" bool ModuleProtocol_Parse_Verifcation(LPCXSTR lpszMsgBuffer, int nMsg
 extern "C" bool ModuleProtocol_Parse_Deamon(LPCXSTR lpszMsgBuffer, int nMsgLen, XCHAR * ptszAPPName, XCHAR * ptszAPPPath, int* pInt_Retime, bool* pbEnable)
 {
 	return m_ProtocolParse.ModuleProtocol_Parse_Deamon(lpszMsgBuffer, nMsgLen, ptszAPPName, ptszAPPPath, pInt_Retime, pbEnable);
+}
+extern "C" bool ModuleProtocol_Parse_Weather(LPCXSTR lpszMsgBuffer, int nMsgLen, XENGINE_WEATHERINFO * pSt_WeatherInfo)
+{
+	return m_ProtocolParse.ModuleProtocol_Parse_Weather(lpszMsgBuffer, nMsgLen, pSt_WeatherInfo);
 }

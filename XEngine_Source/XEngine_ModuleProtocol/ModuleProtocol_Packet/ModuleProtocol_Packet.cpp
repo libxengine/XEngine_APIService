@@ -691,6 +691,61 @@ bool CModuleProtocol_Packet::ModuleProtocol_Packet_TestReply(XCHAR* ptszMsgBuffe
 	return true;
 }
 /********************************************************************
+函数名称：ModuleProtocol_Packet_Weather
+函数功能：天气信息协议打包函数
+ 参数.一：ptszMsgBuffer
+  In/Out：Out
+  类型：字符指针
+  可空：N
+  意思：输出打包的数据信息
+ 参数.二：pInt_MsgLen
+  In/Out：Out
+  类型：整数型指针
+  可空：N
+  意思：输出打包大小
+ 参数.三：pSt_WeatherInfo
+  In/Out：In
+  类型：数据结构
+  可空：N
+  意思：输入要打包的信息
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+bool CModuleProtocol_Packet::ModuleProtocol_Packet_Weather(XCHAR* ptszMsgBuffer, int* pInt_MsgLen, XENGINE_WEATHERINFO* pSt_WeatherInfo)
+{
+	ModuleProtocol_IsErrorOccur = false;
+
+	if ((NULL == ptszMsgBuffer) || (NULL == pInt_MsgLen))
+	{
+		ModuleProtocol_IsErrorOccur = true;
+		ModuleProtocol_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PROTOCOL_PACKET_PARAMENT;
+		return false;
+	}
+	Json::Value st_JsonRoot;
+	Json::Value st_JsonObject;
+	Json::StreamWriterBuilder st_JsonBuilder;
+
+	st_JsonObject["nHumidity"] = pSt_WeatherInfo->nHumidity;
+	st_JsonObject["nTemperature"] = pSt_WeatherInfo->nTemperature;
+	st_JsonObject["tszCity"] = pSt_WeatherInfo->tszCity;
+	st_JsonObject["tszProvince"] = pSt_WeatherInfo->tszProvince;
+	st_JsonObject["tszUPTime"] = pSt_WeatherInfo->tszUPTime;
+	st_JsonObject["tszWeatherStr"] = pSt_WeatherInfo->tszWeatherStr;
+	st_JsonObject["tszWinddiRection"] = pSt_WeatherInfo->tszWinddiRection;
+	st_JsonObject["tszWindPowerStr"] = pSt_WeatherInfo->tszWindPowerStr;
+
+	st_JsonRoot["code"] = 0;
+	st_JsonRoot["msg"] = "success";
+	st_JsonRoot["data"] = st_JsonObject;
+	st_JsonBuilder["emitUTF8"] = true;
+
+	*pInt_MsgLen = Json::writeString(st_JsonBuilder, st_JsonRoot).length();
+	memcpy(ptszMsgBuffer, Json::writeString(st_JsonBuilder, st_JsonRoot).c_str(), *pInt_MsgLen);
+	return true;
+}
+/********************************************************************
 函数名称：ModuleProtocol_Packet_ShortLink
 函数功能：短连接生成协议打包函数
  参数.一：ptszMsgBuffer
