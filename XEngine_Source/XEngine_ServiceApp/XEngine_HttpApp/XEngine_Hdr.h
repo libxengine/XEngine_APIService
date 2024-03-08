@@ -90,6 +90,7 @@ using namespace std;
 #include "XEngine_TaskGet/TaskGet_Locker.h"
 #include "XEngine_TaskGet/TaskGet_Reload.h"
 #include "XEngine_TaskGet/TaskGet_Weather.h"
+#include "XEngine_TaskGet/TaskGet_IDRegion.h"
 /********************************************************************
 //    Created:     2022/01/20  14:42:06
 //    File Name:   D:\XEngine_ServiceApp\XEngine_Source\XEngine_ServiceApp\XEngine_HttpApp\XEngine_Hdr.h

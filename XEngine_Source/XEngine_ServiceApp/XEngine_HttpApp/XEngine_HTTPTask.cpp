@@ -112,6 +112,7 @@ bool HTTPTask_TastPost_Handle(RFCCOMPONENTS_HTTP_REQPARAM* pSt_HTTPParam, LPCXST
 	LPCXSTR lpszParamLocker = _X("lock");
 	LPCXSTR lpszParamReload = _X("reload");
 	LPCXSTR lpszParamWeather = _X("weather");
+	LPCXSTR lpszParamRegion = _X("region");
 	//post
 	LPCXSTR lpszParamP2PClient = _X("p2p");
 	LPCXSTR lpszParamZIPCode = _X("zipcode");
@@ -380,6 +381,50 @@ bool HTTPTask_TastPost_Handle(RFCCOMPONENTS_HTTP_REQPARAM* pSt_HTTPParam, LPCXST
 
 			BaseLib_OperatorString_GetKeyValue(pptszList[1], "=", tszKey, tszIDAddr);
 			HTTPTask_TaskGet_WeatherInfo(lpszClientAddr, tszIDAddr);
+		}
+		else if (0 == _tcsxnicmp(lpszParamRegion, tszValue, _tcsxlen(lpszParamRegion)))
+		{
+			//天气:http://127.0.0.1:5501/api?function=region&type=1&params=省份&params=市区&params=县级
+			int nType = 0;
+			memset(tszValue, '\0', sizeof(tszValue));
+
+			BaseLib_OperatorString_GetKeyValue(pptszList[1], "=", tszKey, tszValue);
+			nType = _ttxoi(tszValue);
+			if (0 == nType)
+			{
+				memset(tszValue, '\0', sizeof(tszValue));
+				BaseLib_OperatorString_GetKeyValue(pptszList[2], "=", tszKey, tszValue);
+				HTTPTask_TaskGet_IDRegion(lpszClientAddr, nType, tszValue, NULL, NULL);
+			}
+			else
+			{
+				if (2 == nListCount)
+				{
+					XCHAR tszProvincerStr[32] = {};
+					BaseLib_OperatorString_GetKeyValue(pptszList[2], "=", tszKey, tszProvincerStr,NULL);
+					HTTPTask_TaskGet_IDRegion(lpszClientAddr, nType, tszProvincerStr, NULL, NULL);
+				}
+				else if (3 == nListCount)
+				{
+					XCHAR tszProvincerStr[32] = {};
+					XCHAR tszCityStr[32] = {};
+					BaseLib_OperatorString_GetKeyValue(pptszList[2], "=", tszKey, tszProvincerStr);
+					BaseLib_OperatorString_GetKeyValue(pptszList[3], "=", tszKey, tszCityStr);
+
+					HTTPTask_TaskGet_IDRegion(lpszClientAddr, nType, tszProvincerStr, tszCityStr, NULL);
+				}
+				else
+				{
+					XCHAR tszProvincerStr[32] = {};
+					XCHAR tszCityStr[32] = {};
+					XCHAR tszCountyStr[32] = {};
+					BaseLib_OperatorString_GetKeyValue(pptszList[2], "=", tszKey, tszProvincerStr);
+					BaseLib_OperatorString_GetKeyValue(pptszList[3], "=", tszKey, tszCityStr);
+					BaseLib_OperatorString_GetKeyValue(pptszList[4], "=", tszKey, tszCountyStr);
+
+					HTTPTask_TaskGet_IDRegion(lpszClientAddr, nType, tszProvincerStr, tszCityStr, tszCountyStr);
+				}
+			}
 		}
 		else
 		{

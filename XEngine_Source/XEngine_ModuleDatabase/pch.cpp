@@ -51,6 +51,10 @@ extern "C" bool ModuleDatabase_IDCard_QueryRegion(XENGINE_IDREGION * pSt_IDRegio
 {
 	return m_IDCard.ModuleDatabase_IDCard_QueryRegion(pSt_IDRegion, pSt_IDInfo);
 }
+extern "C" bool ModuleDatabase_IDCard_QueryByAddr(XENGINE_IDREGION * pSt_IDRegion, int* pInt_IDNumber)
+{
+	return m_IDCard.ModuleDatabase_IDCard_QueryByAddr(pSt_IDRegion, pInt_IDNumber);
+}
 /************************************************************************/
 /*                         导出的银行卡信息函数                         */
 /************************************************************************/

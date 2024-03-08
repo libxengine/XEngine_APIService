@@ -59,6 +59,25 @@ extern "C" bool ModuleDatabase_IDCard_Destory();
 备注：
 *********************************************************************/
 extern "C" bool ModuleDatabase_IDCard_QueryRegion(XENGINE_IDREGION * pSt_IDRegion, XENGINE_IDCARDINFO * pSt_IDInfo);
+/********************************************************************
+函数名称：ModuleDatabase_IDCard_QueryByAddr
+函数功能：查询地址对应的区域ID
+ 参数.一：pSt_IDRegion
+  In/Out：Out
+  类型：数据结构指针
+  可空：N
+  意思：输出查询到的位置信息
+ 参数.二：pInt_IDNumber
+  In/Out：Out
+  类型：整数型指针
+  可空：N
+  意思：输出对应ID
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+extern "C" bool ModuleDatabase_IDCard_QueryByAddr(XENGINE_IDREGION* pSt_IDRegion, int* pInt_IDNumber);
 /************************************************************************/
 /*                         导出的银行卡信息函数                         */
 /************************************************************************/

@@ -39,6 +39,10 @@ extern "C" bool ModuleProtocol_Packet_IDQuery(XCHAR * ptszMsgBuffer, int* pInt_M
 {
 	return m_ProtocolPacket.ModuleProtocol_Packet_IDQuery(ptszMsgBuffer, pInt_MsgLen, pSt_IDInfo, pSt_IDRegion, nCode, lpszMsgBuffer);
 }
+extern "C" bool ModuleProtocol_Packet_IDRegion(XCHAR * ptszMsgBuffer, int* pInt_MsgLen, XENGINE_IDREGION * pSt_IDRegion, int nIDRegion)
+{
+	return m_ProtocolPacket.ModuleProtocol_Packet_IDRegion(ptszMsgBuffer, pInt_MsgLen, pSt_IDRegion, nIDRegion);
+}
 extern "C" bool ModuleProtocol_Packet_BankQuery(XCHAR * ptszMsgBuffer, int* pInt_MsgLen, XENGINE_BANKINFO * pSt_BankInfo, int nCode, LPCXSTR lpszMsgBuffer)
 {
 	return m_ProtocolPacket.ModuleProtocol_Packet_BankQuery(ptszMsgBuffer, pInt_MsgLen, pSt_BankInfo, nCode, lpszMsgBuffer);

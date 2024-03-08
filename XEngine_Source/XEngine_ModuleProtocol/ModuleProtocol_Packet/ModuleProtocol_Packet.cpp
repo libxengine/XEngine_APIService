@@ -153,6 +153,62 @@ bool CModuleProtocol_Packet::ModuleProtocol_Packet_IDQuery(XCHAR* ptszMsgBuffer,
 	return true;
 }
 /********************************************************************
+函数名称：ModuleProtocol_Packet_IDRegion
+函数功能：ID区域转换
+ 参数.一：ptszMsgBuffer
+  In/Out：Out
+  类型：字符指针
+  可空：N
+  意思：输出打包的数据信息
+ 参数.二：pInt_MsgLen
+  In/Out：Out
+  类型：整数型指针
+  可空：N
+  意思：输出打包大小
+ 参数.三：pSt_IDRegion
+  In/Out：In
+  类型：数据结构指针
+  可空：N
+  意思：输入要打包的数据
+ 参数.四：nIDRegion
+  In/Out：In
+  类型：整数型
+  可空：Y
+  意思：输入要打包的ID
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+bool CModuleProtocol_Packet::ModuleProtocol_Packet_IDRegion(XCHAR* ptszMsgBuffer, int* pInt_MsgLen, XENGINE_IDREGION* pSt_IDRegion, int nIDRegion)
+{
+	ModuleProtocol_IsErrorOccur = false;
+
+	if ((NULL == ptszMsgBuffer) || (NULL == pInt_MsgLen))
+	{
+		ModuleProtocol_IsErrorOccur = true;
+		ModuleProtocol_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PROTOCOL_PACKET_PARAMENT;
+		return false;
+	}
+	Json::Value st_JsonRoot;
+	Json::Value st_JsonObject;
+	Json::StreamWriterBuilder st_JsonBuilder;
+
+	st_JsonObject["tszProvincer"] = pSt_IDRegion->tszProvincer;
+	st_JsonObject["tszCity"] = pSt_IDRegion->tszCity;
+	st_JsonObject["tszCounty"] = pSt_IDRegion->tszCounty;
+	st_JsonObject["nIDRegion"] = nIDRegion;
+
+	st_JsonRoot["code"] = 0;
+	st_JsonRoot["msg"] = "success";
+	st_JsonRoot["data"] = st_JsonObject;
+	st_JsonBuilder["emitUTF8"] = true;
+
+	*pInt_MsgLen = Json::writeString(st_JsonBuilder, st_JsonRoot).length();
+	memcpy(ptszMsgBuffer, Json::writeString(st_JsonBuilder, st_JsonRoot).c_str(), *pInt_MsgLen);
+	return true;
+}
+/********************************************************************
 函数名称：ModuleProtocol_Packet_BankQuery
 函数功能：银行卡信息查询打包为JSON
  参数.一：ptszMsgBuffer
