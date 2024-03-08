@@ -98,11 +98,30 @@ int test_query()
 
 	return 0;
 }
-int test_delete()
+int test_list()
 {
 	int nLen = 0;
 	int nCode = 0;
 	LPCXSTR lpszAPIUrl = _X("http://127.0.0.1:5501/api?function=log&params1=3");
+
+	Json::Value st_JsonRoot;
+
+	XCHAR* ptszMsgBuffer = NULL;
+	if (!APIClient_Http_Request(_X("POST"), lpszAPIUrl, st_JsonRoot.toStyledString().c_str(), &nCode, &ptszMsgBuffer, &nLen))
+	{
+		printf("发送投递失败！\n");
+		return 0;
+	}
+	printf("接受到数据,大小:%d,内容:%s\n", nLen, ptszMsgBuffer);
+	BaseLib_OperatorMemory_FreeCStyle((XPPMEM)&ptszMsgBuffer);
+
+	return 0;
+}
+int test_delete()
+{
+	int nLen = 0;
+	int nCode = 0;
+	LPCXSTR lpszAPIUrl = _X("http://127.0.0.1:5501/api?function=log&params1=4");
 
 	Json::Value st_JsonRoot;
 	st_JsonRoot["tszTableName"] = lpszTableName;
@@ -129,6 +148,7 @@ int main()
 	test_insert();
 	test_insert();
 	test_query();
+	test_list();
 	test_delete();
 
 #ifdef _MSC_BUILD
