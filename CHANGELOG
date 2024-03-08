@@ -1,3 +1,29 @@
+XEngine_APIService V3.3.0.1001
+
+增加:行政区域ID转换支持
+增加:天气信息查询支持
+增加:图像质量和压缩级别设置支持
+增加:日志表枚举支持
+更新:匹配XEngine V8.25版本
+修改:后台下载服务不需要等待完成即可返回消息了
+修改:后台上传服务不需要等待完成即可返回消息了
+修改:在进入HTTPTask_TastPost_Handle函数就进行解码了
+修复:创建日志表错误的问题
+修复:日志表字符集不正确的问题
+修复:日志协议删除表协议错误
+
+added:id region convert supported
+added:weather info query supported
+added:image quality and compress level set supported
+added:list xlog database table supported
+update:match xengine v8.25
+modify:does not wait completed reply msg for download of back service
+modify:does not wait completed reply msg for upload of back service
+modify:after entering the HTTPTask_TastPost_Handle function, the url encoding starts to be processed.
+fixed:create log table is incorrect
+fixed:log table charsets is incorrect
+fixed:log protocol delete table is incorrect
+======================================================================================
 XEngine_APIService V3.2.0.1001
 
 增加:编译开关日志提示

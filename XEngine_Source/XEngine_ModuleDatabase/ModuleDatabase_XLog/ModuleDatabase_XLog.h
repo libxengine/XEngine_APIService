@@ -24,6 +24,7 @@ public:
 	bool ModuleDatabase_XLog_Insert(XENGINE_XLOGINFO* pSt_XLogInfo);
 	bool ModuleDatabase_XLog_Query(XENGINE_XLOGINFO*** pppSt_XLogInfo, int* pInt_ListCount, LPCXSTR lpszTableName, LPCXSTR lpszTimeStart, LPCXSTR lpszTimeEnd);
 	bool ModuleDatabase_XLog_Delete(LPCXSTR lpszTableName);
+	bool ModuleDatabase_XLog_Show(XCHAR*** ppptszList, int* pInt_ListCount);
 protected:
 private:
 	XNETHANDLE xhDBSQL;

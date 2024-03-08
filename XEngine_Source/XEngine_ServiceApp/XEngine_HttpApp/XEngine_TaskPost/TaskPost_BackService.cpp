@@ -9,14 +9,14 @@ static XHANDLE xhStream = NULL;
 
 void CALLBACK HTTPTask_TaskPost_CBVideo(uint8_t* punStringY, int nYLen, uint8_t* punStringU, int nULen, uint8_t* punStringV, int nVLen, XPVOID lParam)
 {
-	if (!StreamClient_StreamPush_PushVideo(xhStream, punStringY, nYLen, punStringU, nULen, punStringV, nVLen))
+	if (!XClient_StreamPush_LiveVideo(xhStream, punStringY, nYLen, punStringU, nULen, punStringV, nVLen))
 	{
 		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("屏幕采集器,推流编码失败,需要关闭推流服务,错误码:%lX"), StreamClient_GetLastError());
 	}
 }
 void CALLBACK HTTPTask_TaskPost_CBAudio(uint8_t* punStringAudio, int nVLen, XPVOID lParam)
 {
-	if (!StreamClient_StreamPush_PushAudio(xhStream, punStringAudio, nVLen))
+	if (!XClient_StreamPush_LiveAudio(xhStream, punStringAudio, nVLen))
 	{
 		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("音频采集器,推流编码失败,需要关闭推流服务,错误码:%lX"), StreamClient_GetLastError());
 	}
@@ -92,22 +92,23 @@ bool HTTPTask_TaskPost_BackService(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer
 			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("HTTP客户端:%s,下载任务处理失败,请求下载地址:%s,下载路径:%s,错误码:%lX"), lpszClientAddr, tszSrcBuffer, tszDstBuffer, APIClient_GetLastError());
 			return false;
 		}
+		HttpProtocol_Server_SendMsgEx(xhHTTPPacket, ptszSDBuffer, &nSDLen, &st_HDRParam);
+		XEngine_Network_Send(lpszClientAddr, ptszSDBuffer, nSDLen);
 		while (true)
 		{
-			NETHELP_FILEINFO st_TaskInfo;
-			memset(&st_TaskInfo, '\0', sizeof(NETHELP_FILEINFO));
+			XCLIENT_APIFILE st_TaskInfo;
+			memset(&st_TaskInfo, '\0', sizeof(XCLIENT_APIFILE));
 
-			if (APIClient_File_Query(xhTask, &st_TaskInfo))
+			if (!APIClient_File_Query(xhTask, &st_TaskInfo))
 			{
-				if ((ENUM_NETHELP_APICLIENT_FILE_STATUS_INIT != st_TaskInfo.en_DownStatus) || (ENUM_NETHELP_APICLIENT_FILE_STATUS_DOWNLOADDING != st_TaskInfo.en_DownStatus))
-				{
-					break;
-				}
+				break;
+			}
+			if ((ENUM_XCLIENT_APIHELP_FILE_STATUS_INIT != st_TaskInfo.en_DownStatus) || (ENUM_XCLIENT_APIHELP_FILE_STATUS_DOWNLOADDING != st_TaskInfo.en_DownStatus))
+			{
+				break;
 			}
 		}
 		APIClient_File_Delete(xhTask);
-		HttpProtocol_Server_SendMsgEx(xhHTTPPacket, ptszSDBuffer, &nSDLen, &st_HDRParam);
-		XEngine_Network_Send(lpszClientAddr, ptszSDBuffer, nSDLen);
 		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("HTTP客户端:%s:下载任务处理成功,下载地址:%s,保存地址:%s"),lpszClientAddr, tszSrcBuffer, tszDstBuffer);
 	}
 	break;
@@ -148,21 +149,22 @@ bool HTTPTask_TaskPost_BackService(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer
 			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("HTTP客户端:%s:FTP上传任务处理失败,上传的文件:%s,上传的地址:%s,错误码:%lX"), lpszClientAddr, tszSrcBuffer, tszDstBuffer, APIClient_GetLastError());
 			return false;
 		}
-		while (true)
-		{
-			NETHELP_FILEINFO st_TaskInfo;
-			memset(&st_TaskInfo, '\0', sizeof(NETHELP_FILEINFO));
-
-			if (APIClient_File_Query(xhTask, &st_TaskInfo))
-			{
-				if (ENUM_NETHELP_APICLIENT_FILE_STATUS_DOWNLOADDING != st_TaskInfo.en_DownStatus)
-				{
-					break;
-				}
-			}
-		}
 		HttpProtocol_Server_SendMsgEx(xhHTTPPacket, ptszSDBuffer, &nSDLen, &st_HDRParam);
 		XEngine_Network_Send(lpszClientAddr, ptszSDBuffer, nSDLen);
+		while (true)
+		{
+			XCLIENT_APIFILE st_TaskInfo;
+			memset(&st_TaskInfo, '\0', sizeof(XCLIENT_APIFILE));
+
+			if (!APIClient_File_Query(xhTask, &st_TaskInfo))
+			{
+				break;
+			}
+			if (ENUM_XCLIENT_APIHELP_FILE_STATUS_DOWNLOADDING != st_TaskInfo.en_DownStatus)
+			{
+				break;
+			}
+		}
 		APIClient_File_Delete(xhTask);
 		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("HTTP客户端:%s:上传文件处理成功,上传的文件:%s,上传的地址:%s"), lpszClientAddr, tszSrcBuffer, tszDstBuffer);
 	}
@@ -359,7 +361,7 @@ bool HTTPTask_TaskPost_BackService(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer
 			return false;
 		}
 
-		xhStream = StreamClient_StreamPush_Init(tszDstBuffer, &st_AVInfo);
+		xhStream = XClient_StreamPush_LiveInit(tszDstBuffer, &st_AVInfo);
 		if (NULL == xhStream)
 		{
 			st_HDRParam.nHttpCode = 400;
@@ -381,7 +383,7 @@ bool HTTPTask_TaskPost_BackService(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer
 		{
 			AVCollect_Video_Destory(xhScreen);
 			AVCollect_Audio_Destory(xhSound);
-			StreamClient_StreamPush_Close(xhStream);
+			XClient_StreamPush_LiveClose(xhStream);
 			VideoCodec_Stream_Destroy(xhVideo);
 			AudioCodec_Stream_Destroy(xhAudio);
 			bRecord = false;

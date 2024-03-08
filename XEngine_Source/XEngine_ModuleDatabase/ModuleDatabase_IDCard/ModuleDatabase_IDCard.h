@@ -21,6 +21,8 @@ public:
 	bool ModuleDatabase_IDCard_Init(DATABASE_MYSQL_CONNECTINFO* pSt_DBConnector);
 	bool ModuleDatabase_IDCard_Destory();
 	bool ModuleDatabase_IDCard_QueryRegion(XENGINE_IDREGION* pSt_IDRegion, XENGINE_IDCARDINFO* pSt_IDInfo);
+public:
+	bool ModuleDatabase_IDCard_QueryByAddr(XENGINE_IDREGION* pSt_IDRegion, int* pInt_IDNumber);
 protected:
 	bool ModuleDatabase_IDCard_QueryProvincer(XENGINE_IDREGION* pSt_IDRegion, XENGINE_IDCARDINFO* pSt_IDInfo);
 	bool ModuleDatabase_IDCard_QueryCity(XENGINE_IDREGION* pSt_IDRegion, XENGINE_IDCARDINFO* pSt_IDInfo);

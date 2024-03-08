@@ -8,14 +8,12 @@ bool HTTPTask_TaskGet_Translation(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer,
 	XCHAR* ptszBodyBuffer;
 	XCHAR tszMsgBuffer[4096];
 	XCHAR tszPktBuffer[4096];
-	XCHAR tszUrlBuffer[MAX_PATH];
 	XCHAR tszTypeBuffer[64];
 	XENGINE_LANGUAGEINFO st_LanguageInfo;
 	RFCCOMPONENTS_HTTP_HDRPARAM st_HDRParam;    //发送给客户端的参数
 
 	memset(tszMsgBuffer, '\0', sizeof(tszMsgBuffer));
 	memset(tszPktBuffer, '\0', sizeof(tszPktBuffer));
-	memset(tszUrlBuffer, '\0', MAX_PATH);
 	memset(tszTypeBuffer, '\0', sizeof(tszTypeBuffer));
 	memset(&st_LanguageInfo, '\0', sizeof(XENGINE_LANGUAGEINFO));
 	memset(&st_HDRParam, '\0', sizeof(RFCCOMPONENTS_HTTP_HDRPARAM));
@@ -23,16 +21,13 @@ bool HTTPTask_TaskGet_Translation(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer,
 	st_HDRParam.nHttpCode = 200; //HTTP CODE码
 	st_HDRParam.bIsClose = true; //收到回复后就关闭
 
-	XCHAR tszURLBuffer[MAX_PATH] = {};
 	XCHAR tszSignStr[MAX_PATH] = {};
 	XCHAR tszMD5Codec[MAX_PATH] = {};
 	XCHAR tszMD5Str[MAX_PATH] = {};
 	XCHAR tszURLStr[4096] = {};
 
-	OPenSsl_Codec_UrlDeCodec(lpszMsgBuffer, _tcsxlen(lpszMsgBuffer), tszURLBuffer);
-
 	int nRandomNumber = rand();
-	int nLen = _xstprintf(tszSignStr, _X("%s%s%d%s"), st_ServiceConfig.st_XApi.st_TranslationInfo.tszAPPID, tszURLBuffer, nRandomNumber, st_ServiceConfig.st_XApi.st_TranslationInfo.tszAPPKey);
+	int nLen = _xstprintf(tszSignStr, _X("%s%s%d%s"), st_ServiceConfig.st_XApi.st_TranslationInfo.tszAPPID, lpszMsgBuffer, nRandomNumber, st_ServiceConfig.st_XApi.st_TranslationInfo.tszAPPKey);
 
 	OPenSsl_Api_Digest(tszSignStr, (XBYTE*)tszMD5Codec, &nLen);
 	for (int i = 0; i < 16; i++)

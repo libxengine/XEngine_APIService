@@ -6,6 +6,7 @@ EXPORTS
 	ModuleDatabase_IDCard_Init
 	ModuleDatabase_IDCard_Destory
 	ModuleDatabase_IDCard_QueryRegion
+	ModuleDatabase_IDCard_QueryByAddr
 
 	ModuleDatabase_Bank_Init
 	ModuleDatabase_Bank_Destory
@@ -22,6 +23,7 @@ EXPORTS
 	ModuleDatabase_XLog_Insert
 	ModuleDatabase_XLog_Query
 	ModuleDatabase_XLog_Delete
+	ModuleDatabase_XLog_Show
 
 	ModuleDatabase_ShortLink_Init
 	ModuleDatabase_ShortLink_Destory

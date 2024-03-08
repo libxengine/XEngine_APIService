@@ -29,6 +29,7 @@
         "SQLPass":"123123"
     },
     "XApi":{
+        "tszWeatherUrl":"https://restapi.amap.com/v3/weather/weatherInfo?city=%s&key=3239fc302d6480ce49973f4d1c59e5d8",
         "tszBankUrl":"https://ccdcapi.alipay.com/validateAndCacheCardInfo.json?cardNo=%s&cardBinCheck=true",
         "tszTranslationUrl":"https://fanyi-api.baidu.com/api/trans/vip/translate",
         "st_TranslationInfo":{
@@ -55,11 +56,12 @@
         "tszUserName":"xyry",
         "tszUserPass":"11",
         "st_VerSwitch":{
-            "bBackService":true,
-            "bDeamon":true
+            "bBackService":false,
+            "bDeamon":false
         }
     },
     "XVer":[
+        "3.3.0.1001 Build20240308",
         "3.2.0.1001 Build20231229",
         "3.1.0.1001 Build20231102",
         "3.0.0.1001 Build20230908",

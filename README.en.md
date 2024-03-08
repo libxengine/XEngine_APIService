@@ -23,7 +23,7 @@ Support privatization deployment, free, safe, open source, controllable
 2. support ip address location information query
 3. support ID verification and information query
 4. support phone number information query
-5. Weather forecast (planned)
+5. Weather forecast
 6. Lunar calendar conversion (planning)
 7. News headlines (planned)
 8. Standard height and weight
@@ -49,7 +49,7 @@ Support privatization deployment, free, safe, open source, controllable
 28. remote control(back management)
 29. Image Process
 30. process deamon
-
+31. Region ID Convert
 ## install
 
 #### XEngine Evn

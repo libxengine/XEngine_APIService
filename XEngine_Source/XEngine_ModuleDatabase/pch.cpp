@@ -51,6 +51,10 @@ extern "C" bool ModuleDatabase_IDCard_QueryRegion(XENGINE_IDREGION * pSt_IDRegio
 {
 	return m_IDCard.ModuleDatabase_IDCard_QueryRegion(pSt_IDRegion, pSt_IDInfo);
 }
+extern "C" bool ModuleDatabase_IDCard_QueryByAddr(XENGINE_IDREGION * pSt_IDRegion, int* pInt_IDNumber)
+{
+	return m_IDCard.ModuleDatabase_IDCard_QueryByAddr(pSt_IDRegion, pInt_IDNumber);
+}
 /************************************************************************/
 /*                         导出的银行卡信息函数                         */
 /************************************************************************/
@@ -111,6 +115,10 @@ extern "C" bool ModuleDatabase_XLog_Query(XENGINE_XLOGINFO * **pppSt_XLogInfo, i
 extern "C" bool ModuleDatabase_XLog_Delete(LPCXSTR lpszTableName)
 {
 	return m_XLog.ModuleDatabase_XLog_Delete(lpszTableName);
+}
+extern "C" bool ModuleDatabase_XLog_Show(XCHAR * **ppptszList, int* pInt_ListCount)
+{
+	return m_XLog.ModuleDatabase_XLog_Show(ppptszList, pInt_ListCount);
 }
 /************************************************************************/
 /*                         导出的短连接数据库函数                       */

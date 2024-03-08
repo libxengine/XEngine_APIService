@@ -1116,3 +1116,42 @@ extern "C" bool ModuleHelp_ImageSet_ColorCvt(LPCXSTR lpszSrcBuffer, int nSLen, L
 备注：
 *********************************************************************/
 extern "C" bool ModuleHelp_ImageSet_Ligth(LPCXSTR lpszSrcBuffer, int nSLen, LPCXSTR lpszExtFile, XCHAR* ptszDstBuffer, int* pInt_DLen, int nGamma);
+/********************************************************************
+函数名称：ModuleHelp_ImageSet_Level
+函数功能：图像压缩级别调整
+ 参数.一：lpszSrcFile
+  In/Out：In
+  类型：常量字符指针
+  可空：N
+  意思：输入原始缓冲区数据
+ 参数.二：nSLen
+  In/Out：In
+  类型：整数型
+  可空：N
+  意思：输入原始缓冲区大小
+ 参数.三：lpszExtFile
+  In/Out：In
+  类型：常量字符指针
+  可空：N
+  意思：输入转换的图像格式.jpg .png .jpeg .webp
+ 参数.四：ptszDstBuffer
+  In/Out：Out
+  类型：字符指针
+  可空：N
+  意思：输出转换后的缓冲区
+ 参数.五：pInt_DLen
+  In/Out：Out
+  类型：整数型指针
+  可空：Y
+  意思：输出转换后的大小
+ 参数.六：nLevel
+  In/Out：In
+  类型：整数型
+  可空：N
+  意思：输入压缩后者质量级别.根据类型不同,此值作用不同
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+extern "C" bool ModuleHelp_ImageSet_Level(LPCXSTR lpszSrcBuffer, int nSLen, LPCXSTR lpszExtFile, XCHAR* ptszDstBuffer, int* pInt_DLen, int nLevel);

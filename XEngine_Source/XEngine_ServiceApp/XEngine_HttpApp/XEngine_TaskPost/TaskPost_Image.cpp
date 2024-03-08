@@ -139,6 +139,22 @@ bool HTTPTask_TaskPost_Image(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer, int 
 				XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("HTTP客户端:%s,请求设置图像亮度失败,错误:%lX"), lpszClientAddr, ModuleHelp_GetLastError());
 			}
 		}
+		else if (5 == nOPCode)
+		{
+			if (ModuleHelp_ImageSet_Level(lpszMsgBuffer, nMsgLen, tszFileExt, ptszRVBuffer, &nRVLen, nWidth))
+			{
+				HttpProtocol_Server_SendMsgEx(xhHTTPPacket, ptszSDBuffer, &nSDLen, &st_HDRParam, ptszRVBuffer, nRVLen);
+				XEngine_Network_Send(lpszClientAddr, ptszSDBuffer, nSDLen);
+				XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("HTTP客户端:%s,请求设置图像质量压缩值:%d"), lpszClientAddr, nWidth);
+			}
+			else
+			{
+				st_HDRParam.nHttpCode = 501;
+				HttpProtocol_Server_SendMsgEx(xhHTTPPacket, ptszSDBuffer, &nSDLen, &st_HDRParam);
+				XEngine_Network_Send(lpszClientAddr, ptszSDBuffer, nSDLen);
+				XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("HTTP客户端:%s,请求设置图像质量压缩失败,错误:%lX"), lpszClientAddr, ModuleHelp_GetLastError());
+			}
+		}
 	}
 	free(ptszRVBuffer);
 	free(ptszSDBuffer);

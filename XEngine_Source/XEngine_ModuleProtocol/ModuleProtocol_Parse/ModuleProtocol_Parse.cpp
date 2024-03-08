@@ -991,3 +991,83 @@ bool CModuleProtocol_Parse::ModuleProtocol_Parse_Deamon(LPCXSTR lpszMsgBuffer, i
 	}
 	return true;
 }
+/********************************************************************
+函数名称：ModuleProtocol_Parse_Weather
+函数功能：解析天气信息
+ 参数.一：lpszMsgBuffer
+  In/Out：In
+  类型：常量字符指针
+  可空：N
+  意思：输入要解析的缓冲区
+ 参数.二：nMsgLen
+  In/Out：In
+  类型：整数型
+  可空：N
+  意思：输入缓冲区大小
+ 参数.三：pSt_WeatherInfo
+  In/Out：Out
+  类型：数据结构指针
+  可空：N
+  意思：输出解析后的信息
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+bool CModuleProtocol_Parse::ModuleProtocol_Parse_Weather(LPCXSTR lpszMsgBuffer, int nMsgLen, XENGINE_WEATHERINFO* pSt_WeatherInfo)
+{
+	ModuleProtocol_IsErrorOccur = false;
+
+	if ((NULL == lpszMsgBuffer) || (0 == nMsgLen))
+	{
+		ModuleProtocol_IsErrorOccur = true;
+		ModuleProtocol_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PROTOCOL_PARSE_PARAMENT;
+		return false;
+	}
+	Json::Value st_JsonRoot;
+	JSONCPP_STRING st_JsonError;
+	Json::CharReaderBuilder st_JsonBuilder;
+
+	std::unique_ptr<Json::CharReader> const pSt_JsonReader(st_JsonBuilder.newCharReader());
+	if (!pSt_JsonReader->parse(lpszMsgBuffer, lpszMsgBuffer + nMsgLen, &st_JsonRoot, &st_JsonError))
+	{
+		ModuleProtocol_IsErrorOccur = true;
+		ModuleProtocol_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PROTOCOL_PARSE_PARAMENT;
+		return false;
+	}
+	Json::Value st_JsonObject = st_JsonRoot["lives"][0];
+
+	if (!st_JsonObject["province"].isNull())
+	{
+		_tcsxcpy(pSt_WeatherInfo->tszProvince, st_JsonObject["province"].asCString());
+	}
+	if (!st_JsonObject["city"].isNull())
+	{
+		_tcsxcpy(pSt_WeatherInfo->tszCity, st_JsonObject["city"].asCString());
+	}
+	if (!st_JsonObject["weather"].isNull())
+	{
+		_tcsxcpy(pSt_WeatherInfo->tszWeatherStr, st_JsonObject["weather"].asCString());
+	}
+	if (!st_JsonObject["winddirection"].isNull())
+	{
+		_tcsxcpy(pSt_WeatherInfo->tszWinddiRection, st_JsonObject["winddirection"].asCString());
+	}
+	if (!st_JsonObject["windpower"].isNull())
+	{
+		_tcsxcpy(pSt_WeatherInfo->tszWindPowerStr, st_JsonObject["windpower"].asCString());
+	}
+	if (!st_JsonObject["reporttime"].isNull())
+	{
+		_tcsxcpy(pSt_WeatherInfo->tszUPTime, st_JsonObject["reporttime"].asCString());
+	}
+	if (!st_JsonObject["temperature"].isNull())
+	{
+		pSt_WeatherInfo->nTemperature = _ttxoi(st_JsonObject["temperature"].asCString());
+	}
+	if (!st_JsonObject["humidity"].isNull())
+	{
+		pSt_WeatherInfo->nHumidity = _ttxoi(st_JsonObject["humidity"].asCString());
+	}
+	return true;
+}

@@ -92,21 +92,28 @@ bool CModuleDatabase_XLog::ModuleDatabase_XLog_Create(LPCXSTR lpszTableName)
 		DBModule_dwErrorCode = ERROR_APISERVICE_MODULE_DATABASE_PARAMENT;
 		return false;
 	}
-	XCHAR tszSQLStatement[10240];
+	XCHAR tszSQLStatement[4096];
 	memset(tszSQLStatement, '\0', sizeof(tszSQLStatement));
 
 	_xstprintf(tszSQLStatement, _X("CREATE TABLE IF NOT EXISTS `%s` ("
 	"`ID` int NOT NULL AUTO_INCREMENT,"
-	"`tszFileName` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '文件名',"
-	"`tszFuncName` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '函数名',"
+	"`tszFileName` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '文件名',"
+	"`tszFuncName` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '函数名',"
 	"`nLogLine` int NULL DEFAULT NULL COMMENT '第几行',"
 	"`nLogLevel` int NULL DEFAULT NULL COMMENT '打印级别',"
-	"`tszLogBuffer` varchar(8196) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '日志信息',"
+	"`tszLogBuffer` varchar(8196) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '日志信息',"
 	"`tszLogTime` datetime NOT NULL COMMENT '日志时间',"
 		"PRIMARY KEY (`ID`) USING BTREE"
-	") ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;"), lpszTableName);
+	") ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;"), lpszTableName);
 
+#ifdef _MSC_BUILD
+	int nUTFLen = 0;
+	XCHAR tszUTFQuery[4096] = {};
+	BaseLib_OperatorCharset_AnsiToUTF(tszSQLStatement, tszUTFQuery, &nUTFLen);
+	if (!DataBase_MySQL_Execute(xhDBSQL, tszUTFQuery))
+#else
 	if (!DataBase_MySQL_Execute(xhDBSQL, tszSQLStatement))
+#endif
 	{
 		DBModule_IsErrorOccur = true;
 		DBModule_dwErrorCode = DataBase_GetLastError();
@@ -274,12 +281,65 @@ bool CModuleDatabase_XLog::ModuleDatabase_XLog_Delete(LPCXSTR lpszTableName)
 	XCHAR tszSQLStatement[10240];
 	memset(tszSQLStatement, '\0', sizeof(tszSQLStatement));
 
-	_xstprintf(tszSQLStatement, _X("DROP TABLE IF EXISTS '%s'"), lpszTableName);
+	_xstprintf(tszSQLStatement, _X("DROP TABLE IF EXISTS `%s`"), lpszTableName);
 	if (!DataBase_MySQL_Execute(xhDBSQL, tszSQLStatement))
 	{
 		DBModule_IsErrorOccur = true;
 		DBModule_dwErrorCode = DataBase_GetLastError();
 		return false;
 	}
+	return true;
+}
+/********************************************************************
+函数名称：ModuleDatabase_XLog_Show
+函数功能：日志表列举
+ 参数.一：ppptszList
+  In/Out：Out
+  类型：三级指针
+  可空：N
+  意思：输出日志数据库里面的表列
+ 参数.二：pInt_ListCount
+  In/Out：Out
+  类型：整数型指针
+  可空：N
+  意思：输出列个数
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+bool CModuleDatabase_XLog::ModuleDatabase_XLog_Show(XCHAR*** ppptszList, int* pInt_ListCount)
+{
+	DBModule_IsErrorOccur = false;
+
+	//查询
+	XNETHANDLE xhTable = 0;
+	__int64u nllLine = 0;
+	__int64u nllRow = 0;
+
+	XCHAR tszSQLStatement[1024];
+	memset(tszSQLStatement, '\0', sizeof(tszSQLStatement));
+	//名称为,消息名为必填
+	_xstprintf(tszSQLStatement, _X("SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'XEngine_APILog'"));
+	if (!DataBase_MySQL_ExecuteQuery(xhDBSQL, &xhTable, tszSQLStatement, &nllLine, &nllRow))
+	{
+		DBModule_IsErrorOccur = true;
+		DBModule_dwErrorCode = DataBase_GetLastError();
+		return false;
+	}
+	if (nllLine <= 0)
+	{
+		DBModule_IsErrorOccur = true;
+		DBModule_dwErrorCode = ERROR_APISERVICE_MODULE_DATABASE_NOTFOUND;
+		return false;
+	}
+	*pInt_ListCount = (int)nllLine;
+	BaseLib_OperatorMemory_Malloc((XPPPMEM)ppptszList, (int)nllLine, MAX_PATH);
+	for (__int64u i = 0; i < nllLine; i++)
+	{
+		XCHAR** pptszResult = DataBase_MySQL_GetResult(xhDBSQL, xhTable);
+		_tcsxcpy((*ppptszList)[i], pptszResult[0]);
+	}
+	DataBase_MySQL_FreeResult(xhDBSQL, xhTable);
 	return true;
 }

@@ -90,6 +90,12 @@
     <ClCompile Include="XEngine_TaskPost\TaskPost_Deamon.cpp">
       <Filter>源文件\XEngine_TaskPost</Filter>
     </ClCompile>
+    <ClCompile Include="XEngine_TaskGet\TaskGet_Weather.cpp">
+      <Filter>源文件\XEngine_TaskGet</Filter>
+    </ClCompile>
+    <ClCompile Include="XEngine_TaskGet\TaskGet_IDRegion.cpp">
+      <Filter>源文件\XEngine_TaskGet</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="XEngine_Configure.h">
@@ -154,6 +160,12 @@
     </ClInclude>
     <ClInclude Include="XEngine_TaskPost\TaskPost_Deamon.h">
       <Filter>头文件\XEngine_TaskPost</Filter>
+    </ClInclude>
+    <ClInclude Include="XEngine_TaskGet\TaskGet_Weather.h">
+      <Filter>头文件\XEngine_TaskGet</Filter>
+    </ClInclude>
+    <ClInclude Include="XEngine_TaskGet\TaskGet_IDRegion.h">
+      <Filter>头文件\XEngine_TaskGet</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

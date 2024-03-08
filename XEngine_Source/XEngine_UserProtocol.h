@@ -251,4 +251,16 @@ typedef struct
 	int nItem;                       //单个数据长度
 	int nType;                       //数据类型，字符串形式
 }XENGINE_IMGEXTATTR;
+//天气
+typedef struct  
+{
+	XCHAR tszUPTime[128];            //更新时间
+	XCHAR tszProvince[32];           //省份
+	XCHAR tszCity[32];               //城市
+	XCHAR tszWeatherStr[32];         //天气
+	XCHAR tszWinddiRection[32];      //风向
+	XCHAR tszWindPowerStr[32];       //风力
+	int nTemperature;                //温度
+	int nHumidity;                   //湿度
+}XENGINE_WEATHERINFO;
 #pragma pack(pop)
