@@ -12,6 +12,8 @@ LIB = -lXEngine_BaseLib
 LIBEX = 
 OBJECTS = ModulePlugin_LibCore.o ModulePlugin_LuaCore.o ModulePlugin_Loader.o pch.o
 
+MACRO_LUA_SUPPORT := $(shell gcc -E -dM ../XEngine_BuildSwitch.h | grep _XENGINE_BUILD_SWITCH_LUA | cut -d ' ' -f 3)
+
 ifeq ($(RELEASE),1)
 FLAGS = -c 
 DEBUG = 
@@ -36,7 +38,7 @@ ifeq ($(PLATFORM),linux)
 	endif
 	FILEEXT = so
 	LIBFLAG = -shared
-	ifeq ($(SWITCHLUA),1)
+	ifeq ($(MACRO_QR_SUPPORT),1)
 		LIB += -llua5.4
 	endif
 	LIBEX = -lpthread -lrt -ldl
@@ -47,7 +49,7 @@ else ifeq ($(PLATFORM),mac)
 	PLATDIR = XEngine_Mac
 	FILEEXT = dylib
 	LIBFLAG = -dynamiclib
-	ifeq ($(SWITCHLUA),1)
+	ifeq ($(MACRO_QR_SUPPORT),1)
 		LIB += -llua
 	endif
 	LIBEX = -lpthread -ldl

@@ -12,10 +12,13 @@ LIB = -lXEngine_BaseLib -lXClient_Socket
 LIBEX = 
 OBJECTS = ModuleHelp_IDCard.o ModuleHelp_Language.o ModuleHelp_P2PClient.o ModuleHelp_Locker.o ModuleHelp_QRCode.o ModuleHelp_SocketTest.o ModuleHelp_ImageGet.o ModuleHelp_ImageSet.o pch.o
 
-ifeq ($(SWITCHQR),1)
+MACRO_QR_SUPPORT := $(shell gcc -E -dM ../XEngine_BuildSwitch.h | grep _XENGINE_BUILD_SWITCH_QRDECODEC | cut -d ' ' -f 3)
+MACRO_OPENCV_SUPPORT := $(shell gcc -E -dM ../XEngine_BuildSwitch.h | grep _XENGINE_BUILD_SWITCH_OPENCV | cut -d ' ' -f 3)
+
+ifeq ($(MACRO_QR_SUPPORT),1)
 	LIB += -lqrencode
 endif
-ifeq ($(SWITCHCV),1)
+ifeq ($(MACRO_OPENCV_SUPPORT),1)
 	LIB += -llzma -lpng16 -lopencv_core -lopencv_imgcodecs -lopencv_imgproc -ltiff -lopencv_wechat_qrcode
 endif
 
