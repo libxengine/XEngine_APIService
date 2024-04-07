@@ -38,7 +38,7 @@ ifeq ($(PLATFORM),linux)
 	endif
 	FILEEXT = so
 	LIBFLAG = -shared
-	ifeq ($(MACRO_QR_SUPPORT),1)
+	ifeq ($(MACRO_LUA_SUPPORT),1)
 		LIB += -llua5.4
 	endif
 	LIBEX = -lpthread -lrt -ldl
@@ -49,7 +49,7 @@ else ifeq ($(PLATFORM),mac)
 	PLATDIR = XEngine_Mac
 	FILEEXT = dylib
 	LIBFLAG = -dynamiclib
-	ifeq ($(MACRO_QR_SUPPORT),1)
+	ifeq ($(MACRO_LUA_SUPPORT),1)
 		LIB += -llua
 	endif
 	LIBEX = -lpthread -ldl
