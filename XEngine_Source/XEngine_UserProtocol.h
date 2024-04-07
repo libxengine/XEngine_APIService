@@ -232,10 +232,10 @@ typedef struct
 //机器收集
 typedef struct
 {
+	XCHAR tszMachineText[2048];
 	XCHAR tszMachineName[MAX_PATH];
 	XCHAR tszMachineCode[MAX_PATH];
 	XCHAR tszMachineSystem[MAX_PATH];
-	XCHAR tszMachineText[MAX_PATH];
 	XCHAR tszCreateTime[64];
 	__int64x nTimeNumber;
 	int nID;

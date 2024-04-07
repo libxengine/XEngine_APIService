@@ -191,3 +191,7 @@ extern "C" bool ModuleDatabase_Machine_Delete(XENGINE_MACHINEINFO * pSt_MachineI
 {
 	return m_MachineInfo.ModuleDatabase_Machine_Delete(pSt_MachineInfo);
 }
+extern "C" bool ModuleDatabase_Machine_UPDate(XENGINE_MACHINEINFO * pSt_MachineInfo)
+{
+	return m_MachineInfo.ModuleDatabase_Machine_UPDate(pSt_MachineInfo);
+}

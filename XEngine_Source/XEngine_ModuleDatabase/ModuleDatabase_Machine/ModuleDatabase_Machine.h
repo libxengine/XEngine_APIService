@@ -23,6 +23,7 @@ public:
 	bool ModuleDatabase_Machine_Insert(XENGINE_MACHINEINFO* pSt_MachineInfo);
 	bool ModuleDatabase_Machine_Query(XENGINE_MACHINEINFO* pSt_MachineInfo);
 	bool ModuleDatabase_Machine_Delete(XENGINE_MACHINEINFO* pSt_MachineInfo);
+	bool ModuleDatabase_Machine_UPDate(XENGINE_MACHINEINFO* pSt_MachineInfo);
 protected:
 private:
 	XNETHANDLE xhDBSQL;

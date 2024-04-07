@@ -497,3 +497,17 @@ extern "C" bool ModuleDatabase_Machine_Query(XENGINE_MACHINEINFO * pSt_MachineIn
 备注：
 *********************************************************************/
 extern "C" bool ModuleDatabase_Machine_Delete(XENGINE_MACHINEINFO * pSt_MachineInfo);
+/********************************************************************
+函数名称：ModuleDatabase_Machine_UPDate
+函数功能：更新数据
+ 参数.一：pSt_SLinkInfo
+  In/Out：In
+  类型：数据结构指针
+  可空：N
+  意思：输入要更新的数据
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+extern "C" bool ModuleDatabase_Machine_UPDate(XENGINE_MACHINEINFO* pSt_MachineInfo);

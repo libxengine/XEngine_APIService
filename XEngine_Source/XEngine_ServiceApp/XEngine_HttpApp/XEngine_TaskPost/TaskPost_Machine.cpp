@@ -18,7 +18,15 @@ bool HTTPTask_TastPost_Machine(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer, in
 
 	if (0 == nType)
 	{
-		ModuleDatabase_Machine_Insert(&st_MachineInfo);
+		if (ModuleDatabase_Machine_Query(&st_MachineInfo))
+		{
+			st_MachineInfo.nTimeNumber++;
+			ModuleDatabase_Machine_UPDate(&st_MachineInfo);
+		}
+		else
+		{
+			ModuleDatabase_Machine_Insert(&st_MachineInfo);
+		}
 		ModuleProtocol_Packet_Common(tszRVBuffer, &nRVLen);
 		HttpProtocol_Server_SendMsgEx(xhHTTPPacket, tszSDBuffer, &nSDLen, &st_HDRParam, tszRVBuffer, nRVLen);
 		XEngine_Network_Send(lpszClientAddr, tszSDBuffer, nSDLen);
