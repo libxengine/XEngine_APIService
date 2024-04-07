@@ -170,6 +170,7 @@
     <ClCompile Include="XEngine_TaskPost\TaskPost_DTest.cpp" />
     <ClCompile Include="XEngine_TaskPost\TaskPost_Image.cpp" />
     <ClCompile Include="XEngine_TaskPost\TaskPost_Log.cpp" />
+    <ClCompile Include="XEngine_TaskPost\TaskPost_Machine.cpp" />
     <ClCompile Include="XEngine_TaskPost\TaskPost_P2PClient.cpp" />
     <ClCompile Include="XEngine_TaskPost\TaskPost_PostCode.cpp" />
     <ClCompile Include="XEngine_TaskPost\TaskPost_QRCode.cpp" />
@@ -193,6 +194,7 @@
     <ClInclude Include="XEngine_TaskPost\TaskPost_BackService.h" />
     <ClInclude Include="XEngine_TaskPost\TaskPost_Deamon.h" />
     <ClInclude Include="XEngine_TaskPost\TaskPost_Image.h" />
+    <ClInclude Include="XEngine_TaskPost\TaskPost_Machine.h" />
     <ClInclude Include="XEngine_TaskPost\TaskPost_ShortLink.h" />
     <ClInclude Include="XEngine_TaskPost\TaskPost_DTest.h" />
     <ClInclude Include="XEngine_TaskPost\TaskPost_Log.h" />

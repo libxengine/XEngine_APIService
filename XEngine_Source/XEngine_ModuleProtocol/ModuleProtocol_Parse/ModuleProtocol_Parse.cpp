@@ -1071,3 +1071,67 @@ bool CModuleProtocol_Parse::ModuleProtocol_Parse_Weather(LPCXSTR lpszMsgBuffer, 
 	}
 	return true;
 }
+/********************************************************************
+函数名称：ModuleProtocol_Parse_Machine
+函数功能：解析机器信息收集协议
+ 参数.一：lpszMsgBuffer
+  In/Out：In
+  类型：常量字符指针
+  可空：N
+  意思：输入要解析的缓冲区
+ 参数.二：nMsgLen
+  In/Out：In
+  类型：整数型
+  可空：N
+  意思：输入缓冲区大小
+ 参数.三：pSt_MachineInfo
+  In/Out：Out
+  类型：数据结构指针
+  可空：N
+  意思：输出解析后的信息
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+bool CModuleProtocol_Parse::ModuleProtocol_Parse_Machine(LPCXSTR lpszMsgBuffer, int nMsgLen, XENGINE_MACHINEINFO* pSt_MachineInfo)
+{
+	ModuleProtocol_IsErrorOccur = false;
+
+	if ((NULL == lpszMsgBuffer) || (0 == nMsgLen))
+	{
+		ModuleProtocol_IsErrorOccur = true;
+		ModuleProtocol_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PROTOCOL_PARSE_PARAMENT;
+		return false;
+	}
+	Json::Value st_JsonRoot;
+	JSONCPP_STRING st_JsonError;
+	Json::CharReaderBuilder st_JsonBuilder;
+
+	std::unique_ptr<Json::CharReader> const pSt_JsonReader(st_JsonBuilder.newCharReader());
+	if (!pSt_JsonReader->parse(lpszMsgBuffer, lpszMsgBuffer + nMsgLen, &st_JsonRoot, &st_JsonError))
+	{
+		ModuleProtocol_IsErrorOccur = true;
+		ModuleProtocol_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PROTOCOL_PARSE_PARAMENT;
+		return false;
+	}
+	Json::Value st_JsonObject = st_JsonRoot["lives"][0];
+
+	if (!st_JsonObject["tszMachineName"].isNull())
+	{
+		_tcsxcpy(pSt_MachineInfo->tszMachineName, st_JsonObject["tszMachineName"].asCString());
+	}
+	if (!st_JsonObject["tszMachineCode"].isNull())
+	{
+		_tcsxcpy(pSt_MachineInfo->tszMachineCode, st_JsonObject["tszMachineCode"].asCString());
+	}
+	if (!st_JsonObject["tszMachineSystem"].isNull())
+	{
+		_tcsxcpy(pSt_MachineInfo->tszMachineSystem, st_JsonObject["tszMachineSystem"].asCString());
+	}
+	if (!st_JsonObject["tszMachineText"].isNull())
+	{
+		_tcsxcpy(pSt_MachineInfo->tszMachineText, st_JsonObject["tszMachineText"].asCString());
+	}
+	return true;
+}

@@ -178,3 +178,7 @@ extern "C" bool ModuleProtocol_Parse_Weather(LPCXSTR lpszMsgBuffer, int nMsgLen,
 {
 	return m_ProtocolParse.ModuleProtocol_Parse_Weather(lpszMsgBuffer, nMsgLen, pSt_WeatherInfo);
 }
+extern "C" bool ModuleProtocol_Parse_Machine(LPCXSTR lpszMsgBuffer, int nMsgLen, XENGINE_MACHINEINFO * pSt_MachineInfo)
+{
+	return m_ProtocolParse.ModuleProtocol_Parse_Machine(lpszMsgBuffer, nMsgLen, pSt_MachineInfo);
+}
