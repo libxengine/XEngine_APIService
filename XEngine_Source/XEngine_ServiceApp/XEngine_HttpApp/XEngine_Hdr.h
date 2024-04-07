@@ -83,6 +83,7 @@ using namespace std;
 #include "XEngine_TaskPost/TaskPost_BackService.h"
 #include "XEngine_TaskPost/TaskPost_Image.h"
 #include "XEngine_TaskPost/TaskPost_Deamon.h"
+#include "XEngine_TaskPost/TaskPost_Machine.h"
 //get
 #include "XEngine_TaskGet/TaskGet_IDCard.h"
 #include "XEngine_TaskGet/TaskGet_Bank.h"
