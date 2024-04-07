@@ -138,13 +138,15 @@ bool CModuleConfigure_Json::ModuleConfigure_Json_File(LPCXSTR lpszConfigFile, XE
 	_tcsxcpy(pSt_ServerConfig->st_XApi.st_TranslationInfo.tszAPPID, st_JsonTranslationInfo["appid"].asCString());
 	_tcsxcpy(pSt_ServerConfig->st_XApi.st_TranslationInfo.tszAPPKey, st_JsonTranslationInfo["key"].asCString());
 
-	if (st_JsonRoot["XSql"].empty() || (4 != st_JsonRoot["XSql"].size()))
+	if (st_JsonRoot["XSql"].empty() || (5 != st_JsonRoot["XSql"].size()))
 	{
 		Config_IsErrorOccur = true;
 		Config_dwErrorCode = ERROR_MODULE_CONFIGURE_JSON_XDB;
 		return false;
 	}
 	Json::Value st_JsonXSql = st_JsonRoot["XSql"];
+
+	pSt_ServerConfig->st_XSql.bEnable = st_JsonXSql["bEnable"].asBool();
 	pSt_ServerConfig->st_XSql.nSQLPort = st_JsonXSql["SQLPort"].asInt();
 	_tcsxcpy(pSt_ServerConfig->st_XSql.tszSQLAddr, st_JsonXSql["SQLAddr"].asCString());
 	_tcsxcpy(pSt_ServerConfig->st_XSql.tszSQLUser, st_JsonXSql["SQLUser"].asCString());

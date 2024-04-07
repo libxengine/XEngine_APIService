@@ -17,6 +17,15 @@ bool HTTPTask_TastPost_PostCode(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer, i
 	st_HDRParam.nHttpCode = 200; //HTTP CODE码
 	st_HDRParam.bIsClose = true; //收到回复后就关闭
 
+	if (!st_ServiceConfig.st_XSql.bEnable)
+	{
+		ModuleProtocol_Packet_Common(tszRVBuffer, &nRVLen, 501, _X("function is closed"));
+		HttpProtocol_Server_SendMsgEx(xhHTTPPacket, tszSDBuffer, &nSDLen, &st_HDRParam, tszRVBuffer, nRVLen);
+		XEngine_Network_Send(lpszClientAddr, tszSDBuffer, nSDLen);
+		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("HTTP客户端:%s,请求的邮编查询功能已经被服务器关闭,无法继续"), lpszClientAddr);
+		return false;
+	}
+
 	ModuleProtocol_Parse_ZIPCode(lpszMsgBuffer, nMsgLen, &st_ZIPInfo);
 	if (0 == nType)
 	{

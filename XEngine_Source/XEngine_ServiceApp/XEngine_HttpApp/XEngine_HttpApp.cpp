@@ -209,48 +209,55 @@ int main(int argc, char** argv)
 		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_WARN, _X("启动服务中,插件系统被禁用"));
 	}
 	//初始化数据库
-	if (!ModuleDatabase_IDCard_Init((DATABASE_MYSQL_CONNECTINFO*)&st_ServiceConfig.st_XSql))
+	if (st_ServiceConfig.st_XSql.bEnable)
 	{
-		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("启动服务中,初始化ID数据库失败,错误：%lX"), ModuleDB_GetLastError());
-		goto XENGINE_SERVICEAPP_EXIT;
+		if (!ModuleDatabase_IDCard_Init((DATABASE_MYSQL_CONNECTINFO*)&st_ServiceConfig.st_XSql))
+		{
+			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("启动服务中,初始化ID数据库失败,错误：%lX"), ModuleDB_GetLastError());
+			goto XENGINE_SERVICEAPP_EXIT;
+		}
+		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("启动服务中,初始化ID数据库成功"));
+		if (!ModuleDatabase_Bank_Init((DATABASE_MYSQL_CONNECTINFO*)&st_ServiceConfig.st_XSql))
+		{
+			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("启动服务中,初始化银行卡数据库失败,错误：%lX"), ModuleDB_GetLastError());
+			goto XENGINE_SERVICEAPP_EXIT;
+		}
+		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("启动服务中,初始化银行卡数据库成功"));
+		if (!ModuleDatabase_ZIPCode_Init((DATABASE_MYSQL_CONNECTINFO*)&st_ServiceConfig.st_XSql))
+		{
+			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("启动服务中,初始化行政邮编信息数据库失败,错误：%lX"), ModuleDB_GetLastError());
+			goto XENGINE_SERVICEAPP_EXIT;
+		}
+		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("启动服务中,初始化行政邮编信息数据库成功"));
+		if (!ModuleDatabase_XLog_Init((DATABASE_MYSQL_CONNECTINFO*)&st_ServiceConfig.st_XSql))
+		{
+			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("启动服务中,初始化日志信息数据库失败,错误：%lX"), ModuleDB_GetLastError());
+			goto XENGINE_SERVICEAPP_EXIT;
+		}
+		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("启动服务中,初始化日志信息数据库成功"));
+		if (!ModuleDatabase_ShortLink_Init((DATABASE_MYSQL_CONNECTINFO*)&st_ServiceConfig.st_XSql))
+		{
+			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("启动服务中,初始化短连接数据库失败,错误：%lX"), ModuleDB_GetLastError());
+			goto XENGINE_SERVICEAPP_EXIT;
+		}
+		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("启动服务中,初始化短连接数据库成功"));
+		if (!ModuleDatabase_WordFilter_Init((DATABASE_MYSQL_CONNECTINFO*)&st_ServiceConfig.st_XSql))
+		{
+			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("启动服务中,初始化敏感词数据库失败,错误：%lX"), ModuleDB_GetLastError());
+			goto XENGINE_SERVICEAPP_EXIT;
+		}
+		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("启动服务中,初始化敏感词数据库成功"));
+		if (!ModuleDatabase_Machine_Init((DATABASE_MYSQL_CONNECTINFO*)&st_ServiceConfig.st_XSql))
+		{
+			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("启动服务中,初始化信息收集数据库失败,错误：%lX"), ModuleDB_GetLastError());
+			goto XENGINE_SERVICEAPP_EXIT;
+		}
+		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("启动服务中,初始化信息收集数据库成功"));
 	}
-	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("启动服务中,初始化ID数据库成功"));
-	if (!ModuleDatabase_Bank_Init((DATABASE_MYSQL_CONNECTINFO*)&st_ServiceConfig.st_XSql))
+	else
 	{
-		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("启动服务中,初始化银行卡数据库失败,错误：%lX"), ModuleDB_GetLastError());
-		goto XENGINE_SERVICEAPP_EXIT;
+		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_WARN, _X("启动服务中,数据库操作被禁用,相关ID,银行卡,邮编,日志,短连接,敏感词,信息收集功能也被禁用"));
 	}
-	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("启动服务中,初始化银行卡数据库成功"));
-	if (!ModuleDatabase_ZIPCode_Init((DATABASE_MYSQL_CONNECTINFO*)&st_ServiceConfig.st_XSql))
-	{
-		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("启动服务中,初始化行政邮编信息数据库失败,错误：%lX"), ModuleDB_GetLastError());
-		goto XENGINE_SERVICEAPP_EXIT;
-	}
-	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("启动服务中,初始化行政邮编信息数据库成功"));
-	if (!ModuleDatabase_XLog_Init((DATABASE_MYSQL_CONNECTINFO*)&st_ServiceConfig.st_XSql))
-	{
-		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("启动服务中,初始化日志信息数据库失败,错误：%lX"), ModuleDB_GetLastError());
-		goto XENGINE_SERVICEAPP_EXIT;
-	}
-	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("启动服务中,初始化日志信息数据库成功"));
-	if (!ModuleDatabase_ShortLink_Init((DATABASE_MYSQL_CONNECTINFO*)&st_ServiceConfig.st_XSql))
-	{
-		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("启动服务中,初始化短连接数据库失败,错误：%lX"), ModuleDB_GetLastError());
-		goto XENGINE_SERVICEAPP_EXIT;
-	}
-	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("启动服务中,初始化短连接数据库成功"));
-	if (!ModuleDatabase_WordFilter_Init((DATABASE_MYSQL_CONNECTINFO*)&st_ServiceConfig.st_XSql))
-	{
-		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("启动服务中,初始化敏感词数据库失败,错误：%lX"), ModuleDB_GetLastError());
-		goto XENGINE_SERVICEAPP_EXIT;
-	}
-	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("启动服务中,初始化敏感词数据库成功"));
-	if (!ModuleDatabase_Machine_Init((DATABASE_MYSQL_CONNECTINFO*)&st_ServiceConfig.st_XSql))
-	{
-		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("启动服务中,初始化信息收集数据库失败,错误：%lX"), ModuleDB_GetLastError());
-		goto XENGINE_SERVICEAPP_EXIT;
-	}
-	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("启动服务中,初始化信息收集数据库成功"));
 	//启动HTTP服务相关代码
 	if (st_ServiceConfig.nHttpPort > 0)
 	{
