@@ -43,12 +43,12 @@ typedef struct
 	}st_XLog;
 	struct
 	{
-		bool bEnable;                         //数据库支持开关
 		XCHAR tszSQLAddr[128];                //MYSQL数据库地址
 		XCHAR tszSQLUser[128];                //数据库用户名
 		XCHAR tszSQLPass[128];                //数据库密码
 		XCHAR tszDBName[128];                 //数据库表明
 		int nSQLPort;                         //端口
+		bool bEnable;                         //数据库支持开关
 	}st_XSql;
 	struct  
 	{

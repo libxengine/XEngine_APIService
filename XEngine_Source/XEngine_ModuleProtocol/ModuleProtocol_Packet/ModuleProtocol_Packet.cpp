@@ -1227,7 +1227,7 @@ bool CModuleProtocol_Packet::ModuleProtocol_Packet_HardWare(XCHAR* ptszHWInfo, i
 	st_JsonSerial["DiskSerial"] = st_SDKSerial.tszDiskSerial;
 	st_JsonSerial["CpuSerial"] = st_SDKSerial.tszCpuSerial;
 	st_JsonSerial["BoardSerial"] = st_SDKSerial.tszBoardSerial;
-	st_JsonSerial["SystemSerail"] = st_SDKSerial.tszSystemSerail;
+	st_JsonSerial["SystemSerial"] = st_SDKSerial.tszSystemSerial;
 
 	int nListCount = 0;
 	XSOCKET_CARDINFO** ppSt_ListIFInfo;

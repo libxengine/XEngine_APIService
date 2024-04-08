@@ -1115,23 +1115,22 @@ bool CModuleProtocol_Parse::ModuleProtocol_Parse_Machine(LPCXSTR lpszMsgBuffer, 
 		ModuleProtocol_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PROTOCOL_PARSE_PARAMENT;
 		return false;
 	}
-	Json::Value st_JsonObject = st_JsonRoot["lives"][0];
 
-	if (!st_JsonObject["tszMachineName"].isNull())
+	if (!st_JsonRoot["tszMachineName"].isNull())
 	{
-		_tcsxcpy(pSt_MachineInfo->tszMachineName, st_JsonObject["tszMachineName"].asCString());
+		_tcsxcpy(pSt_MachineInfo->tszMachineName, st_JsonRoot["tszMachineName"].asCString());
 	}
-	if (!st_JsonObject["tszMachineCode"].isNull())
+	if (!st_JsonRoot["tszMachineCode"].isNull())
 	{
-		_tcsxcpy(pSt_MachineInfo->tszMachineCode, st_JsonObject["tszMachineCode"].asCString());
+		_tcsxcpy(pSt_MachineInfo->tszMachineCode, st_JsonRoot["tszMachineCode"].asCString());
 	}
-	if (!st_JsonObject["tszMachineSystem"].isNull())
+	if (!st_JsonRoot["tszMachineSystem"].isNull())
 	{
-		_tcsxcpy(pSt_MachineInfo->tszMachineSystem, st_JsonObject["tszMachineSystem"].asCString());
+		_tcsxcpy(pSt_MachineInfo->tszMachineSystem, st_JsonRoot["tszMachineSystem"].asCString());
 	}
-	if (!st_JsonObject["tszMachineText"].isNull())
+	if (!st_JsonRoot["tszMachineText"].isNull())
 	{
-		_tcsxcpy(pSt_MachineInfo->tszMachineText, st_JsonObject["tszMachineText"].asCString());
+		_tcsxcpy(pSt_MachineInfo->tszMachineText, st_JsonRoot["tszMachineText"].asCString());
 	}
 	return true;
 }
