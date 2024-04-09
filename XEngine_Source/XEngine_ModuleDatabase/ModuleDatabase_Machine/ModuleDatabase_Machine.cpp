@@ -96,7 +96,14 @@ bool CModuleDatabase_Machine::ModuleDatabase_Machine_Insert(XENGINE_MACHINEINFO*
 	memset(tszSQLStatement, '\0', sizeof(tszSQLStatement));
 
 	_xstprintf(tszSQLStatement, _X("INSERT INTO `XEngine_MachineList` (tszMachineName,tszMachineCode,tszMachineSystem,tszMachineText,nTimeNumber,tszCreateTime) VALUES('%s','%s','%s','%s',%lld,now())"), pSt_MachineInfo->tszMachineName, pSt_MachineInfo->tszMachineCode, pSt_MachineInfo->tszMachineSystem, pSt_MachineInfo->tszMachineText, pSt_MachineInfo->nTimeNumber);
+#ifdef _MSC_BUILD
+	XCHAR tszUTFStr[4096] = {};
+	int nSLen = _tcsxlen(tszSQLStatement);
+	BaseLib_OperatorCharset_AnsiToUTF(tszSQLStatement, tszUTFStr, &nSLen);
+	if (!DataBase_MySQL_Execute(xhDBSQL, tszUTFStr))
+#else
 	if (!DataBase_MySQL_Execute(xhDBSQL, tszSQLStatement))
+#endif
 	{
 		DBModule_IsErrorOccur = true;
 		DBModule_dwErrorCode = DataBase_GetLastError();

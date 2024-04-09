@@ -189,7 +189,14 @@ bool CModuleDatabase_ZIPCode::ModuleDatabase_ZIPCode_QueryName(XENGINE_ZIPINFO* 
 		return false;
 	}
 	//查询内容
+#ifdef _MSC_BUILD
+	XCHAR tszUTFStr[1024] = {};
+	int nSLen = _tcsxlen(tszSQLStatement);
+	BaseLib_OperatorCharset_AnsiToUTF(tszSQLStatement, tszUTFStr, &nSLen);
+	if (!DataBase_MySQL_ExecuteQuery(xhDBSQL, &xhTable, tszUTFStr, &nLine, &nRow))
+#else
 	if (!DataBase_MySQL_ExecuteQuery(xhDBSQL, &xhTable, tszSQLStatement, &nLine, &nRow))
+#endif
 	{
 		DBModule_IsErrorOccur = true;
 		DBModule_dwErrorCode = DataBase_GetLastError();
@@ -315,7 +322,15 @@ bool CModuleDatabase_ZIPCode::ModuleDatabase_ZIPCode_QueryParentByName(LPCXSTR l
 
 	memset(tszSQLStatement, '\0', sizeof(tszSQLStatement));
 	_xstprintf(tszSQLStatement, _X("SELECT * FROM `AdministrativeArea` WHERE name = '%s'"), lpszName);
+
+#ifdef _MSC_BUILD
+	XCHAR tszUTFStr[1024] = {};
+	int nSLen = _tcsxlen(tszSQLStatement);
+	BaseLib_OperatorCharset_AnsiToUTF(tszSQLStatement, tszUTFStr, &nSLen);
 	if (!DataBase_MySQL_ExecuteQuery(xhDBSQL, &xhTable, tszSQLStatement, &nLine, &nRow))
+#else
+	if (!DataBase_MySQL_ExecuteQuery(xhDBSQL, &xhTable, tszSQLStatement, &nLine, &nRow))
+#endif
 	{
 		DBModule_IsErrorOccur = true;
 		DBModule_dwErrorCode = DataBase_GetLastError();

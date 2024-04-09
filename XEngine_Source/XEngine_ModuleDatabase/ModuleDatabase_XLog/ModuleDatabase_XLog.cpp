@@ -148,7 +148,15 @@ bool CModuleDatabase_XLog::ModuleDatabase_XLog_Insert(XENGINE_XLOGINFO* pSt_XLog
 	memset(tszSQLStatement, '\0', sizeof(tszSQLStatement));
 
 	_xstprintf(tszSQLStatement, _X("INSERT INTO `%s` (tszFileName,tszFuncName,nLogLine,nLogLevel,tszLogBuffer,tszLogTime) VALUES('%s','%s',%d,%d,'%s','%s')"), pSt_XLogInfo->tszTableName, pSt_XLogInfo->st_ProtocolLog.tszFileName, pSt_XLogInfo->st_ProtocolLog.tszFuncName, pSt_XLogInfo->st_ProtocolLog.nLogLine, pSt_XLogInfo->st_ProtocolLog.nLogLevel, pSt_XLogInfo->tszLogBuffer, pSt_XLogInfo->st_ProtocolLog.tszLogTimer);
+	
+#ifdef _MSC_BUILD
+	XCHAR tszUTFStr[10240] = {};
+	int nSLen = _tcsxlen(tszSQLStatement);
+	BaseLib_OperatorCharset_AnsiToUTF(tszSQLStatement, tszUTFStr, &nSLen);
+	if (!DataBase_MySQL_Execute(xhDBSQL, tszUTFStr))
+#else
 	if (!DataBase_MySQL_Execute(xhDBSQL, tszSQLStatement))
+#endif
 	{
 		DBModule_IsErrorOccur = true;
 		DBModule_dwErrorCode = DataBase_GetLastError();
@@ -208,7 +216,15 @@ bool CModuleDatabase_XLog::ModuleDatabase_XLog_Query(XENGINE_XLOGINFO*** pppSt_X
 	memset(tszSQLStatement, '\0', sizeof(tszSQLStatement));
 	//名称为,消息名为必填
 	_xstprintf(tszSQLStatement, _X("SELECT * FROM `%s` WHERE tszLogTime BETWEEN  '%s' AND '%s'"), lpszTableName, lpszTimeStart, lpszTimeEnd);
+
+#ifdef _MSC_BUILD
+	XCHAR tszUTFStr[1024] = {};
+	int nSLen = _tcsxlen(tszSQLStatement);
+	BaseLib_OperatorCharset_AnsiToUTF(tszSQLStatement, tszUTFStr, &nSLen);
+	if (!DataBase_MySQL_ExecuteQuery(xhDBSQL, &xhTable, tszUTFStr, &nllLine, &nllRow))
+#else
 	if (!DataBase_MySQL_ExecuteQuery(xhDBSQL, &xhTable, tszSQLStatement, &nllLine, &nllRow))
+#endif
 	{
 		DBModule_IsErrorOccur = true;
 		DBModule_dwErrorCode = DataBase_GetLastError();
