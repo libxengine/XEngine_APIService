@@ -100,7 +100,14 @@ bool CModuleDatabase_WordFilter::ModuleDatabase_WordFilter_Query(XENGINE_WORDFIL
 
     memset(tszSQLStatement, '\0', sizeof(tszSQLStatement));
 	_xstprintf(tszSQLStatement, _X("SELECT * FROM `WordFilter` WHERE tszWordsFrom LIKE '%s'"), pSt_WordFilter->tszWordsFrom);
+#ifdef _MSC_BUILD
+	XCHAR tszUTFStr[1024] = {};
+	int nSLen = _tcsxlen(tszSQLStatement);
+	BaseLib_OperatorCharset_AnsiToUTF(tszSQLStatement, tszUTFStr, &nSLen);
+	if (!DataBase_MySQL_ExecuteQuery(xhDBSQL, &xhTable, tszUTFStr, &nLine, &nRow))
+#else
 	if (!DataBase_MySQL_ExecuteQuery(xhDBSQL, &xhTable, tszSQLStatement, &nLine, &nRow))
+#endif
 	{
 		DBModule_IsErrorOccur = true;
 		DBModule_dwErrorCode = DataBase_GetLastError();
@@ -143,11 +150,19 @@ bool CModuleDatabase_WordFilter::ModuleDatabase_WordFilter_Insert(XENGINE_WORDFI
 		DBModule_dwErrorCode = ERROR_APISERVICE_MODULE_DATABASE_PARAMENT;
 		return false;
 	}
-	XCHAR tszSQLStatement[11240];
+	XCHAR tszSQLStatement[1024];
 	memset(tszSQLStatement, '\0', sizeof(tszSQLStatement));
 
 	_xstprintf(tszSQLStatement, _X("INSERT INTO `WordFilter` (tszWordsFrom,tszWordsTo,nLevel) VALUES('%s','%s',%d)"), pSt_WordFilter->tszWordsFrom, pSt_WordFilter->tszWordsTo, pSt_WordFilter->nLevel);
+
+#ifdef _MSC_BUILD
+	int nRet = _tcsxlen(tszSQLStatement);
+	XCHAR tszUTFStr[1024] = {};
+	BaseLib_OperatorCharset_AnsiToUTF(tszSQLStatement, tszUTFStr, &nRet);
+	if (!DataBase_MySQL_Execute(xhDBSQL, tszUTFStr))
+#else
 	if (!DataBase_MySQL_Execute(xhDBSQL, tszSQLStatement))
+#endif
 	{
 		DBModule_IsErrorOccur = true;
 		DBModule_dwErrorCode = DataBase_GetLastError();
@@ -182,7 +197,14 @@ bool CModuleDatabase_WordFilter::ModuleDatabase_WordFilter_Delete(XENGINE_WORDFI
 	memset(tszSQLStatement, '\0', sizeof(tszSQLStatement));
 
 	_xstprintf(tszSQLStatement, _X("DELETE FROM `WordFilter` WHERE tszWordsFrom = '%s'"), pSt_WordFilter->tszWordsFrom);
+#ifdef _MSC_BUILD
+	XCHAR tszUTFStr[1024] = {};
+	int nSLen = _tcsxlen(tszSQLStatement);
+	BaseLib_OperatorCharset_AnsiToUTF(tszSQLStatement, tszUTFStr, &nSLen);
+	if (!DataBase_MySQL_Execute(xhDBSQL, tszUTFStr))
+#else
 	if (!DataBase_MySQL_Execute(xhDBSQL, tszSQLStatement))
+#endif
 	{
 		DBModule_IsErrorOccur = true;
 		DBModule_dwErrorCode = DataBase_GetLastError();
