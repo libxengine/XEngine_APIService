@@ -95,7 +95,7 @@ bool CModuleDatabase_Machine::ModuleDatabase_Machine_Insert(XENGINE_MACHINEINFO*
 	XCHAR tszSQLStatement[4096];
 	memset(tszSQLStatement, '\0', sizeof(tszSQLStatement));
 
-	_xstprintf(tszSQLStatement, _X("INSERT INTO `XEngine_MachineList` (tszMachineName,tszMachineCode,tszMachineSystem,tszMachineText,nTimeNumber,tszCreateTime) VALUES('%s','%s','%s','%s',%lld,'%s')"), pSt_MachineInfo->tszMachineName, pSt_MachineInfo->tszMachineCode, pSt_MachineInfo->tszMachineSystem, pSt_MachineInfo->tszMachineText, pSt_MachineInfo->nTimeNumber, pSt_MachineInfo->tszCreateTime);
+	_xstprintf(tszSQLStatement, _X("INSERT INTO `XEngine_MachineList` (tszMachineName,tszMachineCode,tszMachineSystem,tszMachineText,nTimeNumber,tszCreateTime) VALUES('%s','%s','%s','%s',%lld,now())"), pSt_MachineInfo->tszMachineName, pSt_MachineInfo->tszMachineCode, pSt_MachineInfo->tszMachineSystem, pSt_MachineInfo->tszMachineText, pSt_MachineInfo->nTimeNumber);
 	if (!DataBase_MySQL_Execute(xhDBSQL, tszSQLStatement))
 	{
 		DBModule_IsErrorOccur = true;
