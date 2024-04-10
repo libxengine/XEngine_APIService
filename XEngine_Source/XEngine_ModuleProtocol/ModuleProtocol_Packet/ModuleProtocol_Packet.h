@@ -37,6 +37,7 @@ public:
 	bool ModuleProtocol_Packet_ShortLink(XCHAR* ptszMsgBuffer, int* pInt_MsgLen, XENGINE_SHORTLINK* pSt_ShortLink);
 	bool ModuleProtocol_Packet_ShortLinkList(XCHAR* ptszMsgBuffer, int* pInt_MsgLen, XENGINE_SHORTLINK*** pppSt_ShortLink, int nListCount);
 	bool ModuleProtocol_Packet_WordFilter(XCHAR* ptszMsgBuffer, int* pInt_MsgLen, XENGINE_WORDFILTER* pSt_WordFilter);
+	bool ModuleProtocol_Packet_WordFilterList(XCHAR* ptszMsgBuffer, int* pInt_MsgLen, XENGINE_WORDFILTER*** pppSt_WordFilter, int nListCount);
 	bool ModuleProtocol_Packet_ImageAttr(XCHAR* ptszMsgBuffer, int* pInt_MsgLen, XENGINE_IMGBASEATTR* pSt_BaseInfo, XENGINE_IMGEXTATTR* pSt_ExtAttr);
 	bool ModuleProtocol_Packet_EnumDevice(XCHAR* ptszMsgBuffer, int* pInt_MsgLen, AVHELP_DEVICEINFO*** pppSt_AudioList, AVHELP_DEVICEINFO*** pppSt_VideoList, int nACount, int nVCount);
 	bool ModuleProtocol_Packet_ListFile(XCHAR* ptszMsgBuffer, int* pInt_MsgLen, XCHAR*** pppszFileList, int nListCount);

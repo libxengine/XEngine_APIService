@@ -448,6 +448,25 @@ extern "C" bool ModuleDatabase_WordFilter_Insert(XENGINE_WORDFILTER* pSt_WordFil
 备注：
 *********************************************************************/
 extern "C" bool ModuleDatabase_WordFilter_Delete(XENGINE_WORDFILTER* pSt_WordFilter);
+/********************************************************************
+函数名称：ModuleDatabase_WordFilter_List
+函数功能：列举敏感词信息列表
+ 参数.一：pppSt_MachineInfo
+  In/Out：Out
+  类型：三级指针
+  可空：N
+  意思：输出敏感词列表
+ 参数.二：pInt_ListCount
+  In/Out：Out
+  类型：整数型指针
+  可空：N
+  意思：输出列表个数
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+extern "C" bool ModuleDatabase_WordFilter_List(XENGINE_WORDFILTER*** pppSt_WordFilter, int* pInt_ListCount);
 /************************************************************************/
 /*                         导出的机器信息收集数据库函数                 */
 /************************************************************************/

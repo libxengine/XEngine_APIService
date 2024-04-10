@@ -212,3 +212,69 @@ bool CModuleDatabase_WordFilter::ModuleDatabase_WordFilter_Delete(XENGINE_WORDFI
 	}
 	return true;
 }
+/********************************************************************
+函数名称：ModuleDatabase_WordFilter_List
+函数功能：列举敏感词信息列表
+ 参数.一：pppSt_MachineInfo
+  In/Out：Out
+  类型：三级指针
+  可空：N
+  意思：输出敏感词列表
+ 参数.二：pInt_ListCount
+  In/Out：Out
+  类型：整数型指针
+  可空：N
+  意思：输出列表个数
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+bool CModuleDatabase_WordFilter::ModuleDatabase_WordFilter_List(XENGINE_WORDFILTER*** pppSt_WordFilter, int* pInt_ListCount)
+{
+	DBModule_IsErrorOccur = false;
+
+	//查询
+	__int64u nLine = 0;
+	__int64u nRow = 0;
+	XNETHANDLE xhTable = 0;
+	XCHAR tszSQLStatement[1024];
+
+	memset(tszSQLStatement, '\0', sizeof(tszSQLStatement));
+	_xstprintf(tszSQLStatement, _X("SELECT * FROM `WordFilter`"));
+
+	if (!DataBase_MySQL_ExecuteQuery(xhDBSQL, &xhTable, tszSQLStatement, &nLine, &nRow))
+	{
+		DBModule_IsErrorOccur = true;
+		DBModule_dwErrorCode = DataBase_GetLastError();
+		return false;
+	}
+	if (nLine <= 0)
+	{
+		DBModule_IsErrorOccur = true;
+		DBModule_dwErrorCode = ERROR_APISERVICE_MODULE_DATABASE_NOTFOUND;
+		return false;
+	}
+	*pInt_ListCount = (int)nLine;
+	BaseLib_OperatorMemory_Malloc((XPPPMEM)pppSt_WordFilter, *pInt_ListCount, sizeof(XENGINE_WORDFILTER));
+
+	for (__int64u i = 0; i < nLine; i++)
+	{
+		XCHAR** pptszResult = DataBase_MySQL_GetResult(xhDBSQL, xhTable);
+
+		if (NULL != pptszResult[0])
+		{
+			_tcsxcpy((*pppSt_WordFilter)[i]->tszWordsFrom, pptszResult[0]);
+		}
+		if (NULL != pptszResult[1])
+		{
+			_tcsxcpy((*pppSt_WordFilter)[i]->tszWordsTo, pptszResult[1]);
+		}
+		if (NULL != pptszResult[2])
+		{
+			(*pppSt_WordFilter)[i]->nLevel = _ttxoi(pptszResult[2]);
+		}
+	}
+	DataBase_MySQL_FreeResult(xhDBSQL, xhTable);
+	return true;
+}

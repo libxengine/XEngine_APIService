@@ -37,6 +37,7 @@ EXPORTS
 	ModuleDatabase_WordFilter_Query
 	ModuleDatabase_WordFilter_Insert
 	ModuleDatabase_WordFilter_Delete
+	ModuleDatabase_WordFilter_List
 
 	ModuleDatabase_Machine_Init
 	ModuleDatabase_Machine_Destory

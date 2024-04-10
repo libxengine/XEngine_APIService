@@ -172,6 +172,10 @@ extern "C" bool ModuleDatabase_WordFilter_Delete(XENGINE_WORDFILTER * pSt_WordFi
 {
 	return m_WordFilter.ModuleDatabase_WordFilter_Delete(pSt_WordFilter);
 }
+extern "C" bool ModuleDatabase_WordFilter_List(XENGINE_WORDFILTER * **pppSt_WordFilter, int* pInt_ListCount)
+{
+	return m_WordFilter.ModuleDatabase_WordFilter_List(pppSt_WordFilter, pInt_ListCount);
+}
 /************************************************************************/
 /*                         导出的机器信息收集数据库函数                 */
 /************************************************************************/

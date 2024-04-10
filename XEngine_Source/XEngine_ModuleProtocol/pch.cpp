@@ -91,6 +91,10 @@ extern "C" bool ModuleProtocol_Packet_WordFilter(XCHAR * ptszMsgBuffer, int* pIn
 {
 	return m_ProtocolPacket.ModuleProtocol_Packet_WordFilter(ptszMsgBuffer, pInt_MsgLen, pSt_WordFilter);
 }
+extern "C" bool ModuleProtocol_Packet_WordFilterList(XCHAR * ptszMsgBuffer, int* pInt_MsgLen, XENGINE_WORDFILTER * **pppSt_WordFilter, int nListCount)
+{
+	return m_ProtocolPacket.ModuleProtocol_Packet_WordFilterList(ptszMsgBuffer, pInt_MsgLen, pppSt_WordFilter, nListCount);
+}
 extern "C" bool ModuleProtocol_Packet_ImageAttr(XCHAR * ptszMsgBuffer, int* pInt_MsgLen, XENGINE_IMGBASEATTR * pSt_BaseInfo, XENGINE_IMGEXTATTR * pSt_ExtAttr)
 {
 	return m_ProtocolPacket.ModuleProtocol_Packet_ImageAttr(ptszMsgBuffer, pInt_MsgLen, pSt_BaseInfo, pSt_ExtAttr);

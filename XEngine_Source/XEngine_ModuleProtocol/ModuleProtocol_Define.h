@@ -569,6 +569,35 @@ extern "C" bool ModuleProtocol_Packet_ShortLinkList(XCHAR* ptszMsgBuffer, int* p
 *********************************************************************/
 extern "C" bool ModuleProtocol_Packet_WordFilter(XCHAR* ptszMsgBuffer, int* pInt_MsgLen, XENGINE_WORDFILTER* pSt_WordFilter);
 /********************************************************************
+函数名称：ModuleProtocol_Packet_WordFilterList
+函数功能：敏感词列表打包函数
+ 参数.一：ptszMsgBuffer
+  In/Out：Out
+  类型：字符指针
+  可空：N
+  意思：输出打包的数据信息
+ 参数.二：pInt_MsgLen
+  In/Out：Out
+  类型：整数型指针
+  可空：N
+  意思：输出打包大小
+ 参数.三：pppSt_MachineList
+  In/Out：In
+  类型：三级指针
+  可空：N
+  意思：输入要打包的数据
+ 参数.四：nListCount
+  In/Out：In
+  类型：整数型
+  可空：N
+  意思：输入打包数据个数
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+extern "C" bool ModuleProtocol_Packet_WordFilterList(XCHAR* ptszMsgBuffer, int* pInt_MsgLen, XENGINE_WORDFILTER*** pppSt_WordFilter, int nListCount);
+/********************************************************************
 函数名称：ModuleProtocol_Packet_ImageAttr
 函数功能：图片属性打包
  参数.一：ptszMsgBuffer

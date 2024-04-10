@@ -970,6 +970,66 @@ bool CModuleProtocol_Packet::ModuleProtocol_Packet_WordFilter(XCHAR* ptszMsgBuff
 	return true;
 }
 /********************************************************************
+函数名称：ModuleProtocol_Packet_WordFilterList
+函数功能：敏感词列表打包函数
+ 参数.一：ptszMsgBuffer
+  In/Out：Out
+  类型：字符指针
+  可空：N
+  意思：输出打包的数据信息
+ 参数.二：pInt_MsgLen
+  In/Out：Out
+  类型：整数型指针
+  可空：N
+  意思：输出打包大小
+ 参数.三：pppSt_MachineList
+  In/Out：In
+  类型：三级指针
+  可空：N
+  意思：输入要打包的数据
+ 参数.四：nListCount
+  In/Out：In
+  类型：整数型
+  可空：N
+  意思：输入打包数据个数
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+bool CModuleProtocol_Packet::ModuleProtocol_Packet_WordFilterList(XCHAR* ptszMsgBuffer, int* pInt_MsgLen, XENGINE_WORDFILTER*** pppSt_WordFilter, int nListCount)
+{
+	ModuleProtocol_IsErrorOccur = false;
+
+	if ((NULL == ptszMsgBuffer) || (NULL == pInt_MsgLen))
+	{
+		ModuleProtocol_IsErrorOccur = true;
+		ModuleProtocol_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PROTOCOL_PACKET_PARAMENT;
+		return false;
+	}
+	Json::Value st_JsonRoot;
+	Json::Value st_JsonArray;
+	Json::StreamWriterBuilder st_JsonBuilder;
+
+	for (int i = 0; i < nListCount; i++)
+	{
+		Json::Value st_JsonObject;
+
+		st_JsonObject["tszWordsFrom"] = (*pppSt_WordFilter)[i]->tszWordsFrom;
+		st_JsonObject["tszWordsTo"] = (*pppSt_WordFilter)[i]->tszWordsTo;
+		st_JsonObject["nLevel"] = (*pppSt_WordFilter)[i]->nLevel;
+		st_JsonArray.append(st_JsonObject);
+	}
+	st_JsonRoot["code"] = 0;
+	st_JsonRoot["msg"] = "success";
+	st_JsonRoot["data"] = st_JsonArray;
+	st_JsonBuilder["emitUTF8"] = true;
+
+	*pInt_MsgLen = Json::writeString(st_JsonBuilder, st_JsonRoot).length();
+	memcpy(ptszMsgBuffer, Json::writeString(st_JsonBuilder, st_JsonRoot).c_str(), *pInt_MsgLen);
+	return true;
+}
+/********************************************************************
 函数名称：ModuleProtocol_Packet_ImageAttr
 函数功能：图片属性打包
  参数.一：ptszMsgBuffer
