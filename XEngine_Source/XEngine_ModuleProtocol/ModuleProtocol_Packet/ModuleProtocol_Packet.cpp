@@ -1533,7 +1533,7 @@ bool CModuleProtocol_Packet::ModuleProtocol_Packet_Machine(XCHAR* ptszMSGBuffer,
 		st_JsonObject["tszMachineCode"] = (*pppSt_MachineList)[i]->tszMachineCode;
 		st_JsonObject["tszMachineSystem"] = (*pppSt_MachineList)[i]->tszMachineSystem;
 		st_JsonObject["tszCreateTime"] = (*pppSt_MachineList)[i]->tszCreateTime;
-		st_JsonObject["nTimeNumber"] = (*pppSt_MachineList)[i]->nTimeNumber;
+		st_JsonObject["nTimeNumber"] = (Json::Value::UInt64)(*pppSt_MachineList)[i]->nTimeNumber;
 		st_JsonObject["nID"] = (*pppSt_MachineList)[i]->nID;
 		st_JsonArray.append(st_JsonObject);
 	}
