@@ -61,6 +61,23 @@ int test_insert()
 
 	return 0;
 }
+int test_list()
+{
+	int nLen = 0;
+	int nCode = 0;
+	LPCXSTR lpszAPIUrl = _X("http://127.0.0.1:5501/api?function=machine&params1=2");
+
+	XCHAR* ptszMsgBuffer = NULL;
+	if (!APIClient_Http_Request(_X("POST"), lpszAPIUrl, NULL, &nCode, &ptszMsgBuffer, &nLen))
+	{
+		printf("发送投递失败！\n");
+		return 0;
+	}
+	printf("接受到数据,大小:%d,内容:%s\n", nLen, ptszMsgBuffer);
+	BaseLib_OperatorMemory_FreeCStyle((XPPMEM)&ptszMsgBuffer);
+
+	return 0;
+}
 int test_delete()
 {
 	int nLen = 0;
@@ -93,6 +110,7 @@ int main()
 #endif
 	test_insert();
 	test_insert();
+	test_list();
 	test_delete();
 
 #ifdef _MSC_BUILD

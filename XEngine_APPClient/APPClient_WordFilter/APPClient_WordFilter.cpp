@@ -32,7 +32,7 @@ int test_insert()
 
 	Json::Value st_JsonRoot;
 	Json::StreamWriterBuilder st_JsonBuilder;
-	st_JsonRoot["tszWordsFrom"] = "中文";
+	st_JsonRoot["tszWordsFrom"] = "root";
 	st_JsonRoot["tszWordsTo"] = "user";
 	st_JsonRoot["nLevel"] = 1;
 
@@ -60,6 +60,23 @@ int test_query()
 
 	XCHAR* ptszMsgBuffer = NULL;
 	if (!APIClient_Http_Request(_X("POST"), lpszAPIUrl, st_JsonRoot.toStyledString().c_str(), &nCode, &ptszMsgBuffer, &nLen))
+	{
+		printf("发送投递失败！\n");
+		return 0;
+	}
+	printf("接受到数据,大小:%d,内容:%s\n", nLen, ptszMsgBuffer);
+	BaseLib_OperatorMemory_FreeCStyle((XPPMEM)&ptszMsgBuffer);
+
+	return 0;
+}
+int test_List()
+{
+	int nLen = 0;
+	int nCode = 0;
+	LPCXSTR lpszAPIUrl = _X("http://127.0.0.1:5501/api?function=wordfilter&params1=3");
+
+	XCHAR* ptszMsgBuffer = NULL;
+	if (!APIClient_Http_Request(_X("POST"), lpszAPIUrl, NULL, &nCode, &ptszMsgBuffer, &nLen))
 	{
 		printf("发送投递失败！\n");
 		return 0;
@@ -98,6 +115,7 @@ int main()
 #endif
 	test_insert();
 	test_query();
+	test_List();
 	test_delete();
 
 #ifdef _MSC_BUILD
