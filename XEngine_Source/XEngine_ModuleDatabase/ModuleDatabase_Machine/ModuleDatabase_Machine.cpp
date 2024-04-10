@@ -300,7 +300,7 @@ bool CModuleDatabase_Machine::ModuleDatabase_Machine_List(XENGINE_MACHINEINFO***
 	XCHAR tszSQLStatement[1024];
 	memset(tszSQLStatement, '\0', sizeof(tszSQLStatement));
 
-	_xstprintf(tszSQLStatement, _X("SELECT * FROM `XEngine_MachineList"));
+	_xstprintf(tszSQLStatement, _X("SELECT * FROM `XEngine_MachineList`"));
 	if (!DataBase_MySQL_ExecuteQuery(xhDBSQL, &xhTable, tszSQLStatement, &nllLine, &nllRow))
 	{
 		DBModule_IsErrorOccur = true;
