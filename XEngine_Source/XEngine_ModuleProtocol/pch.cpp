@@ -83,6 +83,10 @@ extern "C" bool ModuleProtocol_Packet_ShortLink(XCHAR * ptszMsgBuffer, int* pInt
 {
 	return m_ProtocolPacket.ModuleProtocol_Packet_ShortLink(ptszMsgBuffer, pInt_MsgLen, pSt_ShortLink);
 }
+extern "C" bool ModuleProtocol_Packet_ShortLinkList(XCHAR * ptszMsgBuffer, int* pInt_MsgLen, XENGINE_SHORTLINK * **pppSt_ShortLink, int nListCount)
+{
+	return m_ProtocolPacket.ModuleProtocol_Packet_ShortLinkList(ptszMsgBuffer, pInt_MsgLen, pppSt_ShortLink, nListCount);
+}
 extern "C" bool ModuleProtocol_Packet_WordFilter(XCHAR * ptszMsgBuffer, int* pInt_MsgLen, XENGINE_WORDFILTER * pSt_WordFilter)
 {
 	return m_ProtocolPacket.ModuleProtocol_Packet_WordFilter(ptszMsgBuffer, pInt_MsgLen, pSt_WordFilter);

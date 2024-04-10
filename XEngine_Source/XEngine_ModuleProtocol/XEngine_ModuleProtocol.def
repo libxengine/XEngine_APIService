@@ -16,6 +16,7 @@ EXPORTS
 	ModuleProtocol_Packet_TestReply
 	ModuleProtocol_Packet_Weather
 	ModuleProtocol_Packet_ShortLink
+	ModuleProtocol_Packet_ShortLinkList
 	ModuleProtocol_Packet_WordFilter
 	ModuleProtocol_Packet_ImageAttr
 	ModuleProtocol_Packet_EnumDevice

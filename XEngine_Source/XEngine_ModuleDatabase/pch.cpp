@@ -145,6 +145,10 @@ extern "C" bool ModuleDatabase_ShortLink_Delete(XENGINE_SHORTLINK * pSt_SLinkInf
 {
 	return m_ShortLink.ModuleDatabase_ShortLink_Delete(pSt_SLinkInfo);
 }
+extern "C" bool ModuleDatabase_ShortLink_List(XENGINE_SHORTLINK * **pppSt_SLinkInfo, int* pInt_ListCount)
+{
+	return m_ShortLink.ModuleDatabase_ShortLink_List(pppSt_SLinkInfo, pInt_ListCount);
+}
 /************************************************************************/
 /*                         导出的敏感词过滤数据库函数                   */
 /************************************************************************/

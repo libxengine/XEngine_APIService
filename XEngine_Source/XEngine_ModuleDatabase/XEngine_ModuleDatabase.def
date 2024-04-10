@@ -30,6 +30,7 @@ EXPORTS
 	ModuleDatabase_ShortLink_Insert
 	ModuleDatabase_ShortLink_Query
 	ModuleDatabase_ShortLink_Delete
+	ModuleDatabase_ShortLink_List
 
 	ModuleDatabase_WordFilter_Init
 	ModuleDatabase_WordFilter_Destory

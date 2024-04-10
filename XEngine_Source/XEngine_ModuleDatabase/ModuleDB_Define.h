@@ -361,6 +361,25 @@ extern "C" bool ModuleDatabase_ShortLink_Query(XENGINE_SHORTLINK* pSt_SLinkInfo)
 备注：
 *********************************************************************/
 extern "C" bool ModuleDatabase_ShortLink_Delete(XENGINE_SHORTLINK* pSt_SLinkInfo);
+/********************************************************************
+函数名称：ModuleDatabase_ShortLink_List
+函数功能：列举短连接信息列表
+ 参数.一：pppSt_MachineInfo
+  In/Out：Out
+  类型：三级指针
+  可空：N
+  意思：输出短连接列表
+ 参数.二：pInt_ListCount
+  In/Out：Out
+  类型：整数型指针
+  可空：N
+  意思：输出列表个数
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+extern "C" bool ModuleDatabase_ShortLink_List(XENGINE_SHORTLINK*** pppSt_SLinkInfo, int* pInt_ListCount);
 /************************************************************************/
 /*                         导出的敏感词过滤数据库函数                   */
 /************************************************************************/
