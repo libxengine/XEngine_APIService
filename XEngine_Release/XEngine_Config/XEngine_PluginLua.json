@@ -9,6 +9,11 @@
             "PluginEnable":true,
             "PluginMethod":"time",
             "PluginFile":"./XEngine_LuaPlugin/ModulePlugin_OSTime.lua"
+        },
+        {
+            "PluginEnable":true,
+            "PluginMethod":"heart",
+            "PluginFile":"./XEngine_LuaPlugin/ModulePlugin_Heart.lua"
         }
     ]
 }

@@ -23,7 +23,8 @@
         "LogLeave":17
     },
     "XSql":{
-        "SQLAddr":"10.0.3.155",
+        "bEnable":true,
+        "SQLAddr":"10.0.3.154",
         "SQLPort":3306,
         "SQLUser":"root",
         "SQLPass":"123123"
@@ -61,6 +62,7 @@
         }
     },
     "XVer":[
+        "3.4.0.1001 Build20240411",
         "3.3.0.1001 Build20240308",
         "3.2.0.1001 Build20231229",
         "3.1.0.1001 Build20231102",
