@@ -24,6 +24,7 @@ public:
 	bool ModuleDatabase_Machine_Query(XENGINE_MACHINEINFO* pSt_MachineInfo);
 	bool ModuleDatabase_Machine_Delete(XENGINE_MACHINEINFO* pSt_MachineInfo);
 	bool ModuleDatabase_Machine_UPDate(XENGINE_MACHINEINFO* pSt_MachineInfo);
+	bool ModuleDatabase_Machine_List(XENGINE_MACHINEINFO*** pppSt_MachineInfo, int* pInt_ListCount);
 protected:
 private:
 	XNETHANDLE xhDBSQL;

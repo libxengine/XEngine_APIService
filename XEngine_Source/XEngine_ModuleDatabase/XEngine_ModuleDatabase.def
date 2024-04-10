@@ -43,3 +43,4 @@ EXPORTS
 	ModuleDatabase_Machine_Query
 	ModuleDatabase_Machine_Delete
 	ModuleDatabase_Machine_UPDate
+	ModuleDatabase_Machine_List

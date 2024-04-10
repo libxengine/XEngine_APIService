@@ -107,6 +107,10 @@ extern "C" bool ModuleProtocol_Packet_SoftWare(XCHAR * ptszSWInfo, int* pInt_Len
 {
 	return m_ProtocolPacket.ModuleProtocol_Packet_SoftWare(ptszSWInfo, pInt_Len);
 }
+extern "C" bool ModuleProtocol_Packet_Machine(XCHAR * ptszMSGBuffer, int* pInt_MSGLen, XENGINE_MACHINEINFO * **pppSt_MachineList, int nListCount)
+{
+	return m_ProtocolPacket.ModuleProtocol_Packet_Machine(ptszMSGBuffer, pInt_MSGLen, pppSt_MachineList, nListCount);
+}
 extern "C" bool ModuleProtocol_Packet_P2PLan(XCHAR * ptszMsgBuffer, int* pInt_MsgLen, XENGINE_P2XPPEER_PROTOCOL * **pppSt_ListClients, int nListCount)
 {
 	return m_ProtocolPacket.ModuleProtocol_Packet_P2PLan(ptszMsgBuffer, pInt_MsgLen, pppSt_ListClients, nListCount);

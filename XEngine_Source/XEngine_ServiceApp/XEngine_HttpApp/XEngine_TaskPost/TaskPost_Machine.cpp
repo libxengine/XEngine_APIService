@@ -4,8 +4,8 @@ bool HTTPTask_TastPost_Machine(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer, in
 {
 	int nSDLen = 0;
 	int nRVLen = 0;
-	XCHAR tszSDBuffer[4096];
-	XCHAR tszRVBuffer[4096];
+	XCHAR tszSDBuffer[10240];
+	XCHAR tszRVBuffer[10240];
 	XENGINE_MACHINEINFO st_MachineInfo = {};
 	RFCCOMPONENTS_HTTP_HDRPARAM st_HDRParam = {};    //发送给客户端的参数
 
@@ -47,6 +47,17 @@ bool HTTPTask_TastPost_Machine(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer, in
 		HttpProtocol_Server_SendMsgEx(xhHTTPPacket, tszSDBuffer, &nSDLen, &st_HDRParam, tszRVBuffer, nRVLen);
 		XEngine_Network_Send(lpszClientAddr, tszSDBuffer, nSDLen);
 		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("HTTP客户端:%s,请求删除一条信息收集数据成功,机器名:%s,机器编码:%s"), lpszClientAddr, st_MachineInfo.tszMachineName, st_MachineInfo.tszMachineCode);
+	}
+	else
+	{
+		int nListCount = 0;
+		XENGINE_MACHINEINFO** ppSt_MachineInfo;
+		ModuleDatabase_Machine_List(&ppSt_MachineInfo, &nListCount);
+		ModuleProtocol_Packet_Machine(tszRVBuffer, &nRVLen, &ppSt_MachineInfo, nListCount);
+		HttpProtocol_Server_SendMsgEx(xhHTTPPacket, tszSDBuffer, &nSDLen, &st_HDRParam, tszRVBuffer, nRVLen);
+		XEngine_Network_Send(lpszClientAddr, tszSDBuffer, nSDLen);
+		BaseLib_OperatorMemory_Free((XPPPMEM)&ppSt_MachineInfo, nListCount);
+		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("HTTP客户端:%s,请求获取机器信息列表成功,个数:%d"), lpszClientAddr, nListCount);
 	}
 	return true;
 }

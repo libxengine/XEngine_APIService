@@ -195,3 +195,7 @@ extern "C" bool ModuleDatabase_Machine_UPDate(XENGINE_MACHINEINFO * pSt_MachineI
 {
 	return m_MachineInfo.ModuleDatabase_Machine_UPDate(pSt_MachineInfo);
 }
+extern "C" bool ModuleDatabase_Machine_List(XENGINE_MACHINEINFO * **pppSt_MachineInfo, int* pInt_ListCount)
+{
+	return m_MachineInfo.ModuleDatabase_Machine_List(pppSt_MachineInfo, pInt_ListCount);
+}

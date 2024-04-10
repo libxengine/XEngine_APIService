@@ -270,3 +270,84 @@ bool CModuleDatabase_Machine::ModuleDatabase_Machine_UPDate(XENGINE_MACHINEINFO*
 	}
 	return true;
 }
+/********************************************************************
+函数名称：ModuleDatabase_Machine_List
+函数功能：列举收集的机器信息
+ 参数.一：pppSt_MachineInfo
+  In/Out：Out
+  类型：三级指针
+  可空：N
+  意思：输出机器信息列表
+ 参数.二：pInt_ListCount
+  In/Out：Out
+  类型：整数型指针
+  可空：N
+  意思：输出列表个数
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+bool CModuleDatabase_Machine::ModuleDatabase_Machine_List(XENGINE_MACHINEINFO*** pppSt_MachineInfo, int* pInt_ListCount)
+{
+	DBModule_IsErrorOccur = false;
+
+	//查询
+	XNETHANDLE xhTable = 0;
+	__int64u nllLine = 0;
+	__int64u nllRow = 0;
+
+	XCHAR tszSQLStatement[1024];
+	memset(tszSQLStatement, '\0', sizeof(tszSQLStatement));
+
+	_xstprintf(tszSQLStatement, _X("SELECT * FROM `XEngine_MachineList"));
+	if (!DataBase_MySQL_ExecuteQuery(xhDBSQL, &xhTable, tszSQLStatement, &nllLine, &nllRow))
+	{
+		DBModule_IsErrorOccur = true;
+		DBModule_dwErrorCode = DataBase_GetLastError();
+		return false;
+	}
+	if (nllLine <= 0)
+	{
+		DBModule_IsErrorOccur = true;
+		DBModule_dwErrorCode = ERROR_APISERVICE_MODULE_DATABASE_NOTFOUND;
+		return false;
+	}
+	*pInt_ListCount = (int)nllLine;
+	BaseLib_OperatorMemory_Malloc((XPPPMEM)pppSt_MachineInfo, *pInt_ListCount, sizeof(XENGINE_MACHINEINFO));
+	for (__int64u i = 0; i < nllLine; i++)
+	{
+		XCHAR** pptszResult = DataBase_MySQL_GetResult(xhDBSQL, xhTable);
+
+		if (NULL != pptszResult[0])
+		{
+			(*pppSt_MachineInfo)[i]->nID = _ttxoi(pptszResult[0]);
+		}
+		if (NULL != pptszResult[1])
+		{
+			_tcsxcpy((*pppSt_MachineInfo)[i]->tszMachineName, pptszResult[1]);
+		}
+		if (NULL != pptszResult[2])
+		{
+			_tcsxcpy((*pppSt_MachineInfo)[i]->tszMachineCode, pptszResult[2]);
+		}
+		if (NULL != pptszResult[3])
+		{
+			_tcsxcpy((*pppSt_MachineInfo)[i]->tszMachineSystem, pptszResult[3]);
+		}
+		if (NULL != pptszResult[4])
+		{
+			_tcsxcpy((*pppSt_MachineInfo)[i]->tszMachineText, pptszResult[4]);
+		}
+		if (NULL != pptszResult[5])
+		{
+			(*pppSt_MachineInfo)[i]->nTimeNumber = _ttxoll(pptszResult[5]);
+		}
+		if (NULL != pptszResult[6])
+		{
+			_tcsxcpy((*pppSt_MachineInfo)[i]->tszCreateTime, pptszResult[6]);
+		}
+	}
+	DataBase_MySQL_FreeResult(xhDBSQL, xhTable);
+	return true;
+}

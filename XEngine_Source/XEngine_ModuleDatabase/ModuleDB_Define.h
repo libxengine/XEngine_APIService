@@ -511,3 +511,22 @@ extern "C" bool ModuleDatabase_Machine_Delete(XENGINE_MACHINEINFO * pSt_MachineI
 备注：
 *********************************************************************/
 extern "C" bool ModuleDatabase_Machine_UPDate(XENGINE_MACHINEINFO* pSt_MachineInfo);
+/********************************************************************
+函数名称：ModuleDatabase_Machine_List
+函数功能：列举收集的机器信息
+ 参数.一：pppSt_MachineInfo
+  In/Out：Out
+  类型：三级指针
+  可空：N
+  意思：输出机器信息列表
+ 参数.二：pInt_ListCount
+  In/Out：Out
+  类型：整数型指针
+  可空：N
+  意思：输出列表个数
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+extern "C" bool ModuleDatabase_Machine_List(XENGINE_MACHINEINFO*** pppSt_MachineInfo, int* pInt_ListCount);
