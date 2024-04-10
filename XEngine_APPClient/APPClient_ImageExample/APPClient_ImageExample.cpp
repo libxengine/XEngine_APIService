@@ -58,7 +58,7 @@ bool APPClient_ImageExample_GetAttr(LPCXSTR lpszMsgBuffer, int nMsgLen, int* pIn
 }
 int test_imgzoom()
 {
-	LPCXSTR lpszFileDir = _X("D:\\Image\\*.png");
+	LPCXSTR lpszFileDir = _X("D:\\Image\\*");
 
 	int nListCount = 0;
 	XCHAR** pptszListFile;
@@ -100,8 +100,6 @@ int test_imgzoom()
 
 		BaseLib_OperatorMemory_FreeCStyle((XPPMEM)&ptszMsgBuffer);
 	}
-
-	
 	return 0;
 }
 
