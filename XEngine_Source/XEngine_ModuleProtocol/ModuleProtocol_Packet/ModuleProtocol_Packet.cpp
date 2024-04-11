@@ -855,6 +855,71 @@ bool CModuleProtocol_Packet::ModuleProtocol_Packet_ShortLink(XCHAR* ptszMsgBuffe
 	return true;
 }
 /********************************************************************
+函数名称：ModuleProtocol_Packet_ShortLinkList
+函数功能：短链接列表打包函数
+ 参数.一：ptszMsgBuffer
+  In/Out：Out
+  类型：字符指针
+  可空：N
+  意思：输出打包的数据信息
+ 参数.二：pInt_MsgLen
+  In/Out：Out
+  类型：整数型指针
+  可空：N
+  意思：输出打包大小
+ 参数.三：pppSt_MachineList
+  In/Out：In
+  类型：三级指针
+  可空：N
+  意思：输入要打包的数据
+ 参数.四：nListCount
+  In/Out：In
+  类型：整数型
+  可空：N
+  意思：输入打包数据个数
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+bool CModuleProtocol_Packet::ModuleProtocol_Packet_ShortLinkList(XCHAR* ptszMSGBuffer, int* pInt_MSGLen, XENGINE_SHORTLINK*** pppSt_ShortLink, int nListCount)
+{
+	ModuleProtocol_IsErrorOccur = false;
+
+	if ((NULL == ptszMSGBuffer) || (NULL == pInt_MSGLen))
+	{
+		ModuleProtocol_IsErrorOccur = true;
+		ModuleProtocol_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PROTOCOL_PACKET_PARAMENT;
+		return false;
+	}
+	Json::Value st_JsonRoot;
+	Json::Value st_JsonArray;
+	Json::StreamWriterBuilder st_JsonBuilder;
+
+	for (int i = 0; i < nListCount; i++)
+	{
+		Json::Value st_JsonObject;
+
+		st_JsonObject["tszFullUrl"] = (*pppSt_ShortLink)[i]->tszFullUrl;
+		st_JsonObject["tszShotUrl"] = (*pppSt_ShortLink)[i]->tszShotUrl;
+		st_JsonObject["tszKeyUrl"] = (*pppSt_ShortLink)[i]->tszKeyUrl;
+		st_JsonObject["tszMapUrl"] = (*pppSt_ShortLink)[i]->tszMapUrl;
+		st_JsonObject["tszCvtUrl"] = (*pppSt_ShortLink)[i]->tszCvtUrl;
+		st_JsonObject["tszCreateTime"] = (*pppSt_ShortLink)[i]->tszCreateTime;
+		st_JsonObject["nLength"] = (*pppSt_ShortLink)[i]->nLength;
+		st_JsonObject["nID"] = (*pppSt_ShortLink)[i]->nID;
+		st_JsonArray.append(st_JsonObject);
+	}
+	st_JsonRoot["code"] = 0;
+	st_JsonRoot["msg"] = "success";
+	st_JsonRoot["data"] = st_JsonArray;
+	st_JsonBuilder["emitUTF8"] = true;
+
+	*pInt_MSGLen = Json::writeString(st_JsonBuilder, st_JsonRoot).length();
+	memcpy(ptszMSGBuffer, Json::writeString(st_JsonBuilder, st_JsonRoot).c_str(), *pInt_MSGLen);
+	return true;
+}
+/********************************************************************
 函数名称：ModuleProtocol_Packet_WordFilter
 函数功能：敏感词生成协议打包函数
  参数.一：ptszMsgBuffer
@@ -898,6 +963,66 @@ bool CModuleProtocol_Packet::ModuleProtocol_Packet_WordFilter(XCHAR* ptszMsgBuff
 	st_JsonRoot["code"] = 0;
 	st_JsonRoot["msg"] = "success";
 	st_JsonRoot["data"] = st_JsonObject;
+	st_JsonBuilder["emitUTF8"] = true;
+
+	*pInt_MsgLen = Json::writeString(st_JsonBuilder, st_JsonRoot).length();
+	memcpy(ptszMsgBuffer, Json::writeString(st_JsonBuilder, st_JsonRoot).c_str(), *pInt_MsgLen);
+	return true;
+}
+/********************************************************************
+函数名称：ModuleProtocol_Packet_WordFilterList
+函数功能：敏感词列表打包函数
+ 参数.一：ptszMsgBuffer
+  In/Out：Out
+  类型：字符指针
+  可空：N
+  意思：输出打包的数据信息
+ 参数.二：pInt_MsgLen
+  In/Out：Out
+  类型：整数型指针
+  可空：N
+  意思：输出打包大小
+ 参数.三：pppSt_MachineList
+  In/Out：In
+  类型：三级指针
+  可空：N
+  意思：输入要打包的数据
+ 参数.四：nListCount
+  In/Out：In
+  类型：整数型
+  可空：N
+  意思：输入打包数据个数
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+bool CModuleProtocol_Packet::ModuleProtocol_Packet_WordFilterList(XCHAR* ptszMsgBuffer, int* pInt_MsgLen, XENGINE_WORDFILTER*** pppSt_WordFilter, int nListCount)
+{
+	ModuleProtocol_IsErrorOccur = false;
+
+	if ((NULL == ptszMsgBuffer) || (NULL == pInt_MsgLen))
+	{
+		ModuleProtocol_IsErrorOccur = true;
+		ModuleProtocol_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PROTOCOL_PACKET_PARAMENT;
+		return false;
+	}
+	Json::Value st_JsonRoot;
+	Json::Value st_JsonArray;
+	Json::StreamWriterBuilder st_JsonBuilder;
+
+	for (int i = 0; i < nListCount; i++)
+	{
+		Json::Value st_JsonObject;
+
+		st_JsonObject["tszWordsFrom"] = (*pppSt_WordFilter)[i]->tszWordsFrom;
+		st_JsonObject["tszWordsTo"] = (*pppSt_WordFilter)[i]->tszWordsTo;
+		st_JsonObject["nLevel"] = (*pppSt_WordFilter)[i]->nLevel;
+		st_JsonArray.append(st_JsonObject);
+	}
+	st_JsonRoot["code"] = 0;
+	st_JsonRoot["msg"] = "success";
+	st_JsonRoot["data"] = st_JsonArray;
 	st_JsonBuilder["emitUTF8"] = true;
 
 	*pInt_MsgLen = Json::writeString(st_JsonBuilder, st_JsonRoot).length();
@@ -1227,7 +1352,7 @@ bool CModuleProtocol_Packet::ModuleProtocol_Packet_HardWare(XCHAR* ptszHWInfo, i
 	st_JsonSerial["DiskSerial"] = st_SDKSerial.tszDiskSerial;
 	st_JsonSerial["CpuSerial"] = st_SDKSerial.tszCpuSerial;
 	st_JsonSerial["BoardSerial"] = st_SDKSerial.tszBoardSerial;
-	st_JsonSerial["SystemSerail"] = st_SDKSerial.tszSystemSerail;
+	st_JsonSerial["SystemSerial"] = st_SDKSerial.tszSystemSerial;
 
 	int nListCount = 0;
 	XSOCKET_CARDINFO** ppSt_ListIFInfo;
@@ -1355,6 +1480,70 @@ bool CModuleProtocol_Packet::ModuleProtocol_Packet_SoftWare(XCHAR* ptszSWInfo, i
 	*pInt_Len = st_JsonRoot.toStyledString().length();
 	memcpy(ptszSWInfo, st_JsonRoot.toStyledString().c_str(), *pInt_Len);
 
+	return true;
+}
+/********************************************************************
+函数名称：ModuleProtocol_Packet_Machine
+函数功能：机器信息列表打包函数
+ 参数.一：ptszMsgBuffer
+  In/Out：Out
+  类型：字符指针
+  可空：N
+  意思：输出打包的数据信息
+ 参数.二：pInt_MsgLen
+  In/Out：Out
+  类型：整数型指针
+  可空：N
+  意思：输出打包大小
+ 参数.三：pppSt_MachineList
+  In/Out：In
+  类型：三级指针
+  可空：N
+  意思：输入要打包的数据
+ 参数.四：nListCount
+  In/Out：In
+  类型：整数型
+  可空：N
+  意思：输入打包数据个数
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+bool CModuleProtocol_Packet::ModuleProtocol_Packet_Machine(XCHAR* ptszMSGBuffer, int* pInt_MSGLen, XENGINE_MACHINEINFO*** pppSt_MachineList, int nListCount)
+{
+	ModuleProtocol_IsErrorOccur = false;
+
+	if ((NULL == ptszMSGBuffer) || (NULL == pInt_MSGLen))
+	{
+		ModuleProtocol_IsErrorOccur = true;
+		ModuleProtocol_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PROTOCOL_PACKET_PARAMENT;
+		return false;
+	}
+	Json::Value st_JsonRoot;
+	Json::Value st_JsonArray;
+	Json::StreamWriterBuilder st_JsonBuilder;
+
+	for (int i = 0; i < nListCount; i++)
+	{
+		Json::Value st_JsonObject;
+
+		st_JsonObject["tszMachineText"] = (*pppSt_MachineList)[i]->tszMachineText;
+		st_JsonObject["tszMachineName"] = (*pppSt_MachineList)[i]->tszMachineName;
+		st_JsonObject["tszMachineCode"] = (*pppSt_MachineList)[i]->tszMachineCode;
+		st_JsonObject["tszMachineSystem"] = (*pppSt_MachineList)[i]->tszMachineSystem;
+		st_JsonObject["tszCreateTime"] = (*pppSt_MachineList)[i]->tszCreateTime;
+		st_JsonObject["nTimeNumber"] = (Json::Value::UInt64)(*pppSt_MachineList)[i]->nTimeNumber;
+		st_JsonObject["nID"] = (*pppSt_MachineList)[i]->nID;
+		st_JsonArray.append(st_JsonObject);
+	}
+	st_JsonRoot["code"] = 0;
+	st_JsonRoot["msg"] = "success";
+	st_JsonRoot["data"] = st_JsonArray;
+	st_JsonBuilder["emitUTF8"] = true;
+
+	*pInt_MSGLen = Json::writeString(st_JsonBuilder, st_JsonRoot).length();
+	memcpy(ptszMSGBuffer, Json::writeString(st_JsonBuilder, st_JsonRoot).c_str(), *pInt_MSGLen);
 	return true;
 }
 /********************************************************************

@@ -43,6 +43,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "APPClient_BackExample", "AP
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "APPClient_DeamonExample", "APPClient_DeamonExample\APPClient_DeamonExample.vcxproj", "{5D064FEF-9B83-493A-B891-12E56B1B4C65}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "APPClient_MachineExample", "APPClient_MachineExample\APPClient_MachineExample.vcxproj", "{7B5FB530-DBE4-4954-BC02-6C9411825A1D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -211,6 +213,14 @@ Global
 		{5D064FEF-9B83-493A-B891-12E56B1B4C65}.Release|x64.Build.0 = Release|x64
 		{5D064FEF-9B83-493A-B891-12E56B1B4C65}.Release|x86.ActiveCfg = Release|Win32
 		{5D064FEF-9B83-493A-B891-12E56B1B4C65}.Release|x86.Build.0 = Release|Win32
+		{7B5FB530-DBE4-4954-BC02-6C9411825A1D}.Debug|x64.ActiveCfg = Debug|x64
+		{7B5FB530-DBE4-4954-BC02-6C9411825A1D}.Debug|x64.Build.0 = Debug|x64
+		{7B5FB530-DBE4-4954-BC02-6C9411825A1D}.Debug|x86.ActiveCfg = Debug|Win32
+		{7B5FB530-DBE4-4954-BC02-6C9411825A1D}.Debug|x86.Build.0 = Debug|Win32
+		{7B5FB530-DBE4-4954-BC02-6C9411825A1D}.Release|x64.ActiveCfg = Release|x64
+		{7B5FB530-DBE4-4954-BC02-6C9411825A1D}.Release|x64.Build.0 = Release|x64
+		{7B5FB530-DBE4-4954-BC02-6C9411825A1D}.Release|x86.ActiveCfg = Release|Win32
+		{7B5FB530-DBE4-4954-BC02-6C9411825A1D}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -22,6 +22,14 @@ bool HTTPTask_TaskGet_BankInfo(LPCXSTR lpszClientAddr, LPCXSTR lpszBankNumber)
 	st_HDRParam.nHttpCode = 200; //HTTP CODE码
 	st_HDRParam.bIsClose = true; //收到回复后就关闭
 
+	if (!st_ServiceConfig.st_XSql.bEnable)
+	{
+		ModuleProtocol_Packet_Common(tszPktBuffer, &nPktLen, 501, _X("function is closed"));
+		HttpProtocol_Server_SendMsgEx(xhHTTPPacket, tszMsgBuffer, &nMsgLen, &st_HDRParam, tszPktBuffer, nPktLen);
+		XEngine_Network_Send(lpszClientAddr, tszMsgBuffer, nMsgLen);
+		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("HTTP客户端:%s,请求的银行卡查询功能已经被服务器关闭,无法继续"), lpszClientAddr);
+		return false;
+	}
 	_tcsxcpy(st_BankInfo.tszBankNumber, lpszBankNumber);
 	_xstprintf(tszUrlBuffer, st_ServiceConfig.st_XApi.tszBankUrl, lpszBankNumber);
 	APIClient_Http_Request(_X("GET"), tszUrlBuffer, NULL, NULL, &ptszBodyBuffer, &nBLen);

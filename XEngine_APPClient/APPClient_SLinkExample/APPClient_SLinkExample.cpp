@@ -65,6 +65,22 @@ int test_get()
 	BaseLib_OperatorMemory_FreeCStyle((XPPMEM)&ptszMsgBuffer);
 	return 0;
 }
+int test_List()
+{
+	int nLen = 0;
+	int nCode = 0;
+	XCHAR* ptszMsgBuffer;
+
+	LPCXSTR lpszAPIUrl = _X("http://127.0.0.1:5501/api?function=slink&params1=3");
+	if (!APIClient_Http_Request(_X("POST"), lpszAPIUrl, NULL, &nCode, &ptszMsgBuffer, &nLen))
+	{
+		printf("发送投递失败！\n");
+		return 0;
+	}
+	printf("接受到数据,大小:%d,内容:%s\n", nLen, ptszMsgBuffer);
+	BaseLib_OperatorMemory_FreeCStyle((XPPMEM)&ptszMsgBuffer);
+	return 0;
+}
 int test_delete()
 {
 	int nLen = 0;
@@ -92,6 +108,7 @@ int main()
 #endif
 	test_create();
 	test_get();
+	test_List();
 	test_delete();
 
 #ifdef _MSC_BUILD

@@ -19,10 +19,10 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <VCProjectVersion>16.0</VCProjectVersion>
+    <VCProjectVersion>17.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{e756b7d2-d40d-4106-9c14-1d90f20a712e}</ProjectGuid>
-    <RootNamespace>XEngineHttpApp</RootNamespace>
+    <ProjectGuid>{7b5fb530-dbe4-4954-bc02-6c9411825a1d}</ProjectGuid>
+    <RootNamespace>APPClientMachineExample</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -70,33 +70,16 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(XEngine_Include);$(IncludePath)</IncludePath>
-    <LibraryPath>$(XEngine_Lib32);$(LibraryPath)</LibraryPath>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(XEngine_Include);$(IncludePath)</IncludePath>
-    <LibraryPath>$(XEngine_Lib32);$(LibraryPath)</LibraryPath>
-  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(XEngine_Include);$(IncludePath)</IncludePath>
-    <LibraryPath>$(XEngine_Lib64);$(LibraryPath)</LibraryPath>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(XEngine_Include);$(IncludePath)</IncludePath>
-    <LibraryPath>$(XEngine_Lib64);$(LibraryPath)</LibraryPath>
+    <IncludePath>$(XEngine_Include);../../XEngine_Source/XEngine_ThirdPart/jsoncpp;$(IncludePath)</IncludePath>
+    <LibraryPath>$(XEngine_Lib64);../../XEngine_Source/x64/Debug;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_WINDOWS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <DisableSpecificWarnings>4819</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -109,10 +92,8 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;_WINDOWS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
-      <DisableSpecificWarnings>4819</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -125,9 +106,8 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_CONSOLE;_WINDOWS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <DisableSpecificWarnings>4819</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -140,10 +120,8 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>NDEBUG;_CONSOLE;_WINDOWS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
-      <DisableSpecificWarnings>4819</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -153,56 +131,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="XEngine_Configure.cpp" />
-    <ClCompile Include="XEngine_HttpApp.cpp" />
-    <ClCompile Include="XEngine_HTTPTask.cpp" />
-    <ClCompile Include="XEngine_Network.cpp" />
-    <ClCompile Include="XEngine_PluginTask.cpp" />
-    <ClCompile Include="XEngine_TaskGet\TaskGet_Bank.cpp" />
-    <ClCompile Include="XEngine_TaskGet\TaskGet_IDCard.cpp" />
-    <ClCompile Include="XEngine_TaskGet\TaskGet_IDRegion.cpp" />
-    <ClCompile Include="XEngine_TaskGet\TaskGet_Locker.cpp" />
-    <ClCompile Include="XEngine_TaskGet\TaskGet_Reload.cpp" />
-    <ClCompile Include="XEngine_TaskGet\TaskGet_Translation.cpp" />
-    <ClCompile Include="XEngine_TaskGet\TaskGet_Weather.cpp" />
-    <ClCompile Include="XEngine_TaskPost\TaskPost_BackService.cpp" />
-    <ClCompile Include="XEngine_TaskPost\TaskPost_Deamon.cpp" />
-    <ClCompile Include="XEngine_TaskPost\TaskPost_DTest.cpp" />
-    <ClCompile Include="XEngine_TaskPost\TaskPost_Image.cpp" />
-    <ClCompile Include="XEngine_TaskPost\TaskPost_Log.cpp" />
-    <ClCompile Include="XEngine_TaskPost\TaskPost_Machine.cpp" />
-    <ClCompile Include="XEngine_TaskPost\TaskPost_P2PClient.cpp" />
-    <ClCompile Include="XEngine_TaskPost\TaskPost_PostCode.cpp" />
-    <ClCompile Include="XEngine_TaskPost\TaskPost_QRCode.cpp" />
-    <ClCompile Include="XEngine_TaskPost\TaskPost_ShortLink.cpp" />
-    <ClCompile Include="XEngine_TaskPost\TaskPost_SocketTest.cpp" />
-    <ClCompile Include="XEngine_TaskPost\TaskPost_WordFilter.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="XEngine_Configure.h" />
-    <ClInclude Include="XEngine_Hdr.h" />
-    <ClInclude Include="XEngine_HTTPTask.h" />
-    <ClInclude Include="XEngine_Network.h" />
-    <ClInclude Include="XEngine_PluginTask.h" />
-    <ClInclude Include="XEngine_TaskGet\TaskGet_Bank.h" />
-    <ClInclude Include="XEngine_TaskGet\TaskGet_IDCard.h" />
-    <ClInclude Include="XEngine_TaskGet\TaskGet_IDRegion.h" />
-    <ClInclude Include="XEngine_TaskGet\TaskGet_Locker.h" />
-    <ClInclude Include="XEngine_TaskGet\TaskGet_Reload.h" />
-    <ClInclude Include="XEngine_TaskGet\TaskGet_Translation.h" />
-    <ClInclude Include="XEngine_TaskGet\TaskGet_Weather.h" />
-    <ClInclude Include="XEngine_TaskPost\TaskPost_BackService.h" />
-    <ClInclude Include="XEngine_TaskPost\TaskPost_Deamon.h" />
-    <ClInclude Include="XEngine_TaskPost\TaskPost_Image.h" />
-    <ClInclude Include="XEngine_TaskPost\TaskPost_Machine.h" />
-    <ClInclude Include="XEngine_TaskPost\TaskPost_ShortLink.h" />
-    <ClInclude Include="XEngine_TaskPost\TaskPost_DTest.h" />
-    <ClInclude Include="XEngine_TaskPost\TaskPost_Log.h" />
-    <ClInclude Include="XEngine_TaskPost\TaskPost_P2PClient.h" />
-    <ClInclude Include="XEngine_TaskPost\TaskPost_PostCode.h" />
-    <ClInclude Include="XEngine_TaskPost\TaskPost_QRCode.h" />
-    <ClInclude Include="XEngine_TaskPost\TaskPost_SocketTest.h" />
-    <ClInclude Include="XEngine_TaskPost\TaskPost_WordFilter.h" />
+    <ClCompile Include="APPClient_MachineExample.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

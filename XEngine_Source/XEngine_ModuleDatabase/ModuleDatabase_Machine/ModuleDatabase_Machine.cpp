@@ -1,20 +1,20 @@
 ﻿#include "pch.h"
-#include "ModuleDatabase_ShortLink.h"
+#include "ModuleDatabase_Machine.h"
 /********************************************************************
-//    Created:     2023/04/11  10:36:45
-//    File Name:   D:\XEngine_APIService\XEngine_Source\XEngine_ModuleDatabase\ModuleDatabase_ShortLink\ModuleDatabase_ShortLink.cpp
-//    File Path:   D:\XEngine_APIService\XEngine_Source\XEngine_ModuleDatabase\ModuleDatabase_ShortLink
-//    File Base:   ModuleDatabase_ShortLink
+//    Created:     2024/04/07  10:37:48
+//    File Name:   D:\XEngine_APIService\XEngine_Source\XEngine_ModuleDatabase\ModuleDatabase_Machine\ModuleDatabase_Machine.cpp
+//    File Path:   D:\XEngine_APIService\XEngine_Source\XEngine_ModuleDatabase\ModuleDatabase_Machine
+//    File Base:   ModuleDatabase_Machine
 //    File Ext:    cpp
 //    Project:     XEngine(网络通信引擎)
 //    Author:      qyt
-//    Purpose:     短连接数据库管理器
+//    Purpose:     机器信息收集数据库
 //    History:
 *********************************************************************/
-CModuleDatabase_ShortLink::CModuleDatabase_ShortLink()
+CModuleDatabase_Machine::CModuleDatabase_Machine()
 {
 }
-CModuleDatabase_ShortLink::~CModuleDatabase_ShortLink()
+CModuleDatabase_Machine::~CModuleDatabase_Machine()
 {
 
 }
@@ -22,8 +22,8 @@ CModuleDatabase_ShortLink::~CModuleDatabase_ShortLink()
 //                             公有函数
 //////////////////////////////////////////////////////////////////////////
 /********************************************************************
-函数名称：ModuleDatabase_ShortLink_Init
-函数功能：初始化SQLITE文件系统
+函数名称：ModuleDatabase_Machine_Init
+函数功能：初始化数据库
  参数.一：pSt_DBConnector
   In/Out：In
   类型：数据结构指针
@@ -34,7 +34,7 @@ CModuleDatabase_ShortLink::~CModuleDatabase_ShortLink()
   意思：是否成功
 备注：
 *********************************************************************/
-bool CModuleDatabase_ShortLink::ModuleDatabase_ShortLink_Init(DATABASE_MYSQL_CONNECTINFO* pSt_DBConnector)
+bool CModuleDatabase_Machine::ModuleDatabase_Machine_Init(DATABASE_MYSQL_CONNECTINFO* pSt_DBConnector)
 {
 	DBModule_IsErrorOccur = false;
 
@@ -45,7 +45,7 @@ bool CModuleDatabase_ShortLink::ModuleDatabase_ShortLink_Init(DATABASE_MYSQL_CON
 		return false;
 	}
 	//连接数据库
-	_tcsxcpy(pSt_DBConnector->tszDBName, _X("XEngine_APISLink"));
+	_tcsxcpy(pSt_DBConnector->tszDBName, _X("XEngine_APIMachine"));
 	if (!DataBase_MySQL_Connect(&xhDBSQL, pSt_DBConnector))
 	{
 		DBModule_IsErrorOccur = true;
@@ -55,14 +55,14 @@ bool CModuleDatabase_ShortLink::ModuleDatabase_ShortLink_Init(DATABASE_MYSQL_CON
 	return true;
 }
 /********************************************************************
-函数名称：ModuleDatabase_ShortLink_Destory
+函数名称：ModuleDatabase_Machine_Destory
 函数功能：销毁
 返回值
   类型：逻辑型
   意思：是否成功
 备注：
 *********************************************************************/
-bool CModuleDatabase_ShortLink::ModuleDatabase_ShortLink_Destory()
+bool CModuleDatabase_Machine::ModuleDatabase_Machine_Destory()
 {
 	DBModule_IsErrorOccur = false;
 
@@ -70,8 +70,8 @@ bool CModuleDatabase_ShortLink::ModuleDatabase_ShortLink_Destory()
 	return true;
 }
 /********************************************************************
-函数名称：ModuleDatabase_ShortLink_Insert
-函数功能：插入一个短连接到数据库中
+函数名称：ModuleDatabase_Machine_Insert
+函数功能：插入一条信息到数据库中
  参数.一：pSt_SLinkInfo
   In/Out：In
   类型：数据结构指针
@@ -82,21 +82,28 @@ bool CModuleDatabase_ShortLink::ModuleDatabase_ShortLink_Destory()
   意思：是否成功
 备注：
 *********************************************************************/
-bool CModuleDatabase_ShortLink::ModuleDatabase_ShortLink_Insert(XENGINE_SHORTLINK* pSt_SLinkInfo)
+bool CModuleDatabase_Machine::ModuleDatabase_Machine_Insert(XENGINE_MACHINEINFO* pSt_MachineInfo)
 {
 	DBModule_IsErrorOccur = false;
 
-	if (NULL == pSt_SLinkInfo)
+	if (NULL == pSt_MachineInfo)
 	{
 		DBModule_IsErrorOccur = true;
 		DBModule_dwErrorCode = ERROR_APISERVICE_MODULE_DATABASE_PARAMENT;
 		return false;
 	}
-	XCHAR tszSQLStatement[2024];
+	XCHAR tszSQLStatement[4096];
 	memset(tszSQLStatement, '\0', sizeof(tszSQLStatement));
 
-	_xstprintf(tszSQLStatement, _X("INSERT INTO `XEngine_ShortLink` (tszFullUrl,tszShortUrl,tszKeyUrl,tszMapUrl,tszCreateTime) VALUES('%s','%s','%s','%s','%s')"), pSt_SLinkInfo->tszFullUrl, pSt_SLinkInfo->tszShotUrl, pSt_SLinkInfo->tszKeyUrl, pSt_SLinkInfo->tszMapUrl, pSt_SLinkInfo->tszCreateTime);
+	_xstprintf(tszSQLStatement, _X("INSERT INTO `XEngine_MachineList` (tszMachineName,tszMachineCode,tszMachineSystem,tszMachineText,nTimeNumber,tszCreateTime) VALUES('%s','%s','%s','%s',%lld,now())"), pSt_MachineInfo->tszMachineName, pSt_MachineInfo->tszMachineCode, pSt_MachineInfo->tszMachineSystem, pSt_MachineInfo->tszMachineText, pSt_MachineInfo->nTimeNumber);
+#ifdef _MSC_BUILD
+	XCHAR tszUTFStr[4096] = {};
+	int nSLen = _tcsxlen(tszSQLStatement);
+	BaseLib_OperatorCharset_AnsiToUTF(tszSQLStatement, tszUTFStr, &nSLen);
+	if (!DataBase_MySQL_Execute(xhDBSQL, tszUTFStr))
+#else
 	if (!DataBase_MySQL_Execute(xhDBSQL, tszSQLStatement))
+#endif
 	{
 		DBModule_IsErrorOccur = true;
 		DBModule_dwErrorCode = DataBase_GetLastError();
@@ -105,23 +112,23 @@ bool CModuleDatabase_ShortLink::ModuleDatabase_ShortLink_Insert(XENGINE_SHORTLIN
 	return true;
 }
 /********************************************************************
-函数名称：ModuleDatabase_ShortLink_Query
-函数功能：查询短连接
+函数名称：ModuleDatabase_Machine_Query
+函数功能：查询数据
  参数.一：pSt_SLinkInfo
   In/Out：In/Out
   类型：数据结构指针
   可空：N
-  意思：输入查询的短连接,输出完整的连接
+  意思：输入查询的信息,输出完整的信息
 返回值
   类型：逻辑型
   意思：是否成功
 备注：
 *********************************************************************/
-bool CModuleDatabase_ShortLink::ModuleDatabase_ShortLink_Query(XENGINE_SHORTLINK* pSt_SLinkInfo)
+bool CModuleDatabase_Machine::ModuleDatabase_Machine_Query(XENGINE_MACHINEINFO* pSt_MachineInfo)
 {
 	DBModule_IsErrorOccur = false;
 
-	if ((NULL == pSt_SLinkInfo))
+	if ((NULL == pSt_MachineInfo))
 	{
 		DBModule_IsErrorOccur = true;
 		DBModule_dwErrorCode = ERROR_APISERVICE_MODULE_DATABASE_PARAMENT;
@@ -134,8 +141,8 @@ bool CModuleDatabase_ShortLink::ModuleDatabase_ShortLink_Query(XENGINE_SHORTLINK
 
 	XCHAR tszSQLStatement[1024];
 	memset(tszSQLStatement, '\0', sizeof(tszSQLStatement));
-	//名称为,消息名为必填
-	_xstprintf(tszSQLStatement, _X("SELECT * FROM `XEngine_ShortLink` WHERE tszMapUrl = '%s'"), pSt_SLinkInfo->tszMapUrl);
+
+	_xstprintf(tszSQLStatement, _X("SELECT * FROM `XEngine_MachineList` WHERE tszMachineCode = '%s'"), pSt_MachineInfo->tszMachineCode);
 	if (!DataBase_MySQL_ExecuteQuery(xhDBSQL, &xhTable, tszSQLStatement, &nllLine, &nllRow))
 	{
 		DBModule_IsErrorOccur = true;
@@ -154,50 +161,54 @@ bool CModuleDatabase_ShortLink::ModuleDatabase_ShortLink_Query(XENGINE_SHORTLINK
 
 		if (NULL != pptszResult[0])
 		{
-			pSt_SLinkInfo->nID = _ttxoi(pptszResult[0]);
+			pSt_MachineInfo->nID = _ttxoi(pptszResult[0]);
 		}
 		if (NULL != pptszResult[1])
 		{
-			_tcsxcpy(pSt_SLinkInfo->tszFullUrl, pptszResult[1]);
+			_tcsxcpy(pSt_MachineInfo->tszMachineName, pptszResult[1]);
 		}
 		if (NULL != pptszResult[2])
 		{
-			_tcsxcpy(pSt_SLinkInfo->tszShotUrl, pptszResult[2]);
+			_tcsxcpy(pSt_MachineInfo->tszMachineCode, pptszResult[2]);
 		}
 		if (NULL != pptszResult[3])
 		{
-			_tcsxcpy(pSt_SLinkInfo->tszKeyUrl, pptszResult[3]);
+			_tcsxcpy(pSt_MachineInfo->tszMachineSystem, pptszResult[3]);
 		}
 		if (NULL != pptszResult[4])
 		{
-			_tcsxcpy(pSt_SLinkInfo->tszMapUrl, pptszResult[4]);
+			_tcsxcpy(pSt_MachineInfo->tszMachineText, pptszResult[4]);
 		}
 		if (NULL != pptszResult[5])
 		{
-			_tcsxcpy(pSt_SLinkInfo->tszCreateTime, pptszResult[5]);
+			pSt_MachineInfo->nTimeNumber = _ttxoll(pptszResult[5]);
+		}
+		if (NULL != pptszResult[6])
+		{
+			_tcsxcpy(pSt_MachineInfo->tszCreateTime, pptszResult[6]);
 		}
 	}
 	DataBase_MySQL_FreeResult(xhDBSQL, xhTable);
 	return true;
 }
 /********************************************************************
-函数名称：ModuleDatabase_ShortLink_Delete
-函数功能：删除短连接
+函数名称：ModuleDatabase_Machine_Delete
+函数功能：删除数据
  参数.一：pSt_SLinkInfo
   In/Out：In
   类型：数据结构指针
   可空：N
-  意思：输入要删除的短连接
+  意思：输入要删除的数据
 返回值
   类型：逻辑型
   意思：是否成功
 备注：
 *********************************************************************/
-bool CModuleDatabase_ShortLink::ModuleDatabase_ShortLink_Delete(XENGINE_SHORTLINK* pSt_SLinkInfo)
+bool CModuleDatabase_Machine::ModuleDatabase_Machine_Delete(XENGINE_MACHINEINFO* pSt_MachineInfo)
 {
 	DBModule_IsErrorOccur = false;
 
-	if (NULL == pSt_SLinkInfo)
+	if (NULL == pSt_MachineInfo)
 	{
 		DBModule_IsErrorOccur = true;
 		DBModule_dwErrorCode = ERROR_APISERVICE_MODULE_DATABASE_PARAMENT;
@@ -206,13 +217,13 @@ bool CModuleDatabase_ShortLink::ModuleDatabase_ShortLink_Delete(XENGINE_SHORTLIN
 	XCHAR tszSQLStatement[1024];
 	memset(tszSQLStatement, '\0', sizeof(tszSQLStatement));
 
-	if (_tcsxlen(pSt_SLinkInfo->tszFullUrl) > 0)
+	if (_tcsxlen(pSt_MachineInfo->tszMachineCode) > 0)
 	{
-		_xstprintf(tszSQLStatement, _X("DELETE FROM `XEngine_ShortLink` WHERE tszFullUrl = '%s'"), pSt_SLinkInfo->tszFullUrl);
+		_xstprintf(tszSQLStatement, _X("DELETE FROM `XEngine_MachineList` WHERE tszMachineCode = '%s'"), pSt_MachineInfo->tszMachineCode);
 	}
 	else
 	{
-		_xstprintf(tszSQLStatement, _X("DELETE FROM `XEngine_ShortLink` WHERE tszMapUrl = '%s'"), pSt_SLinkInfo->tszMapUrl);
+		_xstprintf(tszSQLStatement, _X("DELETE FROM `XEngine_MachineList` WHERE tszMachineName = '%s'"), pSt_MachineInfo->tszMachineName);
 	}
 	
 	if (!DataBase_MySQL_Execute(xhDBSQL, tszSQLStatement))
@@ -224,13 +235,49 @@ bool CModuleDatabase_ShortLink::ModuleDatabase_ShortLink_Delete(XENGINE_SHORTLIN
 	return true;
 }
 /********************************************************************
-函数名称：ModuleDatabase_ShortLink_List
-函数功能：列举短连接信息列表
+函数名称：ModuleDatabase_Machine_UPDate
+函数功能：更新数据
+ 参数.一：pSt_SLinkInfo
+  In/Out：In
+  类型：数据结构指针
+  可空：N
+  意思：输入要更新的数据
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+bool CModuleDatabase_Machine::ModuleDatabase_Machine_UPDate(XENGINE_MACHINEINFO* pSt_MachineInfo)
+{
+	DBModule_IsErrorOccur = false;
+
+	if (NULL == pSt_MachineInfo)
+	{
+		DBModule_IsErrorOccur = true;
+		DBModule_dwErrorCode = ERROR_APISERVICE_MODULE_DATABASE_PARAMENT;
+		return false;
+	}
+	XCHAR tszSQLStatement[1024];
+	memset(tszSQLStatement, '\0', sizeof(tszSQLStatement));
+
+	_xstprintf(tszSQLStatement, _X("UPDATE `XEngine_MachineList` SET nTimeNumber = %lld WHERE tszMachineCode = '%s'"), pSt_MachineInfo->nTimeNumber, pSt_MachineInfo->tszMachineCode);
+
+	if (!DataBase_MySQL_Execute(xhDBSQL, tszSQLStatement))
+	{
+		DBModule_IsErrorOccur = true;
+		DBModule_dwErrorCode = DataBase_GetLastError();
+		return false;
+	}
+	return true;
+}
+/********************************************************************
+函数名称：ModuleDatabase_Machine_List
+函数功能：列举收集的机器信息
  参数.一：pppSt_MachineInfo
   In/Out：Out
   类型：三级指针
   可空：N
-  意思：输出短连接列表
+  意思：输出机器信息列表
  参数.二：pInt_ListCount
   In/Out：Out
   类型：整数型指针
@@ -241,7 +288,7 @@ bool CModuleDatabase_ShortLink::ModuleDatabase_ShortLink_Delete(XENGINE_SHORTLIN
   意思：是否成功
 备注：
 *********************************************************************/
-bool CModuleDatabase_ShortLink::ModuleDatabase_ShortLink_List(XENGINE_SHORTLINK*** pppSt_SLinkInfo, int* pInt_ListCount)
+bool CModuleDatabase_Machine::ModuleDatabase_Machine_List(XENGINE_MACHINEINFO*** pppSt_MachineInfo, int* pInt_ListCount)
 {
 	DBModule_IsErrorOccur = false;
 
@@ -252,8 +299,8 @@ bool CModuleDatabase_ShortLink::ModuleDatabase_ShortLink_List(XENGINE_SHORTLINK*
 
 	XCHAR tszSQLStatement[1024];
 	memset(tszSQLStatement, '\0', sizeof(tszSQLStatement));
-	//名称为,消息名为必填
-	_xstprintf(tszSQLStatement, _X("SELECT * FROM `XEngine_ShortLink`"));
+
+	_xstprintf(tszSQLStatement, _X("SELECT * FROM `XEngine_MachineList`"));
 	if (!DataBase_MySQL_ExecuteQuery(xhDBSQL, &xhTable, tszSQLStatement, &nllLine, &nllRow))
 	{
 		DBModule_IsErrorOccur = true;
@@ -267,35 +314,38 @@ bool CModuleDatabase_ShortLink::ModuleDatabase_ShortLink_List(XENGINE_SHORTLINK*
 		return false;
 	}
 	*pInt_ListCount = (int)nllLine;
-	BaseLib_OperatorMemory_Malloc((XPPPMEM)pppSt_SLinkInfo, *pInt_ListCount, sizeof(XENGINE_SHORTLINK));
-
+	BaseLib_OperatorMemory_Malloc((XPPPMEM)pppSt_MachineInfo, *pInt_ListCount, sizeof(XENGINE_MACHINEINFO));
 	for (__int64u i = 0; i < nllLine; i++)
 	{
 		XCHAR** pptszResult = DataBase_MySQL_GetResult(xhDBSQL, xhTable);
 
 		if (NULL != pptszResult[0])
 		{
-			(*pppSt_SLinkInfo)[i]->nID = _ttxoi(pptszResult[0]);
+			(*pppSt_MachineInfo)[i]->nID = _ttxoi(pptszResult[0]);
 		}
 		if (NULL != pptszResult[1])
 		{
-			_tcsxcpy((*pppSt_SLinkInfo)[i]->tszFullUrl, pptszResult[1]);
+			_tcsxcpy((*pppSt_MachineInfo)[i]->tszMachineName, pptszResult[1]);
 		}
 		if (NULL != pptszResult[2])
 		{
-			_tcsxcpy((*pppSt_SLinkInfo)[i]->tszShotUrl, pptszResult[2]);
+			_tcsxcpy((*pppSt_MachineInfo)[i]->tszMachineCode, pptszResult[2]);
 		}
 		if (NULL != pptszResult[3])
 		{
-			_tcsxcpy((*pppSt_SLinkInfo)[i]->tszKeyUrl, pptszResult[3]);
+			_tcsxcpy((*pppSt_MachineInfo)[i]->tszMachineSystem, pptszResult[3]);
 		}
 		if (NULL != pptszResult[4])
 		{
-			_tcsxcpy((*pppSt_SLinkInfo)[i]->tszMapUrl, pptszResult[4]);
+			_tcsxcpy((*pppSt_MachineInfo)[i]->tszMachineText, pptszResult[4]);
 		}
 		if (NULL != pptszResult[5])
 		{
-			_tcsxcpy((*pppSt_SLinkInfo)[i]->tszCreateTime, pptszResult[5]);
+			(*pppSt_MachineInfo)[i]->nTimeNumber = _ttxoll(pptszResult[5]);
+		}
+		if (NULL != pptszResult[6])
+		{
+			_tcsxcpy((*pppSt_MachineInfo)[i]->tszCreateTime, pptszResult[6]);
 		}
 	}
 	DataBase_MySQL_FreeResult(xhDBSQL, xhTable);

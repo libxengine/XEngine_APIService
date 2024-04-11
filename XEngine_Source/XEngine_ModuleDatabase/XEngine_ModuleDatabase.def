@@ -30,9 +30,19 @@ EXPORTS
 	ModuleDatabase_ShortLink_Insert
 	ModuleDatabase_ShortLink_Query
 	ModuleDatabase_ShortLink_Delete
+	ModuleDatabase_ShortLink_List
 
 	ModuleDatabase_WordFilter_Init
 	ModuleDatabase_WordFilter_Destory
 	ModuleDatabase_WordFilter_Query
 	ModuleDatabase_WordFilter_Insert
 	ModuleDatabase_WordFilter_Delete
+	ModuleDatabase_WordFilter_List
+
+	ModuleDatabase_Machine_Init
+	ModuleDatabase_Machine_Destory
+	ModuleDatabase_Machine_Insert
+	ModuleDatabase_Machine_Query
+	ModuleDatabase_Machine_Delete
+	ModuleDatabase_Machine_UPDate
+	ModuleDatabase_Machine_List

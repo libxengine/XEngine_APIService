@@ -65,6 +65,14 @@ bool HTTPTask_TaskPost_ShortLink(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer, 
 	st_HDRParam.nHttpCode = 200; //HTTP CODE码
 	st_HDRParam.bIsClose = true; //收到回复后就关闭
 
+	if (!st_ServiceConfig.st_XSql.bEnable)
+	{
+		ModuleProtocol_Packet_Common(tszRVBuffer, &nRVLen, 501, _X("function is closed"));
+		HttpProtocol_Server_SendMsgEx(xhHTTPPacket, tszSDBuffer, &nSDLen, &st_HDRParam, tszRVBuffer, nRVLen);
+		XEngine_Network_Send(lpszClientAddr, tszSDBuffer, nSDLen);
+		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("HTTP客户端:%s,请求的短连接操作功能已经被服务器关闭,无法继续"), lpszClientAddr);
+		return false;
+	}
 	ModuleProtocol_Parse_ShortLink(lpszMsgBuffer, nMsgLen, &st_ShortLink);
 	//0生成,1还原,2删除
 	if (0 == nType)
@@ -87,6 +95,10 @@ bool HTTPTask_TaskPost_ShortLink(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer, 
 			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("HTTP客户端:%s,请求生成短连接插入数据库错误,生成的连接:%s,替换的连接:%s,错误码:%lX"), lpszClientAddr, st_ShortLink.tszFullUrl, st_ShortLink.tszCvtUrl, ModuleDB_GetLastError());
 			return false;
 		}
+		ModuleProtocol_Packet_ShortLink(tszRVBuffer, &nRVLen, &st_ShortLink);
+		HttpProtocol_Server_SendMsgEx(xhHTTPPacket, tszSDBuffer, &nSDLen, &st_HDRParam, tszRVBuffer, nRVLen);
+		XEngine_Network_Send(lpszClientAddr, tszSDBuffer, nSDLen);
+		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("HTTP客户端:%s,请求操作短连接插入成功,完整地址URL:%s,映射URL:%s"), lpszClientAddr, st_ShortLink.tszFullUrl, st_ShortLink.tszMapUrl);
 	}
 	else if (1 == nType)
 	{
@@ -98,8 +110,12 @@ bool HTTPTask_TaskPost_ShortLink(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer, 
 			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("HTTP客户端:%s,请求获取短连接错误,连接:%s,错误码:%lX"), lpszClientAddr, st_ShortLink.tszMapUrl, ModuleDB_GetLastError());
 			return false;
 		}
+		ModuleProtocol_Packet_ShortLink(tszRVBuffer, &nRVLen, &st_ShortLink);
+		HttpProtocol_Server_SendMsgEx(xhHTTPPacket, tszSDBuffer, &nSDLen, &st_HDRParam, tszRVBuffer, nRVLen);
+		XEngine_Network_Send(lpszClientAddr, tszSDBuffer, nSDLen);
+		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("HTTP客户端:%s,请求操作短连接获取成功,完整地址URL:%s,映射URL:%s"), lpszClientAddr, st_ShortLink.tszFullUrl, st_ShortLink.tszMapUrl);
 	}
-	else
+	else if (2 == nType)
 	{
 		if (!ModuleDatabase_ShortLink_Delete(&st_ShortLink))
 		{
@@ -109,10 +125,21 @@ bool HTTPTask_TaskPost_ShortLink(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer, 
 			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("HTTP客户端:%s,请求删除短连接错误,完整地址:%s,映射地址:%s,错误码:%lX"), lpszClientAddr, st_ShortLink.tszFullUrl, st_ShortLink.tszMapUrl, ModuleDB_GetLastError());
 			return false;
 		}
+		ModuleProtocol_Packet_ShortLink(tszRVBuffer, &nRVLen, &st_ShortLink);
+		HttpProtocol_Server_SendMsgEx(xhHTTPPacket, tszSDBuffer, &nSDLen, &st_HDRParam, tszRVBuffer, nRVLen);
+		XEngine_Network_Send(lpszClientAddr, tszSDBuffer, nSDLen);
+		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("HTTP客户端:%s,请求操作短连接删除成功,完整地址URL:%s,映射URL:%s"), lpszClientAddr, st_ShortLink.tszFullUrl, st_ShortLink.tszMapUrl);
 	}
-	ModuleProtocol_Packet_ShortLink(tszRVBuffer, &nRVLen, &st_ShortLink);
-	HttpProtocol_Server_SendMsgEx(xhHTTPPacket, tszSDBuffer, &nSDLen, &st_HDRParam, tszRVBuffer, nRVLen);
-	XEngine_Network_Send(lpszClientAddr, tszSDBuffer, nSDLen);
-	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("HTTP客户端:%s,请求操作短连接成功,操作类型:%d,完整地址URL:%s,映射URL:%s"), lpszClientAddr, nType, st_ShortLink.tszFullUrl, st_ShortLink.tszMapUrl);
+	else
+	{
+		int nListCount = 0;
+		XENGINE_SHORTLINK** ppSt_SLinkInfo;
+		ModuleDatabase_ShortLink_List(&ppSt_SLinkInfo, &nListCount);
+		ModuleProtocol_Packet_ShortLinkList(tszRVBuffer, &nRVLen, &ppSt_SLinkInfo, nListCount);
+		HttpProtocol_Server_SendMsgEx(xhHTTPPacket, tszSDBuffer, &nSDLen, &st_HDRParam, tszRVBuffer, nRVLen);
+		XEngine_Network_Send(lpszClientAddr, tszSDBuffer, nSDLen);
+		BaseLib_OperatorMemory_Free((XPPPMEM)&ppSt_SLinkInfo, nListCount);
+		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("HTTP客户端:%s,请求操作短连接查询成功,查询个数:%d"), lpszClientAddr, nListCount);
+	}
 	return true;
 }

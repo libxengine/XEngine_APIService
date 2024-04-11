@@ -516,6 +516,35 @@ extern "C" bool ModuleProtocol_Packet_Weather(XCHAR* ptszMsgBuffer, int* pInt_Ms
 *********************************************************************/
 extern "C" bool ModuleProtocol_Packet_ShortLink(XCHAR* ptszMsgBuffer, int* pInt_MsgLen, XENGINE_SHORTLINK* pSt_ShortLink);
 /********************************************************************
+函数名称：ModuleProtocol_Packet_ShortLinkList
+函数功能：短链接列表打包函数
+ 参数.一：ptszMsgBuffer
+  In/Out：Out
+  类型：字符指针
+  可空：N
+  意思：输出打包的数据信息
+ 参数.二：pInt_MsgLen
+  In/Out：Out
+  类型：整数型指针
+  可空：N
+  意思：输出打包大小
+ 参数.三：pppSt_MachineList
+  In/Out：In
+  类型：三级指针
+  可空：N
+  意思：输入要打包的数据
+ 参数.四：nListCount
+  In/Out：In
+  类型：整数型
+  可空：N
+  意思：输入打包数据个数
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+extern "C" bool ModuleProtocol_Packet_ShortLinkList(XCHAR* ptszMsgBuffer, int* pInt_MsgLen, XENGINE_SHORTLINK*** pppSt_ShortLink, int nListCount);
+/********************************************************************
 函数名称：ModuleProtocol_Packet_WordFilter
 函数功能：敏感词生成协议打包函数
  参数.一：ptszMsgBuffer
@@ -539,6 +568,35 @@ extern "C" bool ModuleProtocol_Packet_ShortLink(XCHAR* ptszMsgBuffer, int* pInt_
 备注：
 *********************************************************************/
 extern "C" bool ModuleProtocol_Packet_WordFilter(XCHAR* ptszMsgBuffer, int* pInt_MsgLen, XENGINE_WORDFILTER* pSt_WordFilter);
+/********************************************************************
+函数名称：ModuleProtocol_Packet_WordFilterList
+函数功能：敏感词列表打包函数
+ 参数.一：ptszMsgBuffer
+  In/Out：Out
+  类型：字符指针
+  可空：N
+  意思：输出打包的数据信息
+ 参数.二：pInt_MsgLen
+  In/Out：Out
+  类型：整数型指针
+  可空：N
+  意思：输出打包大小
+ 参数.三：pppSt_MachineList
+  In/Out：In
+  类型：三级指针
+  可空：N
+  意思：输入要打包的数据
+ 参数.四：nListCount
+  In/Out：In
+  类型：整数型
+  可空：N
+  意思：输入打包数据个数
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+extern "C" bool ModuleProtocol_Packet_WordFilterList(XCHAR* ptszMsgBuffer, int* pInt_MsgLen, XENGINE_WORDFILTER*** pppSt_WordFilter, int nListCount);
 /********************************************************************
 函数名称：ModuleProtocol_Packet_ImageAttr
 函数功能：图片属性打包
@@ -674,6 +732,35 @@ extern "C" bool ModuleProtocol_Packet_HardWare(XCHAR* ptszHWInfo, int* pInt_Len)
 备注：
 *********************************************************************/
 extern "C" bool ModuleProtocol_Packet_SoftWare(XCHAR* ptszSWInfo, int* pInt_Len);
+/********************************************************************
+函数名称：ModuleProtocol_Packet_Machine
+函数功能：机器信息列表打包函数
+ 参数.一：ptszMsgBuffer
+  In/Out：Out
+  类型：字符指针
+  可空：N
+  意思：输出打包的数据信息
+ 参数.二：pInt_MsgLen
+  In/Out：Out
+  类型：整数型指针
+  可空：N
+  意思：输出打包大小
+ 参数.三：pppSt_MachineList
+  In/Out：In
+  类型：三级指针
+  可空：N
+  意思：输入要打包的数据
+ 参数.四：nListCount
+  In/Out：In
+  类型：整数型
+  可空：N
+  意思：输入打包数据个数
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+extern "C" bool ModuleProtocol_Packet_Machine(XCHAR* ptszMSGBuffer, int* pInt_MSGLen, XENGINE_MACHINEINFO*** pppSt_MachineList, int nListCount);
 /************************************************************************/
 /*                         导出的协议解析函数                           */
 /************************************************************************/
@@ -1038,3 +1125,27 @@ extern "C" bool ModuleProtocol_Parse_Deamon(LPCXSTR lpszMsgBuffer, int nMsgLen, 
 备注：
 *********************************************************************/
 extern "C" bool ModuleProtocol_Parse_Weather(LPCXSTR lpszMsgBuffer, int nMsgLen, XENGINE_WEATHERINFO* pSt_WeatherInfo);
+/********************************************************************
+函数名称：ModuleProtocol_Parse_Machine
+函数功能：解析机器信息收集协议
+ 参数.一：lpszMsgBuffer
+  In/Out：In
+  类型：常量字符指针
+  可空：N
+  意思：输入要解析的缓冲区
+ 参数.二：nMsgLen
+  In/Out：In
+  类型：整数型
+  可空：N
+  意思：输入缓冲区大小
+ 参数.三：pSt_MachineInfo
+  In/Out：Out
+  类型：数据结构指针
+  可空：N
+  意思：输出解析后的信息
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+extern "C" bool ModuleProtocol_Parse_Machine(LPCXSTR lpszMsgBuffer, int nMsgLen, XENGINE_MACHINEINFO* pSt_MachineInfo);

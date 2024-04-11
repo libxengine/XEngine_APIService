@@ -48,6 +48,7 @@ typedef struct
 		XCHAR tszSQLPass[128];                //数据库密码
 		XCHAR tszDBName[128];                 //数据库表明
 		int nSQLPort;                         //端口
+		bool bEnable;                         //数据库支持开关
 	}st_XSql;
 	struct  
 	{

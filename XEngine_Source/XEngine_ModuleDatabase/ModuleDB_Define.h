@@ -361,6 +361,25 @@ extern "C" bool ModuleDatabase_ShortLink_Query(XENGINE_SHORTLINK* pSt_SLinkInfo)
 备注：
 *********************************************************************/
 extern "C" bool ModuleDatabase_ShortLink_Delete(XENGINE_SHORTLINK* pSt_SLinkInfo);
+/********************************************************************
+函数名称：ModuleDatabase_ShortLink_List
+函数功能：列举短连接信息列表
+ 参数.一：pppSt_MachineInfo
+  In/Out：Out
+  类型：三级指针
+  可空：N
+  意思：输出短连接列表
+ 参数.二：pInt_ListCount
+  In/Out：Out
+  类型：整数型指针
+  可空：N
+  意思：输出列表个数
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+extern "C" bool ModuleDatabase_ShortLink_List(XENGINE_SHORTLINK*** pppSt_SLinkInfo, int* pInt_ListCount);
 /************************************************************************/
 /*                         导出的敏感词过滤数据库函数                   */
 /************************************************************************/
@@ -429,3 +448,123 @@ extern "C" bool ModuleDatabase_WordFilter_Insert(XENGINE_WORDFILTER* pSt_WordFil
 备注：
 *********************************************************************/
 extern "C" bool ModuleDatabase_WordFilter_Delete(XENGINE_WORDFILTER* pSt_WordFilter);
+/********************************************************************
+函数名称：ModuleDatabase_WordFilter_List
+函数功能：列举敏感词信息列表
+ 参数.一：pppSt_MachineInfo
+  In/Out：Out
+  类型：三级指针
+  可空：N
+  意思：输出敏感词列表
+ 参数.二：pInt_ListCount
+  In/Out：Out
+  类型：整数型指针
+  可空：N
+  意思：输出列表个数
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+extern "C" bool ModuleDatabase_WordFilter_List(XENGINE_WORDFILTER*** pppSt_WordFilter, int* pInt_ListCount);
+/************************************************************************/
+/*                         导出的机器信息收集数据库函数                 */
+/************************************************************************/
+/********************************************************************
+函数名称：ModuleDatabase_Machine_Init
+函数功能：初始化数据库
+ 参数.一：pSt_DBConnector
+  In/Out：In
+  类型：数据结构指针
+  可空：N
+  意思：数据数据库信息
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+extern "C" bool ModuleDatabase_Machine_Init(DATABASE_MYSQL_CONNECTINFO * pSt_DBConnector);
+/********************************************************************
+函数名称：ModuleDatabase_Machine_Destory
+函数功能：销毁
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+extern "C" bool ModuleDatabase_Machine_Destory();
+/********************************************************************
+函数名称：ModuleDatabase_Machine_Insert
+函数功能：插入一条信息到数据库中
+ 参数.一：pSt_SLinkInfo
+  In/Out：In
+  类型：数据结构指针
+  可空：N
+  意思：输入要插入的信息
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+extern "C" bool ModuleDatabase_Machine_Insert(XENGINE_MACHINEINFO * pSt_MachineInfo);
+/********************************************************************
+函数名称：ModuleDatabase_Machine_Query
+函数功能：查询数据
+ 参数.一：pSt_SLinkInfo
+  In/Out：In/Out
+  类型：数据结构指针
+  可空：N
+  意思：输入查询的信息,输出完整的信息
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+extern "C" bool ModuleDatabase_Machine_Query(XENGINE_MACHINEINFO * pSt_MachineInfo);
+/********************************************************************
+函数名称：ModuleDatabase_Machine_Delete
+函数功能：删除数据
+ 参数.一：pSt_SLinkInfo
+  In/Out：In
+  类型：数据结构指针
+  可空：N
+  意思：输入要删除的数据
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+extern "C" bool ModuleDatabase_Machine_Delete(XENGINE_MACHINEINFO * pSt_MachineInfo);
+/********************************************************************
+函数名称：ModuleDatabase_Machine_UPDate
+函数功能：更新数据
+ 参数.一：pSt_SLinkInfo
+  In/Out：In
+  类型：数据结构指针
+  可空：N
+  意思：输入要更新的数据
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+extern "C" bool ModuleDatabase_Machine_UPDate(XENGINE_MACHINEINFO* pSt_MachineInfo);
+/********************************************************************
+函数名称：ModuleDatabase_Machine_List
+函数功能：列举收集的机器信息
+ 参数.一：pppSt_MachineInfo
+  In/Out：Out
+  类型：三级指针
+  可空：N
+  意思：输出机器信息列表
+ 参数.二：pInt_ListCount
+  In/Out：Out
+  类型：整数型指针
+  可空：N
+  意思：输出列表个数
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+extern "C" bool ModuleDatabase_Machine_List(XENGINE_MACHINEINFO*** pppSt_MachineInfo, int* pInt_ListCount);

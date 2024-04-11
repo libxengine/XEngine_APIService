@@ -50,6 +50,9 @@ Support privatization deployment, free, safe, open source, controllable
 29. Image Process
 30. process deamon
 31. Region ID Convert
+32. Machine Information Collect
+33. heartbeat 
+
 ## install
 
 #### XEngine Evn

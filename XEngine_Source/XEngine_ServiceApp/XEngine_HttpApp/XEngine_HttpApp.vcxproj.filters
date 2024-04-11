@@ -96,6 +96,9 @@
     <ClCompile Include="XEngine_TaskGet\TaskGet_IDRegion.cpp">
       <Filter>源文件\XEngine_TaskGet</Filter>
     </ClCompile>
+    <ClCompile Include="XEngine_TaskPost\TaskPost_Machine.cpp">
+      <Filter>源文件\XEngine_TaskPost</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="XEngine_Configure.h">
@@ -166,6 +169,9 @@
     </ClInclude>
     <ClInclude Include="XEngine_TaskGet\TaskGet_IDRegion.h">
       <Filter>头文件\XEngine_TaskGet</Filter>
+    </ClInclude>
+    <ClInclude Include="XEngine_TaskPost\TaskPost_Machine.h">
+      <Filter>头文件\XEngine_TaskPost</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

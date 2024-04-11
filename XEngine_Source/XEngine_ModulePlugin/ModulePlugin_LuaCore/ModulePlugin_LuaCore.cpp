@@ -168,14 +168,16 @@ bool CModulePlugin_LuaCore::ModulePlugin_LuaCore_Exec(XNETHANDLE xhModule, XCHAR
     *pInt_HTTPCode = (int)lua_tonumber(stl_MapIterator->second.pSt_LuaState, -1);
     lua_pop(stl_MapIterator->second.pSt_LuaState, -1);
 
-	lua_getglobal(stl_MapIterator->second.pSt_LuaState, "PtszMsgBuffer");
-	_tcsxcpy(ptszMsgBuffer, lua_tostring(stl_MapIterator->second.pSt_LuaState, -1));
-	lua_pop(stl_MapIterator->second.pSt_LuaState, -1);
-
 	lua_getglobal(stl_MapIterator->second.pSt_LuaState, "PInt_MsgLen");
 	*pInt_MsgLen = (int)lua_tonumber(stl_MapIterator->second.pSt_LuaState, -1);
 	lua_pop(stl_MapIterator->second.pSt_LuaState, -1);
 
+    if (*pInt_MsgLen > 0)
+    {
+		lua_getglobal(stl_MapIterator->second.pSt_LuaState, "PtszMsgBuffer");
+		_tcsxcpy(ptszMsgBuffer, lua_tostring(stl_MapIterator->second.pSt_LuaState, -1));
+		lua_pop(stl_MapIterator->second.pSt_LuaState, -1);
+    }
 	st_csStl.unlock_shared();
 #endif
     return true;

@@ -5,6 +5,7 @@
 #include "ModuleDatabase_XLog/ModuleDatabase_XLog.h"
 #include "ModuleDatabase_ShortLink/ModuleDatabase_ShortLink.h"
 #include "ModuleDatabase_WordFilter/ModuleDatabase_WordFilter.h"
+#include "ModuleDatabase_Machine/ModuleDatabase_Machine.h"
 /********************************************************************
 //    Created:     2022/02/28  13:26:15
 //    File Name:   D:\XEngine_IPInfo\XEngine_Source\XEngine_ModuleDatabase\pch.cpp
@@ -25,6 +26,7 @@ CModuleDatabase_ZIPCode m_ZIPCode;
 CModuleDatabase_XLog m_XLog;
 CModuleDatabase_ShortLink m_ShortLink;
 CModuleDatabase_WordFilter m_WordFilter;
+CModuleDatabase_Machine m_MachineInfo;
 //////////////////////////////////////////////////////////////////////////
 ///                        导出的函数
 //////////////////////////////////////////////////////////////////////////
@@ -143,6 +145,10 @@ extern "C" bool ModuleDatabase_ShortLink_Delete(XENGINE_SHORTLINK * pSt_SLinkInf
 {
 	return m_ShortLink.ModuleDatabase_ShortLink_Delete(pSt_SLinkInfo);
 }
+extern "C" bool ModuleDatabase_ShortLink_List(XENGINE_SHORTLINK * **pppSt_SLinkInfo, int* pInt_ListCount)
+{
+	return m_ShortLink.ModuleDatabase_ShortLink_List(pppSt_SLinkInfo, pInt_ListCount);
+}
 /************************************************************************/
 /*                         导出的敏感词过滤数据库函数                   */
 /************************************************************************/
@@ -165,4 +171,39 @@ extern "C" bool ModuleDatabase_WordFilter_Insert(XENGINE_WORDFILTER * pSt_WordFi
 extern "C" bool ModuleDatabase_WordFilter_Delete(XENGINE_WORDFILTER * pSt_WordFilter)
 {
 	return m_WordFilter.ModuleDatabase_WordFilter_Delete(pSt_WordFilter);
+}
+extern "C" bool ModuleDatabase_WordFilter_List(XENGINE_WORDFILTER * **pppSt_WordFilter, int* pInt_ListCount)
+{
+	return m_WordFilter.ModuleDatabase_WordFilter_List(pppSt_WordFilter, pInt_ListCount);
+}
+/************************************************************************/
+/*                         导出的机器信息收集数据库函数                 */
+/************************************************************************/
+extern "C" bool ModuleDatabase_Machine_Init(DATABASE_MYSQL_CONNECTINFO * pSt_DBConnector)
+{
+	return m_MachineInfo.ModuleDatabase_Machine_Init(pSt_DBConnector);
+}
+extern "C" bool ModuleDatabase_Machine_Destory()
+{
+	return m_MachineInfo.ModuleDatabase_Machine_Destory();
+}
+extern "C" bool ModuleDatabase_Machine_Insert(XENGINE_MACHINEINFO * pSt_MachineInfo)
+{
+	return m_MachineInfo.ModuleDatabase_Machine_Insert(pSt_MachineInfo);
+}
+extern "C" bool ModuleDatabase_Machine_Query(XENGINE_MACHINEINFO * pSt_MachineInfo)
+{
+	return m_MachineInfo.ModuleDatabase_Machine_Query(pSt_MachineInfo);
+}
+extern "C" bool ModuleDatabase_Machine_Delete(XENGINE_MACHINEINFO * pSt_MachineInfo)
+{
+	return m_MachineInfo.ModuleDatabase_Machine_Delete(pSt_MachineInfo);
+}
+extern "C" bool ModuleDatabase_Machine_UPDate(XENGINE_MACHINEINFO * pSt_MachineInfo)
+{
+	return m_MachineInfo.ModuleDatabase_Machine_UPDate(pSt_MachineInfo);
+}
+extern "C" bool ModuleDatabase_Machine_List(XENGINE_MACHINEINFO * **pppSt_MachineInfo, int* pInt_ListCount)
+{
+	return m_MachineInfo.ModuleDatabase_Machine_List(pppSt_MachineInfo, pInt_ListCount);
 }

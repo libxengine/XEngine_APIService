@@ -229,6 +229,17 @@ typedef struct
 	int nLength;
 	int nID;
 }XENGINE_SHORTLINK;
+//机器收集
+typedef struct
+{
+	XCHAR tszMachineText[2048];
+	XCHAR tszMachineName[MAX_PATH];
+	XCHAR tszMachineCode[MAX_PATH];
+	XCHAR tszMachineSystem[MAX_PATH];
+	XCHAR tszCreateTime[64];
+	__int64x nTimeNumber;
+	int nID;
+}XENGINE_MACHINEINFO;
 //敏感词过滤器
 typedef struct
 {

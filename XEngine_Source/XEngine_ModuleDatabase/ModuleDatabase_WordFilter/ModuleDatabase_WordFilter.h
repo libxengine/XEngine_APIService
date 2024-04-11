@@ -23,6 +23,7 @@ public:
 	bool ModuleDatabase_WordFilter_Query(XENGINE_WORDFILTER* pSt_WordFilter);
 	bool ModuleDatabase_WordFilter_Insert(XENGINE_WORDFILTER* pSt_WordFilter);
 	bool ModuleDatabase_WordFilter_Delete(XENGINE_WORDFILTER* pSt_WordFilter);
+	bool ModuleDatabase_WordFilter_List(XENGINE_WORDFILTER*** pppSt_WordFilter, int* pInt_ListCount);
 protected:
 private:
 	XNETHANDLE xhDBSQL;

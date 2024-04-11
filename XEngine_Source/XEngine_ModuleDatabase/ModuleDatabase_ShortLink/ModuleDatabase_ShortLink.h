@@ -23,6 +23,7 @@ public:
 	bool ModuleDatabase_ShortLink_Insert(XENGINE_SHORTLINK* pSt_SLinkInfo);
 	bool ModuleDatabase_ShortLink_Query(XENGINE_SHORTLINK* pSt_SLinkInfo);
 	bool ModuleDatabase_ShortLink_Delete(XENGINE_SHORTLINK* pSt_SLinkInfo);
+	bool ModuleDatabase_ShortLink_List(XENGINE_SHORTLINK*** pppSt_SLinkInfo, int* pInt_ListCount);
 protected:
 private:
 	XNETHANDLE xhDBSQL;

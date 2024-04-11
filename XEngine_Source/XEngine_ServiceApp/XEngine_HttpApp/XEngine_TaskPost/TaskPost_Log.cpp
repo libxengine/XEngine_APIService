@@ -18,6 +18,14 @@ bool HTTPTask_TastPost_LogInfo(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer, in
 	st_HDRParam.bIsClose = true; //收到回复后就关闭
 	ModuleProtocol_Parse_XLog(lpszMsgBuffer, nMsgLen, &st_XLogInfo);
 
+	if (!st_ServiceConfig.st_XSql.bEnable)
+	{
+		ModuleProtocol_Packet_Common(tszRVBuffer, &nRVLen, 501, _X("function is closed"));
+		HttpProtocol_Server_SendMsgEx(xhHTTPPacket, tszSDBuffer, &nSDLen, &st_HDRParam, tszRVBuffer, nRVLen);
+		XEngine_Network_Send(lpszClientAddr, tszSDBuffer, nSDLen);
+		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("HTTP客户端:%s,请求的日志操作功能已经被服务器关闭,无法继续"), lpszClientAddr);
+		return false;
+	}
 	if (0 == nType)
 	{
 		ModuleDatabase_XLog_Create(st_XLogInfo.tszTableName);
