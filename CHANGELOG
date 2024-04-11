@@ -1,3 +1,21 @@
+XEngine_APIService V3.4.0.1001
+
+增加:lua脚本心跳协议支持
+增加:短连接和敏感词查询列表支持
+增加:机器信息收集协议
+修改:允许lua返回的消息大小为0了
+修改:数据库支持部启用了
+修改:条件编译现在不需要添加额外的命令用于支持linux和macos了
+修复:当使用中文字符串插入和其他操作敏感词,日志,邮编数据库的时候不正确的问题
+
+added:lua file heartbeat supported
+added:query list support for short link
+added:machine information collection protocol support
+modify:allow lua to return msg is zero size
+modify:database support not enable
+modify:The conditional compilation switch does not require additional compilation commands on linux or macos
+fixed:when use chinese charset insert or other operator is incorrect for word filter
+======================================================================================
 XEngine_APIService V3.3.0.1001
 
 增加:行政区域ID转换支持
