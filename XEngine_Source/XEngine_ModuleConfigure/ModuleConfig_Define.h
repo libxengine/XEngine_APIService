@@ -20,6 +20,7 @@ typedef struct
 	bool bAutoStart;                          //是否自动启动
 	bool bHideWnd;                            //是否隐藏窗口启动
 	int nHttpPort;                            //HTTP服务端口
+	int nRFCPort;                             //RFC标准服务端口
 	struct
 	{
 		int nMaxClient;                       //最大客户端个数

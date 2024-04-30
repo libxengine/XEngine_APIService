@@ -177,6 +177,7 @@
     <ClCompile Include="XEngine_TaskPost\TaskPost_ShortLink.cpp" />
     <ClCompile Include="XEngine_TaskPost\TaskPost_SocketTest.cpp" />
     <ClCompile Include="XEngine_TaskPost\TaskPost_WordFilter.cpp" />
+    <ClCompile Include="XEngine_TaskRfc\RFCTask_Stun.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="XEngine_Configure.h" />
@@ -203,6 +204,7 @@
     <ClInclude Include="XEngine_TaskPost\TaskPost_QRCode.h" />
     <ClInclude Include="XEngine_TaskPost\TaskPost_SocketTest.h" />
     <ClInclude Include="XEngine_TaskPost\TaskPost_WordFilter.h" />
+    <ClInclude Include="XEngine_TaskRfc\RFCTask_Stun.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

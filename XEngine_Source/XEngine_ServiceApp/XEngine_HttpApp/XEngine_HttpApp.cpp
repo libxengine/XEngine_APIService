@@ -14,6 +14,7 @@ bool bIsRun = false;
 XHANDLE xhLog = NULL;
 //HTTP服务器
 XHANDLE xhHTTPSocket = NULL;
+XHANDLE xhRFCSocket = NULL;
 XHANDLE xhHTTPHeart = NULL;
 XHANDLE xhHTTPPacket = NULL;
 XHANDLE xhHTTPPool = 0;
@@ -34,6 +35,7 @@ void ServiceApp_Stop(int signo)
 		bIsRun = false;
 		//销毁HTTP资源
 		NetCore_TCPXCore_DestroyEx(xhHTTPSocket);
+		NetCore_UDPXCore_DestroyEx(xhRFCSocket);
 		SocketOpt_HeartBeat_DestoryEx(xhHTTPHeart);
 		HttpProtocol_Server_DestroyEx(xhHTTPPacket);
 		ManagePool_Thread_NQDestroy(xhHTTPPool);
@@ -314,7 +316,25 @@ int main(int argc, char** argv)
 	}
 	else
 	{
-		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_WARN, _X("启动服务中,HTTP消息服务没有被启用"));
+		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_WARN, _X("启动服务中,HTTP服务没有被启用"));
+	}
+	//启动RFC标准服务
+	if (st_ServiceConfig.nRFCPort > 0)
+	{
+		//网络
+		xhRFCSocket = NetCore_UDPXCore_StartEx(st_ServiceConfig.nRFCPort, st_ServiceConfig.st_XMax.nIOThread);
+		if (NULL == xhRFCSocket)
+		{
+			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("启动服务中,启动RFC网络服务器失败,错误：%lX"), NetCore_GetLastError());
+			goto XENGINE_SERVICEAPP_EXIT;
+		}
+		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("启动服务中,启动RFC网络服务器成功,RFC端口:%d,IO:%d"), st_ServiceConfig.nRFCPort, st_ServiceConfig.st_XMax.nIOThread);
+		NetCore_UDPXCore_RegisterCallBackEx(xhHTTPSocket, Network_Callback_RFCRecv);
+		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("启动服务中,注册RFC网络事件成功"));
+	}
+	else
+	{
+		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_WARN, _X("启动服务中,RFC服务没有被启用"));
 	}
 	//初始化P2P
 	if (!ModuleHelp_P2PClient_Init(st_ServiceConfig.st_XTime.nP2PTimeOut, HTTPTask_TastPost_P2PCallback))
@@ -420,6 +440,7 @@ XENGINE_SERVICEAPP_EXIT:
 		bIsRun = false;
 		//销毁HTTP资源
 		NetCore_TCPXCore_DestroyEx(xhHTTPSocket);
+		NetCore_UDPXCore_DestroyEx(xhRFCSocket);
 		SocketOpt_HeartBeat_DestoryEx(xhHTTPHeart);
 		HttpProtocol_Server_DestroyEx(xhHTTPPacket);
 		ManagePool_Thread_NQDestroy(xhHTTPPool);

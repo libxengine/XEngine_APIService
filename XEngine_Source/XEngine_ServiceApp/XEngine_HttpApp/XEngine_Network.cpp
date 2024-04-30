@@ -36,6 +36,15 @@ void CALLBACK Network_Callback_HTTPHeart(LPCXSTR lpszClientAddr, XSOCKET hSocket
 {
 	XEngine_Network_Close(lpszClientAddr, true);
 }
+//////////////////////////////////////////////////////////////////////////RFC相关
+void CALLBACK Network_Callback_RFCRecv(LPCXSTR lpszClientAddr, XSOCKET hSocket, LPCXSTR lpszMSGBuffer, int nMSGLen, XPVOID lParam)
+{
+	if (nMSGLen >= 20 && (lpszMSGBuffer[0] & 0xC0) == 0x00 && lpszMSGBuffer[4] == 0x21 && lpszMSGBuffer[5] == 0x12 && lpszMSGBuffer[6] == 0xA4 && lpszMSGBuffer[7] == 0x42)
+	{
+		//STUN消息的类型字段（前两位为00）以及魔术cookie字段
+		RFCTask_Stun_Parse(lpszClientAddr, lpszMSGBuffer, nMSGLen);
+	}
+}
 //////////////////////////////////////////////////////////////////////////网络IO关闭操作
 void XEngine_Network_Close(LPCXSTR lpszClientAddr, bool bHeart)
 {
