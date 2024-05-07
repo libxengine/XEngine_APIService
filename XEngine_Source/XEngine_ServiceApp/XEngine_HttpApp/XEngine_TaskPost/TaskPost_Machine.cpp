@@ -75,6 +75,8 @@ bool HTTPTask_TastPost_Machine(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer, in
 		int nListCount = 1;
 		XENGINE_MACHINEINFO** ppSt_MachineInfo;
 		BaseLib_OperatorMemory_Malloc((XPPPMEM)&ppSt_MachineInfo, nListCount, sizeof(XENGINE_MACHINEINFO));
+		(*ppSt_MachineInfo)[0] = st_MachineInfo;
+
 		ModuleProtocol_Packet_Machine(tszRVBuffer, &nRVLen, &ppSt_MachineInfo, nListCount);
 		HttpProtocol_Server_SendMsgEx(xhHTTPPacket, tszSDBuffer, &nSDLen, &st_HDRParam, tszRVBuffer, nRVLen);
 		XEngine_Network_Send(lpszClientAddr, tszSDBuffer, nSDLen);

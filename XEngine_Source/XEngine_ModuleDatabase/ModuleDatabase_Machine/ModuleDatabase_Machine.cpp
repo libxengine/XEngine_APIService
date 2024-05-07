@@ -172,27 +172,31 @@ bool CModuleDatabase_Machine::ModuleDatabase_Machine_Query(XENGINE_MACHINEINFO* 
 		}
 		if (NULL != pptszResult[1])
 		{
-			_tcsxcpy(pSt_MachineInfo->tszMachineName, pptszResult[1]);
+			_tcsxcpy(pSt_MachineInfo->tszServiceName, pptszResult[1]);
 		}
 		if (NULL != pptszResult[2])
 		{
-			_tcsxcpy(pSt_MachineInfo->tszMachineCode, pptszResult[2]);
+			_tcsxcpy(pSt_MachineInfo->tszMachineName, pptszResult[2]);
 		}
 		if (NULL != pptszResult[3])
 		{
-			_tcsxcpy(pSt_MachineInfo->tszMachineSystem, pptszResult[3]);
+			_tcsxcpy(pSt_MachineInfo->tszMachineCode, pptszResult[3]);
 		}
 		if (NULL != pptszResult[4])
 		{
-			_tcsxcpy(pSt_MachineInfo->tszMachineText, pptszResult[4]);
+			_tcsxcpy(pSt_MachineInfo->tszMachineSystem, pptszResult[4]);
 		}
 		if (NULL != pptszResult[5])
 		{
-			pSt_MachineInfo->nTimeNumber = _ttxoll(pptszResult[5]);
+			_tcsxcpy(pSt_MachineInfo->tszMachineText, pptszResult[5]);
 		}
 		if (NULL != pptszResult[6])
 		{
-			_tcsxcpy(pSt_MachineInfo->tszCreateTime, pptszResult[6]);
+			pSt_MachineInfo->nTimeNumber = _ttxoll(pptszResult[6]);
+		}
+		if (NULL != pptszResult[7])
+		{
+			_tcsxcpy(pSt_MachineInfo->tszCreateTime, pptszResult[7]);
 		}
 	}
 	DataBase_MySQL_FreeResult(xhDBSQL, xhTable);
