@@ -329,7 +329,7 @@ int main(int argc, char** argv)
 			goto XENGINE_SERVICEAPP_EXIT;
 		}
 		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("启动服务中,启动RFC网络服务器成功,RFC端口:%d,IO:%d"), st_ServiceConfig.nRFCPort, st_ServiceConfig.st_XMax.nIOThread);
-		NetCore_UDPXCore_RegisterCallBackEx(xhHTTPSocket, Network_Callback_RFCRecv);
+		NetCore_UDPXCore_RegisterCallBackEx(xhRFCSocket, Network_Callback_RFCRecv);
 		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("启动服务中,注册RFC网络事件成功"));
 	}
 	else
