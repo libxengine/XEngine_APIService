@@ -62,6 +62,25 @@ bool HTTPTask_TastPost_Machine(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer, in
 		XEngine_Network_Send(lpszClientAddr, tszSDBuffer, nSDLen);
 		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("HTTP客户端:%s,请求删除一条信息收集数据成功,机器名:%s,机器编码:%s"), lpszClientAddr, st_MachineInfo.tszMachineName, st_MachineInfo.tszMachineCode);
 	}
+	else if (2 == nType)
+	{
+		if (!ModuleDatabase_Machine_Query(&st_MachineInfo))
+		{
+			ModuleProtocol_Packet_Common(tszRVBuffer, &nRVLen, 400, _X("query is failed"));
+			HttpProtocol_Server_SendMsgEx(xhHTTPPacket, tszSDBuffer, &nSDLen, &st_HDRParam, tszRVBuffer, nRVLen);
+			XEngine_Network_Send(lpszClientAddr, tszSDBuffer, nSDLen);
+			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("HTTP客户端:%s,请求的信息收集操作插入失败,错误:%lX"), lpszClientAddr, ModuleDB_GetLastError());
+			return false;
+		}
+		int nListCount = 1;
+		XENGINE_MACHINEINFO** ppSt_MachineInfo;
+		BaseLib_OperatorMemory_Malloc((XPPPMEM)&ppSt_MachineInfo, nListCount, sizeof(XENGINE_MACHINEINFO));
+		ModuleProtocol_Packet_Machine(tszRVBuffer, &nRVLen, &ppSt_MachineInfo, nListCount);
+		HttpProtocol_Server_SendMsgEx(xhHTTPPacket, tszSDBuffer, &nSDLen, &st_HDRParam, tszRVBuffer, nRVLen);
+		XEngine_Network_Send(lpszClientAddr, tszSDBuffer, nSDLen);
+		BaseLib_OperatorMemory_Free((XPPPMEM)&ppSt_MachineInfo, nListCount);
+		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("HTTP客户端:%s,请求获取机器信息成功,服务名称:%s,机器编号:%s"), lpszClientAddr, st_MachineInfo.tszServiceName, st_MachineInfo.tszMachineCode);
+	}
 	else
 	{
 		int nListCount = 0;

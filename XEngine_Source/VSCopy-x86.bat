@@ -14,6 +14,7 @@ copy /y "%XEngine_Lib32%\XEngine_SystemSdk\XEngine_SystemApi.dll" "./"
 copy /y "%XEngine_Lib32%\XEngine_HelpComponents\HelpComponents_DataBase.dll" "./"
 copy /y "%XEngine_Lib32%\XEngine_HelpComponents\HelpComponents_XLog.dll" "./"
 copy /y "%XEngine_Lib32%\XEngine_RfcComponents\RfcComponents_HttpProtocol.dll" "./"
+copy /y "%XEngine_Lib32%\XEngine_RfcComponents\RfcComponents_NatProtocol.dll" "./"
 
 copy /y "%XEngine_Lib32%\XEngine_AVCodec\XEngine_AVHelp.dll" "./"
 copy /y "%XEngine_Lib32%\XEngine_AVCodec\XEngine_VideoCodec.dll" "./"

@@ -14,6 +14,7 @@ copy /y "D:\XEngine\XEngine_SourceCode\Debug\XEngine_SystemApi.dll" "./"
 copy /y "D:\XEngine\XEngine_SourceCode\Debug\HelpComponents_DataBase.dll" "./"
 copy /y "D:\XEngine\XEngine_SourceCode\Debug\HelpComponents_XLog.dll" "./"
 copy /y "D:\XEngine\XEngine_SourceCode\Debug\RfcComponents_HttpProtocol.dll" "./"
+copy /y "D:\XEngine\XEngine_SourceCode\Debug\RfcComponents_NatProtocol.dll" "./"
 
 copy /y "D:\XEngine\XEngine_SourceCode\Debug\XEngine_AVHelp.dll" "./"
 copy /y "D:\XEngine\XEngine_SourceCode\Debug\XEngine_VideoCodec.dll" "./"
