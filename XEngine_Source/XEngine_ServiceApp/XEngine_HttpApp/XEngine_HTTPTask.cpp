@@ -113,6 +113,7 @@ bool HTTPTask_TastPost_Handle(RFCCOMPONENTS_HTTP_REQPARAM* pSt_HTTPParam, LPCXST
 	LPCXSTR lpszParamReload = _X("reload");
 	LPCXSTR lpszParamWeather = _X("weather");
 	LPCXSTR lpszParamRegion = _X("region");
+	LPCXSTR lpszParamOil = _X("oil");
 	//post
 	LPCXSTR lpszParamP2PClient = _X("p2p");
 	LPCXSTR lpszParamZIPCode = _X("zipcode");
@@ -435,6 +436,14 @@ bool HTTPTask_TastPost_Handle(RFCCOMPONENTS_HTTP_REQPARAM* pSt_HTTPParam, LPCXST
 					HTTPTask_TaskGet_IDRegion(lpszClientAddr, nType, tszProvincerStr, tszCityStr, tszCountyStr);
 				}
 			}
+		}
+		else if (0 == _tcsxnicmp(lpszParamOil, tszValue, _tcsxlen(lpszParamOil)))
+		{
+			//油价:http://127.0.0.1:5501/api?function=oil&param=地区
+			memset(tszValue, '\0', sizeof(tszValue));
+
+			BaseLib_OperatorString_GetKeyValue(pptszList[1], "=", tszKey, tszValue);
+			HTTPTask_TaskGet_Oil(lpszClientAddr, tszValue);
 		}
 		else
 		{

@@ -111,6 +111,9 @@
     <ClCompile Include="XEngine_TaskRfc\RFCTask_Ntp.cpp">
       <Filter>源文件\XEngine_TaskRfc</Filter>
     </ClCompile>
+    <ClCompile Include="XEngine_TaskGet\TaskGet_Oil.cpp">
+      <Filter>源文件\XEngine_TaskGet</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="XEngine_Configure.h">
@@ -190,6 +193,9 @@
     </ClInclude>
     <ClInclude Include="XEngine_TaskRfc\RFCTask_Ntp.h">
       <Filter>头文件\XEngine_TaskRfc</Filter>
+    </ClInclude>
+    <ClInclude Include="XEngine_TaskGet\TaskGet_Oil.h">
+      <Filter>头文件\XEngine_TaskGet</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

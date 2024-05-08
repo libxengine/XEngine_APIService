@@ -162,6 +162,7 @@
     <ClCompile Include="XEngine_TaskGet\TaskGet_IDCard.cpp" />
     <ClCompile Include="XEngine_TaskGet\TaskGet_IDRegion.cpp" />
     <ClCompile Include="XEngine_TaskGet\TaskGet_Locker.cpp" />
+    <ClCompile Include="XEngine_TaskGet\TaskGet_Oil.cpp" />
     <ClCompile Include="XEngine_TaskGet\TaskGet_Reload.cpp" />
     <ClCompile Include="XEngine_TaskGet\TaskGet_Translation.cpp" />
     <ClCompile Include="XEngine_TaskGet\TaskGet_Weather.cpp" />
@@ -190,6 +191,7 @@
     <ClInclude Include="XEngine_TaskGet\TaskGet_IDCard.h" />
     <ClInclude Include="XEngine_TaskGet\TaskGet_IDRegion.h" />
     <ClInclude Include="XEngine_TaskGet\TaskGet_Locker.h" />
+    <ClInclude Include="XEngine_TaskGet\TaskGet_Oil.h" />
     <ClInclude Include="XEngine_TaskGet\TaskGet_Reload.h" />
     <ClInclude Include="XEngine_TaskGet\TaskGet_Translation.h" />
     <ClInclude Include="XEngine_TaskGet\TaskGet_Weather.h" />

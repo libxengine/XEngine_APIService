@@ -98,6 +98,7 @@ using namespace std;
 #include "XEngine_TaskGet/TaskGet_Reload.h"
 #include "XEngine_TaskGet/TaskGet_Weather.h"
 #include "XEngine_TaskGet/TaskGet_IDRegion.h"
+#include "XEngine_TaskGet/TaskGet_Oil.h"
 //rfc
 #include "XEngine_TaskRfc/RFCTask_Stun.h"
 #include "XEngine_TaskRfc/RFCTask_Ntp.h"

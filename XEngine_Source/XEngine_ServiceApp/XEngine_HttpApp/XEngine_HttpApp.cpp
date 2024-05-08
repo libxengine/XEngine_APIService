@@ -47,6 +47,7 @@ void ServiceApp_Stop(int signo)
 		ModuleDatabase_ShortLink_Destory();
 		ModuleDatabase_WordFilter_Destory();
 		ModuleDatabase_Machine_Destory();
+		ModuleDatabase_OilInfo_Destory();
 		//销毁其他
 		ModulePlugin_Loader_Destory();
 		ModuleHelp_P2PClient_Destory();
@@ -255,6 +256,12 @@ int main(int argc, char** argv)
 			goto XENGINE_SERVICEAPP_EXIT;
 		}
 		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("启动服务中,初始化信息收集数据库成功"));
+		if (!ModuleDatabase_OilInfo_Init((DATABASE_MYSQL_CONNECTINFO*)&st_ServiceConfig.st_XSql))
+		{
+			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("启动服务中,初始化油价查询数据库失败,错误：%lX"), ModuleDB_GetLastError());
+			goto XENGINE_SERVICEAPP_EXIT;
+		}
+		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("启动服务中,初始化油价查询数据库成功"));
 	}
 	else
 	{
@@ -469,6 +476,7 @@ XENGINE_SERVICEAPP_EXIT:
 		ModuleDatabase_ShortLink_Destory();
 		ModuleDatabase_WordFilter_Destory();
 		ModuleDatabase_Machine_Destory();
+		ModuleDatabase_OilInfo_Destory();
 		//销毁其他
 		ModulePlugin_Loader_Destory();
 		ModuleHelp_P2PClient_Destory();

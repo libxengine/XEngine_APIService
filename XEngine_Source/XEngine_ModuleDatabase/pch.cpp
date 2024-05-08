@@ -6,6 +6,7 @@
 #include "ModuleDatabase_ShortLink/ModuleDatabase_ShortLink.h"
 #include "ModuleDatabase_WordFilter/ModuleDatabase_WordFilter.h"
 #include "ModuleDatabase_Machine/ModuleDatabase_Machine.h"
+#include "ModuleDatabase_OilInfo/ModuleDatabase_OilInfo.h"
 /********************************************************************
 //    Created:     2022/02/28  13:26:15
 //    File Name:   D:\XEngine_IPInfo\XEngine_Source\XEngine_ModuleDatabase\pch.cpp
@@ -27,6 +28,7 @@ CModuleDatabase_XLog m_XLog;
 CModuleDatabase_ShortLink m_ShortLink;
 CModuleDatabase_WordFilter m_WordFilter;
 CModuleDatabase_Machine m_MachineInfo;
+CModuleDatabase_OilInfo m_OilInfo;
 //////////////////////////////////////////////////////////////////////////
 ///                        导出的函数
 //////////////////////////////////////////////////////////////////////////
@@ -206,4 +208,23 @@ extern "C" bool ModuleDatabase_Machine_UPDate(XENGINE_MACHINEINFO * pSt_MachineI
 extern "C" bool ModuleDatabase_Machine_List(XENGINE_MACHINEINFO * **pppSt_MachineInfo, int* pInt_ListCount)
 {
 	return m_MachineInfo.ModuleDatabase_Machine_List(pppSt_MachineInfo, pInt_ListCount);
+}
+/************************************************************************/
+/*                         导出的油价查询数据库函数                     */
+/************************************************************************/
+extern "C" bool ModuleDatabase_OilInfo_Init(DATABASE_MYSQL_CONNECTINFO * pSt_DBConnector)
+{
+	return m_OilInfo.ModuleDatabase_OilInfo_Init(pSt_DBConnector);
+}
+extern "C" bool ModuleDatabase_OilInfo_Destory()
+{
+	return m_OilInfo.ModuleDatabase_OilInfo_Destory();
+}
+extern "C" bool ModuleDatabase_OilInfo_Query(XENGINE_OILINFO * pSt_OilInfo)
+{
+	return m_OilInfo.ModuleDatabase_OilInfo_Query(pSt_OilInfo);
+}
+extern "C" bool ModuleDatabase_OilInfo_UPDate(XENGINE_OILINFO * pSt_OilInfo)
+{
+	return m_OilInfo.ModuleDatabase_OilInfo_UPDate(pSt_OilInfo);
 }

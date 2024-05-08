@@ -46,3 +46,8 @@ EXPORTS
 	ModuleDatabase_Machine_Delete
 	ModuleDatabase_Machine_UPDate
 	ModuleDatabase_Machine_List
+
+	ModuleDatabase_OilInfo_Init
+	ModuleDatabase_OilInfo_Destory
+	ModuleDatabase_OilInfo_Query
+	ModuleDatabase_OilInfo_UPDate
