@@ -427,6 +427,23 @@ int main(int argc, char** argv)
 	//展示能力
 	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("启动服务中,加载的Lib插件:%d 个,Lua插件:%d 个"), st_PluginLibConfig.pStl_ListPlugin->size(), st_PluginLuaConfig.pStl_ListPlugin->size());
 
+	//发送信息报告
+	if (st_ServiceConfig.st_XReport.bEnable)
+	{
+		if (InfoReport_APIMachine_Send(st_ServiceConfig.st_XReport.tszAPIUrl, st_ServiceConfig.st_XReport.tszServiceName))
+		{
+			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("启动服务中，启动信息报告给API服务器:%s 成功"), st_ServiceConfig.st_XReport.tszAPIUrl);
+		}
+		else
+		{
+			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("启动服务中，启动信息报告给API服务器:%s 失败，错误：%lX"), st_ServiceConfig.st_XReport.tszAPIUrl, InfoReport_GetLastError());
+		}
+	}
+	else
+	{
+		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_WARN, _X("启动服务中，信息报告给API服务器没有启用"));
+	}
+
 	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("所有服务成功启动,服务运行中,XEngine版本:%s%s,发行版本次数:%d,当前版本：%s。。。"), BaseLib_OperatorVer_XNumberStr(), BaseLib_OperatorVer_XTypeStr(), st_ServiceConfig.st_XVer.pStl_ListVer->size(), st_ServiceConfig.st_XVer.pStl_ListVer->front().c_str());
 	while (true)
 	{

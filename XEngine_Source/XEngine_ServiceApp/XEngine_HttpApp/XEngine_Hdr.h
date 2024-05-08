@@ -53,6 +53,8 @@ using namespace std;
 #include <XEngine_Include/XEngine_AVCodec/AudioCodec_Error.h>
 #include <XEngine_Include/XEngine_AVCodec/AVHelp_Define.h>
 #include <XEngine_Include/XEngine_AVCodec/AVHelp_Error.h>
+#include "../../XEngine_Depend/XEngine_Module/XEngine_InfoReport/InfoReport_Define.h"
+#include "../../XEngine_Depend/XEngine_Module/XEngine_InfoReport/InfoReport_Error.h"
 //加载项目相关头文件
 #include "../../XEngine_BuildSwitch.h"
 #include "../../XEngine_UserProtocol.h"
@@ -129,6 +131,7 @@ extern XENGINE_DEAMONAPPLIST st_DeamonAppConfig;
 #ifdef _MSC_BUILD
 #ifdef _WIN64
 #ifdef _DEBUG
+#pragma comment(lib,"../../x64/Debug/XEngine_InfoReport.lib")
 #pragma comment(lib,"../../x64/Debug/XEngine_ModuleConfigure.lib")
 #pragma comment(lib,"../../x64/Debug/XEngine_ModuleDatabase.lib")
 #pragma comment(lib,"../../x64/Debug/XEngine_ModuleProtocol.lib")
@@ -136,6 +139,7 @@ extern XENGINE_DEAMONAPPLIST st_DeamonAppConfig;
 #pragma comment(lib,"../../x64/Debug/XEngine_ModuleHelp.lib")
 #pragma comment(lib,"../../x64/Debug/XEngine_ModulePlugin.lib")
 #else
+#pragma comment(lib,"../../x64/Release/XEngine_InfoReport.lib")
 #pragma comment(lib,"../../x64/Release/XEngine_ModuleConfigure.lib")
 #pragma comment(lib,"../../x64/Release/XEngine_ModuleDatabase.lib")
 #pragma comment(lib,"../../x64/Release/XEngine_ModuleProtocol.lib")
@@ -145,6 +149,7 @@ extern XENGINE_DEAMONAPPLIST st_DeamonAppConfig;
 #endif
 #else
 #ifdef _DEBUG
+#pragma comment(lib,"../../Debug/XEngine_InfoReport.lib")
 #pragma comment(lib,"../../Debug/XEngine_ModuleConfigure.lib")
 #pragma comment(lib,"../../Debug/XEngine_ModuleDatabase.lib")
 #pragma comment(lib,"../../Debug/XEngine_ModuleProtocol.lib")
@@ -152,6 +157,7 @@ extern XENGINE_DEAMONAPPLIST st_DeamonAppConfig;
 #pragma comment(lib,"../../Debug/XEngine_ModuleHelp.lib")
 #pragma comment(lib,"../../Debug/XEngine_ModulePlugin.lib")
 #else
+#pragma comment(lib,"../../Release/XEngine_InfoReport.lib")
 #pragma comment(lib,"../../Release/XEngine_ModuleConfigure.lib")
 #pragma comment(lib,"../../Release/XEngine_ModuleDatabase.lib")
 #pragma comment(lib,"../../Release/XEngine_ModuleProtocol.lib")

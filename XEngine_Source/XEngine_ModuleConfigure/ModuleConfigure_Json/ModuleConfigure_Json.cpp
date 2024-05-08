@@ -199,6 +199,18 @@ bool CModuleConfigure_Json::ModuleConfigure_Json_File(LPCXSTR lpszConfigFile, XE
 	Json::Value st_JsonVerSwitch = st_JsonXVerifcation["st_VerSwitch"];
 	pSt_ServerConfig->st_XVerifcation.st_VerSwitch.bBackService = st_JsonVerSwitch["bBackService"].asBool();
 	pSt_ServerConfig->st_XVerifcation.st_VerSwitch.bDeamon = st_JsonVerSwitch["bDeamon"].asBool();
+
+	if (st_JsonRoot["XReport"].empty() || (3 != st_JsonRoot["XReport"].size()))
+	{
+		Config_IsErrorOccur = true;
+		Config_dwErrorCode = ERROR_MODULE_CONFIGURE_JSON_XREPORT;
+		return false;
+	}
+	Json::Value st_JsonXReport = st_JsonRoot["XReport"];
+
+	pSt_ServerConfig->st_XReport.bEnable = st_JsonXReport["bEnable"].asBool();
+	_tcsxcpy(pSt_ServerConfig->st_XReport.tszAPIUrl, st_JsonXReport["tszAPIUrl"].asCString());
+	_tcsxcpy(pSt_ServerConfig->st_XReport.tszServiceName, st_JsonXReport["tszServiceName"].asCString());
 	return true;
 }
 /********************************************************************

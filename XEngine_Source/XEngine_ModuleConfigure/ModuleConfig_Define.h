@@ -95,6 +95,12 @@ typedef struct
 			bool bDeamon;
 		}st_VerSwitch;
 	}st_XVerifcation;
+	struct
+	{
+		bool bEnable;
+		XCHAR tszAPIUrl[MAX_PATH];
+		XCHAR tszServiceName[128];
+	}st_XReport;
 	struct  
 	{
 		list<string>* pStl_ListVer;
