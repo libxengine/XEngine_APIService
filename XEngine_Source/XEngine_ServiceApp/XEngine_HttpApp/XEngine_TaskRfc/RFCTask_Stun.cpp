@@ -22,7 +22,6 @@ bool RFCTask_Stun_Parse(LPCXSTR lpszClientAddr, LPCXSTR lpszMSGBuffer, int nMSGL
 		int nXLen = 0;
 		int nDLen = 0;
 		int nNLen = 0;
-		int nHLen = 0;
 		XCHAR tszIPAddr[128] = {};
 		_tcsxcpy(tszIPAddr, lpszClientAddr);
 		BaseLib_OperatorIPAddr_SegAddr(tszIPAddr, &nIPPort);

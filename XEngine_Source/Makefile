@@ -5,6 +5,7 @@ FLAGS=
 
 #要编译的模块
 THIRDPART_MODULE_JSONCPP = ./XEngine_Depend/XEngine_Module/jsoncpp
+THIRDPART_MODULE_REPORT = ./XEngine_Depend/XEngine_Module/XEngine_InfoReport
 
 MODULE_CONFIGURE_PATH = ./XEngine_ModuleConfigure
 MODULE_DATABASE_PATH = ./XEngine_ModuleDatabase
@@ -24,7 +25,7 @@ PLUGIN_MODULE_IPADDR = ./XEngine_PluginModule/ModulePlugin_IPAddr
 APP_CENTER_PATH = ./XEngine_ServiceApp/XEngine_CenterApp
 APP_HTTP_PATH = ./XEngine_ServiceApp/XEngine_HttpApp
 
-XENGINE_MODULES = libjsoncpp.so            \
+XENGINE_MODULES = libjsoncpp.so libXEngine_InfoReport.so          \
                   libXEngine_ModuleConfigure.so libXEngine_ModuleDatabase.so libXEngine_ModuleProtocol.so libXEngine_ModuleSystem.so libXEngine_ModuleHelp.so libXEngine_ModulePlugin.so  \
 				  libModulePlugin_Zodiac.so libModulePlugin_Password.so libModulePlugin_Timezone.so libModulePlugin_BMIndex.so  libModulePlugin_Meter.so libModulePlugin_Phone.so libModulePlugin_IPAddr.so \
 		   		  XEngine_HttpApp.exe
@@ -34,6 +35,8 @@ MakeAll:$(XENGINE_MODULES)
 
 libjsoncpp.so:
 	make -C $(THIRDPART_MODULE_JSONCPP) PLATFORM=$(PLATFORM) $(FLAGS)
+libXEngine_InfoReport.so:
+	make -C $(THIRDPART_MODULE_REPORT) PLATFORM=$(PLATFORM) $(FLAGS)
 
 libXEngine_ModuleConfigure.so:
 	make -C $(MODULE_CONFIGURE_PATH) PLATFORM=$(PLATFORM) $(FLAGS)

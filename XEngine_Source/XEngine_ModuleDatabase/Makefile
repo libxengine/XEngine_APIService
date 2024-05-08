@@ -10,7 +10,7 @@ LOADHDR = -I ./
 LOADSO = 
 LIB = -lXEngine_BaseLib -lHelpComponents_DataBase
 LIBEX = 
-OBJECTS = ModuleDatabase_IDCard.o ModuleDatabase_Bank.o ModuleDatabase_ZIPCode.o ModuleDatabase_XLog.o ModuleDatabase_ShortLink.o ModuleDatabase_WordFilter.o ModuleDatabase_Machine.o pch.o
+OBJECTS = ModuleDatabase_IDCard.o ModuleDatabase_Bank.o ModuleDatabase_ZIPCode.o ModuleDatabase_XLog.o ModuleDatabase_ShortLink.o ModuleDatabase_WordFilter.o ModuleDatabase_Machine.o ModuleDatabase_OilInfo.o pch.o
 
 ifeq ($(RELEASE),1)
 FLAGS = -c 
@@ -66,6 +66,8 @@ ModuleDatabase_WordFilter.o:./ModuleDatabase_WordFilter/ModuleDatabase_WordFilte
 	$(CC) $(DEBUG) $(FLAGS) $(UNICODE) $(PLATVER) $(LOADHDR) ./ModuleDatabase_WordFilter/ModuleDatabase_WordFilter.cpp
 ModuleDatabase_Machine.o:./ModuleDatabase_Machine/ModuleDatabase_Machine.cpp             
 	$(CC) $(DEBUG) $(FLAGS) $(UNICODE) $(PLATVER) $(LOADHDR) ./ModuleDatabase_Machine/ModuleDatabase_Machine.cpp
+ModuleDatabase_OilInfo.o:./ModuleDatabase_OilInfo/ModuleDatabase_OilInfo.cpp             
+	$(CC) $(DEBUG) $(FLAGS) $(UNICODE) $(PLATVER) $(LOADHDR) ./ModuleDatabase_OilInfo/ModuleDatabase_OilInfo.cpp
 
 pch.o:./pch.cpp                 		       	    
 	$(CC) $(DEBUG) $(FLAGS) $(UNICODE) $(PLATVER) $(LOADHDR) ./pch.cpp

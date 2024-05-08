@@ -2,12 +2,11 @@
 
 bool RFCTask_NTP_Parse(LPCXSTR lpszClientAddr, LPCXSTR lpszMSGBuffer, int nMSGLen)
 {
+#if (XENGINE_VERSION_KERNEL >= 8) && (XENGINE_VERSION_MAIN >= 31)
 	int nSDLen = 0;
 	XCHAR tszSDBuffer[4096] = {};
 	NTPPROTOCOL_TIMEINFO st_TimeRecv = {};
 	NTPPROTOCOL_TIMEINFO st_TimeTras = {};
-
-#if (XENGINE_VERSION_KERNEL >= 8) && (XENGINE_VERSION_MAIN >= 31)
 	NTPProtocol_Packet_TimeConvert(&st_TimeRecv);
 
 	NTPProtocol_Parse_Header(lpszMSGBuffer, nMSGLen, NULL, NULL, NULL, &st_TimeTras);
