@@ -42,6 +42,8 @@ using namespace std;
 #include <XEngine_Include/XEngine_RfcComponents/HttpProtocol_Error.h>
 #include <XEngine_Include/XEngine_RfcComponents/NatProtocol_Define.h>
 #include <XEngine_Include/XEngine_RfcComponents/NatProtocol_Error.h>
+#include <XEngine_Include/XEngine_RfcComponents/NTPProtocol_Define.h>
+#include <XEngine_Include/XEngine_RfcComponents/NTPProtocol_Error.h>
 #include <XEngine_Include/XEngine_SystemSdk/ProcFile_Define.h>
 #include <XEngine_Include/XEngine_SystemSdk/SystemApi_Define.h>
 #include <XEngine_Include/XEngine_SystemSdk/SystemApi_Error.h>
@@ -98,6 +100,7 @@ using namespace std;
 #include "XEngine_TaskGet/TaskGet_IDRegion.h"
 //rfc
 #include "XEngine_TaskRfc/RFCTask_Stun.h"
+#include "XEngine_TaskRfc/RFCTask_Ntp.h"
 /********************************************************************
 //    Created:     2022/01/20  14:42:06
 //    File Name:   D:\XEngine_ServiceApp\XEngine_Source\XEngine_ServiceApp\XEngine_HttpApp\XEngine_Hdr.h
@@ -175,6 +178,7 @@ extern XENGINE_DEAMONAPPLIST st_DeamonAppConfig;
 #pragma comment(lib,"XEngine_HelpComponents/HelpComponents_XLog.lib")
 #pragma comment(lib,"XEngine_RfcComponents/RfcComponents_HttpProtocol.lib")
 #pragma comment(lib,"XEngine_RfcComponents/RfcComponents_NatProtocol.lib")
+#pragma comment(lib,"XEngine_RfcComponents/RfcComponents_NTPProtocol.lib")
 #pragma comment(lib,"XEngine_SystemSdk/XEngine_SystemApi")
 #pragma comment(lib,"XEngine_AVCodec/XEngine_AVCollect.lib")
 #pragma comment(lib,"XEngine_AVCodec/XEngine_VideoCodec.lib")

@@ -108,6 +108,9 @@
     <ClCompile Include="XEngine_TaskRfc\RFCTask_Stun.cpp">
       <Filter>源文件\XEngine_TaskRfc</Filter>
     </ClCompile>
+    <ClCompile Include="XEngine_TaskRfc\RFCTask_Ntp.cpp">
+      <Filter>源文件\XEngine_TaskRfc</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="XEngine_Configure.h">
@@ -183,6 +186,9 @@
       <Filter>头文件\XEngine_TaskPost</Filter>
     </ClInclude>
     <ClInclude Include="XEngine_TaskRfc\RFCTask_Stun.h">
+      <Filter>头文件\XEngine_TaskRfc</Filter>
+    </ClInclude>
+    <ClInclude Include="XEngine_TaskRfc\RFCTask_Ntp.h">
       <Filter>头文件\XEngine_TaskRfc</Filter>
     </ClInclude>
   </ItemGroup>
