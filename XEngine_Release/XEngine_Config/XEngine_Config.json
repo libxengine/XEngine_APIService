@@ -4,6 +4,7 @@
     "bAutoStart":false,
     "bHideWnd":false,
     "nHttpPort":5501,
+    "nRFCPort":5502,
     "XMax":{
         "nMaxClient":10000,
         "nMaxQueue":10000,
@@ -61,25 +62,9 @@
             "bDeamon":false
         }
     },
-    "XVer":[
-        "3.4.0.1001 Build20240411",
-        "3.3.0.1001 Build20240308",
-        "3.2.0.1001 Build20231229",
-        "3.1.0.1001 Build20231102",
-        "3.0.0.1001 Build20230908",
-        "2.11.0.1001 Build20230829",
-        "2.10.0.1001 Build20230810",
-        "2.9.0.1001 Build20230421",
-        "2.8.0.1001 Build20230207",
-        "2.7.0.1001 Build20230117",
-        "2.6.1.1001 Build20221213",
-        "2.6.0.1001 Build20221212",
-        "2.5.0.1001 Build20221102",
-        "2.4.0.1001 Build20220902",
-        "2.3.0.1001 Build20220723",
-        "2.2.0.1001 Build20220701",
-        "2.1.0.1001 Build20220429",
-        "1.1.0.1001 Build20220402",
-        "1.0.0.1001 Build20220311"
-    ]
+    "XReport":{
+        "bEnable":true,
+        "tszAPIUrl":"http://app.xyry.org:5501/api?function=machine",
+        "tszServiceName":"XEngine_APIService"
+    }
 }
