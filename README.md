@@ -29,7 +29,7 @@ c c++ interface api service
 9. 生肖星座
 10. 密码生成器
 11. 世界时区
-12. 油价查询(计划中)
+12. 油价查询
 13. 行政邮编
 14. 银行卡验证
 15. 汇率计算(计划中)
@@ -51,6 +51,8 @@ c c++ interface api service
 31. 行政区域ID转换
 32. 机器信息收集
 33. 心跳处理
+34. STUN NAT协议
+35. NTP时间同步协议
 
 ## 安装教程
 
@@ -68,6 +70,11 @@ macos执行:./XEngine_LINEnv.sh -i 3
 #### 数据库环境
 需要MYSQL数据库8.0以上版本.通过CreateDatabase.sql创建表,然后导入剩余的表  
 修改配置文件里面XSQL里面的数据库配置为你的  
+
+#### sub module
+由于依赖的子模块,在你checkout仓库后,在仓库目录下执行下面的命令拉取子模块  
+git submodule init  
+git submodule update  
 
 #### Windows
 需要vcpkg配置第三方环境,具体参考vcpkg安装方式,安装好后执行:vcpkg.exe install lua:x86-windows opencv[contrib]:x86-windows libqrencode:x86-windows lua:x64-windows opencv[contrib]:x64-windows libqrencode:x64-windows  
@@ -212,6 +219,25 @@ make FLAGS=CleanAll 清理编译
     "tszLogTimer":"2023-01-13 22:10:01",
     "nLogLine":102,
     "nLogLevel":4
+}
+```
+油价查询  
+接口:http://app.xyry.org:5501/api?function=oil&addr=四川  
+```json
+{
+    "code": 0,
+    "data": {
+        "dlValue0": 7.9100000000000001,
+        "dlValue10": 8.3800000000000008,
+        "dlValue20": 8.6899999999999995,
+        "dlValue35": 0,
+        "dlValue92": 8.2799999999999994,
+        "dlValue95": 8.8499999999999996,
+        "dlValue98": 9.6199999999999992,
+        "tszCityStr": "四川",
+        "tszUPTime": "2024-05-08 14:39:53"
+    },
+    "msg": "success"
 }
 ```
 ## 参与贡献

@@ -1,3 +1,25 @@
+XEngine_APIService V3.5.0.1001
+
+增加:机器信息收集增加服务名字段
+增加:机器信息报告查询
+增加:RFC的UDP服务端口的STUN协议代码支持
+增加:信息报告配置支持
+增加:NTP时间同步协议支持
+增加:油价查询支持
+修改:jsoncpp现在使用子模块方式加载
+修改:分离了版本信息从配置文件中
+修复:图像扩展名没有处理的问题
+
+added:rfc witch udp port and stun protocol supported
+added:query info for report
+added:service name for machine
+added:info report supported
+added:NTP time sync protocol supported
+added:oil price query supported
+modify:jsoncpp is depend sub module
+modify:detach version configure file
+fixed:image process ext name is incorrect
+======================================================================================
 XEngine_APIService V3.4.0.1001
 
 增加:lua脚本心跳协议支持
