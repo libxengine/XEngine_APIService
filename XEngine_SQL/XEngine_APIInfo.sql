@@ -1,17 +1,17 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : Test
+ Source Server         : mysql
  Source Server Type    : MySQL
- Source Server Version : 80031 (8.0.31-0ubuntu0.20.04.2)
- Source Host           : 192.168.1.12:3306
+ Source Server Version : 80036 (8.0.36-0ubuntu0.22.04.1)
+ Source Host           : 10.0.3.154:3306
  Source Schema         : XEngine_APIInfo
 
  Target Server Type    : MySQL
- Target Server Version : 80031 (8.0.31-0ubuntu0.20.04.2)
+ Target Server Version : 80036 (8.0.36-0ubuntu0.22.04.1)
  File Encoding         : 65001
 
- Date: 10/01/2023 15:57:39
+ Date: 08/05/2024 15:41:40
 */
 
 SET NAMES utf8mb4;
@@ -34,7 +34,7 @@ CREATE TABLE `AdministrativeArea`  (
   `first` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL,
   `lng` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL,
   `lat` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of AdministrativeArea
@@ -3798,7 +3798,7 @@ CREATE TABLE `BankList`  (
   `tszBankAbridge` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
   `tszBankName` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
   PRIMARY KEY (`ID`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 169 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 169 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of BankList
@@ -3973,6 +3973,57 @@ INSERT INTO `BankList` VALUES (167, 'ZYCBANK', '遵义市商业银行');
 INSERT INTO `BankList` VALUES (168, 'ZZBANK', '郑州银行');
 
 -- ----------------------------
+-- Table structure for OilPrice
+-- ----------------------------
+DROP TABLE IF EXISTS `OilPrice`;
+CREATE TABLE `OilPrice`  (
+  `tszRegion` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '地区',
+  `98` float(4, 2) NULL DEFAULT NULL COMMENT '98号汽油',
+  `95` float(4, 2) NULL DEFAULT NULL COMMENT '95号汽油',
+  `92` float(4, 2) NULL DEFAULT NULL COMMENT '92号汽油',
+  `0` float(4, 2) NULL DEFAULT NULL COMMENT '0号柴油',
+  `-10` float(4, 2) NULL DEFAULT NULL COMMENT '-10号柴油',
+  `-20` float(4, 2) NULL DEFAULT NULL COMMENT '-20号柴油',
+  `-35` float(4, 2) NULL DEFAULT NULL COMMENT '-30号柴油',
+  `tszUPTime` datetime NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间'
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of OilPrice
+-- ----------------------------
+INSERT INTO `OilPrice` VALUES ('北京', 10.22, 8.72, 8.19, 7.91, 8.39, 8.79, 9.11, '2024-05-08 14:39:53');
+INSERT INTO `OilPrice` VALUES ('上海', 10.01, 8.67, 8.15, 7.84, 8.31, 0.00, 0.00, '2024-05-08 14:39:53');
+INSERT INTO `OilPrice` VALUES ('江苏', 10.48, 8.68, 8.16, 7.82, 8.29, 0.00, 0.00, '2024-05-08 14:39:53');
+INSERT INTO `OilPrice` VALUES ('天津', 10.15, 8.65, 8.18, 7.87, 8.34, 8.73, 0.00, '2024-05-08 14:39:53');
+INSERT INTO `OilPrice` VALUES ('重庆', 10.53, 8.71, 8.25, 7.93, 8.40, 0.00, 0.00, '2024-05-08 14:39:53');
+INSERT INTO `OilPrice` VALUES ('江西', 10.25, 8.75, 8.15, 7.91, 8.46, 0.00, 0.00, '2024-05-08 14:39:53');
+INSERT INTO `OilPrice` VALUES ('辽宁', 9.67, 8.87, 8.34, 7.76, 0.00, 0.00, 8.90, '2024-05-08 14:39:53');
+INSERT INTO `OilPrice` VALUES ('安徽', 9.90, 8.70, 8.14, 7.90, 8.38, 0.00, 0.00, '2024-05-08 14:39:53');
+INSERT INTO `OilPrice` VALUES ('内蒙古', 9.51, 8.67, 8.12, 7.73, 8.21, 8.58, 8.83, '2024-05-08 14:39:53');
+INSERT INTO `OilPrice` VALUES ('福建', 10.20, 8.70, 8.15, 7.86, 8.33, 0.00, 0.00, '2024-05-08 14:39:53');
+INSERT INTO `OilPrice` VALUES ('宁夏', 9.74, 8.54, 8.09, 7.74, 8.21, 8.60, 8.91, '2024-05-08 14:39:53');
+INSERT INTO `OilPrice` VALUES ('甘肃', 10.22, 8.74, 8.19, 7.76, 8.24, 8.67, 8.94, '2024-05-08 14:39:53');
+INSERT INTO `OilPrice` VALUES ('青海', 9.51, 8.73, 8.15, 7.78, 8.25, 8.64, 8.95, '2024-05-08 14:39:53');
+INSERT INTO `OilPrice` VALUES ('广东', 10.89, 8.89, 8.21, 7.87, 0.00, 0.00, 0.00, '2024-05-08 14:39:53');
+INSERT INTO `OilPrice` VALUES ('山东', 9.47, 8.75, 8.15, 7.77, 8.22, 8.58, 8.89, '2024-05-08 14:39:53');
+INSERT INTO `OilPrice` VALUES ('广西', 10.04, 8.91, 8.25, 7.92, 0.00, 0.00, 0.00, '2024-05-08 14:39:53');
+INSERT INTO `OilPrice` VALUES ('山西', 9.98, 8.78, 8.13, 7.94, 8.41, 8.81, 9.13, '2024-05-08 14:39:53');
+INSERT INTO `OilPrice` VALUES ('贵州', 9.69, 8.79, 8.32, 7.97, 8.44, 0.00, 0.00, '2024-05-08 14:39:53');
+INSERT INTO `OilPrice` VALUES ('陕西', 11.19, 8.53, 8.07, 7.75, 8.22, 8.60, 8.91, '2024-05-08 14:39:53');
+INSERT INTO `OilPrice` VALUES ('海南', 11.20, 9.88, 9.30, 7.95, 0.00, 0.00, 0.00, '2024-05-08 14:39:53');
+INSERT INTO `OilPrice` VALUES ('四川', 9.62, 8.85, 8.28, 7.91, 8.38, 8.69, 0.00, '2024-05-08 14:39:53');
+INSERT INTO `OilPrice` VALUES ('河北', 9.47, 8.65, 8.18, 7.87, 8.34, 8.73, 9.05, '2024-05-08 14:39:53');
+INSERT INTO `OilPrice` VALUES ('西藏', 10.68, 9.58, 9.06, 8.40, 8.92, 9.37, 9.66, '2024-05-08 14:39:53');
+INSERT INTO `OilPrice` VALUES ('河南', 9.41, 8.75, 8.20, 7.85, 8.32, 0.00, 0.00, '2024-05-08 14:39:53');
+INSERT INTO `OilPrice` VALUES ('新疆', 9.55, 8.55, 7.99, 7.63, 0.00, 8.15, 8.55, '2024-05-08 14:39:53');
+INSERT INTO `OilPrice` VALUES ('黑龙江', 9.90, 8.73, 8.15, 7.65, 0.00, 0.00, 8.81, '2024-05-08 14:39:53');
+INSERT INTO `OilPrice` VALUES ('吉林', 9.58, 8.79, 8.15, 7.78, 8.20, 8.63, 8.87, '2024-05-08 14:39:53');
+INSERT INTO `OilPrice` VALUES ('云南', 9.63, 8.95, 8.34, 7.93, 0.00, 0.00, 0.00, '2024-05-08 14:39:53');
+INSERT INTO `OilPrice` VALUES ('湖北', 10.15, 8.78, 8.20, 7.85, 0.00, 0.00, 0.00, '2024-05-08 14:39:53');
+INSERT INTO `OilPrice` VALUES ('浙江', 9.50, 8.68, 8.16, 7.85, 8.32, 0.00, 0.00, '2024-05-08 14:39:53');
+INSERT INTO `OilPrice` VALUES ('湖南', 9.65, 8.65, 8.13, 7.93, 0.00, 0.00, 0.00, '2024-05-08 14:39:53');
+
+-- ----------------------------
 -- Table structure for RegionID
 -- ----------------------------
 DROP TABLE IF EXISTS `RegionID`;
@@ -3980,7 +4031,7 @@ CREATE TABLE `RegionID`  (
   `code` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL,
   `name` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL,
   `parentCode` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of RegionID
