@@ -30,7 +30,7 @@ Support privatization deployment, free, safe, open source, controllable
 9. Zodiac Constellation
 10. Password generator
 11. World Time Zones
-12. Oil price inquiry (planned)
+12. Oil price inquiry
 13. Administrative zip code
 14. Bank card verification
 15. Exchange rate calculation (planned)
@@ -52,6 +52,8 @@ Support privatization deployment, free, safe, open source, controllable
 31. Region ID Convert
 32. Machine Information Collect
 33. heartbeat 
+34. STUN NAT Protocol 
+35. NTP Time Sync Protocol
 
 ## install
 
@@ -74,6 +76,11 @@ Modify the database configuration in XSQL in the configuration file to your
 need to vcpkg configure third-part env.refer vcpkg install guide.after installed and execution:vcpkg.exe install lua:x86-windows opencv[contrib]:x86-windows libqrencode:x86-windows lua:x64-windows opencv[contrib]:x64-windows libqrencode:x64-windows  
 use vs open and compile,suport windows 7sp1 and above  
 Just Run it
+
+#### sub module
+Due to the dependent sub-modules, after you checkout the warehouse, execute the following command in the warehouse directory to pull the sub-modules  
+git submodule init  
+git submodule update  
 
 #### Linux
 ubuntu:sudo apt install sudo apt install liblua5.4-dev libopencv-dev libopencv-contrib-dev libqrencode-dev  
@@ -211,6 +218,25 @@ Api:http://app.xyry.org:5501/api?function=log&params1=1
     "tszLogTimer":"2023-01-13 22:10:01",
     "nLogLine":102,
     "nLogLevel":4
+}
+```
+Oil Query  
+API:http://app.xyry.org:5501/api?function=oil&addr=四川  
+```json
+{
+    "code": 0,
+    "data": {
+        "dlValue0": 7.9100000000000001,
+        "dlValue10": 8.3800000000000008,
+        "dlValue20": 8.6899999999999995,
+        "dlValue35": 0,
+        "dlValue92": 8.2799999999999994,
+        "dlValue95": 8.8499999999999996,
+        "dlValue98": 9.6199999999999992,
+        "tszCityStr": "四川",
+        "tszUPTime": "2024-05-08 14:39:53"
+    },
+    "msg": "success"
 }
 ```
 ## Participate in contribution

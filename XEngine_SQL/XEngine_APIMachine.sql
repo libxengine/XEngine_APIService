@@ -11,7 +11,7 @@
  Target Server Version : 80036 (8.0.36-0ubuntu0.22.04.1)
  File Encoding         : 65001
 
- Date: 07/04/2024 14:19:54
+ Date: 08/05/2024 15:41:55
 */
 
 SET NAMES utf8mb4;
@@ -23,6 +23,7 @@ SET FOREIGN_KEY_CHECKS = 0;
 DROP TABLE IF EXISTS `XEngine_MachineList`;
 CREATE TABLE `XEngine_MachineList`  (
   `ID` int NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `tszServiceName` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '服务名称',
   `tszMachineName` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '机器名称',
   `tszMachineCode` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '机器序列',
   `tszMachineSystem` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '系统名称',

@@ -20,6 +20,7 @@ typedef struct
 	bool bAutoStart;                          //是否自动启动
 	bool bHideWnd;                            //是否隐藏窗口启动
 	int nHttpPort;                            //HTTP服务端口
+	int nRFCPort;                             //RFC标准服务端口
 	struct
 	{
 		int nMaxClient;                       //最大客户端个数
@@ -94,6 +95,12 @@ typedef struct
 			bool bDeamon;
 		}st_VerSwitch;
 	}st_XVerifcation;
+	struct
+	{
+		bool bEnable;
+		XCHAR tszAPIUrl[MAX_PATH];
+		XCHAR tszServiceName[128];
+	}st_XReport;
 	struct  
 	{
 		list<string>* pStl_ListVer;
@@ -172,6 +179,25 @@ extern "C" XLONG ModuleConfigure_GetLastError(int* pInt_ErrorCode = NULL);
 备注：
 *********************************************************************/
 extern "C" bool ModuleConfigure_Json_File(LPCXSTR lpszConfigFile, XENGINE_SERVICECONFIG* pSt_ServerConfig);
+/********************************************************************
+函数名称：ModuleConfigure_Json_VersionFile
+函数功能：读取版本配置文件
+ 参数.一：lpszConfigFile
+  In/Out：In
+  类型：常量字符指针
+  可空：N
+  意思：输入要读取的配置文件
+ 参数.二：pSt_ServerConfig
+  In/Out：Out
+  类型：数据结构指针
+  可空：N
+  意思：输出服务配置信息
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+extern "C" bool ModuleConfigure_Json_VersionFile(LPCXSTR lpszConfigFile, XENGINE_SERVICECONFIG* pSt_ServerConfig);
 /********************************************************************
 函数名称：ModuleConfigure_Json_QRCodeFile
 函数功能：读取JSON配置文件

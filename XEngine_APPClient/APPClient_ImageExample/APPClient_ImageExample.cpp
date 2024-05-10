@@ -79,12 +79,14 @@ int test_imgzoom()
 		FILE* pSt_File = _xtfopen(pptszListFile[i], _X("rb"));
 		int nRet = (int)fread(ptszFileBuffer, 1, XENGINE_MEMORY_SIZE_MAX, pSt_File);
 		fclose(pSt_File);
+		
 		APPClient_ImageExample_GetAttr(ptszFileBuffer, nRet, &nWidth, &nHeight);
 
-		XCHAR tszAPIUrl[MAX_PATH];
-		memset(tszAPIUrl, '\0', sizeof(tszAPIUrl));
+		XCHAR tszAPIUrl[MAX_PATH] = {};
+		XCHAR tszFileExt[64] = {};
 
-		_xstprintf(tszAPIUrl, _X("http://127.0.0.1:5501/api?function=image&type=1&ext=png&width=%d&height=%d"), nWidth / 2, nHeight / 2);
+		BaseLib_OperatorString_GetFileAndPath(pptszListFile[i], NULL, NULL, NULL, tszFileExt);
+		_xstprintf(tszAPIUrl, _X("http://127.0.0.1:5501/api?function=image&type=1&ext=%s&width=%d&height=%d"), tszFileExt, nWidth / 2, nHeight / 2);
 
 		XCHAR* ptszMsgBuffer = NULL;
 		if (!APIClient_Http_Request(_X("POST"), tszAPIUrl, ptszFileBuffer, &nCode, &ptszMsgBuffer, &nRet))

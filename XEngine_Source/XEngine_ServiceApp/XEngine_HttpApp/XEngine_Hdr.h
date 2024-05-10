@@ -40,6 +40,10 @@ using namespace std;
 #include <XEngine_Include/XEngine_HelpComponents/DataBase_Error.h>
 #include <XEngine_Include/XEngine_RfcComponents/HttpProtocol_Define.h>
 #include <XEngine_Include/XEngine_RfcComponents/HttpProtocol_Error.h>
+#include <XEngine_Include/XEngine_RfcComponents/NatProtocol_Define.h>
+#include <XEngine_Include/XEngine_RfcComponents/NatProtocol_Error.h>
+#include <XEngine_Include/XEngine_RfcComponents/NTPProtocol_Define.h>
+#include <XEngine_Include/XEngine_RfcComponents/NTPProtocol_Error.h>
 #include <XEngine_Include/XEngine_SystemSdk/ProcFile_Define.h>
 #include <XEngine_Include/XEngine_SystemSdk/SystemApi_Define.h>
 #include <XEngine_Include/XEngine_SystemSdk/SystemApi_Error.h>
@@ -51,6 +55,8 @@ using namespace std;
 #include <XEngine_Include/XEngine_AVCodec/AudioCodec_Error.h>
 #include <XEngine_Include/XEngine_AVCodec/AVHelp_Define.h>
 #include <XEngine_Include/XEngine_AVCodec/AVHelp_Error.h>
+#include "../../XEngine_Depend/XEngine_Module/XEngine_InfoReport/InfoReport_Define.h"
+#include "../../XEngine_Depend/XEngine_Module/XEngine_InfoReport/InfoReport_Error.h"
 //加载项目相关头文件
 #include "../../XEngine_BuildSwitch.h"
 #include "../../XEngine_UserProtocol.h"
@@ -92,6 +98,10 @@ using namespace std;
 #include "XEngine_TaskGet/TaskGet_Reload.h"
 #include "XEngine_TaskGet/TaskGet_Weather.h"
 #include "XEngine_TaskGet/TaskGet_IDRegion.h"
+#include "XEngine_TaskGet/TaskGet_Oil.h"
+//rfc
+#include "XEngine_TaskRfc/RFCTask_Stun.h"
+#include "XEngine_TaskRfc/RFCTask_Ntp.h"
 /********************************************************************
 //    Created:     2022/01/20  14:42:06
 //    File Name:   D:\XEngine_ServiceApp\XEngine_Source\XEngine_ServiceApp\XEngine_HttpApp\XEngine_Hdr.h
@@ -109,6 +119,7 @@ extern bool bIsRun;
 extern XHANDLE xhLog;
 //HTTP服务器
 extern XHANDLE xhHTTPSocket;
+extern XHANDLE xhRFCSocket;
 extern XHANDLE xhHTTPHeart;
 extern XHANDLE xhHTTPPacket;
 extern XHANDLE xhHTTPPool;
@@ -124,6 +135,7 @@ extern XENGINE_DEAMONAPPLIST st_DeamonAppConfig;
 #ifdef _MSC_BUILD
 #ifdef _WIN64
 #ifdef _DEBUG
+#pragma comment(lib,"../../x64/Debug/XEngine_InfoReport.lib")
 #pragma comment(lib,"../../x64/Debug/XEngine_ModuleConfigure.lib")
 #pragma comment(lib,"../../x64/Debug/XEngine_ModuleDatabase.lib")
 #pragma comment(lib,"../../x64/Debug/XEngine_ModuleProtocol.lib")
@@ -131,6 +143,7 @@ extern XENGINE_DEAMONAPPLIST st_DeamonAppConfig;
 #pragma comment(lib,"../../x64/Debug/XEngine_ModuleHelp.lib")
 #pragma comment(lib,"../../x64/Debug/XEngine_ModulePlugin.lib")
 #else
+#pragma comment(lib,"../../x64/Release/XEngine_InfoReport.lib")
 #pragma comment(lib,"../../x64/Release/XEngine_ModuleConfigure.lib")
 #pragma comment(lib,"../../x64/Release/XEngine_ModuleDatabase.lib")
 #pragma comment(lib,"../../x64/Release/XEngine_ModuleProtocol.lib")
@@ -140,6 +153,7 @@ extern XENGINE_DEAMONAPPLIST st_DeamonAppConfig;
 #endif
 #else
 #ifdef _DEBUG
+#pragma comment(lib,"../../Debug/XEngine_InfoReport.lib")
 #pragma comment(lib,"../../Debug/XEngine_ModuleConfigure.lib")
 #pragma comment(lib,"../../Debug/XEngine_ModuleDatabase.lib")
 #pragma comment(lib,"../../Debug/XEngine_ModuleProtocol.lib")
@@ -147,6 +161,7 @@ extern XENGINE_DEAMONAPPLIST st_DeamonAppConfig;
 #pragma comment(lib,"../../Debug/XEngine_ModuleHelp.lib")
 #pragma comment(lib,"../../Debug/XEngine_ModulePlugin.lib")
 #else
+#pragma comment(lib,"../../Release/XEngine_InfoReport.lib")
 #pragma comment(lib,"../../Release/XEngine_ModuleConfigure.lib")
 #pragma comment(lib,"../../Release/XEngine_ModuleDatabase.lib")
 #pragma comment(lib,"../../Release/XEngine_ModuleProtocol.lib")
@@ -163,6 +178,8 @@ extern XENGINE_DEAMONAPPLIST st_DeamonAppConfig;
 #pragma comment(lib,"XEngine_Client/XClient_APIHelp.lib")
 #pragma comment(lib,"XEngine_HelpComponents/HelpComponents_XLog.lib")
 #pragma comment(lib,"XEngine_RfcComponents/RfcComponents_HttpProtocol.lib")
+#pragma comment(lib,"XEngine_RfcComponents/RfcComponents_NatProtocol.lib")
+#pragma comment(lib,"XEngine_RfcComponents/RfcComponents_NTPProtocol.lib")
 #pragma comment(lib,"XEngine_SystemSdk/XEngine_SystemApi")
 #pragma comment(lib,"XEngine_AVCodec/XEngine_AVCollect.lib")
 #pragma comment(lib,"XEngine_AVCodec/XEngine_VideoCodec.lib")

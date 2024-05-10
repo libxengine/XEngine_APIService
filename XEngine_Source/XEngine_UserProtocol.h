@@ -233,6 +233,7 @@ typedef struct
 typedef struct
 {
 	XCHAR tszMachineText[2048];
+	XCHAR tszServiceName[MAX_PATH];
 	XCHAR tszMachineName[MAX_PATH];
 	XCHAR tszMachineCode[MAX_PATH];
 	XCHAR tszMachineSystem[MAX_PATH];
@@ -274,4 +275,17 @@ typedef struct
 	int nTemperature;                //温度
 	int nHumidity;                   //湿度
 }XENGINE_WEATHERINFO;
+//油价
+typedef struct
+{
+	XCHAR tszCityStr[64];       //省/自治区/直辖市  
+	double dlValue98;
+	double dlValue95;
+	double dlValue92;
+	double dlValue0;
+	double dlValue10;
+	double dlValue20;
+	double dlValue35;
+	XCHAR tszUPTime[64];       //更新时间
+}XENGINE_OILINFO;
 #pragma pack(pop)

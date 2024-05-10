@@ -86,6 +86,7 @@ bool CModuleConfigure_Json::ModuleConfigure_Json_File(LPCXSTR lpszConfigFile, XE
 	pSt_ServerConfig->bAutoStart = st_JsonRoot["bAutoStart"].asBool();
 	pSt_ServerConfig->bHideWnd = st_JsonRoot["bHideWnd"].asBool();
 	pSt_ServerConfig->nHttpPort = st_JsonRoot["nHttpPort"].asInt();
+	pSt_ServerConfig->nRFCPort = st_JsonRoot["nRFCPort"].asInt();
 
 	if (st_JsonRoot["XMax"].empty() || (4 != st_JsonRoot["XMax"].size()))
 	{
@@ -199,6 +200,79 @@ bool CModuleConfigure_Json::ModuleConfigure_Json_File(LPCXSTR lpszConfigFile, XE
 	pSt_ServerConfig->st_XVerifcation.st_VerSwitch.bBackService = st_JsonVerSwitch["bBackService"].asBool();
 	pSt_ServerConfig->st_XVerifcation.st_VerSwitch.bDeamon = st_JsonVerSwitch["bDeamon"].asBool();
 
+	if (st_JsonRoot["XReport"].empty() || (3 != st_JsonRoot["XReport"].size()))
+	{
+		Config_IsErrorOccur = true;
+		Config_dwErrorCode = ERROR_MODULE_CONFIGURE_JSON_XREPORT;
+		return false;
+	}
+	Json::Value st_JsonXReport = st_JsonRoot["XReport"];
+
+	pSt_ServerConfig->st_XReport.bEnable = st_JsonXReport["bEnable"].asBool();
+	_tcsxcpy(pSt_ServerConfig->st_XReport.tszAPIUrl, st_JsonXReport["tszAPIUrl"].asCString());
+	_tcsxcpy(pSt_ServerConfig->st_XReport.tszServiceName, st_JsonXReport["tszServiceName"].asCString());
+	return true;
+}
+/********************************************************************
+函数名称：ModuleConfigure_Json_VersionFile
+函数功能：读取版本配置文件
+ 参数.一：lpszConfigFile
+  In/Out：In
+  类型：常量字符指针
+  可空：N
+  意思：输入要读取的配置文件
+ 参数.二：pSt_ServerConfig
+  In/Out：Out
+  类型：数据结构指针
+  可空：N
+  意思：输出服务配置信息
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+bool CModuleConfigure_Json::ModuleConfigure_Json_VersionFile(LPCXSTR lpszConfigFile, XENGINE_SERVICECONFIG* pSt_ServerConfig)
+{
+	Config_IsErrorOccur = false;
+
+	if ((NULL == lpszConfigFile) || (NULL == pSt_ServerConfig))
+	{
+		Config_IsErrorOccur = true;
+		Config_dwErrorCode = ERROR_MODULE_CONFIGURE_JSON_PARAMENT;
+		return false;
+	}
+	Json::Value st_JsonRoot;
+	JSONCPP_STRING st_JsonError;
+	Json::CharReaderBuilder st_JsonBuilder;
+	//读取配置文件所有内容到缓冲区
+	FILE* pSt_File = _xtfopen(lpszConfigFile, _X("rb"));
+	if (NULL == pSt_File)
+	{
+		Config_IsErrorOccur = true;
+		Config_dwErrorCode = ERROR_MODULE_CONFIGURE_JSON_OPENFILE;
+		return false;
+	}
+	size_t nCount = 0;
+	XCHAR tszMsgBuffer[4096];
+	while (1)
+	{
+		size_t nRet = fread(tszMsgBuffer + nCount, 1, 2048, pSt_File);
+		if (nRet <= 0)
+		{
+			break;
+		}
+		nCount += nRet;
+	}
+	fclose(pSt_File);
+	//开始解析配置文件
+	std::unique_ptr<Json::CharReader> const pSt_JsonReader(st_JsonBuilder.newCharReader());
+	if (!pSt_JsonReader->parse(tszMsgBuffer, tszMsgBuffer + nCount, &st_JsonRoot, &st_JsonError))
+	{
+		Config_IsErrorOccur = true;
+		Config_dwErrorCode = ERROR_MODULE_CONFIGURE_JSON_PARSE;
+		return false;
+	}
+	
 	if (st_JsonRoot["XVer"].empty())
 	{
 		Config_IsErrorOccur = true;

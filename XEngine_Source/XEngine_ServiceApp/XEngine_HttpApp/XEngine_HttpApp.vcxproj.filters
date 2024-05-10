@@ -25,6 +25,12 @@
     <Filter Include="源文件\XEngine_TaskPost">
       <UniqueIdentifier>{a904cf8f-7387-403f-8686-0f5c35c6b72c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="头文件\XEngine_TaskRfc">
+      <UniqueIdentifier>{7dbb6197-ab74-46a9-b43f-64edef792af2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\XEngine_TaskRfc">
+      <UniqueIdentifier>{0dfcfd07-5186-4d04-9266-c2cc9e221421}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="XEngine_HttpApp.cpp">
@@ -99,6 +105,15 @@
     <ClCompile Include="XEngine_TaskPost\TaskPost_Machine.cpp">
       <Filter>源文件\XEngine_TaskPost</Filter>
     </ClCompile>
+    <ClCompile Include="XEngine_TaskRfc\RFCTask_Stun.cpp">
+      <Filter>源文件\XEngine_TaskRfc</Filter>
+    </ClCompile>
+    <ClCompile Include="XEngine_TaskRfc\RFCTask_Ntp.cpp">
+      <Filter>源文件\XEngine_TaskRfc</Filter>
+    </ClCompile>
+    <ClCompile Include="XEngine_TaskGet\TaskGet_Oil.cpp">
+      <Filter>源文件\XEngine_TaskGet</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="XEngine_Configure.h">
@@ -172,6 +187,15 @@
     </ClInclude>
     <ClInclude Include="XEngine_TaskPost\TaskPost_Machine.h">
       <Filter>头文件\XEngine_TaskPost</Filter>
+    </ClInclude>
+    <ClInclude Include="XEngine_TaskRfc\RFCTask_Stun.h">
+      <Filter>头文件\XEngine_TaskRfc</Filter>
+    </ClInclude>
+    <ClInclude Include="XEngine_TaskRfc\RFCTask_Ntp.h">
+      <Filter>头文件\XEngine_TaskRfc</Filter>
+    </ClInclude>
+    <ClInclude Include="XEngine_TaskGet\TaskGet_Oil.h">
+      <Filter>头文件\XEngine_TaskGet</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

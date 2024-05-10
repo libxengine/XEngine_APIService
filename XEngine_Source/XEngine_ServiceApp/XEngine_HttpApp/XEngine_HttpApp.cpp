@@ -14,6 +14,7 @@ bool bIsRun = false;
 XHANDLE xhLog = NULL;
 //HTTP服务器
 XHANDLE xhHTTPSocket = NULL;
+XHANDLE xhRFCSocket = NULL;
 XHANDLE xhHTTPHeart = NULL;
 XHANDLE xhHTTPPacket = NULL;
 XHANDLE xhHTTPPool = 0;
@@ -34,6 +35,7 @@ void ServiceApp_Stop(int signo)
 		bIsRun = false;
 		//销毁HTTP资源
 		NetCore_TCPXCore_DestroyEx(xhHTTPSocket);
+		NetCore_UDPXCore_DestroyEx(xhRFCSocket);
 		SocketOpt_HeartBeat_DestoryEx(xhHTTPHeart);
 		HttpProtocol_Server_DestroyEx(xhHTTPPacket);
 		ManagePool_Thread_NQDestroy(xhHTTPPool);
@@ -45,6 +47,7 @@ void ServiceApp_Stop(int signo)
 		ModuleDatabase_ShortLink_Destory();
 		ModuleDatabase_WordFilter_Destory();
 		ModuleDatabase_Machine_Destory();
+		ModuleDatabase_OilInfo_Destory();
 		//销毁其他
 		ModulePlugin_Loader_Destory();
 		ModuleHelp_P2PClient_Destory();
@@ -253,6 +256,12 @@ int main(int argc, char** argv)
 			goto XENGINE_SERVICEAPP_EXIT;
 		}
 		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("启动服务中,初始化信息收集数据库成功"));
+		if (!ModuleDatabase_OilInfo_Init((DATABASE_MYSQL_CONNECTINFO*)&st_ServiceConfig.st_XSql))
+		{
+			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("启动服务中,初始化油价查询数据库失败,错误：%lX"), ModuleDB_GetLastError());
+			goto XENGINE_SERVICEAPP_EXIT;
+		}
+		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("启动服务中,初始化油价查询数据库成功"));
 	}
 	else
 	{
@@ -314,7 +323,25 @@ int main(int argc, char** argv)
 	}
 	else
 	{
-		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_WARN, _X("启动服务中,HTTP消息服务没有被启用"));
+		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_WARN, _X("启动服务中,HTTP服务没有被启用"));
+	}
+	//启动RFC标准服务
+	if (st_ServiceConfig.nRFCPort > 0)
+	{
+		//网络
+		xhRFCSocket = NetCore_UDPXCore_StartEx(st_ServiceConfig.nRFCPort, st_ServiceConfig.st_XMax.nIOThread);
+		if (NULL == xhRFCSocket)
+		{
+			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("启动服务中,启动RFC网络服务器失败,错误：%lX"), NetCore_GetLastError());
+			goto XENGINE_SERVICEAPP_EXIT;
+		}
+		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("启动服务中,启动RFC网络服务器成功,RFC端口:%d,IO:%d"), st_ServiceConfig.nRFCPort, st_ServiceConfig.st_XMax.nIOThread);
+		NetCore_UDPXCore_RegisterCallBackEx(xhRFCSocket, Network_Callback_RFCRecv);
+		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("启动服务中,注册RFC网络事件成功"));
+	}
+	else
+	{
+		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_WARN, _X("启动服务中,RFC服务没有被启用"));
 	}
 	//初始化P2P
 	if (!ModuleHelp_P2PClient_Init(st_ServiceConfig.st_XTime.nP2PTimeOut, HTTPTask_TastPost_P2PCallback))
@@ -407,6 +434,25 @@ int main(int argc, char** argv)
 	//展示能力
 	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("启动服务中,加载的Lib插件:%d 个,Lua插件:%d 个"), st_PluginLibConfig.pStl_ListPlugin->size(), st_PluginLuaConfig.pStl_ListPlugin->size());
 
+	//发送信息报告
+	if (st_ServiceConfig.st_XReport.bEnable)
+	{
+		if (InfoReport_APIMachine_Send(st_ServiceConfig.st_XReport.tszAPIUrl, st_ServiceConfig.st_XReport.tszServiceName))
+		{
+			__int64x nTimeNumber = 0;
+			InfoReport_APIMachine_GetTime(st_ServiceConfig.st_XReport.tszAPIUrl, st_ServiceConfig.st_XReport.tszServiceName, &nTimeNumber);
+			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("启动服务中，启动信息报告给API服务器:%s 成功,报告次数:%lld"), st_ServiceConfig.st_XReport.tszAPIUrl, nTimeNumber);
+		}
+		else
+		{
+			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("启动服务中，启动信息报告给API服务器:%s 失败，错误：%lX"), st_ServiceConfig.st_XReport.tszAPIUrl, InfoReport_GetLastError());
+		}
+	}
+	else
+	{
+		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_WARN, _X("启动服务中，信息报告给API服务器没有启用"));
+	}
+
 	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("所有服务成功启动,服务运行中,XEngine版本:%s%s,发行版本次数:%d,当前版本：%s。。。"), BaseLib_OperatorVer_XNumberStr(), BaseLib_OperatorVer_XTypeStr(), st_ServiceConfig.st_XVer.pStl_ListVer->size(), st_ServiceConfig.st_XVer.pStl_ListVer->front().c_str());
 	while (true)
 	{
@@ -420,6 +466,7 @@ XENGINE_SERVICEAPP_EXIT:
 		bIsRun = false;
 		//销毁HTTP资源
 		NetCore_TCPXCore_DestroyEx(xhHTTPSocket);
+		NetCore_UDPXCore_DestroyEx(xhRFCSocket);
 		SocketOpt_HeartBeat_DestoryEx(xhHTTPHeart);
 		HttpProtocol_Server_DestroyEx(xhHTTPPacket);
 		ManagePool_Thread_NQDestroy(xhHTTPPool);
@@ -431,6 +478,7 @@ XENGINE_SERVICEAPP_EXIT:
 		ModuleDatabase_ShortLink_Destory();
 		ModuleDatabase_WordFilter_Destory();
 		ModuleDatabase_Machine_Destory();
+		ModuleDatabase_OilInfo_Destory();
 		//销毁其他
 		ModulePlugin_Loader_Destory();
 		ModuleHelp_P2PClient_Destory();

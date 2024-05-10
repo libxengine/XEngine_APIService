@@ -568,3 +568,57 @@ extern "C" bool ModuleDatabase_Machine_UPDate(XENGINE_MACHINEINFO* pSt_MachineIn
 备注：
 *********************************************************************/
 extern "C" bool ModuleDatabase_Machine_List(XENGINE_MACHINEINFO*** pppSt_MachineInfo, int* pInt_ListCount);
+/************************************************************************/
+/*                         导出的油价查询数据库函数                     */
+/************************************************************************/
+/********************************************************************
+函数名称：ModuleDatabase_OilInfo_Init
+函数功能：初始化数据库
+ 参数.一：pSt_DBConnector
+  In/Out：In
+  类型：数据结构指针
+  可空：N
+  意思：数据数据库信息
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+extern "C" bool ModuleDatabase_OilInfo_Init(DATABASE_MYSQL_CONNECTINFO* pSt_DBConnector);
+/********************************************************************
+函数名称：ModuleDatabase_OilInfo_Destory
+函数功能：销毁
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+extern "C" bool ModuleDatabase_OilInfo_Destory();
+/********************************************************************
+函数名称：ModuleDatabase_OilInfo_Query
+函数功能：查询数据
+ 参数.一：pSt_OilInfo
+  In/Out：In/Out
+  类型：数据结构指针
+  可空：N
+  意思：输入查询的信息,输出完整的信息
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+extern "C" bool ModuleDatabase_OilInfo_Query(XENGINE_OILINFO* pSt_OilInfo);
+/********************************************************************
+函数名称：ModuleDatabase_OilInfo_UPDate
+函数功能：更新数据
+ 参数.一：pSt_OilInfo
+  In/Out：In
+  类型：数据结构指针
+  可空：N
+  意思：输入要更新的数据
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+extern "C" bool ModuleDatabase_OilInfo_UPDate(XENGINE_OILINFO* pSt_OilInfo);

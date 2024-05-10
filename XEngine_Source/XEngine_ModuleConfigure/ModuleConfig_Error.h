@@ -24,6 +24,7 @@
 #define ERROR_MODULE_CONFIGURE_JSON_XCONFIG 0xA000C                  //配置文件配置加载失败
 #define ERROR_MODULE_CONFIGURE_JSON_XSLINK 0xA000D                   //短连接配置错误
 #define ERROR_MODULE_CONFIGURE_JSON_XVERICATION 0xA000E              //验证配置错误
+#define ERROR_MODULE_CONFIGURE_JSON_XREPORT 0xA000F                  //报告配置错误
 //////////////////////////////////////////////////////////////////////////
 #define ERROR_MODULE_CONFIGURE_FILE_PARAMENT 0xA1001                 //参数错误
 #define ERROR_MODULE_CONFIGURE_FILE_OPENFILE 0xA1002                 //打开文件失败

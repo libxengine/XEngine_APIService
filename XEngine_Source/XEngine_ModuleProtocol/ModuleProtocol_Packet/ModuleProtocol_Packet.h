@@ -44,6 +44,7 @@ public:
 	bool ModuleProtocol_Packet_HardWare(XCHAR* ptszHWInfo, int* pInt_Len);
 	bool ModuleProtocol_Packet_SoftWare(XCHAR* ptszSWInfo, int* pInt_Len);
 	bool ModuleProtocol_Packet_Machine(XCHAR* ptszMSGBuffer, int* pInt_MSGLen, XENGINE_MACHINEINFO*** pppSt_MachineList, int nListCount);
+	bool ModuleProtocol_Packet_OilInfo(XCHAR* ptszMSGBuffer, int* pInt_MSGLen, XENGINE_OILINFO* pSt_OilInfo);
 public:
 	bool ModuleProtocol_Packet_P2PLan(XCHAR* ptszMsgBuffer, int* pInt_MsgLen, XENGINE_P2XPPEER_PROTOCOL*** pppSt_ListClients, int nListCount);
 	bool ModuleProtocol_Packet_P2PWLan(XCHAR* ptszMsgBuffer, int* pInt_MsgLen, list<XENGINE_P2XPPEER_PROTOCOL>* pStl_ListClients);

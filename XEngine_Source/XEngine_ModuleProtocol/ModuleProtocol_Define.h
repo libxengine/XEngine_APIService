@@ -761,6 +761,30 @@ extern "C" bool ModuleProtocol_Packet_SoftWare(XCHAR* ptszSWInfo, int* pInt_Len)
 备注：
 *********************************************************************/
 extern "C" bool ModuleProtocol_Packet_Machine(XCHAR* ptszMSGBuffer, int* pInt_MSGLen, XENGINE_MACHINEINFO*** pppSt_MachineList, int nListCount);
+/********************************************************************
+函数名称：ModuleProtocol_Packet_OilInfo
+函数功能：油价信息打包函数
+ 参数.一：ptszMsgBuffer
+  In/Out：Out
+  类型：字符指针
+  可空：N
+  意思：输出打包的数据信息
+ 参数.二：pInt_MsgLen
+  In/Out：Out
+  类型：整数型指针
+  可空：N
+  意思：输出打包大小
+ 参数.三：pSt_OilInfo
+  In/Out：In
+  类型：数据结构指针
+  可空：N
+  意思：输入要打包的数据
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+extern "C" bool ModuleProtocol_Packet_OilInfo(XCHAR* ptszMSGBuffer, int* pInt_MSGLen, XENGINE_OILINFO* pSt_OilInfo);
 /************************************************************************/
 /*                         导出的协议解析函数                           */
 /************************************************************************/
