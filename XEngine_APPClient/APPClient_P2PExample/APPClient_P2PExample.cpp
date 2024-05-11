@@ -24,7 +24,7 @@
 //需要优先配置XEngine
 //WINDOWS使用VS2022 x64 debug 编译
 //linux使用下面的命令编译
-//g++ -std=c++17 -Wall -g APPClient_P2PExample.cpp -o APPClient_P2PExample.exe -I ../../XEngine_Source/XEngine_ThirdPart/jsoncpp -lXEngine_BaseLib -lXEngine_NetXApi -lXClient_APIHelp -ljsoncpp
+//g++ -std=c++17 -Wall -g APPClient_P2PExample.cpp -o APPClient_P2PExample.exe -I ../../XEngine_Source/XEngine_Depend/XEngine_Module/jsoncpp -L ../../XEngine_Release -lXEngine_BaseLib -lXEngine_NetXApi -lXClient_APIHelp -ljsoncpp -Wl,-rpath=../../XEngine_Release
 
 LPCXSTR lpszUserName = _X("123123aa");
 XCHAR tszPublicAddr[128];

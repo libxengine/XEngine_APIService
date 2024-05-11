@@ -20,7 +20,7 @@
 
 //需要优先配置XEngine
 //WINDOWS支持VS2022 x64 debug 编译调试
-//g++ -std=c++17 -Wall -g APPClient_SocketExample.cpp -o APPClient_SocketExample.exe -lXEngine_BaseLib -lXClient_APIHelp
+//g++ -std=c++17 -Wall -g APPClient_SocketExample.cpp -o APPClient_SocketExample.exe -I ../../XEngine_Source/XEngine_Depend/XEngine_Module/jsoncpp -L ../../XEngine_Release -lXEngine_BaseLib -lXClient_APIHelp -ljsoncpp -Wl,-rpath=../../XEngine_Release
 
 XNETHANDLE xhToken = 0;
 #define QRCODE_BUFFER_SIZE 1024 * 1024 * 10

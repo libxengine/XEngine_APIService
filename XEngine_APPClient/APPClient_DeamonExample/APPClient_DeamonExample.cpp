@@ -21,7 +21,7 @@
 
 //需要优先配置XEngine
 //WINDOWS支持VS2022 x64 debug 编译调试
-//g++ -std=c++17 -Wall -g APPClient_DeamonExample.cpp -o APPClient_DeamonExample.exe -lXEngine_BaseLib -lXClient_APIHelp -ljsoncpp
+//g++ -std=c++17 -Wall -g APPClient_DeamonExample.cpp -o APPClient_DeamonExample.exe -I ../../XEngine_Source/XEngine_Depend/XEngine_Module/jsoncpp -L ../../XEngine_Release -lXEngine_BaseLib -lXClient_APIHelp -ljsoncpp
 
 
 int test_insert()
