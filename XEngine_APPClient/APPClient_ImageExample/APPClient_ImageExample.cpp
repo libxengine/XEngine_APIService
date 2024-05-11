@@ -25,7 +25,7 @@
 
 //需要优先配置XEngine
 //WINDOWS支持VS2022 x64 debug 编译调试
-//g++ -std=c++17 -Wall -g APPClient_ImageExample.cpp -o APPClient_ImageExample.exe -lXEngine_BaseLib -lXClient_APIHelp
+//g++ -std=c++17 -Wall -g APPClient_ImageExample.cpp -o APPClient_ImageExample.exe -I ../../XEngine_Source/XEngine_Depend/XEngine_Module/jsoncpp -L ../../XEngine_Release -lXEngine_BaseLib -lXClient_APIHelp -ljsoncpp -Wl,-rpath=../../XEngine_Release
 
 
 bool APPClient_ImageExample_GetAttr(LPCXSTR lpszMsgBuffer, int nMsgLen, int* pInt_Width, int* pInt_Height)

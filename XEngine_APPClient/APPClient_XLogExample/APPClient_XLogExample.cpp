@@ -20,7 +20,7 @@
 
 //需要优先配置XEngine
 //WINDOWS支持VS2022 x64 debug 编译调试
-//g++ -std=c++17 -Wall -g APPClient_XLogExample.cpp -o APPClient_XLogExample.exe -lXEngine_BaseLib -lXClient_APIHelp
+//g++ -std=c++17 -Wall -g APPClient_XLogExample.cpp -o APPClient_XLogExample.exe -I ../../XEngine_Source/XEngine_Depend/XEngine_Module/jsoncpp -L ../../XEngine_Release -lXEngine_BaseLib -lXClient_APIHelp -ljsoncpp -Wl,-rpath=../../XEngine_Release
 
 LPCXSTR lpszTableName = _X("xengine");
 
