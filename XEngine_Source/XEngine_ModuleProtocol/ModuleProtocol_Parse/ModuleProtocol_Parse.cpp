@@ -1124,6 +1124,10 @@ bool CModuleProtocol_Parse::ModuleProtocol_Parse_Machine(LPCXSTR lpszMsgBuffer, 
 	{
 		_tcsxcpy(pSt_MachineInfo->tszMachineName, st_JsonRoot["tszMachineName"].asCString());
 	}
+	if (!st_JsonRoot["tszMachineUser"].isNull())
+	{
+		_tcsxcpy(pSt_MachineInfo->tszMachineUser, st_JsonRoot["tszMachineUser"].asCString());
+	}
 	if (!st_JsonRoot["tszMachineCode"].isNull())
 	{
 		_tcsxcpy(pSt_MachineInfo->tszMachineCode, st_JsonRoot["tszMachineCode"].asCString());

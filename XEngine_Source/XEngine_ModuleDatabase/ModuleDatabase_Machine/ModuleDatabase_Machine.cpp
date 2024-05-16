@@ -95,7 +95,7 @@ bool CModuleDatabase_Machine::ModuleDatabase_Machine_Insert(XENGINE_MACHINEINFO*
 	XCHAR tszSQLStatement[4096];
 	memset(tszSQLStatement, '\0', sizeof(tszSQLStatement));
 
-	_xstprintf(tszSQLStatement, _X("INSERT INTO `XEngine_MachineList` (tszServiceName,tszMachineName,tszMachineCode,tszMachineSystem,tszMachineText,nTimeNumber,tszCreateTime) VALUES('%s','%s','%s','%s','%s',%lld,now())"), pSt_MachineInfo->tszServiceName, pSt_MachineInfo->tszMachineName, pSt_MachineInfo->tszMachineCode, pSt_MachineInfo->tszMachineSystem, pSt_MachineInfo->tszMachineText, pSt_MachineInfo->nTimeNumber);
+	_xstprintf(tszSQLStatement, _X("INSERT INTO `XEngine_MachineList` (tszServiceName,tszMachineName,tszMachineUser,tszMachineSystem,tszMachineText,nTimeNumber,tszCreateTime) VALUES('%s','%s','%s','%s','%s',%lld,now())"), pSt_MachineInfo->tszServiceName, pSt_MachineInfo->tszMachineName, pSt_MachineInfo->tszMachineUser, pSt_MachineInfo->tszMachineSystem, pSt_MachineInfo->tszMachineText, pSt_MachineInfo->nTimeNumber);
 #ifdef _MSC_BUILD
 	XCHAR tszUTFStr[4096] = {};
 	int nSLen = _tcsxlen(tszSQLStatement);
@@ -142,13 +142,13 @@ bool CModuleDatabase_Machine::ModuleDatabase_Machine_Query(XENGINE_MACHINEINFO* 
 	XCHAR tszSQLStatement[1024];
 	memset(tszSQLStatement, '\0', sizeof(tszSQLStatement));
 
-	if (_tcsxlen(pSt_MachineInfo->tszServiceName) > 0)
+	if (_tcsxlen(pSt_MachineInfo->tszMachineCode) > 0)
 	{
-		_xstprintf(tszSQLStatement, _X("SELECT * FROM `XEngine_MachineList` WHERE tszMachineCode = '%s' AND tszServiceName = '%s'"), pSt_MachineInfo->tszMachineCode, pSt_MachineInfo->tszServiceName);
+		_xstprintf(tszSQLStatement, _X("SELECT * FROM `XEngine_MachineList` WHERE tszMachineUser = '%s' AND tszServiceName = '%s'"), pSt_MachineInfo->tszMachineCode, pSt_MachineInfo->tszServiceName);
 	}
 	else
 	{
-		_xstprintf(tszSQLStatement, _X("SELECT * FROM `XEngine_MachineList` WHERE tszMachineCode = '%s'"), pSt_MachineInfo->tszMachineCode);
+		_xstprintf(tszSQLStatement, _X("SELECT * FROM `XEngine_MachineList` WHERE tszMachineSystem = '%s' AND tszServiceName = '%s'"), pSt_MachineInfo->tszMachineSystem, pSt_MachineInfo->tszServiceName);
 	}
 	if (!DataBase_MySQL_ExecuteQuery(xhDBSQL, &xhTable, tszSQLStatement, &nllLine, &nllRow))
 	{
@@ -180,7 +180,7 @@ bool CModuleDatabase_Machine::ModuleDatabase_Machine_Query(XENGINE_MACHINEINFO* 
 		}
 		if (NULL != pptszResult[3])
 		{
-			_tcsxcpy(pSt_MachineInfo->tszMachineCode, pptszResult[3]);
+			_tcsxcpy(pSt_MachineInfo->tszMachineUser, pptszResult[3]);
 		}
 		if (NULL != pptszResult[4])
 		{
@@ -230,25 +230,11 @@ bool CModuleDatabase_Machine::ModuleDatabase_Machine_Delete(XENGINE_MACHINEINFO*
 
 	if (_tcsxlen(pSt_MachineInfo->tszMachineCode) > 0)
 	{
-		if (_tcsxlen(pSt_MachineInfo->tszServiceName) > 0)
-		{
-			_xstprintf(tszSQLStatement, _X("DELETE FROM `XEngine_MachineList` WHERE tszMachineCode = '%s' AND tszServiceName = '%s'"), pSt_MachineInfo->tszMachineCode, pSt_MachineInfo->tszServiceName);
-		}
-		else
-		{
-			_xstprintf(tszSQLStatement, _X("DELETE FROM `XEngine_MachineList` WHERE tszMachineCode = '%s'"), pSt_MachineInfo->tszMachineCode);
-		}
+		_xstprintf(tszSQLStatement, _X("DELETE FROM `XEngine_MachineList` WHERE tszMachineUser = '%s' AND tszServiceName = '%s'"), pSt_MachineInfo->tszMachineCode, pSt_MachineInfo->tszServiceName);
 	}
 	else
 	{
-		if (_tcsxlen(pSt_MachineInfo->tszServiceName) > 0)
-		{
-			_xstprintf(tszSQLStatement, _X("DELETE FROM `XEngine_MachineList` WHERE tszMachineName = '%s' AND tszServiceName = '%s'"), pSt_MachineInfo->tszMachineName, pSt_MachineInfo->tszServiceName);
-		}
-		else
-		{
-			_xstprintf(tszSQLStatement, _X("DELETE FROM `XEngine_MachineList` WHERE tszMachineName = '%s'"), pSt_MachineInfo->tszMachineName);
-		}
+		_xstprintf(tszSQLStatement, _X("DELETE FROM `XEngine_MachineList` WHERE tszMachineUser = '%s' AND tszServiceName = '%s'"), pSt_MachineInfo->tszMachineUser, pSt_MachineInfo->tszServiceName);
 	}
 	
 	if (!DataBase_MySQL_Execute(xhDBSQL, tszSQLStatement))
@@ -285,13 +271,13 @@ bool CModuleDatabase_Machine::ModuleDatabase_Machine_UPDate(XENGINE_MACHINEINFO*
 	XCHAR tszSQLStatement[1024];
 	memset(tszSQLStatement, '\0', sizeof(tszSQLStatement));
 
-	if (_tcsxlen(pSt_MachineInfo->tszServiceName) > 0)
+	if (_tcsxlen(pSt_MachineInfo->tszMachineCode) > 0)
 	{
-		_xstprintf(tszSQLStatement, _X("UPDATE `XEngine_MachineList` SET nTimeNumber = %lld WHERE tszMachineCode = '%s' AND tszServiceName = '%s'"), pSt_MachineInfo->nTimeNumber, pSt_MachineInfo->tszMachineCode, pSt_MachineInfo->tszServiceName);
+		_xstprintf(tszSQLStatement, _X("UPDATE `XEngine_MachineList` SET nTimeNumber = %lld WHERE tszMachineUser = '%s' AND tszServiceName = '%s'"), pSt_MachineInfo->nTimeNumber, pSt_MachineInfo->tszMachineCode, pSt_MachineInfo->tszServiceName);
 	}
 	else
 	{
-		_xstprintf(tszSQLStatement, _X("UPDATE `XEngine_MachineList` SET nTimeNumber = %lld WHERE tszMachineCode = '%s'"), pSt_MachineInfo->nTimeNumber, pSt_MachineInfo->tszMachineCode);
+		_xstprintf(tszSQLStatement, _X("UPDATE `XEngine_MachineList` SET nTimeNumber = %lld WHERE tszMachineUser = '%s' AND tszServiceName = '%s'"), pSt_MachineInfo->nTimeNumber, pSt_MachineInfo->tszMachineUser, pSt_MachineInfo->tszServiceName);
 	}
 
 	if (!DataBase_MySQL_Execute(xhDBSQL, tszSQLStatement))
@@ -365,7 +351,7 @@ bool CModuleDatabase_Machine::ModuleDatabase_Machine_List(XENGINE_MACHINEINFO***
 		}
 		if (NULL != pptszResult[3])
 		{
-			_tcsxcpy((*pppSt_MachineInfo)[i]->tszMachineCode, pptszResult[3]);
+			_tcsxcpy((*pppSt_MachineInfo)[i]->tszMachineUser, pptszResult[3]);
 		}
 		if (NULL != pptszResult[4])
 		{

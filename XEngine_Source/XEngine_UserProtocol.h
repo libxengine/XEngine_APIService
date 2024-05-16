@@ -235,6 +235,7 @@ typedef struct
 	XCHAR tszMachineText[2048];
 	XCHAR tszServiceName[MAX_PATH];
 	XCHAR tszMachineName[MAX_PATH];
+	XCHAR tszMachineUser[MAX_PATH];
 	XCHAR tszMachineCode[MAX_PATH];
 	XCHAR tszMachineSystem[MAX_PATH];
 	XCHAR tszCreateTime[64];
