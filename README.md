@@ -75,6 +75,7 @@ macos执行:./XEngine_LINEnv.sh -i 3
 由于依赖的子模块,在你checkout仓库后,在仓库目录下执行下面的命令拉取子模块  
 git submodule init  
 git submodule update  
+如果github访问失败,也可以在XEngine_Source\XEngine_Depend 下直接clone项目:git clone https://gitee.com/xengine/XEngine_OPenSource.git
 
 #### Windows
 需要vcpkg配置第三方环境,具体参考vcpkg安装方式,安装好后执行:vcpkg.exe install lua:x86-windows opencv[contrib]:x86-windows libqrencode:x86-windows lua:x64-windows opencv[contrib]:x64-windows libqrencode:x64-windows  
