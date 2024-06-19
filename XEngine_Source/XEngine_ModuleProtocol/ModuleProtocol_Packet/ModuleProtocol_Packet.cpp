@@ -346,7 +346,7 @@ bool CModuleProtocol_Packet::ModuleProtocol_Packet_LanguageQuery(XCHAR* ptszMsgB
 	st_JsonRoot["data"] = st_JsonObject;
 	st_JsonBuilder["emitUTF8"] = true;
 
-	*pInt_MsgLen = Json::writeString(st_JsonBuilder, st_JsonRoot).length();
+	* pInt_MsgLen = Json::writeString(st_JsonBuilder, st_JsonRoot).length();
 	memcpy(ptszMsgBuffer, Json::writeString(st_JsonBuilder, st_JsonRoot).c_str(), *pInt_MsgLen);
 	return true;
 }
