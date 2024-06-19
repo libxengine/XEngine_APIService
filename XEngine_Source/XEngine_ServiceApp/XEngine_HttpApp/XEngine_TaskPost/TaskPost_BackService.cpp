@@ -7,14 +7,14 @@ static XNETHANDLE xhAudio = 0;
 static XNETHANDLE xhVideo = 0;
 static XHANDLE xhStream = NULL;
 
-void CALLBACK HTTPTask_TaskPost_CBVideo(uint8_t* punStringY, int nYLen, uint8_t* punStringU, int nULen, uint8_t* punStringV, int nVLen, XPVOID lParam)
+void CALLBACK HTTPTask_TaskPost_CBVideo(uint8_t* punStringY, int nYLen, uint8_t* punStringU, int nULen, uint8_t* punStringV, int nVLen, AVCOLLECT_TIMEINFO* pSt_TimeInfo, XPVOID lParam)
 {
 	if (!XClient_StreamPush_LiveVideo(xhStream, punStringY, nYLen, punStringU, nULen, punStringV, nVLen))
 	{
 		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("屏幕采集器,推流编码失败,需要关闭推流服务,错误码:%lX"), StreamClient_GetLastError());
 	}
 }
-void CALLBACK HTTPTask_TaskPost_CBAudio(uint8_t* punStringAudio, int nVLen, XPVOID lParam)
+void CALLBACK HTTPTask_TaskPost_CBAudio(uint8_t* punStringAudio, int nVLen, AVCOLLECT_TIMEINFO* pSt_TimeInfo, XPVOID lParam)
 {
 	if (!XClient_StreamPush_LiveAudio(xhStream, punStringAudio, nVLen))
 	{
