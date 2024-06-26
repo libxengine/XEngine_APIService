@@ -14,9 +14,11 @@
 #endif
 #endif //PCH_H
 #include <string>
+#include <unordered_map>
 #include <json/json.h>
 #include <XEngine_Include/XEngine_CommHdr.h>
 #include <XEngine_Include/XEngine_Types.h>
+#include <XEngine_Include/XEngine_ProtocolHdr.h>
 #include <XEngine_Include/XEngine_BaseLib/BaseLib_Define.h>
 #include <XEngine_Include/XEngine_BaseLib/BaseLib_Error.h>
 #include "PluginPhone_Define.h"

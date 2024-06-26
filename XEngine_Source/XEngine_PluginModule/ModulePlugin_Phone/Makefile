@@ -10,7 +10,7 @@ LOADHDR = -I ./ -I ../../XEngine_Depend/XEngine_Module/jsoncpp
 LOADSO = -L ../../XEngine_Depend/XEngine_Module/jsoncpp
 LIB = -lXEngine_BaseLib -ljsoncpp
 LIBEX = 
-OBJECTS = ModulePlugin_DBPhone.o ModulePlugin_APIPhone.o pch.o
+OBJECTS = ModulePlugin_APIPhone.o pch.o
 
 ifeq ($(RELEASE),1)
 FLAGS = -c 
@@ -52,8 +52,6 @@ endif
 all:$(OBJECTS)
 	$(CC) $(DEBUG) $(OBJECTS) -o libModulePlugin_Phone.$(FILEEXT) $(LIBFLAG) $(LIB) $(LIBEX) $(LOADSO) $(LOADBIN)
 
-ModulePlugin_DBPhone.o:./ModulePlugin_DBPhone/ModulePlugin_DBPhone.cpp             
-	$(CC) $(DEBUG) $(FLAGS) $(UNICODE) $(PLATVER) $(LOADHDR) ./ModulePlugin_DBPhone/ModulePlugin_DBPhone.cpp 
 ModulePlugin_APIPhone.o:./ModulePlugin_APIPhone/ModulePlugin_APIPhone.cpp             
 	$(CC) $(DEBUG) $(FLAGS) $(UNICODE) $(PLATVER) $(LOADHDR) ./ModulePlugin_APIPhone/ModulePlugin_APIPhone.cpp 
 

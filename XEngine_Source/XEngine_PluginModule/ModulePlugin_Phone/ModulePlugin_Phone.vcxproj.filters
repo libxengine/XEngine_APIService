@@ -13,12 +13,6 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="头文件\ModulePlugin_DBPhone">
-      <UniqueIdentifier>{e100b797-4228-40ce-b9ae-66fba2991aa3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="源文件\ModulePlugin_DBPhone">
-      <UniqueIdentifier>{ebaf7bf0-c07c-4330-b2f4-487461d2d37b}</UniqueIdentifier>
-    </Filter>
     <Filter Include="头文件\ModulePlugin_APIPhone">
       <UniqueIdentifier>{b156edba-6b44-4339-a1a5-e79bc39726c0}</UniqueIdentifier>
     </Filter>
@@ -32,9 +26,6 @@
     </ClInclude>
     <ClInclude Include="pch.h">
       <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="ModulePlugin_DBPhone\ModulePlugin_DBPhone.h">
-      <Filter>头文件\ModulePlugin_DBPhone</Filter>
     </ClInclude>
     <ClInclude Include="ModulePlugin_APIPhone\ModulePlugin_APIPhone.h">
       <Filter>头文件\ModulePlugin_APIPhone</Filter>
@@ -52,9 +43,6 @@
     </ClCompile>
     <ClCompile Include="pch.cpp">
       <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="ModulePlugin_DBPhone\ModulePlugin_DBPhone.cpp">
-      <Filter>源文件\ModulePlugin_DBPhone</Filter>
     </ClCompile>
     <ClCompile Include="ModulePlugin_APIPhone\ModulePlugin_APIPhone.cpp">
       <Filter>源文件\ModulePlugin_APIPhone</Filter>
