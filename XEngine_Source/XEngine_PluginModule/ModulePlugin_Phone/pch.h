@@ -38,8 +38,6 @@ using namespace std;
 extern bool Phone_IsErrorOccur;
 extern XLONG Phone_dwErrorCode;
 
-#include "ModulePlugin_DBPhone/ModulePlugin_DBPhone.h"
-
 #ifdef _MSC_BUILD
 #pragma comment(lib,"XEngine_BaseLib/XEngine_BaseLib")
 #ifdef _DEBUG

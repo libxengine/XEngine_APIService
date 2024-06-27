@@ -189,7 +189,11 @@ bool CModuleDatabase_Machine::ModuleDatabase_Machine_Query(XENGINE_MACHINEINFO* 
 		}
 		if (NULL != pptszResult[7])
 		{
-			_tcsxcpy(pSt_MachineInfo->tszCreateTime, pptszResult[7]);
+			_tcsxcpy(pSt_MachineInfo->tszLastTime, pptszResult[7]);
+		}
+		if (NULL != pptszResult[8])
+		{
+			_tcsxcpy(pSt_MachineInfo->tszCreateTime, pptszResult[8]);
 		}
 	}
 	DataBase_MySQL_FreeResult(xhDBSQL, xhTable);
@@ -346,7 +350,11 @@ bool CModuleDatabase_Machine::ModuleDatabase_Machine_List(XENGINE_MACHINEINFO***
 		}
 		if (NULL != pptszResult[7])
 		{
-			_tcsxcpy((*pppSt_MachineInfo)[i]->tszCreateTime, pptszResult[7]);
+			_tcsxcpy((*pppSt_MachineInfo)[i]->tszLastTime, pptszResult[7]);
+		}
+		if (NULL != pptszResult[8])
+		{
+			_tcsxcpy((*pppSt_MachineInfo)[i]->tszCreateTime, pptszResult[8]);
 		}
 	}
 	DataBase_MySQL_FreeResult(xhDBSQL, xhTable);
