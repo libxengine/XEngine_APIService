@@ -1,3 +1,6 @@
 [submodule "XEngine_Source/XEngine_Depend"]
 	path = XEngine_Source/XEngine_Depend
 	url = https://github.com/libxengine/XEngine_OPenSource.git
+[submodule "XEngine_Source/XEngine_DBDepend/phonedata"]
+	path = XEngine_Source/XEngine_DBDepend/XEngine_PhoneData
+	url = https://github.com/libxengine/XEngine_PhoneData.git
