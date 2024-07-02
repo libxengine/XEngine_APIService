@@ -8,14 +8,16 @@ RELEASE = 0
 UNICODE = 0
 LOADHDR = -I ./ 
 LOADSO = -L ../../XEngine_ModuleConfigure -L ../../XEngine_ModuleDatabase -L ../../XEngine_ModuleProtocol -L ../../XEngine_ModuleSystem -L ../../XEngine_ModuleHelp -L ../../XEngine_ModulePlugin   \
-		 -L ../../XEngine_Depend/XEngine_Module/jsoncpp -L ../../XEngine_Depend/XEngine_Module/XEngine_InfoReport
+		 -L ../../XEngine_Depend/XEngine_Module/jsoncpp -L ../../XEngine_Depend/XEngine_Module/XEngine_InfoReport  \
+		 -L ../../XEngine_DBDepend/XEngine_IPMacData/XEngine_Source/XEngine_APIModuleIPMac -L ../../XEngine_DBDepend/XEngine_PhoneData/Source/C/XEngine_APIModulePhone
 LIB = -lXEngine_BaseSafe -lXEngine_BaseLib -lXEngine_Algorithm -lXEngine_Core -lXEngine_ManagePool -lXEngine_OPenSsl -lXClient_Stream -lXClient_APIHelp -lHelpComponents_XLog -lRfcComponents_HttpProtocol -lRfcComponents_NatProtocol -lRfcComponents_NTPProtocol -lXEngine_ProcFile -lXEngine_SystemApi -lXEngine_AVHelp -lXEngine_VideoCodec -lXEngine_AudioCodec -lXEngine_AVCollect \
 	  -lXEngine_ModuleConfigure -lXEngine_ModuleDatabase -lXEngine_ModuleProtocol -lXEngine_ModuleSystem -lXEngine_ModuleHelp -lXEngine_ModulePlugin                          \
-	  -ljsoncpp -lXEngine_InfoReport
+	  -ljsoncpp -lXEngine_InfoReport    \
+	  -lXEngine_APIModuleIPMac -lXEngine_APIModulePhone
 LIBEX = 
 OBJECTS = XEngine_Configure.o XEngine_Network.o XEngine_HTTPTask.o XEngine_PluginTask.o XEngine_HttpApp.o        \
 		  RFCTask_Ntp.o RFCTask_Stun.o \
-          TaskGet_Bank.o TaskGet_IDCard.o TaskGet_Locker.o TaskGet_Translation.o TaskGet_Reload.o TaskGet_Weather.o TaskGet_IDRegion.o TaskGet_Oil.o \
+          TaskGet_Bank.o TaskGet_IDCard.o TaskGet_Locker.o TaskGet_Translation.o TaskGet_Reload.o TaskGet_Weather.o TaskGet_IDRegion.o TaskGet_Oil.o TaskGet_APIModule.o \
 		  TaskPost_DTest.o TaskPost_Log.o TaskPost_P2PClient.o TaskPost_PostCode.o TaskPost_QRCode.o TaskPost_ShortLink.o TaskPost_SocketTest.o TaskPost_WordFilter.o TaskPost_Image.o TaskPost_BackService.o TaskPost_Deamon.o TaskPost_Machine.o
 
 ifeq ($(RELEASE),1)
@@ -87,6 +89,8 @@ TaskGet_IDRegion.o:./XEngine_TaskGet/TaskGet_IDRegion.cpp
 	$(CC) $(DEBUG) $(FLAGS) $(UNICODE) $(PLATVER) $(LOADHDR) ./XEngine_TaskGet/TaskGet_IDRegion.cpp
 TaskGet_Oil.o:./XEngine_TaskGet/TaskGet_Oil.cpp
 	$(CC) $(DEBUG) $(FLAGS) $(UNICODE) $(PLATVER) $(LOADHDR) ./XEngine_TaskGet/TaskGet_Oil.cpp
+TaskGet_APIModule.o:./XEngine_TaskGet/TaskGet_APIModule.cpp
+	$(CC) $(DEBUG) $(FLAGS) $(UNICODE) $(PLATVER) $(LOADHDR) ./XEngine_TaskGet/TaskGet_APIModule.cpp
 
 TaskPost_DTest.o:./XEngine_TaskPost/TaskPost_DTest.cpp
 	$(CC) $(DEBUG) $(FLAGS) $(UNICODE) $(PLATVER) $(LOADHDR) ./XEngine_TaskPost/TaskPost_DTest.cpp
