@@ -123,6 +123,18 @@ extern "C" bool ModuleProtocol_Packet_OilInfo(XCHAR * ptszMSGBuffer, int* pInt_M
 {
 	return m_ProtocolPacket.ModuleProtocol_Packet_OilInfo(ptszMSGBuffer, pInt_MSGLen, pSt_OilInfo);
 }
+extern "C" bool ModuleProtocol_Packet_PhoneInfo(XCHAR* ptszMSGBuffer, int* pInt_MSGLen, XENGINE_PHONEINFO* pSt_PhoneInfo)
+{
+	return m_ProtocolPacket.ModuleProtocol_Packet_PhoneInfo(ptszMSGBuffer, pInt_MSGLen, pSt_PhoneInfo);
+}
+extern "C" bool ModuleProtocol_Packet_IPAddr(XCHAR* ptszMSGBuffer, int* pInt_MSGLen, XENGINE_IPADDRINFO* pSt_IPAddrInfo)
+{
+	return m_ProtocolPacket.ModuleProtocol_Packet_IPAddr(ptszMSGBuffer, pInt_MSGLen, pSt_IPAddrInfo);
+}
+extern "C" bool ModuleProtocol_Packet_MacInfo(XCHAR* ptszMSGBuffer, int* pInt_MSGLen, XENGINE_MACADDRINFO* pSt_MacInfo)
+{
+	return m_ProtocolPacket.ModuleProtocol_Packet_MacInfo(ptszMSGBuffer, pInt_MSGLen, pSt_MacInfo);
+}
 extern "C" bool ModuleProtocol_Packet_P2PLan(XCHAR * ptszMsgBuffer, int* pInt_MsgLen, XENGINE_P2XPPEER_PROTOCOL * **pppSt_ListClients, int nListCount)
 {
 	return m_ProtocolPacket.ModuleProtocol_Packet_P2PLan(ptszMsgBuffer, pInt_MsgLen, pppSt_ListClients, nListCount);

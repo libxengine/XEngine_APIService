@@ -158,6 +158,7 @@
     <ClCompile Include="XEngine_HTTPTask.cpp" />
     <ClCompile Include="XEngine_Network.cpp" />
     <ClCompile Include="XEngine_PluginTask.cpp" />
+    <ClCompile Include="XEngine_TaskGet\TaskGet_APIModule.cpp" />
     <ClCompile Include="XEngine_TaskGet\TaskGet_Bank.cpp" />
     <ClCompile Include="XEngine_TaskGet\TaskGet_IDCard.cpp" />
     <ClCompile Include="XEngine_TaskGet\TaskGet_IDRegion.cpp" />
@@ -187,6 +188,7 @@
     <ClInclude Include="XEngine_HTTPTask.h" />
     <ClInclude Include="XEngine_Network.h" />
     <ClInclude Include="XEngine_PluginTask.h" />
+    <ClInclude Include="XEngine_TaskGet\TaskGet_APIModule.h" />
     <ClInclude Include="XEngine_TaskGet\TaskGet_Bank.h" />
     <ClInclude Include="XEngine_TaskGet\TaskGet_IDCard.h" />
     <ClInclude Include="XEngine_TaskGet\TaskGet_IDRegion.h" />

@@ -785,6 +785,78 @@ extern "C" bool ModuleProtocol_Packet_Machine(XCHAR* ptszMSGBuffer, int* pInt_MS
 备注：
 *********************************************************************/
 extern "C" bool ModuleProtocol_Packet_OilInfo(XCHAR* ptszMSGBuffer, int* pInt_MSGLen, XENGINE_OILINFO* pSt_OilInfo);
+/********************************************************************
+函数名称：ModuleProtocol_Packet_PhoneInfo
+函数功能：电话号码信息打包函数
+ 参数.一：ptszMsgBuffer
+  In/Out：Out
+  类型：字符指针
+  可空：N
+  意思：输出打包的数据信息
+ 参数.二：pInt_MsgLen
+  In/Out：Out
+  类型：整数型指针
+  可空：N
+  意思：输出打包大小
+ 参数.三：pSt_PhoneInfo
+  In/Out：In/Out
+  类型：数据结构指针
+  可空：N
+  意思：输入要打包的数据
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+extern "C" bool ModuleProtocol_Packet_PhoneInfo(XCHAR* ptszMSGBuffer, int* pInt_MSGLen, XENGINE_PHONEINFO* pSt_PhoneInfo);
+/********************************************************************
+函数名称：ModuleProtocol_Packet_IPAddr
+函数功能：IP地址信息打包函数
+ 参数.一：ptszMsgBuffer
+  In/Out：Out
+  类型：字符指针
+  可空：N
+  意思：输出打包的数据信息
+ 参数.二：pInt_MsgLen
+  In/Out：Out
+  类型：整数型指针
+  可空：N
+  意思：输出打包大小
+ 参数.三：pSt_PhoneInfo
+  In/Out：In/Out
+  类型：数据结构指针
+  可空：N
+  意思：输入要打包的数据
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+extern "C" bool ModuleProtocol_Packet_IPAddr(XCHAR* ptszMSGBuffer, int* pInt_MSGLen, XENGINE_IPADDRINFO* pSt_IPAddrInfo);
+/********************************************************************
+函数名称：ModuleProtocol_Packet_MacInfo
+函数功能：MAC地址信息打包函数
+ 参数.一：ptszMsgBuffer
+  In/Out：Out
+  类型：字符指针
+  可空：N
+  意思：输出打包的数据信息
+ 参数.二：pInt_MsgLen
+  In/Out：Out
+  类型：整数型指针
+  可空：N
+  意思：输出打包大小
+ 参数.三：pSt_PhoneInfo
+  In/Out：In/Out
+  类型：数据结构指针
+  可空：N
+  意思：输入要打包的数据
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+extern "C" bool ModuleProtocol_Packet_MacInfo(XCHAR* ptszMSGBuffer, int* pInt_MSGLen, XENGINE_MACADDRINFO* pSt_MacInfo);
 /************************************************************************/
 /*                         导出的协议解析函数                           */
 /************************************************************************/

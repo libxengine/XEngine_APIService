@@ -1604,6 +1604,163 @@ bool CModuleProtocol_Packet::ModuleProtocol_Packet_OilInfo(XCHAR* ptszMSGBuffer,
 	return true;
 }
 /********************************************************************
+函数名称：ModuleProtocol_Packet_PhoneInfo
+函数功能：电话号码信息打包函数
+ 参数.一：ptszMsgBuffer
+  In/Out：Out
+  类型：字符指针
+  可空：N
+  意思：输出打包的数据信息
+ 参数.二：pInt_MsgLen
+  In/Out：Out
+  类型：整数型指针
+  可空：N
+  意思：输出打包大小
+ 参数.三：pSt_PhoneInfo
+  In/Out：In/Out
+  类型：数据结构指针
+  可空：N
+  意思：输入要打包的数据
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+bool CModuleProtocol_Packet::ModuleProtocol_Packet_PhoneInfo(XCHAR* ptszMSGBuffer, int* pInt_MSGLen, XENGINE_PHONEINFO* pSt_PhoneInfo)
+{
+	ModuleProtocol_IsErrorOccur = false;
+
+	if ((NULL == ptszMSGBuffer) || (NULL == pInt_MSGLen))
+	{
+		ModuleProtocol_IsErrorOccur = true;
+		ModuleProtocol_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PROTOCOL_PACKET_PARAMENT;
+		return false;
+	}
+	Json::Value st_JsonRoot;
+	Json::Value st_JsonObject;
+	Json::StreamWriterBuilder st_JsonBuilder;
+
+	st_JsonObject["tszAreaCode"] = pSt_PhoneInfo->tszAreaCode;
+	st_JsonObject["tszCity"] = pSt_PhoneInfo->tszCity;
+	st_JsonObject["tszISPName"] = pSt_PhoneInfo->tszISPName;
+	st_JsonObject["tszPhoneNumber"] = pSt_PhoneInfo->tszPhoneNumber;
+	st_JsonObject["tszProvincer"] = pSt_PhoneInfo->tszProvincer;
+
+	st_JsonRoot["code"] = 0;
+	st_JsonRoot["msg"] = "success";
+	st_JsonRoot["data"] = st_JsonObject;
+	st_JsonBuilder["emitUTF8"] = true;
+
+	*pInt_MSGLen = Json::writeString(st_JsonBuilder, st_JsonRoot).length();
+	memcpy(ptszMSGBuffer, Json::writeString(st_JsonBuilder, st_JsonRoot).c_str(), *pInt_MSGLen);
+	return true;
+}
+/********************************************************************
+函数名称：ModuleProtocol_Packet_IPAddr
+函数功能：IP地址信息打包函数
+ 参数.一：ptszMsgBuffer
+  In/Out：Out
+  类型：字符指针
+  可空：N
+  意思：输出打包的数据信息
+ 参数.二：pInt_MsgLen
+  In/Out：Out
+  类型：整数型指针
+  可空：N
+  意思：输出打包大小
+ 参数.三：pSt_PhoneInfo
+  In/Out：In/Out
+  类型：数据结构指针
+  可空：N
+  意思：输入要打包的数据
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+bool CModuleProtocol_Packet::ModuleProtocol_Packet_IPAddr(XCHAR* ptszMSGBuffer, int* pInt_MSGLen, XENGINE_IPADDRINFO* pSt_IPAddrInfo)
+{
+	ModuleProtocol_IsErrorOccur = false;
+
+	if ((NULL == ptszMSGBuffer) || (NULL == pInt_MSGLen))
+	{
+		ModuleProtocol_IsErrorOccur = true;
+		ModuleProtocol_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PROTOCOL_PACKET_PARAMENT;
+		return false;
+	}
+	Json::Value st_JsonRoot;
+	Json::Value st_JsonObject;
+	Json::StreamWriterBuilder st_JsonBuilder;
+
+	st_JsonObject["tszIPAddr"] = pSt_IPAddrInfo->tszIPAddr;
+	st_JsonObject["tszIPCity"] = pSt_IPAddrInfo->tszIPCity;
+	st_JsonObject["tszIPCountry"] = pSt_IPAddrInfo->tszIPCountry;
+	st_JsonObject["tszIPCounty"] = pSt_IPAddrInfo->tszIPCounty;
+	st_JsonObject["tszIPISP"] = pSt_IPAddrInfo->tszIPISP;
+	st_JsonObject["tszIPProvince"] = pSt_IPAddrInfo->tszIPProvince;
+
+	st_JsonRoot["code"] = 0;
+	st_JsonRoot["msg"] = "success";
+	st_JsonRoot["data"] = st_JsonObject;
+	st_JsonBuilder["emitUTF8"] = true;
+
+	*pInt_MSGLen = Json::writeString(st_JsonBuilder, st_JsonRoot).length();
+	BaseLib_OperatorCharset_AnsiToUTF(Json::writeString(st_JsonBuilder, st_JsonRoot).c_str(), ptszMSGBuffer, pInt_MSGLen);
+	return true;
+}
+/********************************************************************
+函数名称：ModuleProtocol_Packet_MacInfo
+函数功能：MAC地址信息打包函数
+ 参数.一：ptszMsgBuffer
+  In/Out：Out
+  类型：字符指针
+  可空：N
+  意思：输出打包的数据信息
+ 参数.二：pInt_MsgLen
+  In/Out：Out
+  类型：整数型指针
+  可空：N
+  意思：输出打包大小
+ 参数.三：pSt_PhoneInfo
+  In/Out：In/Out
+  类型：数据结构指针
+  可空：N
+  意思：输入要打包的数据
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+bool CModuleProtocol_Packet::ModuleProtocol_Packet_MacInfo(XCHAR* ptszMSGBuffer, int* pInt_MSGLen, XENGINE_MACADDRINFO* pSt_MacInfo)
+{
+	ModuleProtocol_IsErrorOccur = false;
+
+	if ((NULL == ptszMSGBuffer) || (NULL == pInt_MSGLen))
+	{
+		ModuleProtocol_IsErrorOccur = true;
+		ModuleProtocol_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PROTOCOL_PACKET_PARAMENT;
+		return false;
+	}
+	Json::Value st_JsonRoot;
+	Json::Value st_JsonObject;
+	Json::StreamWriterBuilder st_JsonBuilder;
+
+	st_JsonObject["bPrivate"] = pSt_MacInfo->bPrivate;
+	st_JsonObject["tszBlockType"] = pSt_MacInfo->tszBlockType;
+	st_JsonObject["tszMACPrefix"] = pSt_MacInfo->tszMACPrefix;
+	st_JsonObject["tszUPTime"] = pSt_MacInfo->tszUPTime;
+	st_JsonObject["tszVendorName"] = pSt_MacInfo->tszVendorName;
+
+	st_JsonRoot["code"] = 0;
+	st_JsonRoot["msg"] = "success";
+	st_JsonRoot["data"] = st_JsonObject;
+	st_JsonBuilder["emitUTF8"] = true;
+
+	*pInt_MSGLen = Json::writeString(st_JsonBuilder, st_JsonRoot).length();
+	memcpy(ptszMSGBuffer, Json::writeString(st_JsonBuilder, st_JsonRoot).c_str(), *pInt_MSGLen);
+	return true;
+}
+/********************************************************************
 函数名称：ModuleProtocol_Packet_P2PLan
 函数功能：响应同步局域网地址列表
  参数.一：ptszMsgBuffer

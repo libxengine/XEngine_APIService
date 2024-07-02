@@ -59,6 +59,12 @@ using namespace std;
 #include <XEngine_Include/XEngine_AVCodec/AVHelp_Error.h>
 #include "../../XEngine_Depend/XEngine_Module/XEngine_InfoReport/InfoReport_Define.h"
 #include "../../XEngine_Depend/XEngine_Module/XEngine_InfoReport/InfoReport_Error.h"
+#include "../../XEngine_DBDepend/XEngine_IPMacData/XEngine_Source/XIPMac_CommHdr.h"
+#include "../../XEngine_DBDepend/XEngine_IPMacData/XEngine_Source/XEngine_APIModuleIPMac/APIIPMac_Define.h"
+#include "../../XEngine_DBDepend/XEngine_IPMacData/XEngine_Source/XEngine_APIModuleIPMac/APIIPMac_Error.h"
+#include "../../XEngine_DBDepend/XEngine_PhoneData/Source/XPhone_CommHdr.h"
+#include "../../XEngine_DBDepend/XEngine_PhoneData/Source/C/XEngine_APIModulePhone/APIPhone_Define.h"
+#include "../../XEngine_DBDepend/XEngine_PhoneData/Source/C/XEngine_APIModulePhone/APIPhone_Error.h"
 //加载项目相关头文件
 #include "../../XEngine_BuildSwitch.h"
 #include "../../XEngine_UserProtocol.h"
@@ -101,6 +107,7 @@ using namespace std;
 #include "XEngine_TaskGet/TaskGet_Weather.h"
 #include "XEngine_TaskGet/TaskGet_IDRegion.h"
 #include "XEngine_TaskGet/TaskGet_Oil.h"
+#include "XEngine_TaskGet/TaskGet_APIModule.h"
 //rfc
 #include "XEngine_TaskRfc/RFCTask_Stun.h"
 #include "XEngine_TaskRfc/RFCTask_Ntp.h"
@@ -138,6 +145,8 @@ extern XENGINE_DEAMONAPPLIST st_DeamonAppConfig;
 #ifdef _WIN64
 #ifdef _DEBUG
 #pragma comment(lib,"../../x64/Debug/XEngine_InfoReport.lib")
+#pragma comment(lib,"../../x64/Debug/XEngine_APIModuleIPMac.lib")
+#pragma comment(lib,"../../x64/Debug/XEngine_APIModulePhone.lib")
 #pragma comment(lib,"../../x64/Debug/XEngine_ModuleConfigure.lib")
 #pragma comment(lib,"../../x64/Debug/XEngine_ModuleDatabase.lib")
 #pragma comment(lib,"../../x64/Debug/XEngine_ModuleProtocol.lib")
@@ -146,6 +155,8 @@ extern XENGINE_DEAMONAPPLIST st_DeamonAppConfig;
 #pragma comment(lib,"../../x64/Debug/XEngine_ModulePlugin.lib")
 #else
 #pragma comment(lib,"../../x64/Release/XEngine_InfoReport.lib")
+#pragma comment(lib,"../../x64/Release/XEngine_APIModuleIPMac.lib")
+#pragma comment(lib,"../../x64/Release/XEngine_APIModulePhone.lib")
 #pragma comment(lib,"../../x64/Release/XEngine_ModuleConfigure.lib")
 #pragma comment(lib,"../../x64/Release/XEngine_ModuleDatabase.lib")
 #pragma comment(lib,"../../x64/Release/XEngine_ModuleProtocol.lib")
@@ -156,6 +167,8 @@ extern XENGINE_DEAMONAPPLIST st_DeamonAppConfig;
 #else
 #ifdef _DEBUG
 #pragma comment(lib,"../../Debug/XEngine_InfoReport.lib")
+#pragma comment(lib,"../../Debug/XEngine_APIModuleIPMac.lib")
+#pragma comment(lib,"../../Debug/XEngine_APIModulePhone.lib")
 #pragma comment(lib,"../../Debug/XEngine_ModuleConfigure.lib")
 #pragma comment(lib,"../../Debug/XEngine_ModuleDatabase.lib")
 #pragma comment(lib,"../../Debug/XEngine_ModuleProtocol.lib")
@@ -164,6 +177,8 @@ extern XENGINE_DEAMONAPPLIST st_DeamonAppConfig;
 #pragma comment(lib,"../../Debug/XEngine_ModulePlugin.lib")
 #else
 #pragma comment(lib,"../../Release/XEngine_InfoReport.lib")
+#pragma comment(lib,"../../Release/XEngine_APIModuleIPMac.lib")
+#pragma comment(lib,"../../Release/XEngine_APIModulePhone.lib")
 #pragma comment(lib,"../../Release/XEngine_ModuleConfigure.lib")
 #pragma comment(lib,"../../Release/XEngine_ModuleDatabase.lib")
 #pragma comment(lib,"../../Release/XEngine_ModuleProtocol.lib")

@@ -49,6 +49,9 @@ void ServiceApp_Stop(int signo)
 		ModuleDatabase_Machine_Destory();
 		ModuleDatabase_OilInfo_Destory();
 		//销毁其他
+		APIModule_IPAddr_UnInit();
+		APIModule_MACInfo_UnInit();
+		APIModule_PhoneNumber_UnInit();
 		ModulePlugin_Loader_Destory();
 		ModuleHelp_P2PClient_Destory();
 		//销毁日志资源
@@ -434,6 +437,30 @@ int main(int argc, char** argv)
 	//展示能力
 	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("启动服务中,加载的Lib插件:%d 个,Lua插件:%d 个"), st_PluginLibConfig.pStl_ListPlugin->size(), st_PluginLuaConfig.pStl_ListPlugin->size());
 
+	if (st_ServiceConfig.st_XAPIModule.bEnable)
+	{
+		if (!APIModule_IPAddr_Init(st_ServiceConfig.st_XAPIModule.tszDBIPAddr))
+		{
+			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("启动服务中，启动IP地址数据查询服务:%s 失败，错误：%lX"), st_ServiceConfig.st_XAPIModule.tszDBIPAddr, APIIPMac_GetLastError());
+		}
+		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("启动服务中，启动IP地址数据查询服务:%s 成功"), st_ServiceConfig.st_XAPIModule.tszDBIPAddr);
+
+		if (!APIModule_MACInfo_Init(st_ServiceConfig.st_XAPIModule.tszDBMac))
+		{
+			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("启动服务中，启动MAC地址数据查询服务:%s 失败，错误：%lX"), st_ServiceConfig.st_XAPIModule.tszDBMac, APIIPMac_GetLastError());
+		}
+		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("启动服务中，启动MAC地址数据查询服务:%s 成功"), st_ServiceConfig.st_XAPIModule.tszDBMac);
+
+		if (!APIModule_PhoneNumber_Init(st_ServiceConfig.st_XAPIModule.tszDBPhone))
+		{
+			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("启动服务中，启动电话号码数据查询服务:%s 失败，错误：%lX"), st_ServiceConfig.st_XAPIModule.tszDBPhone, APIPhone_GetLastError());
+		}
+		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("启动服务中，启动电话号码数据查询服务:%s 成功"), st_ServiceConfig.st_XAPIModule.tszDBPhone);
+	}
+	else
+	{
+		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_WARN, _X("启动服务中，数据查询服务没有启用"));
+	}
 	//发送信息报告
 	if (st_ServiceConfig.st_XReport.bEnable)
 	{
@@ -480,6 +507,9 @@ XENGINE_SERVICEAPP_EXIT:
 		ModuleDatabase_Machine_Destory();
 		ModuleDatabase_OilInfo_Destory();
 		//销毁其他
+		APIModule_IPAddr_UnInit();
+		APIModule_MACInfo_UnInit();
+		APIModule_PhoneNumber_UnInit();
 		ModulePlugin_Loader_Destory();
 		ModuleHelp_P2PClient_Destory();
 		//销毁日志资源
