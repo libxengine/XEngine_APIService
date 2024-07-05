@@ -1,3 +1,27 @@
+XEngine_APIService V3.6.0.1001
+
+增加:mac地址供应商查询
+增加:ip和phone子模块替换插件模块
+增加:机器信息最后更新日期
+更新:ip和phone数据库并且添加mac数据库
+更新:配置文件以及增加数据库配置
+修改:机器信息的编码改为用户信息
+修改:机器信息不在兼容以往的版本
+修正:机器信息数据查询错误
+修正:windows石油查询名称乱码问题
+修正:windows下翻译乱码问题
+
+added:mac address vendor query
+added:ip sub module to plugin instead
+added:last update time for machine
+update:ip phone database and added mac addr database
+update:configure file and added apimodule database
+modify:code to user for machine info
+modify:not compatible with previous version
+fixed:sql query is incorrect for machine
+fixed:oil query name is Garbled on window
+fixed:transfer language chinese Garbled characters on windows
+======================================================================================
 XEngine_APIService V3.5.0.1001
 
 增加:机器信息收集增加服务名字段

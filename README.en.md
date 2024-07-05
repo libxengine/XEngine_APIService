@@ -54,6 +54,7 @@ Support privatization deployment, free, safe, open source, controllable
 33. heartbeat 
 34. STUN NAT Protocol 
 35. NTP Time Sync Protocol
+36. mac address vendor query
 
 ## install
 
