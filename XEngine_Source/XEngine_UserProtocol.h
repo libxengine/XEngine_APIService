@@ -235,8 +235,10 @@ typedef struct
 	XCHAR tszMachineText[2048];
 	XCHAR tszServiceName[MAX_PATH];
 	XCHAR tszMachineName[MAX_PATH];
+	XCHAR tszMachineUser[MAX_PATH];
 	XCHAR tszMachineCode[MAX_PATH];
 	XCHAR tszMachineSystem[MAX_PATH];
+	XCHAR tszLastTime[64];
 	XCHAR tszCreateTime[64];
 	__int64x nTimeNumber;
 	int nID;

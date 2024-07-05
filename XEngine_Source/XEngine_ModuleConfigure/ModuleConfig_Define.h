@@ -98,6 +98,13 @@ typedef struct
 	struct
 	{
 		bool bEnable;
+		XCHAR tszDBPhone[MAX_PATH];
+		XCHAR tszDBMac[MAX_PATH];
+		XCHAR tszDBIPAddr[MAX_PATH];
+	}st_XAPIModule;
+	struct
+	{
+		bool bEnable;
 		XCHAR tszAPIUrl[MAX_PATH];
 		XCHAR tszServiceName[128];
 	}st_XReport;

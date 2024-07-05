@@ -124,6 +124,10 @@ bool CModuleDatabase_OilInfo::ModuleDatabase_OilInfo_Query(XENGINE_OILINFO* pSt_
 	{
 		XCHAR** pptszResult = DataBase_MySQL_GetResult(xhDBSQL, xhTable);
 
+		if (NULL != pptszResult[0])
+		{
+			_tcsxcpy(pSt_OilInfo->tszCityStr, pptszResult[0]);
+		}
 		if (NULL != pptszResult[1])
 		{
 			pSt_OilInfo->dlValue98 = _ttxof(pptszResult[1]);

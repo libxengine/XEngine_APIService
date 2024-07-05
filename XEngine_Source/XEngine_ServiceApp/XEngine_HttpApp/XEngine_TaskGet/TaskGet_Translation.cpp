@@ -25,9 +25,17 @@ bool HTTPTask_TaskGet_Translation(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer,
 	XCHAR tszMD5Codec[MAX_PATH] = {};
 	XCHAR tszMD5Str[MAX_PATH] = {};
 	XCHAR tszURLStr[4096] = {};
+	XCHAR tszUTFBuffer[2048] = {};
+
+#ifdef _MSC_BUILD
+	int nGLen = _tcsxlen(lpszMsgBuffer);
+	BaseLib_OperatorCharset_AnsiToUTF(lpszMsgBuffer, tszUTFBuffer, &nGLen);
+#else
+	_tcsxscpy(tszUTFBuffer, lpszMsgBuffer, sizeof(tszUTFBuffer));
+#endif
 
 	int nRandomNumber = rand();
-	int nLen = _xstprintf(tszSignStr, _X("%s%s%d%s"), st_ServiceConfig.st_XApi.st_TranslationInfo.tszAPPID, lpszMsgBuffer, nRandomNumber, st_ServiceConfig.st_XApi.st_TranslationInfo.tszAPPKey);
+	int nLen = _xstprintf(tszSignStr, _X("%s%s%d%s"), st_ServiceConfig.st_XApi.st_TranslationInfo.tszAPPID, tszUTFBuffer, nRandomNumber, st_ServiceConfig.st_XApi.st_TranslationInfo.tszAPPKey);
 
 	OPenSsl_Api_Digest(tszSignStr, (XBYTE*)tszMD5Codec, &nLen);
 	for (int i = 0; i < 16; i++)
@@ -42,16 +50,17 @@ bool HTTPTask_TaskGet_Translation(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer,
 	ModuleHelp_Translation_Convert((ENUM_XENGINE_APISERVICE_TRANSLATION_TYPE)_ttxoi(lpszSrcStr), tszLanguageSrc);
 	ModuleHelp_Translation_Convert((ENUM_XENGINE_APISERVICE_TRANSLATION_TYPE)_ttxoi(lpszDstStr), tszLanauageDst);
 
-	_xstprintf(tszURLStr, _X("%s?appid=%s&q=%s&from=%s&to=%s&salt=%d&sign=%s"), st_ServiceConfig.st_XApi.tszTranslationUrl, st_ServiceConfig.st_XApi.st_TranslationInfo.tszAPPID, lpszMsgBuffer, tszLanguageSrc, tszLanauageDst, nRandomNumber, tszMD5Str);
+	_xstprintf(tszURLStr, _X("%s?appid=%s&q=%s&from=%s&to=%s&salt=%d&sign=%s"), st_ServiceConfig.st_XApi.tszTranslationUrl, st_ServiceConfig.st_XApi.st_TranslationInfo.tszAPPID, tszUTFBuffer, tszLanguageSrc, tszLanauageDst, nRandomNumber, tszMD5Str);
 	APIClient_Http_Request(_X("GET"), tszURLStr, NULL, NULL, &ptszBodyBuffer, &nBLen);
+
 	//解析数据
 	if (!ModuleProtocol_Parse_Translation(ptszBodyBuffer, nBLen, &st_LanguageInfo))
 	{
 		ModuleProtocol_Packet_LanguageQuery(tszPktBuffer, &nPktLen, NULL, 1002, _X("translation failed"));
-		BaseLib_OperatorMemory_FreeCStyle((XPPMEM)&ptszBodyBuffer);
 		HttpProtocol_Server_SendMsgEx(xhHTTPPacket, tszMsgBuffer, &nMsgLen, &st_HDRParam, tszPktBuffer, nPktLen);
 		XEngine_Network_Send(lpszClientAddr, tszMsgBuffer, nMsgLen);
-		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("HTTP客户端:%s,请求的翻译失败,原始字符串:%s"), lpszClientAddr, lpszMsgBuffer);
+		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("HTTP客户端:%s,请求的翻译失败,原始字符串:%s,错误数据:%s"), lpszClientAddr, lpszMsgBuffer, ptszBodyBuffer);
+		BaseLib_OperatorMemory_FreeCStyle((XPPMEM)&ptszBodyBuffer);
 		return false;
 	}
 	//打包发送

@@ -114,6 +114,9 @@ bool HTTPTask_TastPost_Handle(RFCCOMPONENTS_HTTP_REQPARAM* pSt_HTTPParam, LPCXST
 	LPCXSTR lpszParamWeather = _X("weather");
 	LPCXSTR lpszParamRegion = _X("region");
 	LPCXSTR lpszParamOil = _X("oil");
+	LPCXSTR lpszParamPhone = _X("phone");
+	LPCXSTR lpszParamIPAddr = _X("ip");
+	LPCXSTR lpszParamMacInfo = _X("mac");
 	//post
 	LPCXSTR lpszParamP2PClient = _X("p2p");
 	LPCXSTR lpszParamZIPCode = _X("zipcode");
@@ -444,6 +447,16 @@ bool HTTPTask_TastPost_Handle(RFCCOMPONENTS_HTTP_REQPARAM* pSt_HTTPParam, LPCXST
 
 			BaseLib_OperatorString_GetKeyValue(pptszList[1], "=", tszKey, tszValue);
 			HTTPTask_TaskGet_Oil(lpszClientAddr, tszValue);
+		}
+		else if ((0 == _tcsxnicmp(lpszParamPhone, tszValue, _tcsxlen(lpszParamPhone))) || (0 == _tcsxnicmp(lpszParamIPAddr, tszValue, _tcsxlen(lpszParamIPAddr))) || (0 == _tcsxnicmp(lpszParamMacInfo, tszValue, _tcsxlen(lpszParamMacInfo))))
+		{
+			//phone:http://127.0.0.1:5501/api?function=phone&param=1369943
+			//ip:http://127.0.0.1:5501/api?function=ip&param=117.172.221.14
+			//mac:http://127.0.0.1:5501/api?function=mac&param=00:00:0C
+			memset(tszMsgBuffer, '\0', sizeof(tszMsgBuffer));
+
+			BaseLib_OperatorString_GetKeyValue(pptszList[1], "=", tszKey, tszMsgBuffer);
+			HTTPTask_TaskGet_APIModule(lpszClientAddr, tszValue, tszMsgBuffer);
 		}
 		else
 		{

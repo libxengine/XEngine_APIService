@@ -62,6 +62,12 @@
             "bDeamon":false
         }
     },
+    "XAPIModule": {
+        "bEnable": true,
+        "tszDBPhone": "./XEngine_DBFile/phone.xdb",
+        "tszDBMac": "./XEngine_DBFile/macaddr.xdb",
+        "tszDBIPAddr": "./XEngine_DBFile/ip2region.xdb"
+    },
     "XReport":{
         "bEnable":true,
         "tszAPIUrl":"http://app.xyry.org:5501/api?function=machine",
