@@ -7,16 +7,16 @@ static XNETHANDLE xhAudio = 0;
 static XNETHANDLE xhVideo = 0;
 static XHANDLE xhStream = NULL;
 
-void CALLBACK HTTPTask_TaskPost_CBVideo(uint8_t* punStringY, int nYLen, uint8_t* punStringU, int nULen, uint8_t* punStringV, int nVLen, AVCOLLECT_TIMEINFO* pSt_TimeInfo, XPVOID lParam)
+void CALLBACK HTTPTask_TaskPost_CBVideo(uint8_t* ptszAVBuffer, int nAVLen, AVCOLLECT_TIMEINFO* pSt_TimeInfo, XPVOID lParam)
 {
-	if (!XClient_StreamPush_LiveVideo(xhStream, punStringY, nYLen, punStringU, nULen, punStringV, nVLen))
+	if (!XClient_StreamPush_LiveVideo(xhStream, ptszAVBuffer, nAVLen))
 	{
 		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("屏幕采集器,推流编码失败,需要关闭推流服务,错误码:%lX"), StreamClient_GetLastError());
 	}
 }
-void CALLBACK HTTPTask_TaskPost_CBAudio(uint8_t* punStringAudio, int nVLen, AVCOLLECT_TIMEINFO* pSt_TimeInfo, XPVOID lParam)
+void CALLBACK HTTPTask_TaskPost_CBAudio(uint8_t* ptszAVBuffer, int nAVLen, AVCOLLECT_TIMEINFO* pSt_TimeInfo, XPVOID lParam)
 {
-	if (!XClient_StreamPush_LiveAudio(xhStream, punStringAudio, nVLen))
+	if (!XClient_StreamPush_LiveAudio(xhStream, ptszAVBuffer, nAVLen))
 	{
 		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("音频采集器,推流编码失败,需要关闭推流服务,错误码:%lX"), StreamClient_GetLastError());
 	}
@@ -309,7 +309,7 @@ bool HTTPTask_TaskPost_BackService(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer
 			AVCollect_Audio_GetInfo(xhSound, &st_AVInfo);
 			//音频编码参数
 			st_AVInfo.st_AudioInfo.enAVCodec = ENUM_XENGINE_AVCODEC_AUDIO_TYPE_AAC;
-			st_AVInfo.st_AudioInfo.nSampleFmt = ENUM_AVCOLLECT_AUDIO_SAMPLE_FMT_FLTP;
+			st_AVInfo.st_AudioInfo.nSampleFmt = ENUM_AVCODEC_AUDIO_SAMPLEFMT_FLTP;
 			if (!AudioCodec_Stream_EnInit(&xhAudio, &st_AVInfo.st_AudioInfo))
 			{
 				st_HDRParam.nHttpCode = 400;
@@ -319,7 +319,7 @@ bool HTTPTask_TaskPost_BackService(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer
 				return false;
 			}
 			int nLen = 0;
-			if (!AudioCodec_Stream_SetResample(xhAudio, &nLen, st_AVInfo.st_AudioInfo.nSampleRate, st_AVInfo.st_AudioInfo.nSampleRate, (ENUM_AVCOLLECT_AUDIOSAMPLEFORMAT)st_AVInfo.st_AudioInfo.nSampleFmt, ENUM_AVCOLLECT_AUDIO_SAMPLE_FMT_FLTP, st_AVInfo.st_AudioInfo.nChannel, st_AVInfo.st_AudioInfo.nChannel))
+			if (!AudioCodec_Stream_SetResample(xhAudio, &nLen, st_AVInfo.st_AudioInfo.nSampleRate, st_AVInfo.st_AudioInfo.nSampleRate, (ENUM_AVCODEC_AUDIO_SAMPLEFMT)st_AVInfo.st_AudioInfo.nSampleFmt, ENUM_AVCODEC_AUDIO_SAMPLEFMT_FLTP, st_AVInfo.st_AudioInfo.nChannel, st_AVInfo.st_AudioInfo.nChannel))
 			{
 				st_HDRParam.nHttpCode = 400;
 				HttpProtocol_Server_SendMsgEx(xhHTTPPacket, ptszSDBuffer, &nSDLen, &st_HDRParam);
