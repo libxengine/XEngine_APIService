@@ -25,6 +25,12 @@ APIMODULE_IPMAC_PATH = ./XEngine_DBDepend/XEngine_IPMacData/XEngine_Source/XEngi
 
 APP_HTTP_PATH = ./XEngine_ServiceApp/XEngine_HttpApp
 
+ifeq ($(PLATFORM),linux)
+	FILEEXT = so
+else ifeq ($(PLATFORM),mac)
+	FILEEXT = dylib
+endif
+
 XENGINE_MODULES = libjsoncpp.so libXEngine_InfoReport.so          \
 				  libXEngine_ModuleConfigure.so libXEngine_ModuleDatabase.so libXEngine_ModuleProtocol.so libXEngine_ModuleSystem.so libXEngine_ModuleHelp.so libXEngine_ModulePlugin.so  \
 				  libModulePlugin_Zodiac.so libModulePlugin_Password.so libModulePlugin_Timezone.so libModulePlugin_BMIndex.so  libModulePlugin_Meter.so \
@@ -60,26 +66,26 @@ libModulePlugin_Meter.so:
 
 libjsoncpp.so:
 ifeq ($(FLAGS), InstallAll)
-	cp $(THIRDPART_MODULE_JSONCPP)/libjsoncpp.so ../XEngine_Release/
+	cp $(THIRDPART_MODULE_JSONCPP)/libjsoncpp.$(FILEEXT) ../XEngine_Release/
 else
 	make -C $(THIRDPART_MODULE_JSONCPP) PLATFORM=$(PLATFORM) $(FLAGS)
 endif
 libXEngine_InfoReport.so:
 ifeq ($(FLAGS), InstallAll)
-	cp $(THIRDPART_MODULE_REPORT)/libXEngine_InfoReport.so ../XEngine_Release/
+	cp $(THIRDPART_MODULE_REPORT)/libXEngine_InfoReport.$(FILEEXT) ../XEngine_Release/
 else
 	make -C $(THIRDPART_MODULE_REPORT) PLATFORM=$(PLATFORM) $(FLAGS)
 endif
 
 libXEngine_APIModulePhone.so:
 ifeq ($(FLAGS), InstallAll)
-	cp $(APIMODULE_PHONE_PATH)/libXEngine_APIModulePhone.so ../XEngine_Release/
+	cp $(APIMODULE_PHONE_PATH)/libXEngine_APIModulePhone.$(FILEEXT) ../XEngine_Release/
 else
 	make -C $(APIMODULE_PHONE_PATH) PLATFORM=$(PLATFORM) $(FLAGS)
 endif
 libXEngine_APIModuleIPMac.so:
 ifeq ($(FLAGS), InstallAll)
-	cp $(APIMODULE_IPMAC_PATH)/libXEngine_APIModuleIPMac.so ../XEngine_Release/
+	cp $(APIMODULE_IPMAC_PATH)/libXEngine_APIModuleIPMac.$(FILEEXT) ../XEngine_Release/
 else
 	make -C $(APIMODULE_IPMAC_PATH) PLATFORM=$(PLATFORM) $(FLAGS)
 endif
