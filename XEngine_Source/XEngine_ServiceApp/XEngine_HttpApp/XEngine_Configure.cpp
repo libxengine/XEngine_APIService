@@ -48,6 +48,10 @@ bool XEngine_Configure_Parament(int argc, char** argv)
 			st_ServiceConfig.st_XReload.bReload = true;
 			st_ServiceConfig.st_XReload.byCode = _ttxoi(argv[i + 1]);
 		}
+		else if (0 == _tcsxcmp("-t", argv[i]))
+		{
+			bIsTest = true;
+		}
 	}
 
 	return true;

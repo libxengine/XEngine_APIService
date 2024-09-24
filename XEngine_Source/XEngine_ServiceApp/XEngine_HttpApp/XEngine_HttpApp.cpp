@@ -11,6 +11,7 @@
 //    History:
 *********************************************************************/
 bool bIsRun = false;
+bool bIsTest = false;
 XHANDLE xhLog = NULL;
 //HTTP服务器
 XHANDLE xhHTTPSocket = NULL;
@@ -105,6 +106,7 @@ int main(int argc, char** argv)
 	WSAStartup(MAKEWORD(2, 2), &st_WSAData);
 #endif
 	bIsRun = true;
+	int nRet = -1;
 	HELPCOMPONENTS_XLOG_CONFIGURE st_XLogConfig;
 	THREADPOOL_PARAMENT** ppSt_ListHTTPParam;
 
@@ -462,7 +464,7 @@ int main(int argc, char** argv)
 		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_WARN, _X("启动服务中，数据查询服务没有启用"));
 	}
 	//发送信息报告
-	if (st_ServiceConfig.st_XReport.bEnable)
+	if (st_ServiceConfig.st_XReport.bEnable && !bIsTest)
 	{
 		if (InfoReport_APIMachine_Send(st_ServiceConfig.st_XReport.tszAPIUrl, st_ServiceConfig.st_XReport.tszServiceName))
 		{
@@ -481,15 +483,27 @@ int main(int argc, char** argv)
 	}
 
 	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("所有服务成功启动,服务运行中,XEngine版本:%s%s,发行版本次数:%d,当前版本：%s。。。"), BaseLib_OperatorVer_XNumberStr(), BaseLib_OperatorVer_XTypeStr(), st_ServiceConfig.st_XVer.pStl_ListVer->size(), st_ServiceConfig.st_XVer.pStl_ListVer->front().c_str());
-	while (true)
+	while (bIsRun)
 	{
+		if (bIsTest)
+		{
+			nRet = 0;
+			break;
+		}
 		std::this_thread::sleep_for(std::chrono::seconds(1));
 	}
 
 XENGINE_SERVICEAPP_EXIT:
 	if (bIsRun)
 	{
-		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("有服务启动失败,服务器退出..."));
+		if (bIsTest && 0 == nRet)
+		{
+			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("服务启动完毕，测试程序退出..."));
+		}
+		else
+		{
+			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("有服务启动失败,服务器退出..."));
+		}
 		bIsRun = false;
 		//销毁HTTP资源
 		NetCore_TCPXCore_DestroyEx(xhHTTPSocket);
@@ -523,6 +537,5 @@ XENGINE_SERVICEAPP_EXIT:
 #ifdef _MSC_BUILD
 	WSACleanup();
 #endif
-	getchar();
-	return 0;
+	return nRet;
 }
