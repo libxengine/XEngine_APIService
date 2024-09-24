@@ -31,7 +31,7 @@ bool HTTPTask_TaskGet_Translation(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer,
 	int nGLen = _tcsxlen(lpszMsgBuffer);
 	BaseLib_OperatorCharset_AnsiToUTF(lpszMsgBuffer, tszUTFBuffer, &nGLen);
 #else
-	_tcsxscpy(tszUTFBuffer, lpszMsgBuffer, sizeof(tszUTFBuffer));
+	_xstrcpy(tszUTFBuffer, lpszMsgBuffer, sizeof(tszUTFBuffer));
 #endif
 
 	int nRandomNumber = rand();
