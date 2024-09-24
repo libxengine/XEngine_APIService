@@ -1,38 +1,59 @@
-name: C++ Build with Dependencies
+name: windows build workflows
 
-#on: [push] # 触发条件，推送和拉取请求时，
 on:
-  workflow_dispatch:  # 添加这行来启用手动触发
+  push:
+    branches: [ "develop" ]
+  pull_request:
+    branches: [ "develop" ]
   
 permissions:
-  contents: write
+  contents: read
   
 jobs:
   build:
     strategy:
+      # Set fail-fast to false to ensure that feedback is delivered for all matrix combinations. Consider changing this to true when your workflow is stable.
+      fail-fast: false
       matrix:
-        configuration: [Release]
-        platform: [x86]
+        configuration: [Debug ,Release]
+        platform: [x86 ,x64]
 
     runs-on: windows-latest # 最新的 Windows 环境
 
     steps:
        # 检出您的主仓库代码
       - name: Checkout main repository code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
+        with:
+          ref: 'develop'
         
        # 检出依赖的xengine仓库到指定的xengine目录
       - name: Checkout dependency repository (xengine)
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
-          repository: libxengine/xengine
-          path: xengine
+          repository: libxengine/libxengine
+          path: libxengine
+          
+      - name: sub module checkout (opensource)
+        run: |
+            git submodule init
+            git submodule update
+        shell: pwsh
 
-      - name: Checkout dependency repository (vcpkg)
-        uses: actions/checkout@v3
+      - name: vcpkg dependency repository
+        uses: actions/checkout@v4
         with:
-          repository: https://github.com/microsoft/vcpkg.git
-          path: vcpkg
+          repository: microsoft/vcpkg
+          path: vcpkg     
+         
+      - name: sub module checkout (opensource)
+        run: |
+            cd vcpkg
+            ./bootstrap-vcpkg.bat
+            ./vcpkg.exe install lua:x86-windows opencv[contrib]:x86-windows libqrencode:x86-windows lua:x64-windows opencv[contrib]:x64-windows libqrencode:x64-windows
+            ./vcpkg.exe integrate install
+        shell: pwsh
+        
 
       # 设置依赖库的环境变量
       - name: Set up Dependency Environment Variables
@@ -44,7 +65,28 @@ jobs:
         
       # 配置 MSBuild 的路径，准备构建 VC++ 项目
       - name: Setup MSBuild
-        uses: microsoft/setup-msbuild@v1.0.2
+        uses: microsoft/setup-msbuild@v2
       #编译
       - name: Build Solution
         run: msbuild XEngine_Source/XEngine.sln /p:Configuration=${{ matrix.configuration }} /p:Platform=${{ matrix.platform }}
+      #测试
+      - name: Conditional Step for x86 Release
+        if: matrix.configuration == 'Release' && matrix.platform == 'x86'
+        run: |
+          cp -r XEngine_Source/Release/*.dll XEngine_Release/
+          cp -r XEngine_Source/Release/*.exe XEngine_Release/
+          cp -r XEngine_Source/VSCopy_x86.bat XEngine_Release/
+          cd XEngine_Release
+          ./VSCopy_x86.bat
+          ./XEngine_AuthorizeService.exe -t
+        shell: pwsh
+      - name: Conditional Step for x86 Debug
+        if: matrix.configuration == 'Debug' && matrix.platform == 'x86'
+        run: |
+          cp -r XEngine_Source/Debug/*.dll XEngine_Release/
+          cp -r XEngine_Source/Debug/*.exe XEngine_Release/
+          cp -r XEngine_Source/VSCopy_x86.bat XEngine_Release/
+          cd XEngine_Release
+          ./VSCopy_x86.bat
+          ./XEngine_AuthorizeService.exe -t
+        shell: pwsh
