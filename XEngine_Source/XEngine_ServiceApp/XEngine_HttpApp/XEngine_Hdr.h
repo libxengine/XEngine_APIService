@@ -13,6 +13,7 @@
 #include <tchar.h>
 #else
 #include <unistd.h>
+#include <pthread.h>
 #include <sys/wait.h>
 #include <sys/types.h>
 #include <arpa/inet.h>

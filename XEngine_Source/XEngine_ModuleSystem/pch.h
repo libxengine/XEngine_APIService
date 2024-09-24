@@ -14,6 +14,7 @@
 #include <shlobj.h>
 #else
 #include <unistd.h>
+#include <pthread.h>
 #endif
 #endif //PCH_H
 #include <stdio.h>
