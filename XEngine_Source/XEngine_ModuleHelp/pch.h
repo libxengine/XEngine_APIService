@@ -26,7 +26,6 @@
 #include <shared_mutex>
 #include <unordered_map>
 #if _XENGINE_BUILD_SWITCH_OPENCV == 1
-#include <opencv2/core.hpp>
 #include <opencv2/opencv.hpp>
 #include <opencv2/core/utils/logger.hpp>
 #include <opencv2/wechat_qrcode.hpp>
