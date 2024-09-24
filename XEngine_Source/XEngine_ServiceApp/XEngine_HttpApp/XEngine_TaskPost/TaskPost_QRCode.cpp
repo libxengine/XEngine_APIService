@@ -18,12 +18,12 @@ bool HTTPTask_TaskPost_QRCode(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer, int
 #else
 	int nSDLen = 0;
 	int nRVLen = 0;
-	XCHAR* ptszSDBuffer = (XCHAR*)malloc(XENGIEN_APISERVICE_BUFFER_SIZE);
-	XCHAR* ptszRVBuffer = (XCHAR*)malloc(XENGIEN_APISERVICE_BUFFER_SIZE);
+	XCHAR* ptszSDBuffer = (XCHAR*)malloc(XENGINE_MEMORY_SIZE_MAX);
+	XCHAR* ptszRVBuffer = (XCHAR*)malloc(XENGINE_MEMORY_SIZE_MAX);
 	XENGINE_QRCODE st_QRCode;
 	
-	memset(ptszSDBuffer, '\0', XENGIEN_APISERVICE_BUFFER_SIZE);
-	memset(ptszRVBuffer, '\0', XENGIEN_APISERVICE_BUFFER_SIZE);
+	memset(ptszSDBuffer, '\0', XENGINE_MEMORY_SIZE_MAX);
+	memset(ptszRVBuffer, '\0', XENGINE_MEMORY_SIZE_MAX);
 	memset(&st_QRCode, '\0', sizeof(XENGINE_QRCODE));
 	//0创建,1解析
 	if (0 == nType)

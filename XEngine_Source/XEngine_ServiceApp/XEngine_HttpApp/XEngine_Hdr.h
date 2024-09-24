@@ -46,7 +46,6 @@ using namespace std;
 #include <XEngine_Include/XEngine_RfcComponents/NatProtocol_Error.h>
 #include <XEngine_Include/XEngine_RfcComponents/NTPProtocol_Define.h>
 #include <XEngine_Include/XEngine_RfcComponents/NTPProtocol_Error.h>
-#include <XEngine_Include/XEngine_SystemSdk/ProcFile_Define.h>
 #include <XEngine_Include/XEngine_SystemSdk/SystemApi_Define.h>
 #include <XEngine_Include/XEngine_SystemSdk/SystemApi_Error.h>
 #include <XEngine_Include/XEngine_AVCodec/AVCollect_Define.h>
@@ -122,8 +121,6 @@ using namespace std;
 //    Purpose:     公用头文件
 //    History:
 *********************************************************************/
-#define XENGIEN_APISERVICE_BUFFER_SIZE (1024 * 1024 * 10)
-
 extern bool bIsRun;
 extern bool bIsTest;
 extern XHANDLE xhLog;

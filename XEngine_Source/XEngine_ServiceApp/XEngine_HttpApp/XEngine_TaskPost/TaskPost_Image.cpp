@@ -20,13 +20,13 @@ bool HTTPTask_TaskPost_Image(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer, int 
 	int nRVLen = 0;
 	XCHAR tszHTTPKey[64];
 	XCHAR tszHTTPVlu[64];
-	XCHAR* ptszSDBuffer = (XCHAR*)malloc(XENGIEN_APISERVICE_BUFFER_SIZE);
-	XCHAR* ptszRVBuffer = (XCHAR*)malloc(XENGIEN_APISERVICE_BUFFER_SIZE);
+	XCHAR* ptszSDBuffer = (XCHAR*)malloc(XENGINE_MEMORY_SIZE_MAX);
+	XCHAR* ptszRVBuffer = (XCHAR*)malloc(XENGINE_MEMORY_SIZE_MAX);
 	
 	memset(tszHTTPKey, '\0', sizeof(tszHTTPKey));
 	memset(tszHTTPVlu, '\0', sizeof(tszHTTPVlu));
-	memset(ptszSDBuffer, '\0', XENGIEN_APISERVICE_BUFFER_SIZE);
-	memset(ptszRVBuffer, '\0', XENGIEN_APISERVICE_BUFFER_SIZE);
+	memset(ptszSDBuffer, '\0', XENGINE_MEMORY_SIZE_MAX);
+	memset(ptszRVBuffer, '\0', XENGINE_MEMORY_SIZE_MAX);
 	
 	BaseLib_OperatorString_GetKeyValue((*ppptszList)[1], "=", tszHTTPKey, tszHTTPVlu);
 	int nOPCode = _ttxoi(tszHTTPVlu);

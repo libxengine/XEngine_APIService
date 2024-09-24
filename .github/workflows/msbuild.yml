@@ -46,14 +46,22 @@ jobs:
           repository: microsoft/vcpkg
           path: vcpkg     
          
-      - name: sub module checkout (opensource)
+      - name: vcpkg install (x86)
+        if: matrix.platform == 'x86'  
         run: |
             cd vcpkg
             ./bootstrap-vcpkg.bat
-            ./vcpkg.exe install lua:x86-windows opencv[contrib]:x86-windows libqrencode:x86-windows lua:x64-windows opencv[contrib]:x64-windows libqrencode:x64-windows
+            ./vcpkg.exe install lua:x86-windows opencv[contrib]:x86-windows libqrencode:x86-windows
             ./vcpkg.exe integrate install
         shell: pwsh
-        
+      - name: vcpkg install (x64)
+        if: matrix.platform == 'x64'  
+        run: |
+            cd vcpkg
+            ./bootstrap-vcpkg.bat
+            ./vcpkg.exe install lua:x64-windows opencv[contrib]:x64-windows libqrencode:x64-windows
+            ./vcpkg.exe integrate install
+        shell: pwsh
 
       # 设置依赖库的环境变量
       - name: Set up Dependency Environment Variables
@@ -78,7 +86,7 @@ jobs:
           cp -r XEngine_Source/VSCopy_x86.bat XEngine_Release/
           cd XEngine_Release
           ./VSCopy_x86.bat
-          ./XEngine_AuthorizeService.exe -t
+          ./XEngine_HttpApp.exe -t
         shell: pwsh
       - name: Conditional Step for x86 Debug
         if: matrix.configuration == 'Debug' && matrix.platform == 'x86'
@@ -88,5 +96,5 @@ jobs:
           cp -r XEngine_Source/VSCopy_x86.bat XEngine_Release/
           cd XEngine_Release
           ./VSCopy_x86.bat
-          ./XEngine_AuthorizeService.exe -t
+          ./XEngine_HttpApp.exe -t
         shell: pwsh
