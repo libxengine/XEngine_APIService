@@ -217,7 +217,7 @@ int main(int argc, char** argv)
 		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_WARN, _X("启动服务中,插件系统被禁用"));
 	}
 	//初始化数据库
-	if (st_ServiceConfig.st_XSql.bEnable)
+	if (st_ServiceConfig.st_XSql.bEnable && !bIsTest)
 	{
 		if (!ModuleDatabase_IDCard_Init((DATABASE_MYSQL_CONNECTINFO*)&st_ServiceConfig.st_XSql))
 		{
