@@ -8,7 +8,7 @@ RELEASE = 0
 UNICODE = 0
 LOADHDR = -I ./ -I ../../XEngine_Depend/XEngine_Module/jsoncpp
 LOADSO = -L ../../XEngine_Depend/XEngine_Module/jsoncpp
-LIB = -lXEngine_BaseLib -ljsoncpp
+LIB = -lXEngine_BaseLib -lXEngine_Algorithm -ljsoncpp
 LIBEX = 
 OBJECTS = Plugin_Zodiac.o pch.o
 

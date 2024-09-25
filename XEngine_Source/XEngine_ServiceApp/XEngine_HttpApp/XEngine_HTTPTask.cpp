@@ -415,7 +415,7 @@ bool HTTPTask_TastPost_Handle(RFCCOMPONENTS_HTTP_REQPARAM* pSt_HTTPParam, LPCXST
 				if (2 == nListCount)
 				{
 					XCHAR tszProvincerStr[32] = {};
-					BaseLib_OperatorString_GetKeyValue(pptszList[2], "=", tszKey, tszProvincerStr,NULL);
+					BaseLib_OperatorString_GetKeyValue(pptszList[2], "=", tszKey, tszProvincerStr);
 					HTTPTask_TaskGet_IDRegion(lpszClientAddr, nType, tszProvincerStr, NULL, NULL);
 				}
 				else if (3 == nListCount)

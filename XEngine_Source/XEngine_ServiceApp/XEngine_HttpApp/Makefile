@@ -1,4 +1,4 @@
-CC = g++ -Wall -std=c++17 -fPIC -Wformat-overflow=0
+CC = g++ -Wall -std=c++17 -fPIC
 PLATFORM = linux
 PLATVER = 
 PLATDIR = 
@@ -47,6 +47,7 @@ ifeq ($(PLATFORM),linux)
 		PLATVER = -D __UBUNTU__
 		PLATDIR = XEngine_Linux/Ubuntu
 	endif
+	CC += -Wformat-overflow=0
 	FILEEXT = so
 	LIBFLAG = -shared
 	LIBEX = -lpthread -lrt -ldl
