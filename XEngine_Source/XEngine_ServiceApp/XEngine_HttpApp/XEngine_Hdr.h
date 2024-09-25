@@ -11,6 +11,7 @@
 #ifdef _MSC_BUILD
 #include <Windows.h>
 #include <tchar.h>
+#include <Dbghelp.h>
 #else
 #include <unistd.h>
 #include <pthread.h>
@@ -203,4 +204,5 @@ extern XENGINE_DEAMONAPPLIST st_DeamonAppConfig;
 #pragma comment(lib,"XEngine_AVCodec/XEngine_AudioCodec.lib")
 #pragma comment(lib,"XEngine_AVCodec/XEngine_AVHelp.lib")
 #pragma comment(lib,"Ws2_32.lib")
+#pragma comment(lib,"Dbghelp.lib")
 #endif
