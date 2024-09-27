@@ -44,7 +44,9 @@ int test_insert()
 
 	Json::Value st_JsonRoot;
 	Json::StreamWriterBuilder st_JsonBuilder;
+	st_JsonRoot["tszServiceName"] = "XEngine_TestApp";
 	st_JsonRoot["tszMachineName"] = tszOSName;
+	st_JsonRoot["tszMachineUser"] = "user";
 	st_JsonRoot["tszMachineCode"] = st_SDKSerial.tszSystemSerial;
 	st_JsonRoot["tszMachineSystem"] = tszComputerName;
 
@@ -65,7 +67,7 @@ int test_list()
 {
 	int nLen = 0;
 	int nCode = 0;
-	LPCXSTR lpszAPIUrl = _X("http://127.0.0.1:5501/api?function=machine&params1=2");
+	LPCXSTR lpszAPIUrl = _X("http://127.0.0.1:5501/api?function=machine&params1=3");
 
 	XCHAR* ptszMsgBuffer = NULL;
 	if (!APIClient_Http_Request(_X("POST"), lpszAPIUrl, NULL, &nCode, &ptszMsgBuffer, &nLen))
@@ -84,11 +86,12 @@ int test_delete()
 	int nCode = 0;
 	LPCXSTR lpszAPIUrl = _X("http://127.0.0.1:5501/api?function=machine&params1=1");
 
-	SYSTEMAPI_SERIAL_INFOMATION st_SDKSerial = {};
-	SystemApi_HardWare_GetSerial(&st_SDKSerial);
+	XCHAR tszComputerName[128] = {};
+	SystemApi_System_GetSysName(NULL, tszComputerName);
 
 	Json::Value st_JsonRoot;
-	st_JsonRoot["tszMachineCode"] = st_SDKSerial.tszSystemSerial;
+	st_JsonRoot["tszServiceName"] = "XEngine_TestApp";
+	st_JsonRoot["tszMachineSystem"] = tszComputerName;
 
 	XCHAR* ptszMsgBuffer = NULL;
 	if (!APIClient_Http_Request(_X("POST"), lpszAPIUrl, st_JsonRoot.toStyledString().c_str(), &nCode, &ptszMsgBuffer, &nLen))
