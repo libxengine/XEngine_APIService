@@ -42,7 +42,7 @@ bool HTTPTask_TastPost_Machine(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer, in
 		{
 			if (!ModuleDatabase_Machine_Insert(&st_MachineInfo))
 			{
-				ModuleProtocol_Packet_Common(tszRVBuffer, &nRVLen, 400, _X("update is failed"));
+				ModuleProtocol_Packet_Common(tszRVBuffer, &nRVLen, 400, _X("insert is failed"));
 				HttpProtocol_Server_SendMsgEx(xhHTTPPacket, tszSDBuffer, &nSDLen, &st_HDRParam, tszRVBuffer, nRVLen);
 				XEngine_Network_Send(lpszClientAddr, tszSDBuffer, nSDLen);
 				XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("HTTP客户端:%s,请求的信息收集操作插入失败,错误:%lX"), lpszClientAddr, ModuleDB_GetLastError());
@@ -69,7 +69,7 @@ bool HTTPTask_TastPost_Machine(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer, in
 			ModuleProtocol_Packet_Common(tszRVBuffer, &nRVLen, 400, _X("query is failed"));
 			HttpProtocol_Server_SendMsgEx(xhHTTPPacket, tszSDBuffer, &nSDLen, &st_HDRParam, tszRVBuffer, nRVLen);
 			XEngine_Network_Send(lpszClientAddr, tszSDBuffer, nSDLen);
-			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("HTTP客户端:%s,请求的信息收集操作插入失败,错误:%lX"), lpszClientAddr, ModuleDB_GetLastError());
+			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("HTTP客户端:%s,请求获取机器信息失败,错误:%lX"), lpszClientAddr, ModuleDB_GetLastError());
 			return false;
 		}
 		int nListCount = 1;
