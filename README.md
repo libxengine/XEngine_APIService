@@ -59,11 +59,11 @@ c c++ interface api service
 
 #### XEngine环境
 必须安装XEngine,版本需要V8.x或者以上版本,安装XEngine可以参考其Readme文档  
-GITEE:https://gitee.com/xyry/libxengine  
-GITHUB:https://github.com/libxengine/xengine
+GITEE:https://gitee.com/libxengine/libxengine  
+GITHUB:https://github.com/libxengine/libxengine
 
 ###### 快速部署
-git clone https://gitee.com/xyry/libxengine.git 或者 git clone https://github.com/libxengine/xengine.git  
+git clone https://gitee.com/libxengine/libxengine.git 或者 git clone https://github.com/libxengine/libxengine.git  
 window执行XEngine_WINEnv.bat 脚本.  
 Linux执行:sudo ./XEngine_LINEnv.sh -i 3  
 macos执行:./XEngine_LINEnv.sh -i 3  
@@ -76,6 +76,10 @@ macos执行:./XEngine_LINEnv.sh -i 3
 由于依赖的子模块,在你checkout仓库后,在仓库目录下执行下面的命令拉取子模块  
 git submodule init  
 git submodule update  
+如果github访问失败,你也可以clone该项目,在主目录下使用命令:  
+git clone https://gitee.com/xengine/XEngine_OPenSource.git XEngine_Source/XEngine_Depend  
+git clone https://gitee.com/xengine/XEngine_IPMacData.git XEngine_Source/XEngine_DBDepend/XEngine_IPMacData  
+git clone https://gitee.com/xengine/XEngine_PhoneData.git XEngine_Source/XEngine_DBDepend/XEngine_PhoneData  
 
 #### Windows
 需要vcpkg配置第三方环境,具体参考vcpkg安装方式,安装好后执行:vcpkg.exe install lua:x86-windows opencv[contrib]:x86-windows libqrencode:x86-windows lua:x64-windows opencv[contrib]:x64-windows libqrencode:x64-windows  

@@ -6,7 +6,7 @@ FILEEXT =
 LIBFLAG = 
 RELEASE = 0
 UNICODE = 0
-LOADHDR = -I ./ -I /usr/include/opencv4 
+LOADHDR = -I ./ -I /usr/include/opencv4 -I /usr/local/include/opencv4 -I /usr/local/include/lua
 LOADSO = 
 LIB = -lXEngine_BaseLib -lXClient_Socket 
 LIBEX = 
@@ -26,8 +26,13 @@ ifeq ($(RELEASE),1)
 FLAGS = -c 
 DEBUG = 
 else
-FLAGS = -c -lc_p
-DEBUG = -g -pg 
+	ifeq ($(PLATFORM),mac)
+		FLAGS = -c
+		DEBUG = -g 
+	else
+		FLAGS = -c -lc_p
+		DEBUG = -g -pg 
+	endif
 endif
 
 ifeq ($(UNICODE),1)

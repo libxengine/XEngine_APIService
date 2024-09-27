@@ -11,8 +11,10 @@
 #ifdef _MSC_BUILD
 #include <Windows.h>
 #include <tchar.h>
+#include <Dbghelp.h>
 #else
 #include <unistd.h>
+#include <pthread.h>
 #include <sys/wait.h>
 #include <sys/types.h>
 #include <arpa/inet.h>
@@ -46,7 +48,6 @@ using namespace std;
 #include <XEngine_Include/XEngine_RfcComponents/NatProtocol_Error.h>
 #include <XEngine_Include/XEngine_RfcComponents/NTPProtocol_Define.h>
 #include <XEngine_Include/XEngine_RfcComponents/NTPProtocol_Error.h>
-#include <XEngine_Include/XEngine_SystemSdk/ProcFile_Define.h>
 #include <XEngine_Include/XEngine_SystemSdk/SystemApi_Define.h>
 #include <XEngine_Include/XEngine_SystemSdk/SystemApi_Error.h>
 #include <XEngine_Include/XEngine_AVCodec/AVCollect_Define.h>
@@ -122,9 +123,8 @@ using namespace std;
 //    Purpose:     公用头文件
 //    History:
 *********************************************************************/
-#define XENGIEN_APISERVICE_BUFFER_SIZE (1024 * 1024 * 10)
-
 extern bool bIsRun;
+extern bool bIsTest;
 extern XHANDLE xhLog;
 //HTTP服务器
 extern XHANDLE xhHTTPSocket;
@@ -204,4 +204,5 @@ extern XENGINE_DEAMONAPPLIST st_DeamonAppConfig;
 #pragma comment(lib,"XEngine_AVCodec/XEngine_AudioCodec.lib")
 #pragma comment(lib,"XEngine_AVCodec/XEngine_AVHelp.lib")
 #pragma comment(lib,"Ws2_32.lib")
+#pragma comment(lib,"Dbghelp.lib")
 #endif

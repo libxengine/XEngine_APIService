@@ -8,7 +8,7 @@ RELEASE = 0
 UNICODE = 0
 LOADHDR = -I ./ -I ../XEngine_Depend/XEngine_Module/jsoncpp
 LOADSO = -L ../XEngine_Depend/XEngine_Module/jsoncpp
-LIB = -lXEngine_BaseLib -lNetHelp_XSocket -ljsoncpp
+LIB = -lXEngine_BaseLib -lNetHelp_XSocket -lXEngine_SystemApi -ljsoncpp
 LIBEX = 
 OBJECTS = ModuleProtocol_Packet.o ModuleProtocol_Parse.o pch.o
 
@@ -16,8 +16,13 @@ ifeq ($(RELEASE),1)
 FLAGS = -c 
 DEBUG = 
 else
-FLAGS = -c -lc_p
-DEBUG = -g -pg 
+	ifeq ($(PLATFORM),mac)
+		FLAGS = -c
+		DEBUG = -g 
+	else
+		FLAGS = -c -lc_p
+		DEBUG = -g -pg 
+	endif
 endif
 
 ifeq ($(UNICODE),1)

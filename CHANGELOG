@@ -1,3 +1,33 @@
+XEngine_APIService V3.7.0.1001
+
+增加:windows的coredump支持
+增加:工作流支持
+增加:启动测试参数支持
+更新:匹配XEngine V8.40版本
+更新:子模块
+修改:modify:XENGIEN_APISERVICE_BUFFER_SIZE 替换为 XENGINE_MEMORY_SIZE_MAX
+修改:生成顺序调整
+修改:p2p刻度爱你管理支持禁用了
+修正:mac和linux系统下构建错误
+修正:头文件缺失
+修正:后台服务http下载状态处理错误
+修正:机器信息日志打印错误
+修正:禁用插件没有作用的问题
+
+added:windows core dump generator support
+added:workflows support
+added:start test support
+update:match xengine v8.40
+update:sub module
+modify:XENGIEN_APISERVICE_BUFFER_SIZE instead XENGINE_MEMORY_SIZE_MAX
+modify:generation sequence
+modify:p2p client management support disable
+fixed:build error on mac and linux
+fixed:header file lost
+fixed:http download status process failed for back service
+fixed:log print info incorrect for machine info
+fixed:does not work when disable plugin
+======================================================================================
 XEngine_APIService V3.6.0.1001
 
 增加:mac地址供应商查询
