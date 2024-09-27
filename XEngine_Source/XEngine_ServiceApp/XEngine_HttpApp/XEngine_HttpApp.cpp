@@ -18,9 +18,9 @@ XHANDLE xhHTTPSocket = NULL;
 XHANDLE xhRFCSocket = NULL;
 XHANDLE xhHTTPHeart = NULL;
 XHANDLE xhHTTPPacket = NULL;
-XHANDLE xhHTTPPool = 0;
+XHANDLE xhHTTPPool = NULL;
 //线程
-unique_ptr<thread> pSTDThread_Deamon;
+unique_ptr<thread> pSTDThread_Deamon = NULL;
 //配置文件
 XENGINE_SERVICECONFIG st_ServiceConfig;
 XENGINE_QRCODECONFIG st_QRCodeConfig;
@@ -357,12 +357,19 @@ int main(int argc, char** argv)
 		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_WARN, _X("启动服务中,RFC服务没有被启用"));
 	}
 	//初始化P2P
-	if (!ModuleHelp_P2PClient_Init(st_ServiceConfig.st_XTime.nP2PTimeOut, HTTPTask_TastPost_P2PCallback))
+	if (st_ServiceConfig.st_XTime.nP2PTimeOut > 0)
 	{
-		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("启动服务中,启动P2P客户端管理器失败,错误：%lX"), ModuleHelp_GetLastError());
-		goto XENGINE_SERVICEAPP_EXIT;
+		if (!ModuleHelp_P2PClient_Init(st_ServiceConfig.st_XTime.nP2PTimeOut, HTTPTask_TastPost_P2PCallback))
+		{
+			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("启动服务中,启动P2P客户端管理器失败,错误：%lX"), ModuleHelp_GetLastError());
+			goto XENGINE_SERVICEAPP_EXIT;
+		}
+		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("启动服务中,启动P2P客户端管理器成功,超时时间设置:%d 秒"), st_ServiceConfig.st_XTime.nP2PTimeOut);
 	}
-	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("启动服务中,启动P2P客户端管理器成功,超时时间设置:%d 秒"), st_ServiceConfig.st_XTime.nP2PTimeOut);
+	else
+	{
+		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_WARN, _X("启动服务中,P2P客户端管理器被设置为禁用"));
+	}
 	//进程守护
 	if (!ModuleConfigure_Json_DeamonList(st_ServiceConfig.st_XConfig.tszConfigDeamon, &st_DeamonAppConfig))
 	{
@@ -467,25 +474,25 @@ int main(int argc, char** argv)
 	{
 		if (!APIModule_IPAddr_Init(st_ServiceConfig.st_XAPIModule.tszDBIPAddr))
 		{
-			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("启动服务中，启动IP地址数据查询服务:%s 失败，错误：%lX"), st_ServiceConfig.st_XAPIModule.tszDBIPAddr, APIIPMac_GetLastError());
+			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("启动服务中,启动IP地址数据查询服务:%s 失败，错误：%lX"), st_ServiceConfig.st_XAPIModule.tszDBIPAddr, APIIPMac_GetLastError());
 		}
-		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("启动服务中，启动IP地址数据查询服务:%s 成功"), st_ServiceConfig.st_XAPIModule.tszDBIPAddr);
+		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("启动服务中,启动IP地址数据查询服务:%s 成功"), st_ServiceConfig.st_XAPIModule.tszDBIPAddr);
 
 		if (!APIModule_MACInfo_Init(st_ServiceConfig.st_XAPIModule.tszDBMac))
 		{
-			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("启动服务中，启动MAC地址数据查询服务:%s 失败，错误：%lX"), st_ServiceConfig.st_XAPIModule.tszDBMac, APIIPMac_GetLastError());
+			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("启动服务中,启动MAC地址数据查询服务:%s 失败，错误：%lX"), st_ServiceConfig.st_XAPIModule.tszDBMac, APIIPMac_GetLastError());
 		}
-		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("启动服务中，启动MAC地址数据查询服务:%s 成功"), st_ServiceConfig.st_XAPIModule.tszDBMac);
+		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("启动服务中,启动MAC地址数据查询服务:%s 成功"), st_ServiceConfig.st_XAPIModule.tszDBMac);
 
 		if (!APIModule_PhoneNumber_Init(st_ServiceConfig.st_XAPIModule.tszDBPhone))
 		{
-			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("启动服务中，启动电话号码数据查询服务:%s 失败，错误：%lX"), st_ServiceConfig.st_XAPIModule.tszDBPhone, APIPhone_GetLastError());
+			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("启动服务中,启动电话号码数据查询服务:%s 失败，错误：%lX"), st_ServiceConfig.st_XAPIModule.tszDBPhone, APIPhone_GetLastError());
 		}
-		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("启动服务中，启动电话号码数据查询服务:%s 成功"), st_ServiceConfig.st_XAPIModule.tszDBPhone);
+		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("启动服务中,启动电话号码数据查询服务:%s 成功"), st_ServiceConfig.st_XAPIModule.tszDBPhone);
 	}
 	else
 	{
-		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_WARN, _X("启动服务中，数据查询服务没有启用"));
+		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_WARN, _X("启动服务中,数据查询服务没有启用"));
 	}
 	//发送信息报告
 	if (st_ServiceConfig.st_XReport.bEnable && !bIsTest)
@@ -494,20 +501,20 @@ int main(int argc, char** argv)
 		{
 			__int64x nTimeNumber = 0;
 			InfoReport_APIMachine_GetTime(st_ServiceConfig.st_XReport.tszAPIUrl, st_ServiceConfig.st_XReport.tszServiceName, &nTimeNumber);
-			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("启动服务中，启动信息报告给API服务器:%s 成功,报告次数:%lld"), st_ServiceConfig.st_XReport.tszAPIUrl, nTimeNumber);
+			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("启动服务中,启动信息报告给API服务器:%s 成功,报告次数:%lld"), st_ServiceConfig.st_XReport.tszAPIUrl, nTimeNumber);
 		}
 		else
 		{
-			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("启动服务中，启动信息报告给API服务器:%s 失败，错误：%lX"), st_ServiceConfig.st_XReport.tszAPIUrl, InfoReport_GetLastError());
+			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("启动服务中,启动信息报告给API服务器:%s 失败，错误：%lX"), st_ServiceConfig.st_XReport.tszAPIUrl, InfoReport_GetLastError());
 		}
 	}
 	else
 	{
-		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_WARN, _X("启动服务中，信息报告给API服务器没有启用"));
+		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_WARN, _X("启动服务中,信息报告给API服务器没有启用"));
 	}
 
 	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("所有服务成功启动,服务运行中,XEngine版本:%s%s,发行版本次数:%d,当前版本：%s。。。"), BaseLib_OperatorVer_XNumberStr(), BaseLib_OperatorVer_XTypeStr(), st_ServiceConfig.st_XVer.pStl_ListVer->size(), st_ServiceConfig.st_XVer.pStl_ListVer->front().c_str());
-	while (bIsRun)
+	while (true)
 	{
 		if (bIsTest)
 		{
