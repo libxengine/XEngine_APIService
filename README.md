@@ -14,6 +14,9 @@ c c++ interface api service
 基于libXEngine开发并实现的一套简洁高性能跨平台接口服务  
 并且支持插件系统,dll(so,dylib)模块或者lua脚本  
 
+## 注意
+编译发布版本将只在github上面发布.
+
 #### 为什么选择我们
 支持私有化部署,免费,安全.开源,可控
 

@@ -34,6 +34,7 @@ jobs:
         with:
           repository: libxengine/libxengine
           path: libxengine
+          ref: 'v9'
           
       - name: sub module checkout (opensource)
         run: |
@@ -89,7 +90,7 @@ jobs:
           cp -r XEngine_Source/VSCopy_x86.bat XEngine_Release/
           cd XEngine_Release
           ./VSCopy_x86.bat
-          ./XEngine_HttpApp.exe -t
+          ./XEngine_APIServiceApp.exe -t
         shell: pwsh
       - name: Conditional Step for x64 Release
         if: matrix.configuration == 'Release' && matrix.platform == 'x64'
@@ -105,12 +106,12 @@ jobs:
         if: matrix.configuration == 'Release' && matrix.platform == 'x64'
         uses: actions/upload-artifact@v4
         with:
-          name: XEngine_HttpApp-x86_32-Windows
+          name: XEngine_APIServiceApp-x86_32-Windows
           path: XEngine_Release/
  
       - name: Upload folder as artifact with x64
         if: matrix.configuration == 'Release' && matrix.platform == 'x64'
         uses: actions/upload-artifact@v4
         with:
-          name: XEngine_HttpApp-x86_64-Windows
+          name: XEngine_APIServiceApp-x86_64-Windows
           path: XEngine_Release/
