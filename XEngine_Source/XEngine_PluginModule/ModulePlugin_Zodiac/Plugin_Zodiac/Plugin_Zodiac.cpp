@@ -94,7 +94,7 @@ bool CPlugin_Zodiac::PluginCore_Call(XCHAR*** pppHDRList, int nListCount, int* p
 	memset(tszChineseZodiac, '\0', sizeof(tszChineseZodiac));
 	memset(tszEnglishZodiac, '\0', sizeof(tszEnglishZodiac));
 
-	BaseLib_OperatorString_GetKeyValue((*pppHDRList)[1], "=", tszKeyName, tszValueName);
+	BaseLib_String_GetKeyValue((*pppHDRList)[1], "=", tszKeyName, tszValueName);
 	Plugin_Zodiac_Chinese(tszValueName, tszChineseZodiac);
 	Plugin_Zodiac_English(tszValueName, tszEnglishZodiac);
 

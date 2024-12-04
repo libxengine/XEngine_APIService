@@ -103,7 +103,7 @@ bool CModuleDatabase_WordFilter::ModuleDatabase_WordFilter_Query(XENGINE_WORDFIL
 #ifdef _MSC_BUILD
 	XCHAR tszUTFStr[1024] = {};
 	int nSLen = _tcsxlen(tszSQLStatement);
-	BaseLib_OperatorCharset_AnsiToUTF(tszSQLStatement, tszUTFStr, &nSLen);
+	BaseLib_Charset_AnsiToUTF(tszSQLStatement, tszUTFStr, &nSLen);
 	if (!DataBase_MySQL_ExecuteQuery(xhDBSQL, &xhTable, tszUTFStr, &nLine, &nRow))
 #else
 	if (!DataBase_MySQL_ExecuteQuery(xhDBSQL, &xhTable, tszSQLStatement, &nLine, &nRow))
@@ -158,7 +158,7 @@ bool CModuleDatabase_WordFilter::ModuleDatabase_WordFilter_Insert(XENGINE_WORDFI
 #ifdef _MSC_BUILD
 	int nRet = _tcsxlen(tszSQLStatement);
 	XCHAR tszUTFStr[1024] = {};
-	BaseLib_OperatorCharset_AnsiToUTF(tszSQLStatement, tszUTFStr, &nRet);
+	BaseLib_Charset_AnsiToUTF(tszSQLStatement, tszUTFStr, &nRet);
 	if (!DataBase_MySQL_Execute(xhDBSQL, tszUTFStr))
 #else
 	if (!DataBase_MySQL_Execute(xhDBSQL, tszSQLStatement))
@@ -200,7 +200,7 @@ bool CModuleDatabase_WordFilter::ModuleDatabase_WordFilter_Delete(XENGINE_WORDFI
 #ifdef _MSC_BUILD
 	XCHAR tszUTFStr[1024] = {};
 	int nSLen = _tcsxlen(tszSQLStatement);
-	BaseLib_OperatorCharset_AnsiToUTF(tszSQLStatement, tszUTFStr, &nSLen);
+	BaseLib_Charset_AnsiToUTF(tszSQLStatement, tszUTFStr, &nSLen);
 	if (!DataBase_MySQL_Execute(xhDBSQL, tszUTFStr))
 #else
 	if (!DataBase_MySQL_Execute(xhDBSQL, tszSQLStatement))
@@ -256,7 +256,7 @@ bool CModuleDatabase_WordFilter::ModuleDatabase_WordFilter_List(XENGINE_WORDFILT
 		return false;
 	}
 	*pInt_ListCount = (int)nLine;
-	BaseLib_OperatorMemory_Malloc((XPPPMEM)pppSt_WordFilter, *pInt_ListCount, sizeof(XENGINE_WORDFILTER));
+	BaseLib_Memory_Malloc((XPPPMEM)pppSt_WordFilter, *pInt_ListCount, sizeof(XENGINE_WORDFILTER));
 
 	for (__int64u i = 0; i < nLine; i++)
 	{

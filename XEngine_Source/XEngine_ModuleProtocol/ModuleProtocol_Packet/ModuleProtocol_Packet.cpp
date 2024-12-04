@@ -1287,7 +1287,7 @@ bool CModuleProtocol_Packet::ModuleProtocol_Packet_HardWare(XCHAR* ptszHWInfo, i
 		ModuleProtocol_dwErrorCode = SystemApi_GetLastError();
 		return false;
 	}
-	BaseLib_OperatorMemory_Free((XPPPMEM)&pptszRootName, nDiskNumber);
+	BaseLib_Memory_Free((XPPPMEM)&pptszRootName, nDiskNumber);
 
 	XCHAR tszDriveStr[MAX_PATH];
 	memset(tszDriveStr, '\0', MAX_PATH);
@@ -1367,7 +1367,7 @@ bool CModuleProtocol_Packet::ModuleProtocol_Packet_HardWare(XCHAR* ptszHWInfo, i
 		st_JsonIPAddr["tszMacAddr"] = ppSt_ListIFInfo[i]->tszMacAddr;
 		st_JsonNetCard.append(st_JsonIPAddr);
 	}
-	BaseLib_OperatorMemory_Free((XPPPMEM)&ppSt_ListIFInfo, nListCount);
+	BaseLib_Memory_Free((XPPPMEM)&ppSt_ListIFInfo, nListCount);
 
 	st_JsonRoot["Disk"] = st_JsonDisk;
 	st_JsonRoot["Cpu"] = st_JsonCpu;
@@ -1705,7 +1705,7 @@ bool CModuleProtocol_Packet::ModuleProtocol_Packet_IPAddr(XCHAR* ptszMSGBuffer, 
 	st_JsonBuilder["emitUTF8"] = true;
 
 	*pInt_MSGLen = Json::writeString(st_JsonBuilder, st_JsonRoot).length();
-	BaseLib_OperatorCharset_AnsiToUTF(Json::writeString(st_JsonBuilder, st_JsonRoot).c_str(), ptszMSGBuffer, pInt_MSGLen);
+	BaseLib_Charset_AnsiToUTF(Json::writeString(st_JsonBuilder, st_JsonRoot).c_str(), ptszMSGBuffer, pInt_MSGLen);
 	return true;
 }
 /********************************************************************
@@ -1854,14 +1854,14 @@ bool CModuleProtocol_Packet::ModuleProtocol_Packet_P2PWLan(XCHAR* ptszMsgBuffer,
 	for (auto stl_ListIterator = pStl_ListClients->begin(); stl_ListIterator != pStl_ListClients->end(); stl_ListIterator++)
 	{
 		XCHAR tszClientAddr[128];
-		XENGINE_LIBADDR st_LibAddr;
+		APIADDR_IPADDR st_LibAddr;
 		P2XPPROTOCOL_LANPACKET st_LANPacket;
 
 		memset(tszClientAddr, '\0', sizeof(tszClientAddr));
-		memset(&st_LibAddr, '\0', sizeof(XENGINE_LIBADDR));
+		memset(&st_LibAddr, '\0', sizeof(APIADDR_IPADDR));
 		memset(&st_LANPacket, '\0', sizeof(P2XPPROTOCOL_LANPACKET));
 		//分割
-		BaseLib_OperatorIPAddr_IsIPV4Addr(stl_ListIterator->tszPrivateAddr, &st_LibAddr);
+		APIAddr_IPAddr_IsIPV4Addr(stl_ListIterator->tszPrivateAddr, &st_LibAddr);
 		_xstprintf(tszClientAddr, _X("%d.%d.%d"), st_LibAddr.nIPAddr1, st_LibAddr.nIPAddr2, st_LibAddr.nIPAddr3);
 		//赋值
 		_tcsxcpy(st_LANPacket.tszUsername, stl_ListIterator->tszUserName);

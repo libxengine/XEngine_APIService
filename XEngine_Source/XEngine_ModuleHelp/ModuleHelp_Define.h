@@ -477,7 +477,7 @@ extern "C" bool ModuleHelp_P2PClient_Add(XENGINE_P2XP_PEERINFO * pSt_PeerInfo);
 返回值
   类型：逻辑型
   意思：是否成功
-备注：参数二需要调用基础库的BaseLib_OperatorMemory_Free函数进行内存释放
+备注：参数二需要调用基础库的BaseLib_Memory_Free函数进行内存释放
 *********************************************************************/
 extern "C" bool ModuleHelp_P2PClient_GetLan(XENGINE_P2XPPEER_PROTOCOL * pSt_P2PProtocol, XENGINE_P2XPPEER_PROTOCOL * **pppSt_P2XPClient, int* pInt_ListCount);
 /********************************************************************
@@ -501,7 +501,7 @@ extern "C" bool ModuleHelp_P2PClient_GetLan(XENGINE_P2XPPEER_PROTOCOL * pSt_P2PP
 返回值
   类型：逻辑型
   意思：是否成功
-备注：参数二需要调用基础库的BaseLib_OperatorMemory_Free函数进行内存释放
+备注：参数二需要调用基础库的BaseLib_Memory_Free函数进行内存释放
 *********************************************************************/
 extern "C" bool ModuleHelp_P2PClient_GetLList(LPCXSTR lpszPubAddr, XCHAR * **pppszP2XPClient, int* pInt_ListCount);
 /********************************************************************

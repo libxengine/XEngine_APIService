@@ -70,7 +70,7 @@ bool CModuleHelp_SocketTest::ModuleHelp_SocketTest_StartConnect(XNETHANDLE* pxhT
     pSt_ConnSocket->bIsRun = true;
     pSt_ConnSocket->lParam = lParam;
     pSt_ConnSocket->lpCall_ReConnect = fpCall_ReConnect;
-    BaseLib_OperatorHandle_Create(&pSt_ConnSocket->xhToken);
+    BaseLib_Handle_Create(&pSt_ConnSocket->xhToken);
     memcpy(&pSt_ConnSocket->st_SocketConn, pSt_ReConnect, sizeof(MODULEHELP_SOCKETTEST_RECONNECT));
     //创建线程
     pSt_ConnSocket->pSTDThread = make_shared<std::thread>(ModuleHelp_SocketTest_ThreadConn, pSt_ConnSocket);
@@ -208,7 +208,7 @@ bool CModuleHelp_SocketTest::ModuleHelp_SocketTest_StartDatas(XNETHANDLE* pxhTok
 	pSt_DataSocket->bIsTCP = bTCP;
 	pSt_DataSocket->lParam = lParam;
 	pSt_DataSocket->lpCall_TestDatas = fpCall_DataTest;
-    BaseLib_OperatorHandle_Create(&pSt_DataSocket->xhToken);
+    BaseLib_Handle_Create(&pSt_DataSocket->xhToken);
 	memcpy(&pSt_DataSocket->st_SocketData, pSt_SocketDatas, sizeof(MODULEHELP_SOCKETTEST_DATAS));
 	//创建客户端
 	if (pSt_DataSocket->bIsTCP)

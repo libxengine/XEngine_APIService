@@ -82,8 +82,8 @@ bool CPlugin_Password::PluginCore_Call(XCHAR*** pppHDRList, int nListCount, int*
 	memset(tszParamLength, '\0', sizeof(tszParamLength));
 	memset(tszPassword, '\0', sizeof(tszPassword));
 
-	BaseLib_OperatorString_GetKeyValue((*pppHDRList)[1], "=", tszKeyName, tszParamType);
-	BaseLib_OperatorString_GetKeyValue((*pppHDRList)[2], "=", tszKeyName, tszParamLength);
+	BaseLib_String_GetKeyValue((*pppHDRList)[1], "=", tszKeyName, tszParamType);
+	BaseLib_String_GetKeyValue((*pppHDRList)[2], "=", tszKeyName, tszParamLength);
 	Plugin_Password_Creator(tszParamType, tszParamLength, tszPassword);
 
 	st_JsonObject["tszParamType"] = tszParamType;
@@ -113,7 +113,7 @@ bool CPlugin_Password::Plugin_Password_Creator(LPCXSTR lpszPassType, LPCXSTR lps
 	memset(tszPassBuffer, '\0', MAX_PATH);
 	if (0 == nType)
 	{
-		BaseLib_OperatorHandle_CreateStr(tszPassBuffer, nLen);
+		BaseLib_Handle_CreateStr(tszPassBuffer, nLen);
 	}
 	else if (1 == nType)
 	{

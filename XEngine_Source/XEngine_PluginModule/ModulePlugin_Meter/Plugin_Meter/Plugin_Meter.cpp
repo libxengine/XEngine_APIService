@@ -84,9 +84,9 @@ bool CPlugin_Meter::PluginCore_Call(XCHAR*** pppHDRList, int nListCount, int* pI
 	memset(tszParamValue, '\0', sizeof(tszParamValue));
 
 	//http://192.168.1.8:5501/api?function=meter&type=0&source=0&value=10
-	BaseLib_OperatorString_GetKeyValue((*pppHDRList)[1], "=", tszKeyName, tszParamType);
-	BaseLib_OperatorString_GetKeyValue((*pppHDRList)[2], "=", tszKeyName, tszParamSource);
-	BaseLib_OperatorString_GetKeyValue((*pppHDRList)[3], "=", tszKeyName, tszParamValue);
+	BaseLib_String_GetKeyValue((*pppHDRList)[1], "=", tszKeyName, tszParamType);
+	BaseLib_String_GetKeyValue((*pppHDRList)[2], "=", tszKeyName, tszParamSource);
+	BaseLib_String_GetKeyValue((*pppHDRList)[3], "=", tszKeyName, tszParamValue);
 
 	if (0 == _ttxoi(tszParamType))
 	{

@@ -24,7 +24,7 @@ bool RFCTask_Stun_Parse(LPCXSTR lpszClientAddr, LPCXSTR lpszMSGBuffer, int nMSGL
 		int nNLen = 0;
 		XCHAR tszIPAddr[128] = {};
 		_tcsxcpy(tszIPAddr, lpszClientAddr);
-		BaseLib_OperatorIPAddr_SegAddr(tszIPAddr, &nIPPort);
+		APIAddr_IPAddr_SegAddr(tszIPAddr, &nIPPort);
 
 		NatProtocol_StunNat_BuildMapAddress(tszRVBuffer, &nXLen, tszIPAddr, nIPPort, true);
 		nRVLen += nXLen;

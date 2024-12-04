@@ -185,7 +185,7 @@ bool HTTPTask_TaskPost_BackService(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer
 		ModuleProtocol_Packet_ListFile(ptszRVBuffer, &nRVLen, &ppszFileList, nListCount);
 		HttpProtocol_Server_SendMsgEx(xhHTTPPacket, ptszSDBuffer, &nSDLen, &st_HDRParam, ptszRVBuffer, nRVLen);
 		XEngine_Network_Send(lpszClientAddr, ptszSDBuffer, nSDLen);
-		BaseLib_OperatorMemory_Free((XPPPMEM)&ppszFileList, nListCount);
+		BaseLib_Memory_Free((XPPPMEM)&ppszFileList, nListCount);
 		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("HTTP客户端:%s:获取文件列表成功,回复个数:%d"), lpszClientAddr, nListCount);
 	}
 	break;
@@ -267,8 +267,8 @@ bool HTTPTask_TaskPost_BackService(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer
 
 			AVHelp_Device_EnumDevice(&ppSt_AudioList, &ppSt_VideoList, &nACount, &nVCount);
 			ModuleProtocol_Packet_EnumDevice(ptszRVBuffer, &nRVLen, &ppSt_AudioList, &ppSt_VideoList, nACount, nVCount);
-			BaseLib_OperatorMemory_Free((void***)&ppSt_AudioList, nACount);
-			BaseLib_OperatorMemory_Free((void***)&ppSt_VideoList, nVCount);
+			BaseLib_Memory_Free((void***)&ppSt_AudioList, nACount);
+			BaseLib_Memory_Free((void***)&ppSt_VideoList, nVCount);
 		}
 		HttpProtocol_Server_SendMsgEx(xhHTTPPacket, ptszSDBuffer, &nSDLen, &st_HDRParam, ptszRVBuffer, nRVLen);
 		XEngine_Network_Send(lpszClientAddr, ptszSDBuffer, nSDLen);

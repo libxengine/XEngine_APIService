@@ -37,13 +37,13 @@ bool HTTPTask_TaskGet_BankInfo(LPCXSTR lpszClientAddr, LPCXSTR lpszBankNumber)
 	if (!ModuleProtocol_Parse_Bank(ptszBodyBuffer, nBLen, &st_BankInfo))
 	{
 		ModuleProtocol_Packet_BankQuery(tszPktBuffer, &nPktLen, NULL, 1001, _X("banknumber is corrent"));
-		BaseLib_OperatorMemory_FreeCStyle((XPPMEM)&ptszBodyBuffer);
+		BaseLib_Memory_FreeCStyle((XPPMEM)&ptszBodyBuffer);
 		HttpProtocol_Server_SendMsgEx(xhHTTPPacket, tszMsgBuffer, &nMsgLen, &st_HDRParam, tszPktBuffer, nPktLen);
 		XEngine_Network_Send(lpszClientAddr, tszMsgBuffer, nMsgLen);
 		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("HTTP客户端:%s,请求的银行卡号码错误:%s"), lpszClientAddr, lpszBankNumber);
 		return false;
 	}
-	BaseLib_OperatorMemory_FreeCStyle((XPPMEM)&ptszBodyBuffer);
+	BaseLib_Memory_FreeCStyle((XPPMEM)&ptszBodyBuffer);
 	//查询对应名称
 	if (!ModuleDatabase_Bank_Query(&st_BankInfo))
 	{

@@ -99,7 +99,7 @@ bool CModuleDatabase_Machine::ModuleDatabase_Machine_Insert(XENGINE_MACHINEINFO*
 #ifdef _MSC_BUILD
 	XCHAR tszUTFStr[4096] = {};
 	int nSLen = _tcsxlen(tszSQLStatement);
-	BaseLib_OperatorCharset_AnsiToUTF(tszSQLStatement, tszUTFStr, &nSLen);
+	BaseLib_Charset_AnsiToUTF(tszSQLStatement, tszUTFStr, &nSLen);
 	if (!DataBase_MySQL_Execute(xhDBSQL, tszUTFStr))
 #else
 	if (!DataBase_MySQL_Execute(xhDBSQL, tszSQLStatement))
@@ -315,7 +315,7 @@ bool CModuleDatabase_Machine::ModuleDatabase_Machine_List(XENGINE_MACHINEINFO***
 		return false;
 	}
 	*pInt_ListCount = (int)nllLine;
-	BaseLib_OperatorMemory_Malloc((XPPPMEM)pppSt_MachineInfo, *pInt_ListCount, sizeof(XENGINE_MACHINEINFO));
+	BaseLib_Memory_Malloc((XPPPMEM)pppSt_MachineInfo, *pInt_ListCount, sizeof(XENGINE_MACHINEINFO));
 	for (__int64u i = 0; i < nllLine; i++)
 	{
 		XCHAR** pptszResult = DataBase_MySQL_GetResult(xhDBSQL, xhTable);

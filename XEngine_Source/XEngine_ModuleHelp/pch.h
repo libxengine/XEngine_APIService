@@ -26,9 +26,18 @@
 #include <shared_mutex>
 #include <unordered_map>
 #if _XENGINE_BUILD_SWITCH_OPENCV == 1
+#ifdef _MSC_BUILD
+#include <opencv4/opencv2/opencv.hpp>
+#include <opencv4/opencv2/core/utils/logger.hpp>
+#include <opencv4/opencv2/wechat_qrcode.hpp>
+#else
 #include <opencv2/opencv.hpp>
 #include <opencv2/core/utils/logger.hpp>
 #include <opencv2/wechat_qrcode.hpp>
+#include <opencv2/opencv.hpp>
+#include <opencv2/core/utils/logger.hpp>
+#include <opencv2/wechat_qrcode.hpp>
+#endif
 #include <qrencode.h>
 #endif
 using namespace std;
@@ -39,6 +48,8 @@ using namespace std;
 #include <XEngine_Include/XEngine_BaseLib/BaseLib_Error.h>
 #include <XEngine_Include/XEngine_Client/XClient_Define.h>
 #include <XEngine_Include/XEngine_Client/XClient_Error.h>
+#include <XEngine_Include/XEngine_NetHelp/APIAddr_Define.h>
+#include <XEngine_Include/XEngine_NetHelp/APIAddr_Error.h>
 #include "../XEngine_UserProtocol.h"
 #include "ModuleHelp_Define.h"
 #include "ModuleHelp_Error.h"
@@ -59,6 +70,7 @@ extern XLONG ModuleHelp_dwErrorCode;
 #ifdef _MSC_BUILD
 #pragma comment(lib,"XEngine_BaseLib/XEngine_BaseLib")
 #pragma comment(lib,"XEngine_Client/XClient_Socket")
+#pragma comment(lib,"XEngine_NetHelp/NetHelp_APIAddr")
 #else
 #if __linux__ && !__ANDROID__
 #pragma GCC diagnostic ignored "-Wclass-memaccess"

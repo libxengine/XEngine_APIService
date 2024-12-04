@@ -541,7 +541,7 @@ bool CPlugin_Timezone::PluginCore_Call(XCHAR*** pppHDRList, int nListCount, int*
 	memset(tszParamCvt, '\0', sizeof(tszParamCvt));
 	memset(tszParamTime, '\0', sizeof(tszParamTime));
 
-	BaseLib_OperatorString_GetKeyValue((*pppHDRList)[1], "=", tszKeyName, tszParamType);
+	BaseLib_String_GetKeyValue((*pppHDRList)[1], "=", tszKeyName, tszParamType);
 	if (0 == _ttxoi(tszParamType))
 	{
 		//如果是统计
@@ -550,14 +550,14 @@ bool CPlugin_Timezone::PluginCore_Call(XCHAR*** pppHDRList, int nListCount, int*
 	else if (1 == _ttxoi(tszParamType))
 	{
 		//如果是列举
-		BaseLib_OperatorString_GetKeyValue((*pppHDRList)[2], "=", tszKeyName, tszParamCvt);
+		BaseLib_String_GetKeyValue((*pppHDRList)[2], "=", tszKeyName, tszParamCvt);
 		Plugin_Timezone_List(tszParamCvt, ptszMsgBuffer, pInt_MsgLen);
 	}
 	else if (2 == _ttxoi(tszParamType))
 	{
 		//如果是转换
-		BaseLib_OperatorString_GetKeyValue((*pppHDRList)[2], "=", tszKeyName, tszParamCvt);
-		BaseLib_OperatorString_GetKeyValue((*pppHDRList)[3], "=", tszKeyName, tszParamTime);
+		BaseLib_String_GetKeyValue((*pppHDRList)[2], "=", tszKeyName, tszParamCvt);
+		BaseLib_String_GetKeyValue((*pppHDRList)[3], "=", tszKeyName, tszParamTime);
 		if (!Plugin_Timezone_Convert(tszParamCvt, tszParamTime, ptszMsgBuffer, pInt_MsgLen))
 		{
 			*pInt_HTTPCode = 404;
@@ -648,7 +648,7 @@ bool CPlugin_Timezone::Plugin_Timezone_Convert(LPCXSTR lpszConvert, LPCXSTR lpsz
 	st_TimeEnd = stl_MapIterator->second.st_TimeZone;
 
 	_stxscanf(lpszTimeStr, _X("%04d-%02d-%02d_%02d:%02d:%02d"), &st_TimeStart.wYear, &st_TimeStart.wMonth, &st_TimeStart.wDay, &st_TimeStart.wHour, &st_TimeStart.wMinute, &st_TimeStart.wSecond);
-	BaseLib_OperatorTimeSpan_CalForStu(&st_TimeStart, &st_TimeEnd);
+	BaseLib_TimeSpan_CalForStu(&st_TimeStart, &st_TimeEnd);
 	_xstprintf(tszTimeStr, _X("%04d-%02d-%02d %02d:%02d:%02d"), st_TimeEnd.wYear, st_TimeEnd.wMonth, st_TimeEnd.wDay, st_TimeEnd.wHour, st_TimeEnd.wMinute, st_TimeEnd.wSecond);
 
 	st_JsonObject["tszTimeStr"] = tszTimeStr;

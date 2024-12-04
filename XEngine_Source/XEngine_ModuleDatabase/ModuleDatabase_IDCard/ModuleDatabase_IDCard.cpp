@@ -139,7 +139,7 @@ bool CModuleDatabase_IDCard::ModuleDatabase_IDCard_QueryByAddr(XENGINE_IDREGION*
 #ifdef _MSC_BUILD
 	XCHAR tszUTFBuffer[1024] = {};
 	int nULen = _tcsxlen(tszSQLStatement);
-	BaseLib_OperatorCharset_AnsiToUTF(tszSQLStatement, tszUTFBuffer, &nULen);
+	BaseLib_Charset_AnsiToUTF(tszSQLStatement, tszUTFBuffer, &nULen);
 	if (!DataBase_MySQL_ExecuteQuery(xhDBSQL, &xhTable, tszUTFBuffer, &nLine, &nRow))
 #else
 	if (!DataBase_MySQL_ExecuteQuery(xhDBSQL, &xhTable, tszSQLStatement, &nLine, &nRow))
@@ -167,7 +167,7 @@ bool CModuleDatabase_IDCard::ModuleDatabase_IDCard_QueryByAddr(XENGINE_IDREGION*
 #ifdef _MSC_BUILD
 		XCHAR tszUTFBuffer[1024] = {};
 		int nULen = _tcsxlen(tszSQLStatement);
-		BaseLib_OperatorCharset_AnsiToUTF(tszSQLStatement, tszUTFBuffer, &nULen);
+		BaseLib_Charset_AnsiToUTF(tszSQLStatement, tszUTFBuffer, &nULen);
 		if (!DataBase_MySQL_ExecuteQuery(xhDBSQL, &xhTable, tszUTFBuffer, &nLine, &nRow))
 #else
 		if (!DataBase_MySQL_ExecuteQuery(xhDBSQL, &xhTable, tszSQLStatement, &nLine, &nRow))
@@ -196,7 +196,7 @@ bool CModuleDatabase_IDCard::ModuleDatabase_IDCard_QueryByAddr(XENGINE_IDREGION*
 #ifdef _MSC_BUILD
 		XCHAR tszUTFBuffer[1024] = {};
 		int nULen = _tcsxlen(tszSQLStatement);
-		BaseLib_OperatorCharset_AnsiToUTF(tszSQLStatement, tszUTFBuffer, &nULen);
+		BaseLib_Charset_AnsiToUTF(tszSQLStatement, tszUTFBuffer, &nULen);
 		if (!DataBase_MySQL_ExecuteQuery(xhDBSQL, &xhTable, tszUTFBuffer, &nLine, &nRow))
 #else
 		if (!DataBase_MySQL_ExecuteQuery(xhDBSQL, &xhTable, tszSQLStatement, &nLine, &nRow))

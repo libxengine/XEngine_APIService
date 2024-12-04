@@ -64,7 +64,7 @@ bool HTTPTask_TastPost_WordFilter(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer,
 		ModuleProtocol_Packet_WordFilterList(tszRVBuffer, &nRVLen, &ppSt_WordFilter, nListCount);
 		HttpProtocol_Server_SendMsgEx(xhHTTPPacket, tszSDBuffer, &nSDLen, &st_HDRParam, tszRVBuffer, nRVLen);
 		XEngine_Network_Send(lpszClientAddr, tszSDBuffer, nSDLen);
-		BaseLib_OperatorMemory_Free((XPPPMEM)&ppSt_WordFilter, nListCount);
+		BaseLib_Memory_Free((XPPPMEM)&ppSt_WordFilter, nListCount);
 		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("HTTP客户端:%s,请求枚举敏感词列表成功,敏感词个数:%d"), lpszClientAddr, nListCount);
 	}
 	return true;

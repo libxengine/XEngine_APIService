@@ -28,7 +28,7 @@ bool HTTPTask_TaskPost_Image(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer, int 
 	memset(ptszSDBuffer, '\0', XENGINE_MEMORY_SIZE_MAX);
 	memset(ptszRVBuffer, '\0', XENGINE_MEMORY_SIZE_MAX);
 	
-	BaseLib_OperatorString_GetKeyValue((*ppptszList)[1], "=", tszHTTPKey, tszHTTPVlu);
+	BaseLib_String_GetKeyValue((*ppptszList)[1], "=", tszHTTPKey, tszHTTPVlu);
 	int nOPCode = _ttxoi(tszHTTPVlu);
 	//0获取,1设置
 	if (0 == nOPCode)
@@ -66,14 +66,14 @@ bool HTTPTask_TaskPost_Image(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer, int 
 
 		memset(tszHTTPVlu, '\0', sizeof(tszHTTPVlu));
 
-		BaseLib_OperatorString_GetKeyValue((*ppptszList)[2], "=", tszHTTPKey, tszHTTPVlu);
+		BaseLib_String_GetKeyValue((*ppptszList)[2], "=", tszHTTPKey, tszHTTPVlu);
 		_xstprintf(tszFileExt, _X(".%s"), tszHTTPVlu);
 
-		BaseLib_OperatorString_GetKeyValue((*ppptszList)[3], "=", tszHTTPKey, tszHTTPVlu);
+		BaseLib_String_GetKeyValue((*ppptszList)[3], "=", tszHTTPKey, tszHTTPVlu);
 		int nWidth = _ttxoi(tszHTTPVlu);
 		if (1 == nOPCode)
 		{
-			BaseLib_OperatorString_GetKeyValue((*ppptszList)[4], "=", tszHTTPKey, tszHTTPVlu);
+			BaseLib_String_GetKeyValue((*ppptszList)[4], "=", tszHTTPKey, tszHTTPVlu);
 			int nHeight = _ttxoi(tszHTTPVlu);
 
 			if (ModuleHelp_ImageSet_Resolution(lpszMsgBuffer, nMsgLen, tszFileExt, ptszRVBuffer, &nRVLen, nWidth, nHeight))

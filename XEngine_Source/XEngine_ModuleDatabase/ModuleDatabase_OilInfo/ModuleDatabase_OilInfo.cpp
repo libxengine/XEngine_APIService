@@ -104,7 +104,7 @@ bool CModuleDatabase_OilInfo::ModuleDatabase_OilInfo_Query(XENGINE_OILINFO* pSt_
 #ifdef _MSC_BUILD
 	XCHAR tszUTFStr[1024] = {};
 	int nSLen = _tcsxlen(tszSQLStatement);
-	BaseLib_OperatorCharset_AnsiToUTF(tszSQLStatement, tszUTFStr, &nSLen);
+	BaseLib_Charset_AnsiToUTF(tszSQLStatement, tszUTFStr, &nSLen);
 	if (!DataBase_MySQL_ExecuteQuery(xhDBSQL, &xhTable, tszUTFStr, &nllLine, &nllRow))
 #else
 	if (!DataBase_MySQL_ExecuteQuery(xhDBSQL, &xhTable, tszSQLStatement, &nllLine, &nllRow))
@@ -195,7 +195,7 @@ bool CModuleDatabase_OilInfo::ModuleDatabase_OilInfo_UPDate(XENGINE_OILINFO* pSt
 #ifdef _MSC_BUILD
 	XCHAR tszUTFStr[1024] = {};
 	int nSLen = _tcsxlen(tszSQLStatement);
-	BaseLib_OperatorCharset_AnsiToUTF(tszSQLStatement, tszUTFStr, &nSLen);
+	BaseLib_Charset_AnsiToUTF(tszSQLStatement, tszUTFStr, &nSLen);
 	if (!DataBase_MySQL_Execute(xhDBSQL, tszUTFStr))
 #else
 	if (!DataBase_MySQL_Execute(xhDBSQL, tszSQLStatement))
