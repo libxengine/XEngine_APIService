@@ -17,7 +17,7 @@ jobs:
       fail-fast: false
       matrix:
         configuration: [Debug ,Release]
-        platform: [x86 ,x64]
+        platform: [x64]
 
     runs-on: windows-latest # 最新的 Windows 环境
 
@@ -78,9 +78,10 @@ jobs:
       # 配置 MSBuild 的路径，准备构建 VC++ 项目
       - name: Setup MSBuild
         uses: microsoft/setup-msbuild@v2
+
       #编译
       - name: Build Solution
-        run: msbuild XEngine_Source/XEngine.sln /p:Configuration=${{ matrix.configuration }} /p:Platform=${{ matrix.platform }} /p:AdditionalOptions="/utf-8"
+        run: msbuild XEngine_Source/XEngine.sln /p:Configuration=${{ matrix.configuration }} /p:Platform=${{ matrix.platform }}
       #测试
       - name: Conditional Step for x86 Release
         if: matrix.configuration == 'Release' && matrix.platform == 'x86'

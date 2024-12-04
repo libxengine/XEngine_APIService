@@ -132,6 +132,7 @@ int main(int argc, char** argv)
 	WSAStartup(MAKEWORD(2, 2), &st_WSAData);
 
 	SetUnhandledExceptionFilter(Coredump_ExceptionFilter);
+	SetConsoleOutputCP(CP_UTF8);
 #endif
 	bIsRun = true;
 	int nRet = -1;
