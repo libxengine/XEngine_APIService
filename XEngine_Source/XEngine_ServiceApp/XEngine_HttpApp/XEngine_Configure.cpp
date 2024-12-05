@@ -41,12 +41,12 @@ bool XEngine_Configure_Parament(int argc, char** argv)
 		}
 		else if (0 == _tcsxcmp("-d", argv[i]))
 		{
-			st_ServiceConfig.bDeamon = _ttxoi(argv[i + 1]);
+			st_ServiceConfig.bDeamon = _ttxoi(argv[++i]);
 		}
 		else if (0 == _tcsxcmp("-r", argv[i]))
 		{
 			st_ServiceConfig.st_XReload.bReload = true;
-			st_ServiceConfig.st_XReload.byCode = _ttxoi(argv[i + 1]);
+			st_ServiceConfig.st_XReload.byCode = _ttxoi(argv[++i]);
 		}
 		else if (0 == _tcsxcmp("-t", argv[i]))
 		{
