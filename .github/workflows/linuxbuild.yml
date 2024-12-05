@@ -27,7 +27,6 @@ jobs:
         uses: actions/checkout@v4
         with:
           ref: 'develop'
-          ref: 'v9'
         
        # 检出依赖的xengine仓库到指定的xengine目录
       - name: Checkout dependency repository (xengine)
@@ -35,6 +34,7 @@ jobs:
         with:
           repository: libxengine/libxengine
           path: libxengine
+          ref: 'v9'
 
       - name: sub module checkout (opensource)
         run: |
