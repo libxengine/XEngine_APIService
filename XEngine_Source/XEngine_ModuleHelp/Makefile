@@ -8,7 +8,7 @@ RELEASE = 0
 UNICODE = 0
 LOADHDR = -I ./ -I /usr/include/opencv4 -I /usr/local/include/opencv4 -I /usr/local/include/lua
 LOADSO = 
-LIB = -lXEngine_BaseLib -lXClient_Socket 
+LIB = -lXEngine_BaseLib -lXClient_Socket -lNetHelp_APIAddr
 LIBEX = 
 OBJECTS = ModuleHelp_IDCard.o ModuleHelp_Language.o ModuleHelp_P2PClient.o ModuleHelp_Locker.o ModuleHelp_QRCode.o ModuleHelp_SocketTest.o ModuleHelp_ImageGet.o ModuleHelp_ImageSet.o pch.o
 
