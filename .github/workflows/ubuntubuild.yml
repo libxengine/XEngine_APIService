@@ -42,7 +42,10 @@ jobs:
             git submodule update
 
       - name: install library
-        run: sudo apt install liblua5.4-dev libopencv-dev libopencv-contrib-dev libqrencode-dev
+        run: |
+          sudo apt update -y
+          sudo apt upgrade -y
+          sudo apt install liblua5.4-dev libopencv-dev libopencv-contrib-dev libqrencode-dev -y
 
       # 设置依赖库的环境变量
       - name: Set up Dependency ubuntu24.04 Environment
