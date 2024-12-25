@@ -65,7 +65,7 @@ jobs:
             sudo mkdir -p /usr/local/lib
             sudo cp -rf ./XEngine_Include /usr/local/include
             sudo find ./XEngine_Mac -name "*.dylib" -exec cp {} /usr/local/lib \;    
-            ls -l /opt/homebrew/opt/opencv  
+            ls -al /opt/homebrew/opt/opencv  
       #编译
       - name: make debug
         run: | 
