@@ -65,7 +65,7 @@ jobs:
             sudo mkdir -p /usr/local/lib
             sudo cp -rf ./XEngine_Include /usr/local/include
             sudo find ./XEngine_Mac -name "*.dylib" -exec cp {} /usr/local/lib \;    
-            ls -al /opt/homebrew/opt/opencv4/include
+            ls -al /opt/homebrew/opt/opencv4
             ls -al /opt/homebrew/Cellar/opencv/4.10.0_15/include
             ls -al /opt/homebrew/Cellar/opencv/4.10.0_15/lib
       #编译
