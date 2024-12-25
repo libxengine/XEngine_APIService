@@ -1342,15 +1342,15 @@ bool CModuleProtocol_Packet::ModuleProtocol_Packet_HardWare(XCHAR* ptszHWInfo, i
 	st_JsonDisk["DiskTotal"] = (Json::UInt64)st_DiskInfo.dwDiskTotal;
 	st_JsonDisk["DiskName"] = tszDriveStr;
 
-	st_JsonCpu["CpuNumber"] = st_CPUInfo.nCpuNumber;
-	st_JsonCpu["CpuSpeed"] = st_CPUInfo.nCpuSpeed;
-	st_JsonCpu["CpuName"] = st_CPUInfo.tszCpuName;
+	st_JsonCpu["CpuNumber"] = st_CPUInfo.nCPUNumber;
+	st_JsonCpu["CpuSpeed"] = st_CPUInfo.nCPUSpeed;
+	st_JsonCpu["CpuName"] = st_CPUInfo.tszCPUName;
 
 	st_JsonMemory["MemoryFree"] = (Json::UInt64)st_MemoryInfo.dwMemory_Free;
 	st_JsonMemory["MemoryTotal"] = (Json::UInt64)st_MemoryInfo.dwMemory_Total;
 
 	st_JsonSerial["DiskSerial"] = st_SDKSerial.tszDiskSerial;
-	st_JsonSerial["CpuSerial"] = st_SDKSerial.tszCpuSerial;
+	st_JsonSerial["CpuSerial"] = st_SDKSerial.tszCPUSerial;
 	st_JsonSerial["BoardSerial"] = st_SDKSerial.tszBoardSerial;
 	st_JsonSerial["SystemSerial"] = st_SDKSerial.tszSystemSerial;
 
