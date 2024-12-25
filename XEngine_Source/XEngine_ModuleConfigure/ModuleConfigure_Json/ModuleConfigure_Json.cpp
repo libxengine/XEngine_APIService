@@ -186,6 +186,17 @@ bool CModuleConfigure_Json::ModuleConfigure_Json_File(LPCXSTR lpszConfigFile, XE
 	_tcsxcpy(pSt_ServerConfig->st_XShortLink.tszHostUrl, st_JsonXShort["tszHostUrl"].asCString());
 	pSt_ServerConfig->st_XShortLink.nHTTPCode = st_JsonXShort["nHTTPCode"].asInt();
 
+	if (st_JsonRoot["XImageText"].empty() || (3 != st_JsonRoot["XImageText"].size()))
+	{
+		Config_IsErrorOccur = true;
+		Config_dwErrorCode = ERROR_MODULE_CONFIGURE_JSON_XSLINK;
+		return false;
+	}
+	Json::Value st_JsonXImageText = st_JsonRoot["XImageText"];
+	pSt_ServerConfig->st_XImageText.bEnable = st_JsonXImageText["bEnable"].asBool();
+	_tcsxcpy(pSt_ServerConfig->st_XImageText.tszImagePath, st_JsonXImageText["tszImagePath"].asCString());
+	_tcsxcpy(pSt_ServerConfig->st_XImageText.tszImageLanguage, st_JsonXImageText["tszImageLanguage"].asCString());
+
 	if (st_JsonRoot["XVerification"].empty() || (3 != st_JsonRoot["XVerification"].size()))
 	{
 		Config_IsErrorOccur = true;

@@ -55,6 +55,7 @@ void ServiceApp_Stop(int signo)
 		APIModule_PhoneNumber_UnInit();
 		ModulePlugin_Loader_Destory();
 		ModuleHelp_P2PClient_Destory();
+		ModuleHelp_ImageGet_TextDestory();
 		//销毁日志资源
 		HelpComponents_XLog_Destroy(xhLog);
 		//销毁线程
@@ -225,6 +226,12 @@ int main(int argc, char** argv)
 #else
 	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_WARN, _X("启动服务中,初始化二维码配置文件:%s 失败,因为QR编译脚本被关闭"), st_ServiceConfig.st_XConfig.tszConfigQRCode);
 #endif
+
+	if (!ModuleHelp_ImageGet_TextInit(st_ServiceConfig.st_XImageText.tszImagePath, st_ServiceConfig.st_XImageText.tszImageLanguage))
+	{
+		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("启动服务中,初始化图像文字识别失败,错误：%lX"), ModuleHelp_GetLastError());
+		goto XENGINE_SERVICEAPP_EXIT;
+	}
 	//初始化数据库
 	if (st_ServiceConfig.st_XSql.bEnable && !bIsTest)
 	{
@@ -558,6 +565,7 @@ XENGINE_SERVICEAPP_EXIT:
 		APIModule_PhoneNumber_UnInit();
 		ModulePlugin_Loader_Destory();
 		ModuleHelp_P2PClient_Destory();
+		ModuleHelp_ImageGet_TextDestory();
 		//销毁日志资源
 		HelpComponents_XLog_Destroy(xhLog);
 		//销毁线程

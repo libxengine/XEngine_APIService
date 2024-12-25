@@ -99,6 +99,10 @@ extern "C" bool ModuleProtocol_Packet_ImageAttr(XCHAR * ptszMsgBuffer, int* pInt
 {
 	return m_ProtocolPacket.ModuleProtocol_Packet_ImageAttr(ptszMsgBuffer, pInt_MsgLen, pSt_BaseInfo, pSt_ExtAttr);
 }
+extern "C" bool ModuleProtocol_Packet_ImageText(XCHAR* ptszMsgBuffer, int* pInt_MsgLen, XCHAR*** pppListStr, int nListCount)
+{
+	return m_ProtocolPacket.ModuleProtocol_Packet_ImageText(ptszMsgBuffer, pInt_MsgLen, pppListStr, nListCount);
+}
 extern "C" bool ModuleProtocol_Packet_EnumDevice(XCHAR * ptszMsgBuffer, int* pInt_MsgLen, AVHELP_DEVICEINFO * **pppSt_AudioList, AVHELP_DEVICEINFO * **pppSt_VideoList, int nACount, int nVCount)
 {
 	return m_ProtocolPacket.ModuleProtocol_Packet_EnumDevice(ptszMsgBuffer, pInt_MsgLen, pppSt_AudioList, pppSt_VideoList, nACount, nVCount);

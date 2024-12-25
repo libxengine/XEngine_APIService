@@ -956,6 +956,63 @@ extern "C" bool ModuleHelp_SocketTest_StopDatas(XNETHANDLE xhToken);
 *********************************************************************/
 extern "C" bool ModuleHelp_ImageGet_Attr(LPCXSTR lpszMsgBuffer, int nMsgLen, XENGINE_IMGBASEATTR* pSt_BaseInfo = NULL, XENGINE_IMGEXTATTR* pSt_ExtAttr = NULL);
 /********************************************************************
+函数名称：ModuleHelp_ImageGet_TextInit
+函数功能：初始化图像文字转换
+ 参数.一：lpszPath
+  In/Out：In
+  类型：常量字符指针
+  可空：N
+  意思：输入文本语言数据路径
+ 参数.二：lpszLanguage
+  In/Out：In
+  类型：常量字符指针
+  可空：N
+  意思：输入加载的语言数据.通过+连接
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+extern "C" bool ModuleHelp_ImageGet_TextInit(LPCXSTR lpszPath, LPCXSTR lpszLanguage);
+/********************************************************************
+函数名称：ModuleHelp_ImageGet_TextGet
+函数功能：获取图像文本内容
+ 参数.一：lpszMsgBuffer
+  In/Out：In
+  类型：常量字符指针
+  可空：N
+  意思：输入图像内存
+ 参数.二：nMsgLen
+  In/Out：In
+  类型：整数型
+  可空：N
+  意思：输入图像大小
+ 参数.三：ppptszListStr
+  In/Out：Out
+  类型：三级指针
+  可空：N
+  意思：输出获取到的内容列表
+ 参数.四：pInt_ListCount
+  In/Out：Out
+  类型：整数型指针
+  可空：Y
+  意思：输出列表个数
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+extern "C" bool ModuleHelp_ImageGet_TextGet(LPCXSTR lpszMsgBuffer, int nMsgLen, XCHAR*** ppptszListStr, int* pInt_ListCount);
+/********************************************************************
+函数名称：ModuleHelp_ImageGet_TextDestory
+函数功能：销毁文本提取功能
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+extern "C" bool ModuleHelp_ImageGet_TextDestory();
+/********************************************************************
 函数名称：ModuleHelp_ImageSet_Resolution
 函数功能：分辨率调整
  参数.一：lpszSrcFile

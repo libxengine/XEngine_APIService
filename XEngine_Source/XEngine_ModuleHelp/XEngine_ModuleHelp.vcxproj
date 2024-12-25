@@ -72,7 +72,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(XEngine_Include);$(vcpkgroot)\installed\x86-windows\include\opencv4;$(IncludePath)</IncludePath>
+    <IncludePath>$(XEngine_Include);$(vcpkgroot)\installed\x86-windows\include\opencv4;..\XEngine_ModuleHelp;$(IncludePath)</IncludePath>
     <LibraryPath>$(XEngine_Lib32);$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">

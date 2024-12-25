@@ -18,6 +18,13 @@ public:
 	~CModuleHelp_ImageGet();
 public:
 	bool ModuleHelp_ImageGet_Attr(LPCXSTR lpszMsgBuffer, int nMsgLen, XENGINE_IMGBASEATTR* pSt_BaseInfo = NULL, XENGINE_IMGEXTATTR* pSt_ExtAttr = NULL);
+public:
+	bool ModuleHelp_ImageGet_TextInit(LPCXSTR lpszPath, LPCXSTR lpszLanguage);
+	bool ModuleHelp_ImageGet_TextGet(LPCXSTR lpszMsgBuffer, int nMsgLen, XCHAR*** ppptszListStr, int* pInt_ListCount);
+	bool ModuleHelp_ImageGet_TextDestory();
 protected:
 private:
+#if _XENGINE_BUILD_SWITCH_OPENCV == 1
+	TessBaseAPI* pSt_APITesseract = NULL;
+#endif
 };

@@ -20,6 +20,7 @@ EXPORTS
 	ModuleProtocol_Packet_WordFilter
 	ModuleProtocol_Packet_WordFilterList
 	ModuleProtocol_Packet_ImageAttr
+	ModuleProtocol_Packet_ImageText
 	ModuleProtocol_Packet_EnumDevice
 	ModuleProtocol_Packet_ListFile
 	ModuleProtocol_Packet_HardWare
