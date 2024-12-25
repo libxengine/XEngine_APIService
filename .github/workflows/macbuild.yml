@@ -16,7 +16,7 @@ jobs:
       matrix:
         include:
           - os: macos-13
-          #- os: macos-14
+          - os: macos-14
     runs-on: ${{ matrix.os }}
     
     steps:
@@ -31,7 +31,6 @@ jobs:
         with:
           repository: libxengine/libxengine
           path: libxengine
-          ref: 'v9'
 
       - name: sub module checkout (opensource)
         run: |
@@ -69,8 +68,15 @@ jobs:
             cd XEngine_Release
             ./XEngine_APIServiceApp -t
 
-      - name: Upload folder as artifact with mac
+      - name: Upload folder as artifact with mac x64
+        if: matrix.os == 'macos-13'
         uses: actions/upload-artifact@v4
         with:
           name: XEngine_APIServiceApp-x86_64-Mac
+          path: XEngine_Release/
+      - name: Upload folder as artifact with mac arm
+        if: matrix.os == 'macos-14'
+        uses: actions/upload-artifact@v4
+        with:
+          name: XEngine_APIServiceApp-Arm64-Mac
           path: XEngine_Release/
