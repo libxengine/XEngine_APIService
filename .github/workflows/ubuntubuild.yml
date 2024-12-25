@@ -45,12 +45,27 @@ jobs:
         run: sudo apt install liblua5.4-dev libopencv-dev libopencv-contrib-dev libqrencode-dev
 
       # 设置依赖库的环境变量
-      - name: Set up Dependency Environment Variables
+      - name: Set up Dependency ubuntu24.04 Environment
+        if: matrix.os == 'ubuntu-24.04'
         run: |
             cd libxengine
             chmod 777 *
             sudo ./XEngine_LINEnv.sh -i 3
-            cd ..
+      - name: Set up Dependency ubuntu22.04 Environment
+        if: matrix.os == 'ubuntu-22.04'
+        run: |
+            cd libxengine
+            chmod 777 *
+            sudo ./XEngine_LINEnv.sh -i 0
+
+            latest_tag=$(curl -s https://api.github.com/repos/libxengine/libxengine/releases/latest | jq -r .tag_name)
+            wget https://github.com/libxengine/libxengine/releases/download/$latest_tag/XEngine_UBuntu_22.04_x86-64.zip
+            unzip ./XEngine_UBuntu_22.04_x86-64.zip -d ./XEngine_UBuntu_22.04_x86-64
+            cd XEngine_UBuntu_22.04_x86-64
+            
+            sudo cp -rf ./XEngine_Include /usr/local/include
+            sudo find ./XEngine_Linux -name "*.so" -exec cp {} /usr/local/lib \;         
+            sudo ldconfig
       #编译
       - name: make
         run: | 
