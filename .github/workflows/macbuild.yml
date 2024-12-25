@@ -41,6 +41,10 @@ jobs:
       - name: install library
         run: |
           brew install lua opencv qrencode
+          brew --prefix opencv
+          brew info opencv
+
+          ls -al /opt/homebrew/Cellar/opencv/4.10.0_15
           ls -al /opt/homebrew/Cellar/opencv/4.10.0_15/include
           ls -al /opt/homebrew/Cellar/opencv/4.10.0_15/lib
           ls -al /opt/homebrew/opt/opencv4
