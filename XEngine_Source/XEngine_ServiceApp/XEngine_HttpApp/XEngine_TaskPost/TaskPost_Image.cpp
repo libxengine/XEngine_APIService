@@ -31,7 +31,7 @@ bool HTTPTask_TaskPost_Image(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer, int 
 	BaseLib_String_GetKeyValue((*ppptszList)[1], "=", tszHTTPKey, tszHTTPVlu);
 	int nOPCode = _ttxoi(tszHTTPVlu);
 	//0获取,1设置
-	if (0 == nOPCode)
+	if (0 == nOPCode && st_ServiceConfig.st_XImageText.bEnable)
 	{
 		XCHAR** pptszListStr;
 		int nListCount = 0;

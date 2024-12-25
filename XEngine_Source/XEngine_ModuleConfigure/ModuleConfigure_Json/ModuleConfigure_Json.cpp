@@ -189,7 +189,7 @@ bool CModuleConfigure_Json::ModuleConfigure_Json_File(LPCXSTR lpszConfigFile, XE
 	if (st_JsonRoot["XImageText"].empty() || (3 != st_JsonRoot["XImageText"].size()))
 	{
 		Config_IsErrorOccur = true;
-		Config_dwErrorCode = ERROR_MODULE_CONFIGURE_JSON_XSLINK;
+		Config_dwErrorCode = ERROR_MODULE_CONFIGURE_JSON_XIMAGETEXT;
 		return false;
 	}
 	Json::Value st_JsonXImageText = st_JsonRoot["XImageText"];

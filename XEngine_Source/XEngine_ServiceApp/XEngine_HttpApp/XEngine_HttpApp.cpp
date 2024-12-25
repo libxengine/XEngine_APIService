@@ -227,10 +227,17 @@ int main(int argc, char** argv)
 	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_WARN, _X("启动服务中,初始化二维码配置文件:%s 失败,因为QR编译脚本被关闭"), st_ServiceConfig.st_XConfig.tszConfigQRCode);
 #endif
 
-	if (!ModuleHelp_ImageGet_TextInit(st_ServiceConfig.st_XImageText.tszImagePath, st_ServiceConfig.st_XImageText.tszImageLanguage))
+	if (st_ServiceConfig.st_XImageText.bEnable)
 	{
-		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("启动服务中,初始化图像文字识别失败,错误：%lX"), ModuleHelp_GetLastError());
-		goto XENGINE_SERVICEAPP_EXIT;
+		if (!ModuleHelp_ImageGet_TextInit(st_ServiceConfig.st_XImageText.tszImagePath, st_ServiceConfig.st_XImageText.tszImageLanguage))
+		{
+			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("启动服务中,初始化图像文字识别失败,错误：%lX"), ModuleHelp_GetLastError());
+			goto XENGINE_SERVICEAPP_EXIT;
+		}
+	}
+	else
+	{
+		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_WARN, _X("启动服务中,初始化图像文字识别被禁用"));
 	}
 	//初始化数据库
 	if (st_ServiceConfig.st_XSql.bEnable && !bIsTest)

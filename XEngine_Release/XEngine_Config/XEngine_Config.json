@@ -50,6 +50,11 @@
         "tszConfigHTTPMime":"./XEngine_Config/HttpMime.types",
         "tszConfigHTTPCode":"./XEngine_Config/HttpCode.types"
     },
+    "XImageText":{
+        "bEnable":false,
+        "tszImagePath":"./XEngine_Config/tessdata",
+        "tszImageLanguage":"chi_sim+eng"
+    },
     "XShortLink":{
         "tszHostUrl":"url.xyry.org",
         "nHTTPCode":301
