@@ -55,7 +55,7 @@ else ifeq ($(PLATFORM),mac)
 	FILEEXT = dylib
 	LIBFLAG = -dynamiclib
 
-	LOADHDR += -I /opt/homebrew/opt/lua/include
+	LOADHDR += -I /opt/homebrew/opt/lua/include/lua
 	LOADSO += -L /opt/homebrew/opt/lua/lib
 
 	ifeq ($(MACRO_LUA_SUPPORT),1)
