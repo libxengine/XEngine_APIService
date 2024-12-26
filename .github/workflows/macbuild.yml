@@ -44,7 +44,7 @@ jobs:
           echo "==============opencv4================"
           ls -al /opt/homebrew/Cellar/opencv/4.10.0_15/include/opencv4/opencv2
           echo "==============tesseract================"
-          ls -al /opt/homebrew/opt/tesseract/include
+          ls -al /opt/homebrew/opt/tesseract/include/tesseract
           echo "==============qrencode================"
           ls -al /opt/homebrew/opt/qrencode/include
       # 设置依赖库的环境变量
