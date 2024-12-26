@@ -54,6 +54,10 @@ else ifeq ($(PLATFORM),mac)
 	PLATDIR = XEngine_Mac
 	FILEEXT = dylib
 	LIBFLAG = -dynamiclib
+
+	LOADHDR += -I /opt/homebrew/opt/lua/include
+	LOADSO += -L /opt/homebrew/opt/lua/lib
+
 	ifeq ($(MACRO_LUA_SUPPORT),1)
 		LIB += -llua
 	endif
