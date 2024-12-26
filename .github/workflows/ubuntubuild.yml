@@ -2,7 +2,7 @@ name: ubuntu build workflows
 
 on:
   push:
-    branches: [ "develop1" ]
+    branches: [ "develop" ]
     paths:
       - 'XEngine_Source/**'
       - 'XEngine_Release/**'
