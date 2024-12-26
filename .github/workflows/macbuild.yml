@@ -41,8 +41,8 @@ jobs:
       - name: install library
         run: |
           brew install lua opencv qrencode
-          ls -al /opt/homebrew/opt/leptonica
-          ls -al /opt/homebrew/Cellar/leptonica/1.85.0
+          ls -al /opt/homebrew/opt/leptonica/include
+          ls -al /opt/homebrew/Cellar/leptonica/1.85.0/include
       # 设置依赖库的环境变量
       - name: Set up Dependency x86_64 Environment 
         if: matrix.os == 'macos-13'
