@@ -40,14 +40,15 @@ jobs:
             
       - name: install library
         run: |
-          brew install lua opencv qrencode
+          #brew install lua opencv qrencode
+          brew install opencv
           brew --prefix opencv
           brew info opencv
 
           ls -al /opt/homebrew/Cellar/opencv/4.10.0_15
-          ls -al /opt/homebrew/Cellar/opencv/4.10.0_15/include
+          ls -al /opt/homebrew/Cellar/opencv/4.10.0_15/include/opencv4
           ls -al /opt/homebrew/Cellar/opencv/4.10.0_15/lib
-          ls -al /opt/homebrew/opt/opencv4
+          ls /opt/homebrew/opt
 
       # 设置依赖库的环境变量
       - name: Set up Dependency x86_64 Environment 
