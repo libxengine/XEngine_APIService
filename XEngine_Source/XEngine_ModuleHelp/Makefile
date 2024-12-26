@@ -58,7 +58,7 @@ else ifeq ($(PLATFORM),mac)
 	PLATVER = -D __MACOS__
 	PLATDIR = XEngine_Mac
 	FILEEXT = dylib
-	LOADHDR +=  -I /opt/homebrew/opt/ -I /opt/homebrew/opt/opencv/include/opencv4 -I /opt/homebrew/opt/tesseract/include -I /opt/homebrew/opt/qrencode/include -I /opt/homebrew/opt/lua/include
+	LOADHDR +=  -I /opt/homebrew/opt/leptonica/include -I /opt/homebrew/opt/opencv/include/opencv4 -I /opt/homebrew/opt/tesseract/include -I /opt/homebrew/opt/qrencode/include -I /opt/homebrew/opt/lua/include
 	LOADSO +=  -L /opt/homebrew/opt/leptonica/lib -L /opt/homebrew/opt/opencv/lib -L /opt/homebrew/opt/tesseract/lib -L /opt/homebrew/opt/qrencode/lib -L /opt/homebrew/opt/lua/lib
 	LIBFLAG = -dynamiclib
 	LIBEX = -lpthread -ldl
