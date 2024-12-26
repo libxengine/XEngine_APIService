@@ -41,10 +41,10 @@ jobs:
       - name: install library
         run: |
           brew install lua opencv qrencode
-          echo "==============opencv4================"
-          ls -al /opt/homebrew/Cellar/opencv/4.10.0_15/include/opencv4/opencv2
           echo "==============tesseract================"
           ls -al /opt/homebrew/opt/tesseract/include/tesseract
+          echo "==============tesseract================"
+          cat /opt/homebrew/opt/tesseract/include/tesseract/capi.h
           echo "==============qrencode================"
           ls -al /opt/homebrew/opt/qrencode/include
       # 设置依赖库的环境变量
