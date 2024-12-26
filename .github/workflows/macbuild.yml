@@ -41,9 +41,9 @@ jobs:
       - name: install library
         run: |
           brew install lua opencv qrencode
-          ls -al /opt/homebrew/opt/leptonica/include
-          ls -al /opt/homebrew/Cellar/leptonica/1.85.0/include/leptonica
-      # 设置依赖库的环境变量
+          ls -al /opt/homebrew/opt/png16/include
+          ls -al /opt/homebrew/Cellar/png16
+
       - name: Set up Dependency x86_64 Environment 
         if: matrix.os == 'macos-13'
         run: |
@@ -67,7 +67,7 @@ jobs:
             sudo mkdir -p /usr/local/lib
             sudo cp -rf ./XEngine_Include /usr/local/include
             sudo find ./XEngine_Mac -name "*.dylib" -exec cp {} /usr/local/lib \;
-      #编译
+
       - name: make debug
         run: | 
             cd XEngine_Source
