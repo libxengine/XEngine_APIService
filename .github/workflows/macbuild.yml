@@ -41,8 +41,8 @@ jobs:
       - name: install library
         run: |
           brew install lua opencv qrencode
-          ls -al /opt/homebrew/opt/png16/include
-          ls -al /opt/homebrew/Cellar/png16
+         # ls -al /opt/homebrew/opt/png16/include
+         # ls -al /opt/homebrew/Cellar/png16
 
       - name: Set up Dependency x86_64 Environment 
         if: matrix.os == 'macos-13'
