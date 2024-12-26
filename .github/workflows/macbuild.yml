@@ -39,8 +39,9 @@ jobs:
             git submodule update
             
       - name: install library
-        run: brew install lua opencv qrencode
-
+        run: |
+          brew install lua opencv qrencode
+          ls -al /opt/homebrew/opt/leptonica
       # 设置依赖库的环境变量
       - name: Set up Dependency x86_64 Environment 
         if: matrix.os == 'macos-13'
