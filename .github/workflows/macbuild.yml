@@ -44,7 +44,7 @@ jobs:
           brew --prefix lua
           brew info lua
           ls -al /opt/homebrew/opt/lua
-          ls -al /opt/homebrew/Cellar/lua
+          ls -al /opt/homebrew/Cellar/lua/5.4.7
 
       - name: Set up Dependency x86_64 Environment 
         if: matrix.os == 'macos-13'

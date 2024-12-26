@@ -2,7 +2,7 @@ name: windows build workflows
 
 on:
   push:
-    branches: [ "develop1" ]
+    branches: [ "develop" ]
     paths:
       - 'XEngine_Source/**'
       - 'XEngine_Release/**'
@@ -65,16 +65,26 @@ jobs:
             ./vcpkg.exe integrate install
         shell: pwsh
 
-      # 设置依赖库的环境变量
-      - name: Set up Dependency Environment Variables
+      - name: Set up Dependency x86_64 Environment
+        if: matrix.platform == 'x64'
         run: |
           echo "XENGINE_INCLUDE=${{ github.workspace }}/libxengine" | Out-File -FilePath $env:GITHUB_ENV -Append
-          echo "XENGINE_LIB32=${{ github.workspace }}/libxengine/XEngine_Windows" | Out-File -FilePath $env:GITHUB_ENV -Append
           echo "XENGINE_LIB64=${{ github.workspace }}/libxengine/XEngine_Windows" | Out-File -FilePath $env:GITHUB_ENV -Append
         shell: pwsh
-        
-      - name: Set code page
-        run: chcp 65001
+      - name: Set up Dependency x86_32 Environment
+        if: matrix.platform == 'x86'
+        run: |
+          $response = Invoke-RestMethod -Uri "https://api.github.com/repos/libxengine/libxengine/releases/latest" -Headers @{"Accept"="application/vnd.github.v3+json"}
+          $latest_tag = $response.tag_name
+          Write-Host "Latest Tag: $latest_tag"
+    
+          $url = "https://github.com/libxengine/libxengine/releases/download/$latest_tag/XEngine_Windows_x86-32.zip"
+          Invoke-WebRequest -Uri $url -OutFile "XEngine_Windows_x86-32.zip"
+          Expand-Archive -Path ./XEngine_Windows_x86-32.zip -DestinationPath ./XEngine_Windows -Force
+
+          echo "XENGINE_INCLUDE=${{ github.workspace }}/XEngine_Windows" | Out-File -FilePath $env:GITHUB_ENV -Append
+          echo "XENGINE_LIB32=${{ github.workspace }}/XEngine_Windows/XEngine_Windows" | Out-File -FilePath $env:GITHUB_ENV -Append
+        shell: pwsh
         
       # 配置 MSBuild 的路径，准备构建 VC++ 项目
       - name: Setup MSBuild
