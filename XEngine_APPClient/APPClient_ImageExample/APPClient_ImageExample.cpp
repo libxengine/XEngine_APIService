@@ -49,7 +49,7 @@ bool APPClient_ImageExample_GetAttr(LPCXSTR lpszMsgBuffer, int nMsgLen, int* pIn
 		printf("json parse failed\n");
 		return false;
 	}
-	BaseLib_OperatorMemory_FreeCStyle((XPPMEM)&ptszMsgBuffer);
+	BaseLib_Memory_FreeCStyle((XPPMEM)&ptszMsgBuffer);
 
 	Json::Value st_JsonBase = st_JsonRoot["st_BaseInfo"];
 	*pInt_Width = st_JsonBase["nWidth"].asInt();
@@ -85,7 +85,7 @@ int test_imgzoom()
 		XCHAR tszAPIUrl[MAX_PATH] = {};
 		XCHAR tszFileExt[64] = {};
 
-		BaseLib_OperatorString_GetFileAndPath(pptszListFile[i], NULL, NULL, NULL, tszFileExt);
+		BaseLib_String_GetFileAndPath(pptszListFile[i], NULL, NULL, NULL, tszFileExt);
 		_xstprintf(tszAPIUrl, _X("http://127.0.0.1:5501/api?function=image&type=1&ext=%s&width=%d&height=%d"), tszFileExt, nWidth / 2, nHeight / 2);
 
 		XCHAR* ptszMsgBuffer = NULL;
@@ -100,7 +100,7 @@ int test_imgzoom()
 		fwrite(ptszMsgBuffer, 1, nRet, pSt_File);
 		fclose(pSt_File);
 
-		BaseLib_OperatorMemory_FreeCStyle((XPPMEM)&ptszMsgBuffer);
+		BaseLib_Memory_FreeCStyle((XPPMEM)&ptszMsgBuffer);
 	}
 	return 0;
 }

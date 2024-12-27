@@ -38,13 +38,13 @@ int main()
 	}
 #ifdef _MSC_BUILD
 	XCHAR tszGBKBuffer[1024] = {};
-	BaseLib_OperatorCharset_UTFToAnsi(ptszMsgBuffer, tszGBKBuffer, &nLen);
+	BaseLib_Charset_UTFToAnsi(ptszMsgBuffer, tszGBKBuffer, &nLen);
 	printf("接受到数据,大小:%d,内容:%s\n", nLen, tszGBKBuffer);
 #else
 	printf("接受到数据,大小:%d,内容:%s\n", nLen, ptszMsgBuffer);
 #endif
 	
-	BaseLib_OperatorMemory_FreeCStyle((XPPMEM)&ptszMsgBuffer);
+	BaseLib_Memory_FreeCStyle((XPPMEM)&ptszMsgBuffer);
 
 #ifdef _MSC_BUILD
 	WSACleanup();

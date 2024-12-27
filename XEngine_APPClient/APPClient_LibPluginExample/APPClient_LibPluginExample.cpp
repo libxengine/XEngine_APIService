@@ -35,7 +35,7 @@ int main()
 		return 0;
 	}
 	printf("接受到数据,大小:%d,内容:%s\n", nLen, ptszMsgBuffer);
-	BaseLib_OperatorMemory_FreeCStyle((XPPMEM)&ptszMsgBuffer);
+	BaseLib_Memory_FreeCStyle((XPPMEM)&ptszMsgBuffer);
 
 	LPCXSTR lpszZodiacUrl = _X("http://127.0.0.1:5501/api?function=zodiac&params1=19880121");
 	if (!APIClient_Http_Request(_X("GET"), lpszZodiacUrl, NULL, NULL, &ptszMsgBuffer, &nLen))
@@ -44,7 +44,7 @@ int main()
 		return 0;
 	}
 	printf("接受到数据,大小:%d,内容:%s\n", nLen, ptszMsgBuffer);
-	BaseLib_OperatorMemory_FreeCStyle((XPPMEM)&ptszMsgBuffer);
+	BaseLib_Memory_FreeCStyle((XPPMEM)&ptszMsgBuffer);
 
 	LPCXSTR lpszTimeUrl = _X("http://127.0.0.1:5501/api?function=timezone&params1=1&params2=1-20");
 	if (!APIClient_Http_Request(_X("GET"), lpszTimeUrl, NULL, NULL, &ptszMsgBuffer, &nLen))
@@ -53,7 +53,7 @@ int main()
 		return 0;
 	}
 	printf("接受到数据,大小:%d,内容:%s\n", nLen, ptszMsgBuffer);
-	BaseLib_OperatorMemory_FreeCStyle((XPPMEM)&ptszMsgBuffer);
+	BaseLib_Memory_FreeCStyle((XPPMEM)&ptszMsgBuffer);
 
 	LPCXSTR lpszBmiUrl = _X("http://127.0.0.1:5501/api?function=bmindex&params1=1.78&params2=62");
 	if (!APIClient_Http_Request(_X("GET"), lpszBmiUrl, NULL, NULL, &ptszMsgBuffer, &nLen))
@@ -62,7 +62,7 @@ int main()
 		return 0;
 	}
 	printf("接受到数据,大小:%d,内容:%s\n", nLen, ptszMsgBuffer);
-	BaseLib_OperatorMemory_FreeCStyle((XPPMEM)&ptszMsgBuffer);
+	BaseLib_Memory_FreeCStyle((XPPMEM)&ptszMsgBuffer);
 #ifdef _MSC_BUILD
 	WSACleanup();
 #endif

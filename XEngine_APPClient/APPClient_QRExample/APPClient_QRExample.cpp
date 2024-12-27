@@ -49,7 +49,7 @@ int test_create()
 		fclose(pSt_File);
 	}
 	printf("接受到数据,大小:%d,内容:%s\n", nLen, ptszMsgBuffer);
-	BaseLib_OperatorMemory_FreeCStyle((XPPMEM)&ptszMsgBuffer);
+	BaseLib_Memory_FreeCStyle((XPPMEM)&ptszMsgBuffer);
 
 	return 0;
 }
@@ -73,7 +73,7 @@ int test_parse()
 			return 0;
 		}
 		printf("接受到数据,大小:%d,内容:%s\n", nRet, ptszBodyBuffer);
-		BaseLib_OperatorMemory_FreeCStyle((XPPMEM)&ptszBodyBuffer);
+		BaseLib_Memory_FreeCStyle((XPPMEM)&ptszBodyBuffer);
 	}
 	return 0;
 }
