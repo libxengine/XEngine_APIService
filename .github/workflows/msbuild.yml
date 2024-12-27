@@ -115,7 +115,8 @@ jobs:
           cd XEngine_Release
           ./VSCopy_x64.bat
           ls
-          ./XEngine_HttpApp.exe -t
+          ./XEngine_HttpApp.exe -t > output.log 2>&1
+          cat output.log
         shell: pwsh
 
       - name: Upload folder as artifact with x86
