@@ -21,7 +21,8 @@ jobs:
         platform: [x86 ,x64]
 
     runs-on: windows-latest # 最新的 Windows 环境
-
+    env:
+      ACTIONS_STEP_DEBUG: true
     steps:
        # 检出您的主仓库代码
       - name: Checkout main repository code
@@ -93,10 +94,7 @@ jobs:
       #编译
       - name: Build Solution
         run: msbuild XEngine_Source/XEngine.sln /p:Configuration=${{ matrix.configuration }} /p:Platform=${{ matrix.platform }}
-      - name: Enable debug mode
-        run: |
-          echo "Enabling debug mode..."
-          echo "ACTIONS_STEP_DEBUG=true" >> $GITHUB_ENV
+
       #测试
       - name: Conditional Step for x86 Release
         if: matrix.configuration == 'Release' && matrix.platform == 'x86'
