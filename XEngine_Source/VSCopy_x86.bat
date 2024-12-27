@@ -10,6 +10,8 @@ copy /y "%XEngine_Lib32%\XEngine_Client\XClient_Stream.dll" "./"
 copy /y "%XEngine_Lib32%\XEngine_Client\XClient_Socket.dll" "./"
 
 copy /y "%XEngine_Lib32%\XEngine_NetHelp\NetHelp_XSocket.dll" "./"
+copy /y "%XEngine_Lib32%\XEngine_NetHelp\NetHelp_APIAddr.dll" "./"
+copy /y "%XEngine_Lib32%\XEngine_NetHelp\NetHelp_APIHelp.dll" "./"
 copy /y "%XEngine_Lib32%\XEngine_SystemSdk\XEngine_SystemApi.dll" "./"
 
 copy /y "%XEngine_Lib32%\XEngine_HelpComponents\HelpComponents_DataBase.dll" "./"
