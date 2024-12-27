@@ -19,7 +19,7 @@ ifeq ($(MACRO_QR_SUPPORT),1)
 	LIB += -lqrencode
 endif
 ifeq ($(MACRO_OPENCV_SUPPORT),1)
-	LIB += -llzma -lpng16 -lopencv_core -lopencv_imgcodecs -lopencv_imgproc -ltiff -lopencv_wechat_qrcode -ltesseract 
+	LIB += -llzma -lopencv_core -lopencv_imgcodecs -lopencv_imgproc -lopencv_wechat_qrcode -ltesseract -lleptonica
 endif
 
 ifeq ($(RELEASE),1)
@@ -58,8 +58,8 @@ else ifeq ($(PLATFORM),mac)
 	PLATVER = -D __MACOS__
 	PLATDIR = XEngine_Mac
 	FILEEXT = dylib
-	LOADHDR += -I /opt/homebrew/opt/opencv/include/opencv4 -I /opt/homebrew/opt/tesseract/include -I /opt/homebrew/opt/qrencode/include -I /opt/homebrew/opt/lua/include
-	LOADSO += -L /opt/homebrew/opt/opencv/lib -L /opt/homebrew/opt/tesseract/lib -L /opt/homebrew/opt/qrencode/lib -L /opt/homebrew/opt/lua/lib
+	LOADHDR += -I /opt/homebrew/opt/leptonica/include -I /opt/homebrew/opt/opencv/include/opencv4 -I /opt/homebrew/opt/tesseract/include -I /opt/homebrew/opt/qrencode/include
+	LOADSO += -L /opt/homebrew/opt/leptonica/lib -L /opt/homebrew/opt/opencv/lib -L /opt/homebrew/opt/tesseract/lib -L /opt/homebrew/opt/qrencode/lib
 	LIBFLAG = -dynamiclib
 	LIBEX = -lpthread -ldl
 	LOADBIN = -Wl,-rpath,@loader_path/./

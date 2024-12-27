@@ -10,6 +10,8 @@ copy /y "D:\XEngine\XEngine_SourceCode\Debug\XClient_Stream.dll" "./"
 copy /y "D:\XEngine\XEngine_SourceCode\Debug\XClient_Socket.dll" "./"
 
 copy /y "D:\XEngine\XEngine_SourceCode\Debug\NetHelp_XSocket.dll" "./"
+copy /y "D:\XEngine\XEngine_SourceCode\Debug\NetHelp_APIAddr.dll" "./"
+copy /y "D:\XEngine\XEngine_SourceCode\Debug\NetHelp_APIHelp.dll" "./"
 copy /y "D:\XEngine\XEngine_SourceCode\Debug\XEngine_SystemApi.dll" "./"
 
 copy /y "D:\XEngine\XEngine_SourceCode\Debug\HelpComponents_DataBase.dll" "./"

@@ -45,7 +45,7 @@ jobs:
         run: |
           sudo apt update -y
           sudo apt upgrade -y
-          sudo apt install liblua5.4-dev libopencv-dev libopencv-contrib-dev libqrencode-dev -y
+          sudo apt install liblua5.4-dev libopencv-dev libopencv-contrib-dev libqrencode-dev libleptonica-dev libtesseract-dev -y
 
       # 设置依赖库的环境变量
       - name: Set up Dependency ubuntu24.04 Environment
