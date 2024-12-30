@@ -15,8 +15,10 @@ The purpose of development and implementation based on libXEngine is a cross-pla
 and support plugin system,dll(so,dylib)module or lua script  
 
 #### Why choose us
-
-Support privatization deployment, free, safe, open source, controllable
+Support privatization deployment, free, safe, open source, controllable  
+Dozens of information queries are completely free and open source, while similar products are all charged for API counting.  
+Supports third-party interface data caching. It can save you the cost of other query information.  
+It allows you to save 90% of information service costs in a year.  
 
 ## Software feature
 1. permission verication
@@ -55,11 +57,12 @@ Support privatization deployment, free, safe, open source, controllable
 34. STUN NAT Protocol 
 35. NTP Time Sync Protocol
 36. mac address vendor query
+37. ORC Get TEXT With image
 
 ## install
 
 #### XEngine Evn
-you must install XEngine,need V8.x or above,install XEngine can be refer to xengine Readme docment  
+you must install XEngine,need V9.x or above,install XEngine can be refer to xengine Readme docment  
 GITEE:https://gitee.com/libxengine/libxengine  
 GITHUB:https://github.com/libxengine/libxengine
 
@@ -86,7 +89,7 @@ git submodule update
 #### Linux
 ubuntu:sudo apt install sudo apt install liblua5.4-dev libopencv-dev libopencv-contrib-dev libqrencode-dev  
 centos:compile by self  
-use makefile compile,UBUNTU22.04 x64 or RockyLinux 9 x64
+use makefile compile,UBUNTU24.04 x64 or RockyLinux 9 x64
 Run it on the terminal
 
 #### Macos
@@ -129,20 +132,17 @@ information report
 You can refer to the project under XEngine_PluginModule to write the plugin  
 The written plugin needs to be configured via JSON to be enabled  
 
-## Test Server
-Address:app.xyry.org,Port:5501  
-
 ## now task
 
 ## other problems   
 You can refer to the document under the docment directory. It contains API protocol and service description.  
 
 ## Test Service
-Address:app.xyry.org,Port:5501  
+Address:app.libxengine.com,Port:5501  
 #### example
 For more information please refer to the documentation  
 id information query  
-api:http://app.xyry.org:5501/api?function=id&params1=511025198800000000
+api:http://app.libxengine.com:5501/api?function=id&params1=511025198800000000
 ```json
 {
     "code":0,
@@ -162,7 +162,7 @@ api:http://app.xyry.org:5501/api?function=id&params1=511025198800000000
 }
 ```
 bank card ver  
-api:http://app.xyry.org:5501/api?function=bank&params1=6214832830000000
+api:http://app.libxengine.com:5501/api?function=bank&params1=6214832830000000
 ```json
 {
     "code":0,
@@ -190,7 +190,7 @@ api:http://127.0.0.1:5501/api?function=translation&msg=中文翻译成英文&src
 }
 ```
 Distributed Lock  
-Api:http://app.xyry.org:5501/api?function=lock&params1=1000154321&params2=1
+Api:http://app.libxengine.com:5501/api?function=lock&params1=1000154321&params2=1
 ```json
 {
     "code":0,
@@ -201,14 +201,14 @@ Api:http://app.xyry.org:5501/api?function=lock&params1=1000154321&params2=1
 }
 ```
 ZIPCode  
-Api:http://app.xyry.org:5501/api?function=zipcode&params1=0  
+Api:http://app.libxengine.com:5501/api?function=zipcode&params1=0  
 ```json
 {
     "nZipCode":100010
 }
 ```
 Log  
-Api:http://app.xyry.org:5501/api?function=log&params1=1  
+Api:http://app.libxengine.com:5501/api?function=log&params1=1  
 ```json
 {
     "tszTableName":"xengine",
@@ -222,7 +222,7 @@ Api:http://app.xyry.org:5501/api?function=log&params1=1
 }
 ```
 Oil Query  
-API:http://app.xyry.org:5501/api?function=oil&addr=四川  
+API:http://app.libxengine.com:5501/api?function=oil&addr=四川  
 ```json
 {
     "code": 0,

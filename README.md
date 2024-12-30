@@ -18,7 +18,10 @@ c c++ interface api service
 编译发布版本将只在github上面发布.
 
 #### 为什么选择我们
-支持私有化部署,免费,安全.开源,可控
+支持私有化部署,免费,安全.开源,可控  
+几十种信息查询完全免费开源,而同类型产品全是收费API计数收费  
+支持三方接口数据缓存.可以节约你的其他查询信息费用  
+可以让你一年节约90%信息服务费用.  
 
 ## 软件特性
 1. 权限验证
@@ -57,11 +60,12 @@ c c++ interface api service
 34. STUN NAT协议
 35. NTP时间同步协议
 36. 支持MAC地址厂商查询
+37. ORC图像文本提取
 
 ## 安装教程
 
 #### XEngine环境
-必须安装XEngine,版本需要V8.x或者以上版本,安装XEngine可以参考其Readme文档  
+必须安装XEngine,版本需要V9.x或者以上版本,安装XEngine可以参考其Readme文档  
 GITEE:https://gitee.com/libxengine/libxengine  
 GITHUB:https://github.com/libxengine/libxengine
 
@@ -92,7 +96,7 @@ git clone https://gitee.com/xengine/XEngine_PhoneData.git XEngine_Source/XEngine
 #### Linux
 ubuntu:sudo apt install liblua5.4-dev libopencv-dev libopencv-contrib-dev libqrencode-dev  
 centos:需要自己编译  
-Linux使用Makefile编译,UBUNTU22.04 x64或者RockyLinux 9 x64
+Linux使用Makefile编译,UBUNTU24.04 x64或者RockyLinux 9 x64
 在控制台运行
 
 #### Macos
@@ -145,12 +149,12 @@ make FLAGS=CleanAll 清理编译
 你也可以观看视频教程来了解我们的代码框架情况:https://www.bilibili.com/video/BV13z421d7W8
 
 ## 测试服务器
-地址:app.xyry.org,端口:5501  
+地址:app.libxengine.com,端口:5501  
 
 #### 测试接口示例
 更多内容请参考文档  
 身份证查询  
-接口:http://app.xyry.org:5501/api?function=id&params1=511025198800000000
+接口:http://app.libxengine.com:5501/api?function=id&params1=511025198800000000
 ```json
 {
     "code":0,
@@ -170,7 +174,7 @@ make FLAGS=CleanAll 清理编译
 }
 ```
 银行卡验证  
-接口:http://app.xyry.org:5501/api?function=bank&params1=6214832830000000
+接口:http://app.libxengine.com:5501/api?function=bank&params1=6214832830000000
 ```json
 {
     "code":0,
@@ -198,7 +202,7 @@ make FLAGS=CleanAll 清理编译
 }
 ```
 分布式锁  
-接口:http://app.xyry.org:5501/api?function=lock&params1=1000154321&params2=1
+接口:http://app.libxengine.com:5501/api?function=lock&params1=1000154321&params2=1
 ```json
 {
     "code":0,
@@ -209,14 +213,14 @@ make FLAGS=CleanAll 清理编译
 }
 ```
 行政邮编  
-接口:http://app.xyry.org:5501/api?function=zipcode&params1=0  
+接口:http://app.libxengine.com:5501/api?function=zipcode&params1=0  
 ```json
 {
     "nZipCode":100010
 }
 ```
 日志操作  
-接口:http://app.xyry.org:5501/api?function=log&params1=1  
+接口:http://app.libxengine.com:5501/api?function=log&params1=1  
 ```json
 {
     "tszTableName":"xengine",
@@ -230,7 +234,7 @@ make FLAGS=CleanAll 清理编译
 }
 ```
 油价查询  
-接口:http://app.xyry.org:5501/api?function=oil&addr=四川  
+接口:http://app.libxengine.com:5501/api?function=oil&addr=四川  
 ```json
 {
     "code": 0,
