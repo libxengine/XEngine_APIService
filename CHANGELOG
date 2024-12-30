@@ -1,3 +1,15 @@
+XEngine_APIService V3.8.0.1001
+
+增加:OCR图片文本支持
+增加:OCR识别开关
+更新:匹配XENGINE V9版本
+修改:更多的ci发布支持
+
+added:get image text support
+added:enable support for image text
+update:match xengine v9.x
+modify:more ci release supports
+======================================================================================
 XEngine_APIService V3.7.0.1001
 
 增加:windows的coredump支持
