@@ -53,7 +53,7 @@ bool CModuleHelp_Locker::ModuleHelp_Locker_Create(XNETHANDLE* pxhToken)
 	}
 	pSt_LockInfo->enLockStatus = ENUM_MODULEHELP_LOCKSTATUS_NOTUSED;
 
-	BaseLib_OperatorHandle_Create(pxhToken);
+	BaseLib_Handle_Create(pxhToken);
 
 	st_Locker.lock();
 	stl_MapLocker.insert(make_pair(*pxhToken, pSt_LockInfo));

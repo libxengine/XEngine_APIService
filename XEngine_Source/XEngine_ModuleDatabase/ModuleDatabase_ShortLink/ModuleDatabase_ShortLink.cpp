@@ -267,7 +267,7 @@ bool CModuleDatabase_ShortLink::ModuleDatabase_ShortLink_List(XENGINE_SHORTLINK*
 		return false;
 	}
 	*pInt_ListCount = (int)nllLine;
-	BaseLib_OperatorMemory_Malloc((XPPPMEM)pppSt_SLinkInfo, *pInt_ListCount, sizeof(XENGINE_SHORTLINK));
+	BaseLib_Memory_Malloc((XPPPMEM)pppSt_SLinkInfo, *pInt_ListCount, sizeof(XENGINE_SHORTLINK));
 
 	for (__int64u i = 0; i < nllLine; i++)
 	{

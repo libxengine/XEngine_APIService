@@ -12,7 +12,7 @@ bool HTTPTask_TaskPost_SLProxy(LPCXSTR lpszClientAddr, LPCXSTR lpszUriStr, XCHAR
 		memset(tszKey, '\0', sizeof(tszKey));
 		memset(tszValue, '\0', sizeof(tszValue));
 
-		BaseLib_OperatorString_GetKeyValue((*ppptszHDRList)[i], ": ", tszKey, tszValue);
+		BaseLib_String_GetKeyValue((*ppptszHDRList)[i], ": ", tszKey, tszValue);
 		if (0 == _tcsxnicmp(st_ServiceConfig.st_XShortLink.tszHostUrl, tszValue, _tcsxlen(st_ServiceConfig.st_XShortLink.tszHostUrl)))
 		{
 			bFound = true;
@@ -77,7 +77,7 @@ bool HTTPTask_TaskPost_ShortLink(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer, 
 	//0生成,1还原,2删除
 	if (0 == nType)
 	{
-		BaseLib_OperatorTime_TimeToStr(st_ShortLink.tszCreateTime);
+		BaseLib_Time_TimeToStr(st_ShortLink.tszCreateTime);
 		if (!HttpProtocol_ServerHelp_ShortLink(st_ShortLink.tszFullUrl, st_ShortLink.tszShotUrl, st_ShortLink.tszKeyUrl, st_ShortLink.nLength, st_ShortLink.tszCvtUrl))
 		{
 			st_HDRParam.nHttpCode = 400;
@@ -138,7 +138,7 @@ bool HTTPTask_TaskPost_ShortLink(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer, 
 		ModuleProtocol_Packet_ShortLinkList(tszRVBuffer, &nRVLen, &ppSt_SLinkInfo, nListCount);
 		HttpProtocol_Server_SendMsgEx(xhHTTPPacket, tszSDBuffer, &nSDLen, &st_HDRParam, tszRVBuffer, nRVLen);
 		XEngine_Network_Send(lpszClientAddr, tszSDBuffer, nSDLen);
-		BaseLib_OperatorMemory_Free((XPPPMEM)&ppSt_SLinkInfo, nListCount);
+		BaseLib_Memory_Free((XPPPMEM)&ppSt_SLinkInfo, nListCount);
 		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("HTTP客户端:%s,请求操作短连接查询成功,查询个数:%d"), lpszClientAddr, nListCount);
 	}
 	return true;

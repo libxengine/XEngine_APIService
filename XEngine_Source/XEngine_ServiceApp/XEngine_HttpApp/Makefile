@@ -10,7 +10,7 @@ LOADHDR = -I ./
 LOADSO = -L ../../XEngine_ModuleConfigure -L ../../XEngine_ModuleDatabase -L ../../XEngine_ModuleProtocol -L ../../XEngine_ModuleSystem -L ../../XEngine_ModuleHelp -L ../../XEngine_ModulePlugin   \
 		 -L ../../XEngine_Depend/XEngine_Module/jsoncpp -L ../../XEngine_Depend/XEngine_Module/XEngine_InfoReport  \
 		 -L ../../XEngine_DBDepend/XEngine_IPMacData/XEngine_Source/XEngine_APIModuleIPMac -L ../../XEngine_DBDepend/XEngine_PhoneData/Source/C/XEngine_APIModulePhone
-LIB = -lXEngine_BaseSafe -lXEngine_BaseLib -lXEngine_Algorithm -lXEngine_Core -lXEngine_ManagePool -lXEngine_OPenSsl -lXClient_Stream -lXClient_APIHelp -lHelpComponents_XLog -lRfcComponents_HttpProtocol -lRfcComponents_NatProtocol -lRfcComponents_NTPProtocol -lXEngine_ProcFile -lXEngine_SystemApi -lXEngine_AVHelp -lXEngine_VideoCodec -lXEngine_AudioCodec -lXEngine_AVCollect \
+LIB = -lXEngine_BaseSafe -lXEngine_BaseLib -lXEngine_Algorithm -lXEngine_Core -lXEngine_ManagePool -lXEngine_Cryption -lXClient_Stream -lXClient_APIHelp -lNetHelp_APIAddr -lHelpComponents_XLog -lRfcComponents_HttpProtocol -lRfcComponents_NatProtocol -lRfcComponents_NTPProtocol -lXEngine_ProcFile -lXEngine_SystemApi -lXEngine_AVHelp -lXEngine_VideoCodec -lXEngine_AudioCodec -lXEngine_AVCollect \
 	  -lXEngine_ModuleConfigure -lXEngine_ModuleDatabase -lXEngine_ModuleProtocol -lXEngine_ModuleSystem -lXEngine_ModuleHelp -lXEngine_ModulePlugin                          \
 	  -ljsoncpp -lXEngine_InfoReport    \
 	  -lXEngine_APIModuleIPMac -lXEngine_APIModulePhone

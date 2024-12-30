@@ -45,12 +45,12 @@ int main()
 		return 0;
 	}
 #ifdef _MSC_BUILD
-	BaseLib_OperatorCharset_UTFToAnsi(ptszMsgBuffer, tszMsgBuffer, &nLen);
+	BaseLib_Charset_UTFToAnsi(ptszMsgBuffer, tszMsgBuffer, &nLen);
 	printf("接受到数据,大小:%d,内容:%s\n", nLen, tszMsgBuffer);
 #else
 	printf("接受到数据,大小:%d,内容:%s\n", nLen, ptszMsgBuffer);
 #endif
-	BaseLib_OperatorMemory_FreeCStyle((XPPMEM)&ptszMsgBuffer);
+	BaseLib_Memory_FreeCStyle((XPPMEM)&ptszMsgBuffer);
 
 #ifdef _MSC_BUILD
 	WSACleanup();

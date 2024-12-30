@@ -60,7 +60,7 @@ bool CModulePlugin_LuaCore::ModulePlugin_LuaCore_Push(XNETHANDLE* pxhModule, LPC
 {
     ModulePlugin_IsErrorOccur = false;
 
-    if (!BaseLib_OperatorHandle_Create(pxhModule))
+    if (!BaseLib_Handle_Create(pxhModule))
     {
         ModulePlugin_IsErrorOccur = true;
         ModulePlugin_dwErrorCode = BaseLib_GetLastError();

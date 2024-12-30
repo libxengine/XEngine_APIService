@@ -46,7 +46,7 @@ BOOL APIHelp_NetWork_GetIPNet(XCHAR* ptszIPAddr)
 		return FALSE;
 	}
 	memcpy(ptszIPAddr, ptszBody, nBLen - 1);
-	BaseLib_OperatorMemory_FreeCStyle((VOID**)&ptszBody);
+	BaseLib_Memory_FreeCStyle((VOID**)&ptszBody);
 	return TRUE;
 }
 int APPClient_P2XPLogin()
@@ -72,7 +72,7 @@ int APPClient_P2XPLogin()
 	}
 	//得到IP地址
 	strcpy(tszPrivateAddr, ppSt_APICard[0]->tszIPAddr);
-	BaseLib_OperatorMemory_Free((XPPPMEM)&ppSt_APICard, nListCount);
+	BaseLib_Memory_Free((XPPPMEM)&ppSt_APICard, nListCount);
 
 	st_JsonRoot["tszUserName"] = lpszUserName;
 	st_JsonRoot["tszPrivateAddr"] = tszPrivateAddr;
@@ -88,7 +88,7 @@ int APPClient_P2XPLogin()
 		return -1;
 	}
 	printf("APPClient_P2XPLogin,&nMsgLen:%d,%s\n", nMsgLen, ptszMsgBuffer);
-	BaseLib_OperatorMemory_FreeCStyle((XPPMEM)&ptszMsgBuffer);
+	BaseLib_Memory_FreeCStyle((XPPMEM)&ptszMsgBuffer);
 	return 0;
 }
 
@@ -109,7 +109,7 @@ int APPClient_P2XPList()
 		return -1;
 	}
 	printf("APPClient_P2XPList,&nMsgLen:%d,%s\n", nMsgLen, ptszMsgBuffer);
-	BaseLib_OperatorMemory_FreeCStyle((XPPMEM)&ptszMsgBuffer);
+	BaseLib_Memory_FreeCStyle((XPPMEM)&ptszMsgBuffer);
 	return 0;
 }
 
@@ -126,7 +126,7 @@ int APPClient_P2XPWan()
 		return -1;
 	}
 	printf("APPClient_P2XPWan,&nMsgLen:%d,%s\n", nMsgLen, ptszMsgBuffer);
-	BaseLib_OperatorMemory_FreeCStyle((XPPMEM)&ptszMsgBuffer);
+	BaseLib_Memory_FreeCStyle((XPPMEM)&ptszMsgBuffer);
 	return 0;
 }
 
@@ -147,7 +147,7 @@ int APPClient_P2XPLogout()
 		return -1;
 	}
 	printf("APPClient_P2XPLogout,&nMsgLen:%d,%s\n", nMsgLen, ptszMsgBuffer);
-	BaseLib_OperatorMemory_FreeCStyle((XPPMEM)&ptszMsgBuffer);
+	BaseLib_Memory_FreeCStyle((XPPMEM)&ptszMsgBuffer);
 	return 0;
 }
 

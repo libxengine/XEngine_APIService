@@ -77,8 +77,8 @@ bool CPlugin_BMIndex::PluginCore_Call(XCHAR*** pppHDRList, int nListCount, int* 
 	memset(tszParamHigh, '\0', sizeof(tszParamHigh));
 	memset(tszParamWeight, '\0', sizeof(tszParamWeight));
 
-	BaseLib_OperatorString_GetKeyValue((*pppHDRList)[1], "=", tszKeyName, tszParamHigh);
-	BaseLib_OperatorString_GetKeyValue((*pppHDRList)[2], "=", tszKeyName, tszParamWeight);
+	BaseLib_String_GetKeyValue((*pppHDRList)[1], "=", tszKeyName, tszParamHigh);
+	BaseLib_String_GetKeyValue((*pppHDRList)[2], "=", tszKeyName, tszParamWeight);
 	Plugin_Timezone_BMIndex(tszParamHigh, tszParamWeight, ptszMsgBuffer, pInt_MsgLen);
 	*pInt_HTTPCode = 200;
 	

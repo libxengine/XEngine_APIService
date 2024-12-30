@@ -24,11 +24,11 @@ bool HTTPTask_TaskGet_WeatherInfo(LPCXSTR lpszClientAddr, LPCXSTR lpszAddrCode)
 
 	XCHAR tszGBKStr[1024] = {};
 #ifdef _MSC_BUILD
-	BaseLib_OperatorCharset_UTFToAnsi(ptszBodyBuffer, tszGBKStr, &nBLen);
+	BaseLib_Charset_UTFToAnsi(ptszBodyBuffer, tszGBKStr, &nBLen);
 #else
 	_tcsxcpy(tszGBKStr, ptszBodyBuffer);
 #endif
-	BaseLib_OperatorMemory_FreeCStyle((XPPMEM)&ptszBodyBuffer);
+	BaseLib_Memory_FreeCStyle((XPPMEM)&ptszBodyBuffer);
 	//解析JSON信息
 	if (!ModuleProtocol_Parse_Weather(tszGBKStr, nBLen, &st_WeatherInfo))
 	{
@@ -42,7 +42,7 @@ bool HTTPTask_TaskGet_WeatherInfo(LPCXSTR lpszClientAddr, LPCXSTR lpszAddrCode)
 	ModuleProtocol_Packet_Weather(tszPktBuffer, &nPktLen, &st_WeatherInfo);
 #ifdef _MSC_BUILD
 	XCHAR tszUTFStr[1024] = {};
-	BaseLib_OperatorCharset_AnsiToUTF(tszPktBuffer, tszUTFStr, &nPktLen);
+	BaseLib_Charset_AnsiToUTF(tszPktBuffer, tszUTFStr, &nPktLen);
 	HttpProtocol_Server_SendMsgEx(xhHTTPPacket, tszMsgBuffer, &nMsgLen, &st_HDRParam, tszUTFStr, nPktLen);
 #else
 	HttpProtocol_Server_SendMsgEx(xhHTTPPacket, tszMsgBuffer, &nMsgLen, &st_HDRParam, tszPktBuffer, nPktLen);

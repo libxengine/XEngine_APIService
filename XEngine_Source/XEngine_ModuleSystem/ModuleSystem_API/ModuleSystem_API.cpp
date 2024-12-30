@@ -93,7 +93,7 @@ bool CModuleSystem_API::ModuleSystem_API_AutoStart(bool bIsAuto /* = true */)
 			return false;
 		}
 		_tcsxcat(tszAFile, _X("\\XEngine_DeamonApp.lnk"));
-		BaseLib_OperatorCharset_AnsiToUnicode(tszAFile, tszUFile);
+		BaseLib_Charset_AnsiToUnicode(tszAFile, tszUFile);
 
 		hResult = pSt_IFile->Save(tszUFile, TRUE);
 		if (FAILED(hResult))

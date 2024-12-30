@@ -80,6 +80,12 @@ typedef struct
 		XCHAR tszHostUrl[MAX_PATH];           //主机地址
 		int nHTTPCode;                        //转发模式,301 永久,302 临时
 	}st_XShortLink;
+	struct
+	{
+		bool bEnable;                         //是否启用
+		XCHAR tszImagePath[MAX_PATH];         //图片文字识别配置
+		XCHAR tszImageLanguage[MAX_PATH];     //语言支持
+	}st_XImageText;
 	struct  
 	{
 		bool bReload;                         //配置重载

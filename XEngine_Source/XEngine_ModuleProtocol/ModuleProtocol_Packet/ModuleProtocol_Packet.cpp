@@ -1093,6 +1093,65 @@ bool CModuleProtocol_Packet::ModuleProtocol_Packet_ImageAttr(XCHAR* ptszMsgBuffe
 	return true;
 }
 /********************************************************************
+函数名称：ModuleProtocol_Packet_ImageText
+函数功能：图片文本识别打包
+ 参数.一：ptszMsgBuffer
+  In/Out：Out
+  类型：字符指针
+  可空：N
+  意思：输出打包的数据信息
+ 参数.二：pInt_MsgLen
+  In/Out：Out
+  类型：整数型指针
+  可空：N
+  意思：输出打包大小
+ 参数.三：pppListStr
+  In/Out：In
+  类型：三级指针
+  可空：N
+  意思：输入要打包的文本列表
+ 参数.四：nListCount
+  In/Out：In
+  类型：三级指针
+  可空：N
+  意思：输入要列表个数
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+bool CModuleProtocol_Packet::ModuleProtocol_Packet_ImageText(XCHAR* ptszMsgBuffer, int* pInt_MsgLen, XCHAR*** pppListStr, int nListCount)
+{
+	ModuleProtocol_IsErrorOccur = false;
+
+	if ((NULL == ptszMsgBuffer) || (NULL == pInt_MsgLen))
+	{
+		ModuleProtocol_IsErrorOccur = true;
+		ModuleProtocol_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PROTOCOL_PACKET_PARAMENT;
+		return false;
+	}
+	Json::Value st_JsonRoot;
+	Json::Value st_JsonArray;
+	Json::StreamWriterBuilder st_JsonBuilder;
+
+	for (int i = 0; i < nListCount; i++)
+	{
+		Json::Value st_JsonObject;
+		st_JsonObject["TextStr"] = (*pppListStr)[i];
+		st_JsonArray.append(st_JsonObject);
+	}
+	st_JsonRoot["Count"] = nListCount;
+	st_JsonRoot["data"] = st_JsonArray;
+	st_JsonRoot["code"] = 0;
+	st_JsonRoot["msg"] = "success";
+	st_JsonBuilder["emitUTF8"] = true;
+
+	*pInt_MsgLen = Json::writeString(st_JsonBuilder, st_JsonRoot).length();
+	memcpy(ptszMsgBuffer, Json::writeString(st_JsonBuilder, st_JsonRoot).c_str(), *pInt_MsgLen);
+
+	return true;
+}
+/********************************************************************
 函数名称：ModuleProtocol_Packet_EnumDevice
 函数功能：打包枚举的设备信息
  参数.一：ptszMsgBuffer
@@ -1287,7 +1346,7 @@ bool CModuleProtocol_Packet::ModuleProtocol_Packet_HardWare(XCHAR* ptszHWInfo, i
 		ModuleProtocol_dwErrorCode = SystemApi_GetLastError();
 		return false;
 	}
-	BaseLib_OperatorMemory_Free((XPPPMEM)&pptszRootName, nDiskNumber);
+	BaseLib_Memory_Free((XPPPMEM)&pptszRootName, nDiskNumber);
 
 	XCHAR tszDriveStr[MAX_PATH];
 	memset(tszDriveStr, '\0', MAX_PATH);
@@ -1342,15 +1401,15 @@ bool CModuleProtocol_Packet::ModuleProtocol_Packet_HardWare(XCHAR* ptszHWInfo, i
 	st_JsonDisk["DiskTotal"] = (Json::UInt64)st_DiskInfo.dwDiskTotal;
 	st_JsonDisk["DiskName"] = tszDriveStr;
 
-	st_JsonCpu["CpuNumber"] = st_CPUInfo.nCpuNumber;
-	st_JsonCpu["CpuSpeed"] = st_CPUInfo.nCpuSpeed;
-	st_JsonCpu["CpuName"] = st_CPUInfo.tszCpuName;
+	st_JsonCpu["CpuNumber"] = st_CPUInfo.nCPUNumber;
+	st_JsonCpu["CpuSpeed"] = st_CPUInfo.nCPUSpeed;
+	st_JsonCpu["CpuName"] = st_CPUInfo.tszCPUName;
 
 	st_JsonMemory["MemoryFree"] = (Json::UInt64)st_MemoryInfo.dwMemory_Free;
 	st_JsonMemory["MemoryTotal"] = (Json::UInt64)st_MemoryInfo.dwMemory_Total;
 
 	st_JsonSerial["DiskSerial"] = st_SDKSerial.tszDiskSerial;
-	st_JsonSerial["CpuSerial"] = st_SDKSerial.tszCpuSerial;
+	st_JsonSerial["CpuSerial"] = st_SDKSerial.tszCPUSerial;
 	st_JsonSerial["BoardSerial"] = st_SDKSerial.tszBoardSerial;
 	st_JsonSerial["SystemSerial"] = st_SDKSerial.tszSystemSerial;
 
@@ -1367,7 +1426,7 @@ bool CModuleProtocol_Packet::ModuleProtocol_Packet_HardWare(XCHAR* ptszHWInfo, i
 		st_JsonIPAddr["tszMacAddr"] = ppSt_ListIFInfo[i]->tszMacAddr;
 		st_JsonNetCard.append(st_JsonIPAddr);
 	}
-	BaseLib_OperatorMemory_Free((XPPPMEM)&ppSt_ListIFInfo, nListCount);
+	BaseLib_Memory_Free((XPPPMEM)&ppSt_ListIFInfo, nListCount);
 
 	st_JsonRoot["Disk"] = st_JsonDisk;
 	st_JsonRoot["Cpu"] = st_JsonCpu;
@@ -1705,7 +1764,7 @@ bool CModuleProtocol_Packet::ModuleProtocol_Packet_IPAddr(XCHAR* ptszMSGBuffer, 
 	st_JsonBuilder["emitUTF8"] = true;
 
 	*pInt_MSGLen = Json::writeString(st_JsonBuilder, st_JsonRoot).length();
-	BaseLib_OperatorCharset_AnsiToUTF(Json::writeString(st_JsonBuilder, st_JsonRoot).c_str(), ptszMSGBuffer, pInt_MSGLen);
+	BaseLib_Charset_AnsiToUTF(Json::writeString(st_JsonBuilder, st_JsonRoot).c_str(), ptszMSGBuffer, pInt_MSGLen);
 	return true;
 }
 /********************************************************************
@@ -1854,14 +1913,14 @@ bool CModuleProtocol_Packet::ModuleProtocol_Packet_P2PWLan(XCHAR* ptszMsgBuffer,
 	for (auto stl_ListIterator = pStl_ListClients->begin(); stl_ListIterator != pStl_ListClients->end(); stl_ListIterator++)
 	{
 		XCHAR tszClientAddr[128];
-		XENGINE_LIBADDR st_LibAddr;
+		APIADDR_IPADDR st_LibAddr;
 		P2XPPROTOCOL_LANPACKET st_LANPacket;
 
 		memset(tszClientAddr, '\0', sizeof(tszClientAddr));
-		memset(&st_LibAddr, '\0', sizeof(XENGINE_LIBADDR));
+		memset(&st_LibAddr, '\0', sizeof(APIADDR_IPADDR));
 		memset(&st_LANPacket, '\0', sizeof(P2XPPROTOCOL_LANPACKET));
 		//分割
-		BaseLib_OperatorIPAddr_IsIPV4Addr(stl_ListIterator->tszPrivateAddr, &st_LibAddr);
+		APIAddr_IPAddr_IsIPV4Addr(stl_ListIterator->tszPrivateAddr, &st_LibAddr);
 		_xstprintf(tszClientAddr, _X("%d.%d.%d"), st_LibAddr.nIPAddr1, st_LibAddr.nIPAddr2, st_LibAddr.nIPAddr3);
 		//赋值
 		_tcsxcpy(st_LANPacket.tszUsername, stl_ListIterator->tszUserName);

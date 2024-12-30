@@ -39,6 +39,9 @@ EXPORTS
 	ModuleHelp_SocketTest_StopDatas
 
 	ModuleHelp_ImageGet_Attr
+	ModuleHelp_ImageGet_TextInit
+	ModuleHelp_ImageGet_TextGet
+	ModuleHelp_ImageGet_TextDestory
 	ModuleHelp_ImageSet_Resolution
 	ModuleHelp_ImageSet_Flip
 	ModuleHelp_ImageSet_ColorCvt

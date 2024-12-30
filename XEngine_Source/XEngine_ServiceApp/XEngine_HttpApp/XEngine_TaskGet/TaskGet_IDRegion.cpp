@@ -43,7 +43,7 @@ bool HTTPTask_TaskGet_IDRegion(LPCXSTR lpszClientAddr, int nType, LPCXSTR lpszPr
 #ifdef _MSC_BUILD
 		XCHAR tszUTFBuffer[1024] = {};
 		int nULen = _tcsxlen(tszPktBuffer);
-		BaseLib_OperatorCharset_AnsiToUTF(tszPktBuffer, tszUTFBuffer, &nULen);
+		BaseLib_Charset_AnsiToUTF(tszPktBuffer, tszUTFBuffer, &nULen);
 		HttpProtocol_Server_SendMsgEx(xhHTTPPacket, tszMsgBuffer, &nMsgLen, &st_HDRParam, tszUTFBuffer, nULen);
 #else
 		HttpProtocol_Server_SendMsgEx(xhHTTPPacket, tszMsgBuffer, &nMsgLen, &st_HDRParam, tszPktBuffer, nPktLen);

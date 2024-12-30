@@ -109,7 +109,7 @@ bool CModuleDatabase_XLog::ModuleDatabase_XLog_Create(LPCXSTR lpszTableName)
 #ifdef _MSC_BUILD
 	int nUTFLen = 0;
 	XCHAR tszUTFQuery[4096] = {};
-	BaseLib_OperatorCharset_AnsiToUTF(tszSQLStatement, tszUTFQuery, &nUTFLen);
+	BaseLib_Charset_AnsiToUTF(tszSQLStatement, tszUTFQuery, &nUTFLen);
 	if (!DataBase_MySQL_Execute(xhDBSQL, tszUTFQuery))
 #else
 	if (!DataBase_MySQL_Execute(xhDBSQL, tszSQLStatement))
@@ -152,7 +152,7 @@ bool CModuleDatabase_XLog::ModuleDatabase_XLog_Insert(XENGINE_XLOGINFO* pSt_XLog
 #ifdef _MSC_BUILD
 	XCHAR tszUTFStr[10240] = {};
 	int nSLen = _tcsxlen(tszSQLStatement);
-	BaseLib_OperatorCharset_AnsiToUTF(tszSQLStatement, tszUTFStr, &nSLen);
+	BaseLib_Charset_AnsiToUTF(tszSQLStatement, tszUTFStr, &nSLen);
 	if (!DataBase_MySQL_Execute(xhDBSQL, tszUTFStr))
 #else
 	if (!DataBase_MySQL_Execute(xhDBSQL, tszSQLStatement))
@@ -220,7 +220,7 @@ bool CModuleDatabase_XLog::ModuleDatabase_XLog_Query(XENGINE_XLOGINFO*** pppSt_X
 #ifdef _MSC_BUILD
 	XCHAR tszUTFStr[1024] = {};
 	int nSLen = _tcsxlen(tszSQLStatement);
-	BaseLib_OperatorCharset_AnsiToUTF(tszSQLStatement, tszUTFStr, &nSLen);
+	BaseLib_Charset_AnsiToUTF(tszSQLStatement, tszUTFStr, &nSLen);
 	if (!DataBase_MySQL_ExecuteQuery(xhDBSQL, &xhTable, tszUTFStr, &nllLine, &nllRow))
 #else
 	if (!DataBase_MySQL_ExecuteQuery(xhDBSQL, &xhTable, tszSQLStatement, &nllLine, &nllRow))
@@ -237,7 +237,7 @@ bool CModuleDatabase_XLog::ModuleDatabase_XLog_Query(XENGINE_XLOGINFO*** pppSt_X
 		return false;
 	}
 	*pInt_ListCount = (int)nllLine;
-	BaseLib_OperatorMemory_Malloc((XPPPMEM)pppSt_XLogInfo, (int)nllLine, sizeof(XENGINE_XLOGINFO));
+	BaseLib_Memory_Malloc((XPPPMEM)pppSt_XLogInfo, (int)nllLine, sizeof(XENGINE_XLOGINFO));
 	for (__int64u i = 0; i < nllLine; i++)
 	{
 		XCHAR** pptszResult = DataBase_MySQL_GetResult(xhDBSQL, xhTable);
@@ -350,7 +350,7 @@ bool CModuleDatabase_XLog::ModuleDatabase_XLog_Show(XCHAR*** ppptszList, int* pI
 		return false;
 	}
 	*pInt_ListCount = (int)nllLine;
-	BaseLib_OperatorMemory_Malloc((XPPPMEM)ppptszList, (int)nllLine, MAX_PATH);
+	BaseLib_Memory_Malloc((XPPPMEM)ppptszList, (int)nllLine, MAX_PATH);
 	for (__int64u i = 0; i < nllLine; i++)
 	{
 		XCHAR** pptszResult = DataBase_MySQL_GetResult(xhDBSQL, xhTable);

@@ -36,7 +36,7 @@ int main()
 		return 0;
 	}
 	printf("接受到数据,大小:%d,内容:%s\n", nLen, ptszMsgBuffer);
-	BaseLib_OperatorMemory_FreeCStyle((XPPMEM)&ptszMsgBuffer);
+	BaseLib_Memory_FreeCStyle((XPPMEM)&ptszMsgBuffer);
 
 #ifdef _MSC_BUILD
 	WSACleanup();

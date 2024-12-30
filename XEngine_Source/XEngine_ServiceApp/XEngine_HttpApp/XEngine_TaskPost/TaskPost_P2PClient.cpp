@@ -35,7 +35,7 @@ bool HTTPTask_TastPost_P2PClient(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer, 
 		if (_tcsxlen(st_ClientPeer.st_PeerAddr.tszPublicAddr) <= 0)
 		{
 			_tcsxcpy(st_ClientPeer.st_PeerAddr.tszPublicAddr, lpszClientAddr);
-			BaseLib_OperatorIPAddr_SegAddr(st_ClientPeer.st_PeerAddr.tszPublicAddr, NULL);
+			APIAddr_IPAddr_SegAddr(st_ClientPeer.st_PeerAddr.tszPublicAddr, NULL);
 		}
 		st_ClientPeer.st_PeerTimer.dwUserTime = time(NULL);
 		st_ClientPeer.st_PeerTimer.dwKeepAlive = time(NULL);
@@ -102,7 +102,7 @@ bool HTTPTask_TastPost_P2PClient(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer, 
 			ModuleProtocol_Packet_P2PLan(tszRVBuffer, &nRVLen, &ppSt_ListClients, nListCount);
 			HttpProtocol_Server_SendMsgEx(xhHTTPPacket, tszSDBuffer, &nSDLen, &st_HDRParam, tszRVBuffer, nRVLen);
 			XEngine_Network_Send(lpszClientAddr, tszSDBuffer, nSDLen);
-			BaseLib_OperatorMemory_Free((XPPPMEM)&ppSt_ListClients, nListCount);
+			BaseLib_Memory_Free((XPPPMEM)&ppSt_ListClients, nListCount);
 			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("HTTP客户端:%s,P2P请求同步局域网列表成功,公有地址:%s,私有地址:%s"), lpszClientAddr, st_P2PProtocol.tszPublicAddr, st_P2PProtocol.tszPrivateAddr);
 		}
 		else
@@ -127,10 +127,10 @@ bool HTTPTask_TastPost_P2PClient(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer, 
 						{
 							stl_ListClient.push_back(*ppSt_ListClients[j]);
 						}
-						BaseLib_OperatorMemory_Free((XPPPMEM)&ppSt_ListClients, nLanCount);
+						BaseLib_Memory_Free((XPPPMEM)&ppSt_ListClients, nLanCount);
 					}
 				}
-				BaseLib_OperatorMemory_Free((XPPPMEM)&ppszClientList, nListCount);
+				BaseLib_Memory_Free((XPPPMEM)&ppszClientList, nListCount);
 			}
 			ModuleProtocol_Packet_P2PWLan(tszRVBuffer, &nRVLen, &stl_ListClient);
 			HttpProtocol_Server_SendMsgEx(xhHTTPPacket, tszSDBuffer, &nSDLen, &st_HDRParam, tszRVBuffer, nRVLen);
@@ -148,7 +148,7 @@ bool HTTPTask_TastPost_P2PClient(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer, 
 		HttpProtocol_Server_SendMsgEx(xhHTTPPacket, tszSDBuffer, &nSDLen, &st_HDRParam, tszRVBuffer, nRVLen);
 		XEngine_Network_Send(lpszClientAddr, tszSDBuffer, nSDLen);
 		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("HTTP客户端:%s,P2P请求公有地址列表成功,地址个数:%d"), lpszClientAddr, nListCount);
-		BaseLib_OperatorMemory_Free((XPPPMEM)&pptszListAddr, nListCount);
+		BaseLib_Memory_Free((XPPPMEM)&pptszListAddr, nListCount);
 	}
 	else if (XENGINE_COMMUNICATION_PROTOCOL_OPERATOR_CODE_P2XP_REQHEART == unOperatorCode)
 	{

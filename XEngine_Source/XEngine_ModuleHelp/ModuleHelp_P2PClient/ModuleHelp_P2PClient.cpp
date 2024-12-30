@@ -108,12 +108,12 @@ bool CModuleHelp_P2PClient::ModuleHelp_P2PClient_Add(XENGINE_P2XP_PEERINFO* pSt_
         unordered_map<string, XENGINE_P2XP_PEERINFO> stl_MapPrivate;
         stl_MapPrivate.insert(make_pair(pSt_PeerInfo->st_PeerAddr.tszPrivateAddr, *pSt_PeerInfo));
 		//获取私有网络的路由地址
-		XENGINE_LIBADDR st_LibAddr;
+		APIADDR_IPADDR st_LibAddr;
 		XCHAR tszPrivateAddr[64];
 
 		memset(tszPrivateAddr, '\0', sizeof(tszPrivateAddr));
-		memset(&st_LibAddr, '\0', sizeof(XENGINE_LIBADDR));
-		if (!BaseLib_OperatorIPAddr_IsIPV4Addr(pSt_PeerInfo->st_PeerAddr.tszPrivateAddr, &st_LibAddr))
+		memset(&st_LibAddr, '\0', sizeof(APIADDR_IPADDR));
+		if (!APIAddr_IPAddr_IsIPV4Addr(pSt_PeerInfo->st_PeerAddr.tszPrivateAddr, &st_LibAddr))
 		{
 			//没有内网地址不加入.
 			ModuleHelp_IsErrorOccur = true;
@@ -130,13 +130,13 @@ bool CModuleHelp_P2PClient::ModuleHelp_P2PClient_Add(XENGINE_P2XP_PEERINFO* pSt_
 	else
 	{
 		//找到了这个公网的地址
-		XENGINE_LIBADDR st_LibAddr;
+		APIADDR_IPADDR st_LibAddr;
 		XCHAR tszPrivateAddr[64];
 
 		memset(tszPrivateAddr, '\0', sizeof(tszPrivateAddr));
-		memset(&st_LibAddr, '\0', sizeof(XENGINE_LIBADDR));
+		memset(&st_LibAddr, '\0', sizeof(APIADDR_IPADDR));
 		//获取私有网络的路由地址
-		if (!BaseLib_OperatorIPAddr_IsIPV4Addr(pSt_PeerInfo->st_PeerAddr.tszPrivateAddr, &st_LibAddr))
+		if (!APIAddr_IPAddr_IsIPV4Addr(pSt_PeerInfo->st_PeerAddr.tszPrivateAddr, &st_LibAddr))
 		{
 			//没有内网地址不加入.
 			ModuleHelp_IsErrorOccur = true;
@@ -189,7 +189,7 @@ bool CModuleHelp_P2PClient::ModuleHelp_P2PClient_Add(XENGINE_P2XP_PEERINFO* pSt_
 返回值
   类型：逻辑型
   意思：是否成功
-备注：参数二需要调用基础库的BaseLib_OperatorMemory_Free函数进行内存释放
+备注：参数二需要调用基础库的BaseLib_Memory_Free函数进行内存释放
 *********************************************************************/
 bool CModuleHelp_P2PClient::ModuleHelp_P2PClient_GetLan(XENGINE_P2XPPEER_PROTOCOL* pSt_P2PProtocol, XENGINE_P2XPPEER_PROTOCOL*** pppSt_P2XPClient, int* pInt_ListCount)
 {
@@ -211,13 +211,13 @@ bool CModuleHelp_P2PClient::ModuleHelp_P2PClient_GetLan(XENGINE_P2XPPEER_PROTOCO
         st_Locker.unlock_shared();
         return false;
     }
-    XENGINE_LIBADDR st_LibAddr;
+    APIADDR_IPADDR st_LibAddr;
     XCHAR tszPrivateAddr[64];
 
     memset(tszPrivateAddr, '\0', sizeof(tszPrivateAddr));
-    memset(&st_LibAddr, '\0', sizeof(XENGINE_LIBADDR));
+    memset(&st_LibAddr, '\0', sizeof(APIADDR_IPADDR));
     //如果输入的是192.168.1.1 IP,就我们自己分割,否则认为输入的是 192.168.1
-    if (BaseLib_OperatorIPAddr_IsIPV4Addr(pSt_P2PProtocol->tszPrivateAddr, &st_LibAddr))
+    if (APIAddr_IPAddr_IsIPV4Addr(pSt_P2PProtocol->tszPrivateAddr, &st_LibAddr))
     {
         _xstprintf(tszPrivateAddr, _X("%d.%d.%d"), st_LibAddr.nIPAddr1, st_LibAddr.nIPAddr2, st_LibAddr.nIPAddr3);
         unordered_map<string, unordered_map<string, XENGINE_P2XP_PEERINFO> >::const_iterator stl_MapPriIterator = stl_MapPubIterator->second.find(tszPrivateAddr);
@@ -235,7 +235,7 @@ bool CModuleHelp_P2PClient::ModuleHelp_P2PClient_GetLan(XENGINE_P2XPPEER_PROTOCO
             st_Locker.unlock_shared();
             return false;
         }
-        BaseLib_OperatorMemory_Malloc((XPPPMEM)pppSt_P2XPClient, stl_MapPriIterator->second.size(), sizeof(XENGINE_P2XPPEER_PROTOCOL));
+        BaseLib_Memory_Malloc((XPPPMEM)pppSt_P2XPClient, stl_MapPriIterator->second.size(), sizeof(XENGINE_P2XPPEER_PROTOCOL));
         unordered_map<string, XENGINE_P2XP_PEERINFO>::const_iterator stl_MapConnIterator = stl_MapPriIterator->second.begin();
         for (int i = 0; stl_MapConnIterator != stl_MapPriIterator->second.end(); stl_MapConnIterator++, i++)
         {
@@ -260,7 +260,7 @@ bool CModuleHelp_P2PClient::ModuleHelp_P2PClient_GetLan(XENGINE_P2XPPEER_PROTOCO
             st_Locker.unlock_shared();
             return false;
         }
-        BaseLib_OperatorMemory_Malloc((XPPPMEM)pppSt_P2XPClient, stl_MapPriIterator->second.size(), sizeof(XENGINE_P2XPPEER_PROTOCOL));
+        BaseLib_Memory_Malloc((XPPPMEM)pppSt_P2XPClient, stl_MapPriIterator->second.size(), sizeof(XENGINE_P2XPPEER_PROTOCOL));
         unordered_map<string, XENGINE_P2XP_PEERINFO>::const_iterator stl_MapConnIterator = stl_MapPriIterator->second.begin();
         for (int i = 0; stl_MapConnIterator != stl_MapPriIterator->second.end(); stl_MapConnIterator++, i++)
         {
@@ -292,7 +292,7 @@ bool CModuleHelp_P2PClient::ModuleHelp_P2PClient_GetLan(XENGINE_P2XPPEER_PROTOCO
 返回值
   类型：逻辑型
   意思：是否成功
-备注：参数二需要调用基础库的BaseLib_OperatorMemory_Free函数进行内存释放
+备注：参数二需要调用基础库的BaseLib_Memory_Free函数进行内存释放
 *********************************************************************/
 bool CModuleHelp_P2PClient::ModuleHelp_P2PClient_GetLList(LPCXSTR lpszPubAddr, XCHAR*** pppszP2XPClient, int* pInt_ListCount)
 {
@@ -313,7 +313,7 @@ bool CModuleHelp_P2PClient::ModuleHelp_P2PClient_GetLList(LPCXSTR lpszPubAddr, X
         st_Locker.unlock_shared();
         return false;
     }
-    BaseLib_OperatorMemory_Malloc((XPPPMEM)pppszP2XPClient, stl_MapPubIterator->second.size(), 128);
+    BaseLib_Memory_Malloc((XPPPMEM)pppszP2XPClient, stl_MapPubIterator->second.size(), 128);
     unordered_map<string, unordered_map<string, XENGINE_P2XP_PEERINFO> >::const_iterator stl_MapPriIterator = stl_MapPubIterator->second.begin();
     for (int i = 0; stl_MapPriIterator != stl_MapPubIterator->second.end(); stl_MapPriIterator++, i++)
     {
@@ -357,7 +357,7 @@ bool CModuleHelp_P2PClient::ModuleHelp_P2PClient_GetWList(XCHAR*** pppszP2XPClie
         ModuleHelp_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_HELP_P2P_NOTFOUND;
         return false;
     }
-    BaseLib_OperatorMemory_Malloc((XPPPMEM)pppszP2XPClient, stl_MapClients.size(), 128);
+    BaseLib_Memory_Malloc((XPPPMEM)pppszP2XPClient, stl_MapClients.size(), 128);
 
     st_Locker.lock_shared();
     unordered_map<string, unordered_map<string, unordered_map<string, XENGINE_P2XP_PEERINFO> > >::const_iterator stl_MapIterator = stl_MapClients.begin();
@@ -389,12 +389,12 @@ bool CModuleHelp_P2PClient::ModuleHelp_P2PClient_Delete(XENGINE_P2XPPEER_PROTOCO
 	unordered_map<string, unordered_map<string, unordered_map<string, XENGINE_P2XP_PEERINFO> > >::iterator stl_MapPubIteartor = stl_MapClients.find(pSt_P2PProtocol->tszPublicAddr);
 	if (stl_MapPubIteartor != stl_MapClients.end())
 	{
-		XENGINE_LIBADDR st_LibAddr;
+		APIADDR_IPADDR st_LibAddr;
 		XCHAR tszPrivateAddr[64];
 
 		memset(tszPrivateAddr, '\0', sizeof(tszPrivateAddr));
-		memset(&st_LibAddr, '\0', sizeof(XENGINE_LIBADDR));
-		if (BaseLib_OperatorIPAddr_IsIPV4Addr(pSt_P2PProtocol->tszPrivateAddr, &st_LibAddr))
+		memset(&st_LibAddr, '\0', sizeof(APIADDR_IPADDR));
+		if (APIAddr_IPAddr_IsIPV4Addr(pSt_P2PProtocol->tszPrivateAddr, &st_LibAddr))
 		{
 			_xstprintf(tszPrivateAddr, _X("%d.%d.%d"), st_LibAddr.nIPAddr1, st_LibAddr.nIPAddr2, st_LibAddr.nIPAddr3);
 			//查找私有路由地址
@@ -474,13 +474,13 @@ bool CModuleHelp_P2PClient::ModuleHelp_P2PClient_Heart(XENGINE_P2XPPEER_PROTOCOL
 		return false;
 	}
 	//转换地址
-	XENGINE_LIBADDR st_LibAddr;
+	APIADDR_IPADDR st_LibAddr;
 	XCHAR tszPrivateAddr[64];
 
 	memset(tszPrivateAddr, '\0', sizeof(tszPrivateAddr));
-	memset(&st_LibAddr, '\0', sizeof(XENGINE_LIBADDR));
+	memset(&st_LibAddr, '\0', sizeof(APIADDR_IPADDR));
 	//获取私有网络的路由地址
-	BaseLib_OperatorIPAddr_IsIPV4Addr(pSt_P2PProtocol->tszPrivateAddr, &st_LibAddr);
+	APIAddr_IPAddr_IsIPV4Addr(pSt_P2PProtocol->tszPrivateAddr, &st_LibAddr);
 	_xstprintf(tszPrivateAddr, _X("%d.%d.%d"), st_LibAddr.nIPAddr1, st_LibAddr.nIPAddr2, st_LibAddr.nIPAddr3);
 
 	unordered_map<string, unordered_map<string, XENGINE_P2XP_PEERINFO> >::iterator stl_MapPriIterator = stl_MapPubIterator->second.find(tszPrivateAddr);

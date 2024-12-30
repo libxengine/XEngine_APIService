@@ -44,7 +44,7 @@ int test_create()
 		return 0;
 	}
 	printf("接受到数据,大小:%d,内容:%s\n", nLen, ptszMsgBuffer);
-	BaseLib_OperatorMemory_FreeCStyle((XPPMEM)&ptszMsgBuffer);
+	BaseLib_Memory_FreeCStyle((XPPMEM)&ptszMsgBuffer);
 	return 0;
 }
 int test_get()
@@ -62,7 +62,7 @@ int test_get()
 		return 0;
 	}
 	printf("接受到数据,大小:%d,内容:%s\n", nLen, ptszMsgBuffer);
-	BaseLib_OperatorMemory_FreeCStyle((XPPMEM)&ptszMsgBuffer);
+	BaseLib_Memory_FreeCStyle((XPPMEM)&ptszMsgBuffer);
 	return 0;
 }
 int test_List()
@@ -78,7 +78,7 @@ int test_List()
 		return 0;
 	}
 	printf("接受到数据,大小:%d,内容:%s\n", nLen, ptszMsgBuffer);
-	BaseLib_OperatorMemory_FreeCStyle((XPPMEM)&ptszMsgBuffer);
+	BaseLib_Memory_FreeCStyle((XPPMEM)&ptszMsgBuffer);
 	return 0;
 }
 int test_delete()
@@ -96,7 +96,7 @@ int test_delete()
 		return 0;
 	}
 	printf("接受到数据,大小:%d,内容:%s\n", nLen, ptszMsgBuffer);
-	BaseLib_OperatorMemory_FreeCStyle((XPPMEM)&ptszMsgBuffer);
+	BaseLib_Memory_FreeCStyle((XPPMEM)&ptszMsgBuffer);
 	return 0;
 }
 

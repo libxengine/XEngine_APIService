@@ -29,7 +29,7 @@ bool HTTPTask_TaskGet_Translation(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer,
 
 #ifdef _MSC_BUILD
 	int nGLen = _tcsxlen(lpszMsgBuffer);
-	BaseLib_OperatorCharset_AnsiToUTF(lpszMsgBuffer, tszUTFBuffer, &nGLen);
+	BaseLib_Charset_AnsiToUTF(lpszMsgBuffer, tszUTFBuffer, &nGLen);
 #else
 	_xstrcpy(tszUTFBuffer, lpszMsgBuffer, sizeof(tszUTFBuffer));
 #endif
@@ -37,7 +37,7 @@ bool HTTPTask_TaskGet_Translation(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer,
 	int nRandomNumber = rand();
 	int nLen = _xstprintf(tszSignStr, _X("%s%s%d%s"), st_ServiceConfig.st_XApi.st_TranslationInfo.tszAPPID, tszUTFBuffer, nRandomNumber, st_ServiceConfig.st_XApi.st_TranslationInfo.tszAPPKey);
 
-	OPenSsl_Api_Digest(tszSignStr, (XBYTE*)tszMD5Codec, &nLen);
+	Cryption_Api_Digest(tszSignStr, (XBYTE*)tszMD5Codec, &nLen);
 	for (int i = 0; i < 16; i++)
 	{
 		XCHAR tszTmpStr[4] = {};
@@ -60,14 +60,14 @@ bool HTTPTask_TaskGet_Translation(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer,
 		HttpProtocol_Server_SendMsgEx(xhHTTPPacket, tszMsgBuffer, &nMsgLen, &st_HDRParam, tszPktBuffer, nPktLen);
 		XEngine_Network_Send(lpszClientAddr, tszMsgBuffer, nMsgLen);
 		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("HTTP客户端:%s,请求的翻译失败,原始字符串:%s,错误数据:%s"), lpszClientAddr, lpszMsgBuffer, ptszBodyBuffer);
-		BaseLib_OperatorMemory_FreeCStyle((XPPMEM)&ptszBodyBuffer);
+		BaseLib_Memory_FreeCStyle((XPPMEM)&ptszBodyBuffer);
 		return false;
 	}
 	//打包发送
 	ModuleProtocol_Packet_LanguageQuery(tszPktBuffer, &nPktLen, &st_LanguageInfo);
 	HttpProtocol_Server_SendMsgEx(xhHTTPPacket, tszMsgBuffer, &nMsgLen, &st_HDRParam, tszPktBuffer, nPktLen);
 	XEngine_Network_Send(lpszClientAddr, tszMsgBuffer, nMsgLen);
-	BaseLib_OperatorMemory_FreeCStyle((XPPMEM)&ptszBodyBuffer);
+	BaseLib_Memory_FreeCStyle((XPPMEM)&ptszBodyBuffer);
 	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("HTTP客户端:%s,请求语言翻译成功,原始语言:%s,目标语言:%s"), lpszClientAddr, st_LanguageInfo.tszFromStr, st_LanguageInfo.tszToStr);
 	return true;
 }

@@ -36,7 +36,7 @@ int main()
 		return 0;
 	}
 	printf("接受到数据,大小:%d,内容:%s\n", nLen, ptszBuffer);
-	BaseLib_OperatorMemory_FreeCStyle((XPPMEM)&ptszBuffer);
+	BaseLib_Memory_FreeCStyle((XPPMEM)&ptszBuffer);
 	//打开读锁
 	LPCXSTR lpszReadUrl = _X("http://127.0.0.1:5501/api?function=lock&params1=1000106561&params2=3");
 	if (!APIClient_Http_Request(_X("GET"), lpszReadUrl, NULL, NULL, &ptszBuffer, &nLen))
@@ -45,7 +45,7 @@ int main()
 		return 0;
 	}
 	printf("接受到数据,大小:%d,内容:\n%s\n", nLen, ptszBuffer);
-	BaseLib_OperatorMemory_FreeCStyle((XPPMEM)&ptszBuffer);
+	BaseLib_Memory_FreeCStyle((XPPMEM)&ptszBuffer);
 	//打开写锁
 	LPCXSTR lpszWriteUrl = _X("http://127.0.0.1:5501/api?function=lock&params1=1000106561&params2=5");
 	if (!APIClient_Http_Request(_X("GET"), lpszWriteUrl, NULL, NULL, &ptszBuffer, &nLen))
@@ -54,7 +54,7 @@ int main()
 		return 0;
 	}
 	printf("接受到数据,大小:%d,内容:\n%s\n", nLen, ptszBuffer);
-	BaseLib_OperatorMemory_FreeCStyle((XPPMEM)&ptszBuffer);
+	BaseLib_Memory_FreeCStyle((XPPMEM)&ptszBuffer);
 	//释放读锁
 	LPCXSTR lpszUNReadUrl = _X("http://127.0.0.1:5501/api?function=lock&params1=1000106561&params2=4");
 	if (!APIClient_Http_Request(_X("GET"), lpszUNReadUrl, NULL, NULL, &ptszBuffer, &nLen))
@@ -63,7 +63,7 @@ int main()
 		return 0;
 	}
 	printf("接受到数据,大小:%d,内容:\n%s\n", nLen, ptszBuffer);
-	BaseLib_OperatorMemory_FreeCStyle((XPPMEM)&ptszBuffer);
+	BaseLib_Memory_FreeCStyle((XPPMEM)&ptszBuffer);
 	//打开解锁
 	if (!APIClient_Http_Request(_X("GET"), lpszWriteUrl, NULL, NULL, &ptszBuffer, &nLen))
 	{
@@ -71,7 +71,7 @@ int main()
 		return 0;
 	}
 	printf("接受到数据,大小:%d,内容:\n%s\n", nLen, ptszBuffer);
-	BaseLib_OperatorMemory_FreeCStyle((XPPMEM)&ptszBuffer);
+	BaseLib_Memory_FreeCStyle((XPPMEM)&ptszBuffer);
 	//关闭
 	LPCXSTR lpszCloseUrl = _X("http://127.0.0.1:5501/api?function=lock&params1=1000106561&params2=2");
 	if (!APIClient_Http_Request(_X("GET"), lpszCloseUrl, NULL, NULL, &ptszBuffer, &nLen))
@@ -80,7 +80,7 @@ int main()
 		return 0;
 	}
 	printf("接受到数据,大小:%d,内容:\n%s\n", nLen, ptszBuffer);
-	BaseLib_OperatorMemory_FreeCStyle((XPPMEM)&ptszBuffer);
+	BaseLib_Memory_FreeCStyle((XPPMEM)&ptszBuffer);
 #ifdef _MSC_BUILD
 	WSACleanup();
 #endif

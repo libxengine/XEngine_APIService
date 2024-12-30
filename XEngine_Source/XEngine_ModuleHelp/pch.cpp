@@ -181,6 +181,18 @@ extern "C" bool ModuleHelp_ImageGet_Attr(LPCXSTR lpszMsgBuffer, int nMsgLen, XEN
 {
 	return m_ImageGet.ModuleHelp_ImageGet_Attr(lpszMsgBuffer, nMsgLen, pSt_BaseInfo, pSt_ExtAttr);
 }
+extern "C" bool ModuleHelp_ImageGet_TextInit(LPCXSTR lpszPath, LPCXSTR lpszLanguage)
+{
+	return m_ImageGet.ModuleHelp_ImageGet_TextInit(lpszPath, lpszLanguage);
+}
+extern "C" bool ModuleHelp_ImageGet_TextGet(LPCXSTR lpszMsgBuffer, int nMsgLen, XCHAR*** ppptszListStr, int* pInt_ListCount)
+{
+	return m_ImageGet.ModuleHelp_ImageGet_TextGet(lpszMsgBuffer, nMsgLen, ppptszListStr, pInt_ListCount);
+}
+extern "C" bool ModuleHelp_ImageGet_TextDestory()
+{
+	return m_ImageGet.ModuleHelp_ImageGet_TextDestory();
+}
 extern "C" bool ModuleHelp_ImageSet_Resolution(LPCXSTR lpszSrcBuffer, int nSLen, LPCXSTR lpszExtFile, XCHAR * ptszDstBuffer, int* pInt_DLen, int nWidth, int nHeight)
 {
 	return m_ImageSet.ModuleHelp_ImageSet_Resolution(lpszSrcBuffer, nSLen, lpszExtFile, ptszDstBuffer, pInt_DLen, nWidth, nHeight);
