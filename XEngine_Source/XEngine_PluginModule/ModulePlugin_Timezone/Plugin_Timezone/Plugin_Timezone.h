@@ -12,7 +12,7 @@
 *********************************************************************/
 typedef struct  
 {
-	XENGINE_LIBTIMER st_TimeZone;
+	XENGINE_LIBTIME st_TimeZone;
 	XCHAR tszTimeCountry[MAX_PATH];
 }MODULEPLUGIN_TIMEZONE;
 

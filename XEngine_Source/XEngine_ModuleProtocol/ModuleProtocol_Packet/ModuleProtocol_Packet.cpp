@@ -1478,7 +1478,7 @@ bool CModuleProtocol_Packet::ModuleProtocol_Packet_SoftWare(XCHAR* ptszSWInfo, i
 	XCHAR tszUPTime[MAX_PATH];
 	XCHAR tszOSUser[MAX_PATH];
 	XCHAR tszServicePacket[MAX_PATH];
-	XENGINE_LIBTIMER st_LibTimer;
+	XENGINE_LIBTIME st_LibTimer;
 
 	memset(tszOSBuild, '\0', MAX_PATH);
 	memset(tszOSVersion, '\0', MAX_PATH);
@@ -1486,7 +1486,7 @@ bool CModuleProtocol_Packet::ModuleProtocol_Packet_SoftWare(XCHAR* ptszSWInfo, i
 	memset(tszUPTime, '\0', MAX_PATH);
 	memset(tszOSUser, '\0', MAX_PATH);
 	memset(tszServicePacket, '\0', MAX_PATH);
-	memset(&st_LibTimer, '\0', sizeof(XENGINE_LIBTIMER));
+	memset(&st_LibTimer, '\0', sizeof(XENGINE_LIBTIME));
 
 #ifdef _MSC_BUILD
 	XLONG dwMaxSize = MAX_PATH;
