@@ -87,13 +87,13 @@ git submodule init
 git submodule update  
 
 #### Linux
-ubuntu:sudo apt install sudo apt install liblua5.4-dev libopencv-dev libopencv-contrib-dev libqrencode-dev  
+ubuntu:sudo apt install sudo apt install liblua5.4-dev libopencv-dev libopencv-contrib-dev libqrencode-dev libleptonica-dev libtesseract-dev  
 centos:compile by self  
 use makefile compile,UBUNTU24.04 x64 or RockyLinux 9 x64
 Run it on the terminal
 
 #### Macos
-install opencc:brew install lua opencv qrencode  
+install environment:brew install lua opencv qrencode leptonica tesseract  
 use makefile compile,mac 13 and above  
 Run it on the terminal
 
