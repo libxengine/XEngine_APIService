@@ -391,7 +391,7 @@ XHTHREAD CModuleHelp_SocketTest::ModuleHelp_SocketTest_ThreadData(XPVOID lParam)
 			if (pSt_DataSocket->st_SocketData.nRVLen > 0)
 			{
 				//是否需要可读判断
-				if (XClient_OPTSocket_IOSelect(pSt_DataSocket->hSocket, true, pSt_DataSocket->st_SocketData.st_REConnect.nContWaitTime))
+				if (BaseLib_IO_Select(pSt_DataSocket->hSocket, true, pSt_DataSocket->st_SocketData.st_REConnect.nContWaitTime))
 				{
 					//接受数据
 					int nMsgLen = pSt_DataSocket->st_SocketData.nRVLen;
