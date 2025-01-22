@@ -40,6 +40,12 @@ jobs:
           git submodule init
           git submodule update
 
+    - name: install library
+      run: |
+          sudo apt update -y
+          sudo apt upgrade -y
+          sudo apt install liblua5.4-dev libopencv-dev libopencv-contrib-dev libqrencode-dev libleptonica-dev libtesseract-dev -y
+
     - name: Set up Dependency Environment
       run: |
           cd libxengine
