@@ -4,6 +4,7 @@
 #pragma comment(lib,"Ws2_32")
 #pragma comment(lib,"jsoncpp")
 #pragma comment(lib,"XEngine_BaseLib/XEngine_BaseLib")
+#pragma comment(lib,"XEngine_BaseLib/XEngine_BaseSafe")
 #pragma comment(lib,"XEngine_Client/XClient_APIHelp")
 #pragma comment(lib,"XEngine_SystemSdk/XEngine_SystemApi")
 #endif
@@ -17,6 +18,8 @@
 #include <XEngine_Include/XEngine_ProtocolHdr.h>
 #include <XEngine_Include/XEngine_BaseLib/BaseLib_Define.h>
 #include <XEngine_Include/XEngine_BaseLib/BaseLib_Error.h>
+#include <XEngine_Include/XEngine_BaseLib/BaseSafe_Define.h>
+#include <XEngine_Include/XEngine_BaseLib/BaseSafe_Error.h>
 #include <XEngine_Include/XEngine_Client/APIClient_Define.h>
 #include <XEngine_Include/XEngine_Client/APIClient_Error.h>
 #include <XEngine_Include/XEngine_SystemSdk/ProcFile_Define.h>
@@ -25,7 +28,7 @@
 
 //需要优先配置XEngine
 //WINDOWS支持VS2022 x64 debug 编译调试
-//g++ -std=c++17 -Wall -g APPClient_ImageExample.cpp -o APPClient_ImageExample.exe -I ../../XEngine_Source/XEngine_Depend/XEngine_Module/jsoncpp -L ../../XEngine_Release -lXEngine_BaseLib -lXClient_APIHelp -ljsoncpp -Wl,-rpath=../../XEngine_Release
+//g++ -std=c++17 -Wall -g APPClient_ImageExample.cpp -o APPClient_ImageExample.exe -I ../../XEngine_Source/XEngine_Depend/XEngine_Module/jsoncpp -L ../../XEngine_Release -lXEngine_BaseLib -lXEngine_BaseSafe -lXClient_APIHelp -ljsoncpp -Wl,-rpath=../../XEngine_Release
 
 
 bool APPClient_ImageExample_GetAttr(LPCXSTR lpszMsgBuffer, int nMsgLen, int* pInt_Width, int* pInt_Height)
@@ -76,7 +79,7 @@ int test_imgzoom()
 		}
 		memset(ptszFileBuffer, '\0', XENGINE_MEMORY_SIZE_MAX);
 
-		FILE* pSt_File = _xtfopen(pptszListFile[i], _X("rb"));
+		FILE* pSt_File = _xfopen(pptszListFile[i], _X("rb"));
 		int nRet = (int)fread(ptszFileBuffer, 1, XENGINE_MEMORY_SIZE_MAX, pSt_File);
 		fclose(pSt_File);
 		

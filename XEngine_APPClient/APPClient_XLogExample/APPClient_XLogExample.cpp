@@ -12,6 +12,7 @@
 #include <inttypes.h>
 #include <json/json.h>
 #include <XEngine_Include/XEngine_CommHdr.h>
+#include <XEngine_Include/XEngine_Types.h>
 #include <XEngine_Include/XEngine_ProtocolHdr.h>
 #include <XEngine_Include/XEngine_BaseLib/BaseLib_Define.h>
 #include <XEngine_Include/XEngine_BaseLib/BaseLib_Error.h>
@@ -55,7 +56,7 @@ int test_insert()
 	Json::StreamWriterBuilder st_JsonBuilder;
 	st_JsonRoot["tszTableName"] = lpszTableName;
 	st_JsonRoot["tszLogBuffer"] = lpszMsgBuffer;
-	st_JsonRoot["nLogSize"] = _tcslen(lpszMsgBuffer);
+	st_JsonRoot["nLogSize"] = _tcsxlen(lpszMsgBuffer);
 
 	st_JsonRoot["tszFileName"] = "file.cpp";
 	st_JsonRoot["tszFuncName"] = "xengine_file_insert";
