@@ -15,6 +15,7 @@ bool HTTPTask_TaskPost_Image(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer, int 
 	HttpProtocol_Server_SendMsgEx(xhHTTPPacket, tszMSGBuffer, &nMLen, &st_HDRParam);
 	XEngine_Network_Send(lpszClientAddr, tszMSGBuffer, nMLen);
 	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("HTTP客户端:%s,请求图片操作失败,服务器没有启用此功能"), lpszClientAddr);
+	return false;
 #else
 	if (!st_ServiceConfig.st_XImageText.bEnable)
 	{
@@ -25,6 +26,7 @@ bool HTTPTask_TaskPost_Image(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer, int 
 		HttpProtocol_Server_SendMsgEx(xhHTTPPacket, tszMSGBuffer, &nMLen, &st_HDRParam);
 		XEngine_Network_Send(lpszClientAddr, tszMSGBuffer, nMLen);
 		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("HTTP客户端:%s,请求图片操作失败,服务器没有启用此功能"), lpszClientAddr);
+		return false;
 	}
 	int nSDLen = 0;
 	int nRVLen = 0;
