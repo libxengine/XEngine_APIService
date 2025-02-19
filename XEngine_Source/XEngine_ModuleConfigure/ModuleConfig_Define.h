@@ -158,6 +158,7 @@ typedef struct
 	XCHAR tszAPPName[MAX_PATH];        //应用程序名称
 	XCHAR tszAPPPath[MAX_PATH];        //应用程序路径
 	int nReTime;                       //是否自动重启
+	int nReNumber;
 	//自定义
 	int nErrorTime;
 	__int64x nStartTime;

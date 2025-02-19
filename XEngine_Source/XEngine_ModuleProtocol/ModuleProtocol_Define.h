@@ -1215,9 +1215,14 @@ extern "C" bool ModuleProtocol_Parse_Verifcation(LPCXSTR lpszMsgBuffer, int nMsg
   类型：整数型指针
   可空：N
   意思：输出重试次数
- 参数.六：pbEnable
+ 参数.六：pInt_ReNumber
   In/Out：Out
   类型：整数型指针
+  可空：N
+  意思：输出重启次数
+ 参数.七：pbEnable
+  In/Out：Out
+  类型：逻辑型指针
   可空：N
   意思：输出是否启用
 返回值
@@ -1225,7 +1230,7 @@ extern "C" bool ModuleProtocol_Parse_Verifcation(LPCXSTR lpszMsgBuffer, int nMsg
   意思：是否成功
 备注：
 *********************************************************************/
-extern "C" bool ModuleProtocol_Parse_Deamon(LPCXSTR lpszMsgBuffer, int nMsgLen, XCHAR* ptszAPPName, XCHAR* ptszAPPPath, int* pInt_Retime, bool* pbEnable);
+extern "C" bool ModuleProtocol_Parse_Deamon(LPCXSTR lpszMsgBuffer, int nMsgLen, XCHAR* ptszAPPName, XCHAR* ptszAPPPath, int* pInt_Retime, int* pInt_ReNumber, bool* pbEnable);
 /********************************************************************
 函数名称：ModuleProtocol_Parse_Weather
 函数功能：解析天气信息

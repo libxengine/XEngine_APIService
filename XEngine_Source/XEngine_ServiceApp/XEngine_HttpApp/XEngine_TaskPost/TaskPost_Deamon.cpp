@@ -19,6 +19,12 @@ void CALLBACK HTTPTask_TaskPost_Thread()
 				XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("服务名：%s，由于超过指定启动失败次数：%d，这个服务检测功能被关闭..."), stl_ListIterator->tszAPPName, st_ServiceConfig.st_XTime.nDeamonTime);
 				continue;
 			}
+			if (stl_ListIterator->nErrorTime >= stl_ListIterator->nReNumber)
+			{
+				stl_ListIterator->bEnable = false;
+				XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("服务名：%s，由于超过指定启动失败次数：%d，这个服务检测功能被关闭..."), stl_ListIterator->tszAPPName, st_ServiceConfig.st_XTime.nDeamonTime);
+				continue;
+			}
 
 			if (stl_ListIterator->nReTime > 0)
 			{
@@ -40,9 +46,9 @@ void CALLBACK HTTPTask_TaskPost_Thread()
 					}
 					else
 					{
-						stl_ListIterator->nErrorTime++;
 						XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("自动重启,重启进程：%s 失败，错误码：%lX..."), stl_ListIterator->tszAPPName, SystemApi_GetLastError());
 					}
+					stl_ListIterator->nErrorTime++;
 				}
 			}
 			else
@@ -78,9 +84,9 @@ void CALLBACK HTTPTask_TaskPost_Thread()
 			    }
 				else
 				{
-					stl_ListIterator->nErrorTime++;
 					XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, "崩溃重启,检查到进程不存在,启动进程：%s 失败，错误码：%lX...", stl_ListIterator->tszAPPName, SystemApi_GetLastError());
 				}
+				stl_ListIterator->nErrorTime++;
 			}
 		}
 		//休眠用户配置的时间
@@ -129,7 +135,7 @@ bool HTTPTask_TaskPost_Deamon(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer, int
 		}
 	}
 
-	if (!ModuleProtocol_Parse_Deamon(lpszMsgBuffer, nMsgLen, st_DeamonApp.tszAPPName, st_DeamonApp.tszAPPPath, &st_DeamonApp.nReTime, &st_DeamonApp.bEnable))
+	if (!ModuleProtocol_Parse_Deamon(lpszMsgBuffer, nMsgLen, st_DeamonApp.tszAPPName, st_DeamonApp.tszAPPPath, &st_DeamonApp.nReTime, &st_DeamonApp.nReNumber, &st_DeamonApp.bEnable))
 	{
 		st_HDRParam.nHttpCode = 400;
 		HttpProtocol_Server_SendMsgEx(xhHTTPPacket, ptszSDBuffer, &nSDLen, &st_HDRParam);

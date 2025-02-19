@@ -928,10 +928,15 @@ bool CModuleProtocol_Parse::ModuleProtocol_Parse_Verifcation(LPCXSTR lpszMsgBuff
   In/Out：Out
   类型：整数型指针
   可空：N
-  意思：输出重试次数
- 参数.六：pbEnable
+  意思：输出每隔多少秒重启
+ 参数.六：pInt_ReNumber
   In/Out：Out
   类型：整数型指针
+  可空：N
+  意思：输出重启次数
+ 参数.七：pbEnable
+  In/Out：Out
+  类型：逻辑型指针
   可空：N
   意思：输出是否启用
 返回值
@@ -939,7 +944,7 @@ bool CModuleProtocol_Parse::ModuleProtocol_Parse_Verifcation(LPCXSTR lpszMsgBuff
   意思：是否成功
 备注：
 *********************************************************************/
-bool CModuleProtocol_Parse::ModuleProtocol_Parse_Deamon(LPCXSTR lpszMsgBuffer, int nMsgLen, XCHAR* ptszAPPName, XCHAR* ptszAPPPath, int* pInt_Retime, bool* pbEnable)
+bool CModuleProtocol_Parse::ModuleProtocol_Parse_Deamon(LPCXSTR lpszMsgBuffer, int nMsgLen, XCHAR* ptszAPPName, XCHAR* ptszAPPPath, int* pInt_Retime, int* pInt_ReNumber, bool* pbEnable)
 {
 	ModuleProtocol_IsErrorOccur = false;
 
@@ -980,6 +985,13 @@ bool CModuleProtocol_Parse::ModuleProtocol_Parse_Deamon(LPCXSTR lpszMsgBuffer, i
 		if (NULL != pInt_Retime)
 		{
 			*pInt_Retime = st_JsonRoot["nRetime"].asInt();
+		}
+	}
+	if (!st_JsonRoot["nReNumber"].isNull())
+	{
+		if (NULL != pInt_ReNumber)
+		{
+			*pInt_ReNumber = st_JsonRoot["nReNumber"].asInt();
 		}
 	}
 	if (!st_JsonRoot["bEnable"].isNull())
