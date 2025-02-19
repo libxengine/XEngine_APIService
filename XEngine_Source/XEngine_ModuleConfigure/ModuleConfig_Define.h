@@ -33,7 +33,6 @@ typedef struct
 		int nTimeCheck;                       //检测次数
 		int nHTTPTimeOut;                     //HTTP超时时间
 		int nP2PTimeOut;                      //P2P客户端超时时间
-		int nDeamonTime;                      //进程守护失败执行次数
 	}st_XTime;                                //次数*时间=超时
 	struct
 	{

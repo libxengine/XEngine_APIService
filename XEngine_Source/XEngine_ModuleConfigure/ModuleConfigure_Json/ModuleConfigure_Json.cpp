@@ -100,7 +100,7 @@ bool CModuleConfigure_Json::ModuleConfigure_Json_File(LPCXSTR lpszConfigFile, XE
 	pSt_ServerConfig->st_XMax.nIOThread = st_JsonXMax["nIOThread"].asInt();
 	pSt_ServerConfig->st_XMax.nHTTPThread = st_JsonXMax["nHttpThread"].asInt();
 
-	if (st_JsonRoot["XTime"].empty() || (4 != st_JsonRoot["XTime"].size()))
+	if (st_JsonRoot["XTime"].empty() || (3 != st_JsonRoot["XTime"].size()))
 	{
 		Config_IsErrorOccur = true;
 		Config_dwErrorCode = ERROR_MODULE_CONFIGURE_JSON_XTIME;
@@ -110,7 +110,6 @@ bool CModuleConfigure_Json::ModuleConfigure_Json_File(LPCXSTR lpszConfigFile, XE
 	pSt_ServerConfig->st_XTime.nTimeCheck = st_JsonXTime["nTimeCheck"].asInt();
 	pSt_ServerConfig->st_XTime.nHTTPTimeOut = st_JsonXTime["nHttpTimeOut"].asInt();
 	pSt_ServerConfig->st_XTime.nP2PTimeOut = st_JsonXTime["nP2PTimeOut"].asInt();
-	pSt_ServerConfig->st_XTime.nDeamonTime = st_JsonXTime["nDeamonTime"].asInt();
 
 	if (st_JsonRoot["XLog"].empty() || (4 != st_JsonRoot["XLog"].size()))
 	{
@@ -544,6 +543,7 @@ bool CModuleConfigure_Json::ModuleConfigure_Json_DeamonList(LPCXSTR lpszConfigFi
 		strcpy(st_APPInfo.tszAPPPath, st_JsonArray[i]["tszAPPPath"].asCString());
 		st_APPInfo.bEnable = st_JsonArray[i]["bEnable"].asBool();
 		st_APPInfo.nReTime = st_JsonArray[i]["nAPPReTime"].asInt();
+		st_APPInfo.nReNumber = st_JsonArray[i]["nAPPReNumber"].asInt();
 
 		pSt_AppConfig->stl_ListDeamonApp.push_back(st_APPInfo);
 	}
