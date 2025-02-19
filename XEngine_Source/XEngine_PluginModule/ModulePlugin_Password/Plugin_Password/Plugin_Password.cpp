@@ -108,26 +108,17 @@ bool CPlugin_Password::Plugin_Password_Creator(LPCXSTR lpszPassType, LPCXSTR lps
 
 	int nType = _ttxoi(lpszPassType);
 	int nLen = _ttxoi(lpszLength);
-	XCHAR tszPassBuffer[MAX_PATH];
-
-	memset(tszPassBuffer, '\0', MAX_PATH);
 	if (0 == nType)
 	{
-		BaseLib_Handle_CreateStr(tszPassBuffer, nLen);
+		BaseLib_Handle_CreateStr(ptszPassStr, nLen);
 	}
 	else if (1 == nType)
 	{
-		for (int i = 0; i < nLen; i++)
-		{
-			_xstprintf(&tszPassBuffer[i], _X("%d"), rand() % 9);
-		}
+		BaseLib_Handle_CreateStr(ptszPassStr, nLen, 1);
 	}
 	else if (2 == nType)
 	{
-		for (int i = 0; i < nLen; i++)
-		{
-			_xstprintf(&tszPassBuffer[i], _X("%c"), (rand() % 26) + 65);
-		}
+		BaseLib_Handle_CreateStr(ptszPassStr, nLen, 2);
 	}
 	return true;
 }
