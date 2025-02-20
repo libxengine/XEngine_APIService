@@ -40,6 +40,7 @@ typedef struct
 		int nMaxSize;                         //最大日志大小
 		int nMaxCount;                        //最大日志个数
 		int nLogLeave;                        //日志等级
+		int nLogType;                         //日志类型
 	}st_XLog;
 	struct
 	{
