@@ -1044,10 +1044,16 @@ bool CModuleProtocol_Parse::ModuleProtocol_Parse_Weather(LPCXSTR lpszMsgBuffer, 
 	if (!pSt_JsonReader->parse(lpszMsgBuffer, lpszMsgBuffer + nMsgLen, &st_JsonRoot, &st_JsonError))
 	{
 		ModuleProtocol_IsErrorOccur = true;
-		ModuleProtocol_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PROTOCOL_PARSE_PARAMENT;
+		ModuleProtocol_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PROTOCOL_PARSE_JSON;
 		return false;
 	}
 	Json::Value st_JsonObject = st_JsonRoot["lives"][0];
+	if (0 == st_JsonObject.size())
+	{
+		ModuleProtocol_IsErrorOccur = true;
+		ModuleProtocol_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PROTOCOL_PARSE_VALIDATE;
+		return false;
+	}
 
 	if (!st_JsonObject["province"].isNull())
 	{
