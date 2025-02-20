@@ -34,7 +34,7 @@
 bool APPClient_ImageExample_GetAttr(LPCXSTR lpszMsgBuffer, int nMsgLen, int* pInt_Width, int* pInt_Height)
 {
 	int nCode = 0;
-	LPCXSTR lpszAPIUrl = _X("http://127.0.0.1:5501/api?function=image&params1=0");
+	LPCXSTR lpszAPIUrl = _X("http://127.0.0.1:5501/api?function=image&params1=1");
 
 	XCHAR* ptszMsgBuffer = NULL;
 	if (!APIClient_Http_Request(_X("POST"), lpszAPIUrl, lpszMsgBuffer, &nCode, &ptszMsgBuffer, &nMsgLen))
@@ -61,12 +61,12 @@ bool APPClient_ImageExample_GetAttr(LPCXSTR lpszMsgBuffer, int nMsgLen, int* pIn
 }
 int test_imgzoom()
 {
-	LPCXSTR lpszFileDir = _X("D:\\Image\\*");
+	LPCXSTR lpszFileDir = _X("D:\\Image\\");
 
 	int nListCount = 0;
 	XCHAR** pptszListFile;
 
-	SystemApi_File_EnumFile(lpszFileDir, &pptszListFile, &nListCount);
+	SystemApi_File_EnumFile(lpszFileDir, &pptszListFile, &nListCount, false, 1);
 	for (int i = 0; i < nListCount; i++)
 	{
 		int nCode = 0;
@@ -80,7 +80,11 @@ int test_imgzoom()
 		memset(ptszFileBuffer, '\0', XENGINE_MEMORY_SIZE_MAX);
 
 		FILE* pSt_File = _xfopen(pptszListFile[i], _X("rb"));
-		int nRet = (int)fread(ptszFileBuffer, 1, XENGINE_MEMORY_SIZE_MAX, pSt_File);
+		if (NULL == pSt_File)
+		{
+			continue;
+		}
+		int nRet = fread(ptszFileBuffer, 1, XENGINE_MEMORY_SIZE_MAX, pSt_File);
 		fclose(pSt_File);
 		
 		APPClient_ImageExample_GetAttr(ptszFileBuffer, nRet, &nWidth, &nHeight);
@@ -89,7 +93,7 @@ int test_imgzoom()
 		XCHAR tszFileExt[64] = {};
 
 		BaseLib_String_GetFileAndPath(pptszListFile[i], NULL, NULL, NULL, tszFileExt);
-		_xstprintf(tszAPIUrl, _X("http://127.0.0.1:5501/api?function=image&type=1&ext=%s&width=%d&height=%d"), tszFileExt, nWidth / 2, nHeight / 2);
+		_xstprintf(tszAPIUrl, _X("http://127.0.0.1:5501/api?function=image&type=2&ext=%s&width=%d&height=%d"), tszFileExt, nWidth / 2, nHeight / 2);
 
 		XCHAR* ptszMsgBuffer = NULL;
 		if (!APIClient_Http_Request(_X("POST"), tszAPIUrl, ptszFileBuffer, &nCode, &ptszMsgBuffer, &nRet))

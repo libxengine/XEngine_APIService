@@ -33,7 +33,8 @@ int test_insert()
 
 	Json::Value st_JsonRoot;
 	st_JsonRoot["bEnable"] = true;
-	st_JsonRoot["nRetime"] = 3;
+	st_JsonRoot["nRetime"] = 0;
+	st_JsonRoot["nReNumber"] = 3;
 	st_JsonRoot["tszAPPName"] = "Fairdell_HexCmp2.exe";
 	st_JsonRoot["tszAPPPath"] = "D:\\";
 

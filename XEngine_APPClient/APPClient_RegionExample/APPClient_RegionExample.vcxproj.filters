@@ -15,7 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="APPClient_LanguageExample.cpp">
+    <ClCompile Include="APPClient_RegionExample.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

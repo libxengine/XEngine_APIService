@@ -5,7 +5,7 @@
 #pragma comment(lib,"XEngine_Client/XClient_APIHelp")
 #pragma comment(lib,"XEngine_NetHelp/NetHelp_XSocket")
 #pragma comment(lib,"Ws2_32")
-#ifdef WIN64
+#ifdef _WIN64
 #pragma comment(lib,"../../XEngine_Source/x64/Debug/jsoncpp")
 #else
 #pragma comment(lib,"../../XEngine_Source/Debug/jsoncpp")

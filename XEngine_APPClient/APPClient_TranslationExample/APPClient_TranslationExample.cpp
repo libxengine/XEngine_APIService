@@ -28,7 +28,7 @@ int main()
 #endif
 	int nLen = 0;
 	XCHAR* ptszMsgBuffer = NULL;
-	LPCXSTR lpszUrl = _X("http://127.0.0.1:5501/api?function=translation&params1=中国&params2=0&param3=0");
+	LPCXSTR lpszUrl = _X("http://127.0.0.1:5501/api?function=translation&params1=chinese&params2=0&param3=0");
 
 	if (!APIClient_Http_Request(_X("GET"), lpszUrl, NULL, NULL, &ptszMsgBuffer, &nLen))
 	{

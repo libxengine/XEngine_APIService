@@ -29,7 +29,7 @@ int main()
 #endif
 	int nLen = 0;
 	XCHAR* ptszMsgBuffer = NULL;
-	LPCXSTR lpszUrl = _X("http://127.0.0.1:5501/api?function=id&params1=511025198807018792&params2=0");
+	LPCXSTR lpszUrl = _X("http://127.0.0.1:5501/api?function=id&params1=511000191107018112&params2=0");
 
 	if (!APIClient_Http_Request(_X("GET"), lpszUrl, NULL, NULL, &ptszMsgBuffer, &nLen))
 	{
