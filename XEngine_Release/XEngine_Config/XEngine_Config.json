@@ -33,6 +33,7 @@
     "XApi":{
         "tszWeatherUrl":"https://restapi.amap.com/v3/weather/weatherInfo?city=%s&key=3239fc302d6480ce49973f4d1c59e5d8",
         "tszBankUrl":"https://ccdcapi.alipay.com/validateAndCacheCardInfo.json?cardNo=%s&cardBinCheck=true",
+        "tszOilUrl":"https://www.iamwawa.cn/oilprice/api?area=%s",
         "tszTranslationUrl":"https://fanyi-api.baidu.com/api/trans/vip/translate",
         "st_TranslationInfo":{
             "appid":"20231228001924304",
