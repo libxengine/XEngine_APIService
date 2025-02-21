@@ -124,7 +124,7 @@ bool CModuleConfigure_Json::ModuleConfigure_Json_File(LPCXSTR lpszConfigFile, XE
 	pSt_ServerConfig->st_XLog.nLogType = st_JsonXLog["LogType"].asInt();
 	_tcsxcpy(pSt_ServerConfig->st_XLog.tszLogFile, st_JsonXLog["tszLogFile"].asCString());
 
-	if (st_JsonRoot["XApi"].empty() || (4 != st_JsonRoot["XApi"].size()))
+	if (st_JsonRoot["XApi"].empty() || (5 != st_JsonRoot["XApi"].size()))
 	{
 		Config_IsErrorOccur = true;
 		Config_dwErrorCode = ERROR_MODULE_CONFIGURE_JSON_XAPI;
@@ -134,6 +134,7 @@ bool CModuleConfigure_Json::ModuleConfigure_Json_File(LPCXSTR lpszConfigFile, XE
 
 	_tcsxcpy(pSt_ServerConfig->st_XApi.tszWeatherUrl, st_JsonXApi["tszWeatherUrl"].asCString());
 	_tcsxcpy(pSt_ServerConfig->st_XApi.tszBankUrl, st_JsonXApi["tszBankUrl"].asCString());
+	_tcsxcpy(pSt_ServerConfig->st_XApi.tszOilUrl, st_JsonXApi["tszOilUrl"].asCString());
 	_tcsxcpy(pSt_ServerConfig->st_XApi.tszTranslationUrl, st_JsonXApi["tszTranslationUrl"].asCString());
 	Json::Value st_JsonTranslationInfo = st_JsonXApi["st_TranslationInfo"];
 	_tcsxcpy(pSt_ServerConfig->st_XApi.st_TranslationInfo.tszAPPID, st_JsonTranslationInfo["appid"].asCString());

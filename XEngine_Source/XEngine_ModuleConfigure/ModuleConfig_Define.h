@@ -55,6 +55,7 @@ typedef struct
 	{
 		XCHAR tszWeatherUrl[MAX_PATH];        //天气接口
 		XCHAR tszBankUrl[MAX_PATH];           //银行卡验证地址
+		XCHAR tszOilUrl[MAX_PATH];            //油价接口
 		XCHAR tszTranslationUrl[MAX_PATH];    //翻译接口
 		struct  
 		{

@@ -214,3 +214,7 @@ extern "C" bool ModuleProtocol_Parse_Machine(LPCXSTR lpszMsgBuffer, int nMsgLen,
 {
 	return m_ProtocolParse.ModuleProtocol_Parse_Machine(lpszMsgBuffer, nMsgLen, pSt_MachineInfo);
 }
+extern "C" bool ModuleProtocol_Parse_Oil(LPCXSTR lpszMsgBuffer, int nMsgLen, XENGINE_OILINFO* pSt_OilInfo)
+{
+	return m_ProtocolParse.ModuleProtocol_Parse_Oil(lpszMsgBuffer, nMsgLen, pSt_OilInfo);
+}

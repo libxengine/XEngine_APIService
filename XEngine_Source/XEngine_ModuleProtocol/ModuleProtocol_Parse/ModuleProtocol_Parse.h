@@ -33,5 +33,6 @@ public:
 	bool ModuleProtocol_Parse_Deamon(LPCXSTR lpszMsgBuffer, int nMsgLen, XCHAR* ptszAPPName, XCHAR* ptszAPPPath, int* pInt_Retime, int* pInt_ReNumber, bool* pbEnable);
 	bool ModuleProtocol_Parse_Weather(LPCXSTR lpszMsgBuffer, int nMsgLen, XENGINE_WEATHERINFO* pSt_WeatherInfo);
 	bool ModuleProtocol_Parse_Machine(LPCXSTR lpszMsgBuffer, int nMsgLen, XENGINE_MACHINEINFO* pSt_MachineInfo);
+	bool ModuleProtocol_Parse_Oil(LPCXSTR lpszMsgBuffer, int nMsgLen, XENGINE_OILINFO* pSt_OilInfo);
 private:
 };

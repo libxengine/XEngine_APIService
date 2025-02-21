@@ -289,5 +289,6 @@ typedef struct
 	double dlValue20;
 	double dlValue35;
 	XCHAR tszUPTime[64];       //更新时间
+	XCHAR tszNextTime[64];       //更新时间
 }XENGINE_OILINFO;
 #pragma pack(pop)

@@ -49,3 +49,4 @@ EXPORTS
 	ModuleProtocol_Parse_Deamon
 	ModuleProtocol_Parse_Weather
 	ModuleProtocol_Parse_Machine
+	ModuleProtocol_Parse_Oil
