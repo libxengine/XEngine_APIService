@@ -32,7 +32,7 @@ int test_query()
 	XCHAR* ptszMsgBuffer = NULL;
 
 	Json::Value st_JsonRoot;
-	st_JsonRoot["tszSrcBuffer"] = "D:\\XEngine_APIService\\XEngine_Release\\*";
+	st_JsonRoot["tszSrcBuffer"] = "D:\\XEngine_APIService\\XEngine_Release\\";
 
 	if (!APIClient_Http_Request(_X("POST"), lpszAPIUrl, st_JsonRoot.toStyledString().c_str(), &nCode, &ptszMsgBuffer, &nLen))
 	{

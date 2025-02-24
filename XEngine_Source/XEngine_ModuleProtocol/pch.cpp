@@ -202,9 +202,9 @@ extern "C" bool ModuleProtocol_Parse_Verifcation(LPCXSTR lpszMsgBuffer, int nMsg
 {
 	return m_ProtocolParse.ModuleProtocol_Parse_Verifcation(lpszMsgBuffer, nMsgLen, ptszUserName, ptszUserPass);
 }
-extern "C" bool ModuleProtocol_Parse_Deamon(LPCXSTR lpszMsgBuffer, int nMsgLen, XCHAR * ptszAPPName, XCHAR * ptszAPPPath, int* pInt_Retime, bool* pbEnable)
+extern "C" bool ModuleProtocol_Parse_Deamon(LPCXSTR lpszMsgBuffer, int nMsgLen, XCHAR * ptszAPPName, XCHAR * ptszAPPPath, int* pInt_Retime, int* pInt_ReNumber, bool* pbEnable)
 {
-	return m_ProtocolParse.ModuleProtocol_Parse_Deamon(lpszMsgBuffer, nMsgLen, ptszAPPName, ptszAPPPath, pInt_Retime, pbEnable);
+	return m_ProtocolParse.ModuleProtocol_Parse_Deamon(lpszMsgBuffer, nMsgLen, ptszAPPName, ptszAPPPath, pInt_Retime, pInt_ReNumber, pbEnable);
 }
 extern "C" bool ModuleProtocol_Parse_Weather(LPCXSTR lpszMsgBuffer, int nMsgLen, XENGINE_WEATHERINFO * pSt_WeatherInfo)
 {
@@ -213,4 +213,8 @@ extern "C" bool ModuleProtocol_Parse_Weather(LPCXSTR lpszMsgBuffer, int nMsgLen,
 extern "C" bool ModuleProtocol_Parse_Machine(LPCXSTR lpszMsgBuffer, int nMsgLen, XENGINE_MACHINEINFO * pSt_MachineInfo)
 {
 	return m_ProtocolParse.ModuleProtocol_Parse_Machine(lpszMsgBuffer, nMsgLen, pSt_MachineInfo);
+}
+extern "C" bool ModuleProtocol_Parse_Oil(LPCXSTR lpszMsgBuffer, int nMsgLen, XENGINE_OILINFO* pSt_OilInfo)
+{
+	return m_ProtocolParse.ModuleProtocol_Parse_Oil(lpszMsgBuffer, nMsgLen, pSt_OilInfo);
 }

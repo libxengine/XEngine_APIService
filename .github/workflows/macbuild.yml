@@ -2,14 +2,12 @@ name: macos build workflows
 
 on:
   push:
-    branches: [ "develop" ]
+    branches:
+      - 'develop'
     paths:
       - 'XEngine_Source/**'
       - 'XEngine_Release/**'
       - '.github/**'
-  
-permissions:
-  contents: read
   
 jobs:
   build:
@@ -89,9 +87,11 @@ jobs:
         with:
           name: XEngine_APIServiceApp-x86_64-Mac
           path: XEngine_Release/
+          retention-days: 1
       - name: Upload folder as artifact with mac arm
         if: matrix.os == 'macos-14'
         uses: actions/upload-artifact@v4
         with:
           name: XEngine_APIServiceApp-Arm64-Mac
           path: XEngine_Release/
+          retention-days: 1

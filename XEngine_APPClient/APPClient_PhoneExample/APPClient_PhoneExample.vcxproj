@@ -72,6 +72,8 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
+    <IncludePath>$(XEngine_Include);../../XEngine_Source/XEngine_Depend/XEngine_Module/jsoncpp;$(IncludePath)</IncludePath>
+    <LibraryPath>$(XEngine_Lib32);../../XEngine_Source/Debug;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>

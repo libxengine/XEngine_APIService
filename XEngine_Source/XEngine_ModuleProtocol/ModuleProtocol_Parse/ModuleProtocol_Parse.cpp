@@ -928,10 +928,15 @@ bool CModuleProtocol_Parse::ModuleProtocol_Parse_Verifcation(LPCXSTR lpszMsgBuff
   In/Out：Out
   类型：整数型指针
   可空：N
-  意思：输出重试次数
- 参数.六：pbEnable
+  意思：输出每隔多少秒重启
+ 参数.六：pInt_ReNumber
   In/Out：Out
   类型：整数型指针
+  可空：N
+  意思：输出重启次数
+ 参数.七：pbEnable
+  In/Out：Out
+  类型：逻辑型指针
   可空：N
   意思：输出是否启用
 返回值
@@ -939,7 +944,7 @@ bool CModuleProtocol_Parse::ModuleProtocol_Parse_Verifcation(LPCXSTR lpszMsgBuff
   意思：是否成功
 备注：
 *********************************************************************/
-bool CModuleProtocol_Parse::ModuleProtocol_Parse_Deamon(LPCXSTR lpszMsgBuffer, int nMsgLen, XCHAR* ptszAPPName, XCHAR* ptszAPPPath, int* pInt_Retime, bool* pbEnable)
+bool CModuleProtocol_Parse::ModuleProtocol_Parse_Deamon(LPCXSTR lpszMsgBuffer, int nMsgLen, XCHAR* ptszAPPName, XCHAR* ptszAPPPath, int* pInt_Retime, int* pInt_ReNumber, bool* pbEnable)
 {
 	ModuleProtocol_IsErrorOccur = false;
 
@@ -980,6 +985,13 @@ bool CModuleProtocol_Parse::ModuleProtocol_Parse_Deamon(LPCXSTR lpszMsgBuffer, i
 		if (NULL != pInt_Retime)
 		{
 			*pInt_Retime = st_JsonRoot["nRetime"].asInt();
+		}
+	}
+	if (!st_JsonRoot["nReNumber"].isNull())
+	{
+		if (NULL != pInt_ReNumber)
+		{
+			*pInt_ReNumber = st_JsonRoot["nReNumber"].asInt();
 		}
 	}
 	if (!st_JsonRoot["bEnable"].isNull())
@@ -1032,10 +1044,16 @@ bool CModuleProtocol_Parse::ModuleProtocol_Parse_Weather(LPCXSTR lpszMsgBuffer, 
 	if (!pSt_JsonReader->parse(lpszMsgBuffer, lpszMsgBuffer + nMsgLen, &st_JsonRoot, &st_JsonError))
 	{
 		ModuleProtocol_IsErrorOccur = true;
-		ModuleProtocol_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PROTOCOL_PARSE_PARAMENT;
+		ModuleProtocol_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PROTOCOL_PARSE_JSON;
 		return false;
 	}
 	Json::Value st_JsonObject = st_JsonRoot["lives"][0];
+	if (0 == st_JsonObject.size())
+	{
+		ModuleProtocol_IsErrorOccur = true;
+		ModuleProtocol_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PROTOCOL_PARSE_VALIDATE;
+		return false;
+	}
 
 	if (!st_JsonObject["province"].isNull())
 	{
@@ -1139,6 +1157,99 @@ bool CModuleProtocol_Parse::ModuleProtocol_Parse_Machine(LPCXSTR lpszMsgBuffer, 
 	if (!st_JsonRoot["tszMachineText"].isNull())
 	{
 		_tcsxcpy(pSt_MachineInfo->tszMachineText, st_JsonRoot["tszMachineText"].asCString());
+	}
+	return true;
+}
+/********************************************************************
+函数名称：ModuleProtocol_Parse_Oil
+函数功能：解析油价协议
+ 参数.一：lpszMsgBuffer
+  In/Out：In
+  类型：常量字符指针
+  可空：N
+  意思：输入要解析的缓冲区
+ 参数.二：nMsgLen
+  In/Out：In
+  类型：整数型
+  可空：N
+  意思：输入缓冲区大小
+ 参数.三：pSt_OilInfo
+  In/Out：Out
+  类型：数据结构指针
+  可空：N
+  意思：输出解析后的信息
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+bool CModuleProtocol_Parse::ModuleProtocol_Parse_Oil(LPCXSTR lpszMsgBuffer, int nMsgLen, XENGINE_OILINFO* pSt_OilInfo)
+{
+	ModuleProtocol_IsErrorOccur = false;
+
+	if ((NULL == lpszMsgBuffer) || (0 == nMsgLen))
+	{
+		ModuleProtocol_IsErrorOccur = true;
+		ModuleProtocol_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PROTOCOL_PARSE_PARAMENT;
+		return false;
+	}
+	Json::Value st_JsonRoot;
+	JSONCPP_STRING st_JsonError;
+	Json::CharReaderBuilder st_JsonBuilder;
+
+	std::unique_ptr<Json::CharReader> const pSt_JsonReader(st_JsonBuilder.newCharReader());
+	if (!pSt_JsonReader->parse(lpszMsgBuffer, lpszMsgBuffer + nMsgLen, &st_JsonRoot, &st_JsonError))
+	{
+		ModuleProtocol_IsErrorOccur = true;
+		ModuleProtocol_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PROTOCOL_PARSE_PARAMENT;
+		return false;
+	}
+
+	if (1 != st_JsonRoot["status"].asInt())
+	{
+		return false;
+	}
+	Json::Value st_JsonObject = st_JsonRoot["data"];
+
+	if (!st_JsonObject["date"].isNull())
+	{
+		_tcsxcpy(pSt_OilInfo->tszUPTime, st_JsonObject["date"].asCString());
+	}
+	if (!st_JsonObject["name"].isNull())
+	{
+		_tcsxcpy(pSt_OilInfo->tszCityStr, st_JsonObject["name"].asCString());
+	}
+	if (!st_JsonObject["p98"].isNull())
+	{
+		pSt_OilInfo->dlValue98 = _ttxof(st_JsonObject["p98"].asCString());
+	}
+	if (!st_JsonObject["p95"].isNull())
+	{
+		pSt_OilInfo->dlValue95 = _ttxof(st_JsonObject["p95"].asCString());
+	}
+	if (!st_JsonObject["p92"].isNull())
+	{
+		pSt_OilInfo->dlValue92 = _ttxof(st_JsonObject["p92"].asCString());
+	}
+	if (!st_JsonObject["p0"].isNull())
+	{
+		pSt_OilInfo->dlValue0 = _ttxof(st_JsonObject["p0"].asCString());
+	}
+	if (!st_JsonObject["p10"].isNull())
+	{
+		pSt_OilInfo->dlValue10 = _ttxof(st_JsonObject["p10"].asCString());
+	}
+	if (!st_JsonObject["p20"].isNull())
+	{
+		pSt_OilInfo->dlValue20 = _ttxof(st_JsonObject["p20"].asCString());
+	}
+	if (!st_JsonObject["p35"].isNull())
+	{
+		pSt_OilInfo->dlValue35 = _ttxof(st_JsonObject["p35"].asCString());
+	}
+	if (!st_JsonObject["next_update_time"].isNull())
+	{
+		_tcsxcpy(pSt_OilInfo->tszNextTime, st_JsonObject["next_update_time"].asCString());
 	}
 	return true;
 }

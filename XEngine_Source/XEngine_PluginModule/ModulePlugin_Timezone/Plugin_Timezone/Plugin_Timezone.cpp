@@ -638,12 +638,12 @@ bool CPlugin_Timezone::Plugin_Timezone_Convert(LPCXSTR lpszConvert, LPCXSTR lpsz
 		return false;
 	}
 	XCHAR tszTimeStr[64];
-	XENGINE_LIBTIMER st_TimeStart;
-	XENGINE_LIBTIMER st_TimeEnd;
+	XENGINE_LIBTIME st_TimeStart;
+	XENGINE_LIBTIME st_TimeEnd;
 
 	memset(tszTimeStr, '\0', sizeof(tszTimeStr));
-	memset(&st_TimeStart, '\0', sizeof(XENGINE_LIBTIMER));
-	memset(&st_TimeEnd, '\0', sizeof(XENGINE_LIBTIMER));
+	memset(&st_TimeStart, '\0', sizeof(XENGINE_LIBTIME));
+	memset(&st_TimeEnd, '\0', sizeof(XENGINE_LIBTIME));
 
 	st_TimeEnd = stl_MapIterator->second.st_TimeZone;
 

@@ -15,6 +15,7 @@ bool HTTPTask_TaskPost_Image(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer, int 
 	HttpProtocol_Server_SendMsgEx(xhHTTPPacket, tszMSGBuffer, &nMLen, &st_HDRParam);
 	XEngine_Network_Send(lpszClientAddr, tszMSGBuffer, nMLen);
 	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("HTTP客户端:%s,请求图片操作失败,服务器没有启用此功能"), lpszClientAddr);
+	return false;
 #else
 	int nSDLen = 0;
 	int nRVLen = 0;
@@ -31,8 +32,19 @@ bool HTTPTask_TaskPost_Image(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer, int 
 	BaseLib_String_GetKeyValue((*ppptszList)[1], "=", tszHTTPKey, tszHTTPVlu);
 	int nOPCode = _ttxoi(tszHTTPVlu);
 	//0获取,1设置
-	if (0 == nOPCode && st_ServiceConfig.st_XImageText.bEnable)
+	if (0 == nOPCode)
 	{
+		if (!st_ServiceConfig.st_XImageText.bEnable)
+		{
+			int nMLen = 0;
+			XCHAR tszMSGBuffer[MAX_PATH] = {};
+
+			st_HDRParam.nHttpCode = 501;
+			HttpProtocol_Server_SendMsgEx(xhHTTPPacket, tszMSGBuffer, &nMLen, &st_HDRParam);
+			XEngine_Network_Send(lpszClientAddr, tszMSGBuffer, nMLen);
+			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("HTTP客户端:%s,请求图片转文本操作失败,服务器没有启用此功能"), lpszClientAddr);
+			return false;
+		}
 		XCHAR** pptszListStr;
 		int nListCount = 0;
 		if (ModuleHelp_ImageGet_TextGet(lpszMsgBuffer, nMsgLen, &pptszListStr, &nListCount))

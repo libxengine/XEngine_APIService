@@ -33,7 +33,6 @@ typedef struct
 		int nTimeCheck;                       //检测次数
 		int nHTTPTimeOut;                     //HTTP超时时间
 		int nP2PTimeOut;                      //P2P客户端超时时间
-		int nDeamonTime;                      //进程守护失败执行次数
 	}st_XTime;                                //次数*时间=超时
 	struct
 	{
@@ -41,6 +40,7 @@ typedef struct
 		int nMaxSize;                         //最大日志大小
 		int nMaxCount;                        //最大日志个数
 		int nLogLeave;                        //日志等级
+		int nLogType;                         //日志类型
 	}st_XLog;
 	struct
 	{
@@ -55,6 +55,7 @@ typedef struct
 	{
 		XCHAR tszWeatherUrl[MAX_PATH];        //天气接口
 		XCHAR tszBankUrl[MAX_PATH];           //银行卡验证地址
+		XCHAR tszOilUrl[MAX_PATH];            //油价接口
 		XCHAR tszTranslationUrl[MAX_PATH];    //翻译接口
 		struct  
 		{
@@ -158,6 +159,7 @@ typedef struct
 	XCHAR tszAPPName[MAX_PATH];        //应用程序名称
 	XCHAR tszAPPPath[MAX_PATH];        //应用程序路径
 	int nReTime;                       //是否自动重启
+	int nReNumber;
 	//自定义
 	int nErrorTime;
 	__int64x nStartTime;

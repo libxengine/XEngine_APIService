@@ -398,7 +398,7 @@ bool HTTPTask_TastPost_Handle(RFCCOMPONENTS_HTTP_REQPARAM* pSt_HTTPParam, LPCXST
 		}
 		else if (0 == _tcsxnicmp(lpszParamRegion, tszValue, _tcsxlen(lpszParamRegion)))
 		{
-			//天气:http://127.0.0.1:5501/api?function=region&type=1&params=省份&params=市区&params=县级
+			//地区ID:http://127.0.0.1:5501/api?function=region&type=1&params=省份&params=市区&params=县级
 			int nType = 0;
 			memset(tszValue, '\0', sizeof(tszValue));
 

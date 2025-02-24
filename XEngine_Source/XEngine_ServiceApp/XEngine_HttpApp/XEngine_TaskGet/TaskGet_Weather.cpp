@@ -32,7 +32,7 @@ bool HTTPTask_TaskGet_WeatherInfo(LPCXSTR lpszClientAddr, LPCXSTR lpszAddrCode)
 	//解析JSON信息
 	if (!ModuleProtocol_Parse_Weather(tszGBKStr, nBLen, &st_WeatherInfo))
 	{
-		ModuleProtocol_Packet_Common(tszPktBuffer, &nPktLen, 404, _X("address id is incorrect"));
+		ModuleProtocol_Packet_Common(tszPktBuffer, &nPktLen, 404, _X("get weather failed.maybe id is incorrect"));
 		HttpProtocol_Server_SendMsgEx(xhHTTPPacket, tszMsgBuffer, &nMsgLen, &st_HDRParam, tszPktBuffer, nPktLen);
 		XEngine_Network_Send(lpszClientAddr, tszMsgBuffer, nMsgLen);
 		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("HTTP客户端:%s,请求的实时天气信息错误,可能ID:%s,不正确"), lpszClientAddr, lpszAddrCode);
