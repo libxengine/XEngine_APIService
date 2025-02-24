@@ -30,7 +30,7 @@ int main()
 	int nLen = 0;
 	XCHAR* ptszMsgBuffer = NULL;
 	//四川
-	LPCXSTR lpszUrl = _X("http://127.0.0.1:5501/api?function=oil&param=%E5%9B%9B%E5%B7%9D");
+	LPCXSTR lpszUrl = _X("http://127.0.0.1:5501/api?function=oil&params1=%E5%8C%97%E4%BA%AC");
 
 	if (!APIClient_Http_Request(_X("GET"), lpszUrl, NULL, NULL, &ptszMsgBuffer, &nLen))
 	{

@@ -1,3 +1,33 @@
+XEngine_APIService V3.9.0.1001
+
+增加:设置日志类型配置支持
+更新:依赖库
+更新:makefile的g++
+更新:配置增加模型文件
+修改:报告次数现在直接在发送的时候获取了
+修改:守护进程新的重试次数参数支持
+修改:支持其他语言系统
+修改:油价查询实现通过http api了
+修正:编译问题
+修正:启用和禁用图像处理不正确的问题
+修正:密码插件不工作的问题
+修正:天气查询问题
+删除:守护功能启动程序失败不在重试
+
+added:set log type support
+update:depend library
+update:make file g++ version
+update:configure file and add model file
+modify:reply time count when send report for machine protocol
+modify:new parameter re-number support for deamon
+modify:other language system supported
+modify:imp oil price query thought http api
+fixed:build problem
+fixed:enable or disable handle failed for image
+fixed:lib module password not work
+fixed:weather query is incorrect
+delete:not retry when start process failed
+======================================================================================
 XEngine_APIService V3.8.0.1001
 
 增加:OCR图片文本支持
