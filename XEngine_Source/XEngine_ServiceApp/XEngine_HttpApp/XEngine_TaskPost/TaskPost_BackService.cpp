@@ -309,22 +309,13 @@ bool HTTPTask_TaskPost_BackService(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer
 			AVCollect_Audio_GetInfo(xhSound, &st_AVInfo);
 			//音频编码参数
 			st_AVInfo.st_AudioInfo.enAVCodec = ENUM_XENGINE_AVCODEC_AUDIO_TYPE_AAC;
-			st_AVInfo.st_AudioInfo.nSampleFmt = ENUM_AVCODEC_AUDIO_SAMPLEFMT_FLTP;
+			st_AVInfo.st_AudioInfo.nSampleFmt = ENUM_AVCODEC_AUDIO_SAMPLEFMT_S16;
 			if (!AudioCodec_Stream_EnInit(&xhAudio, &st_AVInfo.st_AudioInfo))
 			{
 				st_HDRParam.nHttpCode = 400;
 				HttpProtocol_Server_SendMsgEx(xhHTTPPacket, ptszSDBuffer, &nSDLen, &st_HDRParam);
 				XEngine_Network_Send(lpszClientAddr, ptszSDBuffer, nSDLen);
 				XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("HTTP客户端:%s,初始化音频编码器失败,错误码:%lX"), lpszClientAddr, AudioCodec_GetLastError());
-				return false;
-			}
-			int nLen = 0;
-			if (!AudioCodec_Stream_SetResample(xhAudio, &nLen, st_AVInfo.st_AudioInfo.nSampleRate, st_AVInfo.st_AudioInfo.nSampleRate, (ENUM_AVCODEC_AUDIO_SAMPLEFMT)st_AVInfo.st_AudioInfo.nSampleFmt, ENUM_AVCODEC_AUDIO_SAMPLEFMT_FLTP, st_AVInfo.st_AudioInfo.nChannel, st_AVInfo.st_AudioInfo.nChannel))
-			{
-				st_HDRParam.nHttpCode = 400;
-				HttpProtocol_Server_SendMsgEx(xhHTTPPacket, ptszSDBuffer, &nSDLen, &st_HDRParam);
-				XEngine_Network_Send(lpszClientAddr, ptszSDBuffer, nSDLen);
-				XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("HTTP客户端:%s,初始化音频重采样工具失败,错误码:%lX"), lpszClientAddr, AudioCodec_GetLastError());
 				return false;
 			}
 			AVCollect_Audio_Start(xhSound);
