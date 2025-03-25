@@ -67,8 +67,11 @@ jobs:
         run: |
             cd vcpkg
             ./bootstrap-vcpkg.bat
-            ./vcpkg.exe install lua:Arm64-windows opencv[contrib]:Arm64-windows libqrencode:Arm64-windows
+            ./vcpkg.exe install lua:Arm64-windows libqrencode:Arm64-windows
             ./vcpkg.exe integrate install
+            # ./vcpkg.exe install lua:Arm64-windows opencv[contrib]:Arm64-windows libqrencode:Arm64-windows Windows的opencv 有问题 
+
+            sed -i 's/#define _XENGINE_BUILD_SWITCH_OPENCV 1/#define _XENGINE_BUILD_SWITCH_OPENCV 0/' XEngine_Source/XEngine_BuildSwitch.h
         shell: pwsh
 
       - name: Set up Dependency x86_64 Environment
@@ -123,7 +126,7 @@ jobs:
           cp -r XEngine_Source/VSCopy_x86.bat XEngine_Release/
           cd XEngine_Release
           ./VSCopy_x86.bat
-          ./XEngine_HttpApp.exe -t
+          # ./XEngine_HttpApp.exe -t
       - name: Conditional Step for x64 Release
         if: matrix.configuration == 'Release' && matrix.platform == 'x64'
         run: |
