@@ -1,0 +1,36 @@
+copy /y "%XEngine_LibArm64%\XEngine_BaseLib\XEngine_BaseLib.dll" "./"
+copy /y "%XEngine_LibArm64%\XEngine_BaseLib\XEngine_BaseSafe.dll" "./"
+copy /y "%XEngine_LibArm64%\XEngine_BaseLib\XEngine_Algorithm.dll" "./"
+copy /y "%XEngine_LibArm64%\XEngine_Core\XEngine_Core.dll" "./"
+copy /y "%XEngine_LibArm64%\XEngine_Core\XEngine_ManagePool.dll" "./"
+copy /y "%XEngine_LibArm64%\XEngine_Core\XEngine_Cryption.dll" "./"
+
+copy /y "%XEngine_LibArm64%\XEngine_Client\XClient_APIHelp.dll" "./"
+copy /y "%XEngine_LibArm64%\XEngine_Client\XClient_Stream.dll" "./"
+copy /y "%XEngine_LibArm64%\XEngine_Client\XClient_Socket.dll" "./"
+
+copy /y "%XEngine_LibArm64%\XEngine_NetHelp\NetHelp_XSocket.dll" "./"
+copy /y "%XEngine_LibArm64%\XEngine_NetHelp\NetHelp_APIAddr.dll" "./"
+copy /y "%XEngine_LibArm64%\XEngine_NetHelp\NetHelp_APIHelp.dll" "./"
+copy /y "%XEngine_LibArm64%\XEngine_SystemSdk\XEngine_SystemApi.dll" "./"
+copy /y "%XEngine_LibArm64%\XEngine_SystemSdk\XEngine_SystemConfig.dll" "./
+
+copy /y "%XEngine_LibArm64%\XEngine_HelpComponents\HelpComponents_DataBase.dll" "./"
+copy /y "%XEngine_LibArm64%\XEngine_HelpComponents\HelpComponents_XLog.dll" "./"
+copy /y "%XEngine_LibArm64%\XEngine_RfcComponents\RfcComponents_HttpProtocol.dll" "./"
+copy /y "%XEngine_LibArm64%\XEngine_RfcComponents\RfcComponents_NatProtocol.dll" "./"
+copy /y "%XEngine_LibArm64%\XEngine_RfcComponents\RfcComponents_NTPProtocol.dll" "./"
+
+copy /y "%XEngine_LibArm64%\XEngine_AVCodec\XEngine_AVHelp.dll" "./"
+copy /y "%XEngine_LibArm64%\XEngine_AVCodec\XEngine_VideoCodec.dll" "./"
+copy /y "%XEngine_LibArm64%\XEngine_AVCodec\XEngine_AudioCodec.dll" "./"
+copy /y "%XEngine_LibArm64%\XEngine_AVCodec\XEngine_AVCollect.dll" "./"
+
+copy /y "%XEngine_LibArm64%\XEngine_AVCodec\avcodec-61.dll" "./"
+copy /y "%XEngine_LibArm64%\XEngine_AVCodec\avdevice-61.dll" "./"
+copy /y "%XEngine_LibArm64%\XEngine_AVCodec\avfilter-10.dll" "./"
+copy /y "%XEngine_LibArm64%\XEngine_AVCodec\avformat-61.dll" "./"
+copy /y "%XEngine_LibArm64%\XEngine_AVCodec\avutil-59.dll" "./"
+copy /y "%XEngine_LibArm64%\XEngine_AVCodec\swresample-5.dll" "./"
+copy /y "%XEngine_LibArm64%\XEngine_AVCodec\swscale-8.dll" "./"
+copy /y "%XEngine_LibArm64%\XEngine_AVCodec\postproc-58.dll" "./"
