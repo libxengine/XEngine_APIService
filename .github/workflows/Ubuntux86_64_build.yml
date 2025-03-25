@@ -1,4 +1,4 @@
-name: ubuntu build workflows
+name: ubuntu x86_64 build workflows
 
 on:
   push:
@@ -89,7 +89,7 @@ jobs:
         if: matrix.os == 'ubuntu-22.04'
         uses: actions/upload-artifact@v4
         with:
-          name: XEngine_APIServiceApp-x86_64-Ubuntu-22.04
+          name: XEngine_APIServiceApp-x86_64_Ubuntu_22.04
           path: XEngine_Release/
           retention-days: 1
 
@@ -97,6 +97,6 @@ jobs:
         if: matrix.os == 'ubuntu-24.04'
         uses: actions/upload-artifact@v4
         with:
-          name: XEngine_APIServiceApp-x86_64-Ubuntu-24.04
+          name: XEngine_APIServiceApp-x86_64_Ubuntu_24.04
           path: XEngine_Release/
           retention-days: 1
