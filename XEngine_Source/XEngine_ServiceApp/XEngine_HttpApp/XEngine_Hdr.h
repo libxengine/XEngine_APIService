@@ -145,51 +145,6 @@ extern XENGINE_PLUGINCONFIG st_PluginLuaConfig;
 extern XENGINE_DEAMONAPPLIST st_DeamonAppConfig;
 //连接库
 #ifdef _MSC_BUILD
-#ifdef _WIN64
-#ifdef _DEBUG
-#pragma comment(lib,"../../x64/Debug/XEngine_InfoReport.lib")
-#pragma comment(lib,"../../x64/Debug/XEngine_APIModuleIPMac.lib")
-#pragma comment(lib,"../../x64/Debug/XEngine_APIModulePhone.lib")
-#pragma comment(lib,"../../x64/Debug/XEngine_ModuleConfigure.lib")
-#pragma comment(lib,"../../x64/Debug/XEngine_ModuleDatabase.lib")
-#pragma comment(lib,"../../x64/Debug/XEngine_ModuleProtocol.lib")
-#pragma comment(lib,"../../x64/Debug/XEngine_ModuleSystem.lib")
-#pragma comment(lib,"../../x64/Debug/XEngine_ModuleHelp.lib")
-#pragma comment(lib,"../../x64/Debug/XEngine_ModulePlugin.lib")
-#else
-#pragma comment(lib,"../../x64/Release/XEngine_InfoReport.lib")
-#pragma comment(lib,"../../x64/Release/XEngine_APIModuleIPMac.lib")
-#pragma comment(lib,"../../x64/Release/XEngine_APIModulePhone.lib")
-#pragma comment(lib,"../../x64/Release/XEngine_ModuleConfigure.lib")
-#pragma comment(lib,"../../x64/Release/XEngine_ModuleDatabase.lib")
-#pragma comment(lib,"../../x64/Release/XEngine_ModuleProtocol.lib")
-#pragma comment(lib,"../../x64/Release/XEngine_ModuleSystem.lib")
-#pragma comment(lib,"../../x64/Release/XEngine_ModuleHelp.lib")
-#pragma comment(lib,"../../x64/Release/XEngine_ModulePlugin.lib")
-#endif
-#else
-#ifdef _DEBUG
-#pragma comment(lib,"../../Debug/XEngine_InfoReport.lib")
-#pragma comment(lib,"../../Debug/XEngine_APIModuleIPMac.lib")
-#pragma comment(lib,"../../Debug/XEngine_APIModulePhone.lib")
-#pragma comment(lib,"../../Debug/XEngine_ModuleConfigure.lib")
-#pragma comment(lib,"../../Debug/XEngine_ModuleDatabase.lib")
-#pragma comment(lib,"../../Debug/XEngine_ModuleProtocol.lib")
-#pragma comment(lib,"../../Debug/XEngine_ModuleSystem.lib")
-#pragma comment(lib,"../../Debug/XEngine_ModuleHelp.lib")
-#pragma comment(lib,"../../Debug/XEngine_ModulePlugin.lib")
-#else
-#pragma comment(lib,"../../Release/XEngine_InfoReport.lib")
-#pragma comment(lib,"../../Release/XEngine_APIModuleIPMac.lib")
-#pragma comment(lib,"../../Release/XEngine_APIModulePhone.lib")
-#pragma comment(lib,"../../Release/XEngine_ModuleConfigure.lib")
-#pragma comment(lib,"../../Release/XEngine_ModuleDatabase.lib")
-#pragma comment(lib,"../../Release/XEngine_ModuleProtocol.lib")
-#pragma comment(lib,"../../Release/XEngine_ModuleSystem.lib")
-#pragma comment(lib,"../../Release/XEngine_ModuleHelp.lib")
-#pragma comment(lib,"../../Release/XEngine_ModulePlugin.lib")
-#endif
-#endif
 #pragma comment(lib,"XEngine_BaseLib/XEngine_BaseLib.lib")
 #pragma comment(lib,"XEngine_BaseLib/XEngine_BaseSafe.lib")
 #pragma comment(lib,"XEngine_Core/XEngine_Core.lib")
@@ -209,4 +164,69 @@ extern XENGINE_DEAMONAPPLIST st_DeamonAppConfig;
 #pragma comment(lib,"XEngine_AVCodec/XEngine_AVHelp.lib")
 #pragma comment(lib,"Ws2_32.lib")
 #pragma comment(lib,"Dbghelp.lib")
+#ifdef _DEBUG
+#ifdef _M_X64
+#pragma comment(lib,"../../x64/Debug/XEngine_InfoReport.lib")
+#pragma comment(lib,"../../x64/Debug/XEngine_APIModuleIPMac.lib")
+#pragma comment(lib,"../../x64/Debug/XEngine_APIModulePhone.lib")
+#pragma comment(lib,"../../x64/Debug/XEngine_ModuleConfigure.lib")
+#pragma comment(lib,"../../x64/Debug/XEngine_ModuleDatabase.lib")
+#pragma comment(lib,"../../x64/Debug/XEngine_ModuleProtocol.lib")
+#pragma comment(lib,"../../x64/Debug/XEngine_ModuleSystem.lib")
+#pragma comment(lib,"../../x64/Debug/XEngine_ModuleHelp.lib")
+#pragma comment(lib,"../../x64/Debug/XEngine_ModulePlugin.lib")
+#elif _M_ARM64
+#pragma comment(lib,"../../ARM64/Debug/XEngine_InfoReport.lib")
+#pragma comment(lib,"../../ARM64/Debug/XEngine_APIModuleIPMac.lib")
+#pragma comment(lib,"../../ARM64/Debug/XEngine_APIModulePhone.lib")
+#pragma comment(lib,"../../ARM64/Debug/XEngine_ModuleConfigure.lib")
+#pragma comment(lib,"../../ARM64/Debug/XEngine_ModuleDatabase.lib")
+#pragma comment(lib,"../../ARM64/Debug/XEngine_ModuleProtocol.lib")
+#pragma comment(lib,"../../ARM64/Debug/XEngine_ModuleSystem.lib")
+#pragma comment(lib,"../../ARM64/Debug/XEngine_ModuleHelp.lib")
+#pragma comment(lib,"../../ARM64/Debug/XEngine_ModulePlugin.lib")
+#elif _M_IX86
+#pragma comment(lib,"../../Debug/XEngine_InfoReport.lib")
+#pragma comment(lib,"../../Debug/XEngine_APIModuleIPMac.lib")
+#pragma comment(lib,"../../Debug/XEngine_APIModulePhone.lib")
+#pragma comment(lib,"../../Debug/XEngine_ModuleConfigure.lib")
+#pragma comment(lib,"../../Debug/XEngine_ModuleDatabase.lib")
+#pragma comment(lib,"../../Debug/XEngine_ModuleProtocol.lib")
+#pragma comment(lib,"../../Debug/XEngine_ModuleSystem.lib")
+#pragma comment(lib,"../../Debug/XEngine_ModuleHelp.lib")
+#pragma comment(lib,"../../Debug/XEngine_ModulePlugin.lib")
+#endif
+#else
+#ifdef _M_X64
+#pragma comment(lib,"../../x64/Release/XEngine_InfoReport.lib")
+#pragma comment(lib,"../../x64/Release/XEngine_APIModuleIPMac.lib")
+#pragma comment(lib,"../../x64/Release/XEngine_APIModulePhone.lib")
+#pragma comment(lib,"../../x64/Release/XEngine_ModuleConfigure.lib")
+#pragma comment(lib,"../../x64/Release/XEngine_ModuleDatabase.lib")
+#pragma comment(lib,"../../x64/Release/XEngine_ModuleProtocol.lib")
+#pragma comment(lib,"../../x64/Release/XEngine_ModuleSystem.lib")
+#pragma comment(lib,"../../x64/Release/XEngine_ModuleHelp.lib")
+#pragma comment(lib,"../../x64/Release/XEngine_ModulePlugin.lib")
+#elif _M_ARM64
+#pragma comment(lib,"../../ARM64/Release/XEngine_InfoReport.lib")
+#pragma comment(lib,"../../ARM64/Release/XEngine_APIModuleIPMac.lib")
+#pragma comment(lib,"../../ARM64/Release/XEngine_APIModulePhone.lib")
+#pragma comment(lib,"../../ARM64/Release/XEngine_ModuleConfigure.lib")
+#pragma comment(lib,"../../ARM64/Release/XEngine_ModuleDatabase.lib")
+#pragma comment(lib,"../../ARM64/Release/XEngine_ModuleProtocol.lib")
+#pragma comment(lib,"../../ARM64/Release/XEngine_ModuleSystem.lib")
+#pragma comment(lib,"../../ARM64/Release/XEngine_ModuleHelp.lib")
+#pragma comment(lib,"../../ARM64/Release/XEngine_ModulePlugin.lib")
+#elif _M_IX86
+#pragma comment(lib,"../../Release/XEngine_InfoReport.lib")
+#pragma comment(lib,"../../Release/XEngine_APIModuleIPMac.lib")
+#pragma comment(lib,"../../Release/XEngine_APIModulePhone.lib")
+#pragma comment(lib,"../../Release/XEngine_ModuleConfigure.lib")
+#pragma comment(lib,"../../Release/XEngine_ModuleDatabase.lib")
+#pragma comment(lib,"../../Release/XEngine_ModuleProtocol.lib")
+#pragma comment(lib,"../../Release/XEngine_ModuleSystem.lib")
+#pragma comment(lib,"../../Release/XEngine_ModuleHelp.lib")
+#pragma comment(lib,"../../Release/XEngine_ModulePlugin.lib")
+#endif
+#endif
 #endif
