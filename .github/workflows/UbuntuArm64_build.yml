@@ -37,6 +37,7 @@ jobs:
             set -e
             apt update -y
             apt install git make g++ wget curl jq unzip -y
+            apt install liblua5.4-dev libopencv-dev libopencv-contrib-dev libqrencode-dev libleptonica-dev libtesseract-dev -y
 
             git config --global --add safe.directory /workspace
             git submodule init
