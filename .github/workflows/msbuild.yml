@@ -71,6 +71,7 @@ jobs:
             ./vcpkg.exe integrate install
             # ./vcpkg.exe install lua:Arm64-windows opencv[contrib]:Arm64-windows libqrencode:Arm64-windows Windows的opencv 有问题 
 
+            cd ..
             $filePath = "XEngine_Source/XEngine_BuildSwitch.h"
             (Get-Content $filePath) -replace '#define _XENGINE_BUILD_SWITCH_OPENCV 1', '#define _XENGINE_BUILD_SWITCH_OPENCV 0' | Set-Content $filePath
         shell: pwsh
