@@ -41,12 +41,12 @@ jobs:
         uses: actions/checkout@v4
         with:
           repository: libxengine/XEngine_PhoneData
-          path: XEngine_Source/XEngine_DBDepend
+          path: XEngine_Source/XEngine_DBDepend/XEngine_PhoneData
       - name: sub module checkout (XEngine_IPMacData)
         uses: actions/checkout@v4
         with:
           repository: libxengine/XEngine_IPMacData
-          path: XEngine_Source/XEngine_DBDepend
+          path: XEngine_Source/XEngine_DBDepend/XEngine_IPMacData
 
       - name: install system package
         run: |
