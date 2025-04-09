@@ -51,6 +51,8 @@ jobs:
       - name: install system package
         run: |
             dnf update -y
+            ls -al ./XEngine_Source/XEngine_DBDepend/
+            ls -al ./XEngine_Source/XEngine_DBDepend/XEngine_IPMacData/XEngine_Source
             dnf install gcc g++ make git jq unzip -y
       # 设置依赖库的环境变量
       - name: Set up Dependency rocky linux Environment
