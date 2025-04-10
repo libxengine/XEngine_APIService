@@ -3,7 +3,7 @@ name: ubuntu x86_64 build workflows
 on:
   push:
     branches:
-      - 'develop1'
+      - 'develop'
     paths:
       - 'XEngine_Source/**'
       - 'XEngine_Release/**'
