@@ -10,4 +10,4 @@
 //    Purpose:     配置文件操作代码
 //    History:
 *********************************************************************/
-bool XEngine_Configure_Parament(int argc, wchar_t* argv[]);
+bool XEngine_Configure_Parament();

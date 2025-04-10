@@ -14,22 +14,28 @@ bool bIsRun = false;
 XHANDLE xhLog = NULL;
 XENGINE_SERVICECONFIG st_ServiceConfig = {};
 // 服务名称，使用 constexpr 替代宏定义
-constexpr LPCWSTR SERVICE_NAME = L"XEngine_APIService";
+constexpr LPCTSTR XENGINE_SERVICE_NAME = _T("XEngine_APIService");
+constexpr LPCTSTR XENGINE_SERVICE_SHOW = _T("XEngine APIService 管理服务");
+constexpr LPCTSTR XENGINE_SERVICE_DESCRIPTION = _T("XEngine APIService 数据查询与系统管理接口服务程序");
 // 全局变量
 SERVICE_STATUS st_ServiceStatus = { 0 };
-SERVICE_STATUS_HANDLE st_hServiceStatusHandle = nullptr;
+SERVICE_STATUS_HANDLE hServiceStatusHandle = NULL;
 // 函数声明
 void WINAPI XEngine_ServiceCtrlHandler(DWORD dwControl);
 void WINAPI XEngine_ServiceMain(DWORD dwArgc, LPTSTR* lpszArgv);
 void XEngine_InstallService();
 void XEngine_UninstallService();
-// 主函数
-int wmain(int argc, wchar_t* argv[])
+
+bool XEngine_InitLog()
 {
-	//初始化参数
-	if (!XEngine_Configure_Parament(argc, argv))
+	if (NULL != xhLog)
 	{
-		return -1;
+		return true;
+	}
+	//初始化参数
+	if (!XEngine_Configure_Parament())
+	{
+		return false;
 	}
 	//初始日志
 	HELPCOMPONENTS_XLOG_CONFIGURE st_XLogConfig = {};
@@ -40,33 +46,37 @@ int wmain(int argc, wchar_t* argv[])
 	if (NULL == xhLog)
 	{
 		printf("启动服务中,启动日志失败,错误：%lX", XLog_GetLastError());
-		return -2;
+		return false;
 	}
 	//设置日志打印级别
 	HelpComponents_XLog_SetLogPriority(xhLog, st_ServiceConfig.st_XLog.nLogType);
 	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("启动服务中,初始化日志系统成功"));
-
+	return true;
+}
+// 主函数
+int _tmain(int argc, TCHAR* argv[])
+{
+	XEngine_InitLog();
 	if (argc > 1)
 	{
-		if (_wcsicmp(argv[1], L"install") == 0)
+		if (0 == _tcsicmp(argv[1], L"-install"))
 		{
 			XEngine_InstallService();
 			return 0;
 		}
-		else if (_wcsicmp(argv[1], L"uninstall") == 0)
+		else if (0 == _tcsicmp(argv[1], L"-uninstall"))
 		{
 			XEngine_UninstallService();
 			return 0;
 		}
 	}
-
-	SERVICE_TABLE_ENTRYW ServiceTable[] =
+	
+	SERVICE_TABLE_ENTRY ServiceTable[] =
 	{
-		{ const_cast<LPWSTR>(SERVICE_NAME), (LPSERVICE_MAIN_FUNCTIONW)XEngine_ServiceMain },
-		{ nullptr, nullptr }
+		{ const_cast<LPTSTR>(XENGINE_SERVICE_NAME), (LPSERVICE_MAIN_FUNCTION)XEngine_ServiceMain },
+		{ NULL, NULL }
 	};
-
-	if (!StartServiceCtrlDispatcherW(ServiceTable))
+	if (!StartServiceCtrlDispatcher(ServiceTable))
 	{
 		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("启动服务中,启动服务控制程序失败,错误:%d"), GetLastError());
 		return -3;
@@ -77,6 +87,7 @@ int wmain(int argc, wchar_t* argv[])
 // 服务主函数
 void WINAPI XEngine_ServiceMain(DWORD dwArgc, LPTSTR* lpszArgv)
 {
+	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("启动服务中,开始处理服务程序"));
 	// 初始化服务状态
 	st_ServiceStatus.dwServiceType = SERVICE_WIN32_OWN_PROCESS;
 	st_ServiceStatus.dwCurrentState = SERVICE_START_PENDING;
@@ -84,115 +95,134 @@ void WINAPI XEngine_ServiceMain(DWORD dwArgc, LPTSTR* lpszArgv)
 	st_ServiceStatus.dwWin32ExitCode = 0;
 	st_ServiceStatus.dwServiceSpecificExitCode = 0;
 	st_ServiceStatus.dwCheckPoint = 0;
-	st_ServiceStatus.dwWaitHint = 0;
-
+	st_ServiceStatus.dwWaitHint = 1000;
 	// 注册服务控制处理程序
-	st_hServiceStatusHandle = RegisterServiceCtrlHandlerW(SERVICE_NAME, XEngine_ServiceCtrlHandler);
-	if (NULL == st_hServiceStatusHandle)
+	hServiceStatusHandle = RegisterServiceCtrlHandlerW(XENGINE_SERVICE_NAME, XEngine_ServiceCtrlHandler);
+	if (NULL == hServiceStatusHandle)
 	{
-		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("启动服务中,启动服务控制程序失败,错误:%d"), GetLastError());
+		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("启动服务中,注册服务控制程序失败,错误:%d"), GetLastError());
 		return;
 	}
-
+	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("启动服务中,注册服务控制程序成功"));
 	// 服务启动完成
+	if (!SetServiceStatus(hServiceStatusHandle, &st_ServiceStatus))
+	{
+		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("启动服务中,启动服务设置状态失败,错误:%d"), GetLastError());
+		return;
+	}
+	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("启动服务中,设置服务程序状态成功"));
+	// 服务启动完成
+	st_ServiceStatus.dwCheckPoint = 0;
+	st_ServiceStatus.dwWaitHint = 0;
 	st_ServiceStatus.dwCurrentState = SERVICE_RUNNING;
-	if (!SetServiceStatus(st_hServiceStatusHandle, &st_ServiceStatus))
+	st_ServiceStatus.dwControlsAccepted = SERVICE_ACCEPT_STOP | SERVICE_ACCEPT_SHUTDOWN;
+	if (!SetServiceStatus(hServiceStatusHandle, &st_ServiceStatus))
 	{
-		throw std::runtime_error("SetServiceStatus failed");
+		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("启动服务中,启动服务启动状态失败,错误:%d"), GetLastError());
+		return;
 	}
-
-	// 服务主循环（示例）
-	while (st_ServiceStatus.dwCurrentState == SERVICE_RUNNING)
+	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("启动服务中,设置服务启动状态成功,服务运行中"));
+	bIsRun = true;
+	while (bIsRun)
 	{
-		Sleep(1000); // 模拟服务工作
-		// 在这里添加你的服务逻辑
-	}
-	try
-	{
-		
-	}
-	catch (const std::exception& e)
-	{
-		std::wcerr << L"ServiceMain exception: " << e.what() << L"\n";
-		st_ServiceStatus.dwCurrentState = SERVICE_STOPPED;
-		SetServiceStatus(st_hServiceStatusHandle, &st_ServiceStatus);
+		Sleep(1000); 
 	}
 }
-
 // 服务控制处理函数
 void WINAPI XEngine_ServiceCtrlHandler(DWORD dwControl)
 {
 	switch (dwControl)
 	{
+	case SERVICE_CONTROL_PAUSE:
+		break;
+	case SERVICE_CONTROL_CONTINUE:
+		st_ServiceStatus.dwCurrentState = SERVICE_RUNNING;
+		SetServiceStatus(hServiceStatusHandle, &st_ServiceStatus);
+		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("服务运行中,收到命令,继续执行"));
+		break;
 	case SERVICE_CONTROL_STOP:
-	case SERVICE_CONTROL_SHUTDOWN:
+		bIsRun = false;
 		st_ServiceStatus.dwCurrentState = SERVICE_STOPPED;
-		SetServiceStatus(st_hServiceStatusHandle, &st_ServiceStatus);
+		SetServiceStatus(hServiceStatusHandle, &st_ServiceStatus);
+		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("服务运行中,收到命令,停止运行"));
+		break;
+	case SERVICE_CONTROL_SHUTDOWN:
+		bIsRun = false;
+		st_ServiceStatus.dwCurrentState = SERVICE_STOPPED;
+		SetServiceStatus(hServiceStatusHandle, &st_ServiceStatus);
+		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("服务运行中,收到命令,关闭程序"));
 		break;
 	default:
+		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("服务运行中,收到无法处理的命令:%d"), dwControl);
 		break;
 	}
 }
-
 // 安装服务
 void XEngine_InstallService()
 {
-	try
+	TCHAR tszFilePath[MAX_PATH] = {};
+	if (!GetModuleFileName(NULL, tszFilePath, MAX_PATH))
 	{
-		wchar_t szPath[MAX_PATH];
-		if (!GetModuleFileNameW(nullptr, szPath, MAX_PATH))
-		{
-			throw std::runtime_error("GetModuleFileName failed");
-		}
-
-		auto hSCManager = std::unique_ptr<std::remove_pointer_t<SC_HANDLE>, decltype(&CloseServiceHandle)>(
-			OpenSCManagerW(nullptr, nullptr, SC_MANAGER_CREATE_SERVICE),
-			CloseServiceHandle
-		);
-		if (!hSCManager)
-		{
-			throw std::runtime_error("OpenSCManager failed");
-		}
-
-		auto hService = std::unique_ptr<std::remove_pointer_t<SC_HANDLE>, decltype(&CloseServiceHandle)>(CreateServiceW(hSCManager.get(), SERVICE_NAME, L"My Modern Service",SERVICE_ALL_ACCESS, SERVICE_WIN32_OWN_PROCESS,SERVICE_DEMAND_START, SERVICE_ERROR_NORMAL,szPath, nullptr, nullptr, nullptr, nullptr, nullptr),CloseServiceHandle
-		);
-		if (!hService)
-		{
-			throw std::runtime_error("CreateService failed");
-		}
-
-		std::wcout << L"Service installed successfully\n";
+		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("启动服务中,安装服务失败,获取文件路径失败,错误码:%d"), GetLastError());
+		return;
 	}
-	catch (const std::exception& e)
+	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("服务运行中,安装服务中,获取本地路径成功:%s"), tszFilePath);
+
+	SC_HANDLE hSCManager = OpenSCManager(NULL, NULL, SC_MANAGER_CREATE_SERVICE);
+	if (NULL == hSCManager)
 	{
-		std::wcerr << L"XEngine_InstallService exception: " << e.what() << L"\n";
+		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("启动服务中,安装服务失败,打开权限错误,错误码:%d"), GetLastError());
+		return;
 	}
+	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("服务运行中,安装服务中,打开服务成功"));
+
+	SC_HANDLE hService = CreateService(hSCManager, XENGINE_SERVICE_NAME, XENGINE_SERVICE_SHOW, SERVICE_ALL_ACCESS, SERVICE_WIN32_OWN_PROCESS, SERVICE_DEMAND_START, SERVICE_ERROR_NORMAL, tszFilePath, NULL, NULL, NULL, NULL, NULL);
+	if (NULL == hService)
+	{
+		CloseServiceHandle(hSCManager);
+		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("启动服务中,安装服务失败,创建服务失败,错误码:%d"), GetLastError());
+		return;
+	}
+	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("服务运行中,安装服务中,创建服务成功"));
+
+	SERVICE_DESCRIPTION st_ServiceDescpition = { };
+	st_ServiceDescpition.lpDescription = const_cast<LPTSTR>(XENGINE_SERVICE_DESCRIPTION); // 描述内容
+	if (!ChangeServiceConfig2(hService, SERVICE_CONFIG_DESCRIPTION, &st_ServiceDescpition))
+	{
+		CloseServiceHandle(hSCManager);
+		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("启动服务中,安装服务失败,设置服务描述失败,错误码:%d"), GetLastError());
+		return;
+	}
+	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("服务运行中,安装服务中,设置服务描述内容成功"));
+
+	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("服务运行中,安装服务成功"));
 }
-
 // 卸载服务
 void XEngine_UninstallService()
 {
-	try
+	SC_HANDLE hSCManager = OpenSCManager(NULL, NULL, SC_MANAGER_ALL_ACCESS);
+	if (NULL == hSCManager)
 	{
-		auto hSCManager = std::unique_ptr<std::remove_pointer_t<SC_HANDLE>, decltype(&CloseServiceHandle)>(OpenSCManagerW(nullptr, nullptr, SC_MANAGER_ALL_ACCESS), CloseServiceHandle);
-		if (!hSCManager)
-		{
-			throw std::runtime_error("OpenSCManager failed");
-		}
-		auto hService = std::unique_ptr<std::remove_pointer_t<SC_HANDLE>, decltype(&CloseServiceHandle)>(OpenServiceW(hSCManager.get(), SERVICE_NAME, DELETE), CloseServiceHandle);
-		if (!hService)
-		{
-			throw std::runtime_error("OpenService failed");
-		}
+		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("启动服务中,卸载服务失败,打开权限错误,错误码:%d"), GetLastError());
+		return;
+	}
+	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("服务运行中,卸载服务中,打开权限成功"));
 
-		if (!DeleteService(hService.get()))
-		{
-			throw std::runtime_error("DeleteService failed");
-		}
-		std::wcout << L"Service uninstalled successfully\n";
-	}
-	catch (const std::exception& e)
+	SC_HANDLE hService = OpenService(hSCManager, XENGINE_SERVICE_NAME, DELETE);
+	if (!hService)
 	{
-		std::wcerr << L"XEngine_UninstallService exception: " << e.what() << L"\n";
+		CloseServiceHandle(hSCManager);
+		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("启动服务中,卸载服务失败,获取权限失败,错误码:%d"), GetLastError());
+		return;
 	}
+	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("服务运行中,卸载服务中,获取删除权限成功"));
+
+	if (!DeleteService(hService))
+	{
+		CloseServiceHandle(hSCManager);
+		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("启动服务中,卸载服务失败,删除服务失败,错误码:%d"), GetLastError());
+		return;
+	}
+	CloseServiceHandle(hSCManager);
+	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("服务运行中,卸载服务中,删除服务成功"));
 }
