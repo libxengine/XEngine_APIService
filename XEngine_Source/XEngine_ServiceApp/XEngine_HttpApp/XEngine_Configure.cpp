@@ -1,11 +1,11 @@
 ﻿#include "XEngine_Hdr.h"
 /********************************************************************
-//    Created:     2022/01/20  14:40:45
-//    File Name:   D:\XEngine_ServiceApp\XEngine_Source\XEngine_ServiceApp\XEngine_HttpApp\XEngine_Configure.cpp
-//    File Path:   D:\XEngine_ServiceApp\XEngine_Source\XEngine_ServiceApp\XEngine_HttpApp
+//    Created:     2025/04/10  13:56:28
+//    File Name:   D:\XEngine_APIService\XEngine_Source\XEngine_ServiceApp\XEngine_HttpApp\XEngine_Configure.cpp
+//    File Path:   D:\XEngine_APIService\XEngine_Source\XEngine_ServiceApp\XEngine_HttpApp
 //    File Base:   XEngine_Configure
 //    File Ext:    cpp
-//    Project:     XEngine(网络通信引擎)
+//    Project:     XEngine
 //    Author:      qyt
 //    Purpose:     配置文件操作代码
 //    History:
