@@ -29,8 +29,22 @@ int wmain(int argc, wchar_t* argv[])
 	//初始化参数
 	if (!XEngine_Configure_Parament(argc, argv))
 	{
-		return 0;
+		return -1;
 	}
+	//初始日志
+	HELPCOMPONENTS_XLOG_CONFIGURE st_XLogConfig = {};
+	st_XLogConfig.XLog_MaxBackupFile = st_ServiceConfig.st_XLog.nMaxCount;
+	st_XLogConfig.XLog_MaxSize = st_ServiceConfig.st_XLog.nMaxSize;
+	_xstrcpy(st_XLogConfig.tszFileName, st_ServiceConfig.st_XLog.tszServiceFile, sizeof(st_XLogConfig.tszFileName));
+	xhLog = HelpComponents_XLog_Init(st_ServiceConfig.st_XLog.nLogLeave, &st_XLogConfig);
+	if (NULL == xhLog)
+	{
+		printf("启动服务中,启动日志失败,错误：%lX", XLog_GetLastError());
+		return -2;
+	}
+	//设置日志打印级别
+	HelpComponents_XLog_SetLogPriority(xhLog, st_ServiceConfig.st_XLog.nLogType);
+	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("启动服务中,初始化日志系统成功"));
 
 	if (argc > 1)
 	{
@@ -54,8 +68,8 @@ int wmain(int argc, wchar_t* argv[])
 
 	if (!StartServiceCtrlDispatcherW(ServiceTable))
 	{
-		std::wcerr << L"StartServiceCtrlDispatcher failed (" << GetLastError() << L")\n";
-		return 1;
+		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("启动服务中,启动服务控制程序失败,错误:%d"), GetLastError());
+		return -3;
 	}
 	return 0;
 }
@@ -76,7 +90,8 @@ void WINAPI XEngine_ServiceMain(DWORD dwArgc, LPTSTR* lpszArgv)
 	st_hServiceStatusHandle = RegisterServiceCtrlHandlerW(SERVICE_NAME, XEngine_ServiceCtrlHandler);
 	if (NULL == st_hServiceStatusHandle)
 	{
-		throw std::runtime_error("RegisterServiceCtrlHandler failed");
+		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("启动服务中,启动服务控制程序失败,错误:%d"), GetLastError());
+		return;
 	}
 
 	// 服务启动完成

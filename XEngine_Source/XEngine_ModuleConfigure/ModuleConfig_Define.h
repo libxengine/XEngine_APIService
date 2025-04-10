@@ -36,7 +36,8 @@ typedef struct
 	}st_XTime;                                //次数*时间=超时
 	struct
 	{
-		XCHAR tszLogFile[MAX_PATH];           //日志文件地址
+		XCHAR tszAPIFile[MAX_PATH];           //日志文件地址
+		XCHAR tszServiceFile[MAX_PATH];
 		int nMaxSize;                         //最大日志大小
 		int nMaxCount;                        //最大日志个数
 		int nLogLeave;                        //日志等级

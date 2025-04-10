@@ -13,6 +13,8 @@ using namespace std;
 #include <XEngine_Include/XEngine_ProtocolHdr.h>
 #include <XEngine_Include/XEngine_BaseLib/BaseLib_Define.h>
 #include <XEngine_Include/XEngine_BaseLib/BaseLib_Error.h>
+#include <XEngine_Include/XEngine_BaseLib/BaseSafe_Define.h>
+#include <XEngine_Include/XEngine_BaseLib/BaseSafe_Error.h>
 #include <XEngine_Include/XEngine_HelpComponents/XLog_Define.h>
 #include <XEngine_Include/XEngine_HelpComponents/XLog_Error.h>
 //加载模块头文件
@@ -38,6 +40,7 @@ extern XENGINE_SERVICECONFIG st_ServiceConfig;
 //连接库
 #ifdef _MSC_BUILD
 #pragma comment(lib,"XEngine_BaseLib/XEngine_BaseLib")
+#pragma comment(lib,"XEngine_BaseLib/XEngine_BaseSafe")
 #pragma comment(lib,"XEngine_HelpComponents/HelpComponents_XLog")
 #ifdef _DEBUG
 #ifdef _M_X64
