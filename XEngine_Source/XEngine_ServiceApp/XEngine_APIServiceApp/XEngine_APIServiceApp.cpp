@@ -57,6 +57,13 @@ bool XEngine_InitLog()
 // 主函数
 int _tmain(int argc, TCHAR* argv[])
 {
+#ifndef _DEBUG
+	if (setlocale(LC_ALL, ".UTF8") == NULL)
+	{
+		printf("Error setting locale.\n");
+		return -1;
+	}
+#endif
 	XEngine_InitLog();
 	if (argc > 1)
 	{
