@@ -139,7 +139,6 @@ extern XHANDLE xhHTTPPool;
 extern unique_ptr<thread> pSTDThread_Deamon;
 //配置文件
 extern XENGINE_SERVICECONFIG st_ServiceConfig;
-extern XENGINE_QRCODECONFIG st_QRCodeConfig;
 extern XENGINE_PLUGINCONFIG st_PluginLibConfig;
 extern XENGINE_PLUGINCONFIG st_PluginLuaConfig;
 extern XENGINE_DEAMONAPPLIST st_DeamonAppConfig;

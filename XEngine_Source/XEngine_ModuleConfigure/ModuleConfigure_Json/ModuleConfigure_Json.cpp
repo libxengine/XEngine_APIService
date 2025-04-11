@@ -172,7 +172,12 @@ bool CModuleConfigure_Json::ModuleConfigure_Json_File(LPCXSTR lpszConfigFile, XE
 		return false;
 	}
 	Json::Value st_JsonXConfig = st_JsonRoot["XConfig"];
-	_tcsxcpy(pSt_ServerConfig->st_XConfig.tszConfigQRCode, st_JsonXConfig["tszConfigQRCode"].asCString());
+
+	_tcsxcpy(pSt_ServerConfig->st_XConfig.st_ConfigQRCodec.tszModelDetect, st_JsonXConfig["st_ConfigQRCode"]["tszModelDetect"].asCString());
+	_tcsxcpy(pSt_ServerConfig->st_XConfig.st_ConfigQRCodec.tszModelSr, st_JsonXConfig["st_ConfigQRCode"]["tszModelSr"].asCString());
+	_tcsxcpy(pSt_ServerConfig->st_XConfig.st_ConfigQRCodec.tszProtoDetect, st_JsonXConfig["st_ConfigQRCode"]["tszProtoDetect"].asCString());
+	_tcsxcpy(pSt_ServerConfig->st_XConfig.st_ConfigQRCodec.tszProtoSr, st_JsonXConfig["st_ConfigQRCode"]["tszProtoSr"].asCString());
+
 	_tcsxcpy(pSt_ServerConfig->st_XConfig.tszConfigDeamon, st_JsonXConfig["tszConfigDeamon"].asCString());
 	_tcsxcpy(pSt_ServerConfig->st_XConfig.tszConfigHTTPMime, st_JsonXConfig["tszConfigHTTPMime"].asCString());
 	_tcsxcpy(pSt_ServerConfig->st_XConfig.tszConfigHTTPCode, st_JsonXConfig["tszConfigHTTPCode"].asCString());
@@ -315,71 +320,6 @@ bool CModuleConfigure_Json::ModuleConfigure_Json_VersionFile(LPCXSTR lpszConfigF
 	{
 		pSt_ServerConfig->st_XVer.pStl_ListVer->push_back(st_JsonXVer[i].asCString());
 	}
-	return true;
-}
-/********************************************************************
-函数名称：ModuleConfigure_Json_QRCodeFile
-函数功能：读取JSON配置文件
- 参数.一：lpszConfigFile
-  In/Out：In
-  类型：常量字符指针
-  可空：N
-  意思：输入要读取的配置文件
- 参数.二：pSt_QRCodeConfig
-  In/Out：Out
-  类型：数据结构指针
-  可空：N
-  意思：输出二维码配置信息
-返回值
-  类型：逻辑型
-  意思：是否成功
-备注：
-*********************************************************************/
-bool CModuleConfigure_Json::ModuleConfigure_Json_QRCodeFile(LPCXSTR lpszConfigFile, XENGINE_QRCODECONFIG* pSt_QRCodeConfig)
-{
-	Config_IsErrorOccur = false;
-
-	if ((NULL == lpszConfigFile) || (NULL == pSt_QRCodeConfig))
-	{
-		Config_IsErrorOccur = true;
-		Config_dwErrorCode = ERROR_MODULE_CONFIGURE_JSON_PARAMENT;
-		return false;
-	}
-	Json::Value st_JsonRoot;
-	JSONCPP_STRING st_JsonError;
-	Json::CharReaderBuilder st_JsonBuilder;
-	//读取配置文件所有内容到缓冲区
-	FILE* pSt_File = _xtfopen(lpszConfigFile, _X("rb"));
-	if (NULL == pSt_File)
-	{
-		Config_IsErrorOccur = true;
-		Config_dwErrorCode = ERROR_MODULE_CONFIGURE_JSON_OPENFILE;
-		return false;
-	}
-	size_t nCount = 0;
-	XCHAR tszMsgBuffer[4096];
-	while (1)
-	{
-		size_t nRet = fread(tszMsgBuffer + nCount, 1, 2048, pSt_File);
-		if (nRet <= 0)
-		{
-			break;
-		}
-		nCount += nRet;
-	}
-	fclose(pSt_File);
-	//开始解析配置文件
-	std::unique_ptr<Json::CharReader> const pSt_JsonReader(st_JsonBuilder.newCharReader());
-	if (!pSt_JsonReader->parse(tszMsgBuffer, tszMsgBuffer + nCount, &st_JsonRoot, &st_JsonError))
-	{
-		Config_IsErrorOccur = true;
-		Config_dwErrorCode = ERROR_MODULE_CONFIGURE_JSON_PARSE;
-		return false;
-	}
-	_tcsxcpy(pSt_QRCodeConfig->tszModelDetect, st_JsonRoot["tszModelDetect"].asCString());
-	_tcsxcpy(pSt_QRCodeConfig->tszModelSr, st_JsonRoot["tszModelSr"].asCString());
-	_tcsxcpy(pSt_QRCodeConfig->tszProtoDetect, st_JsonRoot["tszProtoDetect"].asCString());
-	_tcsxcpy(pSt_QRCodeConfig->tszProtoSr, st_JsonRoot["tszProtoSr"].asCString());
 	return true;
 }
 /********************************************************************

@@ -71,7 +71,14 @@ typedef struct
 	}st_XPlugin;
 	struct
 	{   
-		XCHAR tszConfigQRCode[MAX_PATH];      //二维码配置地址
+		//二维码模型库
+		struct
+		{
+			XCHAR tszModelDetect[MAX_PATH];
+			XCHAR tszModelSr[MAX_PATH];
+			XCHAR tszProtoDetect[MAX_PATH];
+			XCHAR tszProtoSr[MAX_PATH];
+		}st_ConfigQRCodec;
 		XCHAR tszConfigDeamon[MAX_PATH];      //守护进程配置文件
 		XCHAR tszConfigHTTPMime[MAX_PATH];    //HTTPMINE配置文件
 		XCHAR tszConfigHTTPCode[MAX_PATH];    //HTTP状态配置文件
@@ -120,14 +127,6 @@ typedef struct
 		list<string>* pStl_ListVer;
 	}st_XVer;
 }XENGINE_SERVICECONFIG;
-//二维码模型库
-typedef struct
-{
-	XCHAR tszModelDetect[MAX_PATH];
-	XCHAR tszModelSr[MAX_PATH];
-	XCHAR tszProtoDetect[MAX_PATH];
-	XCHAR tszProtoSr[MAX_PATH];
-}XENGINE_QRCODECONFIG;
 //插件
 typedef struct
 {
@@ -213,25 +212,6 @@ extern "C" bool ModuleConfigure_Json_File(LPCXSTR lpszConfigFile, XENGINE_SERVIC
 备注：
 *********************************************************************/
 extern "C" bool ModuleConfigure_Json_VersionFile(LPCXSTR lpszConfigFile, XENGINE_SERVICECONFIG* pSt_ServerConfig);
-/********************************************************************
-函数名称：ModuleConfigure_Json_QRCodeFile
-函数功能：读取JSON配置文件
- 参数.一：lpszConfigFile
-  In/Out：In
-  类型：常量字符指针
-  可空：N
-  意思：输入要读取的配置文件
- 参数.二：pSt_QRCodeConfig
-  In/Out：Out
-  类型：数据结构指针
-  可空：N
-  意思：输出二维码配置信息
-返回值
-  类型：逻辑型
-  意思：是否成功
-备注：
-*********************************************************************/
-extern "C" bool ModuleConfigure_Json_QRCodeFile(LPCXSTR lpszConfigFile, XENGINE_QRCODECONFIG* pSt_QRCodeConfig);
 /********************************************************************
 函数名称：ModuleConfigure_Json_PluginFile
 函数功能：读取JSON配置文件

@@ -60,6 +60,10 @@ bool XEngine_Configure_Parament(int argc, char** argv)
 			st_ServiceConfig.st_XReload.bReload = true;
 			st_ServiceConfig.st_XReload.byCode = _ttxoi(argv[++i]);
 		}
+		else if (0 == _tcsxcmp("-db", argv[i]))
+		{
+			st_ServiceConfig.st_XSql.bEnable = _ttxoi(argv[++i]);
+		}
 		else if (0 == _tcsxcmp("-t", argv[i]))
 		{
 			bIsTest = true;

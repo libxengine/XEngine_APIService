@@ -47,7 +47,7 @@ bool HTTPTask_TaskPost_QRCode(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer, int
 	}
 	else
 	{
-		if (ModuleHelp_QRCode_QRDecodecMemory(lpszMsgBuffer, nMsgLen, ptszRVBuffer, st_QRCodeConfig.tszProtoDetect, st_QRCodeConfig.tszModelDetect, st_QRCodeConfig.tszProtoSr, st_QRCodeConfig.tszModelSr))
+		if (ModuleHelp_QRCode_QRDecodecMemory(lpszMsgBuffer, nMsgLen, ptszRVBuffer, st_ServiceConfig.st_XConfig.st_ConfigQRCodec.tszProtoDetect, st_ServiceConfig.st_XConfig.st_ConfigQRCodec.tszModelDetect, st_ServiceConfig.st_XConfig.st_ConfigQRCodec.tszProtoSr, st_ServiceConfig.st_XConfig.st_ConfigQRCodec.tszModelSr))
 		{
 			nRVLen = _tcsxlen(ptszRVBuffer);
 			HttpProtocol_Server_SendMsgEx(xhHTTPPacket, ptszSDBuffer, &nSDLen, &st_HDRParam, ptszRVBuffer, nRVLen);

@@ -37,10 +37,6 @@ extern "C" bool ModuleConfigure_Json_VersionFile(LPCXSTR lpszConfigFile, XENGINE
 {
 	return m_ConfigJson.ModuleConfigure_Json_VersionFile(lpszConfigFile, pSt_ServerConfig);
 }
-extern "C" bool ModuleConfigure_Json_QRCodeFile(LPCXSTR lpszConfigFile, XENGINE_QRCODECONFIG * pSt_QRCodeConfig)
-{
-	return m_ConfigJson.ModuleConfigure_Json_QRCodeFile(lpszConfigFile, pSt_QRCodeConfig);
-}
 extern "C" bool ModuleConfigure_Json_PluginFile(LPCXSTR lpszConfigFile, XENGINE_PLUGINCONFIG * pSt_PluginConfig)
 {
 	return m_ConfigJson.ModuleConfigure_Json_PluginFile(lpszConfigFile, pSt_PluginConfig);
