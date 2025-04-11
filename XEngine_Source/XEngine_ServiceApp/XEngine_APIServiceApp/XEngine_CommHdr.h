@@ -17,6 +17,8 @@ using namespace std;
 #include <XEngine_Include/XEngine_BaseLib/BaseSafe_Error.h>
 #include <XEngine_Include/XEngine_HelpComponents/XLog_Define.h>
 #include <XEngine_Include/XEngine_HelpComponents/XLog_Error.h>
+#include <XEngine_Include/XEngine_SystemSdk/SystemApi_Define.h>
+#include <XEngine_Include/XEngine_SystemSdk/SystemApi_Error.h>
 //加载模块头文件
 #include "../../XEngine_ModuleConfigure/ModuleConfig_Define.h"
 #include "../../XEngine_ModuleConfigure/ModuleConfig_Error.h"
@@ -42,6 +44,7 @@ extern XENGINE_SERVICECONFIG st_ServiceConfig;
 #pragma comment(lib,"XEngine_BaseLib/XEngine_BaseLib")
 #pragma comment(lib,"XEngine_BaseLib/XEngine_BaseSafe")
 #pragma comment(lib,"XEngine_HelpComponents/HelpComponents_XLog")
+#pragma comment(lib,"XEngine_SystemSdk/XEngine_SystemApi")
 #ifdef _DEBUG
 #ifdef _M_X64
 #pragma comment(lib,"../../x64/Debug/XEngine_ModuleConfigure.lib")

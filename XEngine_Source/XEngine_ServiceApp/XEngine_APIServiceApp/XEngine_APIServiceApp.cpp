@@ -12,6 +12,7 @@
 *********************************************************************/
 bool bIsRun = false;
 XHANDLE xhLog = NULL;
+XLONG dwProcessID = 0;
 XENGINE_SERVICECONFIG st_ServiceConfig = {};
 // 服务名称，使用 constexpr 替代宏定义
 constexpr LPCTSTR XENGINE_SERVICE_NAME = _T("XEngine_APIService");
@@ -125,6 +126,11 @@ void WINAPI XEngine_ServiceMain(DWORD dwArgc, LPTSTR* lpszArgv)
 	bIsRun = true;
 	while (bIsRun)
 	{
+		SYSTEMAPI_PROCESS_INFOMATION st_ProcessInfo = {};
+		if (!SystemApi_Process_GetProcessInfo(&st_ProcessInfo, NULL, dwProcessID))
+		{
+			SystemApi_Process_CreateProcess(&dwProcessID, "./XEngine_HttpApp.exe", NULL, false);
+		}
 		Sleep(1000); 
 	}
 }
@@ -142,12 +148,14 @@ void WINAPI XEngine_ServiceCtrlHandler(DWORD dwControl)
 		break;
 	case SERVICE_CONTROL_STOP:
 		bIsRun = false;
+		SystemApi_Process_Stop(NULL, dwProcessID);
 		st_ServiceStatus.dwCurrentState = SERVICE_STOPPED;
 		SetServiceStatus(hServiceStatusHandle, &st_ServiceStatus);
 		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("服务运行中,收到命令,停止运行"));
 		break;
 	case SERVICE_CONTROL_SHUTDOWN:
 		bIsRun = false;
+		SystemApi_Process_Stop(NULL, dwProcessID);
 		st_ServiceStatus.dwCurrentState = SERVICE_STOPPED;
 		SetServiceStatus(hServiceStatusHandle, &st_ServiceStatus);
 		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("服务运行中,收到命令,关闭程序"));

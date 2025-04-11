@@ -94,9 +94,9 @@ git clone https://gitee.com/xengine/XEngine_PhoneData.git XEngine_Source/XEngine
 直接运行即可
 
 #### Linux
-ubuntu:sudo apt install liblua5.4-dev libopencv-dev libopencv-contrib-dev libqrencode-dev libleptonica-dev libtesseract-dev  
-centos:需要自己编译  
-Linux使用Makefile编译,UBUNTU24.04 x64或者RockyLinux 9 x64
+ubuntu:sudo apt install liblua5.4-dev libopencv-dev libopencv-contrib-dev libqrencode-dev libleptonica-dev libtesseract-dev -y  
+centos:sudo dnf install lua-devel opencv-devel qrencode-devel leptonica-devel tesseract-devel -y  
+Linux使用Makefile编译,UBUNTU24.04 x64或者RockyLinux 9 x64  
 在控制台运行
 
 #### Macos

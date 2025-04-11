@@ -87,9 +87,9 @@ git submodule init
 git submodule update  
 
 #### Linux
-ubuntu:sudo apt install sudo apt install liblua5.4-dev libopencv-dev libopencv-contrib-dev libqrencode-dev libleptonica-dev libtesseract-dev  
-centos:compile by self  
-use makefile compile,UBUNTU24.04 x64 or RockyLinux 9 x64
+ubuntu:sudo apt install sudo apt install liblua5.4-dev libopencv-dev libopencv-contrib-dev libqrencode-dev libleptonica-dev libtesseract-dev -y  
+centos:sudo dnf install lua-devel opencv-devel qrencode-devel leptonica-devel tesseract-devel -y  
+use makefile compile,UBUNTU24.04 x64 or RockyLinux 9 x64  
 Run it on the terminal
 
 #### Macos
