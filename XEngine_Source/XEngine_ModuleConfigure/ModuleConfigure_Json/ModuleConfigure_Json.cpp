@@ -83,7 +83,6 @@ bool CModuleConfigure_Json::ModuleConfigure_Json_File(LPCXSTR lpszConfigFile, XE
 	}
 	_tcsxcpy(pSt_ServerConfig->tszIPAddr, st_JsonRoot["tszIPAddr"].asCString());
 	pSt_ServerConfig->bDeamon = st_JsonRoot["bDeamon"].asBool();
-	pSt_ServerConfig->bAutoStart = st_JsonRoot["bAutoStart"].asBool();
 	pSt_ServerConfig->bHideWnd = st_JsonRoot["bHideWnd"].asBool();
 	pSt_ServerConfig->nHttpPort = st_JsonRoot["nHttpPort"].asInt();
 	pSt_ServerConfig->nRFCPort = st_JsonRoot["nRFCPort"].asInt();

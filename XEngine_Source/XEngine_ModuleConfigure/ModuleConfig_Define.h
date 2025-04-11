@@ -17,7 +17,6 @@ typedef struct
 {
 	XCHAR tszIPAddr[128];                     //本机IP地址,根据需要配置
 	bool bDeamon;                             //是否以守护进程启动,LINUX有效
-	bool bAutoStart;                          //是否自动启动
 	bool bHideWnd;                            //是否隐藏窗口启动
 	int nHttpPort;                            //HTTP服务端口
 	int nRFCPort;                             //RFC标准服务端口
