@@ -1,7 +1,6 @@
 {
     "tszIPAddr":"192.168.1.8",
     "bDeamon":false,
-    "bAutoStart":false,
     "bHideWnd":false,
     "nHttpPort":5501,
     "nRFCPort":5502,
@@ -47,7 +46,12 @@
         "tszPluginLua":"./XEngine_Config/XEngine_PluginLua.json"
     },
     "XConfig":{
-        "tszConfigQRCode":"./XEngine_Config/XEngine_QRCode.json",
+        "st_ConfigQRCode":{
+            "tszModelDetect":"./XEngine_Config/qrmodel/detect.caffemodel",
+            "tszModelSr":"./XEngine_Config/qrmodel/sr.caffemodel",
+            "tszProtoDetect":"./XEngine_Config/qrmodel/detect.prototxt",
+            "tszProtoSr":"./XEngine_Config/qrmodel/sr.prototxt"
+        },
         "tszConfigDeamon":"./XEngine_Config/XEngine_DeamonConfig.json",
         "tszConfigHTTPMime":"./XEngine_Config/HttpMime.types",
         "tszConfigHTTPCode":"./XEngine_Config/HttpCode.types"
