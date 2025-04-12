@@ -66,8 +66,7 @@ typedef struct
 	struct  
 	{
 		bool bEnable;                         //是否启用
-		XCHAR tszPluginLib[MAX_PATH];         //配置文件地址
-		XCHAR tszPluginLua[MAX_PATH];         //配置文件地址
+		XCHAR tszPlugin[MAX_PATH];            //配置文件地址
 	}st_XPlugin;
 	struct
 	{   
@@ -136,7 +135,8 @@ typedef struct
 }XENGINE_PLUGININFO;
 typedef struct
 {
-	list<XENGINE_PLUGININFO>* pStl_ListPlugin;
+	list<XENGINE_PLUGININFO>* pStl_ListPluginModule;
+	list<XENGINE_PLUGININFO>* pStl_ListPluginLua;
 }XENGINE_PLUGINCONFIG;
 //////////////////////////////////////////////////////////////////////////
 typedef struct

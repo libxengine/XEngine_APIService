@@ -1,5 +1,5 @@
 {
-    "PluginArray":[
+    "PluginModule":[
         {
             "PluginEnable":true,
             "PluginMethod":"zodiac",
@@ -24,6 +24,23 @@
             "PluginEnable":true,
             "PluginMethod":"meter",
             "PluginFile":"./XEngine_LibPlugin/libModulePlugin_Meter"
+        }
+    ],
+    "PluginLua":[
+        {
+            "PluginEnable":true,
+            "PluginMethod":"cal",
+            "PluginFile":"./XEngine_LuaPlugin/ModulePlugin_Calculation.lua"
+        },
+        {
+            "PluginEnable":true,
+            "PluginMethod":"time",
+            "PluginFile":"./XEngine_LuaPlugin/ModulePlugin_OSTime.lua"
+        },
+        {
+            "PluginEnable":true,
+            "PluginMethod":"heart",
+            "PluginFile":"./XEngine_LuaPlugin/ModulePlugin_Heart.lua"
         }
     ]
 }

@@ -42,8 +42,7 @@
     },
     "XPlugin":{
         "bEnable":true,
-        "tszPluginLib":"./XEngine_Config/XEngine_PluginLib.json",
-        "tszPluginLua":"./XEngine_Config/XEngine_PluginLua.json"
+        "tszPlugin":"./XEngine_Config/XEngine_Plugin.json"
     },
     "XConfig":{
         "st_ConfigQRCode":{

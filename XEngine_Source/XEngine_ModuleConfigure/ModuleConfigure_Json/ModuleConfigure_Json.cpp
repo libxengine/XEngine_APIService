@@ -154,7 +154,7 @@ bool CModuleConfigure_Json::ModuleConfigure_Json_File(LPCXSTR lpszConfigFile, XE
 	_tcsxcpy(pSt_ServerConfig->st_XSql.tszSQLUser, st_JsonXSql["SQLUser"].asCString());
 	_tcsxcpy(pSt_ServerConfig->st_XSql.tszSQLPass, st_JsonXSql["SQLPass"].asCString());
 
-	if (st_JsonRoot["XPlugin"].empty() || (3 != st_JsonRoot["XPlugin"].size()))
+	if (st_JsonRoot["XPlugin"].empty() || (2 != st_JsonRoot["XPlugin"].size()))
 	{
 		Config_IsErrorOccur = true;
 		Config_dwErrorCode = ERROR_MODULE_CONFIGURE_JSON_XPLUGIN;
@@ -162,8 +162,7 @@ bool CModuleConfigure_Json::ModuleConfigure_Json_File(LPCXSTR lpszConfigFile, XE
 	}
 	Json::Value st_JsonXPlugin = st_JsonRoot["XPlugin"];
 	pSt_ServerConfig->st_XPlugin.bEnable = st_JsonXPlugin["bEnable"].asBool();
-	_tcsxcpy(pSt_ServerConfig->st_XPlugin.tszPluginLib, st_JsonXPlugin["tszPluginLib"].asCString());
-	_tcsxcpy(pSt_ServerConfig->st_XPlugin.tszPluginLua, st_JsonXPlugin["tszPluginLua"].asCString());
+	_tcsxcpy(pSt_ServerConfig->st_XPlugin.tszPlugin, st_JsonXPlugin["tszPlugin"].asCString());
 
 	if (st_JsonRoot["XConfig"].empty() || (4 != st_JsonRoot["XConfig"].size()))
 	{
@@ -382,36 +381,46 @@ bool CModuleConfigure_Json::ModuleConfigure_Json_PluginFile(LPCXSTR lpszConfigFi
 		return false;
 	}
 	//申请内存
-	pSt_PluginConfig->pStl_ListPlugin = new list<XENGINE_PLUGININFO>;
-	if (NULL == pSt_PluginConfig->pStl_ListPlugin)
+	pSt_PluginConfig->pStl_ListPluginLua = new list<XENGINE_PLUGININFO>;
+	pSt_PluginConfig->pStl_ListPluginModule = new list<XENGINE_PLUGININFO>;
+	if (NULL == pSt_PluginConfig->pStl_ListPluginLua || NULL == pSt_PluginConfig->pStl_ListPluginModule)
 	{
 		Config_IsErrorOccur = true;
 		Config_dwErrorCode = ERROR_MODULE_CONFIGURE_JSON_MALLOC;
 		return false;
 	}
-	//解析列表
-	Json::Value st_JsonArray = st_JsonRoot["PluginArray"];
-	for (unsigned int i = 0; i < st_JsonArray.size(); i++)
+	//解析module列表
+	Json::Value st_JsonModuleArray = st_JsonRoot["PluginModule"];
+	for (unsigned int i = 0; i < st_JsonModuleArray.size(); i++)
 	{
 		XENGINE_PLUGININFO st_PluginInfo;
 		memset(&st_PluginInfo, '\0', sizeof(XENGINE_PLUGININFO));
 
-		st_PluginInfo.bEnable = st_JsonArray[i]["PluginEnable"].asBool();
-		_tcsxcpy(st_PluginInfo.tszPluginFile, st_JsonArray[i]["PluginFile"].asCString());
-
-		if (NULL == _tcsxstr(st_PluginInfo.tszPluginFile + 3,_X(".")))
-		{
+		st_PluginInfo.bEnable = st_JsonModuleArray[i]["PluginEnable"].asBool();
+		_tcsxcpy(st_PluginInfo.tszPluginFile, st_JsonModuleArray[i]["PluginFile"].asCString());
 #ifdef _MSC_BUILD
-			_tcsxcat(st_PluginInfo.tszPluginFile, ".dll");
+		_tcsxcat(st_PluginInfo.tszPluginFile, ".dll");
 #elif __linux__
-			_tcsxcat(st_PluginInfo.tszPluginFile, ".so");
+		_tcsxcat(st_PluginInfo.tszPluginFile, ".so");
 #else
-			_tcsxcat(st_PluginInfo.tszPluginFile, ".dylib");
+		_tcsxcat(st_PluginInfo.tszPluginFile, ".dylib");
 #endif
-		}
+		_tcsxcpy(st_PluginInfo.tszPluginMethod, st_JsonModuleArray[i]["PluginMethod"].asCString());
 
-		_tcsxcpy(st_PluginInfo.tszPluginMethod, st_JsonArray[i]["PluginMethod"].asCString());
-		pSt_PluginConfig->pStl_ListPlugin->push_back(st_PluginInfo);
+		pSt_PluginConfig->pStl_ListPluginModule->push_back(st_PluginInfo);
+	}
+	//解析lua列表
+	Json::Value st_JsonLuaArray = st_JsonRoot["PluginLua"];
+	for (unsigned int i = 0; i < st_JsonLuaArray.size(); i++)
+	{
+		XENGINE_PLUGININFO st_PluginInfo;
+		memset(&st_PluginInfo, '\0', sizeof(XENGINE_PLUGININFO));
+
+		st_PluginInfo.bEnable = st_JsonLuaArray[i]["PluginEnable"].asBool();
+		_tcsxcpy(st_PluginInfo.tszPluginFile, st_JsonLuaArray[i]["PluginFile"].asCString());
+		_tcsxcpy(st_PluginInfo.tszPluginMethod, st_JsonLuaArray[i]["PluginMethod"].asCString());
+
+		pSt_PluginConfig->pStl_ListPluginLua->push_back(st_PluginInfo);
 	}
 	return true;
 }
