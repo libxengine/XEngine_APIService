@@ -84,7 +84,7 @@ bool HTTPTask_TaskGet_Reload(LPCXSTR lpszClientAddr, LPCXSTR lpszOPCode)
 		XEngine_Network_Send(lpszClientAddr, tszMsgBuffer, nMsgLen);
 		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("HTTP客户端:%s,请求重载插件成功,Lib插件:%d 个,Lua插件:%d 个"), lpszClientAddr, st_PluginConfig.pStl_ListPluginModule->size(), st_PluginConfig.pStl_ListPluginLua->size());
 	}
-	else if (3 == _ttxoi(lpszOPCode))
+	else if (2 == _ttxoi(lpszOPCode))
 	{
 		st_DeamonAppConfig.stl_ListDeamonApp.clear();
 		if (!ModuleConfigure_Json_DeamonList(st_ServiceConfig.st_XConfig.tszConfigDeamon, &st_DeamonAppConfig))
