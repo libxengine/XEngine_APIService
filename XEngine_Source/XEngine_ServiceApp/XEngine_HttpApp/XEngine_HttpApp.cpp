@@ -470,18 +470,21 @@ int main(int argc, char** argv)
 		if (!APIModule_IPAddr_Init(st_ServiceConfig.st_XAPIModule.tszDBIPAddr, st_ServiceConfig.st_XAPIModule.tszDBISPAddr))
 		{
 			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("启动服务中,启动IP地址数据查询服务:%s 失败，错误：%lX"), st_ServiceConfig.st_XAPIModule.tszDBIPAddr, APIIPMac_GetLastError());
+			goto XENGINE_SERVICEAPP_EXIT;
 		}
 		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("启动服务中,启动IP地址数据查询服务:%s 成功"), st_ServiceConfig.st_XAPIModule.tszDBIPAddr);
 
 		if (!APIModule_MACInfo_Init(st_ServiceConfig.st_XAPIModule.tszDBMac))
 		{
 			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("启动服务中,启动MAC地址数据查询服务:%s 失败，错误：%lX"), st_ServiceConfig.st_XAPIModule.tszDBMac, APIIPMac_GetLastError());
+			goto XENGINE_SERVICEAPP_EXIT;
 		}
 		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("启动服务中,启动MAC地址数据查询服务:%s 成功"), st_ServiceConfig.st_XAPIModule.tszDBMac);
 
 		if (!APIModule_PhoneNumber_Init(st_ServiceConfig.st_XAPIModule.tszDBPhone))
 		{
 			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("启动服务中,启动电话号码数据查询服务:%s 失败，错误：%lX"), st_ServiceConfig.st_XAPIModule.tszDBPhone, APIPhone_GetLastError());
+			goto XENGINE_SERVICEAPP_EXIT;
 		}
 		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("启动服务中,启动电话号码数据查询服务:%s 成功"), st_ServiceConfig.st_XAPIModule.tszDBPhone);
 	}
