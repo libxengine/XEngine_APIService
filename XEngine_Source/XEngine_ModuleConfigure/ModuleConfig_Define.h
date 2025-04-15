@@ -114,6 +114,7 @@ typedef struct
 		XCHAR tszDBPhone[MAX_PATH];
 		XCHAR tszDBMac[MAX_PATH];
 		XCHAR tszDBIPAddr[MAX_PATH];
+		XCHAR tszDBISPAddr[MAX_PATH];
 	}st_XAPIModule;
 	struct
 	{

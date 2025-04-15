@@ -76,7 +76,8 @@
         "bEnable": true,
         "tszDBPhone": "./XEngine_DBFile/phone.xdb",
         "tszDBMac": "./XEngine_DBFile/macaddr.xdb",
-        "tszDBIPAddr": "./XEngine_DBFile/ip2region.xdb"
+        "tszDBIPAddr": "./XEngine_DBFile/GeoLite2-City.mmdb",
+        "tszDBISPAddr": "./XEngine_DBFile/GeoLite2-ASN.mmdb"
     },
     "XReport":{
         "bEnable":true,

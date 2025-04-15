@@ -216,7 +216,7 @@ bool CModuleConfigure_Json::ModuleConfigure_Json_File(LPCXSTR lpszConfigFile, XE
 	pSt_ServerConfig->st_XVerifcation.st_VerSwitch.bBackService = st_JsonVerSwitch["bBackService"].asBool();
 	pSt_ServerConfig->st_XVerifcation.st_VerSwitch.bDeamon = st_JsonVerSwitch["bDeamon"].asBool();
 
-	if (st_JsonRoot["XAPIModule"].empty() || (4 != st_JsonRoot["XAPIModule"].size()))
+	if (st_JsonRoot["XAPIModule"].empty() || (5 != st_JsonRoot["XAPIModule"].size()))
 	{
 		Config_IsErrorOccur = true;
 		Config_dwErrorCode = ERROR_MODULE_CONFIGURE_JSON_XREPORT;
@@ -225,6 +225,7 @@ bool CModuleConfigure_Json::ModuleConfigure_Json_File(LPCXSTR lpszConfigFile, XE
 	Json::Value st_JsonXAPIModule = st_JsonRoot["XAPIModule"];
 	pSt_ServerConfig->st_XAPIModule.bEnable = st_JsonXAPIModule["bEnable"].asBool();
 	_tcsxcpy(pSt_ServerConfig->st_XAPIModule.tszDBIPAddr, st_JsonXAPIModule["tszDBIPAddr"].asCString());
+	_tcsxcpy(pSt_ServerConfig->st_XAPIModule.tszDBISPAddr, st_JsonXAPIModule["tszDBISPAddr"].asCString());
 	_tcsxcpy(pSt_ServerConfig->st_XAPIModule.tszDBMac, st_JsonXAPIModule["tszDBMac"].asCString());
 	_tcsxcpy(pSt_ServerConfig->st_XAPIModule.tszDBPhone, st_JsonXAPIModule["tszDBPhone"].asCString());
 

@@ -467,7 +467,7 @@ int main(int argc, char** argv)
 	
 	if (st_ServiceConfig.st_XAPIModule.bEnable)
 	{
-		if (!APIModule_IPAddr_Init(st_ServiceConfig.st_XAPIModule.tszDBIPAddr))
+		if (!APIModule_IPAddr_Init(st_ServiceConfig.st_XAPIModule.tszDBIPAddr, st_ServiceConfig.st_XAPIModule.tszDBISPAddr))
 		{
 			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("启动服务中,启动IP地址数据查询服务:%s 失败，错误：%lX"), st_ServiceConfig.st_XAPIModule.tszDBIPAddr, APIIPMac_GetLastError());
 		}
