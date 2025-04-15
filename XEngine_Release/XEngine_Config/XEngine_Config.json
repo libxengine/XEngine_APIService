@@ -1,7 +1,7 @@
 {
     "tszIPAddr":"192.168.1.8",
     "bDeamon":false,
-    "bHideWnd":false,
+    "bShowWnd":true,
     "nHttpPort":5501,
     "nRFCPort":5502,
     "XMax":{

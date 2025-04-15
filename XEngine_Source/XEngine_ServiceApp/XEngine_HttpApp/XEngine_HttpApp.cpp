@@ -197,7 +197,7 @@ int main(int argc, char** argv)
 		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_WARN, _X("启动服务中,启动权限不足,对于进程和后台服务任务可能会执行失败"));
 	}
 
-	if (st_ServiceConfig.bHideWnd)
+	if (!st_ServiceConfig.bShowWnd)
 	{
 #ifdef _MSC_BUILD
 		HWND hWnd = GetConsoleWindow();

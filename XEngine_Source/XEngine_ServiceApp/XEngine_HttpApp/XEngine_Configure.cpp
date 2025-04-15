@@ -45,7 +45,7 @@ bool XEngine_Configure_Parament(int argc, char** argv)
 		}
 		else if (0 == _tcsxcmp("-w", argv[i]))
 		{
-			st_ServiceConfig.bHideWnd = _ttxoi(argv[++i]);
+			st_ServiceConfig.bShowWnd = _ttxoi(argv[++i]);
 		}
 		else if (0 == _tcsxcmp("-hp", argv[i]))
 		{

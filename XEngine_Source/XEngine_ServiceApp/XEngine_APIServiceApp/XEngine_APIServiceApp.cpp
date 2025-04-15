@@ -136,7 +136,7 @@ void WINAPI XEngine_ServiceMain(DWORD dwArgc, LPTSTR* lpszArgv)
 		SYSTEMAPI_PROCESS_INFOMATION st_ProcessInfo = {};
 		if (!SystemApi_Process_GetProcessInfo(&st_ProcessInfo, NULL, dwProcessID))
 		{
-			SystemApi_Process_CreateProcess(&dwProcessID, "./XEngine_HttpApp.exe", "-db 0", st_ServiceConfig.bHideWnd);
+			SystemApi_Process_CreateProcess(&dwProcessID, "./XEngine_HttpApp.exe", "-db 0", st_ServiceConfig.bShowWnd);
 		}
 		Sleep(1000); 
 	}
