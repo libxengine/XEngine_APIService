@@ -1,6 +1,6 @@
 ﻿#include "../XEngine_Hdr.h"
 
-bool HTTPTask_TaskGet_APIModule(LPCXSTR lpszClientAddr, LPCXSTR lpszQueryType, LPCXSTR lpszQueryStr)
+bool HTTPTask_TaskGet_APIModule(LPCXSTR lpszClientAddr, LPCXSTR lpszQueryType, LPCXSTR lpszQueryStr, LPCXSTR lpszTPStr)
 {
 	int nMsgLen = 4096;
 	int nPktLen = 4096;
@@ -49,7 +49,7 @@ bool HTTPTask_TaskGet_APIModule(LPCXSTR lpszClientAddr, LPCXSTR lpszQueryType, L
 
 		_tcsxcpy(st_IPAddr.tszIPAddr, lpszQueryStr);
 
-		if (!APIModule_IPAddr_Query(&st_IPAddr))
+		if (!APIModule_IPAddr_Query(&st_IPAddr, lpszTPStr))
 		{
 			ModuleProtocol_Packet_Common(tszPktBuffer, &nPktLen, 404, _X("not found"));
 			HttpProtocol_Server_SendMsgEx(xhHTTPPacket, tszMsgBuffer, &nMsgLen, &st_HDRParam, tszPktBuffer, nPktLen);

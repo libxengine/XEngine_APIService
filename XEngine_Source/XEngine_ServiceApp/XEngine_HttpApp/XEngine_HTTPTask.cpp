@@ -451,12 +451,21 @@ bool HTTPTask_TastPost_Handle(RFCCOMPONENTS_HTTP_REQPARAM* pSt_HTTPParam, LPCXST
 		else if ((0 == _tcsxnicmp(lpszParamPhone, tszValue, _tcsxlen(lpszParamPhone))) || (0 == _tcsxnicmp(lpszParamIPAddr, tszValue, _tcsxlen(lpszParamIPAddr))) || (0 == _tcsxnicmp(lpszParamMacInfo, tszValue, _tcsxlen(lpszParamMacInfo))))
 		{
 			//phone:http://127.0.0.1:5501/api?function=phone&param=1369943
-			//ip:http://127.0.0.1:5501/api?function=ip&param=117.172.221.14
+			//ip:http://127.0.0.1:5501/api?function=ip&param=117.172.221.14&language=en
 			//mac:http://127.0.0.1:5501/api?function=mac&param=00:00:0C
 			memset(tszMsgBuffer, '\0', sizeof(tszMsgBuffer));
 
 			BaseLib_String_GetKeyValue(pptszList[1], "=", tszKey, tszMsgBuffer);
-			HTTPTask_TaskGet_APIModule(lpszClientAddr, tszValue, tszMsgBuffer);
+			if (nListCount <= 2)
+			{
+				HTTPTask_TaskGet_APIModule(lpszClientAddr, tszValue, tszMsgBuffer, NULL);
+			}
+			else
+			{
+				XCHAR tszTPStr[128] = {};
+				BaseLib_String_GetKeyValue(pptszList[2], "=", tszKey, tszTPStr);
+				HTTPTask_TaskGet_APIModule(lpszClientAddr, tszValue, tszMsgBuffer, tszTPStr);
+			}
 		}
 		else
 		{
