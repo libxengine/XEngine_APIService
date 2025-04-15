@@ -68,6 +68,7 @@ jobs:
             cd ..
 
             cd XEngine_Release
+            ./copydb.sh
             ./XEngine_APIServiceApp -t
             chown -R $(id -u):$(id -g) .
             chmod -R a+r .  '

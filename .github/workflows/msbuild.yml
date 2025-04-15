@@ -128,6 +128,7 @@ jobs:
           cp -r XEngine_Source/Release/*.exe XEngine_Release/
           cp -r XEngine_Source/VSCopy_x86.bat XEngine_Release/
           cd XEngine_Release
+          ./copydb.bat
           ./VSCopy_x86.bat
           # ./XEngine_HttpApp.exe -t
       - name: Conditional Step for x64 Release
@@ -137,6 +138,7 @@ jobs:
           cp -r XEngine_Source/x64/Release/*.exe XEngine_Release/
           cp -r XEngine_Source/VSCopy_x64.bat XEngine_Release/
           cd XEngine_Release
+          ./copydb.bat
           ./VSCopy_x64.bat
         shell: pwsh
       - name: Conditional Step for ARM64 Release
@@ -146,6 +148,7 @@ jobs:
           cp -r XEngine_Source/ARM64/Release/*.exe XEngine_Release/
           cp -r XEngine_Source/VSCopy_Arm64.bat XEngine_Release/
           cd XEngine_Release
+          ./copydb.bat
           ./VSCopy_Arm64.bat
         shell: pwsh
 

@@ -83,6 +83,7 @@ jobs:
       - name: test
         run: |
             cd XEngine_Release
+            ./copydb.sh
             ./XEngine_APIServiceApp -t
 
       - name: Upload folder as artifact with ubuntu22.04
