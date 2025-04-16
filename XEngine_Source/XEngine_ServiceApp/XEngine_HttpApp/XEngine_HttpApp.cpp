@@ -23,9 +23,7 @@ XHANDLE xhHTTPPool = NULL;
 unique_ptr<thread> pSTDThread_Deamon = NULL;
 //配置文件
 XENGINE_SERVICECONFIG st_ServiceConfig;
-XENGINE_QRCODECONFIG st_QRCodeConfig;
-XENGINE_PLUGINCONFIG st_PluginLibConfig;
-XENGINE_PLUGINCONFIG st_PluginLuaConfig;
+XENGINE_PLUGINCONFIG st_PluginConfig;
 XENGINE_DEAMONAPPLIST st_DeamonAppConfig;
 
 void ServiceApp_Stop(int signo)
@@ -148,9 +146,7 @@ int main(int argc, char** argv)
 
 	memset(&st_XLogConfig, '\0', sizeof(HELPCOMPONENTS_XLOG_CONFIGURE));
 	memset(&st_ServiceConfig, '\0', sizeof(XENGINE_SERVICECONFIG));
-	memset(&st_QRCodeConfig, '\0', sizeof(XENGINE_QRCODECONFIG));
-	memset(&st_PluginLibConfig, '\0', sizeof(XENGINE_PLUGINCONFIG));
-	memset(&st_PluginLuaConfig, '\0', sizeof(XENGINE_PLUGINCONFIG));
+	memset(&st_PluginConfig, '\0', sizeof(XENGINE_PLUGINCONFIG));
 
 	//初始化参数
 	if (!XEngine_Configure_Parament(argc, argv))
@@ -176,7 +172,7 @@ int main(int argc, char** argv)
 	//初始日志
 	st_XLogConfig.XLog_MaxBackupFile = st_ServiceConfig.st_XLog.nMaxCount;
 	st_XLogConfig.XLog_MaxSize = st_ServiceConfig.st_XLog.nMaxSize;
-	_tcsxcpy(st_XLogConfig.tszFileName, st_ServiceConfig.st_XLog.tszLogFile);
+	_tcsxcpy(st_XLogConfig.tszFileName, st_ServiceConfig.st_XLog.tszAPIFile);
 	xhLog = HelpComponents_XLog_Init(st_ServiceConfig.st_XLog.nLogLeave, &st_XLogConfig);
 	if (NULL == xhLog)
 	{
@@ -194,19 +190,14 @@ int main(int argc, char** argv)
 
 	if (SystemApi_Process_IsAdmin())
 	{
-		if (!ModuleSystem_API_AutoStart(st_ServiceConfig.bAutoStart))
-		{
-			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("启动服务中,注册软件开机启动失败!错误:%lX"), ModuleHelp_GetLastError());
-			goto XENGINE_SERVICEAPP_EXIT;
-		}
-		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("启动服务中,设置软件开机启动标志成功,标志位:%d"), st_ServiceConfig.bAutoStart);
+		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("启动服务中,启动权限设置为管理员"));
 	}
 	else
 	{
-		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_WARN, _X("启动服务中,启动权限不足,对于进程和后台服务任务可能会执行失败,请切换管理员权限"));
+		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_WARN, _X("启动服务中,启动权限不足,对于进程和后台服务任务可能会执行失败"));
 	}
 
-	if (st_ServiceConfig.bHideWnd)
+	if (!st_ServiceConfig.bShowWnd)
 	{
 #ifdef _MSC_BUILD
 		HWND hWnd = GetConsoleWindow();
@@ -221,17 +212,6 @@ int main(int argc, char** argv)
 		}
 #endif
 	}
-
-#if (1 == _XENGINE_BUILD_SWITCH_QRDECODEC)
-	if (!ModuleConfigure_Json_QRCodeFile(st_ServiceConfig.st_XConfig.tszConfigQRCode, &st_QRCodeConfig))
-	{
-		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("启动服务中,初始化二维码配置文件失败,错误：%lX"), ModuleConfigure_GetLastError());
-		goto XENGINE_SERVICEAPP_EXIT;
-	}
-	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("启动服务中,初始化二维码配置文件:%s 成功"), st_ServiceConfig.st_XConfig.tszConfigQRCode);
-#else
-	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_WARN, _X("启动服务中,初始化二维码配置文件:%s 失败,因为QR编译脚本被关闭"), st_ServiceConfig.st_XConfig.tszConfigQRCode);
-#endif
 
 	if (st_ServiceConfig.st_XImageText.bEnable)
 	{
@@ -421,18 +401,12 @@ int main(int argc, char** argv)
 	//初始化插件配置
 	if (st_ServiceConfig.st_XPlugin.bEnable)
 	{
-		if (!ModuleConfigure_Json_PluginFile(st_ServiceConfig.st_XPlugin.tszPluginLib, &st_PluginLibConfig))
+		if (!ModuleConfigure_Json_PluginFile(st_ServiceConfig.st_XPlugin.tszPlugin, &st_PluginConfig))
 		{
 			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("启动服务中,初始化Lib插件配置文件失败,错误：%lX"), ModuleConfigure_GetLastError());
 			goto XENGINE_SERVICEAPP_EXIT;
 		}
-		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("启动服务中,初始化Lib插件配置文件成功"));
-		if (!ModuleConfigure_Json_PluginFile(st_ServiceConfig.st_XPlugin.tszPluginLua, &st_PluginLuaConfig))
-		{
-			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("启动服务中,初始化Lua插件配置文件失败,错误：%lX"), ModuleConfigure_GetLastError());
-			goto XENGINE_SERVICEAPP_EXIT;
-		}
-		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("启动服务中,初始化Lua插件配置文件成功"));
+		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("启动服务中,初始化插件配置文件成功"));
 		//启动插件
 		if (!ModulePlugin_Loader_Init())
 		{
@@ -441,8 +415,8 @@ int main(int argc, char** argv)
 		}
 		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("启动服务中,初始化插件系统成功,开始加载插件"));
 		//加载插件
-		list<XENGINE_PLUGININFO>::const_iterator stl_ListIterator = st_PluginLibConfig.pStl_ListPlugin->begin();
-		for (int i = 1; stl_ListIterator != st_PluginLibConfig.pStl_ListPlugin->end(); stl_ListIterator++, i++)
+		list<XENGINE_PLUGININFO>::const_iterator stl_ListIterator = st_PluginConfig.pStl_ListPluginModule->begin();
+		for (int i = 1; stl_ListIterator != st_PluginConfig.pStl_ListPluginModule->end(); stl_ListIterator++, i++)
 		{
 			if (stl_ListIterator->bEnable)
 			{
@@ -461,8 +435,8 @@ int main(int argc, char** argv)
 			}
 		}
 #if (1 == _XENGINE_BUILD_SWITCH_LUA)
-		stl_ListIterator = st_PluginLuaConfig.pStl_ListPlugin->begin();
-		for (int i = 1; stl_ListIterator != st_PluginLuaConfig.pStl_ListPlugin->end(); stl_ListIterator++, i++)
+		stl_ListIterator = st_PluginConfig.pStl_ListPluginLua->begin();
+		for (int i = 1; stl_ListIterator != st_PluginConfig.pStl_ListPluginLua->end(); stl_ListIterator++, i++)
 		{
 			if (stl_ListIterator->bEnable)
 			{
@@ -484,7 +458,7 @@ int main(int argc, char** argv)
 		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_WARN, _X("启动服务中,加载Lua模块插件失败,因为LUA编译被关闭"));
 #endif
 		//展示能力
-		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("启动服务中,加载的Lib插件:%d 个,Lua插件:%d 个"), st_PluginLibConfig.pStl_ListPlugin->size(), st_PluginLuaConfig.pStl_ListPlugin->size());
+		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("启动服务中,加载的Lib插件:%d 个,Lua插件:%d 个"), st_PluginConfig.pStl_ListPluginModule->size(), st_PluginConfig.pStl_ListPluginLua->size());
 	}
 	else
 	{
@@ -493,21 +467,24 @@ int main(int argc, char** argv)
 	
 	if (st_ServiceConfig.st_XAPIModule.bEnable)
 	{
-		if (!APIModule_IPAddr_Init(st_ServiceConfig.st_XAPIModule.tszDBIPAddr))
+		if (!APIModule_IPAddr_Init(st_ServiceConfig.st_XAPIModule.tszDBIPAddr, st_ServiceConfig.st_XAPIModule.tszDBISPAddr))
 		{
 			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("启动服务中,启动IP地址数据查询服务:%s 失败，错误：%lX"), st_ServiceConfig.st_XAPIModule.tszDBIPAddr, APIIPMac_GetLastError());
+			goto XENGINE_SERVICEAPP_EXIT;
 		}
 		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("启动服务中,启动IP地址数据查询服务:%s 成功"), st_ServiceConfig.st_XAPIModule.tszDBIPAddr);
 
 		if (!APIModule_MACInfo_Init(st_ServiceConfig.st_XAPIModule.tszDBMac))
 		{
 			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("启动服务中,启动MAC地址数据查询服务:%s 失败，错误：%lX"), st_ServiceConfig.st_XAPIModule.tszDBMac, APIIPMac_GetLastError());
+			goto XENGINE_SERVICEAPP_EXIT;
 		}
 		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("启动服务中,启动MAC地址数据查询服务:%s 成功"), st_ServiceConfig.st_XAPIModule.tszDBMac);
 
 		if (!APIModule_PhoneNumber_Init(st_ServiceConfig.st_XAPIModule.tszDBPhone))
 		{
 			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("启动服务中,启动电话号码数据查询服务:%s 失败，错误：%lX"), st_ServiceConfig.st_XAPIModule.tszDBPhone, APIPhone_GetLastError());
+			goto XENGINE_SERVICEAPP_EXIT;
 		}
 		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("启动服务中,启动电话号码数据查询服务:%s 成功"), st_ServiceConfig.st_XAPIModule.tszDBPhone);
 	}
@@ -515,6 +492,7 @@ int main(int argc, char** argv)
 	{
 		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_WARN, _X("启动服务中,数据查询服务没有启用"));
 	}
+#ifndef _DEBUG
 	//发送信息报告
 	if (st_ServiceConfig.st_XReport.bEnable && !bIsTest)
 	{
@@ -532,7 +510,7 @@ int main(int argc, char** argv)
 	{
 		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_WARN, _X("启动服务中,信息报告给API服务器没有启用"));
 	}
-
+#endif
 	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("所有服务成功启动,服务运行中,XEngine版本:%s%s,发行版本次数:%d,当前版本：%s。。。"), BaseLib_Version_XNumberStr(), BaseLib_Version_XTypeStr(), st_ServiceConfig.st_XVer.pStl_ListVer->size(), st_ServiceConfig.st_XVer.pStl_ListVer->front().c_str());
 	while (true)
 	{

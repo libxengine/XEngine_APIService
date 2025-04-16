@@ -16,15 +16,42 @@ jobs:
         with:
           fetch-depth: 0 
 
-      - name: Download ubuntubuild
+      - name: Download ubuntu x86_64 build
         uses: dawidd6/action-download-artifact@v6
         with:
-          workflow: ubuntubuild.yml
+          workflow: Ubuntux86_64_build.yml
           workflow_conclusion: success
           check_artifacts: false
           skip_unpack: true
           if_no_artifact_found: fail
           path: ./XRelease/
+      - name: Download ubuntu Arm64 build
+        uses: dawidd6/action-download-artifact@v6
+        with:
+          workflow: UbuntuArm64_build.yml
+          workflow_conclusion: success
+          check_artifacts: false
+          skip_unpack: true
+          if_no_artifact_found: fail
+          path: ./XRelease/
+      - name: Download rocky x86_64 build
+        uses: dawidd6/action-download-artifact@v6
+        with:
+          workflow: RockyX86_64_build.yml
+          workflow_conclusion: success
+          check_artifacts: false
+          skip_unpack: true
+          if_no_artifact_found: fail
+          path: ./XRelease/
+      - name: Download rocky Arm64 build
+        uses: dawidd6/action-download-artifact@v6
+        with:
+          workflow: RockyArm64_build.yml
+          workflow_conclusion: success
+          check_artifacts: false
+          skip_unpack: true
+          if_no_artifact_found: fail
+          path: ./XRelease/  
       - name: Download macbuild
         uses: dawidd6/action-download-artifact@v6
         with:

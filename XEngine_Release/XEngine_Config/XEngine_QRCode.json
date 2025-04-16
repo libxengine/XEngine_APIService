@@ -1,6 +1,0 @@
-{
-    "tszModelDetect":"./XEngine_Config/qrmodel/detect.caffemodel",
-    "tszModelSr":"./XEngine_Config/qrmodel/sr.caffemodel",
-    "tszProtoDetect":"./XEngine_Config/qrmodel/detect.prototxt",
-    "tszProtoSr":"./XEngine_Config/qrmodel/sr.prototxt"
-}

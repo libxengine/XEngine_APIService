@@ -50,7 +50,7 @@ bool HTTPTask_TaskGet_Translation(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer,
 	ModuleHelp_Translation_Convert((ENUM_XENGINE_APISERVICE_TRANSLATION_TYPE)_ttxoi(lpszSrcStr), tszLanguageSrc);
 	ModuleHelp_Translation_Convert((ENUM_XENGINE_APISERVICE_TRANSLATION_TYPE)_ttxoi(lpszDstStr), tszLanauageDst);
 
-	_xstprintf(tszURLStr, _X("%s?appid=%s&q=%s&from=%s&to=%s&salt=%d&sign=%s"), st_ServiceConfig.st_XApi.tszTranslationUrl, st_ServiceConfig.st_XApi.st_TranslationInfo.tszAPPID, tszUTFBuffer, tszLanguageSrc, tszLanauageDst, nRandomNumber, tszMD5Str);
+	_xstprintf(tszURLStr, _X("%s?appid=%s&q=%s&from=%s&to=%s&salt=%d&sign=%s"), st_ServiceConfig.st_XApi.st_TranslationInfo.tszAPPUrl, st_ServiceConfig.st_XApi.st_TranslationInfo.tszAPPID, tszUTFBuffer, tszLanguageSrc, tszLanauageDst, nRandomNumber, tszMD5Str);
 	APIClient_Http_Request(_X("GET"), tszURLStr, NULL, NULL, &ptszBodyBuffer, &nBLen);
 
 	//解析数据

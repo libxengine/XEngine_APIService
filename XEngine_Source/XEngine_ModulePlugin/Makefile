@@ -37,15 +37,14 @@ ifeq ($(PLATFORM),linux)
 	ifeq (/etc/redhat-release,$(wildcard /etc/redhat-release))
 		PLATVER = -D __CENTOS__
 		PLATDIR = XEngine_Linux/Centos
+		LIB += -llua
 	else
 		PLATVER = -D __UBUNTU__
 		PLATDIR = XEngine_Linux/Ubuntu
+		LIB += -llua5.4
 	endif
 	FILEEXT = so
 	LIBFLAG = -shared
-	ifeq ($(MACRO_LUA_SUPPORT),1)
-		LIB += -llua5.4
-	endif
 	LIBEX = -lpthread -lrt -ldl
 	LOADBIN = -Wl,-rpath=./,--disable-new-dtags
 else ifeq ($(PLATFORM),mac)

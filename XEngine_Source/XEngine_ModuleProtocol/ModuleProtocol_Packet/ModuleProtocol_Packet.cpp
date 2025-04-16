@@ -1752,11 +1752,14 @@ bool CModuleProtocol_Packet::ModuleProtocol_Packet_IPAddr(XCHAR* ptszMSGBuffer, 
 	Json::StreamWriterBuilder st_JsonBuilder;
 
 	st_JsonObject["tszIPAddr"] = pSt_IPAddrInfo->tszIPAddr;
-	st_JsonObject["tszIPCity"] = pSt_IPAddrInfo->tszIPCity;
+	st_JsonObject["tszIPContinent"] = pSt_IPAddrInfo->tszIPContinent;
 	st_JsonObject["tszIPCountry"] = pSt_IPAddrInfo->tszIPCountry;
-	st_JsonObject["tszIPCounty"] = pSt_IPAddrInfo->tszIPCounty;
-	st_JsonObject["tszIPISP"] = pSt_IPAddrInfo->tszIPISP;
 	st_JsonObject["tszIPProvince"] = pSt_IPAddrInfo->tszIPProvince;
+	st_JsonObject["tszIPCity"] = pSt_IPAddrInfo->tszIPCity;
+	st_JsonObject["tszIPISP"] = pSt_IPAddrInfo->tszIPISP;
+	st_JsonObject["tszTimezone"] = pSt_IPAddrInfo->tszTimezone;
+	st_JsonObject["dlLatitude"] = pSt_IPAddrInfo->dlLatitude;
+	st_JsonObject["dlLongitude"] = pSt_IPAddrInfo->dlLongitude;
 
 	st_JsonRoot["code"] = 0;
 	st_JsonRoot["msg"] = "success";

@@ -83,8 +83,7 @@ bool CModuleConfigure_Json::ModuleConfigure_Json_File(LPCXSTR lpszConfigFile, XE
 	}
 	_tcsxcpy(pSt_ServerConfig->tszIPAddr, st_JsonRoot["tszIPAddr"].asCString());
 	pSt_ServerConfig->bDeamon = st_JsonRoot["bDeamon"].asBool();
-	pSt_ServerConfig->bAutoStart = st_JsonRoot["bAutoStart"].asBool();
-	pSt_ServerConfig->bHideWnd = st_JsonRoot["bHideWnd"].asBool();
+	pSt_ServerConfig->bShowWnd = st_JsonRoot["bShowWnd"].asBool();
 	pSt_ServerConfig->nHttpPort = st_JsonRoot["nHttpPort"].asInt();
 	pSt_ServerConfig->nRFCPort = st_JsonRoot["nRFCPort"].asInt();
 
@@ -111,7 +110,7 @@ bool CModuleConfigure_Json::ModuleConfigure_Json_File(LPCXSTR lpszConfigFile, XE
 	pSt_ServerConfig->st_XTime.nHTTPTimeOut = st_JsonXTime["nHttpTimeOut"].asInt();
 	pSt_ServerConfig->st_XTime.nP2PTimeOut = st_JsonXTime["nP2PTimeOut"].asInt();
 
-	if (st_JsonRoot["XLog"].empty() || (5 != st_JsonRoot["XLog"].size()))
+	if (st_JsonRoot["XLog"].empty() || (6 != st_JsonRoot["XLog"].size()))
 	{
 		Config_IsErrorOccur = true;
 		Config_dwErrorCode = ERROR_MODULE_CONFIGURE_JSON_XLOG;
@@ -122,9 +121,10 @@ bool CModuleConfigure_Json::ModuleConfigure_Json_File(LPCXSTR lpszConfigFile, XE
 	pSt_ServerConfig->st_XLog.nMaxCount = st_JsonXLog["MaxCount"].asInt();
 	pSt_ServerConfig->st_XLog.nLogLeave = st_JsonXLog["LogLeave"].asInt();
 	pSt_ServerConfig->st_XLog.nLogType = st_JsonXLog["LogType"].asInt();
-	_tcsxcpy(pSt_ServerConfig->st_XLog.tszLogFile, st_JsonXLog["tszLogFile"].asCString());
+	_tcsxcpy(pSt_ServerConfig->st_XLog.tszAPIFile, st_JsonXLog["tszAPIFile"].asCString());
+	_tcsxcpy(pSt_ServerConfig->st_XLog.tszServiceFile, st_JsonXLog["tszServiceFile"].asCString());
 
-	if (st_JsonRoot["XApi"].empty() || (5 != st_JsonRoot["XApi"].size()))
+	if (st_JsonRoot["XApi"].empty() || (4 != st_JsonRoot["XApi"].size()))
 	{
 		Config_IsErrorOccur = true;
 		Config_dwErrorCode = ERROR_MODULE_CONFIGURE_JSON_XAPI;
@@ -135,8 +135,9 @@ bool CModuleConfigure_Json::ModuleConfigure_Json_File(LPCXSTR lpszConfigFile, XE
 	_tcsxcpy(pSt_ServerConfig->st_XApi.tszWeatherUrl, st_JsonXApi["tszWeatherUrl"].asCString());
 	_tcsxcpy(pSt_ServerConfig->st_XApi.tszBankUrl, st_JsonXApi["tszBankUrl"].asCString());
 	_tcsxcpy(pSt_ServerConfig->st_XApi.tszOilUrl, st_JsonXApi["tszOilUrl"].asCString());
-	_tcsxcpy(pSt_ServerConfig->st_XApi.tszTranslationUrl, st_JsonXApi["tszTranslationUrl"].asCString());
+
 	Json::Value st_JsonTranslationInfo = st_JsonXApi["st_TranslationInfo"];
+	_tcsxcpy(pSt_ServerConfig->st_XApi.st_TranslationInfo.tszAPPUrl, st_JsonTranslationInfo["url"].asCString());
 	_tcsxcpy(pSt_ServerConfig->st_XApi.st_TranslationInfo.tszAPPID, st_JsonTranslationInfo["appid"].asCString());
 	_tcsxcpy(pSt_ServerConfig->st_XApi.st_TranslationInfo.tszAPPKey, st_JsonTranslationInfo["key"].asCString());
 
@@ -154,7 +155,7 @@ bool CModuleConfigure_Json::ModuleConfigure_Json_File(LPCXSTR lpszConfigFile, XE
 	_tcsxcpy(pSt_ServerConfig->st_XSql.tszSQLUser, st_JsonXSql["SQLUser"].asCString());
 	_tcsxcpy(pSt_ServerConfig->st_XSql.tszSQLPass, st_JsonXSql["SQLPass"].asCString());
 
-	if (st_JsonRoot["XPlugin"].empty() || (3 != st_JsonRoot["XPlugin"].size()))
+	if (st_JsonRoot["XPlugin"].empty() || (2 != st_JsonRoot["XPlugin"].size()))
 	{
 		Config_IsErrorOccur = true;
 		Config_dwErrorCode = ERROR_MODULE_CONFIGURE_JSON_XPLUGIN;
@@ -162,8 +163,7 @@ bool CModuleConfigure_Json::ModuleConfigure_Json_File(LPCXSTR lpszConfigFile, XE
 	}
 	Json::Value st_JsonXPlugin = st_JsonRoot["XPlugin"];
 	pSt_ServerConfig->st_XPlugin.bEnable = st_JsonXPlugin["bEnable"].asBool();
-	_tcsxcpy(pSt_ServerConfig->st_XPlugin.tszPluginLib, st_JsonXPlugin["tszPluginLib"].asCString());
-	_tcsxcpy(pSt_ServerConfig->st_XPlugin.tszPluginLua, st_JsonXPlugin["tszPluginLua"].asCString());
+	_tcsxcpy(pSt_ServerConfig->st_XPlugin.tszPlugin, st_JsonXPlugin["tszPlugin"].asCString());
 
 	if (st_JsonRoot["XConfig"].empty() || (4 != st_JsonRoot["XConfig"].size()))
 	{
@@ -172,10 +172,15 @@ bool CModuleConfigure_Json::ModuleConfigure_Json_File(LPCXSTR lpszConfigFile, XE
 		return false;
 	}
 	Json::Value st_JsonXConfig = st_JsonRoot["XConfig"];
-	_tcsxcpy(pSt_ServerConfig->st_XConfig.tszConfigQRCode, st_JsonXConfig["tszConfigQRCode"].asCString());
 	_tcsxcpy(pSt_ServerConfig->st_XConfig.tszConfigDeamon, st_JsonXConfig["tszConfigDeamon"].asCString());
 	_tcsxcpy(pSt_ServerConfig->st_XConfig.tszConfigHTTPMime, st_JsonXConfig["tszConfigHTTPMime"].asCString());
 	_tcsxcpy(pSt_ServerConfig->st_XConfig.tszConfigHTTPCode, st_JsonXConfig["tszConfigHTTPCode"].asCString());
+
+	Json::Value st_JsonXConfigQRCode = st_JsonXConfig["st_ConfigQRCode"];
+	_tcsxcpy(pSt_ServerConfig->st_XConfig.st_ConfigQRCodec.tszModelDetect, st_JsonXConfigQRCode["tszModelDetect"].asCString());
+	_tcsxcpy(pSt_ServerConfig->st_XConfig.st_ConfigQRCodec.tszModelSr, st_JsonXConfigQRCode["tszModelSr"].asCString());
+	_tcsxcpy(pSt_ServerConfig->st_XConfig.st_ConfigQRCodec.tszProtoDetect, st_JsonXConfigQRCode["tszProtoDetect"].asCString());
+	_tcsxcpy(pSt_ServerConfig->st_XConfig.st_ConfigQRCodec.tszProtoSr, st_JsonXConfigQRCode["tszProtoSr"].asCString());
 
 	if (st_JsonRoot["XShortLink"].empty() || (2 != st_JsonRoot["XShortLink"].size()))
 	{
@@ -212,7 +217,7 @@ bool CModuleConfigure_Json::ModuleConfigure_Json_File(LPCXSTR lpszConfigFile, XE
 	pSt_ServerConfig->st_XVerifcation.st_VerSwitch.bBackService = st_JsonVerSwitch["bBackService"].asBool();
 	pSt_ServerConfig->st_XVerifcation.st_VerSwitch.bDeamon = st_JsonVerSwitch["bDeamon"].asBool();
 
-	if (st_JsonRoot["XAPIModule"].empty() || (4 != st_JsonRoot["XAPIModule"].size()))
+	if (st_JsonRoot["XAPIModule"].empty() || (5 != st_JsonRoot["XAPIModule"].size()))
 	{
 		Config_IsErrorOccur = true;
 		Config_dwErrorCode = ERROR_MODULE_CONFIGURE_JSON_XREPORT;
@@ -221,6 +226,7 @@ bool CModuleConfigure_Json::ModuleConfigure_Json_File(LPCXSTR lpszConfigFile, XE
 	Json::Value st_JsonXAPIModule = st_JsonRoot["XAPIModule"];
 	pSt_ServerConfig->st_XAPIModule.bEnable = st_JsonXAPIModule["bEnable"].asBool();
 	_tcsxcpy(pSt_ServerConfig->st_XAPIModule.tszDBIPAddr, st_JsonXAPIModule["tszDBIPAddr"].asCString());
+	_tcsxcpy(pSt_ServerConfig->st_XAPIModule.tszDBISPAddr, st_JsonXAPIModule["tszDBISPAddr"].asCString());
 	_tcsxcpy(pSt_ServerConfig->st_XAPIModule.tszDBMac, st_JsonXAPIModule["tszDBMac"].asCString());
 	_tcsxcpy(pSt_ServerConfig->st_XAPIModule.tszDBPhone, st_JsonXAPIModule["tszDBPhone"].asCString());
 
@@ -318,71 +324,6 @@ bool CModuleConfigure_Json::ModuleConfigure_Json_VersionFile(LPCXSTR lpszConfigF
 	return true;
 }
 /********************************************************************
-函数名称：ModuleConfigure_Json_QRCodeFile
-函数功能：读取JSON配置文件
- 参数.一：lpszConfigFile
-  In/Out：In
-  类型：常量字符指针
-  可空：N
-  意思：输入要读取的配置文件
- 参数.二：pSt_QRCodeConfig
-  In/Out：Out
-  类型：数据结构指针
-  可空：N
-  意思：输出二维码配置信息
-返回值
-  类型：逻辑型
-  意思：是否成功
-备注：
-*********************************************************************/
-bool CModuleConfigure_Json::ModuleConfigure_Json_QRCodeFile(LPCXSTR lpszConfigFile, XENGINE_QRCODECONFIG* pSt_QRCodeConfig)
-{
-	Config_IsErrorOccur = false;
-
-	if ((NULL == lpszConfigFile) || (NULL == pSt_QRCodeConfig))
-	{
-		Config_IsErrorOccur = true;
-		Config_dwErrorCode = ERROR_MODULE_CONFIGURE_JSON_PARAMENT;
-		return false;
-	}
-	Json::Value st_JsonRoot;
-	JSONCPP_STRING st_JsonError;
-	Json::CharReaderBuilder st_JsonBuilder;
-	//读取配置文件所有内容到缓冲区
-	FILE* pSt_File = _xtfopen(lpszConfigFile, _X("rb"));
-	if (NULL == pSt_File)
-	{
-		Config_IsErrorOccur = true;
-		Config_dwErrorCode = ERROR_MODULE_CONFIGURE_JSON_OPENFILE;
-		return false;
-	}
-	size_t nCount = 0;
-	XCHAR tszMsgBuffer[4096];
-	while (1)
-	{
-		size_t nRet = fread(tszMsgBuffer + nCount, 1, 2048, pSt_File);
-		if (nRet <= 0)
-		{
-			break;
-		}
-		nCount += nRet;
-	}
-	fclose(pSt_File);
-	//开始解析配置文件
-	std::unique_ptr<Json::CharReader> const pSt_JsonReader(st_JsonBuilder.newCharReader());
-	if (!pSt_JsonReader->parse(tszMsgBuffer, tszMsgBuffer + nCount, &st_JsonRoot, &st_JsonError))
-	{
-		Config_IsErrorOccur = true;
-		Config_dwErrorCode = ERROR_MODULE_CONFIGURE_JSON_PARSE;
-		return false;
-	}
-	_tcsxcpy(pSt_QRCodeConfig->tszModelDetect, st_JsonRoot["tszModelDetect"].asCString());
-	_tcsxcpy(pSt_QRCodeConfig->tszModelSr, st_JsonRoot["tszModelSr"].asCString());
-	_tcsxcpy(pSt_QRCodeConfig->tszProtoDetect, st_JsonRoot["tszProtoDetect"].asCString());
-	_tcsxcpy(pSt_QRCodeConfig->tszProtoSr, st_JsonRoot["tszProtoSr"].asCString());
-	return true;
-}
-/********************************************************************
 函数名称：ModuleConfigure_Json_PluginFile
 函数功能：读取JSON配置文件
  参数.一：lpszConfigFile
@@ -442,36 +383,46 @@ bool CModuleConfigure_Json::ModuleConfigure_Json_PluginFile(LPCXSTR lpszConfigFi
 		return false;
 	}
 	//申请内存
-	pSt_PluginConfig->pStl_ListPlugin = new list<XENGINE_PLUGININFO>;
-	if (NULL == pSt_PluginConfig->pStl_ListPlugin)
+	pSt_PluginConfig->pStl_ListPluginLua = new list<XENGINE_PLUGININFO>;
+	pSt_PluginConfig->pStl_ListPluginModule = new list<XENGINE_PLUGININFO>;
+	if (NULL == pSt_PluginConfig->pStl_ListPluginLua || NULL == pSt_PluginConfig->pStl_ListPluginModule)
 	{
 		Config_IsErrorOccur = true;
 		Config_dwErrorCode = ERROR_MODULE_CONFIGURE_JSON_MALLOC;
 		return false;
 	}
-	//解析列表
-	Json::Value st_JsonArray = st_JsonRoot["PluginArray"];
-	for (unsigned int i = 0; i < st_JsonArray.size(); i++)
+	//解析module列表
+	Json::Value st_JsonModuleArray = st_JsonRoot["PluginModule"];
+	for (unsigned int i = 0; i < st_JsonModuleArray.size(); i++)
 	{
 		XENGINE_PLUGININFO st_PluginInfo;
 		memset(&st_PluginInfo, '\0', sizeof(XENGINE_PLUGININFO));
 
-		st_PluginInfo.bEnable = st_JsonArray[i]["PluginEnable"].asBool();
-		_tcsxcpy(st_PluginInfo.tszPluginFile, st_JsonArray[i]["PluginFile"].asCString());
-
-		if (NULL == _tcsxstr(st_PluginInfo.tszPluginFile + 3,_X(".")))
-		{
+		st_PluginInfo.bEnable = st_JsonModuleArray[i]["PluginEnable"].asBool();
+		_tcsxcpy(st_PluginInfo.tszPluginFile, st_JsonModuleArray[i]["PluginFile"].asCString());
 #ifdef _MSC_BUILD
-			_tcsxcat(st_PluginInfo.tszPluginFile, ".dll");
+		_tcsxcat(st_PluginInfo.tszPluginFile, ".dll");
 #elif __linux__
-			_tcsxcat(st_PluginInfo.tszPluginFile, ".so");
+		_tcsxcat(st_PluginInfo.tszPluginFile, ".so");
 #else
-			_tcsxcat(st_PluginInfo.tszPluginFile, ".dylib");
+		_tcsxcat(st_PluginInfo.tszPluginFile, ".dylib");
 #endif
-		}
+		_tcsxcpy(st_PluginInfo.tszPluginMethod, st_JsonModuleArray[i]["PluginMethod"].asCString());
 
-		_tcsxcpy(st_PluginInfo.tszPluginMethod, st_JsonArray[i]["PluginMethod"].asCString());
-		pSt_PluginConfig->pStl_ListPlugin->push_back(st_PluginInfo);
+		pSt_PluginConfig->pStl_ListPluginModule->push_back(st_PluginInfo);
+	}
+	//解析lua列表
+	Json::Value st_JsonLuaArray = st_JsonRoot["PluginLua"];
+	for (unsigned int i = 0; i < st_JsonLuaArray.size(); i++)
+	{
+		XENGINE_PLUGININFO st_PluginInfo;
+		memset(&st_PluginInfo, '\0', sizeof(XENGINE_PLUGININFO));
+
+		st_PluginInfo.bEnable = st_JsonLuaArray[i]["PluginEnable"].asBool();
+		_tcsxcpy(st_PluginInfo.tszPluginFile, st_JsonLuaArray[i]["PluginFile"].asCString());
+		_tcsxcpy(st_PluginInfo.tszPluginMethod, st_JsonLuaArray[i]["PluginMethod"].asCString());
+
+		pSt_PluginConfig->pStl_ListPluginLua->push_back(st_PluginInfo);
 	}
 	return true;
 }

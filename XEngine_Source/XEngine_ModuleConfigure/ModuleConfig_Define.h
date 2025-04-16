@@ -17,8 +17,7 @@ typedef struct
 {
 	XCHAR tszIPAddr[128];                     //本机IP地址,根据需要配置
 	bool bDeamon;                             //是否以守护进程启动,LINUX有效
-	bool bAutoStart;                          //是否自动启动
-	bool bHideWnd;                            //是否隐藏窗口启动
+	bool bShowWnd;                            //是否显示窗口启动
 	int nHttpPort;                            //HTTP服务端口
 	int nRFCPort;                             //RFC标准服务端口
 	struct
@@ -36,7 +35,8 @@ typedef struct
 	}st_XTime;                                //次数*时间=超时
 	struct
 	{
-		XCHAR tszLogFile[MAX_PATH];           //日志文件地址
+		XCHAR tszAPIFile[MAX_PATH];           //日志文件地址
+		XCHAR tszServiceFile[MAX_PATH];
 		int nMaxSize;                         //最大日志大小
 		int nMaxCount;                        //最大日志个数
 		int nLogLeave;                        //日志等级
@@ -56,9 +56,10 @@ typedef struct
 		XCHAR tszWeatherUrl[MAX_PATH];        //天气接口
 		XCHAR tszBankUrl[MAX_PATH];           //银行卡验证地址
 		XCHAR tszOilUrl[MAX_PATH];            //油价接口
-		XCHAR tszTranslationUrl[MAX_PATH];    //翻译接口
+		//翻译接口
 		struct  
 		{
+			XCHAR tszAPPUrl[MAX_PATH];    
 			XCHAR tszAPPID[MAX_PATH];
 			XCHAR tszAPPKey[MAX_PATH];
 		}st_TranslationInfo;
@@ -66,12 +67,18 @@ typedef struct
 	struct  
 	{
 		bool bEnable;                         //是否启用
-		XCHAR tszPluginLib[MAX_PATH];         //配置文件地址
-		XCHAR tszPluginLua[MAX_PATH];         //配置文件地址
+		XCHAR tszPlugin[MAX_PATH];            //配置文件地址
 	}st_XPlugin;
 	struct
 	{   
-		XCHAR tszConfigQRCode[MAX_PATH];      //二维码配置地址
+		//二维码模型库
+		struct
+		{
+			XCHAR tszModelDetect[MAX_PATH];
+			XCHAR tszModelSr[MAX_PATH];
+			XCHAR tszProtoDetect[MAX_PATH];
+			XCHAR tszProtoSr[MAX_PATH];
+		}st_ConfigQRCodec;
 		XCHAR tszConfigDeamon[MAX_PATH];      //守护进程配置文件
 		XCHAR tszConfigHTTPMime[MAX_PATH];    //HTTPMINE配置文件
 		XCHAR tszConfigHTTPCode[MAX_PATH];    //HTTP状态配置文件
@@ -108,6 +115,7 @@ typedef struct
 		XCHAR tszDBPhone[MAX_PATH];
 		XCHAR tszDBMac[MAX_PATH];
 		XCHAR tszDBIPAddr[MAX_PATH];
+		XCHAR tszDBISPAddr[MAX_PATH];
 	}st_XAPIModule;
 	struct
 	{
@@ -120,14 +128,6 @@ typedef struct
 		list<string>* pStl_ListVer;
 	}st_XVer;
 }XENGINE_SERVICECONFIG;
-//二维码模型库
-typedef struct
-{
-	XCHAR tszModelDetect[MAX_PATH];
-	XCHAR tszModelSr[MAX_PATH];
-	XCHAR tszProtoDetect[MAX_PATH];
-	XCHAR tszProtoSr[MAX_PATH];
-}XENGINE_QRCODECONFIG;
 //插件
 typedef struct
 {
@@ -137,7 +137,8 @@ typedef struct
 }XENGINE_PLUGININFO;
 typedef struct
 {
-	list<XENGINE_PLUGININFO>* pStl_ListPlugin;
+	list<XENGINE_PLUGININFO>* pStl_ListPluginModule;
+	list<XENGINE_PLUGININFO>* pStl_ListPluginLua;
 }XENGINE_PLUGINCONFIG;
 //////////////////////////////////////////////////////////////////////////
 typedef struct
@@ -213,25 +214,6 @@ extern "C" bool ModuleConfigure_Json_File(LPCXSTR lpszConfigFile, XENGINE_SERVIC
 备注：
 *********************************************************************/
 extern "C" bool ModuleConfigure_Json_VersionFile(LPCXSTR lpszConfigFile, XENGINE_SERVICECONFIG* pSt_ServerConfig);
-/********************************************************************
-函数名称：ModuleConfigure_Json_QRCodeFile
-函数功能：读取JSON配置文件
- 参数.一：lpszConfigFile
-  In/Out：In
-  类型：常量字符指针
-  可空：N
-  意思：输入要读取的配置文件
- 参数.二：pSt_QRCodeConfig
-  In/Out：Out
-  类型：数据结构指针
-  可空：N
-  意思：输出二维码配置信息
-返回值
-  类型：逻辑型
-  意思：是否成功
-备注：
-*********************************************************************/
-extern "C" bool ModuleConfigure_Json_QRCodeFile(LPCXSTR lpszConfigFile, XENGINE_QRCODECONFIG* pSt_QRCodeConfig);
 /********************************************************************
 函数名称：ModuleConfigure_Json_PluginFile
 函数功能：读取JSON配置文件

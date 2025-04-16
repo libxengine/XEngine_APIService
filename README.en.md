@@ -72,6 +72,10 @@ window Exection XEngine_WINEnv.bat
 Linux Exection:sudo ./XEngine_LINEnv.sh -i 3  
 Macos Exection:./XEngine_LINEnv.sh -i 3
 
+####### Development environment
+It is recommended to use github to pull the code, and use the VS2022+COPILOG combination. Copilot will automatically help you analyze and modify the code  
+In order to save resources, now the IP and phone and mac databases need to be copied by themselves. Execute the XEngine_Release/copydb.bat(copydb.sh) script. Otherwise, an error will be reported
+
 #### Database Env
 MYSQL database version 8.0 or above is required. Create a table through CreateDatabase.sql, and then import other sql table
 Modify the database configuration in XSQL in the configuration file to your  
@@ -87,9 +91,9 @@ git submodule init
 git submodule update  
 
 #### Linux
-ubuntu:sudo apt install sudo apt install liblua5.4-dev libopencv-dev libopencv-contrib-dev libqrencode-dev libleptonica-dev libtesseract-dev  
-centos:compile by self  
-use makefile compile,UBUNTU24.04 x64 or RockyLinux 9 x64
+ubuntu:sudo apt install sudo apt install liblua5.4-dev libopencv-dev libopencv-contrib-dev libqrencode-dev libleptonica-dev libtesseract-dev -y  
+centos:sudo dnf install lua-devel opencv-devel qrencode-devel leptonica-devel tesseract-devel -y  
+use makefile compile,UBUNTU24.04 x64 or RockyLinux 9 x64  
 Run it on the terminal
 
 #### Macos
