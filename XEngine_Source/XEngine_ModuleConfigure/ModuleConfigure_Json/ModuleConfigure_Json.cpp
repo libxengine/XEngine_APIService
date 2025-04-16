@@ -172,15 +172,15 @@ bool CModuleConfigure_Json::ModuleConfigure_Json_File(LPCXSTR lpszConfigFile, XE
 		return false;
 	}
 	Json::Value st_JsonXConfig = st_JsonRoot["XConfig"];
-
-	_tcsxcpy(pSt_ServerConfig->st_XConfig.st_ConfigQRCodec.tszModelDetect, st_JsonXConfig["st_ConfigQRCode"]["tszModelDetect"].asCString());
-	_tcsxcpy(pSt_ServerConfig->st_XConfig.st_ConfigQRCodec.tszModelSr, st_JsonXConfig["st_ConfigQRCode"]["tszModelSr"].asCString());
-	_tcsxcpy(pSt_ServerConfig->st_XConfig.st_ConfigQRCodec.tszProtoDetect, st_JsonXConfig["st_ConfigQRCode"]["tszProtoDetect"].asCString());
-	_tcsxcpy(pSt_ServerConfig->st_XConfig.st_ConfigQRCodec.tszProtoSr, st_JsonXConfig["st_ConfigQRCode"]["tszProtoSr"].asCString());
-
 	_tcsxcpy(pSt_ServerConfig->st_XConfig.tszConfigDeamon, st_JsonXConfig["tszConfigDeamon"].asCString());
 	_tcsxcpy(pSt_ServerConfig->st_XConfig.tszConfigHTTPMime, st_JsonXConfig["tszConfigHTTPMime"].asCString());
 	_tcsxcpy(pSt_ServerConfig->st_XConfig.tszConfigHTTPCode, st_JsonXConfig["tszConfigHTTPCode"].asCString());
+
+	Json::Value st_JsonXConfigQRCode = st_JsonXConfig["st_ConfigQRCode"];
+	_tcsxcpy(pSt_ServerConfig->st_XConfig.st_ConfigQRCodec.tszModelDetect, st_JsonXConfigQRCode["tszModelDetect"].asCString());
+	_tcsxcpy(pSt_ServerConfig->st_XConfig.st_ConfigQRCodec.tszModelSr, st_JsonXConfigQRCode["tszModelSr"].asCString());
+	_tcsxcpy(pSt_ServerConfig->st_XConfig.st_ConfigQRCodec.tszProtoDetect, st_JsonXConfigQRCode["tszProtoDetect"].asCString());
+	_tcsxcpy(pSt_ServerConfig->st_XConfig.st_ConfigQRCodec.tszProtoSr, st_JsonXConfigQRCode["tszProtoSr"].asCString());
 
 	if (st_JsonRoot["XShortLink"].empty() || (2 != st_JsonRoot["XShortLink"].size()))
 	{

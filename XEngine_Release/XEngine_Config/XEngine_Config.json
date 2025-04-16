@@ -34,8 +34,8 @@
         "tszWeatherUrl":"https://restapi.amap.com/v3/weather/weatherInfo?city=%s&key=3239fc302d6480ce49973f4d1c59e5d8",
         "tszBankUrl":"https://ccdcapi.alipay.com/validateAndCacheCardInfo.json?cardNo=%s&cardBinCheck=true",
         "tszOilUrl":"https://www.iamwawa.cn/oilprice/api?area=%s",
-        "tszTranslationUrl":"https://fanyi-api.baidu.com/api/trans/vip/translate",
         "st_TranslationInfo":{
+            "url":"https://fanyi-api.baidu.com/api/trans/vip/translate",
             "appid":"20231228001924304",
             "key":"udXGjpmNVeQHml1FjT8E"
         }
@@ -55,11 +55,6 @@
         "tszConfigHTTPMime":"./XEngine_Config/HttpMime.types",
         "tszConfigHTTPCode":"./XEngine_Config/HttpCode.types"
     },
-    "XImageText":{
-        "bEnable":true,
-        "tszImagePath":"./XEngine_Config/tessdata",
-        "tszImageLanguage":"chi_sim+eng"
-    },
     "XShortLink":{
         "tszHostUrl":"url.xyry.org",
         "nHTTPCode":301
@@ -72,16 +67,21 @@
             "bDeamon":false
         }
     },
+    "XReport":{
+        "bEnable":true,
+        "tszAPIUrl":"http://app.xyry.org:5501/api?function=machine",
+        "tszServiceName":"XEngine_APIService"
+    },
+    "XImageText":{
+        "bEnable":true,
+        "tszImagePath":"./XEngine_Config/tessdata",
+        "tszImageLanguage":"chi_sim+eng"
+    },
     "XAPIModule": {
         "bEnable": true,
         "tszDBPhone": "./XEngine_DBFile/phone.xdb",
         "tszDBMac": "./XEngine_DBFile/macaddr.xdb",
         "tszDBIPAddr": "./XEngine_DBFile/GeoLite2-City.mmdb",
         "tszDBISPAddr": "./XEngine_DBFile/GeoLite2-ASN.mmdb"
-    },
-    "XReport":{
-        "bEnable":true,
-        "tszAPIUrl":"http://app.xyry.org:5501/api?function=machine",
-        "tszServiceName":"XEngine_APIService"
     }
 }
