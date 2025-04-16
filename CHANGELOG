@@ -1,3 +1,39 @@
+XEngine_APIService V3.10.0.1001
+
+增加:windows服务支持
+增加:更新系统发布支持
+增加:windows arm64和rockylinux支持
+更新:依赖库
+更新:vscopy 文件和重载类型
+更新:ip和电话数据库
+优化:启动参数
+修改:当debug模式的时候不发送信息报告
+修改:合并qr配置到主配置中
+修改:合并Lua和lib配置到一个文件
+修改:ip查询支持设置回复语言
+修改:匹配窗口显示配置
+修改:合并翻译配置
+修正:当加载数据库失败没有退出的问题
+删除:删除了自动启动支持
+删除:油价数据库
+
+added:windows service app
+added:more release system release support
+added:windows arm64 and rockylinux build
+update:depend library
+update:vs copy file and reload type
+update:ip and phone database
+improved:start parameter
+modify:does not report info with debug build
+modify:merge qr configure to main configure
+modify:merge lua and lib configure
+modify:ip query to set language reply support
+modify:match show windows type on windows
+modify:merge translation configure
+fixed:not exist when load db failed 
+delete:auto start for http app
+delete:oil sql file
+======================================================================================
 XEngine_APIService V3.9.0.1001
 
 增加:设置日志类型配置支持

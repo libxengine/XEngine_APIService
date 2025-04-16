@@ -72,6 +72,10 @@ window Exection XEngine_WINEnv.bat
 Linux Exection:sudo ./XEngine_LINEnv.sh -i 3  
 Macos Exection:./XEngine_LINEnv.sh -i 3
 
+####### Development environment
+It is recommended to use github to pull the code, and use the VS2022+COPILOG combination. Copilot will automatically help you analyze and modify the code  
+In order to save resources, now the IP and phone and mac databases need to be copied by themselves. Execute the XEngine_Release/copydb.bat(copydb.sh) script. Otherwise, an error will be reported
+
 #### Database Env
 MYSQL database version 8.0 or above is required. Create a table through CreateDatabase.sql, and then import other sql table
 Modify the database configuration in XSQL in the configuration file to your  

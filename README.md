@@ -75,6 +75,10 @@ window执行XEngine_WINEnv.bat 脚本.
 Linux执行:sudo ./XEngine_LINEnv.sh -i 3  
 macos执行:./XEngine_LINEnv.sh -i 3  
 
+###### 开发环境搭建
+建议使用github拉取代码,在使用VS2022+COPILOG组合.Copilot会自动帮你分析和修改代码  
+为了节约资源,现在ip和phone,mac数据库需要自己拷贝.执行XEngine_Release/copydb.bat(copydb.sh)脚本即可.否则会报错
+
 #### 数据库环境
 需要MYSQL数据库8.0以上版本.通过CreateDatabase.sql创建表,然后导入剩余的表  
 修改配置文件里面XSQL里面的数据库配置为你的  
