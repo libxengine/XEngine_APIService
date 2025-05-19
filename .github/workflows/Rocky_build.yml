@@ -93,6 +93,8 @@ jobs:
       - name: test
         run: |
             cd XEngine_Release
+            chmod 777 copydb.sh
+            ./copydb.sh
             ./XEngine_APIServiceApp -t
 
       - name: Upload folder as artifact with RockyLinux
