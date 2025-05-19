@@ -62,7 +62,7 @@ jobs:
         run: |
             dnf update -y
             dnf install gcc g++ make git jq unzip wget -y
-            apt install liblua5.4-dev libopencv-dev libopencv-contrib-dev libqrencode-dev libleptonica-dev libtesseract-dev -y
+            dnf install lua-devel opencv-devel qrencode-devel leptonica-devel tesseract-devel -y
 
       - name: Set TERM variable
         run: echo "TERM=xterm" >> $GITHUB_ENV
