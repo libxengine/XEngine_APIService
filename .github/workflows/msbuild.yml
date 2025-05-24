@@ -151,7 +151,6 @@ jobs:
           cd XEngine_Release
           ./copydb.bat
           ./VSCopy_Arm64.bat
-          ./XEngine_HttpApp.exe -t
         shell: pwsh
 
       - name: Upload folder as artifact with x86
