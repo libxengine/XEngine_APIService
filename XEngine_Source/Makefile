@@ -25,6 +25,12 @@ APIMODULE_IPMAC_PATH = ./XEngine_DBDepend/XEngine_IPMacData/XEngine_Source/XEngi
 
 APP_HTTP_PATH = ./XEngine_ServiceApp/XEngine_HttpApp
 
+ifeq ($(PLATFORM),linux)
+	FILEEXT = so
+else ifeq ($(PLATFORM),mac)
+	FILEEXT = dylib
+endif
+
 XENGINE_MODULES = libjsoncpp.so libXEngine_InfoReport.so          \
 				  libXEngine_ModuleConfigure.so libXEngine_ModuleDatabase.so libXEngine_ModuleProtocol.so libXEngine_ModuleSystem.so libXEngine_ModuleHelp.so libXEngine_ModulePlugin.so  \
 				  libModulePlugin_Zodiac.so libModulePlugin_Password.so libModulePlugin_Timezone.so libModulePlugin_BMIndex.so  libModulePlugin_Meter.so \
@@ -33,12 +39,6 @@ XENGINE_MODULES = libjsoncpp.so libXEngine_InfoReport.so          \
 
 .PHONY:MakeAll 
 MakeAll:$(XENGINE_MODULES)
-
-ifeq ($(PLATFORM),linux)
-	FILEEXT = so
-else ifeq ($(PLATFORM),mac)
-	FILEEXT = dylib
-endif
 
 libjsoncpp.so:
 ifeq ($(FLAGS), InstallAll)
