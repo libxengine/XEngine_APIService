@@ -26,7 +26,7 @@ public:
 	bool ModuleHelp_P2PClient_DelAll();
 	bool ModuleHelp_P2PClient_Heart(XENGINE_P2XPPEER_PROTOCOL* pSt_P2PProtocol);
 protected:
-	static XHTHREAD CALLBACK ModuleHelp_P2PClient_Thread(XPVOID lParam);
+	static XHTHREAD XCALLBACK ModuleHelp_P2PClient_Thread(XPVOID lParam);
 private:
 	bool m_bIsRun;
 	int m_nTimeout;

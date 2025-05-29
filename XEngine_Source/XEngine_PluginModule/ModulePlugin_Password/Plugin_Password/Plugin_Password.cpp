@@ -72,7 +72,7 @@ bool CPlugin_Password::PluginCore_Call(XCHAR*** pppHDRList, int nListCount, int*
 	XCHAR tszKeyName[128];
 	XCHAR tszParamType[128];
 	XCHAR tszParamLength[128];
-	XCHAR tszPassword[MAX_PATH];
+	XCHAR tszPassword[XPATH_MAX];
 	Json::Value st_JsonRoot;
 	Json::Value st_JsonObject;
 	Json::StreamWriterBuilder st_JsonBuilder;

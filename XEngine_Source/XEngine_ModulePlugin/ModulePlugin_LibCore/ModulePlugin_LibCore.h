@@ -22,7 +22,7 @@ typedef struct
 #else
 	void* mhFile;
 #endif
-	XCHAR tszModuleFile[MAX_PATH];
+	XCHAR tszModuleFile[XPATH_MAX];
 
 	bool(*fpCall_PluginCore_Init)(XPVOID lParam);
 	void(*fpCall_PluginCore_UnInit)();

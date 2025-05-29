@@ -8,7 +8,7 @@ bool HTTPTask_TaskGet_Oil(LPCXSTR lpszClientAddr, LPCXSTR lpszCityStr)
 	XCHAR* ptszBodyBuffer;
 	XCHAR tszMsgBuffer[4096];
 	XCHAR tszPktBuffer[4096];
-	XCHAR tszUrlBuffer[MAX_PATH] = {};
+	XCHAR tszUrlBuffer[XPATH_MAX] = {};
 
 	XENGINE_OILINFO st_OilInfo = {};
 	RFCCOMPONENTS_HTTP_HDRPARAM st_HDRParam = {};    //发送给客户端的参数
@@ -19,11 +19,11 @@ bool HTTPTask_TaskGet_Oil(LPCXSTR lpszClientAddr, LPCXSTR lpszCityStr)
 	st_HDRParam.nHttpCode = 200; //HTTP CODE码
 	st_HDRParam.bIsClose = true; //收到回复后就关闭
 
-	XCHAR tszURLEncoder[MAX_PATH] = {};
+	XCHAR tszURLEncoder[XPATH_MAX] = {};
 	_xstprintf(tszUrlBuffer, st_ServiceConfig.st_XApi.tszOilUrl, lpszCityStr);
 
 #ifdef _MSC_BUILD
-	XCHAR tszUTFEncoder[MAX_PATH] = {};
+	XCHAR tszUTFEncoder[XPATH_MAX] = {};
 	BaseLib_Charset_AnsiToUTF(tszUrlBuffer, tszUTFEncoder);
 	Cryption_Codec_UrlEnCodec(tszUTFEncoder, _tcsxlen(tszUTFEncoder), tszURLEncoder);
 #else

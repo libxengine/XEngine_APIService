@@ -10,7 +10,7 @@
 //    Purpose:     HTTP任务处理代码
 //    History:
 *********************************************************************/
-XHTHREAD CALLBACK HTTPTask_TastPost_Thread(XPVOID lParam)
+XHTHREAD XCALLBACK HTTPTask_TastPost_Thread(XPVOID lParam)
 {
 	//任务池是编号1开始的.
 	int nThreadPos = *(int*)lParam;
@@ -75,8 +75,8 @@ bool HTTPTask_TastPost_Handle(RFCCOMPONENTS_HTTP_REQPARAM* pSt_HTTPParam, LPCXST
 
 	memset(tszUrlName, '\0', sizeof(tszUrlName));
 
-	XCHAR tszUrlBuffer[MAX_PATH] = {};
-	XCHAR tszGBKBuffer[MAX_PATH] = {};
+	XCHAR tszUrlBuffer[XPATH_MAX] = {};
+	XCHAR tszGBKBuffer[XPATH_MAX] = {};
 	Cryption_Codec_UrlDeCodec(pSt_HTTPParam->tszHttpUri, _tcsxlen(pSt_HTTPParam->tszHttpUri), tszUrlBuffer);
 #ifdef _MSC_BUILD
 	int nCLen = _tcsxlen(tszUrlBuffer);
@@ -100,8 +100,8 @@ bool HTTPTask_TastPost_Handle(RFCCOMPONENTS_HTTP_REQPARAM* pSt_HTTPParam, LPCXST
 		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("HTTP客户端:%s,发送的URL请求参数不正确:%s"), lpszClientAddr, tszGBKBuffer);
 		return false;
 	}
-	XCHAR tszKey[MAX_PATH];
-	XCHAR tszValue[MAX_PATH];
+	XCHAR tszKey[XPATH_MAX];
+	XCHAR tszValue[XPATH_MAX];
 	LPCXSTR lpszFuncName = _X("api");
 	LPCXSTR lpszParamFuncKey = _X("function");
 	LPCXSTR lpszParamName = _X("params1");
@@ -131,8 +131,8 @@ bool HTTPTask_TastPost_Handle(RFCCOMPONENTS_HTTP_REQPARAM* pSt_HTTPParam, LPCXST
 	LPCXSTR lpszParamDeamon = _X("deamon");
 	LPCXSTR lpszParamMachine = _X("machine");
 
-	memset(tszKey, '\0', MAX_PATH);
-	memset(tszValue, '\0', MAX_PATH);
+	memset(tszKey, '\0', XPATH_MAX);
+	memset(tszValue, '\0', XPATH_MAX);
 
 	if (0 != _tcsxnicmp(lpszFuncName, tszUrlName, _tcsxlen(lpszFuncName)))
 	{

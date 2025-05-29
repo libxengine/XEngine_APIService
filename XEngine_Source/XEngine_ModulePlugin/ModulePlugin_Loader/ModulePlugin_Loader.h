@@ -12,8 +12,8 @@
 *********************************************************************/
 typedef struct
 {
-	XCHAR tszModuleFile[MAX_PATH];
-	XCHAR tszModuleMethod[MAX_PATH];
+	XCHAR tszModuleFile[XPATH_MAX];
+	XCHAR tszModuleMethod[XPATH_MAX];
 	XNETHANDLE xhToken;
 	int nType;
 }PLUGINCORE_LOADER, * LPPLUGINCORE_LOADER;

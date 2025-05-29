@@ -8,13 +8,13 @@ bool HTTPTask_TaskGet_WeatherInfo(LPCXSTR lpszClientAddr, LPCXSTR lpszAddrCode)
 	XCHAR* ptszBodyBuffer;
 	XCHAR tszMsgBuffer[4096];
 	XCHAR tszPktBuffer[4096];
-	XCHAR tszUrlBuffer[MAX_PATH];
+	XCHAR tszUrlBuffer[XPATH_MAX];
 	XENGINE_WEATHERINFO st_WeatherInfo = {};
 	RFCCOMPONENTS_HTTP_HDRPARAM st_HDRParam = {};    //发送给客户端的参数
 
 	memset(tszMsgBuffer, '\0', sizeof(tszMsgBuffer));
 	memset(tszPktBuffer, '\0', sizeof(tszPktBuffer));
-	memset(tszUrlBuffer, '\0', MAX_PATH);
+	memset(tszUrlBuffer, '\0', XPATH_MAX);
 
 	st_HDRParam.nHttpCode = 200; //HTTP CODE码
 	st_HDRParam.bIsClose = true; //收到回复后就关闭

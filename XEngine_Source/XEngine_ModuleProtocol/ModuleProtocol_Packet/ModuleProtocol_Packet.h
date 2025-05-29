@@ -12,7 +12,7 @@
 *********************************************************************/
 typedef struct
 {
-	XCHAR tszUsername[MAX_PATH];
+	XCHAR tszUsername[XPATH_MAX];
 	XCHAR tszClientAddr[128];
 }P2XPPROTOCOL_LANPACKET;
 

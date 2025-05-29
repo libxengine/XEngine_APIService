@@ -6,8 +6,8 @@ bool HTTPTask_TaskPost_SLProxy(LPCXSTR lpszClientAddr, LPCXSTR lpszUriStr, XCHAR
 	bool bFound = false;
 	for (int i = 0; i < nHDRCount; i++)
 	{
-		XCHAR tszKey[MAX_PATH];
-		XCHAR tszValue[MAX_PATH];
+		XCHAR tszKey[XPATH_MAX];
+		XCHAR tszValue[XPATH_MAX];
 
 		memset(tszKey, '\0', sizeof(tszKey));
 		memset(tszValue, '\0', sizeof(tszValue));

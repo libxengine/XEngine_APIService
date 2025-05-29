@@ -7,14 +7,14 @@ static XNETHANDLE xhAudio = 0;
 static XNETHANDLE xhVideo = 0;
 static XHANDLE xhStream = NULL;
 
-void CALLBACK HTTPTask_TaskPost_CBVideo(uint8_t* ptszAVBuffer, int nAVLen, AVCOLLECT_TIMEINFO* pSt_TimeInfo, XPVOID lParam)
+void XCALLBACK HTTPTask_TaskPost_CBVideo(uint8_t* ptszAVBuffer, int nAVLen, AVCOLLECT_TIMEINFO* pSt_TimeInfo, XPVOID lParam)
 {
 	if (!XClient_StreamPush_LiveVideo(xhStream, ptszAVBuffer, nAVLen))
 	{
 		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("屏幕采集器,推流编码失败,需要关闭推流服务,错误码:%lX"), StreamClient_GetLastError());
 	}
 }
-void CALLBACK HTTPTask_TaskPost_CBAudio(uint8_t* ptszAVBuffer, int nAVLen, AVCOLLECT_TIMEINFO* pSt_TimeInfo, XPVOID lParam)
+void XCALLBACK HTTPTask_TaskPost_CBAudio(uint8_t* ptszAVBuffer, int nAVLen, AVCOLLECT_TIMEINFO* pSt_TimeInfo, XPVOID lParam)
 {
 	if (!XClient_StreamPush_LiveAudio(xhStream, ptszAVBuffer, nAVLen))
 	{
@@ -29,8 +29,8 @@ bool HTTPTask_TaskPost_BackService(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer
 	int nBSType = 0;
 	XCHAR* ptszRVBuffer = (XCHAR*)malloc(XENGINE_MEMORY_SIZE_MAX);
 	XCHAR* ptszSDBuffer = (XCHAR*)malloc(XENGINE_MEMORY_SIZE_MAX);
-	XCHAR tszSrcBuffer[MAX_PATH];
-	XCHAR tszDstBuffer[MAX_PATH];
+	XCHAR tszSrcBuffer[XPATH_MAX];
+	XCHAR tszDstBuffer[XPATH_MAX];
 	RFCCOMPONENTS_HTTP_HDRPARAM st_HDRParam;    //发送给客户端的参数
 
 	memset(ptszRVBuffer, '\0', XENGINE_MEMORY_SIZE_MAX);
@@ -45,8 +45,8 @@ bool HTTPTask_TaskPost_BackService(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer
 
 	if (st_ServiceConfig.st_XVerifcation.st_VerSwitch.bBackService)
 	{
-		XCHAR tszUserName[MAX_PATH];
-		XCHAR tszUserPass[MAX_PATH];
+		XCHAR tszUserName[XPATH_MAX];
+		XCHAR tszUserPass[XPATH_MAX];
 
 		memset(tszUserName, '\0', sizeof(tszUserName));
 		memset(tszUserPass, '\0', sizeof(tszUserPass));

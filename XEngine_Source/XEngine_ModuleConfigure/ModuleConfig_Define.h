@@ -35,8 +35,8 @@ typedef struct
 	}st_XTime;                                //次数*时间=超时
 	struct
 	{
-		XCHAR tszAPIFile[MAX_PATH];           //日志文件地址
-		XCHAR tszServiceFile[MAX_PATH];
+		XCHAR tszAPIFile[XPATH_MAX];           //日志文件地址
+		XCHAR tszServiceFile[XPATH_MAX];
 		int nMaxSize;                         //最大日志大小
 		int nMaxCount;                        //最大日志个数
 		int nLogLeave;                        //日志等级
@@ -53,46 +53,46 @@ typedef struct
 	}st_XSql;
 	struct  
 	{
-		XCHAR tszWeatherUrl[MAX_PATH];        //天气接口
-		XCHAR tszBankUrl[MAX_PATH];           //银行卡验证地址
-		XCHAR tszOilUrl[MAX_PATH];            //油价接口
+		XCHAR tszWeatherUrl[XPATH_MAX];        //天气接口
+		XCHAR tszBankUrl[XPATH_MAX];           //银行卡验证地址
+		XCHAR tszOilUrl[XPATH_MAX];            //油价接口
 		//翻译接口
 		struct  
 		{
-			XCHAR tszAPPUrl[MAX_PATH];    
-			XCHAR tszAPPID[MAX_PATH];
-			XCHAR tszAPPKey[MAX_PATH];
+			XCHAR tszAPPUrl[XPATH_MAX];    
+			XCHAR tszAPPID[XPATH_MAX];
+			XCHAR tszAPPKey[XPATH_MAX];
 		}st_TranslationInfo;
 	}st_XApi;
 	struct  
 	{
 		bool bEnable;                         //是否启用
-		XCHAR tszPlugin[MAX_PATH];            //配置文件地址
+		XCHAR tszPlugin[XPATH_MAX];            //配置文件地址
 	}st_XPlugin;
 	struct
 	{   
 		//二维码模型库
 		struct
 		{
-			XCHAR tszModelDetect[MAX_PATH];
-			XCHAR tszModelSr[MAX_PATH];
-			XCHAR tszProtoDetect[MAX_PATH];
-			XCHAR tszProtoSr[MAX_PATH];
+			XCHAR tszModelDetect[XPATH_MAX];
+			XCHAR tszModelSr[XPATH_MAX];
+			XCHAR tszProtoDetect[XPATH_MAX];
+			XCHAR tszProtoSr[XPATH_MAX];
 		}st_ConfigQRCodec;
-		XCHAR tszConfigDeamon[MAX_PATH];      //守护进程配置文件
-		XCHAR tszConfigHTTPMime[MAX_PATH];    //HTTPMINE配置文件
-		XCHAR tszConfigHTTPCode[MAX_PATH];    //HTTP状态配置文件
+		XCHAR tszConfigDeamon[XPATH_MAX];      //守护进程配置文件
+		XCHAR tszConfigHTTPMime[XPATH_MAX];    //HTTPMINE配置文件
+		XCHAR tszConfigHTTPCode[XPATH_MAX];    //HTTP状态配置文件
 	}st_XConfig;
 	struct  
 	{
-		XCHAR tszHostUrl[MAX_PATH];           //主机地址
+		XCHAR tszHostUrl[XPATH_MAX];           //主机地址
 		int nHTTPCode;                        //转发模式,301 永久,302 临时
 	}st_XShortLink;
 	struct
 	{
 		bool bEnable;                         //是否启用
-		XCHAR tszImagePath[MAX_PATH];         //图片文字识别配置
-		XCHAR tszImageLanguage[MAX_PATH];     //语言支持
+		XCHAR tszImagePath[XPATH_MAX];         //图片文字识别配置
+		XCHAR tszImageLanguage[XPATH_MAX];     //语言支持
 	}st_XImageText;
 	struct  
 	{
@@ -101,8 +101,8 @@ typedef struct
 	}st_XReload;
 	struct  
 	{
-		XCHAR tszUserName[MAX_PATH];
-		XCHAR tszUserPass[MAX_PATH];
+		XCHAR tszUserName[XPATH_MAX];
+		XCHAR tszUserPass[XPATH_MAX];
 		struct  
 		{
 			bool bBackService;
@@ -112,15 +112,15 @@ typedef struct
 	struct
 	{
 		bool bEnable;
-		XCHAR tszDBPhone[MAX_PATH];
-		XCHAR tszDBMac[MAX_PATH];
-		XCHAR tszDBIPAddr[MAX_PATH];
-		XCHAR tszDBISPAddr[MAX_PATH];
+		XCHAR tszDBPhone[XPATH_MAX];
+		XCHAR tszDBMac[XPATH_MAX];
+		XCHAR tszDBIPAddr[XPATH_MAX];
+		XCHAR tszDBISPAddr[XPATH_MAX];
 	}st_XAPIModule;
 	struct
 	{
 		bool bEnable;
-		XCHAR tszAPIUrl[MAX_PATH];
+		XCHAR tszAPIUrl[XPATH_MAX];
 		XCHAR tszServiceName[128];
 	}st_XReport;
 	struct  
@@ -132,8 +132,8 @@ typedef struct
 typedef struct
 {
 	bool bEnable;
-	XCHAR tszPluginMethod[MAX_PATH];
-	XCHAR tszPluginFile[MAX_PATH];
+	XCHAR tszPluginMethod[XPATH_MAX];
+	XCHAR tszPluginFile[XPATH_MAX];
 }XENGINE_PLUGININFO;
 typedef struct
 {
@@ -144,9 +144,9 @@ typedef struct
 typedef struct
 {
 	bool bEnable;
-	XCHAR tszOPMethod[MAX_PATH];
-	XCHAR tszOPNote[MAX_PATH];
-	XCHAR tszOPExample[MAX_PATH];
+	XCHAR tszOPMethod[XPATH_MAX];
+	XCHAR tszOPNote[XPATH_MAX];
+	XCHAR tszOPExample[XPATH_MAX];
 }XENGINE_OPTIONINFO;
 typedef struct
 {
@@ -157,8 +157,8 @@ typedef struct
 typedef struct
 {
 	bool bEnable;                      //是否启用
-	XCHAR tszAPPName[MAX_PATH];        //应用程序名称
-	XCHAR tszAPPPath[MAX_PATH];        //应用程序路径
+	XCHAR tszAPPName[XPATH_MAX];        //应用程序名称
+	XCHAR tszAPPPath[XPATH_MAX];        //应用程序路径
 	int nReTime;                       //是否自动重启
 	int nReNumber;
 	//自定义

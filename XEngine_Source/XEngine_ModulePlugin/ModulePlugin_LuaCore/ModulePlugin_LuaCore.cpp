@@ -142,8 +142,8 @@ bool CModulePlugin_LuaCore::ModulePlugin_LuaCore_Exec(XNETHANDLE xhModule, XCHAR
 		st_csStl.unlock_shared();
 		return false;
 	}
-    XCHAR tszURLParam[MAX_PATH];
-    memset(tszURLParam, '\0', MAX_PATH);
+    XCHAR tszURLParam[XPATH_MAX];
+    memset(tszURLParam, '\0', XPATH_MAX);
 
     for (int i = 1; i < nListCount; i++)
     {

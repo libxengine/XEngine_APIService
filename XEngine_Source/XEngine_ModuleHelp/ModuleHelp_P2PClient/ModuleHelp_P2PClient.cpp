@@ -506,7 +506,7 @@ bool CModuleHelp_P2PClient::ModuleHelp_P2PClient_Heart(XENGINE_P2XPPEER_PROTOCOL
 //////////////////////////////////////////////////////////////////////////
 //                          保护函数
 //////////////////////////////////////////////////////////////////////////
-XHTHREAD CALLBACK CModuleHelp_P2PClient::ModuleHelp_P2PClient_Thread(XPVOID lParam)
+XHTHREAD XCALLBACK CModuleHelp_P2PClient::ModuleHelp_P2PClient_Thread(XPVOID lParam)
 {
     CModuleHelp_P2PClient* pClass_This = (CModuleHelp_P2PClient*)lParam;
     list<XENGINE_P2XP_PEERINFO> stl_ListRemove;

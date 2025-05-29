@@ -12,7 +12,7 @@
 *********************************************************************/
 typedef struct
 {
-	XCHAR tszModuleFile[MAX_PATH];
+	XCHAR tszModuleFile[XPATH_MAX];
 #if (1 == _XENGINE_BUILD_SWITCH_LUA)
 	lua_State* pSt_LuaState;
 #endif
