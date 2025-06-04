@@ -52,6 +52,43 @@ void CPlugin_Meter::PluginCore_UnInit()
 	Meter_IsErrorOccur = false;
 }
 /********************************************************************
+函数名称：PluginCore_GetInfo
+函数功能：获取插件基础信息函数
+ 参数.一：ptszPluginName
+  In/Out：Out
+  类型：字符指针
+  可空：N
+  意思：处理名称
+ 参数.二：ptszPluginVersion
+  In/Out：Out
+  类型：字符指针
+  可空：N
+  意思：版本号.使用x.x.x.x 格式
+ 参数.三：ptszPluginAuthor
+  In/Out：Out
+  类型：字符指针
+  可空：N
+  意思：作者
+ 参数.四：ptszPluginDesc
+  In/Out：Out
+  类型：字符指针
+  可空：N
+  意思：插件描述
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+void CPlugin_Meter::PluginCore_GetInfo(XCHAR* ptszPluginName, XCHAR* ptszPluginVersion, XCHAR* ptszPluginAuthor, XCHAR* ptszPluginDesc)
+{
+	Meter_IsErrorOccur = false;
+
+	ptszPluginName = (XCHAR *)"meter";
+	ptszPluginVersion = (XCHAR*)"1.0.0.1001";
+	ptszPluginAuthor = (XCHAR*)"xengine";
+	ptszPluginDesc = (XCHAR*)"";
+}
+/********************************************************************
 函数名称：PluginCore_Call
 函数功能：调用插件
 返回值

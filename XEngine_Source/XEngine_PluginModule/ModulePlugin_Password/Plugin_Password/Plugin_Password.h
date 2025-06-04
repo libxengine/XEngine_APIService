@@ -19,7 +19,7 @@ public:
 public:
 	bool PluginCore_Init(XPVOID lParam);
 	void PluginCore_UnInit();
-	bool PluginCore_GetInfo(XCHAR* ptszPluginName, XCHAR* ptszPluginVersion, XCHAR* ptszPluginAuthor, XCHAR* ptszPluginDesc);
+	void PluginCore_GetInfo(XCHAR* ptszPluginName, XCHAR* ptszPluginVersion, XCHAR* ptszPluginAuthor, XCHAR* ptszPluginDesc);
 	bool PluginCore_Call(XCHAR*** pppHDRList, int nListCount, int* pInt_HTTPCode, XCHAR* ptszMsgBuffer, int* pInt_MsgLen, LPCXSTR lpszMsgBuffer, int nMsgLen);
 protected:
 	bool Plugin_Password_Creator(LPCXSTR lpszPassType, LPCXSTR lpszLength, XCHAR* ptszPassStr);

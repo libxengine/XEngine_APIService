@@ -5,4 +5,5 @@ EXPORTS
 
 	PluginCore_Init
 	PluginCore_UnInit
+	PluginCore_GetInfo
 	PluginCore_Call

@@ -51,22 +51,42 @@ void CPlugin_Password::PluginCore_UnInit()
 {
 	Pass_IsErrorOccur = false;
 }
-bool CPlugin_Password::PluginCore_GetInfo(XCHAR* ptszPluginName, XCHAR* ptszPluginVersion, XCHAR* ptszPluginAuthor, XCHAR* ptszPluginDesc)
+/********************************************************************
+函数名称：PluginCore_GetInfo
+函数功能：获取插件基础信息函数
+ 参数.一：ptszPluginName
+  In/Out：Out
+  类型：字符指针
+  可空：N
+  意思：处理名称
+ 参数.二：ptszPluginVersion
+  In/Out：Out
+  类型：字符指针
+  可空：N
+  意思：版本号.使用x.x.x.x 格式
+ 参数.三：ptszPluginAuthor
+  In/Out：Out
+  类型：字符指针
+  可空：N
+  意思：作者
+ 参数.四：ptszPluginDesc
+  In/Out：Out
+  类型：字符指针
+  可空：N
+  意思：插件描述
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+void CPlugin_Password::PluginCore_GetInfo(XCHAR* ptszPluginName, XCHAR* ptszPluginVersion, XCHAR* ptszPluginAuthor, XCHAR* ptszPluginDesc)
 {
 	Pass_IsErrorOccur = false;
-
-	if ((NULL == ptszPluginName) || (NULL == ptszPluginVersion) || (NULL == ptszPluginAuthor) || (NULL == ptszPluginDesc))
-	{
-		Pass_IsErrorOccur = true;
-		Pass_dwErrorCode = ERROR_XENGINE_APISERVICE_PLUGIN_MODULE_PASS_PARAMENT;
-		return false;
-	}
 	
-	_tcsxcpy(ptszPluginName, "Password Generator");
+	_tcsxcpy(ptszPluginName, "pass");
 	_tcsxcpy(ptszPluginVersion, "1.0.0.1001");
-	_tcsxcpy(ptszPluginAuthor, "qyt");
+	_tcsxcpy(ptszPluginAuthor, "xengine");
 	_tcsxcpy(ptszPluginDesc, "Password Generator Plugin for XEngine API Service");
-	return true;
 }
 /********************************************************************
 函数名称：PluginCore_Call

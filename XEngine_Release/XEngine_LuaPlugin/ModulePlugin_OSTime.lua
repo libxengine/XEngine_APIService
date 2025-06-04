@@ -45,4 +45,13 @@ function PluginCore_Call(lpszStrUrl, nListCount, lpszMsgBuffer, nMsgLen)
     return true
 end
 
+function PluginCore_GetInfo()
+
+    ptszPluginName = "time"
+    ptszPluginVersion = "1.0.0.1001"
+    ptszPluginAuthor = "xengine"
+    ptszPluginDesc = "get time info for XEngine API Service"
+
+    return ptszPluginName, ptszPluginVersion, ptszPluginAuthor, ptszPluginDesc
+end
 -- PluginCore_Call("",0,"",0)

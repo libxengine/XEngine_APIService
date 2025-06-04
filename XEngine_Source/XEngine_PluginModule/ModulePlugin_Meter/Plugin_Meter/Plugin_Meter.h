@@ -19,6 +19,7 @@ public:
 public:
 	bool PluginCore_Init(XPVOID lParam);
 	void PluginCore_UnInit();
+	void PluginCore_GetInfo(XCHAR* ptszPluginName, XCHAR* ptszPluginVersion, XCHAR* ptszPluginAuthor, XCHAR* ptszPluginDesc);
 	bool PluginCore_Call(XCHAR*** pppHDRList, int nListCount, int* pInt_HTTPCode, XCHAR* ptszMsgBuffer, int* pInt_MsgLen, LPCXSTR lpszMsgBuffer, int nMsgLen);
 protected:
 	bool Plugin_Meter_LengthConvert(int nSource, __int64x nValue, Json::Value *pSt_JsonObject);
