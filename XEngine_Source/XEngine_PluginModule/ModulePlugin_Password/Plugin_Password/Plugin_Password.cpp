@@ -51,6 +51,23 @@ void CPlugin_Password::PluginCore_UnInit()
 {
 	Pass_IsErrorOccur = false;
 }
+bool CPlugin_Password::PluginCore_GetInfo(XCHAR* ptszPluginName, XCHAR* ptszPluginVersion, XCHAR* ptszPluginAuthor, XCHAR* ptszPluginDesc)
+{
+	Pass_IsErrorOccur = false;
+
+	if ((NULL == ptszPluginName) || (NULL == ptszPluginVersion) || (NULL == ptszPluginAuthor) || (NULL == ptszPluginDesc))
+	{
+		Pass_IsErrorOccur = true;
+		Pass_dwErrorCode = ERROR_XENGINE_APISERVICE_PLUGIN_MODULE_PASS_PARAMENT;
+		return false;
+	}
+	
+	_tcsxcpy(ptszPluginName, "Password Generator");
+	_tcsxcpy(ptszPluginVersion, "1.0.0.1001");
+	_tcsxcpy(ptszPluginAuthor, "qyt");
+	_tcsxcpy(ptszPluginDesc, "Password Generator Plugin for XEngine API Service");
+	return true;
+}
 /********************************************************************
 函数名称：PluginCore_Call
 函数功能：调用插件

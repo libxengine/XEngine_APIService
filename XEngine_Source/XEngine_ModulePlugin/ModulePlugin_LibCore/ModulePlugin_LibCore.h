@@ -12,6 +12,7 @@
 *********************************************************************/
 typedef bool(*FPCall_PluginCore_Init)(XPVOID lParam);
 typedef void(*FPCall_PluginCore_UnInit)();
+typedef bool(*FPCall_PluginCore_GetInfo)(XCHAR* ptszPluginName, XCHAR* ptszPluginVersion, XCHAR* ptszPluginAuthor, XCHAR* ptszPluginDesc);
 typedef bool(*FPCall_PluginCore_Call)(XCHAR*** pppHDRList, int nListCount, int* pInt_HTTPCode, XCHAR* ptszMsgBuffer, int* pInt_MsgLen, LPCXSTR lpszMsgBufer, int nMsgLen);
 typedef XLONG(*FPCall_PluginCore_GetLastError)();
 
@@ -23,9 +24,14 @@ typedef struct
 	void* mhFile;
 #endif
 	XCHAR tszModuleFile[XPATH_MAX];
+	XCHAR tszModuleName[128];
+	XCHAR tszModuleAuthor[128];
+	XCHAR tszModuleDesc[128];
+	XCHAR tszModuleVer[64];
 
 	bool(*fpCall_PluginCore_Init)(XPVOID lParam);
 	void(*fpCall_PluginCore_UnInit)();
+	bool(*fpCall_PluginCore_GetInfo)(XCHAR* ptszPluginName, XCHAR* ptszPluginVersion, XCHAR* ptszPluginAuthor, XCHAR* ptszPluginDesc);
 	bool(*fpCall_PluginCore_Call)(XCHAR*** pppHDRList, int nListCount, int* pInt_HTTPCode, XCHAR* ptszMsgBuffer, int* pInt_MsgLen, LPCXSTR lpszMsgBufer, int nMsgLen);
 	XLONG(*fpCall_PluginCore_GetLastError)();
 }PLUGINCORE_FRAMEWORK, * LPPLUGINCORE_FRAMEWORK;

@@ -49,6 +49,11 @@ using namespace std;
 extern bool ModulePlugin_IsErrorOccur;
 extern XLONG ModulePlugin_dwErrorCode;
 
+
 #ifdef _MSC_BUILD
 #pragma comment(lib,"XEngine_BaseLib/XEngine_BaseLib")
+
+#define XFreeModule FreeLibrary
+#else
+#define XFreeModule dlclose
 #endif

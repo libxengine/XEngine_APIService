@@ -248,11 +248,7 @@ bool CModulePlugin_LibCore::ModulePlugin_LibCore_Add(XNETHANDLE xhNet, LPCXSTR l
 #endif
     if (NULL == st_FrameWork.fpCall_PluginCore_Init)
     {
-#ifdef _MSC_BUILD
-        FreeLibrary(st_FrameWork.mhFile);
-#else
-        dlclose(st_FrameWork.mhFile);
-#endif
+        XFreeModule(st_FrameWork.mhFile);
         ModulePlugin_IsErrorOccur = true;
         ModulePlugin_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PLUGIN_FPINIT;
         return false;
@@ -264,11 +260,7 @@ bool CModulePlugin_LibCore::ModulePlugin_LibCore_Add(XNETHANDLE xhNet, LPCXSTR l
 #endif
     if (NULL == st_FrameWork.fpCall_PluginCore_UnInit)
     {
-#ifdef _MSC_BUILD
-        FreeLibrary(st_FrameWork.mhFile);
-#else
-        dlclose(st_FrameWork.mhFile);
-#endif
+        XFreeModule(st_FrameWork.mhFile);
         ModulePlugin_IsErrorOccur = true;
         ModulePlugin_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PLUGIN_FPUNINIT;
         return false;
@@ -280,11 +272,7 @@ bool CModulePlugin_LibCore::ModulePlugin_LibCore_Add(XNETHANDLE xhNet, LPCXSTR l
 #endif
     if (NULL == st_FrameWork.fpCall_PluginCore_Call)
     {
-#ifdef _MSC_BUILD
-        FreeLibrary(st_FrameWork.mhFile);
-#else
-        dlclose(st_FrameWork.mhFile);
-#endif
+        XFreeModule(st_FrameWork.mhFile);
         ModulePlugin_IsErrorOccur = true;
         ModulePlugin_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PLUGIN_FPCALL;
         return false;
@@ -296,26 +284,35 @@ bool CModulePlugin_LibCore::ModulePlugin_LibCore_Add(XNETHANDLE xhNet, LPCXSTR l
 #endif
     if (NULL == st_FrameWork.fpCall_PluginCore_GetLastError)
     {
-#ifdef _MSC_BUILD
-        FreeLibrary(st_FrameWork.mhFile);
-#else
-        dlclose(st_FrameWork.mhFile);
-#endif
+        XFreeModule(st_FrameWork.mhFile);
         ModulePlugin_IsErrorOccur = true;
         ModulePlugin_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PLUGIN_FPERROR;
         return false;
     }
+	//得到插件信息函数
+    XFreeModule(st_FrameWork.mhFile);
+	if (NULL == st_FrameWork.fpCall_PluginCore_GetInfo)
+	{
+        XFreeModule(st_FrameWork.mhFile);
+		ModulePlugin_IsErrorOccur = true;
+		ModulePlugin_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PLUGIN_GETINFO;
+		return false;
+	}
     //初始化内部模块
     if (!st_FrameWork.fpCall_PluginCore_Init(lParam))
     {
-#ifdef _MSC_BUILD
-        FreeLibrary(st_FrameWork.mhFile);
-#else
-        dlclose(st_FrameWork.mhFile);
-#endif
+        XFreeModule(st_FrameWork.mhFile);
         ModulePlugin_IsErrorOccur = true;
         ModulePlugin_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PLUGIN_INIT;
         return false;
+    }
+	//获得内部模块信息
+    if (!st_FrameWork.fpCall_PluginCore_GetInfo(st_FrameWork.tszModuleName, st_FrameWork.tszModuleVer, st_FrameWork.tszModuleAuthor, st_FrameWork.tszModuleDesc))
+    {
+        XFreeModule(st_FrameWork.mhFile);
+		ModulePlugin_IsErrorOccur = true;
+		ModulePlugin_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PLUGIN_INIT;
+		return false;
     }
     _tcsxcpy(st_FrameWork.tszModuleFile, lpszPluginFile);
 
