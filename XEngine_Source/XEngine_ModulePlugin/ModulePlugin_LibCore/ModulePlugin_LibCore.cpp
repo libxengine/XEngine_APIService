@@ -178,12 +178,8 @@ bool CModulePlugin_LibCore::ModulePlugin_LibCore_Destroy()
     unordered_map<XNETHANDLE, PLUGINCORE_FRAMEWORK>::iterator stl_MapIterator = stl_MapFrameWork.begin();
     for (; stl_MapIterator != stl_MapFrameWork.end(); stl_MapIterator++)
     {
-        stl_MapIterator->second.fpCall_PluginCore_UnInit();
-#ifdef _MSC_BUILD
-        FreeLibrary(stl_MapIterator->second.mhFile);
-#else
-        dlclose(stl_MapIterator->second.mhFile);
-#endif
+		stl_MapIterator->second.fpCall_PluginCore_UnInit();
+		XFreeModule(stl_MapIterator->second.mhFile);
     }
     stl_MapFrameWork.clear();
     st_csStl.unlock();
@@ -307,13 +303,7 @@ bool CModulePlugin_LibCore::ModulePlugin_LibCore_Add(XNETHANDLE xhNet, LPCXSTR l
         return false;
     }
 	//获得内部模块信息
-    if (!st_FrameWork.fpCall_PluginCore_GetInfo(st_FrameWork.tszModuleName, st_FrameWork.tszModuleVer, st_FrameWork.tszModuleAuthor, st_FrameWork.tszModuleDesc))
-    {
-        XFreeModule(st_FrameWork.mhFile);
-		ModulePlugin_IsErrorOccur = true;
-		ModulePlugin_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PLUGIN_INIT;
-		return false;
-    }
+    st_FrameWork.fpCall_PluginCore_GetInfo(st_FrameWork.tszModuleName, st_FrameWork.tszModuleVer, st_FrameWork.tszModuleAuthor, st_FrameWork.tszModuleDesc);
     _tcsxcpy(st_FrameWork.tszModuleFile, lpszPluginFile);
 
     //添加模块属性到STL函数中

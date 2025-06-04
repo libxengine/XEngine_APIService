@@ -13,6 +13,10 @@
 typedef struct
 {
 	XCHAR tszModuleFile[XPATH_MAX];
+	XCHAR tszModuleName[128];
+	XCHAR tszModuleAuthor[128];
+	XCHAR tszModuleDesc[128];
+	XCHAR tszModuleVer[64];
 #if (1 == _XENGINE_BUILD_SWITCH_LUA)
 	lua_State* pSt_LuaState;
 #endif

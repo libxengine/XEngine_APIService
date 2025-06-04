@@ -273,7 +273,7 @@ bool CModulePlugin_LuaCore::ModulePlugin_LuaCore_Add(XNETHANDLE xhNet, LPCXSTR l
 		ModulePlugin_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PLUGIN_EXECTION;
 		return false;
 	}
-
+	//得到初始化函数
     if (0 == lua_getglobal(st_LuaCore.pSt_LuaState, "PluginCore_Init"))
     {
 		ModulePlugin_IsErrorOccur = true;
@@ -294,6 +294,31 @@ bool CModulePlugin_LuaCore::ModulePlugin_LuaCore_Add(XNETHANDLE xhNet, LPCXSTR l
 		return false;
     }
     lua_pop(st_LuaCore.pSt_LuaState, -1);
+    //得到信息函数
+	if (0 == lua_getglobal(st_LuaCore.pSt_LuaState, "PluginCore_GetInfo"))
+	{
+		ModulePlugin_IsErrorOccur = true;
+		ModulePlugin_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PLUGIN_FPINIT;
+		return false;
+	}
+	if (LUA_OK != lua_pcall(st_LuaCore.pSt_LuaState, 0, 4, 0))
+	{
+		ModulePlugin_IsErrorOccur = true;
+		ModulePlugin_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PLUGIN_EXECTION;
+		return false;
+	}
+	if (!lua_toboolean(st_LuaCore.pSt_LuaState, -1))
+	{
+		ModulePlugin_IsErrorOccur = true;
+		ModulePlugin_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PLUGIN_EXECTION;
+		return false;
+	}
+	// Lua 栈从右到左是逆序压栈的，所以要从 -4 开始取
+	_tcsxcpy(st_LuaCore.tszModuleName, lua_tostring(st_LuaCore.pSt_LuaState, -4));
+	_tcsxcpy(st_LuaCore.tszModuleVer, lua_tostring(st_LuaCore.pSt_LuaState, -3));
+	_tcsxcpy(st_LuaCore.tszModuleAuthor, lua_tostring(st_LuaCore.pSt_LuaState, -2));
+	_tcsxcpy(st_LuaCore.tszModuleDesc, lua_tostring(st_LuaCore.pSt_LuaState, -1));
+	lua_pop(st_LuaCore.pSt_LuaState, 4);
 
     st_csStl.lock();
     stl_MapFrameWork.insert(make_pair(xhNet, st_LuaCore));
