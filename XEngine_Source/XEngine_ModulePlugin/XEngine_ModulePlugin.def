@@ -18,5 +18,7 @@ EXPORTS
 	ModulePlugin_Loader_Init
 	ModulePlugin_Loader_Insert
 	ModulePlugin_Loader_Find
+	ModulePlugin_Loader_Get
+	ModulePlugin_Loader_GetForModule
 	ModulePlugin_Loader_Exec
 	ModulePlugin_Loader_Destory

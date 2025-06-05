@@ -420,7 +420,11 @@ int main(int argc, char** argv)
 				//加载插件
 				if (ModulePlugin_Loader_Insert(pptszListFile[i], 0))
 				{
-					XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("启动服务中,加载Lib模块插件中,当前第:%d 个加载成功,路径:%s"), i, pptszListFile[i]);
+					XCHAR tszModuleName[128] = {};
+					XCHAR tszModuleAuthor[64] = {};
+					XCHAR tszModuleVer[64] = {};
+					ModulePlugin_Loader_GetForModule(pptszListFile[i], tszModuleName, tszModuleVer, tszModuleAuthor);
+					XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("启动服务中,加载Lib模块插件中,当前第:%d 个加载成功,路径:%s,方法名:%s,作者:%s,版本:V%s"), i, pptszListFile[i], tszModuleName, tszModuleAuthor, tszModuleVer);
 				}
 				else
 				{
@@ -441,7 +445,11 @@ int main(int argc, char** argv)
 			{
 				if (ModulePlugin_Loader_Insert(pptszListFile[i], 1))
 				{
-					XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("启动服务中,加载Lua模块插件中,当前第:%d 个加载成功,路径:%s"), i, pptszListFile[i]);
+					XCHAR tszModuleName[128] = {};
+					XCHAR tszModuleAuthor[64] = {};
+					XCHAR tszModuleVer[64] = {};
+					ModulePlugin_Loader_GetForModule(pptszListFile[i], tszModuleName, tszModuleVer, tszModuleAuthor);
+					XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("启动服务中,加载Lua模块插件中,当前第:%d 个加载成功,路径:%s,方法名:%s,作者:%s,版本:V%s"), i, pptszListFile[i], tszModuleName, tszModuleAuthor, tszModuleVer);
 				}
 				else
 				{

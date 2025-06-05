@@ -91,6 +91,14 @@ extern "C" bool ModulePlugin_Loader_Find(LPCXSTR lpszMethodName, int* pInt_Type)
 {
 	return m_PluginLoader.ModulePlugin_Loader_Find(lpszMethodName, pInt_Type);
 }
+extern "C" bool ModulePlugin_Loader_Get(LPCXSTR lpszMethodName, XCHAR* ptszPluginName, XCHAR* ptszPluginVersion, XCHAR* ptszPluginAuthor, XCHAR* ptszPluginDesc)
+{
+	return m_PluginLoader.ModulePlugin_Loader_Get(lpszMethodName, ptszPluginName, ptszPluginVersion, ptszPluginAuthor, ptszPluginDesc);
+}
+extern "C" bool ModulePlugin_Loader_GetForModule(LPCXSTR lpszModuleName, XCHAR* ptszPluginName, XCHAR* ptszPluginVersion, XCHAR* ptszPluginAuthor, XCHAR* ptszPluginDesc)
+{
+	return m_PluginLoader.ModulePlugin_Loader_GetForModule(lpszModuleName, ptszPluginName, ptszPluginVersion, ptszPluginAuthor, ptszPluginDesc);
+}
 extern "C" bool ModulePlugin_Loader_Exec(LPCXSTR lpszMethodName, XCHAR * **pppHDRList, int nListCount, int* pInt_HTTPCode, XCHAR * ptszMsgBuffer, int* pInt_MsgLen)
 {
 	return m_PluginLoader.ModulePlugin_Loader_Exec(lpszMethodName, pppHDRList, nListCount, pInt_HTTPCode, ptszMsgBuffer, pInt_MsgLen);

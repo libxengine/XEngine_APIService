@@ -207,6 +207,79 @@ bool CModulePlugin_Loader::ModulePlugin_Loader_Get(LPCXSTR lpszMethodName, XCHAR
 	return true;
 }
 /********************************************************************
+函数名称：ModulePlugin_Loader_GetForModule
+函数功能：通过模块名称获取模块信息
+ 参数.一：lpszModuleName
+  In/Out：In
+  类型：常量字符指针
+  可空：N
+  意思：要操作的模块名称
+ 参数.二：ptszPluginName
+  In/Out：Out
+  类型：字符指针
+  可空：N
+  意思：处理名称
+ 参数.三：ptszPluginVersion
+  In/Out：Out
+  类型：字符指针
+  可空：N
+  意思：版本号.使用x.x.x.x 格式
+ 参数.四：ptszPluginAuthor
+  In/Out：Out
+  类型：字符指针
+  可空：N
+  意思：作者
+ 参数.五：ptszPluginDesc
+  In/Out：Out
+  类型：字符指针
+  可空：N
+  意思：插件描述
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+bool CModulePlugin_Loader::ModulePlugin_Loader_GetForModule(LPCXSTR lpszModuleName, XCHAR* ptszPluginName /* = NULL */, XCHAR* ptszPluginVersion /* = NULL */, XCHAR* ptszPluginAuthor /* = NULL */, XCHAR* ptszPluginDesc /* = NULL */)
+{
+	ModulePlugin_IsErrorOccur = false;
+
+	bool bFound = false;
+	st_Locker.lock_shared();
+	for (auto stl_MapIterator = stl_MapLoader.begin(); stl_MapIterator != stl_MapLoader.end(); stl_MapIterator++)
+	{
+		if (0 == _tcsxnicmp(lpszModuleName, stl_MapIterator->second.tszModuleFile, _tcsxlen(stl_MapIterator->second.tszModuleFile)))
+		{
+			if (NULL != ptszPluginName)
+			{
+				_tcsxcpy(ptszPluginName, stl_MapIterator->second.tszModuleName);
+			}
+			if (NULL != ptszPluginVersion)
+			{
+				_tcsxcpy(ptszPluginVersion, stl_MapIterator->second.tszModuleVer);
+			}
+			if (NULL != ptszPluginAuthor)
+			{
+				_tcsxcpy(ptszPluginAuthor, stl_MapIterator->second.tszModuleAuthor);
+			}
+			if (NULL != ptszPluginDesc)
+			{
+				_tcsxcpy(ptszPluginDesc, stl_MapIterator->second.tszModuleDesc);
+			}
+			bFound = true;
+			break;
+		}
+	}
+	st_Locker.unlock_shared();
+
+	if (!bFound)
+	{
+		ModulePlugin_IsErrorOccur = true;
+		ModulePlugin_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PLUGIN_NOTFOUND;
+		return false;
+	}
+	return true;
+}
+/********************************************************************
 函数名称：ModulePlugin_Loader_Exec
 函数功能：执行一次插件
  参数.一：lpszMethodName

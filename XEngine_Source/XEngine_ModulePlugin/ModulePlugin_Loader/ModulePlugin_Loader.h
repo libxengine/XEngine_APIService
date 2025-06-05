@@ -32,6 +32,7 @@ public:
 	bool ModulePlugin_Loader_Insert(LPCXSTR lpszModuleName, int nType = 0);
 	bool ModulePlugin_Loader_Find(LPCXSTR lpszMethodName, int* pInt_Type);
 	bool ModulePlugin_Loader_Get(LPCXSTR lpszMethodName, XCHAR* ptszPluginName = NULL, XCHAR* ptszPluginVersion = NULL, XCHAR* ptszPluginAuthor = NULL, XCHAR* ptszPluginDesc = NULL);
+	bool ModulePlugin_Loader_GetForModule(LPCXSTR lpszModuleName, XCHAR* ptszPluginName = NULL, XCHAR* ptszPluginVersion = NULL, XCHAR* ptszPluginAuthor = NULL, XCHAR* ptszPluginDesc = NULL);
 	bool ModulePlugin_Loader_Exec(LPCXSTR lpszMethodName, XCHAR*** pppHDRList, int nListCount, int* pInt_HTTPCode, XCHAR* ptszMsgBuffer, int* pInt_MsgLen);
 	bool ModulePlugin_Loader_Destory();
 protected:

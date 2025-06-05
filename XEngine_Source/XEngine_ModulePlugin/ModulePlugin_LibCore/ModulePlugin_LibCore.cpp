@@ -276,9 +276,7 @@ bool CModulePlugin_LibCore::ModulePlugin_LibCore_Add(XNETHANDLE xhNet, LPCXSTR l
         ModulePlugin_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PLUGIN_PARAMENT;
         return false;
     }
-    PLUGINCORE_FRAMEWORK st_FrameWork;
-    st_FrameWork.mhFile = 0;
-    memset(st_FrameWork.tszModuleFile, '\0', sizeof(st_FrameWork.tszModuleFile));
+    PLUGINCORE_FRAMEWORK st_FrameWork = {};
     //打开一个模块
 #ifdef _MSC_BUILD
     st_FrameWork.mhFile = LoadLibraryA(lpszPluginFile);
