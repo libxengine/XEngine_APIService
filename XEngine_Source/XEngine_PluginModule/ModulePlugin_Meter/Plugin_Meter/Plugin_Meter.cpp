@@ -83,10 +83,10 @@ void CPlugin_Meter::PluginCore_GetInfo(XCHAR* ptszPluginName, XCHAR* ptszPluginV
 {
 	Meter_IsErrorOccur = false;
 
-	ptszPluginName = (XCHAR *)"meter";
-	ptszPluginVersion = (XCHAR*)"1.0.0.1001";
-	ptszPluginAuthor = (XCHAR*)"xengine";
-	ptszPluginDesc = (XCHAR*)"";
+	_tcsxcpy(ptszPluginName, "meter");
+	_tcsxcpy(ptszPluginVersion, "1.0.0.1001");
+	_tcsxcpy(ptszPluginAuthor, "xengine");
+	_tcsxcpy(ptszPluginDesc, "null");
 }
 /********************************************************************
 函数名称：PluginCore_Call
