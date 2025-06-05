@@ -13,7 +13,11 @@
 typedef struct
 {
 	XCHAR tszModuleFile[XPATH_MAX];
-	XCHAR tszModuleMethod[XPATH_MAX];
+	XCHAR tszModuleName[128];
+	XCHAR tszModuleAuthor[128];
+	XCHAR tszModuleDesc[128];
+	XCHAR tszModuleVer[128];
+
 	XNETHANDLE xhToken;
 	int nType;
 }PLUGINCORE_LOADER, * LPPLUGINCORE_LOADER;
@@ -25,8 +29,9 @@ public:
 	~CModulePlugin_Loader();
 public:
 	bool ModulePlugin_Loader_Init();
-	bool ModulePlugin_Loader_Insert(LPCXSTR lpszModuleMethod, LPCXSTR lpszModuleName, int nType = 0);
+	bool ModulePlugin_Loader_Insert(LPCXSTR lpszModuleName, int nType = 0);
 	bool ModulePlugin_Loader_Find(LPCXSTR lpszMethodName, int* pInt_Type);
+	bool ModulePlugin_Loader_Get(LPCXSTR lpszMethodName, XCHAR* ptszPluginName = NULL, XCHAR* ptszPluginVersion = NULL, XCHAR* ptszPluginAuthor = NULL, XCHAR* ptszPluginDesc = NULL);
 	bool ModulePlugin_Loader_Exec(LPCXSTR lpszMethodName, XCHAR*** pppHDRList, int nListCount, int* pInt_HTTPCode, XCHAR* ptszMsgBuffer, int* pInt_MsgLen);
 	bool ModulePlugin_Loader_Destory();
 protected:

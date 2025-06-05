@@ -24,7 +24,7 @@
         "LogType":32
     },
     "XSql":{
-        "bEnable":true,
+        "bEnable":false,
         "SQLAddr":"10.0.2.6",
         "SQLPort":3306,
         "SQLUser":"root",
@@ -42,7 +42,8 @@
     },
     "XPlugin":{
         "bEnable":true,
-        "tszPlugin":"./XEngine_Config/XEngine_Plugin.json"
+        "tszLibPlugin":"./XEngine_LibPlugin",
+        "tszLuaPlugin":"./XEngine_LuaPlugin"
     },
     "XConfig":{
         "st_ConfigQRCode":{

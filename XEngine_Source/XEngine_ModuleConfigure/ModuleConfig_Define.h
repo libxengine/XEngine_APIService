@@ -66,8 +66,9 @@ typedef struct
 	}st_XApi;
 	struct  
 	{
-		bool bEnable;                         //是否启用
-		XCHAR tszPlugin[XPATH_MAX];            //配置文件地址
+		bool bEnable;                           //是否启用
+		XCHAR tszLibPlugin[XPATH_MAX];
+		XCHAR tszLuaPlugin[XPATH_MAX];           
 	}st_XPlugin;
 	struct
 	{   
@@ -128,18 +129,6 @@ typedef struct
 		list<string>* pStl_ListVer;
 	}st_XVer;
 }XENGINE_SERVICECONFIG;
-//插件
-typedef struct
-{
-	bool bEnable;
-	XCHAR tszPluginMethod[XPATH_MAX];
-	XCHAR tszPluginFile[XPATH_MAX];
-}XENGINE_PLUGININFO;
-typedef struct
-{
-	list<XENGINE_PLUGININFO>* pStl_ListPluginModule;
-	list<XENGINE_PLUGININFO>* pStl_ListPluginLua;
-}XENGINE_PLUGINCONFIG;
 //////////////////////////////////////////////////////////////////////////
 typedef struct
 {
@@ -214,25 +203,6 @@ extern "C" bool ModuleConfigure_Json_File(LPCXSTR lpszConfigFile, XENGINE_SERVIC
 备注：
 *********************************************************************/
 extern "C" bool ModuleConfigure_Json_VersionFile(LPCXSTR lpszConfigFile, XENGINE_SERVICECONFIG* pSt_ServerConfig);
-/********************************************************************
-函数名称：ModuleConfigure_Json_PluginFile
-函数功能：读取JSON配置文件
- 参数.一：lpszConfigFile
-  In/Out：In
-  类型：常量字符指针
-  可空：N
-  意思：输入要读取的配置文件
- 参数.二：pSt_PluginConfig
-  In/Out：Out
-  类型：数据结构指针
-  可空：N
-  意思：输出插件配置信息
-返回值
-  类型：逻辑型
-  意思：是否成功
-备注：
-*********************************************************************/
-extern "C" bool ModuleConfigure_Json_PluginFile(LPCXSTR lpszConfigFile, XENGINE_PLUGINCONFIG* pSt_PluginConfig);
 /********************************************************************
 函数名称：ModuleConfigure_Json_DeamonList
 函数功能：读取JSON配置文件

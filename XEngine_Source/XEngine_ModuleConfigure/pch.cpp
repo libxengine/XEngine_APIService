@@ -37,10 +37,6 @@ extern "C" bool ModuleConfigure_Json_VersionFile(LPCXSTR lpszConfigFile, XENGINE
 {
 	return m_ConfigJson.ModuleConfigure_Json_VersionFile(lpszConfigFile, pSt_ServerConfig);
 }
-extern "C" bool ModuleConfigure_Json_PluginFile(LPCXSTR lpszConfigFile, XENGINE_PLUGINCONFIG * pSt_PluginConfig)
-{
-	return m_ConfigJson.ModuleConfigure_Json_PluginFile(lpszConfigFile, pSt_PluginConfig);
-}
 extern "C" bool ModuleConfigure_Json_DeamonList(LPCXSTR lpszConfigFile, XENGINE_DEAMONAPPLIST * pSt_AppConfig)
 {
 	return m_ConfigJson.ModuleConfigure_Json_DeamonList(lpszConfigFile, pSt_AppConfig);

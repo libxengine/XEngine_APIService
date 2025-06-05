@@ -100,6 +100,40 @@ extern "C" bool ModulePlugin_LibCore_Push(XNETHANDLE * pxhNet, LPCXSTR lpszPlugi
 *********************************************************************/
 extern "C" bool ModulePlugin_LibCore_Exec(XNETHANDLE xhModule, XCHAR * **pppHDRList, int nListCount, int* pInt_HTTPCode, XCHAR * ptszMsgBuffer, int* pInt_MsgLen, LPCXSTR lpszMsgBufer = NULL, int nMsgLen = 0);
 /********************************************************************
+函数名称：ModulePlugin_LibCore_Get
+函数功能：获取插件基础信息函数
+ 参数.一：xhModule
+  In/Out：In
+  类型：句柄
+  可空：N
+  意思：要操作的模块句柄
+ 参数.二：ptszPluginName
+  In/Out：Out
+  类型：字符指针
+  可空：N
+  意思：处理名称
+ 参数.三：ptszPluginVersion
+  In/Out：Out
+  类型：字符指针
+  可空：N
+  意思：版本号.使用x.x.x.x 格式
+ 参数.四：ptszPluginAuthor
+  In/Out：Out
+  类型：字符指针
+  可空：N
+  意思：作者
+ 参数.五：ptszPluginDesc
+  In/Out：Out
+  类型：字符指针
+  可空：N
+  意思：插件描述
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+extern "C" bool ModulePlugin_LibCore_Get(XNETHANDLE xhModule, XCHAR* ptszPluginName, XCHAR* ptszPluginVersion, XCHAR* ptszPluginAuthor, XCHAR* ptszPluginDesc);
+/********************************************************************
 函数名称：ModulePlugin_LibCore_Destroy
 函数功能：销毁插件核心并且清理资源
 返回值
@@ -194,6 +228,40 @@ extern "C" bool ModulePlugin_LuaCore_Push(XNETHANDLE* pxhModule, LPCXSTR lpszPlu
 *********************************************************************/
 extern "C" bool ModulePlugin_LuaCore_Exec(XNETHANDLE xhModule, XCHAR*** pppHDRList, int nListCount, int* pInt_HTTPCode, XCHAR* ptszMsgBuffer, int* pInt_MsgLen, LPCXSTR lpszMsgBufer = NULL, int nMsgLen = 0);
 /********************************************************************
+函数名称：ModulePlugin_LuaCore_Get
+函数功能：获取插件基础信息函数
+ 参数.一：xhModule
+  In/Out：In
+  类型：句柄
+  可空：N
+  意思：要操作的模块句柄
+ 参数.二：ptszPluginName
+  In/Out：Out
+  类型：字符指针
+  可空：N
+  意思：处理名称
+ 参数.三：ptszPluginVersion
+  In/Out：Out
+  类型：字符指针
+  可空：N
+  意思：版本号.使用x.x.x.x 格式
+ 参数.四：ptszPluginAuthor
+  In/Out：Out
+  类型：字符指针
+  可空：N
+  意思：作者
+ 参数.五：ptszPluginDesc
+  In/Out：Out
+  类型：字符指针
+  可空：N
+  意思：插件描述
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+extern "C" bool ModulePlugin_LuaCore_Get(XNETHANDLE xhModule, XCHAR* ptszPluginName, XCHAR* ptszPluginVersion, XCHAR* ptszPluginAuthor, XCHAR* ptszPluginDesc);
+/********************************************************************
 函数名称：ModulePlugin_LuaCore_Destroy
 函数功能：销毁插件核心并且清理资源
 返回值
@@ -217,17 +285,12 @@ extern "C" bool ModulePlugin_Loader_Init();
 /********************************************************************
 函数名称：ModulePlugin_Loader_Insert
 函数功能：插入一个模块到加载器
- 参数.一：lpszModuleMethod
-  In/Out：In
-  类型：常量字符指针
-  可空：N
-  意思：插件方法名
- 参数.二：lpszModuleName
+ 参数.一：lpszModuleName
   In/Out：In
   类型：常量字符指针
   可空：N
   意思：插件路径
- 参数.三：nType
+ 参数.二：nType
   In/Out：In
   类型：整数型
   可空：Y
@@ -237,7 +300,7 @@ extern "C" bool ModulePlugin_Loader_Init();
   意思：是否成功
 备注：
 *********************************************************************/
-extern "C" bool ModulePlugin_Loader_Insert(LPCXSTR lpszModuleMethod, LPCXSTR lpszModuleName, int nType = 0);
+extern "C" bool ModulePlugin_Loader_Insert(LPCXSTR lpszModuleName, int nType = 0);
 /********************************************************************
 函数名称：ModulePlugin_Loader_Find
 函数功能：查找方法是否注册

@@ -146,7 +146,7 @@ bool CModuleConfigure_Json::ModuleConfigure_Json_File(LPCXSTR lpszConfigFile, XE
 	_tcsxcpy(pSt_ServerConfig->st_XSql.tszSQLUser, st_JsonXSql["SQLUser"].asCString());
 	_tcsxcpy(pSt_ServerConfig->st_XSql.tszSQLPass, st_JsonXSql["SQLPass"].asCString());
 
-	if (st_JsonRoot["XPlugin"].empty() || (2 != st_JsonRoot["XPlugin"].size()))
+	if (st_JsonRoot["XPlugin"].empty() || (3 != st_JsonRoot["XPlugin"].size()))
 	{
 		Config_IsErrorOccur = true;
 		Config_dwErrorCode = ERROR_MODULE_CONFIGURE_JSON_XPLUGIN;
@@ -154,7 +154,8 @@ bool CModuleConfigure_Json::ModuleConfigure_Json_File(LPCXSTR lpszConfigFile, XE
 	}
 	Json::Value st_JsonXPlugin = st_JsonRoot["XPlugin"];
 	pSt_ServerConfig->st_XPlugin.bEnable = st_JsonXPlugin["bEnable"].asBool();
-	_tcsxcpy(pSt_ServerConfig->st_XPlugin.tszPlugin, st_JsonXPlugin["tszPlugin"].asCString());
+	_tcsxcpy(pSt_ServerConfig->st_XPlugin.tszLibPlugin, st_JsonXPlugin["tszLibPlugin"].asCString());
+	_tcsxcpy(pSt_ServerConfig->st_XPlugin.tszLuaPlugin, st_JsonXPlugin["tszLuaPlugin"].asCString());
 
 	if (st_JsonRoot["XConfig"].empty() || (4 != st_JsonRoot["XConfig"].size()))
 	{
@@ -302,100 +303,6 @@ bool CModuleConfigure_Json::ModuleConfigure_Json_VersionFile(LPCXSTR lpszConfigF
 	for (unsigned int i = 0; i < st_JsonXVer.size(); i++)
 	{
 		pSt_ServerConfig->st_XVer.pStl_ListVer->push_back(st_JsonXVer[i].asCString());
-	}
-	return true;
-}
-/********************************************************************
-函数名称：ModuleConfigure_Json_PluginFile
-函数功能：读取JSON配置文件
- 参数.一：lpszConfigFile
-  In/Out：In
-  类型：常量字符指针
-  可空：N
-  意思：输入要读取的配置文件
- 参数.二：pSt_PluginConfig
-  In/Out：Out
-  类型：数据结构指针
-  可空：N
-  意思：输出插件配置信息
-返回值
-  类型：逻辑型
-  意思：是否成功
-备注：
-*********************************************************************/
-bool CModuleConfigure_Json::ModuleConfigure_Json_PluginFile(LPCXSTR lpszConfigFile, XENGINE_PLUGINCONFIG* pSt_PluginConfig)
-{
-	Config_IsErrorOccur = false;
-
-	if ((NULL == lpszConfigFile) || (NULL == pSt_PluginConfig))
-	{
-		Config_IsErrorOccur = true;
-		Config_dwErrorCode = ERROR_MODULE_CONFIGURE_JSON_PARAMENT;
-		return false;
-	}
-	Json::Value st_JsonRoot;
-	JSONCPP_STRING st_JsonError;
-	Json::CharReaderBuilder st_JsonBuilder;
-	//读取配置文件所有内容到缓冲区
-	FILE* pSt_File = _xtfopen(lpszConfigFile, _X("rb"));
-	if (NULL == pSt_File)
-	{
-		Config_IsErrorOccur = true;
-		Config_dwErrorCode = ERROR_MODULE_CONFIGURE_JSON_OPENFILE;
-		return false;
-	}
-	XCHAR tszMsgBuffer[8192] = {};
-	size_t nRet = fread(tszMsgBuffer, 1, sizeof(tszMsgBuffer), pSt_File);
-	fclose(pSt_File);
-	//开始解析配置文件
-	std::unique_ptr<Json::CharReader> const pSt_JsonReader(st_JsonBuilder.newCharReader());
-	if (!pSt_JsonReader->parse(tszMsgBuffer, tszMsgBuffer + nRet, &st_JsonRoot, &st_JsonError))
-	{
-		Config_IsErrorOccur = true;
-		Config_dwErrorCode = ERROR_MODULE_CONFIGURE_JSON_PARSE;
-		return false;
-	}
-	//申请内存
-	pSt_PluginConfig->pStl_ListPluginLua = new list<XENGINE_PLUGININFO>;
-	pSt_PluginConfig->pStl_ListPluginModule = new list<XENGINE_PLUGININFO>;
-	if (NULL == pSt_PluginConfig->pStl_ListPluginLua || NULL == pSt_PluginConfig->pStl_ListPluginModule)
-	{
-		Config_IsErrorOccur = true;
-		Config_dwErrorCode = ERROR_MODULE_CONFIGURE_JSON_MALLOC;
-		return false;
-	}
-	//解析module列表
-	Json::Value st_JsonModuleArray = st_JsonRoot["PluginModule"];
-	for (unsigned int i = 0; i < st_JsonModuleArray.size(); i++)
-	{
-		XENGINE_PLUGININFO st_PluginInfo;
-		memset(&st_PluginInfo, '\0', sizeof(XENGINE_PLUGININFO));
-
-		st_PluginInfo.bEnable = st_JsonModuleArray[i]["PluginEnable"].asBool();
-		_tcsxcpy(st_PluginInfo.tszPluginFile, st_JsonModuleArray[i]["PluginFile"].asCString());
-#ifdef _MSC_BUILD
-		_tcsxcat(st_PluginInfo.tszPluginFile, ".dll");
-#elif __linux__
-		_tcsxcat(st_PluginInfo.tszPluginFile, ".so");
-#else
-		_tcsxcat(st_PluginInfo.tszPluginFile, ".dylib");
-#endif
-		_tcsxcpy(st_PluginInfo.tszPluginMethod, st_JsonModuleArray[i]["PluginMethod"].asCString());
-
-		pSt_PluginConfig->pStl_ListPluginModule->push_back(st_PluginInfo);
-	}
-	//解析lua列表
-	Json::Value st_JsonLuaArray = st_JsonRoot["PluginLua"];
-	for (unsigned int i = 0; i < st_JsonLuaArray.size(); i++)
-	{
-		XENGINE_PLUGININFO st_PluginInfo;
-		memset(&st_PluginInfo, '\0', sizeof(XENGINE_PLUGININFO));
-
-		st_PluginInfo.bEnable = st_JsonLuaArray[i]["PluginEnable"].asBool();
-		_tcsxcpy(st_PluginInfo.tszPluginFile, st_JsonLuaArray[i]["PluginFile"].asCString());
-		_tcsxcpy(st_PluginInfo.tszPluginMethod, st_JsonLuaArray[i]["PluginMethod"].asCString());
-
-		pSt_PluginConfig->pStl_ListPluginLua->push_back(st_PluginInfo);
 	}
 	return true;
 }

@@ -183,6 +183,59 @@ bool CModulePlugin_LuaCore::ModulePlugin_LuaCore_Exec(XNETHANDLE xhModule, XCHAR
     return true;
 }
 /********************************************************************
+函数名称：ModulePlugin_LuaCore_Get
+函数功能：获取插件基础信息函数
+ 参数.一：xhModule
+  In/Out：In
+  类型：句柄
+  可空：N
+  意思：要操作的模块句柄
+ 参数.二：ptszPluginName
+  In/Out：Out
+  类型：字符指针
+  可空：N
+  意思：处理名称
+ 参数.三：ptszPluginVersion
+  In/Out：Out
+  类型：字符指针
+  可空：N
+  意思：版本号.使用x.x.x.x 格式
+ 参数.四：ptszPluginAuthor
+  In/Out：Out
+  类型：字符指针
+  可空：N
+  意思：作者
+ 参数.五：ptszPluginDesc
+  In/Out：Out
+  类型：字符指针
+  可空：N
+  意思：插件描述
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+bool CModulePlugin_LuaCore::ModulePlugin_LuaCore_Get(XNETHANDLE xhModule, XCHAR* ptszPluginName, XCHAR* ptszPluginVersion, XCHAR* ptszPluginAuthor, XCHAR* ptszPluginDesc)
+{
+	ModulePlugin_IsErrorOccur = false;
+
+	st_csStl.lock_shared();
+	unordered_map<XNETHANDLE, PLUGINCORE_LUAFRAMEWORK>::const_iterator stl_MapIterator = stl_MapFrameWork.find(xhModule);
+	if (stl_MapIterator == stl_MapFrameWork.end())
+	{
+		ModulePlugin_IsErrorOccur = true;
+		ModulePlugin_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PLUGIN_NOTFOUND;
+		st_csStl.unlock_shared();
+		return false;
+	}
+	_tcsxcpy(ptszPluginName, stl_MapIterator->second.tszModuleName);
+	_tcsxcpy(ptszPluginVersion, stl_MapIterator->second.tszModuleVer);
+	_tcsxcpy(ptszPluginAuthor, stl_MapIterator->second.tszModuleAuthor);
+	_tcsxcpy(ptszPluginDesc, stl_MapIterator->second.tszModuleDesc);
+	st_csStl.unlock_shared();
+	return true;
+}
+/********************************************************************
 函数名称：ModulePlugin_LuaCore_Destroy
 函数功能：销毁插件核心并且清理资源
 返回值
