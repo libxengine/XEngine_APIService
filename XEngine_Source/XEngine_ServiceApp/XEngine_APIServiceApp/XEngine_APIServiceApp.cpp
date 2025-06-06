@@ -147,11 +147,11 @@ void WINAPI XEngine_ServiceMain(DWORD dwArgc, LPTSTR* lpszArgv)
 	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("启动服务中,设置服务启动状态成功,服务运行中"));
 	bIsRun = true;
 
-	XCHAR tszCurrectDir[MAX_PATH] = {};
-	XCHAR tszPathBuffer[MAX_PATH] = {};
-	GetModuleFileNameA(NULL, tszCurrectDir, MAX_PATH);
+	XCHAR tszCurrectDir[XPATH_MAX] = {};
+	XCHAR tszPathBuffer[XPATH_MAX] = {};
+	GetModuleFileNameA(NULL, tszCurrectDir, XPATH_MAX);
 	BaseLib_String_GetFileAndPathA(tszCurrectDir, tszPathBuffer);
-	_xstrcat(tszPathBuffer, MAX_PATH, _X("XEngine_HttpApp.exe"));
+	_xstrcat(tszPathBuffer, XPATH_MAX, _X("XEngine_HttpApp.exe"));
 
 	if (!SystemApi_Process_CreateProcess(&dwProcessID, tszPathBuffer, "-db 0", false))
 	{
@@ -206,8 +206,8 @@ void WINAPI XEngine_ServiceCtrlHandler(DWORD dwControl)
 // 安装服务
 void XEngine_InstallService()
 {
-	TCHAR tszFilePath[MAX_PATH] = {};
-	if (!GetModuleFileName(NULL, tszFilePath, MAX_PATH))
+	TCHAR tszFilePath[XPATH_MAX] = {};
+	if (!GetModuleFileName(NULL, tszFilePath, XPATH_MAX))
 	{
 		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("启动服务中,安装服务失败,获取文件路径失败,错误码:%d"), GetLastError());
 		return;

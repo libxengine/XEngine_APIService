@@ -328,9 +328,9 @@ typedef enum
 //////////////////////////////////////////////////////////////////////////
 //                       导出回调函数
 //////////////////////////////////////////////////////////////////////////
-typedef void(CALLBACK* CALLBACK_APISERVICE_MODULE_HELP_P2PCLIENT)(XENGINE_P2XPPEER_PROTOCOL* pSt_P2PProtocol, XPVOID lParam);
+typedef void(XCALLBACK* CALLBACK_APISERVICE_MODULE_HELP_P2PCLIENT)(XENGINE_P2XPPEER_PROTOCOL* pSt_P2PProtocol, XPVOID lParam);
 //套接字测试回调:测试句柄，测试的服务器地址，测试的端口，当前测试次数，失败次数,成功次数,状态:0成功报告,1失败报告,2结束报告,自定义参数
-typedef void(CALLBACK* CALLBACK_APISERVICE_MODULE_HELP_SOCKETTEST)(XNETHANDLE xhToken, LPCXSTR lpszAddr, int nPort, __int64x nNumber, __int64x nFailed, __int64x nSuccess, int nStatus, XPVOID lParam);
+typedef void(XCALLBACK* CALLBACK_APISERVICE_MODULE_HELP_SOCKETTEST)(XNETHANDLE xhToken, LPCXSTR lpszAddr, int nPort, __int64x nNumber, __int64x nFailed, __int64x nSuccess, int nStatus, XPVOID lParam);
 //////////////////////////////////////////////////////////////////////////
 //                       导出数据结构
 //////////////////////////////////////////////////////////////////////////

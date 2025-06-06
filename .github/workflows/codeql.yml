@@ -46,6 +46,9 @@ jobs:
           sudo apt upgrade -y
           sudo apt install liblua5.4-dev libopencv-dev libopencv-contrib-dev libqrencode-dev libleptonica-dev libtesseract-dev -y
 
+    - name: Set TERM variable
+      run: echo "TERM=xterm" >> $GITHUB_ENV
+
     - name: Set up Dependency Environment
       run: |
           cd libxengine

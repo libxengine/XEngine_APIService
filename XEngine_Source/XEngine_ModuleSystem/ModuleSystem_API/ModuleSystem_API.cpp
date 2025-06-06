@@ -62,14 +62,14 @@ bool CModuleSystem_API::ModuleSystem_API_AutoStart(bool bIsAuto /* = true */)
 			return false;
 		}
 
-		XCHAR tszFilePath[MAX_PATH];
-		XCHAR tszFileName[MAX_PATH];
+		XCHAR tszFilePath[XPATH_MAX];
+		XCHAR tszFileName[XPATH_MAX];
 
-		memset(tszFilePath, '\0', MAX_PATH);
-		memset(tszFileName, '\0', MAX_PATH);
+		memset(tszFilePath, '\0', XPATH_MAX);
+		memset(tszFileName, '\0', XPATH_MAX);
 
-		GetCurrentDirectoryA(MAX_PATH, tszFilePath);
-		GetModuleFileNameA(NULL, tszFileName, MAX_PATH);
+		GetCurrentDirectoryA(XPATH_MAX, tszFilePath);
+		GetModuleFileNameA(NULL, tszFileName, XPATH_MAX);
 		//目标
 		pSt_ILink->SetPath(tszFileName);
 		//工作目录
@@ -80,8 +80,8 @@ bool CModuleSystem_API::ModuleSystem_API_AutoStart(bool bIsAuto /* = true */)
 		pSt_ILink->SetShowCmd(SW_SHOW);
 		//保存快捷方式到指定目录下
 
-		XCHAR tszAFile[MAX_PATH];
-		WCHAR tszUFile[MAX_PATH];
+		XCHAR tszAFile[XPATH_MAX];
+		WCHAR tszUFile[XPATH_MAX];
 
 		memset(tszAFile, '\0', sizeof(tszAFile));
 		memset(tszUFile, '\0', sizeof(tszUFile));
@@ -108,7 +108,7 @@ bool CModuleSystem_API::ModuleSystem_API_AutoStart(bool bIsAuto /* = true */)
 	}
 	else
 	{
-		XCHAR tszAFile[MAX_PATH];
+		XCHAR tszAFile[XPATH_MAX];
 		memset(tszAFile, '\0', sizeof(tszAFile));
 
 		if (S_OK != SHGetFolderPathA(NULL, CSIDL_STARTUP, NULL, 0, tszAFile))
@@ -127,7 +127,7 @@ bool CModuleSystem_API::ModuleSystem_API_AutoStart(bool bIsAuto /* = true */)
 		if (0 != _xtaccess(lpszStartStr, F_OK))
 		{
 			XCHAR tszMsgBuffer[2048];
-			XCHAR tszFileDir[MAX_PATH];
+			XCHAR tszFileDir[XPATH_MAX];
 
 			memset(tszMsgBuffer, '\0', sizeof(tszMsgBuffer));
 			memset(tszFileDir, '\0', sizeof(tszFileDir));
@@ -155,8 +155,8 @@ bool CModuleSystem_API::ModuleSystem_API_AutoStart(bool bIsAuto /* = true */)
 				return false;
 			}
 		}
-		XCHAR tszServiceStr[MAX_PATH];
-		memset(tszServiceStr, '\0', MAX_PATH);
+		XCHAR tszServiceStr[XPATH_MAX];
+		memset(tszServiceStr, '\0', XPATH_MAX);
 
 		_xstprintf(tszServiceStr, _X("sudo systemctl enable xdeamon"));
 		if (-1 == system(tszServiceStr))
@@ -168,8 +168,8 @@ bool CModuleSystem_API::ModuleSystem_API_AutoStart(bool bIsAuto /* = true */)
 	}
 	else
 	{
-		XCHAR tszServiceStr[MAX_PATH];
-		memset(tszServiceStr, '\0', MAX_PATH);
+		XCHAR tszServiceStr[XPATH_MAX];
+		memset(tszServiceStr, '\0', XPATH_MAX);
 
 		_xstprintf(tszServiceStr, _X("systemctl disable xdeamon"));
 		if (-1 == system(tszServiceStr))

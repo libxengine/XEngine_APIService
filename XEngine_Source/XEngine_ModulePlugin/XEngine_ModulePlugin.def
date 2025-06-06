@@ -6,15 +6,19 @@ EXPORTS
 	ModulePlugin_LibCore_Init
 	ModulePlugin_LibCore_Push
 	ModulePlugin_LibCore_Exec
+	ModulePlugin_LibCore_Get
 	ModulePlugin_LibCore_Destroy
 
 	ModulePlugin_LuaCore_Init
 	ModulePlugin_LuaCore_Push
 	ModulePlugin_LuaCore_Exec
+	ModulePlugin_LuaCore_Get
 	ModulePlugin_LuaCore_Destroy
 
 	ModulePlugin_Loader_Init
 	ModulePlugin_Loader_Insert
 	ModulePlugin_Loader_Find
+	ModulePlugin_Loader_Get
+	ModulePlugin_Loader_GetForModule
 	ModulePlugin_Loader_Exec
 	ModulePlugin_Loader_Destory

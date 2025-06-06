@@ -1321,9 +1321,9 @@ bool CModuleProtocol_Packet::ModuleProtocol_Packet_HardWare(XCHAR* ptszHWInfo, i
 	}
 	int nDiskNumber = 0;
 	XCHAR** pptszRootName;
-	XCHAR tszOSName[MAX_PATH];
-	XCHAR tszOSVersion[MAX_PATH];
-	XCHAR tszOSBuild[MAX_PATH];
+	XCHAR tszOSName[XPATH_MAX];
+	XCHAR tszOSVersion[XPATH_MAX];
+	XCHAR tszOSBuild[XPATH_MAX];
 	XLONG nOSPro = 0;
 	XCHAR tszOSInfo[2048];
 	SYSTEMAPI_DISK_INFOMATION st_DiskInfo;
@@ -1348,11 +1348,11 @@ bool CModuleProtocol_Packet::ModuleProtocol_Packet_HardWare(XCHAR* ptszHWInfo, i
 	}
 	BaseLib_Memory_Free((XPPPMEM)&pptszRootName, nDiskNumber);
 
-	XCHAR tszDriveStr[MAX_PATH];
-	memset(tszDriveStr, '\0', MAX_PATH);
+	XCHAR tszDriveStr[XPATH_MAX];
+	memset(tszDriveStr, '\0', XPATH_MAX);
 
 #ifdef _MSC_BUILD
-	GetLogicalDriveStringsA(MAX_PATH, tszDriveStr);
+	GetLogicalDriveStringsA(XPATH_MAX, tszDriveStr);
 #else
 	LPCXSTR lpszDir = _X("/");
 	strcpy(tszDriveStr, lpszDir);
@@ -1472,24 +1472,24 @@ bool CModuleProtocol_Packet::ModuleProtocol_Packet_SoftWare(XCHAR* ptszSWInfo, i
 	}
 	int nProcessCount;
 	XLONG nOSProcessor;
-	XCHAR tszOSBuild[MAX_PATH];
-	XCHAR tszOSVersion[MAX_PATH];
-	XCHAR tszOSInfo[MAX_PATH];
-	XCHAR tszUPTime[MAX_PATH];
-	XCHAR tszOSUser[MAX_PATH];
-	XCHAR tszServicePacket[MAX_PATH];
+	XCHAR tszOSBuild[XPATH_MAX];
+	XCHAR tszOSVersion[XPATH_MAX];
+	XCHAR tszOSInfo[XPATH_MAX];
+	XCHAR tszUPTime[XPATH_MAX];
+	XCHAR tszOSUser[XPATH_MAX];
+	XCHAR tszServicePacket[XPATH_MAX];
 	XENGINE_LIBTIME st_LibTimer;
 
-	memset(tszOSBuild, '\0', MAX_PATH);
-	memset(tszOSVersion, '\0', MAX_PATH);
-	memset(tszOSInfo, '\0', MAX_PATH);
-	memset(tszUPTime, '\0', MAX_PATH);
-	memset(tszOSUser, '\0', MAX_PATH);
-	memset(tszServicePacket, '\0', MAX_PATH);
+	memset(tszOSBuild, '\0', XPATH_MAX);
+	memset(tszOSVersion, '\0', XPATH_MAX);
+	memset(tszOSInfo, '\0', XPATH_MAX);
+	memset(tszUPTime, '\0', XPATH_MAX);
+	memset(tszOSUser, '\0', XPATH_MAX);
+	memset(tszServicePacket, '\0', XPATH_MAX);
 	memset(&st_LibTimer, '\0', sizeof(XENGINE_LIBTIME));
 
 #ifdef _MSC_BUILD
-	XLONG dwMaxSize = MAX_PATH;
+	XLONG dwMaxSize = XPATH_MAX;
 	if (!GetComputerNameA(tszOSUser, &dwMaxSize))
 	{
 		ModuleProtocol_IsErrorOccur = true;

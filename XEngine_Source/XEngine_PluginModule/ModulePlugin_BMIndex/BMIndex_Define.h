@@ -20,17 +20,17 @@ extern "C" XLONG PluginCore_GetLastError();
 /********************************************************************
 函数名称：PluginCore_Init
 函数功能：初始化插件模块
- 参数.一：lParam
-  In/Out：In/Out
-  类型：无类型指针
+ 参数.一：pSt_PluginParameter
+  In/Out：In
+  类型：数据结构指针
   可空：N
-  意思：自定义参数
+  意思：输入插件初始化信息
 返回值
   类型：逻辑型
   意思：是否成功
 备注：
 *********************************************************************/
-extern "C" bool PluginCore_Init(XPVOID lParam = NULL);
+extern "C" bool PluginCore_Init(XENGINE_PLUGINPARAM *pSt_PluginParameter);
 /********************************************************************
 函数名称：PluginCore_UnInit
 函数功能：卸载插件
@@ -40,6 +40,35 @@ extern "C" bool PluginCore_Init(XPVOID lParam = NULL);
 备注：
 *********************************************************************/
 extern "C" void PluginCore_UnInit();
+/********************************************************************
+函数名称：PluginCore_GetInfo
+函数功能：获取插件基础信息函数
+ 参数.一：ptszPluginName
+  In/Out：Out
+  类型：字符指针
+  可空：N
+  意思：处理名称
+ 参数.二：ptszPluginVersion
+  In/Out：Out
+  类型：字符指针
+  可空：N
+  意思：版本号.使用x.x.x.x 格式
+ 参数.三：ptszPluginAuthor
+  In/Out：Out
+  类型：字符指针
+  可空：N
+  意思：作者
+ 参数.四：ptszPluginDesc
+  In/Out：Out
+  类型：字符指针
+  可空：N
+  意思：插件描述
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+extern "C" void PluginCore_GetInfo(XCHAR* ptszPluginName, XCHAR* ptszPluginVersion, XCHAR* ptszPluginAuthor, XCHAR* ptszPluginDesc);
 /********************************************************************
 函数名称：PluginCore_Call
 函数功能：调用插件

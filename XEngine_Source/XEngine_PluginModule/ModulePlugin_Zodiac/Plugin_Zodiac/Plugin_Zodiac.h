@@ -17,8 +17,9 @@ public:
 	CPlugin_Zodiac();
 	~CPlugin_Zodiac();
 public:
-	bool PluginCore_Init(XPVOID lParam);
+	bool PluginCore_Init(XENGINE_PLUGINPARAM *pSt_PluginParameter);
 	void PluginCore_UnInit();
+	void PluginCore_GetInfo(XCHAR* ptszPluginName, XCHAR* ptszPluginVersion, XCHAR* ptszPluginAuthor, XCHAR* ptszPluginDesc);
 	bool PluginCore_Call(XCHAR*** pppHDRList, int nListCount, int* pInt_HTTPCode, XCHAR* ptszMsgBuffer, int* pInt_MsgLen, LPCXSTR lpszMsgBuffer, int nMsgLen);
 protected:
 	bool Plugin_Zodiac_Chinese(LPCXSTR lpszDate, XCHAR* ptszCZodiac);

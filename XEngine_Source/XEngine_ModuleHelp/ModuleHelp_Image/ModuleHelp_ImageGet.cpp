@@ -213,7 +213,7 @@ bool CModuleHelp_ImageGet::ModuleHelp_ImageGet_TextGet(LPCXSTR lpszMsgBuffer, in
 	}
 
 	*pInt_ListCount = stl_ListStr.size();
-	BaseLib_Memory_Malloc((XPPPMEM)ppptszListStr, *pInt_ListCount, MAX_PATH);
+	BaseLib_Memory_Malloc((XPPPMEM)ppptszListStr, *pInt_ListCount, XPATH_MAX);
 
 	auto stl_ListIterator = stl_ListStr.begin();
 	for (int i = 0; stl_ListIterator != stl_ListStr.end(); i++, stl_ListIterator++)

@@ -1,4 +1,6 @@
-function PluginCore_Init()
+function PluginCore_Init(pSt_PluginParameter)
+    -- print("API Ver:", pSt_PluginParameter.APIVersion)
+    -- print("XEngine Ver:", pSt_PluginParameter.XEngineVer)
     return true
 end
 
@@ -49,6 +51,16 @@ function PluginCore_Call(lpszStrUrl, nListCount, lpszMsgBuffer, nMsgLen)
     PInt_MsgLen = #PtszMsgBuffer
 
     return true
+end
+
+function PluginCore_GetInfo()
+
+    ptszPluginName = "cal"
+    ptszPluginVersion = "1.0.0.1001"
+    ptszPluginAuthor = "xengine"
+    ptszPluginDesc = "math cal for XEngine API Service"
+
+    return ptszPluginName, ptszPluginVersion, ptszPluginAuthor, ptszPluginDesc
 end
 
 -- PluginCore_Call("param1=1&param2=2&param3=0",3,"hello",5)

@@ -9,7 +9,7 @@ bool HTTPTask_TaskPost_QRCode(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer, int
 	st_HDRParam.bIsClose = true; //收到回复后就关闭
 #if (0 == _XENGINE_BUILD_SWITCH_QRDECODEC)
 	int nMLen = 0;
-	XCHAR tszMSGBuffer[MAX_PATH] = {};
+	XCHAR tszMSGBuffer[XPATH_MAX] = {};
 
 	st_HDRParam.nHttpCode = 501;
 	HttpProtocol_Server_SendMsgEx(xhHTTPPacket, tszMSGBuffer, &nMLen, &st_HDRParam);

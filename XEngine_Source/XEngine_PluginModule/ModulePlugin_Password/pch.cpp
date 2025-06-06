@@ -25,13 +25,17 @@ extern "C" XLONG PluginCore_GetLastError()
 /*********************************************************************************
 *                                导出函数定义                                    *
 *********************************************************************************/
-extern "C" bool PluginCore_Init(XPVOID lParam)
+extern "C" bool PluginCore_Init(XENGINE_PLUGINPARAM *pSt_PluginParameter)
 {
-	return m_PluginPass.PluginCore_Init(lParam);
+	return m_PluginPass.PluginCore_Init(pSt_PluginParameter);
 }
 extern "C" void PluginCore_UnInit()
 {
 	m_PluginPass.PluginCore_UnInit();
+}
+extern "C" void PluginCore_GetInfo(XCHAR* ptszPluginName, XCHAR* ptszPluginVersion, XCHAR* ptszPluginAuthor, XCHAR* ptszPluginDesc)
+{
+	return m_PluginPass.PluginCore_GetInfo(ptszPluginName, ptszPluginVersion, ptszPluginAuthor, ptszPluginDesc);
 }
 extern "C" bool PluginCore_Call(XCHAR * **pppHDRList, int nListCount, int* pInt_HTTPCode, XCHAR * ptszMsgBuffer, int* pInt_MsgLen, LPCXSTR lpszMsgBuffer, int nMsgLen)
 {

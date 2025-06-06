@@ -126,16 +126,16 @@ typedef struct
 //银行卡
 typedef struct
 {
-	XCHAR tszBankNumber[MAX_PATH];       //银行卡号
-	XCHAR tszBankName[MAX_PATH];         //银行卡名称
-	XCHAR tszBankAbridge[MAX_PATH];      //银行卡缩写
+	XCHAR tszBankNumber[XPATH_MAX];       //银行卡号
+	XCHAR tszBankName[XPATH_MAX];         //银行卡名称
+	XCHAR tszBankAbridge[XPATH_MAX];      //银行卡缩写
 	ENUM_XENGINE_APISERVICE_BANK_TYPE enBankType;
 }XENGINE_BANKINFO;
 //语言转换
 typedef struct
 {
-	XCHAR tszSourceStr[MAX_PATH];                            //原始字符串
-	XCHAR tszDestStr[MAX_PATH];                              //转换字符串
+	XCHAR tszSourceStr[XPATH_MAX];                            //原始字符串
+	XCHAR tszDestStr[XPATH_MAX];                              //转换字符串
 	XCHAR tszFromStr[64];                                    //原始类型
 	XCHAR tszToStr[64];                                      //目标类型
 }XENGINE_LANGUAGEINFO;
@@ -149,15 +149,6 @@ typedef struct
 	XSHOT dwConnectType;                                                   //连接类型
 	XSHOT dwPeerType;                                                      //节点类型
 }XENGINE_P2XPPEER_PROTOCOL, * LPXENGINE_P2XPPEER_PROTOCOL;
-//P2XP通道连接命令
-typedef struct tag_XEngine_P2XPIO_Protocol
-{
-	XCHAR tszSourceUser[32];                                               //请求连接的用户
-	XCHAR tszDestUser[32];                                                 //要连接的用户
-	XCHAR tszConnectAddr[32];                                              //连接的IP地址
-	int nDestPort;                                                        //要连接的端口
-	bool bIsTcp;                                                          //连接类型TCP,否则为UDP
-}XENGINE_P2XPIO_PROTOCOL, * LPXENGINE_P2XPIO_PROTOCOL;
 //邮编信息
 typedef struct
 {
@@ -211,7 +202,7 @@ typedef struct
 {
 	MODULEHELP_SOCKETTEST_RECONNECT st_SocketConn;
 	MODULEHELP_SOCKETTEST_DATAS st_SocketData;
-	XCHAR tszAPIUrl[MAX_PATH];
+	XCHAR tszAPIUrl[XPATH_MAX];
 	XNETHANDLE xhToken;
 	int nType;                                                  //0,全部报告,其他结束统计报告
 	bool bTCP;
@@ -220,11 +211,11 @@ typedef struct
 //短连接
 typedef struct
 {
-	XCHAR tszFullUrl[MAX_PATH];
-	XCHAR tszShotUrl[MAX_PATH];
-	XCHAR tszKeyUrl[MAX_PATH];
-	XCHAR tszMapUrl[MAX_PATH];
-	XCHAR tszCvtUrl[MAX_PATH];
+	XCHAR tszFullUrl[XPATH_MAX];
+	XCHAR tszShotUrl[XPATH_MAX];
+	XCHAR tszKeyUrl[XPATH_MAX];
+	XCHAR tszMapUrl[XPATH_MAX];
+	XCHAR tszCvtUrl[XPATH_MAX];
 	XCHAR tszCreateTime[64];
 	int nLength;
 	int nID;
@@ -233,11 +224,11 @@ typedef struct
 typedef struct
 {
 	XCHAR tszMachineText[2048];
-	XCHAR tszServiceName[MAX_PATH];
-	XCHAR tszMachineName[MAX_PATH];
-	XCHAR tszMachineUser[MAX_PATH];
-	XCHAR tszMachineCode[MAX_PATH];
-	XCHAR tszMachineSystem[MAX_PATH];
+	XCHAR tszServiceName[XPATH_MAX];
+	XCHAR tszMachineName[XPATH_MAX];
+	XCHAR tszMachineUser[XPATH_MAX];
+	XCHAR tszMachineCode[XPATH_MAX];
+	XCHAR tszMachineSystem[XPATH_MAX];
 	XCHAR tszLastTime[64];
 	XCHAR tszCreateTime[64];
 	__int64x nTimeNumber;
@@ -246,8 +237,8 @@ typedef struct
 //敏感词过滤器
 typedef struct
 {
-	XCHAR tszWordsFrom[MAX_PATH];       
-	XCHAR tszWordsTo[MAX_PATH];    
+	XCHAR tszWordsFrom[XPATH_MAX];       
+	XCHAR tszWordsTo[XPATH_MAX];    
 	XBYTE nLevel;                                  //过滤级别,0替换,1删除,2禁止
 }XENGINE_WORDFILTER;
 //图像基本属性
@@ -291,4 +282,10 @@ typedef struct
 	XCHAR tszUPTime[64];       //更新时间
 	XCHAR tszNextTime[64];       //更新时间
 }XENGINE_OILINFO;
+//插件参数
+typedef struct
+{
+	XCHAR tszAPIVersion[64];                                              //API服务版本
+	XCHAR tszXEngineVer[64];                                              //XEngine版本
+}XENGINE_PLUGINPARAM;
 #pragma pack(pop)

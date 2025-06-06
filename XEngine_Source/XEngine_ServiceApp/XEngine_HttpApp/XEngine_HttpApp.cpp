@@ -23,7 +23,6 @@ XHANDLE xhHTTPPool = NULL;
 unique_ptr<thread> pSTDThread_Deamon = NULL;
 //配置文件
 XENGINE_SERVICECONFIG st_ServiceConfig;
-XENGINE_PLUGINCONFIG st_PluginConfig;
 XENGINE_DEAMONAPPLIST st_DeamonAppConfig;
 
 void ServiceApp_Stop(int signo)
@@ -71,7 +70,7 @@ void ServiceApp_Stop(int signo)
 LONG WINAPI Coredump_ExceptionFilter(EXCEPTION_POINTERS* pExceptionPointers)
 {
 	static int i = 0;
-	XCHAR tszFileStr[MAX_PATH] = {};
+	XCHAR tszFileStr[XPATH_MAX] = {};
 	XCHAR tszTimeStr[128] = {};
 	BaseLib_Time_TimeToStr(tszTimeStr);
 	_xstprintf(tszFileStr, _X("./XEngine_Coredump/dumpfile_%s_%d.dmp"), tszTimeStr, i++);
@@ -141,12 +140,11 @@ int main(int argc, char** argv)
 #endif
 	bIsRun = true;
 	int nRet = -1;
-	HELPCOMPONENTS_XLOG_CONFIGURE st_XLogConfig;
+	XENGINE_PLUGINPARAM st_PluginParam = {};
+	HELPCOMPONENTS_XLOG_CONFIGURE st_XLogConfig = {};
 	THREADPOOL_PARAMENT** ppSt_ListHTTPParam;
 
-	memset(&st_XLogConfig, '\0', sizeof(HELPCOMPONENTS_XLOG_CONFIGURE));
 	memset(&st_ServiceConfig, '\0', sizeof(XENGINE_SERVICECONFIG));
-	memset(&st_PluginConfig, '\0', sizeof(XENGINE_PLUGINCONFIG));
 
 	//初始化参数
 	if (!XEngine_Configure_Parament(argc, argv))
@@ -399,13 +397,10 @@ int main(int argc, char** argv)
 	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("启动服务中,启动进程管理线程成功"));
 
 	//初始化插件配置
+	_tcsxcpy(st_PluginParam.tszAPIVersion, st_ServiceConfig.st_XVer.pStl_ListVer->front().c_str());
+	_tcsxcpy(st_PluginParam.tszXEngineVer, BaseLib_Version_XNumberStr());
 	if (st_ServiceConfig.st_XPlugin.bEnable)
 	{
-		if (!ModuleConfigure_Json_PluginFile(st_ServiceConfig.st_XPlugin.tszPlugin, &st_PluginConfig))
-		{
-			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("启动服务中,初始化Lib插件配置文件失败,错误：%lX"), ModuleConfigure_GetLastError());
-			goto XENGINE_SERVICEAPP_EXIT;
-		}
 		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("启动服务中,初始化插件配置文件成功"));
 		//启动插件
 		if (!ModulePlugin_Loader_Init())
@@ -414,51 +409,61 @@ int main(int argc, char** argv)
 			goto XENGINE_SERVICEAPP_EXIT;
 		}
 		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("启动服务中,初始化插件系统成功,开始加载插件"));
-		//加载插件
-		list<XENGINE_PLUGININFO>::const_iterator stl_ListIterator = st_PluginConfig.pStl_ListPluginModule->begin();
-		for (int i = 1; stl_ListIterator != st_PluginConfig.pStl_ListPluginModule->end(); stl_ListIterator++, i++)
+		//枚举插件
+		int nLibCount = 0;
+		XCHAR** pptszListFile;
+		SystemApi_File_EnumFileA(st_ServiceConfig.st_XPlugin.tszLibPlugin, &pptszListFile, &nLibCount, false, 1);
+		for (int i = 0; i < nLibCount; i++)
 		{
-			if (stl_ListIterator->bEnable)
+			XCHAR tszFileExt[64] = {};
+			BaseLib_String_GetFileAndPath(pptszListFile[i], NULL, NULL, NULL, tszFileExt);
+			if (0 == _tcsxnicmp(tszFileExt, _X("dll"), 3) || 0 == _tcsxnicmp(tszFileExt, _X("so"), 2) || 0 == _tcsxnicmp(tszFileExt, _X("dylib"), 5))
 			{
-				if (ModulePlugin_Loader_Insert(stl_ListIterator->tszPluginMethod, stl_ListIterator->tszPluginFile, 0))
+				//加载插件
+				if (ModulePlugin_Loader_Insert(pptszListFile[i], 0, &st_PluginParam))
 				{
-					XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("启动服务中,加载Lib模块插件中,当前第:%d 个加载成功,方法:%s,路径:%s"), i, stl_ListIterator->tszPluginMethod, stl_ListIterator->tszPluginFile);
+					XCHAR tszModuleName[128] = {};
+					XCHAR tszModuleAuthor[64] = {};
+					XCHAR tszModuleVer[64] = {};
+					ModulePlugin_Loader_GetForModule(pptszListFile[i], tszModuleName, tszModuleVer, tszModuleAuthor);
+					XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("启动服务中,加载Lib模块插件中,当前第:%d 个加载成功,路径:%s,方法名:%s,作者:%s,版本:V%s"), i, pptszListFile[i], tszModuleName, tszModuleAuthor, tszModuleVer);
 				}
 				else
 				{
-					XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("启动服务中,加载Lib模块插件中,当前第:%d 个加载失败,方法:%s,路径:%s,错误:%lX"), i, stl_ListIterator->tszPluginMethod, stl_ListIterator->tszPluginFile, ModulePlugin_GetLastError());
+					XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("启动服务中,加载Lib模块插件中,当前第:%d 个加载失败,路径:%s,错误:%lX"), i, pptszListFile[i], ModulePlugin_GetLastError());
 				}
-			}
-			else
-			{
-				XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_WARN, _X("启动服务中,加载Lib模块插件中,当前第:%d 个加载失败,因为没有启用,方法:%s,路径:%s"), i, stl_ListIterator->tszPluginMethod, stl_ListIterator->tszPluginFile);
 			}
 		}
+		BaseLib_Memory_Free((XPPPMEM)&pptszListFile, nLibCount);
+
 #if (1 == _XENGINE_BUILD_SWITCH_LUA)
-		stl_ListIterator = st_PluginConfig.pStl_ListPluginLua->begin();
-		for (int i = 1; stl_ListIterator != st_PluginConfig.pStl_ListPluginLua->end(); stl_ListIterator++, i++)
+		int nLuaCount = 0;
+		XCHAR tszFileExt[64] = {};
+		SystemApi_File_EnumFileA(st_ServiceConfig.st_XPlugin.tszLuaPlugin, &pptszListFile, &nLuaCount, false, 1);
+		for (int i = 0; i < nLuaCount; i++)
 		{
-			if (stl_ListIterator->bEnable)
+			BaseLib_String_GetFileAndPath(pptszListFile[i], NULL, NULL, NULL, tszFileExt);
+			if (0 == _tcsxnicmp(tszFileExt, _X("lua"), 3))
 			{
-				if (ModulePlugin_Loader_Insert(stl_ListIterator->tszPluginMethod, stl_ListIterator->tszPluginFile, 1))
+				if (ModulePlugin_Loader_Insert(pptszListFile[i], 1, &st_PluginParam))
 				{
-					XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("启动服务中,加载Lua模块插件中,当前第:%d 个加载成功,方法:%s,路径:%s"), i, stl_ListIterator->tszPluginMethod, stl_ListIterator->tszPluginFile);
+					XCHAR tszModuleName[128] = {};
+					XCHAR tszModuleAuthor[64] = {};
+					XCHAR tszModuleVer[64] = {};
+					ModulePlugin_Loader_GetForModule(pptszListFile[i], tszModuleName, tszModuleVer, tszModuleAuthor);
+					XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("启动服务中,加载Lua模块插件中,当前第:%d 个加载成功,路径:%s,方法名:%s,作者:%s,版本:V%s"), i, pptszListFile[i], tszModuleName, tszModuleAuthor, tszModuleVer);
 				}
 				else
 				{
-					XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("启动服务中,加载Lua模块插件中,当前第:%d 个加载失败,方法:%s,路径:%s,错误:%lX"), i, stl_ListIterator->tszPluginMethod, stl_ListIterator->tszPluginFile, ModulePlugin_GetLastError());
+					XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("启动服务中,加载Lua模块插件中,当前第:%d 个加载失败,路径:%s,错误:%lX"), i, pptszListFile[i], ModulePlugin_GetLastError());
 				}
-			}
-			else
-			{
-				XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_WARN, _X("启动服务中,加载Lua模块插件中,当前第:%d 个加载失败,因为没有启用,方法:%s,路径:%s"), i, stl_ListIterator->tszPluginMethod, stl_ListIterator->tszPluginFile);
 			}
 		}
 #else
 		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_WARN, _X("启动服务中,加载Lua模块插件失败,因为LUA编译被关闭"));
 #endif
 		//展示能力
-		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("启动服务中,加载的Lib插件:%d 个,Lua插件:%d 个"), st_PluginConfig.pStl_ListPluginModule->size(), st_PluginConfig.pStl_ListPluginLua->size());
+		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("启动服务中,加载的Lib插件:%d 个,Lua插件:%d 个"), nLibCount, nLuaCount);
 	}
 	else
 	{

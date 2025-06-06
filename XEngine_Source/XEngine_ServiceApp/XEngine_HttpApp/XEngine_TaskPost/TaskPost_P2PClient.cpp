@@ -1,6 +1,6 @@
 ﻿#include "../XEngine_Hdr.h"
 
-void CALLBACK HTTPTask_TastPost_P2PCallback(XENGINE_P2XPPEER_PROTOCOL* pSt_P2PProtocol, XPVOID lParam)
+void XCALLBACK HTTPTask_TastPost_P2PCallback(XENGINE_P2XPPEER_PROTOCOL* pSt_P2PProtocol, XPVOID lParam)
 {
 	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_WARN, _X("HTTP客户端,公网:%s,私网:%s,连接:%s,P2XP心跳离开"), pSt_P2PProtocol->tszPublicAddr, pSt_P2PProtocol->tszPrivateAddr, pSt_P2PProtocol->tszConnectAddr);
 }
@@ -9,7 +9,7 @@ bool HTTPTask_TastPost_P2PClient(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer, 
 	int nSDLen = 4096;
 	int nRVLen = 4096;
 	XCHAR tszSDBuffer[4096];
-	XCHAR tszRVBuffer[MAX_PATH];
+	XCHAR tszRVBuffer[XPATH_MAX];
 	RFCCOMPONENTS_HTTP_HDRPARAM st_HDRParam;    //发送给客户端的参数
 
 	memset(tszSDBuffer, '\0', sizeof(tszSDBuffer));

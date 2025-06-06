@@ -350,7 +350,7 @@ bool CModuleDatabase_XLog::ModuleDatabase_XLog_Show(XCHAR*** ppptszList, int* pI
 		return false;
 	}
 	*pInt_ListCount = (int)nllLine;
-	BaseLib_Memory_Malloc((XPPPMEM)ppptszList, (int)nllLine, MAX_PATH);
+	BaseLib_Memory_Malloc((XPPPMEM)ppptszList, (int)nllLine, XPATH_MAX);
 	for (__int64u i = 0; i < nllLine; i++)
 	{
 		XCHAR** pptszResult = DataBase_MySQL_GetResult(xhDBSQL, xhTable);

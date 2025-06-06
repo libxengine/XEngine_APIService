@@ -1,11 +1,7 @@
 CC = g++ -Wall -std=c++20 -fPIC
-PLATFORM = linux
 PLATVER = 
-PLATDIR = 
 FILEEXT = 
 LIBFLAG = 
-RELEASE = 0
-UNICODE = 0
 LOADHDR = -I ./ 
 LOADSO = -L ../../XEngine_ModuleConfigure -L ../../XEngine_ModuleDatabase -L ../../XEngine_ModuleProtocol -L ../../XEngine_ModuleSystem -L ../../XEngine_ModuleHelp -L ../../XEngine_ModulePlugin   \
 		 -L ../../XEngine_Depend/XEngine_Module/jsoncpp -L ../../XEngine_Depend/XEngine_Module/XEngine_InfoReport  \
@@ -21,8 +17,8 @@ OBJECTS = XEngine_Configure.o XEngine_Network.o XEngine_HTTPTask.o XEngine_Plugi
 		  TaskPost_DTest.o TaskPost_Log.o TaskPost_P2PClient.o TaskPost_PostCode.o TaskPost_QRCode.o TaskPost_ShortLink.o TaskPost_SocketTest.o TaskPost_WordFilter.o TaskPost_Image.o TaskPost_BackService.o TaskPost_Deamon.o TaskPost_Machine.o
 
 ifeq ($(RELEASE),1)
-FLAGS = -c 
-DEBUG = 
+FLAGS = -c -D _RELEASE
+DEBUG = -O2
 else
 	ifeq ($(PLATFORM),mac)
 		FLAGS = -c
@@ -34,18 +30,16 @@ else
 endif
 
 ifeq ($(UNICODE),1)
-UNICODE = -D _UNICODE
+override UNICODE := -D __UNICODE__
 else
-UNICODE = 
+override UNICODE := -D __ANSI__
 endif
 
 ifeq ($(PLATFORM),linux)
 	ifeq (/etc/redhat-release,$(wildcard /etc/redhat-release))
 		PLATVER = -D __CENTOS__
-		PLATDIR = XEngine_Linux/Centos
 	else
 		PLATVER = -D __UBUNTU__
-		PLATDIR = XEngine_Linux/Ubuntu
 	endif
 	CC += -Wformat-overflow=0
 	FILEEXT = so
@@ -55,7 +49,6 @@ ifeq ($(PLATFORM),linux)
 else ifeq ($(PLATFORM),mac)
 	CC += -Wno-deprecated-declarations
 	PLATVER = -D __MACOS__
-	PLATDIR = XEngine_Mac
 	FILEEXT = dylib
 	LIBFLAG = -dynamiclib
 	LIBEX = -lpthread -ldl

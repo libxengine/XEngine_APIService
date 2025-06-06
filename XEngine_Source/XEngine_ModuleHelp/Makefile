@@ -1,11 +1,7 @@
 CC = g++ -Wall -std=c++20 -fPIC
-PLATFORM = linux
 PLATVER = 
-PLATDIR = 
 FILEEXT = 
 LIBFLAG = 
-RELEASE = 0
-UNICODE = 0
 LOADHDR = -I ./ -I /usr/include/opencv4 -I /usr/local/include/opencv4 -I /usr/local/include/lua
 LOADSO = 
 LIB = -lXEngine_BaseLib -lXClient_Socket -lNetHelp_APIAddr
@@ -19,35 +15,33 @@ ifeq ($(MACRO_QR_SUPPORT),1)
 	LIB += -lqrencode
 endif
 ifeq ($(MACRO_OPENCV_SUPPORT),1)
-	LIB += -llzma -lopencv_core -lopencv_imgcodecs -lopencv_imgproc -lopencv_wechat_qrcode -ltesseract -lleptonica
+	LIB += -lopencv_core -lopencv_imgcodecs -lopencv_imgproc -lopencv_wechat_qrcode -ltesseract -lleptonica
 endif
 
 ifeq ($(RELEASE),1)
-FLAGS = -c 
-DEBUG = 
+FLAGS = -c -D _RELEASE
+DEBUG = -O2
 else
 	ifeq ($(PLATFORM),mac)
 		FLAGS = -c
-		DEBUG = -g 
+		DEBUG = -g -D _DEBUG
 	else
 		FLAGS = -c -lc_p
-		DEBUG = -g -pg 
+		DEBUG = -g -pg -D _DEBUG
 	endif
 endif
 
 ifeq ($(UNICODE),1)
-UNICODE = -D _UNICODE 
+override UNICODE := -D __UNICODE__
 else
-UNICODE = 
+override UNICODE := -D __ANSI__
 endif
 
 ifeq ($(PLATFORM),linux)
 	ifeq (/etc/redhat-release,$(wildcard /etc/redhat-release))
 		PLATVER = -D __CENTOS__
-		PLATDIR = XEngine_Linux/Centos
 	else
 		PLATVER = -D __UBUNTU__
-		PLATDIR = XEngine_Linux/Ubuntu
 	endif
 	FILEEXT = so
 	LIBFLAG = -shared
@@ -56,7 +50,6 @@ ifeq ($(PLATFORM),linux)
 else ifeq ($(PLATFORM),mac)
 	CC += -Wno-deprecated-declarations
 	PLATVER = -D __MACOS__
-	PLATDIR = XEngine_Mac
 	FILEEXT = dylib
 	LOADHDR += -I /opt/homebrew/opt/leptonica/include -I /opt/homebrew/opt/opencv/include/opencv4 -I /opt/homebrew/opt/tesseract/include -I /opt/homebrew/opt/qrencode/include
 	LOADSO += -L /opt/homebrew/opt/leptonica/lib -L /opt/homebrew/opt/opencv/lib -L /opt/homebrew/opt/tesseract/lib -L /opt/homebrew/opt/qrencode/lib

@@ -1,6 +1,6 @@
 ﻿#include "../XEngine_Hdr.h"
 
-void CALLBACK HTTPTask_TaskPost_Thread()
+void XCALLBACK HTTPTask_TaskPost_Thread()
 {
 	while (bIsRun)
 	{
@@ -105,8 +105,8 @@ bool HTTPTask_TaskPost_Deamon(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer, int
 
 	if (st_ServiceConfig.st_XVerifcation.st_VerSwitch.bDeamon)
 	{
-		XCHAR tszUserName[MAX_PATH];
-		XCHAR tszUserPass[MAX_PATH];
+		XCHAR tszUserName[XPATH_MAX];
+		XCHAR tszUserPass[XPATH_MAX];
 
 		memset(tszUserName, '\0', sizeof(tszUserName));
 		memset(tszUserPass, '\0', sizeof(tszUserPass));

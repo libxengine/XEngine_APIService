@@ -21,9 +21,9 @@ bool HTTPTask_TaskGet_Translation(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer,
 	st_HDRParam.nHttpCode = 200; //HTTP CODE码
 	st_HDRParam.bIsClose = true; //收到回复后就关闭
 
-	XCHAR tszSignStr[MAX_PATH] = {};
-	XCHAR tszMD5Codec[MAX_PATH] = {};
-	XCHAR tszMD5Str[MAX_PATH] = {};
+	XCHAR tszSignStr[XPATH_MAX] = {};
+	XCHAR tszMD5Codec[XPATH_MAX] = {};
+	XCHAR tszMD5Str[XPATH_MAX] = {};
 	XCHAR tszURLStr[4096] = {};
 	XCHAR tszUTFBuffer[2048] = {};
 

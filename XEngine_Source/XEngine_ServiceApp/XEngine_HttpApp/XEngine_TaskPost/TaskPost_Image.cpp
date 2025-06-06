@@ -9,7 +9,7 @@ bool HTTPTask_TaskPost_Image(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer, int 
 	st_HDRParam.bIsClose = true; //收到回复后就关闭
 #if (0 == _XENGINE_BUILD_SWITCH_OPENCV)
 	int nMLen = 0;
-	XCHAR tszMSGBuffer[MAX_PATH] = {};
+	XCHAR tszMSGBuffer[XPATH_MAX] = {};
 
 	st_HDRParam.nHttpCode = 501;
 	HttpProtocol_Server_SendMsgEx(xhHTTPPacket, tszMSGBuffer, &nMLen, &st_HDRParam);
@@ -37,7 +37,7 @@ bool HTTPTask_TaskPost_Image(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer, int 
 		if (!st_ServiceConfig.st_XImageText.bEnable)
 		{
 			int nMLen = 0;
-			XCHAR tszMSGBuffer[MAX_PATH] = {};
+			XCHAR tszMSGBuffer[XPATH_MAX] = {};
 
 			st_HDRParam.nHttpCode = 501;
 			HttpProtocol_Server_SendMsgEx(xhHTTPPacket, tszMSGBuffer, &nMLen, &st_HDRParam);
@@ -93,7 +93,7 @@ bool HTTPTask_TaskPost_Image(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer, int 
 			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("HTTP客户端:%s,请求设置图像数据失败,因为附加参数不正确,参数个数:%d"), lpszClientAddr, nListCount);
 			return false;
 		}
-		XCHAR tszFileExt[MAX_PATH];
+		XCHAR tszFileExt[XPATH_MAX];
 		memset(tszFileExt, '\0', sizeof(tszFileExt));
 
 		memset(tszHTTPVlu, '\0', sizeof(tszHTTPVlu));

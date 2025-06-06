@@ -21,68 +21,35 @@ bool HTTPTask_TaskGet_Reload(LPCXSTR lpszClientAddr, LPCXSTR lpszOPCode)
 	}
 	else if (1 == _ttxoi(lpszOPCode))
 	{
+		int nLuaCount = 0;
+		int nLibCount = 0;
+		XCHAR** pptszListFile;
+		XENGINE_PLUGINPARAM st_PluginParam = {};
+		_tcsxcpy(st_PluginParam.tszAPIVersion, st_ServiceConfig.st_XVer.pStl_ListVer->front().c_str());
+		_tcsxcpy(st_PluginParam.tszXEngineVer, BaseLib_Version_XNumberStr());
+
 		ModulePlugin_Loader_Destory();
-		delete st_PluginConfig.pStl_ListPluginLua;
-		delete st_PluginConfig.pStl_ListPluginModule;
-		st_PluginConfig.pStl_ListPluginLua = NULL;
-		st_PluginConfig.pStl_ListPluginModule = NULL;
-
 		ModulePlugin_Loader_Init();
-		if (!ModuleConfigure_Json_PluginFile(st_ServiceConfig.st_XPlugin.tszPlugin, &st_PluginConfig))
-		{
-			st_HDRParam.nHttpCode = 500;
-			HttpProtocol_Server_SendMsgEx(xhHTTPPacket, tszMsgBuffer, &nMsgLen, &st_HDRParam);
-			XEngine_Network_Send(lpszClientAddr, tszMsgBuffer, nMsgLen);
-			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("HTTP客户端:%s,请求操作配置重载失败,加载Lib插件配置失败,错误：%lX"), lpszClientAddr, ModuleConfigure_GetLastError());
-			return false;
-		}
 		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("HTTP客户端:%s,请求操作配置重载成功,加载插件配置成功"), lpszClientAddr);
-
 		{
-			list<XENGINE_PLUGININFO>::const_iterator stl_ListIterator = st_PluginConfig.pStl_ListPluginModule->begin();
-			for (int i = 1; stl_ListIterator != st_PluginConfig.pStl_ListPluginModule->end(); stl_ListIterator++, i++)
+			SystemApi_File_EnumFileA(st_ServiceConfig.st_XPlugin.tszLibPlugin, &pptszListFile, &nLibCount, false, 1);
+			for (int i = 0; i < nLibCount; i++)
 			{
-				if (stl_ListIterator->bEnable)
-				{
-					if (ModulePlugin_Loader_Insert(stl_ListIterator->tszPluginMethod, stl_ListIterator->tszPluginFile, 0))
-					{
-						XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("HTTP客户端:%s,重载Lib模块插件中,当前第:%d 个加载成功,方法:%s,路径:%s"), lpszClientAddr, i, stl_ListIterator->tszPluginMethod, stl_ListIterator->tszPluginFile);
-					}
-					else
-					{
-						XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("HTTP客户端:%s,重载Lib模块插件中,当前第:%d 个加载失败,方法:%s,路径:%s,错误:%lX"), lpszClientAddr, i, stl_ListIterator->tszPluginMethod, stl_ListIterator->tszPluginFile, ModulePlugin_GetLastError());
-					}
-				}
-				else
-				{
-					XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_WARN, _X("HTTP客户端:%s,重载Lib模块插件中,当前第:%d 个加载失败,因为没有启用,方法:%s,路径:%s"), lpszClientAddr, i, stl_ListIterator->tszPluginMethod, stl_ListIterator->tszPluginFile);
-				}
+				//加载插件
+				ModulePlugin_Loader_Insert(pptszListFile[i], 0, &st_PluginParam);
 			}
+			BaseLib_Memory_Free((XPPPMEM)&pptszListFile, nLibCount);
 		}
 		{
-			list<XENGINE_PLUGININFO>::const_iterator stl_ListIterator = st_PluginConfig.pStl_ListPluginLua->begin();
-			for (int i = 1; stl_ListIterator != st_PluginConfig.pStl_ListPluginLua->end(); stl_ListIterator++, i++)
+			SystemApi_File_EnumFileA(st_ServiceConfig.st_XPlugin.tszLuaPlugin, &pptszListFile, &nLuaCount, false, 1);
+			for (int i = 0; i < nLuaCount; i++)
 			{
-				if (stl_ListIterator->bEnable)
-				{
-					if (ModulePlugin_Loader_Insert(stl_ListIterator->tszPluginMethod, stl_ListIterator->tszPluginFile, 1))
-					{
-						XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("HTTP客户端:%s,重载Lua模块插件中,当前第:%d 个加载成功,方法:%s,路径:%s"), lpszClientAddr, i, stl_ListIterator->tszPluginMethod, stl_ListIterator->tszPluginFile);
-					}
-					else
-					{
-						XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("HTTP客户端:%s,重载Lua模块插件中,当前第:%d 个加载失败,方法:%s,路径:%s,错误:%lX"), lpszClientAddr, i, stl_ListIterator->tszPluginMethod, stl_ListIterator->tszPluginFile, ModulePlugin_GetLastError());
-					}
-				}
-				else
-				{
-					XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_WARN, _X("HTTP客户端:%s,重载Lua模块插件中,当前第:%d 个加载失败,因为没有启用,方法:%s,路径:%s"), lpszClientAddr, i, stl_ListIterator->tszPluginMethod, stl_ListIterator->tszPluginFile);
-				}
+				ModulePlugin_Loader_Insert(pptszListFile[i], 1, &st_PluginParam);
 			}
 		}
 		HttpProtocol_Server_SendMsgEx(xhHTTPPacket, tszMsgBuffer, &nMsgLen, &st_HDRParam);
 		XEngine_Network_Send(lpszClientAddr, tszMsgBuffer, nMsgLen);
-		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("HTTP客户端:%s,请求重载插件成功,Lib插件:%d 个,Lua插件:%d 个"), lpszClientAddr, st_PluginConfig.pStl_ListPluginModule->size(), st_PluginConfig.pStl_ListPluginLua->size());
+		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("HTTP客户端:%s,请求重载插件成功,Lib插件:%d 个,Lua插件:%d 个"), lpszClientAddr, nLibCount, nLuaCount);
 	}
 	else if (2 == _ttxoi(lpszOPCode))
 	{

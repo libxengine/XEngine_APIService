@@ -139,7 +139,6 @@ extern XHANDLE xhHTTPPool;
 extern unique_ptr<thread> pSTDThread_Deamon;
 //配置文件
 extern XENGINE_SERVICECONFIG st_ServiceConfig;
-extern XENGINE_PLUGINCONFIG st_PluginConfig;
 extern XENGINE_DEAMONAPPLIST st_DeamonAppConfig;
 //连接库
 #ifdef _MSC_BUILD

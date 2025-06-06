@@ -9,6 +9,7 @@
 
 #ifdef _MSC_BUILD
 // 添加要在此处预编译的标头
+#define _CRT_SECURE_NO_WARNINGS
 #include "framework.h"
 #include <tchar.h>
 #endif // _MSC_BUILD
@@ -21,8 +22,10 @@
 #include <json/json.h>
 #include <XEngine_Include/XEngine_CommHdr.h>
 #include <XEngine_Include/XEngine_Types.h>
+#include <XEngine_Include/XEngine_ProtocolHdr.h>
 #include <XEngine_Include/XEngine_BaseLib/BaseLib_Define.h>
 #include <XEngine_Include/XEngine_BaseLib/BaseLib_Error.h>
+#include "../../XEngine_UserProtocol.h"
 #include "BMIndex_Define.h"
 #include "BMIndex_Error.h"
 using namespace std;

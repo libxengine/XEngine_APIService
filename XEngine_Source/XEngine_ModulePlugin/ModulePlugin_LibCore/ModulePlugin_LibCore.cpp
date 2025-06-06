@@ -56,17 +56,17 @@ bool CModulePlugin_LibCore::ModulePlugin_LibCore_Init()
   类型：常量字符指针
   可空：N
   意思：插件模块路径
- 参数.三：lParam
-  In/Out：In/Out
-  类型：无类型指针
+ 参数.三：pSt_PluginParameter
+  In/Out：In
+  类型：数据结构指针
   可空：Y
-  意思：自定义输入输出参数
+  意思：输入插件初始化参数
 返回值
   类型：逻辑型
   意思：是否成功添加
 备注：
 *********************************************************************/
-bool CModulePlugin_LibCore::ModulePlugin_LibCore_Push(XNETHANDLE* pxhModule, LPCXSTR lpszPluginFile, XPVOID lParam)
+bool CModulePlugin_LibCore::ModulePlugin_LibCore_Push(XNETHANDLE* pxhModule, LPCXSTR lpszPluginFile, XENGINE_PLUGINPARAM* pSt_PluginParameter)
 {
     ModulePlugin_IsErrorOccur = false;
 
@@ -76,7 +76,7 @@ bool CModulePlugin_LibCore::ModulePlugin_LibCore_Push(XNETHANDLE* pxhModule, LPC
         ModulePlugin_dwErrorCode = BaseLib_GetLastError();
         return false;
     }
-    if (!ModulePlugin_LibCore_Add(*pxhModule, lpszPluginFile, lParam))
+    if (!ModulePlugin_LibCore_Add(*pxhModule, lpszPluginFile, pSt_PluginParameter))
     {
         return false;
     }
@@ -156,6 +156,61 @@ bool CModulePlugin_LibCore::ModulePlugin_LibCore_Exec(XNETHANDLE xhModule, XCHAR
     return true;
 }
 /********************************************************************
+函数名称：ModulePlugin_LibCore_Get
+函数功能：获取插件基础信息函数
+ 参数.一：xhModule
+  In/Out：In
+  类型：句柄
+  可空：N
+  意思：要操作的模块句柄
+ 参数.二：ptszPluginName
+  In/Out：Out
+  类型：字符指针
+  可空：N
+  意思：处理名称
+ 参数.三：ptszPluginVersion
+  In/Out：Out
+  类型：字符指针
+  可空：N
+  意思：版本号.使用x.x.x.x 格式
+ 参数.四：ptszPluginAuthor
+  In/Out：Out
+  类型：字符指针
+  可空：N
+  意思：作者
+ 参数.五：ptszPluginDesc
+  In/Out：Out
+  类型：字符指针
+  可空：N
+  意思：插件描述
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+bool CModulePlugin_LibCore::ModulePlugin_LibCore_Get(XNETHANDLE xhModule, XCHAR* ptszPluginName, XCHAR* ptszPluginVersion, XCHAR* ptszPluginAuthor, XCHAR* ptszPluginDesc)
+{
+	ModulePlugin_IsErrorOccur = false;
+
+	st_csStl.lock_shared();
+	//执行指定插件函数
+	unordered_map<XNETHANDLE, PLUGINCORE_FRAMEWORK>::const_iterator stl_MapIterator = stl_MapFrameWork.find(xhModule);
+	if (stl_MapIterator == stl_MapFrameWork.end())
+	{
+		ModulePlugin_IsErrorOccur = true;
+		ModulePlugin_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PLUGIN_NOTFOUND;
+		st_csStl.unlock_shared();
+		return false;
+	}
+	_tcsxcpy(ptszPluginName, stl_MapIterator->second.tszModuleName);
+	_tcsxcpy(ptszPluginVersion, stl_MapIterator->second.tszModuleVer);
+	_tcsxcpy(ptszPluginAuthor, stl_MapIterator->second.tszModuleAuthor);
+	_tcsxcpy(ptszPluginDesc, stl_MapIterator->second.tszModuleDesc);
+	st_csStl.unlock_shared();
+
+	return true;
+}
+/********************************************************************
 函数名称：ModulePlugin_LibCore_Destroy
 函数功能：销毁插件核心并且清理资源
 返回值
@@ -178,12 +233,8 @@ bool CModulePlugin_LibCore::ModulePlugin_LibCore_Destroy()
     unordered_map<XNETHANDLE, PLUGINCORE_FRAMEWORK>::iterator stl_MapIterator = stl_MapFrameWork.begin();
     for (; stl_MapIterator != stl_MapFrameWork.end(); stl_MapIterator++)
     {
-        stl_MapIterator->second.fpCall_PluginCore_UnInit();
-#ifdef _MSC_BUILD
-        FreeLibrary(stl_MapIterator->second.mhFile);
-#else
-        dlclose(stl_MapIterator->second.mhFile);
-#endif
+		stl_MapIterator->second.fpCall_PluginCore_UnInit();
+		XFreeModule(stl_MapIterator->second.mhFile);
     }
     stl_MapFrameWork.clear();
     st_csStl.unlock();
@@ -205,17 +256,17 @@ bool CModulePlugin_LibCore::ModulePlugin_LibCore_Destroy()
   类型：常量字符指针
   可空：N
   意思：插件模块路径
- 参数.三：lParam
-  In/Out：In/Out
-  类型：无类型指针
+ 参数.三：pSt_PluginParameter
+  In/Out：In
+  类型：数据结构指针
   可空：Y
-  意思：自定义输入输出参数
+  意思：输入插件初始化参数
 返回值
   类型：逻辑型
   意思：是否成功执行
 备注：
 *********************************************************************/
-bool CModulePlugin_LibCore::ModulePlugin_LibCore_Add(XNETHANDLE xhNet, LPCXSTR lpszPluginFile, XPVOID lParam)
+bool CModulePlugin_LibCore::ModulePlugin_LibCore_Add(XNETHANDLE xhNet, LPCXSTR lpszPluginFile, XENGINE_PLUGINPARAM* pSt_PluginParameter)
 {
     ModulePlugin_IsErrorOccur = false;
 
@@ -225,9 +276,7 @@ bool CModulePlugin_LibCore::ModulePlugin_LibCore_Add(XNETHANDLE xhNet, LPCXSTR l
         ModulePlugin_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PLUGIN_PARAMENT;
         return false;
     }
-    PLUGINCORE_FRAMEWORK st_FrameWork;
-    st_FrameWork.mhFile = 0;
-    memset(st_FrameWork.tszModuleFile, '\0', sizeof(st_FrameWork.tszModuleFile));
+    PLUGINCORE_FRAMEWORK st_FrameWork = {};
     //打开一个模块
 #ifdef _MSC_BUILD
     st_FrameWork.mhFile = LoadLibraryA(lpszPluginFile);
@@ -248,11 +297,7 @@ bool CModulePlugin_LibCore::ModulePlugin_LibCore_Add(XNETHANDLE xhNet, LPCXSTR l
 #endif
     if (NULL == st_FrameWork.fpCall_PluginCore_Init)
     {
-#ifdef _MSC_BUILD
-        FreeLibrary(st_FrameWork.mhFile);
-#else
-        dlclose(st_FrameWork.mhFile);
-#endif
+        XFreeModule(st_FrameWork.mhFile);
         ModulePlugin_IsErrorOccur = true;
         ModulePlugin_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PLUGIN_FPINIT;
         return false;
@@ -264,11 +309,7 @@ bool CModulePlugin_LibCore::ModulePlugin_LibCore_Add(XNETHANDLE xhNet, LPCXSTR l
 #endif
     if (NULL == st_FrameWork.fpCall_PluginCore_UnInit)
     {
-#ifdef _MSC_BUILD
-        FreeLibrary(st_FrameWork.mhFile);
-#else
-        dlclose(st_FrameWork.mhFile);
-#endif
+        XFreeModule(st_FrameWork.mhFile);
         ModulePlugin_IsErrorOccur = true;
         ModulePlugin_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PLUGIN_FPUNINIT;
         return false;
@@ -280,11 +321,7 @@ bool CModulePlugin_LibCore::ModulePlugin_LibCore_Add(XNETHANDLE xhNet, LPCXSTR l
 #endif
     if (NULL == st_FrameWork.fpCall_PluginCore_Call)
     {
-#ifdef _MSC_BUILD
-        FreeLibrary(st_FrameWork.mhFile);
-#else
-        dlclose(st_FrameWork.mhFile);
-#endif
+        XFreeModule(st_FrameWork.mhFile);
         ModulePlugin_IsErrorOccur = true;
         ModulePlugin_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PLUGIN_FPCALL;
         return false;
@@ -296,27 +333,33 @@ bool CModulePlugin_LibCore::ModulePlugin_LibCore_Add(XNETHANDLE xhNet, LPCXSTR l
 #endif
     if (NULL == st_FrameWork.fpCall_PluginCore_GetLastError)
     {
-#ifdef _MSC_BUILD
-        FreeLibrary(st_FrameWork.mhFile);
-#else
-        dlclose(st_FrameWork.mhFile);
-#endif
+        XFreeModule(st_FrameWork.mhFile);
         ModulePlugin_IsErrorOccur = true;
         ModulePlugin_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PLUGIN_FPERROR;
         return false;
     }
-    //初始化内部模块
-    if (!st_FrameWork.fpCall_PluginCore_Init(lParam))
-    {
 #ifdef _MSC_BUILD
-        FreeLibrary(st_FrameWork.mhFile);
+	st_FrameWork.fpCall_PluginCore_GetInfo = (FPCall_PluginCore_GetInfo)GetProcAddress(st_FrameWork.mhFile, _X("PluginCore_GetInfo"));
 #else
-        dlclose(st_FrameWork.mhFile);
+	* (void**)(&st_FrameWork.fpCall_PluginCore_GetInfo) = dlsym(st_FrameWork.mhFile, _X("PluginCore_GetInfo"));
 #endif
+	if (NULL == st_FrameWork.fpCall_PluginCore_GetInfo)
+	{
+		XFreeModule(st_FrameWork.mhFile);
+		ModulePlugin_IsErrorOccur = true;
+		ModulePlugin_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PLUGIN_FPERROR;
+		return false;
+	}
+    //初始化内部模块
+    if (!st_FrameWork.fpCall_PluginCore_Init(pSt_PluginParameter))
+    {
+        XFreeModule(st_FrameWork.mhFile);
         ModulePlugin_IsErrorOccur = true;
         ModulePlugin_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PLUGIN_INIT;
         return false;
     }
+	//获得内部模块信息
+    st_FrameWork.fpCall_PluginCore_GetInfo(st_FrameWork.tszModuleName, st_FrameWork.tszModuleVer, st_FrameWork.tszModuleAuthor, st_FrameWork.tszModuleDesc);
     _tcsxcpy(st_FrameWork.tszModuleFile, lpszPluginFile);
 
     //添加模块属性到STL函数中

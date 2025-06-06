@@ -339,7 +339,7 @@ XHTHREAD CModuleHelp_SocketTest::ModuleHelp_SocketTest_ThreadConn(XPVOID lParam)
 			break;
 		}
 		//设置TCP
-		XSOCKET hSocket = INVALID_SOCKET;
+		XSOCKET hSocket = XSOCKET_ERROR;
 		if (XClient_TCPSelect_Create(&hSocket, pSt_ReConnect->st_SocketConn.tszAddr, pSt_ReConnect->st_SocketConn.nPort, 100))
 		{
 			pSt_ReConnect->lpCall_ReConnect(pSt_ReConnect->xhToken, pSt_ReConnect->st_SocketConn.tszAddr, pSt_ReConnect->st_SocketConn.nPort, ++nNumber, nFailed, ++nSucess, 0, pSt_ReConnect->lParam);

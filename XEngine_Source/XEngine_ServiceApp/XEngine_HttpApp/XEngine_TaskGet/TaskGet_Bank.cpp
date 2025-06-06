@@ -9,13 +9,13 @@ bool HTTPTask_TaskGet_BankInfo(LPCXSTR lpszClientAddr, LPCXSTR lpszBankNumber)
 	XCHAR* ptszBodyBuffer;
 	XCHAR tszMsgBuffer[4096];
 	XCHAR tszPktBuffer[4096];
-	XCHAR tszUrlBuffer[MAX_PATH];
+	XCHAR tszUrlBuffer[XPATH_MAX];
 	XENGINE_BANKINFO st_BankInfo;
 	RFCCOMPONENTS_HTTP_HDRPARAM st_HDRParam;    //发送给客户端的参数
 
 	memset(tszMsgBuffer, '\0', sizeof(tszMsgBuffer));
 	memset(tszPktBuffer, '\0', sizeof(tszPktBuffer));
-	memset(tszUrlBuffer, '\0', MAX_PATH);
+	memset(tszUrlBuffer, '\0', XPATH_MAX);
 	memset(&st_BankInfo, '\0', sizeof(XENGINE_BANKINFO));
 	memset(&st_HDRParam, '\0', sizeof(RFCCOMPONENTS_HTTP_HDRPARAM));
 

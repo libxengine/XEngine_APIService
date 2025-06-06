@@ -31,8 +31,10 @@
 using namespace std;
 #include <XEngine_Include/XEngine_CommHdr.h>
 #include <XEngine_Include/XEngine_Types.h>
+#include <XEngine_Include/XEngine_ProtocolHdr.h>
 #include <XEngine_Include/XEngine_BaseLib/BaseLib_Define.h>
 #include <XEngine_Include/XEngine_BaseLib/BaseLib_Error.h>
+#include "../XEngine_UserProtocol.h"
 #include "ModulePlugin_Define.h"
 #include "ModulePlugin_Error.h"
 /********************************************************************
@@ -49,6 +51,11 @@ using namespace std;
 extern bool ModulePlugin_IsErrorOccur;
 extern XLONG ModulePlugin_dwErrorCode;
 
+
 #ifdef _MSC_BUILD
 #pragma comment(lib,"XEngine_BaseLib/XEngine_BaseLib")
+
+#define XFreeModule FreeLibrary
+#else
+#define XFreeModule dlclose
 #endif

@@ -12,7 +12,11 @@
 *********************************************************************/
 typedef struct
 {
-	XCHAR tszModuleFile[MAX_PATH];
+	XCHAR tszModuleFile[XPATH_MAX];
+	XCHAR tszModuleName[128];
+	XCHAR tszModuleAuthor[128];
+	XCHAR tszModuleDesc[128];
+	XCHAR tszModuleVer[64];
 #if (1 == _XENGINE_BUILD_SWITCH_LUA)
 	lua_State* pSt_LuaState;
 #endif
@@ -25,11 +29,12 @@ public:
 	~CModulePlugin_LuaCore();
 public:
 	bool ModulePlugin_LuaCore_Init();
-	bool ModulePlugin_LuaCore_Push(XNETHANDLE* pxhModule, LPCXSTR lpszPluginFile, XPVOID lParam = NULL);
+	bool ModulePlugin_LuaCore_Push(XNETHANDLE* pxhModule, LPCXSTR lpszPluginFile, XENGINE_PLUGINPARAM* pSt_PluginParameter = NULL);
 	bool ModulePlugin_LuaCore_Exec(XNETHANDLE xhModule, XCHAR*** pppHDRList, int nListCount, int* pInt_HTTPCode, XCHAR* ptszMsgBuffer, int* pInt_MsgLen, LPCXSTR lpszMsgBufer = NULL, int nMsgLen = 0);
+	bool ModulePlugin_LuaCore_Get(XNETHANDLE xhModule, XCHAR* ptszPluginName, XCHAR* ptszPluginVersion, XCHAR* ptszPluginAuthor, XCHAR* ptszPluginDesc);
 	bool ModulePlugin_LuaCore_Destroy();
 protected:
-	bool ModulePlugin_LuaCore_Add(XNETHANDLE xhNet, LPCXSTR lpszPluginFile, XPVOID lParam = NULL);
+	bool ModulePlugin_LuaCore_Add(XNETHANDLE xhNet, LPCXSTR lpszPluginFile, XENGINE_PLUGINPARAM* pSt_PluginParameter = NULL);
 private:
 	shared_mutex st_csStl;
 private:

@@ -1,3 +1,21 @@
+XEngine_APIService V3.11.0.1001
+
+增加:更多发布系统支持
+更新:依赖库
+优化:编译脚本
+修改:插件支持获取更多信息了
+修改:删除了插件配置,不在需要
+修改:插件模块支持初始化参数了
+修复:配置文件内存溢出问题
+
+ci:added debian and fedora system support
+update:depend library
+improved:make file build flags
+modify:get more info support for plugin  module
+modify:delete plugin configure and plugin auto load support
+modify:init parameter and used now for plugin module
+fixed:memory leak for configure parse
+======================================================================================
 XEngine_APIService V3.10.0.1001
 
 增加:windows服务支持
