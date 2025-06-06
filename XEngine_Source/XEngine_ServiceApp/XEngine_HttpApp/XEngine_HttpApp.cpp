@@ -415,7 +415,7 @@ int main(int argc, char** argv)
 		{
 			XCHAR tszFileExt[64] = {};
 			BaseLib_String_GetFileAndPath(pptszListFile[i], NULL, NULL, NULL, tszFileExt);
-			if (0 == _tcsxnicmp(tszFileExt, _X("dll"), 3) || 0 == _tcsxnicmp(tszFileExt, _X("so"), 2))
+			if (0 == _tcsxnicmp(tszFileExt, _X("dll"), 3) || 0 == _tcsxnicmp(tszFileExt, _X("so"), 2) || 0 == _tcsxnicmp(tszFileExt, _X("dylib"), 5))
 			{
 				//加载插件
 				if (ModulePlugin_Loader_Insert(pptszListFile[i], 0))
