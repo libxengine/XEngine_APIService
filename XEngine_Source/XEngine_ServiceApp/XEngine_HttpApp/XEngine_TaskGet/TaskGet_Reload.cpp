@@ -24,6 +24,10 @@ bool HTTPTask_TaskGet_Reload(LPCXSTR lpszClientAddr, LPCXSTR lpszOPCode)
 		int nLuaCount = 0;
 		int nLibCount = 0;
 		XCHAR** pptszListFile;
+		XENGINE_PLUGINPARAM st_PluginParam = {};
+		_tcsxcpy(st_PluginParam.tszAPIVersion, st_ServiceConfig.st_XVer.pStl_ListVer->front().c_str());
+		_tcsxcpy(st_PluginParam.tszXEngineVer, BaseLib_Version_XNumberStr());
+
 		ModulePlugin_Loader_Destory();
 		ModulePlugin_Loader_Init();
 		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("HTTP客户端:%s,请求操作配置重载成功,加载插件配置成功"), lpszClientAddr);
@@ -32,7 +36,7 @@ bool HTTPTask_TaskGet_Reload(LPCXSTR lpszClientAddr, LPCXSTR lpszOPCode)
 			for (int i = 0; i < nLibCount; i++)
 			{
 				//加载插件
-				ModulePlugin_Loader_Insert(pptszListFile[i], 0);
+				ModulePlugin_Loader_Insert(pptszListFile[i], 0, &st_PluginParam);
 			}
 			BaseLib_Memory_Free((XPPPMEM)&pptszListFile, nLibCount);
 		}
@@ -40,7 +44,7 @@ bool HTTPTask_TaskGet_Reload(LPCXSTR lpszClientAddr, LPCXSTR lpszOPCode)
 			SystemApi_File_EnumFileA(st_ServiceConfig.st_XPlugin.tszLuaPlugin, &pptszListFile, &nLuaCount, false, 1);
 			for (int i = 0; i < nLuaCount; i++)
 			{
-				ModulePlugin_Loader_Insert(pptszListFile[i], 1);
+				ModulePlugin_Loader_Insert(pptszListFile[i], 1, &st_PluginParam);
 			}
 		}
 		HttpProtocol_Server_SendMsgEx(xhHTTPPacket, tszMsgBuffer, &nMsgLen, &st_HDRParam);
