@@ -37,9 +37,9 @@ extern "C" bool ModulePlugin_LibCore_Init()
 {
 	return m_PluginLib.ModulePlugin_LibCore_Init();
 }
-extern "C" bool ModulePlugin_LibCore_Push(XNETHANDLE * pxhModule, LPCXSTR lpszPluginFile, XPVOID lParam)
+extern "C" bool ModulePlugin_LibCore_Push(XNETHANDLE * pxhModule, LPCXSTR lpszPluginFile, XENGINE_PLUGINPARAM* pSt_PluginParameter)
 {
-	return m_PluginLib.ModulePlugin_LibCore_Push(pxhModule, lpszPluginFile, lParam);
+	return m_PluginLib.ModulePlugin_LibCore_Push(pxhModule, lpszPluginFile, pSt_PluginParameter);
 }
 extern "C" bool ModulePlugin_LibCore_Exec(XNETHANDLE xhModule, XCHAR * **pppHDRList, int nListCount, int* pInt_HTTPCode, XCHAR * ptszMsgBuffer, int* pInt_MsgLen, LPCXSTR lpszMsgBufer, int nMsgLen)
 {
@@ -64,9 +64,9 @@ extern "C" bool ModulePlugin_LuaCore_Init()
 {
 	return m_PluginLua.ModulePlugin_LuaCore_Init();
 }
-extern "C" bool ModulePlugin_LuaCore_Push(XNETHANDLE * pxhModule, LPCXSTR lpszPluginFile, XPVOID lParam)
+extern "C" bool ModulePlugin_LuaCore_Push(XNETHANDLE * pxhModule, LPCXSTR lpszPluginFile, XENGINE_PLUGINPARAM* pSt_PluginParameter)
 {
-	return m_PluginLua.ModulePlugin_LuaCore_Push(pxhModule, lpszPluginFile, lParam);
+	return m_PluginLua.ModulePlugin_LuaCore_Push(pxhModule, lpszPluginFile, pSt_PluginParameter);
 }
 extern "C" bool ModulePlugin_LuaCore_Exec(XNETHANDLE xhModule, XCHAR * **pppHDRList, int nListCount, int* pInt_HTTPCode, XCHAR * ptszMsgBuffer, int* pInt_MsgLen, LPCXSTR lpszMsgBufer, int nMsgLen)
 {
@@ -83,9 +83,9 @@ extern "C" bool ModulePlugin_LuaCore_Destroy()
 /*********************************************************************************
 *                        加载器导出函数定义                                      *
 *********************************************************************************/
-extern "C" bool ModulePlugin_Loader_Insert(LPCXSTR lpszModuleName, int nType)
+extern "C" bool ModulePlugin_Loader_Insert(LPCXSTR lpszModuleName, int nType, XENGINE_PLUGINPARAM* pSt_PluginParameter)
 {
-	return m_PluginLoader.ModulePlugin_Loader_Insert(lpszModuleName, nType);
+	return m_PluginLoader.ModulePlugin_Loader_Insert(lpszModuleName, nType, pSt_PluginParameter);
 }
 extern "C" bool ModulePlugin_Loader_Find(LPCXSTR lpszMethodName, int* pInt_Type)
 {

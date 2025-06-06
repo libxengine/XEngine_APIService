@@ -39,17 +39,17 @@ extern "C" bool ModulePlugin_LibCore_Init();
   类型：常量字符指针
   可空：N
   意思：插件模块路径
- 参数.三：lParam
-  In/Out：In/Out
-  类型：无类型指针
+ 参数.三：pSt_PluginParameter
+  In/Out：In
+  类型：数据结构指针
   可空：Y
-  意思：自定义输入输出参数
+  意思：输入插件初始化参数
 返回值
   类型：逻辑型
   意思：是否成功添加
 备注：
 *********************************************************************/
-extern "C" bool ModulePlugin_LibCore_Push(XNETHANDLE * pxhNet, LPCXSTR lpszPluginFile, XPVOID lParam = NULL);
+extern "C" bool ModulePlugin_LibCore_Push(XNETHANDLE * pxhNet, LPCXSTR lpszPluginFile, XENGINE_PLUGINPARAM* pSt_PluginParameter = NULL);
 /********************************************************************
 函数名称：ModulePlugin_LibCore_Exec
 函数功能：执行一次
@@ -167,17 +167,17 @@ extern "C" bool ModulePlugin_LuaCore_Init();
   类型：常量字符指针
   可空：N
   意思：插件模块路径
- 参数.三：lParam
-  In/Out：In/Out
-  类型：无类型指针
+ 参数.三：pSt_PluginParameter
+  In/Out：In
+  类型：数据结构指针
   可空：Y
-  意思：自定义输入输出参数
+  意思：输入插件初始化参数
 返回值
   类型：逻辑型
   意思：是否成功添加
 备注：
 *********************************************************************/
-extern "C" bool ModulePlugin_LuaCore_Push(XNETHANDLE* pxhModule, LPCXSTR lpszPluginFile, XPVOID lParam = NULL);
+extern "C" bool ModulePlugin_LuaCore_Push(XNETHANDLE* pxhModule, LPCXSTR lpszPluginFile, XENGINE_PLUGINPARAM* pSt_PluginParameter = NULL);
 /********************************************************************
 函数名称：ModulePlugin_LuaCore_Exec
 函数功能：执行一次
@@ -293,14 +293,19 @@ extern "C" bool ModulePlugin_Loader_Init();
  参数.二：nType
   In/Out：In
   类型：整数型
-  可空：Y
+  可空：N
   意思：0为lib,1为lua
+ 参数.三：pSt_PluginParameter
+  In/Out：In
+  类型：数据结构指针
+  可空：Y
+  意思：输入插件初始化参数
 返回值
   类型：逻辑型
   意思：是否成功
 备注：
 *********************************************************************/
-extern "C" bool ModulePlugin_Loader_Insert(LPCXSTR lpszModuleName, int nType = 0);
+extern "C" bool ModulePlugin_Loader_Insert(LPCXSTR lpszModuleName, int nType, XENGINE_PLUGINPARAM* pSt_PluginParameter = NULL);
 /********************************************************************
 函数名称：ModulePlugin_Loader_Find
 函数功能：查找方法是否注册

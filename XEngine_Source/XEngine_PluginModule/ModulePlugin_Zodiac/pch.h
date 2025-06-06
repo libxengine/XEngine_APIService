@@ -17,10 +17,12 @@
 #include <json/json.h>
 #include <XEngine_Include/XEngine_CommHdr.h>
 #include <XEngine_Include/XEngine_Types.h>
+#include <XEngine_Include/XEngine_ProtocolHdr.h>
 #include <XEngine_Include/XEngine_BaseLib/BaseLib_Define.h>
 #include <XEngine_Include/XEngine_BaseLib/BaseLib_Error.h>
 #include <XEngine_Include/XEngine_BaseLib/Algorithm_Define.h>
 #include <XEngine_Include/XEngine_BaseLib/Algorithm_Error.h>
+#include "../../XEngine_UserProtocol.h"
 #include "PluginZodiac_Define.h"
 #include "PluginZodiac_Error.h"
 using namespace std;

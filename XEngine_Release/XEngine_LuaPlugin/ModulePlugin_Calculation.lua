@@ -1,4 +1,6 @@
-function PluginCore_Init()
+function PluginCore_Init(pSt_PluginParameter)
+    -- print("API Ver:", pSt_PluginParameter.APIVersion)
+    -- print("XEngine Ver:", pSt_PluginParameter.XEngineVer)
     return true
 end
 

@@ -31,8 +31,10 @@
 using namespace std;
 #include <XEngine_Include/XEngine_CommHdr.h>
 #include <XEngine_Include/XEngine_Types.h>
+#include <XEngine_Include/XEngine_ProtocolHdr.h>
 #include <XEngine_Include/XEngine_BaseLib/BaseLib_Define.h>
 #include <XEngine_Include/XEngine_BaseLib/BaseLib_Error.h>
+#include "../XEngine_UserProtocol.h"
 #include "ModulePlugin_Define.h"
 #include "ModulePlugin_Error.h"
 /********************************************************************

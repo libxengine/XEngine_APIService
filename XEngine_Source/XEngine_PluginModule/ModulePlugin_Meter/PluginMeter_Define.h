@@ -83,7 +83,7 @@ extern "C" XLONG PluginCore_GetLastError();
   意思：是否成功
 备注：
 *********************************************************************/
-extern "C" bool PluginCore_Init(XPVOID lParam = NULL);
+extern "C" bool PluginCore_Init(XENGINE_PLUGINPARAM* pSt_PluginParameter = NULL);
 /********************************************************************
 函数名称：PluginCore_UnInit
 函数功能：卸载插件

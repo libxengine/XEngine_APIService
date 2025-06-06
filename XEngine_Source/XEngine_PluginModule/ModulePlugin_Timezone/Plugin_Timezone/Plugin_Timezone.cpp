@@ -23,17 +23,17 @@ CPlugin_Timezone::~CPlugin_Timezone()
 /********************************************************************
 函数名称：PluginCore_Init
 函数功能：初始化插件模块
- 参数.一：lParam
-  In/Out：In/Out
-  类型：无类型指针
+ 参数.一：pSt_PluginParameter
+  In/Out：In
+  类型：数据结构指针
   可空：N
-  意思：自定义参数
+  意思：输入插件初始化信息
 返回值
   类型：逻辑型
   意思：是否成功
 备注：
 *********************************************************************/
-bool CPlugin_Timezone::PluginCore_Init(XPVOID lParam)
+bool CPlugin_Timezone::PluginCore_Init(XENGINE_PLUGINPARAM *pSt_PluginParameter)
 {
 	Timezone_IsErrorOccur = false;
 

@@ -140,10 +140,10 @@ int main(int argc, char** argv)
 #endif
 	bIsRun = true;
 	int nRet = -1;
-	HELPCOMPONENTS_XLOG_CONFIGURE st_XLogConfig;
+	XENGINE_PLUGINPARAM st_PluginParam = {};
+	HELPCOMPONENTS_XLOG_CONFIGURE st_XLogConfig = {};
 	THREADPOOL_PARAMENT** ppSt_ListHTTPParam;
 
-	memset(&st_XLogConfig, '\0', sizeof(HELPCOMPONENTS_XLOG_CONFIGURE));
 	memset(&st_ServiceConfig, '\0', sizeof(XENGINE_SERVICECONFIG));
 
 	//初始化参数
@@ -397,6 +397,8 @@ int main(int argc, char** argv)
 	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("启动服务中,启动进程管理线程成功"));
 
 	//初始化插件配置
+	_tcsxcpy(st_PluginParam.tszAPIVersion, st_ServiceConfig.st_XVer.pStl_ListVer->front().c_str());
+	_tcsxcpy(st_PluginParam.tszXEngineVer, BaseLib_Version_XNumberStr());
 	if (st_ServiceConfig.st_XPlugin.bEnable)
 	{
 		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("启动服务中,初始化插件配置文件成功"));
@@ -418,7 +420,7 @@ int main(int argc, char** argv)
 			if (0 == _tcsxnicmp(tszFileExt, _X("dll"), 3) || 0 == _tcsxnicmp(tszFileExt, _X("so"), 2) || 0 == _tcsxnicmp(tszFileExt, _X("dylib"), 5))
 			{
 				//加载插件
-				if (ModulePlugin_Loader_Insert(pptszListFile[i], 0))
+				if (ModulePlugin_Loader_Insert(pptszListFile[i], 0, &st_PluginParam))
 				{
 					XCHAR tszModuleName[128] = {};
 					XCHAR tszModuleAuthor[64] = {};
@@ -443,7 +445,7 @@ int main(int argc, char** argv)
 			BaseLib_String_GetFileAndPath(pptszListFile[i], NULL, NULL, NULL, tszFileExt);
 			if (0 == _tcsxnicmp(tszFileExt, _X("lua"), 3))
 			{
-				if (ModulePlugin_Loader_Insert(pptszListFile[i], 1))
+				if (ModulePlugin_Loader_Insert(pptszListFile[i], 1, &st_PluginParam))
 				{
 					XCHAR tszModuleName[128] = {};
 					XCHAR tszModuleAuthor[64] = {};

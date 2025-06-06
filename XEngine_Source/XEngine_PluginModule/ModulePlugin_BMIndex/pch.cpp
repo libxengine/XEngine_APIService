@@ -25,9 +25,9 @@ extern "C" XLONG PluginCore_GetLastError()
 /*********************************************************************************
 *                                导出函数定义                                    *
 *********************************************************************************/
-extern "C" bool PluginCore_Init(XPVOID lParam)
+extern "C" bool PluginCore_Init(XENGINE_PLUGINPARAM *pSt_PluginParameter)
 {
-	return m_PluginBMIndex.PluginCore_Init(lParam);
+	return m_PluginBMIndex.PluginCore_Init(pSt_PluginParameter);
 }
 extern "C" void PluginCore_UnInit()
 {

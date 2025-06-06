@@ -46,14 +46,19 @@ bool CModulePlugin_Loader::ModulePlugin_Loader_Init()
  参数.二：nType
   In/Out：In
   类型：整数型
-  可空：Y
+  可空：N
   意思：0为lib,1为lua
+ 参数.三：pSt_PluginParameter
+  In/Out：In
+  类型：数据结构指针
+  可空：Y
+  意思：输入插件初始化参数
 返回值
   类型：逻辑型
   意思：是否成功
 备注：
 *********************************************************************/
-bool CModulePlugin_Loader::ModulePlugin_Loader_Insert(LPCXSTR lpszModuleName, int nType /* = 0 */)
+bool CModulePlugin_Loader::ModulePlugin_Loader_Insert(LPCXSTR lpszModuleName, int nType, XENGINE_PLUGINPARAM* pSt_PluginParameter /* = NULL */)
 {
     ModulePlugin_IsErrorOccur = false;
 
@@ -71,7 +76,7 @@ bool CModulePlugin_Loader::ModulePlugin_Loader_Insert(LPCXSTR lpszModuleName, in
 
 	if (0 == nType)
 	{
-		if (!ModulePlugin_LibCore_Push(&st_PluginLoader.xhToken, lpszModuleName))
+		if (!ModulePlugin_LibCore_Push(&st_PluginLoader.xhToken, lpszModuleName, pSt_PluginParameter))
 		{
 			return false;
 		}
@@ -79,7 +84,7 @@ bool CModulePlugin_Loader::ModulePlugin_Loader_Insert(LPCXSTR lpszModuleName, in
 	}
 	else
 	{
-		if (!ModulePlugin_LuaCore_Push(&st_PluginLoader.xhToken, lpszModuleName))
+		if (!ModulePlugin_LuaCore_Push(&st_PluginLoader.xhToken, lpszModuleName, pSt_PluginParameter))
 		{
 			return false;
 		}

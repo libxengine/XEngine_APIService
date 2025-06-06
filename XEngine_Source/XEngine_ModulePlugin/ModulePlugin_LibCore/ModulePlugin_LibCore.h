@@ -10,7 +10,7 @@
 //    Purpose:     插件核心架构定义
 //    History:
 *********************************************************************/
-typedef bool(*FPCall_PluginCore_Init)(XPVOID lParam);
+typedef bool(*FPCall_PluginCore_Init)(XENGINE_PLUGINPARAM* pSt_PluginParameter);
 typedef void(*FPCall_PluginCore_UnInit)();
 typedef void(*FPCall_PluginCore_GetInfo)(XCHAR* ptszPluginName, XCHAR* ptszPluginVersion, XCHAR* ptszPluginAuthor, XCHAR* ptszPluginDesc);
 typedef bool(*FPCall_PluginCore_Call)(XCHAR*** pppHDRList, int nListCount, int* pInt_HTTPCode, XCHAR* ptszMsgBuffer, int* pInt_MsgLen, LPCXSTR lpszMsgBufer, int nMsgLen);
@@ -29,7 +29,7 @@ typedef struct
 	XCHAR tszModuleDesc[128];
 	XCHAR tszModuleVer[64];
 
-	bool(*fpCall_PluginCore_Init)(XPVOID lParam);
+	bool(*fpCall_PluginCore_Init)(XENGINE_PLUGINPARAM* pSt_PluginParameter);
 	void(*fpCall_PluginCore_UnInit)();
 	void(*fpCall_PluginCore_GetInfo)(XCHAR* ptszPluginName, XCHAR* ptszPluginVersion, XCHAR* ptszPluginAuthor, XCHAR* ptszPluginDesc);
 	bool(*fpCall_PluginCore_Call)(XCHAR*** pppHDRList, int nListCount, int* pInt_HTTPCode, XCHAR* ptszMsgBuffer, int* pInt_MsgLen, LPCXSTR lpszMsgBufer, int nMsgLen);
@@ -43,12 +43,12 @@ public:
 	~CModulePlugin_LibCore();
 public:
 	bool ModulePlugin_LibCore_Init();
-	bool ModulePlugin_LibCore_Push(XNETHANDLE* pxhModule, LPCXSTR lpszPluginFile, XPVOID lParam = NULL);
+	bool ModulePlugin_LibCore_Push(XNETHANDLE* pxhModule, LPCXSTR lpszPluginFile, XENGINE_PLUGINPARAM* pSt_PluginParameter = NULL);
 	bool ModulePlugin_LibCore_Exec(XNETHANDLE xhModule, XCHAR*** pppHDRList, int nListCount, int* pInt_HTTPCode, XCHAR* ptszMsgBuffer, int* pInt_MsgLen, LPCXSTR lpszMsgBufer = NULL, int nMsgLen = 0);
 	bool ModulePlugin_LibCore_Get(XNETHANDLE xhModule, XCHAR* ptszPluginName, XCHAR* ptszPluginVersion, XCHAR* ptszPluginAuthor, XCHAR* ptszPluginDesc);
 	bool ModulePlugin_LibCore_Destroy();
 protected:
-	bool ModulePlugin_LibCore_Add(XNETHANDLE xhNet, LPCXSTR lpszPluginFile, XPVOID lParam = NULL);
+	bool ModulePlugin_LibCore_Add(XNETHANDLE xhNet, LPCXSTR lpszPluginFile, XENGINE_PLUGINPARAM* pSt_PluginParameter = NULL);
 private:
 	bool bIsInit;
 private:

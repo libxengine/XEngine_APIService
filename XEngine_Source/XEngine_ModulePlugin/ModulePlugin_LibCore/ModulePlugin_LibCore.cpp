@@ -56,17 +56,17 @@ bool CModulePlugin_LibCore::ModulePlugin_LibCore_Init()
   类型：常量字符指针
   可空：N
   意思：插件模块路径
- 参数.三：lParam
-  In/Out：In/Out
-  类型：无类型指针
+ 参数.三：pSt_PluginParameter
+  In/Out：In
+  类型：数据结构指针
   可空：Y
-  意思：自定义输入输出参数
+  意思：输入插件初始化参数
 返回值
   类型：逻辑型
   意思：是否成功添加
 备注：
 *********************************************************************/
-bool CModulePlugin_LibCore::ModulePlugin_LibCore_Push(XNETHANDLE* pxhModule, LPCXSTR lpszPluginFile, XPVOID lParam)
+bool CModulePlugin_LibCore::ModulePlugin_LibCore_Push(XNETHANDLE* pxhModule, LPCXSTR lpszPluginFile, XENGINE_PLUGINPARAM* pSt_PluginParameter)
 {
     ModulePlugin_IsErrorOccur = false;
 
@@ -76,7 +76,7 @@ bool CModulePlugin_LibCore::ModulePlugin_LibCore_Push(XNETHANDLE* pxhModule, LPC
         ModulePlugin_dwErrorCode = BaseLib_GetLastError();
         return false;
     }
-    if (!ModulePlugin_LibCore_Add(*pxhModule, lpszPluginFile, lParam))
+    if (!ModulePlugin_LibCore_Add(*pxhModule, lpszPluginFile, pSt_PluginParameter))
     {
         return false;
     }
@@ -256,17 +256,17 @@ bool CModulePlugin_LibCore::ModulePlugin_LibCore_Destroy()
   类型：常量字符指针
   可空：N
   意思：插件模块路径
- 参数.三：lParam
-  In/Out：In/Out
-  类型：无类型指针
+ 参数.三：pSt_PluginParameter
+  In/Out：In
+  类型：数据结构指针
   可空：Y
-  意思：自定义输入输出参数
+  意思：输入插件初始化参数
 返回值
   类型：逻辑型
   意思：是否成功执行
 备注：
 *********************************************************************/
-bool CModulePlugin_LibCore::ModulePlugin_LibCore_Add(XNETHANDLE xhNet, LPCXSTR lpszPluginFile, XPVOID lParam)
+bool CModulePlugin_LibCore::ModulePlugin_LibCore_Add(XNETHANDLE xhNet, LPCXSTR lpszPluginFile, XENGINE_PLUGINPARAM* pSt_PluginParameter)
 {
     ModulePlugin_IsErrorOccur = false;
 
@@ -351,7 +351,7 @@ bool CModulePlugin_LibCore::ModulePlugin_LibCore_Add(XNETHANDLE xhNet, LPCXSTR l
 		return false;
 	}
     //初始化内部模块
-    if (!st_FrameWork.fpCall_PluginCore_Init(lParam))
+    if (!st_FrameWork.fpCall_PluginCore_Init(pSt_PluginParameter))
     {
         XFreeModule(st_FrameWork.mhFile);
         ModulePlugin_IsErrorOccur = true;

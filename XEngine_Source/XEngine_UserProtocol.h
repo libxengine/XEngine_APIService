@@ -149,15 +149,6 @@ typedef struct
 	XSHOT dwConnectType;                                                   //连接类型
 	XSHOT dwPeerType;                                                      //节点类型
 }XENGINE_P2XPPEER_PROTOCOL, * LPXENGINE_P2XPPEER_PROTOCOL;
-//P2XP通道连接命令
-typedef struct tag_XEngine_P2XPIO_Protocol
-{
-	XCHAR tszSourceUser[32];                                               //请求连接的用户
-	XCHAR tszDestUser[32];                                                 //要连接的用户
-	XCHAR tszConnectAddr[32];                                              //连接的IP地址
-	int nDestPort;                                                        //要连接的端口
-	bool bIsTcp;                                                          //连接类型TCP,否则为UDP
-}XENGINE_P2XPIO_PROTOCOL, * LPXENGINE_P2XPIO_PROTOCOL;
 //邮编信息
 typedef struct
 {
@@ -291,4 +282,10 @@ typedef struct
 	XCHAR tszUPTime[64];       //更新时间
 	XCHAR tszNextTime[64];       //更新时间
 }XENGINE_OILINFO;
+//插件参数
+typedef struct
+{
+	XCHAR tszAPIVersion[64];                                              //API服务版本
+	XCHAR tszXEngineVer[64];                                              //XEngine版本
+}XENGINE_PLUGINPARAM;
 #pragma pack(pop)

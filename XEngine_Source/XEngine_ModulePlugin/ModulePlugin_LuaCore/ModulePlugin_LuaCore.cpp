@@ -46,17 +46,17 @@ bool CModulePlugin_LuaCore::ModulePlugin_LuaCore_Init()
   类型：常量字符指针
   可空：N
   意思：插件模块路径
- 参数.三：lParam
-  In/Out：In/Out
-  类型：无类型指针
+ 参数.三：pSt_PluginParameter
+  In/Out：In
+  类型：数据结构指针
   可空：Y
-  意思：自定义输入输出参数
+  意思：输入插件初始化参数
 返回值
   类型：逻辑型
   意思：是否成功添加
 备注：
 *********************************************************************/
-bool CModulePlugin_LuaCore::ModulePlugin_LuaCore_Push(XNETHANDLE* pxhModule, LPCXSTR lpszPluginFile, XPVOID lParam)
+bool CModulePlugin_LuaCore::ModulePlugin_LuaCore_Push(XNETHANDLE* pxhModule, LPCXSTR lpszPluginFile, XENGINE_PLUGINPARAM* pSt_PluginParameter)
 {
     ModulePlugin_IsErrorOccur = false;
 
@@ -66,7 +66,7 @@ bool CModulePlugin_LuaCore::ModulePlugin_LuaCore_Push(XNETHANDLE* pxhModule, LPC
         ModulePlugin_dwErrorCode = BaseLib_GetLastError();
         return false;
     }
-    if (!ModulePlugin_LuaCore_Add(*pxhModule, lpszPluginFile, lParam))
+    if (!ModulePlugin_LuaCore_Add(*pxhModule, lpszPluginFile, pSt_PluginParameter))
     {
         return false;
     }
@@ -279,17 +279,17 @@ bool CModulePlugin_LuaCore::ModulePlugin_LuaCore_Destroy()
   类型：常量字符指针
   可空：N
   意思：插件模块路径
- 参数.三：lParam
-  In/Out：In/Out
-  类型：无类型指针
+ 参数.三：pSt_PluginParameter
+  In/Out：In
+  类型：数据结构指针
   可空：Y
-  意思：自定义输入输出参数
+  意思：输入插件初始化参数
 返回值
   类型：逻辑型
   意思：是否成功执行
 备注：
 *********************************************************************/
-bool CModulePlugin_LuaCore::ModulePlugin_LuaCore_Add(XNETHANDLE xhNet, LPCXSTR lpszPluginFile, XPVOID lParam)
+bool CModulePlugin_LuaCore::ModulePlugin_LuaCore_Add(XNETHANDLE xhNet, LPCXSTR lpszPluginFile, XENGINE_PLUGINPARAM* pSt_PluginParameter /* = NULL */)
 {
     ModulePlugin_IsErrorOccur = false;
 
@@ -333,8 +333,17 @@ bool CModulePlugin_LuaCore::ModulePlugin_LuaCore_Add(XNETHANDLE xhNet, LPCXSTR l
 		ModulePlugin_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PLUGIN_FPINIT;
 		return false;
     }
+	lua_newtable(st_LuaCore.pSt_LuaState);
 
-	if (LUA_OK != lua_pcall(st_LuaCore.pSt_LuaState, 0, 1, 0))
+	lua_pushstring(st_LuaCore.pSt_LuaState, "APIVersion");
+	lua_pushstring(st_LuaCore.pSt_LuaState, pSt_PluginParameter->tszAPIVersion);
+	lua_settable(st_LuaCore.pSt_LuaState, -3);
+
+	lua_pushstring(st_LuaCore.pSt_LuaState, "XEngineVer");
+	lua_pushstring(st_LuaCore.pSt_LuaState, pSt_PluginParameter->tszXEngineVer);
+	lua_settable(st_LuaCore.pSt_LuaState, -3);
+
+	if (LUA_OK != lua_pcall(st_LuaCore.pSt_LuaState, 1, 1, 0))
 	{
 		ModulePlugin_IsErrorOccur = true;
 		ModulePlugin_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PLUGIN_EXECTION;
@@ -346,7 +355,7 @@ bool CModulePlugin_LuaCore::ModulePlugin_LuaCore_Add(XNETHANDLE xhNet, LPCXSTR l
 		ModulePlugin_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PLUGIN_EXECTION;
 		return false;
     }
-    lua_pop(st_LuaCore.pSt_LuaState, -1);
+    lua_pop(st_LuaCore.pSt_LuaState, 1);
     //得到信息函数
 	if (0 == lua_getglobal(st_LuaCore.pSt_LuaState, "PluginCore_GetInfo"))
 	{

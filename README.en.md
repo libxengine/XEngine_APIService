@@ -79,6 +79,7 @@ In order to save resources, now the IP and phone and mac databases need to be co
 #### Database Env
 MYSQL database version 8.0 or above is required. Create a table through CreateDatabase.sql, and then import other sql table
 Modify the database configuration in XSQL in the configuration file to your  
+The default configuration does not enable database support. If the database interface is required, you need to enable the database yourself
 
 #### Windows
 need to vcpkg configure third-part env.refer vcpkg install guide.after installed and execution:vcpkg.exe install lua:x86-windows opencv[contrib]:x86-windows libqrencode:x86-windows lua:x64-windows opencv[contrib]:x64-windows libqrencode:x64-windows  
