@@ -1,0 +1,9 @@
+[submodule "XEngine_Source/XEngine_DependLibrary/XEngine_OPenSource"]
+	path = XEngine_Source/XEngine_DependLibrary/XEngine_OPenSource
+	url = https://github.com/libxengine/XEngine_OPenSource.git
+[submodule "XEngine_Source/XEngine_DependLibrary/XEngine_IPMacData"]
+	path = XEngine_Source/XEngine_DependLibrary/XEngine_IPMacData
+	url = https://github.com/libxengine/XEngine_IPMacData.git
+[submodule "XEngine_Source/XEngine_DependLibrary/XEngine_PhoneData"]
+	path = XEngine_Source/XEngine_DependLibrary/XEngine_PhoneData
+	url = https://github.com/libxengine/XEngine_PhoneData.git

@@ -61,14 +61,14 @@ using namespace std;
 #include <XEngine_Include/XEngine_AVCodec/AudioCodec_Error.h>
 #include <XEngine_Include/XEngine_AVCodec/AVHelp_Define.h>
 #include <XEngine_Include/XEngine_AVCodec/AVHelp_Error.h>
-#include "../../XEngine_Depend/XEngine_Module/XEngine_InfoReport/InfoReport_Define.h"
-#include "../../XEngine_Depend/XEngine_Module/XEngine_InfoReport/InfoReport_Error.h"
-#include "../../XEngine_DBDepend/XEngine_IPMacData/XEngine_Source/XIPMac_CommHdr.h"
-#include "../../XEngine_DBDepend/XEngine_IPMacData/XEngine_Source/XEngine_APIModuleIPMac/APIIPMac_Define.h"
-#include "../../XEngine_DBDepend/XEngine_IPMacData/XEngine_Source/XEngine_APIModuleIPMac/APIIPMac_Error.h"
-#include "../../XEngine_DBDepend/XEngine_PhoneData/Source/XPhone_CommHdr.h"
-#include "../../XEngine_DBDepend/XEngine_PhoneData/Source/C/XEngine_APIModulePhone/APIPhone_Define.h"
-#include "../../XEngine_DBDepend/XEngine_PhoneData/Source/C/XEngine_APIModulePhone/APIPhone_Error.h"
+#include "../../XEngine_DependLibrary/XEngine_OPenSource/XEngine_Module/XEngine_InfoReport/InfoReport_Define.h"
+#include "../../XEngine_DependLibrary/XEngine_OPenSource/XEngine_Module/XEngine_InfoReport/InfoReport_Error.h"
+#include "../../XEngine_DependLibrary/XEngine_IPMacData/XEngine_Source/XIPMac_CommHdr.h"
+#include "../../XEngine_DependLibrary/XEngine_IPMacData/XEngine_Source/XEngine_APIModuleIPMac/APIIPMac_Define.h"
+#include "../../XEngine_DependLibrary/XEngine_IPMacData/XEngine_Source/XEngine_APIModuleIPMac/APIIPMac_Error.h"
+#include "../../XEngine_DependLibrary/XEngine_PhoneData/Source/XPhone_CommHdr.h"
+#include "../../XEngine_DependLibrary/XEngine_PhoneData/Source/C/XEngine_APIModulePhone/APIPhone_Define.h"
+#include "../../XEngine_DependLibrary/XEngine_PhoneData/Source/C/XEngine_APIModulePhone/APIPhone_Error.h"
 //加载项目相关头文件
 #include "../../XEngine_BuildSwitch.h"
 #include "../../XEngine_UserProtocol.h"
