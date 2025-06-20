@@ -42,11 +42,6 @@ jobs:
           repository: libxengine/libxengine
           path: libxengine
 
-      - name: sub module checkout (opensource)
-        run: |
-          git submodule init
-          git submodule update
-
       - name: install system package
         run: |
             dnf update -y
@@ -55,6 +50,11 @@ jobs:
 
       - name: Set TERM variable
         run: echo "TERM=xterm" >> $GITHUB_ENV
+
+      - name: sub module checkout (opensource)
+        run: |
+          git submodule init
+          git submodule update
 
       - name: install xengine library
         run: |
