@@ -35,6 +35,10 @@ jobs:
     steps:
       - name: Checkout main repository code
         uses: actions/checkout@v4
+        with:
+          ref: 'develop'
+          fetch-depth: 0
+          submodules: 'recursive'
 
       - name: Checkout dependency repository (xengine)
         uses: actions/checkout@v4
@@ -50,11 +54,6 @@ jobs:
 
       - name: Set TERM variable
         run: echo "TERM=xterm" >> $GITHUB_ENV
-
-      - name: sub module checkout (opensource)
-        run: |
-          git submodule init
-          git submodule update
 
       - name: install xengine library
         run: |
