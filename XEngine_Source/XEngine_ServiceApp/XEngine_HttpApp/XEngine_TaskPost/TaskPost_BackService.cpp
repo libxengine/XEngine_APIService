@@ -352,7 +352,7 @@ bool HTTPTask_TaskPost_BackService(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer
 			return false;
 		}
 
-		xhStream = XClient_StreamPush_LiveInit(tszDstBuffer, &st_AVInfo);
+		xhStream = XClient_StreamPush_LiveInit();
 		if (NULL == xhStream)
 		{
 			st_HDRParam.nHttpCode = 400;
@@ -361,6 +361,8 @@ bool HTTPTask_TaskPost_BackService(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer
 			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("HTTP客户端:%s,推流:%s 请求失败,错误码:%lX"), lpszClientAddr, tszDstBuffer, StreamClient_GetLastError());
 			return false;
 		}
+		XClient_StreamPush_LiveOutput(xhStream, tszDstBuffer, _X("flv"));
+		XClient_StreamPush_LiveCreate(xhStream, &st_AVInfo);
 		bRecord = true;
 		AVCollect_Video_Start(xhScreen);
 		HttpProtocol_Server_SendMsgEx(xhHTTPPacket, ptszSDBuffer, &nSDLen, &st_HDRParam);
