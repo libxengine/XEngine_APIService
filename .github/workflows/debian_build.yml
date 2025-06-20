@@ -38,21 +38,10 @@ jobs:
           repository: libxengine/libxengine
           path: libxengine
 
-      - name: sub module checkout (XEngine_OPenSource)
-        uses: actions/checkout@v4
-        with:
-          repository: libxengine/XEngine_OPenSource
-          path: XEngine_Source/XEngine_Depend
-      - name: sub module checkout (XEngine_PhoneData)
-        uses: actions/checkout@v4
-        with:
-          repository: libxengine/XEngine_PhoneData
-          path: XEngine_Source/XEngine_DBDepend/XEngine_PhoneData
-      - name: sub module checkout (XEngine_IPMacData)
-        uses: actions/checkout@v4
-        with:
-          repository: libxengine/XEngine_IPMacData
-          path: XEngine_Source/XEngine_DBDepend/XEngine_IPMacData
+      - name: sub module checkout (opensource)
+        run: |
+          git submodule init
+          git submodule update
 
       - name: Set TERM variable
         run: echo "TERM=xterm" >> $GITHUB_ENV
