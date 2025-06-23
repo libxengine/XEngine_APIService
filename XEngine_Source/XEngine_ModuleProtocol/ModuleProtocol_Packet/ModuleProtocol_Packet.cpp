@@ -1321,9 +1321,9 @@ bool CModuleProtocol_Packet::ModuleProtocol_Packet_HardWare(XCHAR* ptszHWInfo, i
 	}
 	int nDiskNumber = 0;
 	XCHAR** pptszRootName;
-	XCHAR tszOSName[XPATH_MAX];
-	XCHAR tszOSVersion[XPATH_MAX];
-	XCHAR tszOSBuild[XPATH_MAX];
+	XCHAR tszOSName[256];
+	XCHAR tszOSVersion[256];
+	XCHAR tszOSBuild[256];
 	XLONG nOSPro = 0;
 	XCHAR tszOSInfo[2048];
 	SYSTEMAPI_DISK_INFOMATION st_DiskInfo;

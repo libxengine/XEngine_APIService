@@ -126,9 +126,9 @@ typedef struct
 //银行卡
 typedef struct
 {
-	XCHAR tszBankNumber[XPATH_MAX];       //银行卡号
-	XCHAR tszBankName[XPATH_MAX];         //银行卡名称
-	XCHAR tszBankAbridge[XPATH_MAX];      //银行卡缩写
+	XCHAR tszBankNumber[128];       //银行卡号
+	XCHAR tszBankName[128];         //银行卡名称
+	XCHAR tszBankAbridge[128];      //银行卡缩写
 	ENUM_XENGINE_APISERVICE_BANK_TYPE enBankType;
 }XENGINE_BANKINFO;
 //语言转换
@@ -166,7 +166,7 @@ typedef struct
 typedef struct  
 {
 	XENGINE_PROTOCOL_XLOG st_ProtocolLog;
-	XCHAR tszLogBuffer[10240];
+	XCHAR tszLogBuffer[8192];
 	XCHAR tszTableName[128];
 	XCHAR tszTimeStart[128];
 	XCHAR tszTimeEnd[128];
@@ -202,7 +202,7 @@ typedef struct
 {
 	MODULEHELP_SOCKETTEST_RECONNECT st_SocketConn;
 	MODULEHELP_SOCKETTEST_DATAS st_SocketData;
-	XCHAR tszAPIUrl[XPATH_MAX];
+	XCHAR tszAPIUrl[256];
 	XNETHANDLE xhToken;
 	int nType;                                                  //0,全部报告,其他结束统计报告
 	bool bTCP;
@@ -211,11 +211,11 @@ typedef struct
 //短连接
 typedef struct
 {
-	XCHAR tszFullUrl[XPATH_MAX];
-	XCHAR tszShotUrl[XPATH_MAX];
-	XCHAR tszKeyUrl[XPATH_MAX];
-	XCHAR tszMapUrl[XPATH_MAX];
-	XCHAR tszCvtUrl[XPATH_MAX];
+	XCHAR tszFullUrl[256];
+	XCHAR tszShotUrl[256];
+	XCHAR tszKeyUrl[256];
+	XCHAR tszMapUrl[256];
+	XCHAR tszCvtUrl[256];
 	XCHAR tszCreateTime[64];
 	int nLength;
 	int nID;
@@ -224,11 +224,11 @@ typedef struct
 typedef struct
 {
 	XCHAR tszMachineText[2048];
-	XCHAR tszServiceName[XPATH_MAX];
-	XCHAR tszMachineName[XPATH_MAX];
-	XCHAR tszMachineUser[XPATH_MAX];
-	XCHAR tszMachineCode[XPATH_MAX];
-	XCHAR tszMachineSystem[XPATH_MAX];
+	XCHAR tszServiceName[256];
+	XCHAR tszMachineName[256];
+	XCHAR tszMachineUser[256];
+	XCHAR tszMachineCode[256];
+	XCHAR tszMachineSystem[256];
 	XCHAR tszLastTime[64];
 	XCHAR tszCreateTime[64];
 	__int64x nTimeNumber;
@@ -237,8 +237,8 @@ typedef struct
 //敏感词过滤器
 typedef struct
 {
-	XCHAR tszWordsFrom[XPATH_MAX];       
-	XCHAR tszWordsTo[XPATH_MAX];    
+	XCHAR tszWordsFrom[256];
+	XCHAR tszWordsTo[256];
 	XBYTE nLevel;                                  //过滤级别,0替换,1删除,2禁止
 }XENGINE_WORDFILTER;
 //图像基本属性
