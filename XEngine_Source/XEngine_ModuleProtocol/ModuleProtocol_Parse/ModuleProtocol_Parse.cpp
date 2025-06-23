@@ -1154,10 +1154,23 @@ bool CModuleProtocol_Parse::ModuleProtocol_Parse_Machine(LPCXSTR lpszMsgBuffer, 
 	{
 		_tcsxcpy(pSt_MachineInfo->tszMachineSystem, st_JsonRoot["tszMachineSystem"].asCString());
 	}
-	if (!st_JsonRoot["tszMachineText"].isNull())
+	//to do
+	if (st_JsonRoot["tszMachineText"].isNull())
 	{
-		_tcsxcpy(pSt_MachineInfo->tszMachineText, st_JsonRoot["tszMachineText"].asCString());
+		if (!st_JsonRoot["tszMachineSoftware"].isNull())
+		{
+			_tcsxcpy(pSt_MachineInfo->tszMachineSoftware, st_JsonRoot["tszMachineSoftware"].asCString());
+		}
+		if (!st_JsonRoot["tszMachineHardware"].isNull())
+		{
+			_tcsxcpy(pSt_MachineInfo->tszMachineHardware, st_JsonRoot["tszMachineHardware"].asCString());
+		}
 	}
+	else
+	{
+		_tcsxcpy(pSt_MachineInfo->tszMachineSoftware, st_JsonRoot["tszMachineText"].asCString());
+	}
+	
 	return true;
 }
 /********************************************************************

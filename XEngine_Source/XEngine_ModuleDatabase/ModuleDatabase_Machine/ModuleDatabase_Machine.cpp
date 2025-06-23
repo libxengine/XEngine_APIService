@@ -95,7 +95,7 @@ bool CModuleDatabase_Machine::ModuleDatabase_Machine_Insert(XENGINE_MACHINEINFO*
 	XCHAR tszSQLStatement[4096];
 	memset(tszSQLStatement, '\0', sizeof(tszSQLStatement));
 
-	_xstprintf(tszSQLStatement, _X("INSERT INTO `XEngine_MachineList` (tszServiceName,tszMachineName,tszMachineUser,tszMachineSystem,tszMachineText,nTimeNumber,tszCreateTime) VALUES('%s','%s','%s','%s','%s',%lld,now())"), pSt_MachineInfo->tszServiceName, pSt_MachineInfo->tszMachineName, pSt_MachineInfo->tszMachineUser, pSt_MachineInfo->tszMachineSystem, pSt_MachineInfo->tszMachineText, pSt_MachineInfo->nTimeNumber);
+	_xstprintf(tszSQLStatement, _X("INSERT INTO `XEngine_MachineList` (tszServiceName,tszMachineName,tszMachineUser,tszMachineSystem,tszMachineSoftware,tszMachineHardware,nTimeNumber,tszCreateTime) VALUES('%s','%s','%s','%s','%s','%s',%lld,now())"), pSt_MachineInfo->tszServiceName, pSt_MachineInfo->tszMachineName, pSt_MachineInfo->tszMachineUser, pSt_MachineInfo->tszMachineSystem, pSt_MachineInfo->tszMachineSoftware, pSt_MachineInfo->tszMachineHardware, pSt_MachineInfo->nTimeNumber);
 #ifdef _MSC_BUILD
 	XCHAR tszUTFStr[4096] = {};
 	int nSLen = _tcsxlen(tszSQLStatement);
@@ -181,19 +181,23 @@ bool CModuleDatabase_Machine::ModuleDatabase_Machine_Query(XENGINE_MACHINEINFO* 
 		}
 		if (NULL != pptszResult[5])
 		{
-			_tcsxcpy(pSt_MachineInfo->tszMachineText, pptszResult[5]);
+			_tcsxcpy(pSt_MachineInfo->tszMachineSoftware, pptszResult[5]);
 		}
 		if (NULL != pptszResult[6])
 		{
-			pSt_MachineInfo->nTimeNumber = _ttxoll(pptszResult[6]);
+			_tcsxcpy(pSt_MachineInfo->tszMachineHardware, pptszResult[6]);
 		}
 		if (NULL != pptszResult[7])
 		{
-			_tcsxcpy(pSt_MachineInfo->tszLastTime, pptszResult[7]);
+			pSt_MachineInfo->nTimeNumber = _ttxoll(pptszResult[7]);
 		}
 		if (NULL != pptszResult[8])
 		{
-			_tcsxcpy(pSt_MachineInfo->tszCreateTime, pptszResult[8]);
+			_tcsxcpy(pSt_MachineInfo->tszLastTime, pptszResult[8]);
+		}
+		if (NULL != pptszResult[9])
+		{
+			_tcsxcpy(pSt_MachineInfo->tszCreateTime, pptszResult[9]);
 		}
 	}
 	DataBase_MySQL_FreeResult(xhDBSQL, xhTable);
@@ -342,19 +346,23 @@ bool CModuleDatabase_Machine::ModuleDatabase_Machine_List(XENGINE_MACHINEINFO***
 		}
 		if (NULL != pptszResult[5])
 		{
-			_tcsxcpy((*pppSt_MachineInfo)[i]->tszMachineText, pptszResult[5]);
+			_tcsxcpy((*pppSt_MachineInfo)[i]->tszMachineSoftware, pptszResult[5]);
 		}
 		if (NULL != pptszResult[6])
 		{
-			(*pppSt_MachineInfo)[i]->nTimeNumber = _ttxoll(pptszResult[6]);
+			_tcsxcpy((*pppSt_MachineInfo)[i]->tszMachineHardware, pptszResult[6]);
 		}
 		if (NULL != pptszResult[7])
 		{
-			_tcsxcpy((*pppSt_MachineInfo)[i]->tszLastTime, pptszResult[7]);
+			(*pppSt_MachineInfo)[i]->nTimeNumber = _ttxoll(pptszResult[7]);
 		}
 		if (NULL != pptszResult[8])
 		{
-			_tcsxcpy((*pppSt_MachineInfo)[i]->tszCreateTime, pptszResult[8]);
+			_tcsxcpy((*pppSt_MachineInfo)[i]->tszLastTime, pptszResult[8]);
+		}
+		if (NULL != pptszResult[9])
+		{
+			_tcsxcpy((*pppSt_MachineInfo)[i]->tszCreateTime, pptszResult[9]);
 		}
 	}
 	DataBase_MySQL_FreeResult(xhDBSQL, xhTable);

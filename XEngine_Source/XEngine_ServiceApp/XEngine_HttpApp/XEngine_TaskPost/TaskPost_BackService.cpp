@@ -252,11 +252,11 @@ bool HTTPTask_TaskPost_BackService(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer
 	{
 		if (0 == nBSType)
 		{
-			ModuleProtocol_Packet_HardWare(ptszRVBuffer, &nRVLen);
+			InfoReport_APIMachine_Hardware(ptszRVBuffer, &nRVLen);
 		}
 		else if (1 == nBSType)
 		{
-			ModuleProtocol_Packet_SoftWare(ptszRVBuffer, &nRVLen);
+			InfoReport_APIMachine_Software(ptszRVBuffer, &nRVLen);
 		}
 		else if (2 == nBSType)
 		{

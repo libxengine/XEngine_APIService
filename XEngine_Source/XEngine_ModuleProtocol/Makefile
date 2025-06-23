@@ -4,7 +4,7 @@ FILEEXT =
 LIBFLAG = 
 LOADHDR = -I ./ -I ../XEngine_DependLibrary/XEngine_OPenSource/XEngine_Module/jsoncpp
 LOADSO = -L ../XEngine_DependLibrary/XEngine_OPenSource/XEngine_Module/jsoncpp
-LIB = -lXEngine_BaseLib -lNetHelp_XSocket -lXEngine_SystemApi -lNetHelp_APIAddr -ljsoncpp
+LIB = -lXEngine_BaseLib -lNetHelp_APIAddr -ljsoncpp
 LIBEX = 
 OBJECTS = ModuleProtocol_Packet.o ModuleProtocol_Parse.o pch.o
 

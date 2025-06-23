@@ -23,8 +23,6 @@ EXPORTS
 	ModuleProtocol_Packet_ImageText
 	ModuleProtocol_Packet_EnumDevice
 	ModuleProtocol_Packet_ListFile
-	ModuleProtocol_Packet_HardWare
-	ModuleProtocol_Packet_SoftWare
 	ModuleProtocol_Packet_Machine
 	ModuleProtocol_Packet_OilInfo
 	ModuleProtocol_Packet_PhoneInfo

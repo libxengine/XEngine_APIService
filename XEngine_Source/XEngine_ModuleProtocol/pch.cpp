@@ -111,14 +111,6 @@ extern "C" bool ModuleProtocol_Packet_ListFile(XCHAR * ptszMsgBuffer, int* pInt_
 {
 	return m_ProtocolPacket.ModuleProtocol_Packet_ListFile(ptszMsgBuffer, pInt_MsgLen, pppszFileList, nListCount);
 }
-extern "C" bool ModuleProtocol_Packet_HardWare(XCHAR * ptszHWInfo, int* pInt_Len)
-{
-	return m_ProtocolPacket.ModuleProtocol_Packet_HardWare(ptszHWInfo, pInt_Len);
-}
-extern "C" bool ModuleProtocol_Packet_SoftWare(XCHAR * ptszSWInfo, int* pInt_Len)
-{
-	return m_ProtocolPacket.ModuleProtocol_Packet_SoftWare(ptszSWInfo, pInt_Len);
-}
 extern "C" bool ModuleProtocol_Packet_Machine(XCHAR * ptszMSGBuffer, int* pInt_MSGLen, XENGINE_MACHINEINFO * **pppSt_MachineList, int nListCount)
 {
 	return m_ProtocolPacket.ModuleProtocol_Packet_Machine(ptszMSGBuffer, pInt_MSGLen, pppSt_MachineList, nListCount);

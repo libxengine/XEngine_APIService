@@ -27,13 +27,9 @@
 #include <XEngine_Include/XEngine_ProtocolHdr.h>
 #include <XEngine_Include/XEngine_BaseLib/BaseLib_Define.h>
 #include <XEngine_Include/XEngine_BaseLib/BaseLib_Error.h>
-#include <XEngine_Include/XEngine_NetHelp/XSocket_Define.h>
-#include <XEngine_Include/XEngine_NetHelp/XSocket_Error.h>
 #include <XEngine_Include/XEngine_NetHelp/APIAddr_Define.h>
 #include <XEngine_Include/XEngine_NetHelp/APIAddr_Error.h>
 #include <XEngine_Include/XEngine_SystemSdk/ProcFile_Define.h>
-#include <XEngine_Include/XEngine_SystemSdk/SystemApi_Define.h>
-#include <XEngine_Include/XEngine_SystemSdk/SystemApi_Error.h>
 #include <XEngine_Include/XEngine_AVCodec/AVCollect_Define.h>
 #include <XEngine_Include/XEngine_AVCodec/VideoCodec_Define.h>
 #include <XEngine_Include/XEngine_AVCodec/AVHelp_Define.h>
@@ -60,9 +56,7 @@ extern XLONG ModuleProtocol_dwErrorCode;
 
 #ifdef _MSC_BUILD
 #pragma comment(lib,"XEngine_BaseLib/XEngine_BaseLib")
-#pragma comment(lib,"XEngine_NetHelp/NetHelp_XSocket")
 #pragma comment(lib,"XEngine_NetHelp/NetHelp_APIAddr")
-#pragma comment(lib,"XEngine_SystemSdk/XEngine_SystemApi")
 #ifdef _DEBUG
 #ifdef _M_X64
 #pragma comment(lib,"../x64/Debug/jsoncpp")

@@ -223,7 +223,8 @@ typedef struct
 //机器收集
 typedef struct
 {
-	XCHAR tszMachineText[2048];
+	XCHAR tszMachineSoftware[8192];
+	XCHAR tszMachineHardware[8192];
 	XCHAR tszServiceName[256];
 	XCHAR tszMachineName[256];
 	XCHAR tszMachineUser[256];
