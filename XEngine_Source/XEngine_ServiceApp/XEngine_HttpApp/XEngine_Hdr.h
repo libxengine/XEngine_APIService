@@ -135,11 +135,15 @@ extern XHANDLE xhRFCSocket;
 extern XHANDLE xhHTTPHeart;
 extern XHANDLE xhHTTPPacket;
 extern XHANDLE xhHTTPPool;
+extern XHANDLE xhMemPool;
 //线程
 extern unique_ptr<thread> pSTDThread_Deamon;
 //配置文件
 extern XENGINE_SERVICECONFIG st_ServiceConfig;
 extern XENGINE_DEAMONAPPLIST st_DeamonAppConfig;
+
+#include "XEngine_MemoryPool.h"
+
 //连接库
 #ifdef _MSC_BUILD
 #pragma comment(lib,"XEngine_BaseLib/XEngine_BaseLib.lib")

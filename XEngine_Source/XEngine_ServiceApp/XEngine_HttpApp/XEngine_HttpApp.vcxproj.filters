@@ -203,5 +203,8 @@
     <ClInclude Include="XEngine_TaskGet\TaskGet_APIModule.h">
       <Filter>头文件\XEngine_TaskGet</Filter>
     </ClInclude>
+    <ClInclude Include="XEngine_MemoryPool.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

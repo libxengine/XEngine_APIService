@@ -19,6 +19,7 @@ XHANDLE xhRFCSocket = NULL;
 XHANDLE xhHTTPHeart = NULL;
 XHANDLE xhHTTPPacket = NULL;
 XHANDLE xhHTTPPool = NULL;
+XHANDLE xhMemPool = NULL;
 //线程
 unique_ptr<thread> pSTDThread_Deamon = NULL;
 //配置文件
@@ -37,6 +38,7 @@ void ServiceApp_Stop(int signo)
 		SocketOpt_HeartBeat_DestoryEx(xhHTTPHeart);
 		HttpProtocol_Server_DestroyEx(xhHTTPPacket);
 		ManagePool_Thread_NQDestroy(xhHTTPPool);
+		ManagePool_Memory_Destory(xhMemPool);
 		//销毁数据库
 		ModuleDatabase_IDCard_Destory();
 		ModuleDatabase_Bank_Destory();
@@ -210,6 +212,14 @@ int main(int argc, char** argv)
 		}
 #endif
 	}
+
+	xhMemPool = ManagePool_Memory_Create();
+	if (NULL == xhMemPool)
+	{
+		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("启动服务中，初始化内存池失败，错误：%lX"), ManagePool_GetLastError());
+		goto XENGINE_SERVICEAPP_EXIT;
+	}
+	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("启动服务中，初始化内存池成功"));
 
 	if (st_ServiceConfig.st_XImageText.bEnable)
 	{
@@ -545,6 +555,7 @@ XENGINE_SERVICEAPP_EXIT:
 		SocketOpt_HeartBeat_DestoryEx(xhHTTPHeart);
 		HttpProtocol_Server_DestroyEx(xhHTTPPacket);
 		ManagePool_Thread_NQDestroy(xhHTTPPool);
+		ManagePool_Memory_Destory(xhMemPool);
 		//销毁数据库
 		ModuleDatabase_IDCard_Destory();
 		ModuleDatabase_Bank_Destory();
