@@ -343,8 +343,10 @@ bool HTTPTask_TaskPost_BackService(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer
 		st_AVScreen.nPosY = 0;
 #ifdef _MSC_BUILD
 		xhScreen = AVCollect_Video_Init("gdigrab", "desktop", &st_AVScreen, HTTPTask_TaskPost_CBVideo);
-#else
+#elif __linux__
 		xhScreen = AVCollect_Video_Init("x11grab", ":0", &st_AVScreen, HTTPTask_TaskPost_CBVideo);
+#else
+		xhScreen = AVCollect_Video_Init("avfoundation", "1", &st_AVScreen, HTTPTask_TaskPost_CBVideo);
 #endif
 		if (NULL == xhScreen)
 		{
