@@ -1109,7 +1109,12 @@ extern "C" bool ModuleProtocol_Parse_WordFilter(LPCXSTR lpszMsgBuffer, int nMsgL
   类型：字符指针
   可空：N
   意思：输出解析好的信息
- 参数.五：pInt_BSType
+ 参数.五：ptszAPIBuffer
+  In/Out：Out
+  类型：字符指针
+  可空：N
+  意思：输出反驳地址
+ 参数.六：pInt_BSType
   In/Out：Out
   类型：整数型指针
   可空：N
@@ -1119,7 +1124,7 @@ extern "C" bool ModuleProtocol_Parse_WordFilter(LPCXSTR lpszMsgBuffer, int nMsgL
   意思：是否成功
 备注：输出的内容具体参考协议文档
 *********************************************************************/
-extern "C" bool ModuleProtocol_Parse_BackService(LPCXSTR lpszMsgBuffer, int nMsgLen, XCHAR* ptszSrcBuffer = NULL, XCHAR* ptszDstBuffer = NULL, int* pInt_BSType = NULL);
+extern "C" bool ModuleProtocol_Parse_BackService(LPCXSTR lpszMsgBuffer, int nMsgLen, XCHAR* ptszSrcBuffer = NULL, XCHAR* ptszDstBuffer = NULL, XCHAR* ptszAPIBuffer = NULL, int* pInt_BSType = NULL);
 /********************************************************************
 函数名称：ModuleProtocol_Parse_Verifcation
 函数功能：解析验证协议

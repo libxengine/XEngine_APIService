@@ -30,13 +30,10 @@ bool HTTPTask_TaskPost_BackService(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer
 	CXEngine_MemoryPoolEx m_MemorySend(XENGINE_MEMORY_SIZE_MAX);
 	CXEngine_MemoryPoolEx m_MemoryRecv(XENGINE_MEMORY_SIZE_MAX);
 
-	XCHAR tszSrcBuffer[XPATH_MAX];
-	XCHAR tszDstBuffer[XPATH_MAX];
-	RFCCOMPONENTS_HTTP_HDRPARAM st_HDRParam;    //发送给客户端的参数
-	
-	memset(tszSrcBuffer, '\0', sizeof(tszSrcBuffer));
-	memset(tszDstBuffer, '\0', sizeof(tszDstBuffer));
-	memset(&st_HDRParam, '\0', sizeof(RFCCOMPONENTS_HTTP_HDRPARAM));
+	XCHAR tszSrcBuffer[XPATH_MAX] = {};
+	XCHAR tszDstBuffer[XPATH_MAX] = {};
+	XCHAR tszAPIBuffer[XPATH_MAX] = {};
+	RFCCOMPONENTS_HTTP_HDRPARAM st_HDRParam = {};    //发送给客户端的参数
 
 	st_HDRParam.nHttpCode = 200; //HTTP CODE码
 	st_HDRParam.bIsClose = true; //收到回复后就关闭
@@ -68,7 +65,7 @@ bool HTTPTask_TaskPost_BackService(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer
 			return false;
 		}
 	}
-	if (!ModuleProtocol_Parse_BackService(lpszMsgBuffer, nMsgLen, tszSrcBuffer, tszDstBuffer, &nBSType))
+	if (!ModuleProtocol_Parse_BackService(lpszMsgBuffer, nMsgLen, tszSrcBuffer, tszDstBuffer, tszAPIBuffer, &nBSType))
 	{
 		st_HDRParam.nHttpCode = 400;
 		HttpProtocol_Server_SendMsgEx(xhHTTPPacket, m_MemorySend.get(), &nSDLen, &st_HDRParam);
@@ -342,11 +339,11 @@ bool HTTPTask_TaskPost_BackService(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer
 		st_AVScreen.nPosX = 0;
 		st_AVScreen.nPosY = 0;
 #ifdef _MSC_BUILD
-		xhScreen = AVCollect_Video_Init("gdigrab", "desktop", &st_AVScreen, HTTPTask_TaskPost_CBVideo);
+		xhScreen = AVCollect_Video_Init("gdigrab", tszDstBuffer, &st_AVScreen, HTTPTask_TaskPost_CBVideo);
 #elif __linux__
-		xhScreen = AVCollect_Video_Init("x11grab", ":0", &st_AVScreen, HTTPTask_TaskPost_CBVideo);
+		xhScreen = AVCollect_Video_Init("x11grab", tszDstBuffer, &st_AVScreen, HTTPTask_TaskPost_CBVideo);
 #else
-		xhScreen = AVCollect_Video_Init("avfoundation", "1", &st_AVScreen, HTTPTask_TaskPost_CBVideo);
+		xhScreen = AVCollect_Video_Init("avfoundation", tszDstBuffer, &st_AVScreen, HTTPTask_TaskPost_CBVideo);
 #endif
 		if (NULL == xhScreen)
 		{
@@ -377,13 +374,13 @@ bool HTTPTask_TaskPost_BackService(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer
 			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("HTTP客户端:%s,推流:%s 请求失败,错误码:%lX"), lpszClientAddr, tszDstBuffer, StreamClient_GetLastError());
 			return false;
 		}
-		XClient_StreamPush_LiveOutput(xhStream, tszDstBuffer, _X("flv"));
+		XClient_StreamPush_LiveOutput(xhStream, tszAPIBuffer, _X("flv"));
 		XClient_StreamPush_LiveCreate(xhStream, &st_AVInfo);
 		bRecord = true;
 		AVCollect_Video_Start(xhScreen);
 		HttpProtocol_Server_SendMsgEx(xhHTTPPacket, m_MemorySend.get(), &nSDLen, &st_HDRParam);
 		XEngine_Network_Send(lpszClientAddr, m_MemorySend.get(), nSDLen);
-		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("HTTP客户端:%s,开始屏幕录制推流:%s 请求成功"), lpszClientAddr, tszDstBuffer);
+		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("HTTP客户端:%s,开始屏幕录制,音频:%s,视频:%s 推流:%s 请求成功"), lpszClientAddr, tszSrcBuffer, tszDstBuffer, tszAPIBuffer);
 	}
 	break;
 	case XENGINE_COMMUNICATION_PROTOCOL_OPERATOR_CODE_BS_RECORDSTOP:

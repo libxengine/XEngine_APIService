@@ -780,7 +780,12 @@ bool CModuleProtocol_Parse::ModuleProtocol_Parse_WordFilter(LPCXSTR lpszMsgBuffe
   类型：字符指针
   可空：N
   意思：输出解析好的信息
- 参数.五：pInt_BSType
+ 参数.五：ptszAPIBuffer
+  In/Out：Out
+  类型：字符指针
+  可空：N
+  意思：输出反驳地址
+ 参数.六：pInt_BSType
   In/Out：Out
   类型：整数型指针
   可空：N
@@ -790,7 +795,7 @@ bool CModuleProtocol_Parse::ModuleProtocol_Parse_WordFilter(LPCXSTR lpszMsgBuffe
   意思：是否成功
 备注：输出的内容具体参考协议文档
 *********************************************************************/
-bool CModuleProtocol_Parse::ModuleProtocol_Parse_BackService(LPCXSTR lpszMsgBuffer, int nMsgLen, XCHAR* ptszSrcBuffer, XCHAR* ptszDstBuffer, int* pInt_BSType)
+bool CModuleProtocol_Parse::ModuleProtocol_Parse_BackService(LPCXSTR lpszMsgBuffer, int nMsgLen, XCHAR* ptszSrcBuffer, XCHAR* ptszDstBuffer, XCHAR* ptszAPIBuffer, int* pInt_BSType)
 {
 	ModuleProtocol_IsErrorOccur = false;
 
@@ -824,6 +829,13 @@ bool CModuleProtocol_Parse::ModuleProtocol_Parse_BackService(LPCXSTR lpszMsgBuff
 		if (NULL != ptszDstBuffer)
 		{
 			_tcsxcpy(ptszDstBuffer, st_JsonRoot["tszDstBuffer"].asCString());
+		}
+	}
+	if (!st_JsonRoot["tszAPIBuffer"].isNull())
+	{
+		if (NULL != ptszAPIBuffer)
+		{
+			_tcsxcpy(ptszAPIBuffer, st_JsonRoot["tszAPIBuffer"].asCString());
 		}
 	}
 	if (!st_JsonRoot["nBSType"].isNull())

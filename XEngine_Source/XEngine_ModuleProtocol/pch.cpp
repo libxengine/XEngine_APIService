@@ -186,9 +186,9 @@ extern "C" bool ModuleProtocol_Parse_WordFilter(LPCXSTR lpszMsgBuffer, int nMsgL
 {
 	return m_ProtocolParse.ModuleProtocol_Parse_WordFilter(lpszMsgBuffer, nMsgLen, pSt_WordFilter);
 }
-extern "C" bool ModuleProtocol_Parse_BackService(LPCXSTR lpszMsgBuffer, int nMsgLen, XCHAR * ptszSrcBuffer, XCHAR * ptszDstBuffer, int* pInt_BSType)
+extern "C" bool ModuleProtocol_Parse_BackService(LPCXSTR lpszMsgBuffer, int nMsgLen, XCHAR * ptszSrcBuffer, XCHAR * ptszDstBuffer, XCHAR* ptszAPIBuffer, int* pInt_BSType)
 {
-	return m_ProtocolParse.ModuleProtocol_Parse_BackService(lpszMsgBuffer, nMsgLen, ptszSrcBuffer, ptszDstBuffer, pInt_BSType);
+	return m_ProtocolParse.ModuleProtocol_Parse_BackService(lpszMsgBuffer, nMsgLen, ptszSrcBuffer, ptszDstBuffer, ptszAPIBuffer, pInt_BSType);
 }
 extern "C" bool ModuleProtocol_Parse_Verifcation(LPCXSTR lpszMsgBuffer, int nMsgLen, XCHAR * ptszUserName, XCHAR * ptszUserPass)
 {
