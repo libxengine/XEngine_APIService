@@ -28,6 +28,7 @@ EXPORTS
 	ModuleProtocol_Packet_PhoneInfo
 	ModuleProtocol_Packet_IPAddr
 	ModuleProtocol_Packet_MacInfo
+	ModuleProtocol_Packet_BackNotify
 	ModuleProtocol_Packet_P2PLan
 	ModuleProtocol_Packet_P2PWLan
 	ModuleProtocol_Packet_P2PWList

@@ -131,6 +131,10 @@ extern "C" bool ModuleProtocol_Packet_MacInfo(XCHAR* ptszMSGBuffer, int* pInt_MS
 {
 	return m_ProtocolPacket.ModuleProtocol_Packet_MacInfo(ptszMSGBuffer, pInt_MSGLen, pSt_MacInfo);
 }
+extern "C" bool ModuleProtocol_Packet_BackNotify(XCHAR* ptszMSGBuffer, int* pInt_MSGLen, int nCode, int nOPerator, LPCXSTR lpszSourceStr, LPCXSTR lpszDestStr, LPCXSTR lpszAPIStr)
+{
+	return m_ProtocolPacket.ModuleProtocol_Packet_BackNotify(ptszMSGBuffer, pInt_MSGLen, nCode, nOPerator, lpszSourceStr, lpszDestStr, lpszAPIStr);
+}
 extern "C" bool ModuleProtocol_Packet_P2PLan(XCHAR * ptszMsgBuffer, int* pInt_MsgLen, XENGINE_P2XPPEER_PROTOCOL * **pppSt_ListClients, int nListCount)
 {
 	return m_ProtocolPacket.ModuleProtocol_Packet_P2PLan(ptszMsgBuffer, pInt_MsgLen, pppSt_ListClients, nListCount);

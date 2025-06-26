@@ -97,6 +97,8 @@ bool HTTPTask_TaskPost_BackService(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer
 		}
 		HttpProtocol_Server_SendMsgEx(xhHTTPPacket, m_MemorySend.get(), &nSDLen, &st_HDRParam);
 		XEngine_Network_Send(lpszClientAddr, m_MemorySend.get(), nSDLen);
+
+		XLONG dwRet = 0;
 		while (true)
 		{
 			XCLIENT_APIFILE st_TaskInfo;
@@ -104,14 +106,22 @@ bool HTTPTask_TaskPost_BackService(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer
 
 			if (!APIClient_File_Query(xhTask, &st_TaskInfo))
 			{
+				dwRet = APIClient_GetLastError();
 				break;
 			}
 			if ((ENUM_XCLIENT_APIHELP_FILE_STATUS_INIT != st_TaskInfo.en_DownStatus) && (ENUM_XCLIENT_APIHELP_FILE_STATUS_DOWNLOADDING != st_TaskInfo.en_DownStatus))
 			{
+				dwRet = APIClient_GetLastError();
 				break;
 			}
 		}
 		APIClient_File_Delete(xhTask);
+		//完成通知
+		if (_tcsxlen(tszAPIBuffer) > 0)
+		{
+			ModuleProtocol_Packet_BackNotify(m_MemorySend.get(), &nSDLen, (int)dwRet, XENGINE_COMMUNICATION_PROTOCOL_OPERATOR_CODE_BS_DOWNFILE, tszSrcBuffer, tszDstBuffer, tszAPIBuffer);
+			APIClient_Http_Request(_X("POST"), tszAPIBuffer, m_MemorySend.get());
+		}
 		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("HTTP客户端:%s:下载任务处理成功,下载地址:%s,保存地址:%s"),lpszClientAddr, tszSrcBuffer, tszDstBuffer);
 	}
 	break;
@@ -162,6 +172,8 @@ bool HTTPTask_TaskPost_BackService(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer
 		}
 		HttpProtocol_Server_SendMsgEx(xhHTTPPacket, m_MemorySend.get(), &nSDLen, &st_HDRParam);
 		XEngine_Network_Send(lpszClientAddr, m_MemorySend.get(), nSDLen);
+
+		XLONG dwRet = 0;
 		while (true)
 		{
 			XCLIENT_APIFILE st_TaskInfo;
@@ -169,14 +181,22 @@ bool HTTPTask_TaskPost_BackService(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer
 
 			if (!APIClient_File_Query(xhTask, &st_TaskInfo))
 			{
+				dwRet = APIClient_GetLastError();
 				break;
 			}
 			if (ENUM_XCLIENT_APIHELP_FILE_STATUS_DOWNLOADDING != st_TaskInfo.en_DownStatus && (ENUM_XCLIENT_APIHELP_FILE_STATUS_INIT != st_TaskInfo.en_DownStatus))
 			{
+				dwRet = APIClient_GetLastError();
 				break;
 			}
 		}
 		APIClient_File_Delete(xhTask);
+		//完成通知
+		if (_tcsxlen(tszAPIBuffer) > 0)
+		{
+			ModuleProtocol_Packet_BackNotify(m_MemorySend.get(), &nSDLen, (int)dwRet, XENGINE_COMMUNICATION_PROTOCOL_OPERATOR_CODE_BS_UPFILE, tszSrcBuffer, tszDstBuffer, tszAPIBuffer);
+			APIClient_Http_Request(_X("POST"), tszAPIBuffer, m_MemorySend.get());
+		}
 		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("HTTP客户端:%s:上传文件处理成功,上传的文件:%s,上传的地址:%s"), lpszClientAddr, tszSrcBuffer, tszDstBuffer);
 	}
 	break;
