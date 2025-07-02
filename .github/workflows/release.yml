@@ -17,7 +17,7 @@ jobs:
           fetch-depth: 0 
 
       - name: Download ubuntu build
-        uses: dawidd6/action-download-artifact
+        uses: dawidd6/action-download-artifact@v11
         with:
           workflow: Ubuntu_build.yml
           workflow_conclusion: success
@@ -26,7 +26,7 @@ jobs:
           if_no_artifact_found: fail
           path: ./XRelease/
       - name: Download debian build
-        uses: dawidd6/action-download-artifact
+        uses: dawidd6/action-download-artifact@v11
         with:
           workflow: debian_build.yml
           workflow_conclusion: success
@@ -35,7 +35,7 @@ jobs:
           if_no_artifact_found: fail
           path: ./XRelease/
       - name: Download fedora build
-        uses: dawidd6/action-download-artifact
+        uses: dawidd6/action-download-artifact@v11
         with:
           workflow: fedora_build.yml
           workflow_conclusion: success
@@ -44,7 +44,7 @@ jobs:
           if_no_artifact_found: fail
           path: ./XRelease/
       - name: Download Rocky build
-        uses: dawidd6/action-download-artifact
+        uses: dawidd6/action-download-artifact@v11
         with:
           workflow: Rocky_build.yml
           workflow_conclusion: success
@@ -53,7 +53,7 @@ jobs:
           if_no_artifact_found: fail
           path: ./XRelease/  
       - name: Download macbuild
-        uses: dawidd6/action-download-artifact
+        uses: dawidd6/action-download-artifact@v11
         with:
           workflow: macbuild.yml
           workflow_conclusion: success
@@ -62,7 +62,7 @@ jobs:
           if_no_artifact_found: fail
           path: ./XRelease/
       - name: Download msbuild
-        uses: dawidd6/action-download-artifact
+        uses: dawidd6/action-download-artifact@v11
         with:
           workflow: msbuild.yml
           workflow_conclusion: success
@@ -104,7 +104,7 @@ jobs:
           echo "$release_notes" > release_notes.txt
         
       - name: Release
-        uses: softprops/action-gh-release
+        uses: softprops/action-gh-release@v2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
