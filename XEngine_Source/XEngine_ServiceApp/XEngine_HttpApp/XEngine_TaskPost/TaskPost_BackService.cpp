@@ -19,7 +19,6 @@ void XCALLBACK HTTPTask_TaskPost_CBAudio(uint8_t* ptszAVBuffer, int nAVLen, AVCO
 	{
 		while (true)
 		{
-			int nALen = 0;
 			XBYTE tszAVBuffer[8192] = {};
 			if (!AudioCodec_Help_FifoRecv(xhAudioFifo, tszAVBuffer, &nAVLen))
 			{

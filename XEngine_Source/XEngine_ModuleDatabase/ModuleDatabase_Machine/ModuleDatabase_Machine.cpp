@@ -92,7 +92,7 @@ bool CModuleDatabase_Machine::ModuleDatabase_Machine_Insert(XENGINE_MACHINEINFO*
 		DBModule_dwErrorCode = ERROR_APISERVICE_MODULE_DATABASE_PARAMENT;
 		return false;
 	}
-	XCHAR tszSQLStatement[4096];
+	XCHAR tszSQLStatement[10240];
 	memset(tszSQLStatement, '\0', sizeof(tszSQLStatement));
 
 	_xstprintf(tszSQLStatement, _X("INSERT INTO `XEngine_MachineList` (tszServiceName,tszMachineName,tszMachineUser,tszMachineSystem,tszMachineSoftware,tszMachineHardware,nTimeNumber,tszCreateTime) VALUES('%s','%s','%s','%s','%s','%s',%lld,now())"), pSt_MachineInfo->tszServiceName, pSt_MachineInfo->tszMachineName, pSt_MachineInfo->tszMachineUser, pSt_MachineInfo->tszMachineSystem, pSt_MachineInfo->tszMachineSoftware, pSt_MachineInfo->tszMachineHardware, pSt_MachineInfo->nTimeNumber);
