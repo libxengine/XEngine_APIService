@@ -1,3 +1,31 @@
+XEngine_APIService V3.12.0.1001
+
+增加:rockylinux 10 支持
+增加:后台服务完成通知
+增加:macos屏幕录像
+优化:大内存操作统一采用内存池
+修改:内存缓冲警告和优化
+修改:调整信息获取和存储方法
+修改:git的子模块目录修改
+修改:可以为后台服务报告api完成信息了
+修正:后台服务下载操作问题
+修正:后台服务上传文件无效
+修正:屏幕推流不工作
+删除:不需要的后台编码句柄
+
+added:rocky linux 10 support
+added:completed notify for back service
+added:record screen macos support
+improved:All large memory operations use memory pool instead
+modify:memory buffer warn and improved
+modify:Adjust the information acquisition and storage method
+modify:git submodule move to new dir
+modify:create new field for api address report for back service
+fixed:download operator not work for back service protocol
+fixed:upload file not work for back service
+fixed:screen stream push not work
+delete:audio and video encoder code for back service
+======================================================================================
 XEngine_APIService V3.11.0.1001
 
 增加:更多发布系统支持

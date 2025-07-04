@@ -257,6 +257,7 @@
     <ClInclude Include="XEngine_Configure.h" />
     <ClInclude Include="XEngine_Hdr.h" />
     <ClInclude Include="XEngine_HTTPTask.h" />
+    <ClInclude Include="XEngine_MemoryPool.h" />
     <ClInclude Include="XEngine_Network.h" />
     <ClInclude Include="XEngine_PluginTask.h" />
     <ClInclude Include="XEngine_TaskGet\TaskGet_APIModule.h" />

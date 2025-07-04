@@ -724,44 +724,6 @@ extern "C" bool ModuleProtocol_Packet_EnumDevice(XCHAR* ptszMsgBuffer, int* pInt
 *********************************************************************/
 extern "C" bool ModuleProtocol_Packet_ListFile(XCHAR* ptszMsgBuffer, int* pInt_MsgLen, XCHAR*** pppszFileList, int nListCount);
 /********************************************************************
-函数名称：ModuleProtocol_Packet_HardWare
-函数功能：获取硬件信息
- 参数.一：ptszHWInfo
-  In/Out：Out
-  类型：字符指针
-  可空：N
-  意思：导出获取到的数据,这个数据是JSON格式
- 参数.二：pInt_Len
-  In/Out：Out
-  类型：整数型指针
-  可空：N
-  意思：导出数据的长度
-返回值
-  类型：逻辑型
-  意思：是否成功
-备注：
-*********************************************************************/
-extern "C" bool ModuleProtocol_Packet_HardWare(XCHAR* ptszHWInfo, int* pInt_Len);
-/********************************************************************
-函数名称：XControl_Info_SoftWare
-函数功能：获取软件系统信息
- 参数.一：ptszSWInfo
-  In/Out：Out
-  类型：字符指针
-  可空：N
-  意思：导出系统信息JSON结构
- 参数.二：pInt_Len
-  In/Out：Out
-  类型：整数型指针
-  可空：N
-  意思：导出系统信息长度
-返回值
-  类型：逻辑型
-  意思：是否成功
-备注：
-*********************************************************************/
-extern "C" bool ModuleProtocol_Packet_SoftWare(XCHAR* ptszSWInfo, int* pInt_Len);
-/********************************************************************
 函数名称：ModuleProtocol_Packet_Machine
 函数功能：机器信息列表打包函数
  参数.一：ptszMsgBuffer
@@ -886,6 +848,30 @@ extern "C" bool ModuleProtocol_Packet_IPAddr(XCHAR* ptszMSGBuffer, int* pInt_MSG
 备注：
 *********************************************************************/
 extern "C" bool ModuleProtocol_Packet_MacInfo(XCHAR* ptszMSGBuffer, int* pInt_MSGLen, XENGINE_MACADDRINFO* pSt_MacInfo);
+/********************************************************************
+函数名称：ModuleProtocol_Packet_BackNotify
+函数功能：后台服务通知协议
+ 参数.一：ptszMsgBuffer
+  In/Out：Out
+  类型：字符指针
+  可空：N
+  意思：输出打好包的缓冲区
+ 参数.二：pInt_MsgLen
+  In/Out：Out
+  类型：整数型指针
+  可空：N
+  意思：输出缓冲区大小
+ 参数.三：nCode
+  In/Out：In
+  类型：整数型
+  可空：N
+  意思：输入返回的值
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+extern "C" bool ModuleProtocol_Packet_BackNotify(XCHAR* ptszMSGBuffer, int* pInt_MSGLen, int nCode, int nOPerator, LPCXSTR lpszSourceStr, LPCXSTR lpszDestStr, LPCXSTR lpszAPIStr);
 /************************************************************************/
 /*                         导出的协议解析函数                           */
 /************************************************************************/
@@ -1147,7 +1133,12 @@ extern "C" bool ModuleProtocol_Parse_WordFilter(LPCXSTR lpszMsgBuffer, int nMsgL
   类型：字符指针
   可空：N
   意思：输出解析好的信息
- 参数.五：pInt_BSType
+ 参数.五：ptszAPIBuffer
+  In/Out：Out
+  类型：字符指针
+  可空：N
+  意思：输出反驳地址
+ 参数.六：pInt_BSType
   In/Out：Out
   类型：整数型指针
   可空：N
@@ -1157,7 +1148,7 @@ extern "C" bool ModuleProtocol_Parse_WordFilter(LPCXSTR lpszMsgBuffer, int nMsgL
   意思：是否成功
 备注：输出的内容具体参考协议文档
 *********************************************************************/
-extern "C" bool ModuleProtocol_Parse_BackService(LPCXSTR lpszMsgBuffer, int nMsgLen, XCHAR* ptszSrcBuffer = NULL, XCHAR* ptszDstBuffer = NULL, int* pInt_BSType = NULL);
+extern "C" bool ModuleProtocol_Parse_BackService(LPCXSTR lpszMsgBuffer, int nMsgLen, XCHAR* ptszSrcBuffer = NULL, XCHAR* ptszDstBuffer = NULL, XCHAR* ptszAPIBuffer = NULL, int* pInt_BSType = NULL);
 /********************************************************************
 函数名称：ModuleProtocol_Parse_Verifcation
 函数功能：解析验证协议

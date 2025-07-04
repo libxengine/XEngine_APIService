@@ -61,14 +61,14 @@ using namespace std;
 #include <XEngine_Include/XEngine_AVCodec/AudioCodec_Error.h>
 #include <XEngine_Include/XEngine_AVCodec/AVHelp_Define.h>
 #include <XEngine_Include/XEngine_AVCodec/AVHelp_Error.h>
-#include "../../XEngine_Depend/XEngine_Module/XEngine_InfoReport/InfoReport_Define.h"
-#include "../../XEngine_Depend/XEngine_Module/XEngine_InfoReport/InfoReport_Error.h"
-#include "../../XEngine_DBDepend/XEngine_IPMacData/XEngine_Source/XIPMac_CommHdr.h"
-#include "../../XEngine_DBDepend/XEngine_IPMacData/XEngine_Source/XEngine_APIModuleIPMac/APIIPMac_Define.h"
-#include "../../XEngine_DBDepend/XEngine_IPMacData/XEngine_Source/XEngine_APIModuleIPMac/APIIPMac_Error.h"
-#include "../../XEngine_DBDepend/XEngine_PhoneData/Source/XPhone_CommHdr.h"
-#include "../../XEngine_DBDepend/XEngine_PhoneData/Source/C/XEngine_APIModulePhone/APIPhone_Define.h"
-#include "../../XEngine_DBDepend/XEngine_PhoneData/Source/C/XEngine_APIModulePhone/APIPhone_Error.h"
+#include "../../XEngine_DependLibrary/XEngine_OPenSource/XEngine_Module/XEngine_InfoReport/InfoReport_Define.h"
+#include "../../XEngine_DependLibrary/XEngine_OPenSource/XEngine_Module/XEngine_InfoReport/InfoReport_Error.h"
+#include "../../XEngine_DependLibrary/XEngine_IPMacData/XEngine_Source/XIPMac_CommHdr.h"
+#include "../../XEngine_DependLibrary/XEngine_IPMacData/XEngine_Source/XEngine_APIModuleIPMac/APIIPMac_Define.h"
+#include "../../XEngine_DependLibrary/XEngine_IPMacData/XEngine_Source/XEngine_APIModuleIPMac/APIIPMac_Error.h"
+#include "../../XEngine_DependLibrary/XEngine_PhoneData/Source/XPhone_CommHdr.h"
+#include "../../XEngine_DependLibrary/XEngine_PhoneData/Source/C/XEngine_APIModulePhone/APIPhone_Define.h"
+#include "../../XEngine_DependLibrary/XEngine_PhoneData/Source/C/XEngine_APIModulePhone/APIPhone_Error.h"
 //加载项目相关头文件
 #include "../../XEngine_BuildSwitch.h"
 #include "../../XEngine_UserProtocol.h"
@@ -135,11 +135,15 @@ extern XHANDLE xhRFCSocket;
 extern XHANDLE xhHTTPHeart;
 extern XHANDLE xhHTTPPacket;
 extern XHANDLE xhHTTPPool;
+extern XHANDLE xhMemPool;
 //线程
 extern unique_ptr<thread> pSTDThread_Deamon;
 //配置文件
 extern XENGINE_SERVICECONFIG st_ServiceConfig;
 extern XENGINE_DEAMONAPPLIST st_DeamonAppConfig;
+
+#include "XEngine_MemoryPool.h"
+
 //连接库
 #ifdef _MSC_BUILD
 #pragma comment(lib,"XEngine_BaseLib/XEngine_BaseLib.lib")

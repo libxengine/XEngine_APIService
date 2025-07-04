@@ -1292,256 +1292,6 @@ bool CModuleProtocol_Packet::ModuleProtocol_Packet_ListFile(XCHAR* ptszMsgBuffer
 	return true;
 }
 /********************************************************************
-函数名称：ModuleProtocol_Packet_HardWare
-函数功能：获取硬件信息
- 参数.一：ptszHWInfo
-  In/Out：Out
-  类型：字符指针
-  可空：N
-  意思：导出获取到的数据,这个数据是JSON格式
- 参数.二：pInt_Len
-  In/Out：Out
-  类型：整数型指针
-  可空：N
-  意思：导出数据的长度
-返回值
-  类型：逻辑型
-  意思：是否成功
-备注：
-*********************************************************************/
-bool CModuleProtocol_Packet::ModuleProtocol_Packet_HardWare(XCHAR* ptszHWInfo, int* pInt_Len)
-{
-	ModuleProtocol_IsErrorOccur = false;
-
-	if ((NULL == ptszHWInfo) || (NULL == pInt_Len))
-	{
-		ModuleProtocol_IsErrorOccur = true;
-		ModuleProtocol_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PROTOCOL_PARSE_PARAMENT;
-		return false;
-	}
-	int nDiskNumber = 0;
-	XCHAR** pptszRootName;
-	XCHAR tszOSName[XPATH_MAX];
-	XCHAR tszOSVersion[XPATH_MAX];
-	XCHAR tszOSBuild[XPATH_MAX];
-	XLONG nOSPro = 0;
-	XCHAR tszOSInfo[2048];
-	SYSTEMAPI_DISK_INFOMATION st_DiskInfo;
-	SYSTEMAPI_CPU_INFOMATION st_CPUInfo;
-	SYSTEMAPI_MEMORY_INFOMATION st_MemoryInfo;
-	SYSTEMAPI_SERIAL_INFOMATION st_SDKSerial;
-
-	memset(tszOSName, '\0', sizeof(tszOSName));
-	memset(tszOSVersion, '\0', sizeof(tszOSVersion));
-	memset(tszOSBuild, '\0', sizeof(tszOSBuild));
-	memset(tszOSInfo, '\0', sizeof(tszOSInfo));
-	memset(&st_MemoryInfo, '\0', sizeof(SYSTEMAPI_MEMORY_INFOMATION));
-	memset(&st_CPUInfo, '\0', sizeof(SYSTEMAPI_CPU_INFOMATION));
-	memset(&st_DiskInfo, '\0', sizeof(SYSTEMAPI_DISK_INFOMATION));
-	memset(&st_SDKSerial, '\0', sizeof(SYSTEMAPI_SERIAL_INFOMATION));
-
-	if (!SystemApi_HardWare_GetDiskNumber(&pptszRootName, &nDiskNumber))
-	{
-		ModuleProtocol_IsErrorOccur = true;
-		ModuleProtocol_dwErrorCode = SystemApi_GetLastError();
-		return false;
-	}
-	BaseLib_Memory_Free((XPPPMEM)&pptszRootName, nDiskNumber);
-
-	XCHAR tszDriveStr[XPATH_MAX];
-	memset(tszDriveStr, '\0', XPATH_MAX);
-
-#ifdef _MSC_BUILD
-	GetLogicalDriveStringsA(XPATH_MAX, tszDriveStr);
-#else
-	LPCXSTR lpszDir = _X("/");
-	strcpy(tszDriveStr, lpszDir);
-#endif
-
-	if (!SystemApi_HardWare_GetDiskInfomation(tszDriveStr, &st_DiskInfo, XENGINE_SYSTEMSDK_API_SYSTEM_SIZE_MB))
-	{
-		ModuleProtocol_IsErrorOccur = true;
-		ModuleProtocol_dwErrorCode = SystemApi_GetLastError();
-		return false;
-	}
-	if (!SystemApi_HardWare_GetCpuInfomation(&st_CPUInfo))
-	{
-		ModuleProtocol_IsErrorOccur = true;
-		ModuleProtocol_dwErrorCode = SystemApi_GetLastError();
-		return false;
-	}
-	if (!SystemApi_System_GetMemoryUsage(&st_MemoryInfo, XENGINE_SYSTEMSDK_API_SYSTEM_SIZE_MB))
-	{
-		ModuleProtocol_IsErrorOccur = true;
-		ModuleProtocol_dwErrorCode = SystemApi_GetLastError();
-		return false;
-	}
-	if (!SystemApi_HardWare_GetSerial(&st_SDKSerial))
-	{
-		ModuleProtocol_IsErrorOccur = true;
-		ModuleProtocol_dwErrorCode = SystemApi_GetLastError();
-		return false;
-	}
-	if (!SystemApi_System_GetSystemVer(tszOSName, tszOSVersion, tszOSBuild, &nOSPro))
-	{
-		ModuleProtocol_IsErrorOccur = true;
-		ModuleProtocol_dwErrorCode = SystemApi_GetLastError();
-		return false;
-	}
-
-	Json::Value st_JsonRoot;
-	Json::Value st_JsonDisk;
-	Json::Value st_JsonCpu;
-	Json::Value st_JsonSerial;
-	Json::Value st_JsonMemory;
-	Json::Value st_JsonNetCard;
-
-	st_JsonDisk["DiskNumber"] = nDiskNumber;
-	st_JsonDisk["DiskFree"] = (Json::UInt64)st_DiskInfo.dwDiskFree;
-	st_JsonDisk["DiskTotal"] = (Json::UInt64)st_DiskInfo.dwDiskTotal;
-	st_JsonDisk["DiskName"] = tszDriveStr;
-
-	st_JsonCpu["CpuNumber"] = st_CPUInfo.nCPUNumber;
-	st_JsonCpu["CpuSpeed"] = st_CPUInfo.nCPUSpeed;
-	st_JsonCpu["CpuName"] = st_CPUInfo.tszCPUName;
-
-	st_JsonMemory["MemoryFree"] = (Json::UInt64)st_MemoryInfo.dwMemory_Free;
-	st_JsonMemory["MemoryTotal"] = (Json::UInt64)st_MemoryInfo.dwMemory_Total;
-
-	st_JsonSerial["DiskSerial"] = st_SDKSerial.tszDiskSerial;
-	st_JsonSerial["CpuSerial"] = st_SDKSerial.tszCPUSerial;
-	st_JsonSerial["BoardSerial"] = st_SDKSerial.tszBoardSerial;
-	st_JsonSerial["SystemSerial"] = st_SDKSerial.tszSystemSerial;
-
-	int nListCount = 0;
-	XSOCKET_CARDINFO** ppSt_ListIFInfo;
-	XSocket_Api_GetCardInfo(&ppSt_ListIFInfo, &nListCount);
-	for (int i = 0; i < nListCount; i++)
-	{
-		Json::Value st_JsonIPAddr;
-		st_JsonIPAddr["tszIFName"] = ppSt_ListIFInfo[i]->tszIFName;
-		st_JsonIPAddr["tszIPAddr"] = ppSt_ListIFInfo[i]->tszIPAddr;
-		st_JsonIPAddr["tszBroadAddr"] = ppSt_ListIFInfo[i]->tszBroadAddr;
-		st_JsonIPAddr["tszDnsAddr"] = ppSt_ListIFInfo[i]->tszDnsAddr;
-		st_JsonIPAddr["tszMacAddr"] = ppSt_ListIFInfo[i]->tszMacAddr;
-		st_JsonNetCard.append(st_JsonIPAddr);
-	}
-	BaseLib_Memory_Free((XPPPMEM)&ppSt_ListIFInfo, nListCount);
-
-	st_JsonRoot["Disk"] = st_JsonDisk;
-	st_JsonRoot["Cpu"] = st_JsonCpu;
-	st_JsonRoot["Memory"] = st_JsonMemory;
-	st_JsonRoot["Serial"] = st_JsonSerial;
-	st_JsonRoot["NetCard"] = st_JsonNetCard;
-
-	sprintf(tszOSInfo, "%s %s %s %lu", tszOSName, tszOSVersion, tszOSBuild, nOSPro);
-	st_JsonRoot["Platfrom"] = tszOSInfo;
-
-	*pInt_Len = st_JsonRoot.toStyledString().length();
-	memcpy(ptszHWInfo, st_JsonRoot.toStyledString().c_str(), *pInt_Len);
-
-	return true;
-}
-/********************************************************************
-函数名称：XControl_Info_SoftWare
-函数功能：获取软件系统信息
- 参数.一：ptszSWInfo
-  In/Out：Out
-  类型：字符指针
-  可空：N
-  意思：导出系统信息JSON结构
- 参数.二：pInt_Len
-  In/Out：Out
-  类型：整数型指针
-  可空：N
-  意思：导出系统信息长度
-返回值
-  类型：逻辑型
-  意思：是否成功
-备注：
-*********************************************************************/
-bool CModuleProtocol_Packet::ModuleProtocol_Packet_SoftWare(XCHAR* ptszSWInfo, int* pInt_Len)
-{
-	ModuleProtocol_IsErrorOccur = false;
-
-	if ((NULL == ptszSWInfo) || (NULL == pInt_Len))
-	{
-		ModuleProtocol_IsErrorOccur = true;
-		ModuleProtocol_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PROTOCOL_PARSE_PARAMENT;
-		return false;
-	}
-	int nProcessCount;
-	XLONG nOSProcessor;
-	XCHAR tszOSBuild[XPATH_MAX];
-	XCHAR tszOSVersion[XPATH_MAX];
-	XCHAR tszOSInfo[XPATH_MAX];
-	XCHAR tszUPTime[XPATH_MAX];
-	XCHAR tszOSUser[XPATH_MAX];
-	XCHAR tszServicePacket[XPATH_MAX];
-	XENGINE_LIBTIME st_LibTimer;
-
-	memset(tszOSBuild, '\0', XPATH_MAX);
-	memset(tszOSVersion, '\0', XPATH_MAX);
-	memset(tszOSInfo, '\0', XPATH_MAX);
-	memset(tszUPTime, '\0', XPATH_MAX);
-	memset(tszOSUser, '\0', XPATH_MAX);
-	memset(tszServicePacket, '\0', XPATH_MAX);
-	memset(&st_LibTimer, '\0', sizeof(XENGINE_LIBTIME));
-
-#ifdef _MSC_BUILD
-	XLONG dwMaxSize = XPATH_MAX;
-	if (!GetComputerNameA(tszOSUser, &dwMaxSize))
-	{
-		ModuleProtocol_IsErrorOccur = true;
-		ModuleProtocol_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PROTOCOL_PARSE_GETNAME;
-		return false;
-	}
-#else
-	struct passwd* pSt_Passwd = NULL;
-	pSt_Passwd = getpwuid(getuid());
-	if (NULL == pSt_Passwd)
-	{
-		ModuleProtocol_IsErrorOccur = true;
-		ModuleProtocol_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PROTOCOL_PARSE_GETNAME;
-		return false;
-	}
-	strcpy(tszOSUser, pSt_Passwd->pw_name);
-#endif
-	if (!SystemApi_System_GetSystemVer(tszOSInfo, tszOSVersion, tszOSBuild, &nOSProcessor))
-	{
-		ModuleProtocol_IsErrorOccur = true;
-		ModuleProtocol_dwErrorCode = SystemApi_GetLastError();
-		return false;
-	}
-	if (!SystemApi_System_GetProcessCount(&nProcessCount))
-	{
-		ModuleProtocol_IsErrorOccur = true;
-		ModuleProtocol_dwErrorCode = SystemApi_GetLastError();
-		return false;
-	}
-	if (!SystemApi_System_GetUpTime(&st_LibTimer))
-	{
-		ModuleProtocol_IsErrorOccur = true;
-		ModuleProtocol_dwErrorCode = SystemApi_GetLastError();
-		return false;
-	}
-	sprintf(tszUPTime, "%04d-%02d-%02d %02d:%02d:%02d", st_LibTimer.wYear, st_LibTimer.wMonth, st_LibTimer.wDay, st_LibTimer.wHour, st_LibTimer.wMinute, st_LibTimer.wSecond);
-
-	Json::Value st_JsonRoot;
-	Json::Value st_JsonSystem;
-
-	st_JsonSystem["OSUser"] = tszOSUser;
-	st_JsonSystem["OSUPTime"] = tszUPTime;
-	st_JsonSystem["OSVersion"] = tszOSInfo;
-	st_JsonSystem["OSProcessCount"] = nProcessCount;
-	st_JsonRoot["OSInfo"] = st_JsonSystem;
-
-	*pInt_Len = st_JsonRoot.toStyledString().length();
-	memcpy(ptszSWInfo, st_JsonRoot.toStyledString().c_str(), *pInt_Len);
-
-	return true;
-}
-/********************************************************************
 函数名称：ModuleProtocol_Packet_Machine
 函数功能：机器信息列表打包函数
  参数.一：ptszMsgBuffer
@@ -1587,7 +1337,8 @@ bool CModuleProtocol_Packet::ModuleProtocol_Packet_Machine(XCHAR* ptszMSGBuffer,
 	{
 		Json::Value st_JsonObject;
 
-		st_JsonObject["tszMachineText"] = (*pppSt_MachineList)[i]->tszMachineText;
+		st_JsonObject["tszMachineSoftware"] = (*pppSt_MachineList)[i]->tszMachineSoftware;
+		st_JsonObject["tszMachineHardware"] = (*pppSt_MachineList)[i]->tszMachineHardware;
 		st_JsonObject["tszMachineName"] = (*pppSt_MachineList)[i]->tszMachineName;
 		st_JsonObject["tszMachineUser"] = (*pppSt_MachineList)[i]->tszMachineUser;
 		st_JsonObject["tszMachineCode"] = (*pppSt_MachineList)[i]->tszMachineCode;
@@ -1820,6 +1571,57 @@ bool CModuleProtocol_Packet::ModuleProtocol_Packet_MacInfo(XCHAR* ptszMSGBuffer,
 
 	*pInt_MSGLen = Json::writeString(st_JsonBuilder, st_JsonRoot).length();
 	memcpy(ptszMSGBuffer, Json::writeString(st_JsonBuilder, st_JsonRoot).c_str(), *pInt_MSGLen);
+	return true;
+}
+/********************************************************************
+函数名称：ModuleProtocol_Packet_BackNotify
+函数功能：后台服务通知协议
+ 参数.一：ptszMsgBuffer
+  In/Out：Out
+  类型：字符指针
+  可空：N
+  意思：输出打好包的缓冲区
+ 参数.二：pInt_MsgLen
+  In/Out：Out
+  类型：整数型指针
+  可空：N
+  意思：输出缓冲区大小
+ 参数.三：nCode
+  In/Out：In
+  类型：整数型
+  可空：N
+  意思：输入返回的值
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+bool CModuleProtocol_Packet::ModuleProtocol_Packet_BackNotify(XCHAR* ptszMSGBuffer, int* pInt_MSGLen, int nCode, int nOPerator, LPCXSTR lpszSourceStr, LPCXSTR lpszDestStr, LPCXSTR lpszAPIStr)
+{
+	ModuleProtocol_IsErrorOccur = false;
+
+	if ((NULL == ptszMSGBuffer) || (NULL == pInt_MSGLen))
+	{
+		ModuleProtocol_IsErrorOccur = true;
+		ModuleProtocol_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PROTOCOL_PACKET_PARAMENT;
+		return false;
+	}
+	Json::Value st_JsonRoot;
+	Json::Value st_JsonObject;
+	Json::StreamWriterBuilder st_JsonBuilder;
+
+	st_JsonObject["nOPerator"] = nOPerator;
+	st_JsonObject["lpszSourceStr"] = lpszSourceStr;
+	st_JsonObject["lpszDestStr"] = lpszDestStr;
+	st_JsonObject["lpszAPIStr"] = lpszAPIStr;
+
+	st_JsonRoot["code"] = nCode;
+	st_JsonRoot["data"] = st_JsonObject;
+	st_JsonBuilder["emitUTF8"] = true;
+
+	*pInt_MSGLen = Json::writeString(st_JsonBuilder, st_JsonRoot).length();
+	memcpy(ptszMSGBuffer, Json::writeString(st_JsonBuilder, st_JsonRoot).c_str(), *pInt_MSGLen);
+
 	return true;
 }
 /********************************************************************

@@ -17,11 +17,11 @@ PLUGIN_MODULE_TIMEZONE = ./XEngine_PluginModule/ModulePlugin_Timezone
 PLUGIN_MODULE_BMINDEX = ./XEngine_PluginModule/ModulePlugin_BMIndex
 PLUGIN_MODULE_METER = ./XEngine_PluginModule/ModulePlugin_Meter
 
-THIRDPART_MODULE_JSONCPP = ./XEngine_Depend/XEngine_Module/jsoncpp
-THIRDPART_MODULE_REPORT = ./XEngine_Depend/XEngine_Module/XEngine_InfoReport
+THIRDPART_MODULE_JSONCPP = ./XEngine_DependLibrary/XEngine_OPenSource/XEngine_Module/jsoncpp
+THIRDPART_MODULE_REPORT = ./XEngine_DependLibrary/XEngine_OPenSource/XEngine_Module/XEngine_InfoReport
 
-APIMODULE_PHONE_PATH = ./XEngine_DBDepend/XEngine_PhoneData/Source/C/XEngine_APIModulePhone
-APIMODULE_IPMAC_PATH = ./XEngine_DBDepend/XEngine_IPMacData/XEngine_Source/XEngine_APIModuleIPMac
+APIMODULE_PHONE_PATH = ./XEngine_DependLibrary/XEngine_PhoneData/Source/C/XEngine_APIModulePhone
+APIMODULE_IPMAC_PATH = ./XEngine_DependLibrary/XEngine_IPMacData/XEngine_Source/XEngine_APIModuleIPMac
 
 APP_HTTP_PATH = ./XEngine_ServiceApp/XEngine_HttpApp
 

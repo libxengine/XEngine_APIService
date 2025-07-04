@@ -147,7 +147,7 @@ bool CModuleDatabase_XLog::ModuleDatabase_XLog_Insert(XENGINE_XLOGINFO* pSt_XLog
 	XCHAR tszSQLStatement[11240];
 	memset(tszSQLStatement, '\0', sizeof(tszSQLStatement));
 
-	_xstprintf(tszSQLStatement, _X("INSERT INTO `%s` (tszFileName,tszFuncName,nLogLine,nLogLevel,tszLogBuffer,tszLogTime) VALUES('%s','%s',%d,%d,'%s','%s')"), pSt_XLogInfo->tszTableName, pSt_XLogInfo->st_ProtocolLog.tszFileName, pSt_XLogInfo->st_ProtocolLog.tszFuncName, pSt_XLogInfo->st_ProtocolLog.nLogLine, pSt_XLogInfo->st_ProtocolLog.nLogLevel, pSt_XLogInfo->tszLogBuffer, pSt_XLogInfo->st_ProtocolLog.tszLogTimer);
+	_xsntprintf(tszSQLStatement, sizeof(tszSQLStatement), _X("INSERT INTO `%s` (tszFileName,tszFuncName,nLogLine,nLogLevel,tszLogBuffer,tszLogTime) VALUES('%s','%s',%d,%d,'%s','%s')"), pSt_XLogInfo->tszTableName, pSt_XLogInfo->st_ProtocolLog.tszFileName, pSt_XLogInfo->st_ProtocolLog.tszFuncName, pSt_XLogInfo->st_ProtocolLog.nLogLine, pSt_XLogInfo->st_ProtocolLog.nLogLevel, pSt_XLogInfo->tszLogBuffer, pSt_XLogInfo->st_ProtocolLog.tszLogTimer);
 	
 #ifdef _MSC_BUILD
 	XCHAR tszUTFStr[10240] = {};

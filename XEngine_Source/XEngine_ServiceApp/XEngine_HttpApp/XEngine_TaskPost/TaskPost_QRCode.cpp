@@ -18,54 +18,47 @@ bool HTTPTask_TaskPost_QRCode(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer, int
 #else
 	int nSDLen = 0;
 	int nRVLen = 0;
-	XCHAR* ptszSDBuffer = (XCHAR*)malloc(XENGINE_MEMORY_SIZE_MAX);
-	XCHAR* ptszRVBuffer = (XCHAR*)malloc(XENGINE_MEMORY_SIZE_MAX);
-	XENGINE_QRCODE st_QRCode;
-	
-	memset(ptszSDBuffer, '\0', XENGINE_MEMORY_SIZE_MAX);
-	memset(ptszRVBuffer, '\0', XENGINE_MEMORY_SIZE_MAX);
-	memset(&st_QRCode, '\0', sizeof(XENGINE_QRCODE));
+	XENGINE_QRCODE st_QRCode = {};
+	CXEngine_MemoryPoolEx m_MemorySend(XENGINE_MEMORY_SIZE_MAX);
+	CXEngine_MemoryPoolEx m_MemoryRecv(XENGINE_MEMORY_SIZE_MAX);
+
 	//0创建,1解析
 	if (0 == nType)
 	{
 		ModuleProtocol_Parse_QRCode(lpszMsgBuffer, nMsgLen, &st_QRCode);
 		_tcsxcpy(st_HDRParam.tszMimeType, st_QRCode.tszFmtBuffer + 1);
 
-		if (ModuleHelp_QRCode_QREncodecMemory(st_QRCode.tszMsgBuffer, ptszRVBuffer, &nRVLen, st_QRCode.tszFmtBuffer))
+		if (ModuleHelp_QRCode_QREncodecMemory(st_QRCode.tszMsgBuffer, m_MemoryRecv.get(), &nRVLen, st_QRCode.tszFmtBuffer))
 		{
-			HttpProtocol_Server_SendMsgEx(xhHTTPPacket, ptszSDBuffer, &nSDLen, &st_HDRParam, ptszRVBuffer, nRVLen);
-			XEngine_Network_Send(lpszClientAddr, ptszSDBuffer, nSDLen);
+			HttpProtocol_Server_SendMsgEx(xhHTTPPacket, m_MemorySend.get(), &nSDLen, &st_HDRParam, m_MemoryRecv.get(), nRVLen);
+			XEngine_Network_Send(lpszClientAddr, m_MemorySend.get(), nSDLen);
 			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("HTTP客户端:%s,请求创建二维码成功,创建的二维码数据:%s"), lpszClientAddr, st_QRCode.tszMsgBuffer);
 		}
 		else
 		{
 			st_HDRParam.nHttpCode = 501;
-			HttpProtocol_Server_SendMsgEx(xhHTTPPacket, ptszSDBuffer, &nSDLen, &st_HDRParam);
-			XEngine_Network_Send(lpszClientAddr, ptszSDBuffer, nSDLen);
+			HttpProtocol_Server_SendMsgEx(xhHTTPPacket, m_MemorySend.get(), &nSDLen, &st_HDRParam);
+			XEngine_Network_Send(lpszClientAddr, m_MemorySend.get(), nSDLen);
 			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("HTTP客户端:%s,请求创建二维码失败,错误:%lX"), lpszClientAddr, ModuleHelp_GetLastError());
 		}
 	}
 	else
 	{
-		if (ModuleHelp_QRCode_QRDecodecMemory(lpszMsgBuffer, nMsgLen, ptszRVBuffer, st_ServiceConfig.st_XConfig.st_ConfigQRCodec.tszProtoDetect, st_ServiceConfig.st_XConfig.st_ConfigQRCodec.tszModelDetect, st_ServiceConfig.st_XConfig.st_ConfigQRCodec.tszProtoSr, st_ServiceConfig.st_XConfig.st_ConfigQRCodec.tszModelSr))
+		if (ModuleHelp_QRCode_QRDecodecMemory(lpszMsgBuffer, nMsgLen, m_MemoryRecv.get(), st_ServiceConfig.st_XConfig.st_ConfigQRCodec.tszProtoDetect, st_ServiceConfig.st_XConfig.st_ConfigQRCodec.tszModelDetect, st_ServiceConfig.st_XConfig.st_ConfigQRCodec.tszProtoSr, st_ServiceConfig.st_XConfig.st_ConfigQRCodec.tszModelSr))
 		{
-			nRVLen = _tcsxlen(ptszRVBuffer);
-			HttpProtocol_Server_SendMsgEx(xhHTTPPacket, ptszSDBuffer, &nSDLen, &st_HDRParam, ptszRVBuffer, nRVLen);
-			XEngine_Network_Send(lpszClientAddr, ptszSDBuffer, nSDLen);
-			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("HTTP客户端:%s,请求二维码解析成功,解析的数据:%s"), lpszClientAddr, ptszRVBuffer);
+			nRVLen = _tcsxlen(m_MemoryRecv.get());
+			HttpProtocol_Server_SendMsgEx(xhHTTPPacket, m_MemorySend.get(), &nSDLen, &st_HDRParam, m_MemoryRecv.get(), nRVLen);
+			XEngine_Network_Send(lpszClientAddr, m_MemorySend.get(), nSDLen);
+			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("HTTP客户端:%s,请求二维码解析成功,解析的数据:%s"), lpszClientAddr, m_MemoryRecv.get());
 		}
 		else
 		{
 			st_HDRParam.nHttpCode = 501;
-			HttpProtocol_Server_SendMsgEx(xhHTTPPacket, ptszSDBuffer, &nSDLen, &st_HDRParam);
-			XEngine_Network_Send(lpszClientAddr, ptszSDBuffer, nSDLen);
+			HttpProtocol_Server_SendMsgEx(xhHTTPPacket, m_MemorySend.get(), &nSDLen, &st_HDRParam);
+			XEngine_Network_Send(lpszClientAddr, m_MemorySend.get(), nSDLen);
 			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("HTTP客户端:%s,请求二维码解析失败,错误:%lX"), lpszClientAddr, ModuleHelp_GetLastError());
 		}
 	}
-	free(ptszRVBuffer);
-	free(ptszSDBuffer);
-	ptszRVBuffer = NULL;
-	ptszSDBuffer = NULL;
 #endif
 	return true;
 }

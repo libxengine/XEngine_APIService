@@ -35,6 +35,8 @@ jobs:
     steps:
       - name: Checkout main repository code
         uses: actions/checkout@v4
+        with:
+          ref: 'develop'
 
       - name: Checkout dependency repository (xengine)
         uses: actions/checkout@v4
@@ -46,18 +48,18 @@ jobs:
         uses: actions/checkout@v4
         with:
           repository: libxengine/XEngine_OPenSource
-          path: XEngine_Source/XEngine_Depend
+          path: XEngine_Source/XEngine_DependLibrary/XEngine_OPenSource
       - name: sub module checkout (XEngine_PhoneData)
         uses: actions/checkout@v4
         with:
           repository: libxengine/XEngine_PhoneData
-          path: XEngine_Source/XEngine_DBDepend/XEngine_PhoneData
+          path: XEngine_Source/XEngine_DependLibrary/XEngine_PhoneData
       - name: sub module checkout (XEngine_IPMacData)
         uses: actions/checkout@v4
         with:
           repository: libxengine/XEngine_IPMacData
-          path: XEngine_Source/XEngine_DBDepend/XEngine_IPMacData
-
+          path: XEngine_Source/XEngine_DependLibrary/XEngine_IPMacData
+          
       - name: install system package
         run: |
             dnf update -y

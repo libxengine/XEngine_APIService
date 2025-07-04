@@ -38,25 +38,25 @@ jobs:
           repository: libxengine/libxengine
           path: libxengine
 
+      - name: Set TERM variable
+        run: echo "TERM=xterm" >> $GITHUB_ENV
+
       - name: sub module checkout (XEngine_OPenSource)
         uses: actions/checkout@v4
         with:
           repository: libxengine/XEngine_OPenSource
-          path: XEngine_Source/XEngine_Depend
+          path: XEngine_Source/XEngine_DependLibrary/XEngine_OPenSource
       - name: sub module checkout (XEngine_PhoneData)
         uses: actions/checkout@v4
         with:
           repository: libxengine/XEngine_PhoneData
-          path: XEngine_Source/XEngine_DBDepend/XEngine_PhoneData
+          path: XEngine_Source/XEngine_DependLibrary/XEngine_PhoneData
       - name: sub module checkout (XEngine_IPMacData)
         uses: actions/checkout@v4
         with:
           repository: libxengine/XEngine_IPMacData
-          path: XEngine_Source/XEngine_DBDepend/XEngine_IPMacData
+          path: XEngine_Source/XEngine_DependLibrary/XEngine_IPMacData
 
-      - name: Set TERM variable
-        run: echo "TERM=xterm" >> $GITHUB_ENV
-        
       - name: install system package
         run: |
             apt update -y

@@ -111,14 +111,6 @@ extern "C" bool ModuleProtocol_Packet_ListFile(XCHAR * ptszMsgBuffer, int* pInt_
 {
 	return m_ProtocolPacket.ModuleProtocol_Packet_ListFile(ptszMsgBuffer, pInt_MsgLen, pppszFileList, nListCount);
 }
-extern "C" bool ModuleProtocol_Packet_HardWare(XCHAR * ptszHWInfo, int* pInt_Len)
-{
-	return m_ProtocolPacket.ModuleProtocol_Packet_HardWare(ptszHWInfo, pInt_Len);
-}
-extern "C" bool ModuleProtocol_Packet_SoftWare(XCHAR * ptszSWInfo, int* pInt_Len)
-{
-	return m_ProtocolPacket.ModuleProtocol_Packet_SoftWare(ptszSWInfo, pInt_Len);
-}
 extern "C" bool ModuleProtocol_Packet_Machine(XCHAR * ptszMSGBuffer, int* pInt_MSGLen, XENGINE_MACHINEINFO * **pppSt_MachineList, int nListCount)
 {
 	return m_ProtocolPacket.ModuleProtocol_Packet_Machine(ptszMSGBuffer, pInt_MSGLen, pppSt_MachineList, nListCount);
@@ -138,6 +130,10 @@ extern "C" bool ModuleProtocol_Packet_IPAddr(XCHAR* ptszMSGBuffer, int* pInt_MSG
 extern "C" bool ModuleProtocol_Packet_MacInfo(XCHAR* ptszMSGBuffer, int* pInt_MSGLen, XENGINE_MACADDRINFO* pSt_MacInfo)
 {
 	return m_ProtocolPacket.ModuleProtocol_Packet_MacInfo(ptszMSGBuffer, pInt_MSGLen, pSt_MacInfo);
+}
+extern "C" bool ModuleProtocol_Packet_BackNotify(XCHAR* ptszMSGBuffer, int* pInt_MSGLen, int nCode, int nOPerator, LPCXSTR lpszSourceStr, LPCXSTR lpszDestStr, LPCXSTR lpszAPIStr)
+{
+	return m_ProtocolPacket.ModuleProtocol_Packet_BackNotify(ptszMSGBuffer, pInt_MSGLen, nCode, nOPerator, lpszSourceStr, lpszDestStr, lpszAPIStr);
 }
 extern "C" bool ModuleProtocol_Packet_P2PLan(XCHAR * ptszMsgBuffer, int* pInt_MsgLen, XENGINE_P2XPPEER_PROTOCOL * **pppSt_ListClients, int nListCount)
 {
@@ -194,9 +190,9 @@ extern "C" bool ModuleProtocol_Parse_WordFilter(LPCXSTR lpszMsgBuffer, int nMsgL
 {
 	return m_ProtocolParse.ModuleProtocol_Parse_WordFilter(lpszMsgBuffer, nMsgLen, pSt_WordFilter);
 }
-extern "C" bool ModuleProtocol_Parse_BackService(LPCXSTR lpszMsgBuffer, int nMsgLen, XCHAR * ptszSrcBuffer, XCHAR * ptszDstBuffer, int* pInt_BSType)
+extern "C" bool ModuleProtocol_Parse_BackService(LPCXSTR lpszMsgBuffer, int nMsgLen, XCHAR * ptszSrcBuffer, XCHAR * ptszDstBuffer, XCHAR* ptszAPIBuffer, int* pInt_BSType)
 {
-	return m_ProtocolParse.ModuleProtocol_Parse_BackService(lpszMsgBuffer, nMsgLen, ptszSrcBuffer, ptszDstBuffer, pInt_BSType);
+	return m_ProtocolParse.ModuleProtocol_Parse_BackService(lpszMsgBuffer, nMsgLen, ptszSrcBuffer, ptszDstBuffer, ptszAPIBuffer, pInt_BSType);
 }
 extern "C" bool ModuleProtocol_Parse_Verifcation(LPCXSTR lpszMsgBuffer, int nMsgLen, XCHAR * ptszUserName, XCHAR * ptszUserPass)
 {
