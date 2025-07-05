@@ -90,9 +90,9 @@ macos执行:./XEngine_LINEnv.sh -i 3
 git submodule init  
 git submodule update  
 如果github访问失败,你也可以clone该项目,在主目录下使用命令:  
-git clone https://gitee.com/xengine/XEngine_OPenSource.git XEngine_Source/XEngine_Depend  
-git clone https://gitee.com/xengine/XEngine_IPMacData.git XEngine_Source/XEngine_DBDepend/XEngine_IPMacData  
-git clone https://gitee.com/xengine/XEngine_PhoneData.git XEngine_Source/XEngine_DBDepend/XEngine_PhoneData  
+git clone https://gitee.com/xengine/XEngine_OPenSource.git XEngine_Source/XEngine_DependLibrary/XEngine_OPenSource
+git clone https://gitee.com/xengine/XEngine_IPMacData.git XEngine_Source/XEngine_DependLibrary/XEngine_IPMacData  
+git clone https://gitee.com/xengine/XEngine_PhoneData.git XEngine_Source/XEngine_DependLibrary/XEngine_PhoneData  
 
 #### Windows
 需要vcpkg配置第三方环境,具体参考vcpkg安装方式,安装好后执行:vcpkg.exe install lua:x86-windows opencv[contrib]:x86-windows libqrencode:x86-windows lua:x64-windows opencv[contrib]:x64-windows libqrencode:x64-windows  
