@@ -86,7 +86,7 @@ macos执行:./XEngine_LINEnv.sh -i 3
 默认配置没有开启数据库支持,如果需要数据库接口支持,需要自己开启数据库  
 
 #### sub module
-由于依赖的子模块,在你checkout仓库后,在仓库目录下执行下面的命令拉取子模块  
+由于依赖的子模块,在你clone仓库后,在仓库目录下执行下面的命令拉取子模块  
 git submodule init  
 git submodule update  
 如果github访问失败,你也可以clone该项目,在主目录下使用命令:  
