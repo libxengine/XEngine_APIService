@@ -132,6 +132,8 @@ extern XHANDLE xhLog;
 //HTTP服务器
 extern XHANDLE xhHTTPSocket;
 extern XHANDLE xhRFCSocket;
+extern XHANDLE xhNTPSocket;
+extern XHANDLE xhDNSSocket;
 extern XHANDLE xhHTTPHeart;
 extern XHANDLE xhHTTPPacket;
 extern XHANDLE xhHTTPPool;

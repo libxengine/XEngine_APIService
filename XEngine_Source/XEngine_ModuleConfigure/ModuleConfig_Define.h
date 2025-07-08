@@ -20,6 +20,8 @@ typedef struct
 	bool bShowWnd;                            //是否显示窗口启动
 	int nHttpPort;                            //HTTP服务端口
 	int nRFCPort;                             //RFC标准服务端口
+	int nNTPPort;  						      //NTP服务端口
+	int nDNSPort;							  //DNS服务端口
 	struct
 	{
 		int nMaxClient;                       //最大客户端个数

@@ -1,82 +1,84 @@
 {
-    "tszIPAddr":"192.168.1.8",
-    "bDeamon":false,
-    "bShowWnd":true,
-    "nHttpPort":5501,
-    "nRFCPort":5502,
-    "XMax":{
-        "nMaxClient":10000,
-        "nMaxQueue":10000,
-        "nIOThread":2,
-        "nHttpThread":2
+    "tszIPAddr": "192.168.1.8",
+    "bDeamon": false,
+    "bShowWnd": true,
+    "nHttpPort": 5501,
+    "nRFCPort": 5502,
+    "nNTPPort": 123,
+    "nDNSPort": 53,
+    "XMax": {
+        "nMaxClient": 10000,
+        "nMaxQueue": 10000,
+        "nIOThread": 2,
+        "nHttpThread": 2
     },
-    "XTime":{
-        "nTimeCheck":3,
-        "nHttpTimeOut":5,
-        "nP2PTimeOut":60
+    "XTime": {
+        "nTimeCheck": 3,
+        "nHttpTimeOut": 5,
+        "nP2PTimeOut": 60
     },
-    "XLog":{
-        "tszAPIFile":"./XEngine_Log/XEngine_HttpApp.Log",
-        "tszServiceFile":"./XEngine_Log/XEngine_ServiceApp.Log",
-        "MaxSize":1024000,
-        "MaxCount":10,
-        "LogLeave":17,
-        "LogType":32
+    "XLog": {
+        "tszAPIFile": "./XEngine_Log/XEngine_HttpApp.Log",
+        "tszServiceFile": "./XEngine_Log/XEngine_ServiceApp.Log",
+        "MaxSize": 1024000,
+        "MaxCount": 10,
+        "LogLeave": 17,
+        "LogType": 32
     },
-    "XSql":{
-        "bEnable":false,
-        "SQLAddr":"10.0.2.6",
-        "SQLPort":3306,
-        "SQLUser":"root",
-        "SQLPass":"123123aa"
+    "XSql": {
+        "bEnable": false,
+        "SQLAddr": "10.0.2.6",
+        "SQLPort": 3306,
+        "SQLUser": "root",
+        "SQLPass": "123123aa"
     },
-    "XApi":{
-        "tszWeatherUrl":"https://restapi.amap.com/v3/weather/weatherInfo?city=%s&key=3239fc302d6480ce49973f4d1c59e5d8",
-        "tszBankUrl":"https://ccdcapi.alipay.com/validateAndCacheCardInfo.json?cardNo=%s&cardBinCheck=true",
-        "tszOilUrl":"https://www.iamwawa.cn/oilprice/api?area=%s",
-        "st_TranslationInfo":{
-            "url":"https://fanyi-api.baidu.com/api/trans/vip/translate",
-            "appid":"20231228001924304",
-            "key":"udXGjpmNVeQHml1FjT8E"
+    "XApi": {
+        "tszWeatherUrl": "https://restapi.amap.com/v3/weather/weatherInfo?city=%s&key=3239fc302d6480ce49973f4d1c59e5d8",
+        "tszBankUrl": "https://ccdcapi.alipay.com/validateAndCacheCardInfo.json?cardNo=%s&cardBinCheck=true",
+        "tszOilUrl": "https://www.iamwawa.cn/oilprice/api?area=%s",
+        "st_TranslationInfo": {
+            "url": "https://fanyi-api.baidu.com/api/trans/vip/translate",
+            "appid": "20231228001924304",
+            "key": "udXGjpmNVeQHml1FjT8E"
         }
     },
-    "XPlugin":{
-        "bEnable":true,
-        "tszLibPlugin":"./XEngine_LibPlugin",
-        "tszLuaPlugin":"./XEngine_LuaPlugin"
+    "XPlugin": {
+        "bEnable": true,
+        "tszLibPlugin": "./XEngine_LibPlugin",
+        "tszLuaPlugin": "./XEngine_LuaPlugin"
     },
-    "XConfig":{
-        "st_ConfigQRCode":{
-            "tszModelDetect":"./XEngine_Config/qrmodel/detect.caffemodel",
-            "tszModelSr":"./XEngine_Config/qrmodel/sr.caffemodel",
-            "tszProtoDetect":"./XEngine_Config/qrmodel/detect.prototxt",
-            "tszProtoSr":"./XEngine_Config/qrmodel/sr.prototxt"
+    "XConfig": {
+        "st_ConfigQRCode": {
+            "tszModelDetect": "./XEngine_Config/qrmodel/detect.caffemodel",
+            "tszModelSr": "./XEngine_Config/qrmodel/sr.caffemodel",
+            "tszProtoDetect": "./XEngine_Config/qrmodel/detect.prototxt",
+            "tszProtoSr": "./XEngine_Config/qrmodel/sr.prototxt"
         },
-        "tszConfigDeamon":"./XEngine_Config/XEngine_DeamonConfig.json",
-        "tszConfigHTTPMime":"./XEngine_Config/HttpMime.types",
-        "tszConfigHTTPCode":"./XEngine_Config/HttpCode.types"
+        "tszConfigDeamon": "./XEngine_Config/XEngine_DeamonConfig.json",
+        "tszConfigHTTPMime": "./XEngine_Config/HttpMime.types",
+        "tszConfigHTTPCode": "./XEngine_Config/HttpCode.types"
     },
-    "XShortLink":{
-        "tszHostUrl":"url.xyry.org",
-        "nHTTPCode":301
+    "XShortLink": {
+        "tszHostUrl": "url.xyry.org",
+        "nHTTPCode": 301
     },
-    "XVerification":{
-        "tszUserName":"xyry",
-        "tszUserPass":"11",
-        "st_VerSwitch":{
-            "bBackService":false,
-            "bDeamon":false
+    "XVerification": {
+        "tszUserName": "xyry",
+        "tszUserPass": "11",
+        "st_VerSwitch": {
+            "bBackService": false,
+            "bDeamon": false
         }
     },
-    "XReport":{
-        "bEnable":true,
-        "tszAPIUrl":"http://app.xyry.org:5501/api?function=machine",
-        "tszServiceName":"XEngine_APIService"
+    "XReport": {
+        "bEnable": true,
+        "tszAPIUrl": "http://app.xyry.org:5501/api?function=machine",
+        "tszServiceName": "XEngine_APIService"
     },
-    "XImageText":{
-        "bEnable":true,
-        "tszImagePath":"./XEngine_Config/tessdata",
-        "tszImageLanguage":"chi_sim+eng"
+    "XImageText": {
+        "bEnable": true,
+        "tszImagePath": "./XEngine_Config/tessdata",
+        "tszImageLanguage": "chi_sim+eng"
     },
     "XAPIModule": {
         "bEnable": true,

@@ -77,6 +77,8 @@ bool CModuleConfigure_Json::ModuleConfigure_Json_File(LPCXSTR lpszConfigFile, XE
 	pSt_ServerConfig->bShowWnd = st_JsonRoot["bShowWnd"].asBool();
 	pSt_ServerConfig->nHttpPort = st_JsonRoot["nHttpPort"].asInt();
 	pSt_ServerConfig->nRFCPort = st_JsonRoot["nRFCPort"].asInt();
+	pSt_ServerConfig->nNTPPort = st_JsonRoot["nNTPPort"].asInt();
+	pSt_ServerConfig->nDNSPort = st_JsonRoot["nDNSPort"].asInt();
 
 	if (st_JsonRoot["XMax"].empty() || (4 != st_JsonRoot["XMax"].size()))
 	{

@@ -16,6 +16,8 @@ XHANDLE xhLog = NULL;
 //HTTP服务器
 XHANDLE xhHTTPSocket = NULL;
 XHANDLE xhRFCSocket = NULL;
+XHANDLE xhNTPSocket = NULL;
+XHANDLE xhDNSSocket = NULL;
 XHANDLE xhHTTPHeart = NULL;
 XHANDLE xhHTTPPacket = NULL;
 XHANDLE xhHTTPPool = NULL;
@@ -35,6 +37,8 @@ void ServiceApp_Stop(int signo)
 		//销毁HTTP资源
 		NetCore_TCPXCore_DestroyEx(xhHTTPSocket);
 		NetCore_UDPXCore_DestroyEx(xhRFCSocket);
+		NetCore_UDPXCore_DestroyEx(xhNTPSocket);
+		NetCore_UDPXCore_DestroyEx(xhDNSSocket);
 		SocketOpt_HeartBeat_DestoryEx(xhHTTPHeart);
 		HttpProtocol_Server_DestroyEx(xhHTTPPacket);
 		ManagePool_Thread_NQDestroy(xhHTTPPool);
@@ -365,6 +369,40 @@ int main(int argc, char** argv)
 	{
 		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_WARN, _X("启动服务中,RFC服务没有被启用"));
 	}
+	if (st_ServiceConfig.nNTPPort > 0)
+	{
+		//网络
+		xhNTPSocket = NetCore_UDPXCore_StartEx(st_ServiceConfig.nNTPPort, st_ServiceConfig.st_XMax.nIOThread);
+		if (NULL == xhNTPSocket)
+		{
+			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("启动服务中,启动NTP网络服务器失败,错误：%lX"), NetCore_GetLastError());
+			goto XENGINE_SERVICEAPP_EXIT;
+		}
+		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("启动服务中,启动NTP网络服务器成功,NTP端口:%d,IO:%d"), st_ServiceConfig.nNTPPort, st_ServiceConfig.st_XMax.nIOThread);
+		NetCore_UDPXCore_RegisterCallBackEx(xhNTPSocket, Network_Callback_NTPRecv);
+		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("启动服务中,注册NTP网络事件成功"));
+	}
+	else
+	{
+		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_WARN, _X("启动服务中,NTP服务没有被启用"));
+	}
+	if (st_ServiceConfig.nDNSPort > 0)
+	{
+		//网络
+		xhDNSSocket = NetCore_UDPXCore_StartEx(st_ServiceConfig.nDNSPort, st_ServiceConfig.st_XMax.nIOThread);
+		if (NULL == xhDNSSocket)
+		{
+			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("启动服务中,启动DNS网络服务器失败,错误：%lX"), NetCore_GetLastError());
+			goto XENGINE_SERVICEAPP_EXIT;
+		}
+		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("启动服务中,启动DNS网络服务器成功,DNS端口:%d,IO:%d"), st_ServiceConfig.nDNSPort, st_ServiceConfig.st_XMax.nIOThread);
+		NetCore_UDPXCore_RegisterCallBackEx(xhDNSSocket, Network_Callback_DNSRecv);
+		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("启动服务中,注册DNS网络事件成功"));
+	}
+	else
+	{
+		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_WARN, _X("启动服务中,DNS服务没有被启用"));
+	}
 	//初始化P2P
 	if (st_ServiceConfig.st_XTime.nP2PTimeOut > 0)
 	{
@@ -552,6 +590,8 @@ XENGINE_SERVICEAPP_EXIT:
 		//销毁HTTP资源
 		NetCore_TCPXCore_DestroyEx(xhHTTPSocket);
 		NetCore_UDPXCore_DestroyEx(xhRFCSocket);
+		NetCore_UDPXCore_DestroyEx(xhNTPSocket);
+		NetCore_UDPXCore_DestroyEx(xhDNSSocket);
 		SocketOpt_HeartBeat_DestoryEx(xhHTTPHeart);
 		HttpProtocol_Server_DestroyEx(xhHTTPPacket);
 		ManagePool_Thread_NQDestroy(xhHTTPPool);
