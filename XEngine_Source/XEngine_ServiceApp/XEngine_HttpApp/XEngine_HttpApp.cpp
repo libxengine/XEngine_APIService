@@ -26,6 +26,7 @@ XHANDLE xhMemPool = NULL;
 unique_ptr<thread> pSTDThread_Deamon = NULL;
 //配置文件
 XENGINE_SERVICECONFIG st_ServiceConfig;
+XENGINE_DNSINFO st_DNSConfig;
 XENGINE_DEAMONAPPLIST st_DeamonAppConfig;
 
 void ServiceApp_Stop(int signo)
@@ -59,6 +60,7 @@ void ServiceApp_Stop(int signo)
 		ModulePlugin_Loader_Destory();
 		ModuleHelp_P2PClient_Destory();
 		ModuleHelp_ImageGet_TextDestory();
+		ModuleHelp_DNSAddr_Destroy();
 		//销毁日志资源
 		HelpComponents_XLog_Destroy(xhLog);
 		//销毁线程
@@ -220,10 +222,10 @@ int main(int argc, char** argv)
 	xhMemPool = ManagePool_Memory_Create();
 	if (NULL == xhMemPool)
 	{
-		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("启动服务中，初始化内存池失败，错误：%lX"), ManagePool_GetLastError());
+		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("启动服务中,初始化内存池失败，错误：%lX"), ManagePool_GetLastError());
 		goto XENGINE_SERVICEAPP_EXIT;
 	}
-	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("启动服务中，初始化内存池成功"));
+	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("启动服务中,初始化内存池成功"));
 
 	if (st_ServiceConfig.st_XImageText.bEnable)
 	{
@@ -375,7 +377,7 @@ int main(int argc, char** argv)
 		xhNTPSocket = NetCore_UDPXCore_StartEx(st_ServiceConfig.nNTPPort, st_ServiceConfig.st_XMax.nIOThread);
 		if (NULL == xhNTPSocket)
 		{
-			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("启动服务中,启动NTP网络服务器失败,错误：%lX"), NetCore_GetLastError());
+			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("启动服务中,启动NTP网络服务器失败,端口:%d,错误：%lX"), st_ServiceConfig.nNTPPort, NetCore_GetLastError());
 			goto XENGINE_SERVICEAPP_EXIT;
 		}
 		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("启动服务中,启动NTP网络服务器成功,NTP端口:%d,IO:%d"), st_ServiceConfig.nNTPPort, st_ServiceConfig.st_XMax.nIOThread);
@@ -392,12 +394,19 @@ int main(int argc, char** argv)
 		xhDNSSocket = NetCore_UDPXCore_StartEx(st_ServiceConfig.nDNSPort, st_ServiceConfig.st_XMax.nIOThread);
 		if (NULL == xhDNSSocket)
 		{
-			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("启动服务中,启动DNS网络服务器失败,错误：%lX"), NetCore_GetLastError());
+			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("启动服务中,启动DNS网络服务器失败,端口:%d,错误：%lX"), st_ServiceConfig.nDNSPort, NetCore_GetLastError());
 			goto XENGINE_SERVICEAPP_EXIT;
 		}
 		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("启动服务中,启动DNS网络服务器成功,DNS端口:%d,IO:%d"), st_ServiceConfig.nDNSPort, st_ServiceConfig.st_XMax.nIOThread);
 		NetCore_UDPXCore_RegisterCallBackEx(xhDNSSocket, Network_Callback_DNSRecv);
 		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("启动服务中,注册DNS网络事件成功"));
+
+		if (!ModuleHelp_DNSAddr_Init(&st_DNSConfig))
+		{
+			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("启动服务中,初始化DNS配置帮助函数库失败,错误：%lX"), ModuleHelp_GetLastError());
+			goto XENGINE_SERVICEAPP_EXIT;
+		}
+		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("启动服务中,初始化DNS配置帮助函数库成功,备用DNS服务个数:%d,配置DNS地址:%d"), st_DNSConfig.stl_ListDNSList.size(), st_DNSConfig.stl_ListDNSServer.size());
 	}
 	else
 	{
@@ -612,6 +621,7 @@ XENGINE_SERVICEAPP_EXIT:
 		ModulePlugin_Loader_Destory();
 		ModuleHelp_P2PClient_Destory();
 		ModuleHelp_ImageGet_TextDestory();
+		ModuleHelp_DNSAddr_Destroy();
 		//销毁日志资源
 		HelpComponents_XLog_Destroy(xhLog);
 		//销毁线程

@@ -6,7 +6,7 @@ LOADHDR = -I ./ -I /usr/include/opencv4 -I /usr/local/include/opencv4 -I /usr/lo
 LOADSO = 
 LIB = -lXEngine_BaseLib -lXClient_Socket -lNetHelp_APIAddr
 LIBEX = 
-OBJECTS = ModuleHelp_IDCard.o ModuleHelp_Language.o ModuleHelp_P2PClient.o ModuleHelp_Locker.o ModuleHelp_QRCode.o ModuleHelp_SocketTest.o ModuleHelp_ImageGet.o ModuleHelp_ImageSet.o pch.o
+OBJECTS = ModuleHelp_IDCard.o ModuleHelp_Language.o ModuleHelp_P2PClient.o ModuleHelp_Locker.o ModuleHelp_QRCode.o ModuleHelp_SocketTest.o ModuleHelp_ImageGet.o ModuleHelp_ImageSet.o ModuleHelp_DNSAddr.o pch.o
 
 MACRO_QR_SUPPORT := $(shell gcc -E -dM ../XEngine_BuildSwitch.h | grep _XENGINE_BUILD_SWITCH_QRDECODEC | cut -d ' ' -f 3)
 MACRO_OPENCV_SUPPORT := $(shell gcc -E -dM ../XEngine_BuildSwitch.h | grep _XENGINE_BUILD_SWITCH_OPENCV | cut -d ' ' -f 3)
@@ -78,6 +78,8 @@ ModuleHelp_ImageGet.o:./ModuleHelp_Image/ModuleHelp_ImageGet.cpp
 	$(CC) $(DEBUG) $(FLAGS) $(UNICODE) $(PLATVER) $(LOADHDR) ./ModuleHelp_Image/ModuleHelp_ImageGet.cpp
 ModuleHelp_ImageSet.o:./ModuleHelp_Image/ModuleHelp_ImageSet.cpp             
 	$(CC) $(DEBUG) $(FLAGS) $(UNICODE) $(PLATVER) $(LOADHDR) ./ModuleHelp_Image/ModuleHelp_ImageSet.cpp
+ModuleHelp_DNSAddr.o:./ModuleHelp_DNSAddr/ModuleHelp_DNSAddr.cpp             
+	$(CC) $(DEBUG) $(FLAGS) $(UNICODE) $(PLATVER) $(LOADHDR) ./ModuleHelp_DNSAddr/ModuleHelp_DNSAddr.cpp
 
 pch.o:./pch.cpp                 		       	    
 	$(CC) $(DEBUG) $(FLAGS) $(UNICODE) $(PLATVER) $(LOADHDR) ./pch.cpp

@@ -51,6 +51,8 @@ using namespace std;
 #include <XEngine_Include/XEngine_RfcComponents/NatProtocol_Error.h>
 #include <XEngine_Include/XEngine_RfcComponents/NTPProtocol_Define.h>
 #include <XEngine_Include/XEngine_RfcComponents/NTPProtocol_Error.h>
+#include <XEngine_Include/XEngine_RfcComponents/DNSProtocol_Define.h>
+#include <XEngine_Include/XEngine_RfcComponents/DNSProtocol_Error.h>
 #include <XEngine_Include/XEngine_SystemSdk/SystemApi_Define.h>
 #include <XEngine_Include/XEngine_SystemSdk/SystemApi_Error.h>
 #include <XEngine_Include/XEngine_AVCodec/AVCollect_Define.h>
@@ -115,6 +117,7 @@ using namespace std;
 //rfc
 #include "XEngine_TaskRfc/RFCTask_Stun.h"
 #include "XEngine_TaskRfc/RFCTask_Ntp.h"
+#include "XEngine_TaskRfc/RFCTask_Dns.h"
 /********************************************************************
 //    Created:     2022/01/20  14:42:06
 //    File Name:   D:\XEngine_ServiceApp\XEngine_Source\XEngine_ServiceApp\XEngine_HttpApp\XEngine_Hdr.h
@@ -142,6 +145,7 @@ extern XHANDLE xhMemPool;
 extern unique_ptr<thread> pSTDThread_Deamon;
 //配置文件
 extern XENGINE_SERVICECONFIG st_ServiceConfig;
+extern XENGINE_DNSINFO st_DNSConfig;
 extern XENGINE_DEAMONAPPLIST st_DeamonAppConfig;
 
 #include "XEngine_MemoryPool.h"
@@ -160,6 +164,7 @@ extern XENGINE_DEAMONAPPLIST st_DeamonAppConfig;
 #pragma comment(lib,"XEngine_RfcComponents/RfcComponents_HttpProtocol.lib")
 #pragma comment(lib,"XEngine_RfcComponents/RfcComponents_NatProtocol.lib")
 #pragma comment(lib,"XEngine_RfcComponents/RfcComponents_NTPProtocol.lib")
+#pragma comment(lib,"XEngine_RfcComponents/RfcComponents_DNSProtocol.lib")
 #pragma comment(lib,"XEngine_SystemSdk/XEngine_SystemApi")
 #pragma comment(lib,"XEngine_AVCodec/XEngine_AVCollect.lib")
 #pragma comment(lib,"XEngine_AVCodec/XEngine_VideoCodec.lib")

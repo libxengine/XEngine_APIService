@@ -70,3 +70,8 @@
 #define ERROR_XENGINE_APISERVICE_MODULE_HELP_IAMGE_INIT 0xD6007           //初始化失败
 #define ERROR_XENGINE_APISERVICE_MODULE_HELP_IAMGE_READ 0xD6008           //读取数据失败
 #define ERROR_XENGINE_APISERVICE_MODULE_HELP_IAMGE_GET 0xD6009            //获取数据失败
+//////////////////////////////////////////////////////////////////////////
+//                       DNS处理错误
+//////////////////////////////////////////////////////////////////////////
+#define ERROR_XENGINE_APISERVICE_MODULE_HELP_DNS_PARAMRT 0xD7001          //参数错误
+#define ERROR_XENGINE_APISERVICE_MODULE_HELP_DNS_NOTFOUND 0xD7002         //没有找到

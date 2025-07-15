@@ -12,7 +12,7 @@ LIB = -lXEngine_BaseSafe -lXEngine_BaseLib -lXEngine_Algorithm -lXEngine_Core -l
 	  -lXEngine_APIModuleIPMac -lXEngine_APIModulePhone
 LIBEX = 
 OBJECTS = XEngine_Configure.o XEngine_Network.o XEngine_HTTPTask.o XEngine_PluginTask.o XEngine_HttpApp.o        \
-		  RFCTask_Ntp.o RFCTask_Stun.o \
+		  RFCTask_Ntp.o RFCTask_Stun.o RFCTask_Dns.o \
           TaskGet_Bank.o TaskGet_IDCard.o TaskGet_Locker.o TaskGet_Translation.o TaskGet_Reload.o TaskGet_Weather.o TaskGet_IDRegion.o TaskGet_Oil.o TaskGet_APIModule.o \
 		  TaskPost_DTest.o TaskPost_Log.o TaskPost_P2PClient.o TaskPost_PostCode.o TaskPost_QRCode.o TaskPost_ShortLink.o TaskPost_SocketTest.o TaskPost_WordFilter.o TaskPost_Image.o TaskPost_BackService.o TaskPost_Deamon.o TaskPost_Machine.o
 
@@ -71,6 +71,8 @@ RFCTask_Ntp.o:./XEngine_TaskRfc/RFCTask_Ntp.cpp
 	$(CC) $(DEBUG) $(FLAGS) $(UNICODE) $(PLATVER) $(LOADHDR) ./XEngine_TaskRfc/RFCTask_Ntp.cpp
 RFCTask_Stun.o:./XEngine_TaskRfc/RFCTask_Stun.cpp
 	$(CC) $(DEBUG) $(FLAGS) $(UNICODE) $(PLATVER) $(LOADHDR) ./XEngine_TaskRfc/RFCTask_Stun.cpp
+RFCTask_Dns.o:./XEngine_TaskRfc/RFCTask_Dns.cpp
+	$(CC) $(DEBUG) $(FLAGS) $(UNICODE) $(PLATVER) $(LOADHDR) ./XEngine_TaskRfc/RFCTask_Dns.cpp
 
 TaskGet_Bank.o:./XEngine_TaskGet/TaskGet_Bank.cpp
 	$(CC) $(DEBUG) $(FLAGS) $(UNICODE) $(PLATVER) $(LOADHDR) ./XEngine_TaskGet/TaskGet_Bank.cpp

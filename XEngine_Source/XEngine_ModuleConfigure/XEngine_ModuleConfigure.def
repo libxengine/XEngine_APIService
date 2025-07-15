@@ -6,3 +6,4 @@ EXPORTS
 	ModuleConfigure_Json_File
 	ModuleConfigure_Json_VersionFile
 	ModuleConfigure_Json_DeamonList
+	ModuleConfigure_Json_DNSFile

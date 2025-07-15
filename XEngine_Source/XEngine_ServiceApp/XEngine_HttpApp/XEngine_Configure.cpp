@@ -13,6 +13,7 @@
 bool XEngine_Configure_Parament(int argc, char** argv)
 {
 	LPCXSTR lpszConfigFile = _X("./XEngine_Config/XEngine_Config.json");
+	LPCXSTR lpszDNSConfig = _X("./XEngine_Config/XEngine_DNSConfig.json");
 	LPCXSTR lpszVersionFile = _X("./XEngine_Config/XEngine_VersionConfig.json");
 
 	if (NULL != st_ServiceConfig.st_XVer.pStl_ListVer)
@@ -24,6 +25,11 @@ bool XEngine_Configure_Parament(int argc, char** argv)
 	if (!ModuleConfigure_Json_File(lpszConfigFile, &st_ServiceConfig))
 	{
 		printf("解析配置文件失败,ModuleConfigure_Json_File:%lX\n", ModuleConfigure_GetLastError());
+		return false;
+	}
+	if (!ModuleConfigure_Json_DNSFile(lpszDNSConfig, &st_DNSConfig))
+	{
+		printf("解析配置文件失败,ModuleConfigure_Json_DNSFile:%lX\n", ModuleConfigure_GetLastError());
 		return false;
 	}
 	if (!ModuleConfigure_Json_VersionFile(lpszVersionFile, &st_ServiceConfig))

@@ -54,6 +54,7 @@ using namespace std;
 #include <XEngine_Include/XEngine_NetHelp/APIAddr_Define.h>
 #include <XEngine_Include/XEngine_NetHelp/APIAddr_Error.h>
 #include "../XEngine_UserProtocol.h"
+#include "../XEngine_ModuleConfigure/ModuleConfig_Define.h"
 #include "ModuleHelp_Define.h"
 #include "ModuleHelp_Error.h"
 /********************************************************************

@@ -117,6 +117,9 @@
     <ClCompile Include="XEngine_TaskGet\TaskGet_APIModule.cpp">
       <Filter>源文件\XEngine_TaskGet</Filter>
     </ClCompile>
+    <ClCompile Include="XEngine_TaskRfc\RFCTask_Dns.cpp">
+      <Filter>源文件\XEngine_TaskRfc</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="XEngine_Configure.h">
@@ -205,6 +208,9 @@
     </ClInclude>
     <ClInclude Include="XEngine_MemoryPool.h">
       <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="XEngine_TaskRfc\RFCTask_Dns.h">
+      <Filter>头文件\XEngine_TaskRfc</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

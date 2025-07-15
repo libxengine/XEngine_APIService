@@ -47,3 +47,9 @@ EXPORTS
 	ModuleHelp_ImageSet_ColorCvt
 	ModuleHelp_ImageSet_Ligth
 	ModuleHelp_ImageSet_Level
+
+	ModuleHelp_DNSAddr_Init
+	ModuleHelp_DNSAddr_Destroy
+	ModuleHelp_DNSAddr_FindA
+	ModuleHelp_DNSAddr_FindPtr
+	ModuleHelp_DNSAddr_Select

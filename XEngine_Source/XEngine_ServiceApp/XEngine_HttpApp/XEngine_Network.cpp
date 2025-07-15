@@ -51,7 +51,7 @@ void XCALLBACK Network_Callback_NTPRecv(LPCXSTR lpszClientAddr, XSOCKET hSocket,
 }
 void XCALLBACK Network_Callback_DNSRecv(LPCXSTR lpszClientAddr, XSOCKET hSocket, LPCXSTR lpszMSGBuffer, int nMSGLen, XPVOID lParam)
 {
-
+	RFCTask_DNS_Parse(lpszClientAddr, lpszMSGBuffer, nMSGLen);
 }
 //////////////////////////////////////////////////////////////////////////网络IO关闭操作
 void XEngine_Network_Close(LPCXSTR lpszClientAddr, bool bHeart)

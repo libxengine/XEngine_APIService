@@ -247,6 +247,7 @@
   <ItemGroup>
     <ClInclude Include="framework.h" />
     <ClInclude Include="ModuleHelp_Define.h" />
+    <ClInclude Include="ModuleHelp_DNSAddr\ModuleHelp_DNSAddr.h" />
     <ClInclude Include="ModuleHelp_Error.h" />
     <ClInclude Include="ModuleHelp_IDCard\ModuleHelp_IDCard.h" />
     <ClInclude Include="ModuleHelp_Image\ModuleHelp_ImageGet.h" />
@@ -260,6 +261,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
+    <ClCompile Include="ModuleHelp_DNSAddr\ModuleHelp_DNSAddr.cpp" />
     <ClCompile Include="ModuleHelp_IDCard\ModuleHelp_IDCard.cpp" />
     <ClCompile Include="ModuleHelp_Image\ModuleHelp_ImageGet.cpp" />
     <ClCompile Include="ModuleHelp_Image\ModuleHelp_ImageSet.cpp" />
