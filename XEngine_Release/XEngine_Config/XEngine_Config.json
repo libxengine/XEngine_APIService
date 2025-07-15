@@ -4,8 +4,8 @@
     "bShowWnd": true,
     "nHttpPort": 5501,
     "nRFCPort": 5502,
-    "nNTPPort": 123,
-    "nDNSPort": 53,
+    "nNTPPort": 0,
+    "nDNSPort": 0,
     "XMax": {
         "nMaxClient": 10000,
         "nMaxQueue": 10000,
