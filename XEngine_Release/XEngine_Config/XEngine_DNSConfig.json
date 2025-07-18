@@ -5,23 +5,23 @@
     ],
     "DNSList": [
         {
-            "bEnable": false,
+            "bEnable": true,
             "DNSName": "www.libxengine.com",
             "DNSAddr": [
                 {
-                    "Type:": 5,
-                    "TTL": 60,
+                    "Type": 5,
+                    "TTL": 30,
                     "Name": "www.libxengine.com",
                     "Addr": "www.xyry.org"
                 },
                 {
-                    "Type:": 1,
+                    "Type": 1,
                     "TTL": 60,
                     "Name": "www.xyry.org",
                     "Addr": "118.25.14.242"
                 },
                 {
-                    "Type:": 1,
+                    "Type": 1,
                     "TTL": 120,
                     "Name": "www.libxengine.com",
                     "Addr": "104.21.4.128"
@@ -33,7 +33,7 @@
             "DNSName": "www.xyry.org",
             "DNSAddr": [
                 {
-                    "Type:": 1,
+                    "Type": 1,
                     "TTL": 120,
                     "Name": "www.xyry.org",
                     "Addr": "104.21.4.128"

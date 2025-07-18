@@ -141,13 +141,7 @@ bool CModuleHelp_DNSAddr::ModuleHelp_DNSAddr_FindPtr(LPCXSTR lpszDNSAddr, XENGIN
 {
 	ModuleHelp_IsErrorOccur = false;
 
-	auto stl_MapIterator = stl_MapDNSAddr.find(lpszDNSAddr);
-	if (stl_MapIterator == stl_MapDNSAddr.end())
-	{
-		ModuleHelp_IsErrorOccur = true;
-		ModuleHelp_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_HELP_DNS_NOTFOUND;
-		return false;
-	}
+	auto stl_MapIterator = stl_MapDNSAddr.begin();
 	//查找地址
 	bool bIsFound = false;
 	for (auto stl_ListIterator = stl_MapIterator->second.begin(); stl_ListIterator != stl_MapIterator->second.end(); stl_ListIterator++)

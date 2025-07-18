@@ -49,7 +49,7 @@ bool RFCTask_DNS_Parse(LPCXSTR lpszClientAddr, LPCXSTR lpszMSGBuffer, int nMSGLe
 		if (ModuleHelp_DNSAddr_FindPtr(tszIPStr, &st_DNSAddr))
 		{
 			ppSt_DNSAnswer[0]->nTTL = st_DNSAddr.nTTL;
-			ppSt_DNSAnswer[0]->st_QueryInfo.nNameType = st_DNSAddr.nType;
+			ppSt_DNSAnswer[0]->st_QueryInfo.nNameType = XENGINE_DNSPROTOCOL_QUERY_QUESTION_TYPE_PTR;
 			ppSt_DNSAnswer[0]->st_QueryInfo.nNameClass = XENGINE_DNSPROTOCOL_QUERY_QUESTION_CLASS_IN;
 			_tcsxcpy(ppSt_DNSAnswer[0]->tszNameStr, st_DNSAddr.tszDNSAddr);
 			_tcsxcpy(ppSt_DNSAnswer[0]->tszAddrStr, st_DNSAddr.tszDNSName);
