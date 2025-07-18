@@ -35,6 +35,8 @@ using namespace std;
 #include <XEngine_Include/XEngine_Core/ManagePool_Error.h>
 #include <XEngine_Include/XEngine_Core/Cryption_Define.h>
 #include <XEngine_Include/XEngine_Core/Cryption_Error.h>
+#include <XEngine_Include/XEngine_Client/XClient_Define.h>
+#include <XEngine_Include/XEngine_Client/XClient_Error.h>
 #include <XEngine_Include/XEngine_Client/APIClient_Define.h>
 #include <XEngine_Include/XEngine_Client/APIClient_Error.h>
 #include <XEngine_Include/XEngine_Client/StreamClient_Define.h>
@@ -157,6 +159,7 @@ extern XENGINE_DEAMONAPPLIST st_DeamonAppConfig;
 #pragma comment(lib,"XEngine_Core/XEngine_Core.lib")
 #pragma comment(lib,"XEngine_Core/XEngine_ManagePool.lib")
 #pragma comment(lib,"XEngine_Core/XEngine_Cryption.lib")
+#pragma comment(lib,"XEngine_Client/XClient_Socket.lib")
 #pragma comment(lib,"XEngine_Client/XClient_Stream.lib")
 #pragma comment(lib,"XEngine_Client/XClient_APIHelp.lib")
 #pragma comment(lib,"XEngine_NetHelp/NetHelp_APIAddr")

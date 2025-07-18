@@ -2,6 +2,7 @@
 
 bool RFCTask_DNS_Parse(LPCXSTR lpszClientAddr, LPCXSTR lpszMSGBuffer, int nMSGLen)
 {
+	bool bQuery = false;
 	int nSDLen = 0;
 	int nRequestID = 0;
 	XCHAR tszSDBuffer[4096] = {};
@@ -10,6 +11,7 @@ bool RFCTask_DNS_Parse(LPCXSTR lpszClientAddr, LPCXSTR lpszMSGBuffer, int nMSGLe
 	if (!DNSProtocol_Parse_Header(lpszMSGBuffer, nMSGLen, &nRequestID, &st_DNSRequest))
 	{
 		DNSProtocol_Packet_Error(tszSDBuffer, &nSDLen, nRequestID, &st_DNSRequest, XENGINE_DNSPROTOCOL_QUERY_QUESTION_STATUS_FORMAT);
+		NetCore_UDPXCore_SendEx(xhDNSSocket, lpszClientAddr, tszSDBuffer, nSDLen);
 		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("DNS客户端:%s,发送的DNS协议不正确"), lpszClientAddr);
 		return false;
 	}
@@ -33,6 +35,7 @@ bool RFCTask_DNS_Parse(LPCXSTR lpszClientAddr, LPCXSTR lpszMSGBuffer, int nMSGLe
 			}
 			DNSProtocol_Packet_REPHeader(tszSDBuffer, &nSDLen, nRequestID, &st_DNSRequest, &ppSt_DNSAnswer, nListCount);
 			BaseLib_Memory_Free((XPPPMEM)&ppSt_DNSAnswer, nListCount);
+			bQuery = true;
 		}
 	}
 	else if (XENGINE_DNSPROTOCOL_QUERY_QUESTION_TYPE_PTR == st_DNSRequest.st_QueryInfo.nNameType)
@@ -41,25 +44,50 @@ bool RFCTask_DNS_Parse(LPCXSTR lpszClientAddr, LPCXSTR lpszMSGBuffer, int nMSGLe
 		int nListCount = 1;
 		XCHAR tszIPStr[256] = {};
 		XENGINE_DNSADDRINFO st_DNSAddr = {};
-		XENGINE_DNSPROTOCOL** ppSt_DNSAnswer;
-
+		
 		DNSProtocol_Help_PTRStr(st_DNSRequest.tszNameStr, tszIPStr, &nIPVer);
-		BaseLib_Memory_Malloc((XPPPMEM)&ppSt_DNSAnswer, nListCount, sizeof(XENGINE_DNSPROTOCOL));
-
 		if (ModuleHelp_DNSAddr_FindPtr(tszIPStr, &st_DNSAddr))
 		{
+			XENGINE_DNSPROTOCOL** ppSt_DNSAnswer;
+			BaseLib_Memory_Malloc((XPPPMEM)&ppSt_DNSAnswer, nListCount, sizeof(XENGINE_DNSPROTOCOL));
+
 			ppSt_DNSAnswer[0]->nTTL = st_DNSAddr.nTTL;
 			ppSt_DNSAnswer[0]->st_QueryInfo.nNameType = XENGINE_DNSPROTOCOL_QUERY_QUESTION_TYPE_PTR;
 			ppSt_DNSAnswer[0]->st_QueryInfo.nNameClass = XENGINE_DNSPROTOCOL_QUERY_QUESTION_CLASS_IN;
 			_tcsxcpy(ppSt_DNSAnswer[0]->tszNameStr, st_DNSAddr.tszDNSAddr);
 			_tcsxcpy(ppSt_DNSAnswer[0]->tszAddrStr, st_DNSAddr.tszDNSName);
+
+			DNSProtocol_Packet_REPHeader(tszSDBuffer, &nSDLen, nRequestID, &st_DNSRequest, &ppSt_DNSAnswer, nListCount);
+			BaseLib_Memory_Free((XPPPMEM)&ppSt_DNSAnswer, nListCount);
+			bQuery = true;
 		}
-		DNSProtocol_Packet_REPHeader(tszSDBuffer, &nSDLen, nRequestID, &st_DNSRequest, &ppSt_DNSAnswer, nListCount);
-		BaseLib_Memory_Free((XPPPMEM)&ppSt_DNSAnswer, nListCount);
+	}
+
+	if (!bQuery)
+	{
+		//选择一个备用DNS服务器
+		XCHAR tszIPServer[128] = {};
+		ModuleHelp_DNSAddr_Select(tszIPServer);
+		//创建UDP查询连接
+		XSOCKET hSocket = XSOCKET_ERROR;
+		XClient_UDPSelect_Create(&hSocket);
+		XClient_UDPSelect_Bind(hSocket, 12331);
+		XClient_UDPSelect_Connect(hSocket, tszIPServer, 53);
+		XClient_UDPSelect_SendMsg(hSocket, lpszMSGBuffer, nMSGLen);
+
+		if (!BaseLib_IO_Select(hSocket, true, 2000))
+		{
+			DNSProtocol_Packet_Error(tszSDBuffer, &nSDLen, nRequestID, &st_DNSRequest, XENGINE_DNSPROTOCOL_QUERY_QUESTION_STATUS_SERVFAIL);
+			NetCore_UDPXCore_SendEx(xhDNSSocket, lpszClientAddr, tszSDBuffer, nSDLen);
+			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("DNS客户端:%s,请求备用服务器数据失败,数据超时"), lpszClientAddr);
+			return false;
+		}
+		nSDLen = 4096;
+		XClient_UDPSelect_RecvMsg(hSocket, tszSDBuffer, &nSDLen);
+		XClient_UDPSelect_Close(hSocket);
 	}
 	
 	NetCore_UDPXCore_SendEx(xhDNSSocket, lpszClientAddr, tszSDBuffer, nSDLen);
 	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("DNS客户端:%s,发送DNS协议给服务器,处理成功"), lpszClientAddr);
-
 	return true;
 }
