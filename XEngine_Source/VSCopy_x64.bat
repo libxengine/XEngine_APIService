@@ -20,6 +20,7 @@ copy /y "%XEngine_Lib64%\XEngine_HelpComponents\HelpComponents_XLog.dll" "./"
 copy /y "%XEngine_Lib64%\XEngine_RfcComponents\RfcComponents_HttpProtocol.dll" "./"
 copy /y "%XEngine_Lib64%\XEngine_RfcComponents\RfcComponents_NatProtocol.dll" "./"
 copy /y "%XEngine_Lib64%\XEngine_RfcComponents\RfcComponents_NTPProtocol.dll" "./"
+copy /y "%XEngine_Lib64%\XEngine_RfcComponents\RfcComponents_DNSProtocol.dll" "./"
 
 copy /y "%XEngine_Lib64%\XEngine_AVCodec\XEngine_AVHelp.dll" "./"
 copy /y "%XEngine_Lib64%\XEngine_AVCodec\XEngine_VideoCodec.dll" "./"
