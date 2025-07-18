@@ -406,7 +406,6 @@ bool CModuleConfigure_Json::ModuleConfigure_Json_DNSFile(LPCXSTR lpszConfigFile,
 	JSONCPP_STRING st_JsonError;
 	Json::Value st_JsonRoot;
 	Json::CharReaderBuilder st_JsonBuilder;
-
 	FILE* pSt_File = fopen(lpszConfigFile, "rb");
 	if (NULL == pSt_File)
 	{
@@ -417,7 +416,6 @@ bool CModuleConfigure_Json::ModuleConfigure_Json_DNSFile(LPCXSTR lpszConfigFile,
 	XCHAR tszMsgBuffer[8192] = {};
 	size_t nRet = fread(tszMsgBuffer, 1, sizeof(tszMsgBuffer), pSt_File);
 	fclose(pSt_File);
-
 	std::unique_ptr<Json::CharReader> const pSt_JsonReader(st_JsonBuilder.newCharReader());
 	if (!pSt_JsonReader->parse(tszMsgBuffer, tszMsgBuffer + nRet, &st_JsonRoot, &st_JsonError))
 	{
@@ -425,29 +423,27 @@ bool CModuleConfigure_Json::ModuleConfigure_Json_DNSFile(LPCXSTR lpszConfigFile,
 		Config_dwErrorCode = ERROR_MODULE_CONFIGURE_JSON_PARSE;
 		return false;
 	}
-
 	Json::Value st_JsonServer = st_JsonRoot["DNSServer"];
 	for (unsigned int i = 0; i < st_JsonRoot["DNSServer"].size(); i++)
 	{
 		pSt_DNSList->stl_ListDNSServer.push_back(st_JsonServer[i].asCString());
 	}
-
 	Json::Value st_JsonList = st_JsonRoot["DNSList"];
 	for (unsigned int i = 0; i < st_JsonRoot["DNSList"].size(); i++)
 	{
 		XENGINE_DNSDOMAIN st_DNSDomain = {};
 
-		st_DNSDomain.bEnable = st_JsonList["bEnable"].asBool();
-		_tcsxcpy(st_DNSDomain.tszDNSName, st_JsonList["DNSName"].asCString());
+		st_DNSDomain.bEnable = st_JsonList[i]["bEnable"].asBool();
+		_tcsxcpy(st_DNSDomain.tszDNSName, st_JsonList[i]["DNSName"].asCString());
 
-		Json::Value st_JsonAddr = st_JsonList["DNSAddr"];
-		for (unsigned int j = 0; j < st_JsonList["DNSAddr"].size(); j++)
+		Json::Value st_JsonAddr = st_JsonList[i]["DNSAddr"];
+		for (unsigned int j = 0; j < st_JsonList[i]["DNSAddr"].size(); j++)
 		{
 			XENGINE_DNSADDRINFO st_DNSAddr = {};
-			st_DNSAddr.nType = st_JsonAddr["Type"].asInt();
-			st_DNSAddr.nTTL = st_JsonAddr["TTL"].asInt();
-			_tcsxcpy(st_DNSAddr.tszDNSName, st_JsonAddr["Name"].asCString());
-			_tcsxcpy(st_DNSAddr.tszDNSAddr, st_JsonAddr["Addr"].asCString());
+			st_DNSAddr.nType = st_JsonAddr[j]["Type"].asInt();
+			st_DNSAddr.nTTL = st_JsonAddr[j]["TTL"].asInt();
+			_tcsxcpy(st_DNSAddr.tszDNSName, st_JsonAddr[j]["Name"].asCString());
+			_tcsxcpy(st_DNSAddr.tszDNSAddr, st_JsonAddr[j]["Addr"].asCString());
 
 			st_DNSDomain.stl_ListDNSAddr.push_back(st_DNSAddr);
 		}

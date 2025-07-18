@@ -37,7 +37,6 @@ bool XEngine_Configure_Parament(int argc, char** argv)
 		printf("解析配置文件失败,ModuleConfigure_Json_VersionFile:%lX\n", ModuleConfigure_GetLastError());
 		return false;
 	}
-
 	for (int i = 0; i < argc; i++)
 	{
 		if ((0 == _tcsxcmp("-h", argv[i])) || (0 == _tcsxcmp("-H", argv[i])))
@@ -75,7 +74,6 @@ bool XEngine_Configure_Parament(int argc, char** argv)
 			bIsTest = true;
 		}
 	}
-
 	return true;
 }
 

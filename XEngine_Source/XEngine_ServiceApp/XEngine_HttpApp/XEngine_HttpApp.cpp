@@ -153,7 +153,6 @@ int main(int argc, char** argv)
 	THREADPOOL_PARAMENT** ppSt_ListHTTPParam;
 
 	memset(&st_ServiceConfig, '\0', sizeof(XENGINE_SERVICECONFIG));
-
 	//初始化参数
 	if (!XEngine_Configure_Parament(argc, argv))
 	{
