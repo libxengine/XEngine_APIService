@@ -21,6 +21,6 @@ bool HTTPTask_TastPost_DTest(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer, int 
 		HttpProtocol_Server_SendMsgEx(xhHTTPPacket, tszSDBuffer, &nSDLen, &st_HDRParam);
 	}
 	XEngine_Network_Send(lpszClientAddr, tszSDBuffer, nSDLen);
-	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("HTTP客户端:%s,请求数据用例测试成功,请求的大小:%d,请求的类型:%d"), lpszClientAddr, nMsgLen, nType);
+	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("HTTP客户端:%s,请求数据用例测试成功,请求的大小:%d,请求的类型:%d,发送的内容:%s"), lpszClientAddr, nMsgLen, nType, lpszMsgBuffer);
 	return true;
 }
