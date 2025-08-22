@@ -39,37 +39,37 @@ bool XEngine_Configure_Parament(int argc, char** argv)
 	}
 	for (int i = 0; i < argc; i++)
 	{
-		if ((0 == _tcsxcmp("-h", argv[i])) || (0 == _tcsxcmp("-H", argv[i])))
+		if ((0 == _tcsxicmp("-h", argv[i])) || (0 == _tcsxicmp("-H", argv[i])))
 		{
 			XEngine_Configure_Help();
 			return false;
 		}
-		else if (0 == _tcsxcmp("-d", argv[i]))
+		else if (0 == _tcsxicmp("-d", argv[i]))
 		{
 			st_ServiceConfig.bDeamon = _ttxoi(argv[++i]);
 		}
-		else if (0 == _tcsxcmp("-w", argv[i]))
+		else if (0 == _tcsxicmp("-w", argv[i]))
 		{
 			st_ServiceConfig.bShowWnd = _ttxoi(argv[++i]);
 		}
-		else if (0 == _tcsxcmp("-hp", argv[i]))
+		else if (0 == _tcsxicmp("-hp", argv[i]))
 		{
 			st_ServiceConfig.nHttpPort = _ttxoi(argv[++i]);
 		}
-		else if (0 == _tcsxcmp("-rp", argv[i]))
+		else if (0 == _tcsxicmp("-rp", argv[i]))
 		{
 			st_ServiceConfig.nRFCPort = _ttxoi(argv[++i]);
 		}
-		else if (0 == _tcsxcmp("-r", argv[i]))
+		else if (0 == _tcsxicmp("-r", argv[i]))
 		{
 			st_ServiceConfig.st_XReload.bReload = true;
 			st_ServiceConfig.st_XReload.byCode = _ttxoi(argv[++i]);
 		}
-		else if (0 == _tcsxcmp("-db", argv[i]))
+		else if (0 == _tcsxicmp("-db", argv[i]))
 		{
 			st_ServiceConfig.st_XSql.bEnable = _ttxoi(argv[++i]);
 		}
-		else if (0 == _tcsxcmp("-t", argv[i]))
+		else if (0 == _tcsxicmp("-t", argv[i]))
 		{
 			bIsTest = true;
 		}
