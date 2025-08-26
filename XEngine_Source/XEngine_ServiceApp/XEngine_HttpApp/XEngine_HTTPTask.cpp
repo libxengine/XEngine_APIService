@@ -44,7 +44,7 @@ XHTHREAD XCALLBACK HTTPTask_TastPost_Thread(XPVOID lParam)
 				if (HttpProtocol_Server_GetMemoryEx(xhHTTPPacket, ppSst_ListAddr[i]->tszClientAddr, &ptszMsgBuffer, &nMsgLen, &st_HTTPReqparam, &pptszListHdr, &nHDRCount))
 				{
 					//在另外一个函数里面处理数据
-					HTTPTask_TastPost_Handle(&st_HTTPReqparam, ppSst_ListAddr[i]->tszClientAddr, ptszMsgBuffer, nMsgLen, &pptszListHdr, nHDRCount);
+					HTTPTask_TastPost_Handle(&st_HTTPReqparam, ppSst_ListAddr[i]->tszClientAddr, ptszMsgBuffer, nMsgLen, pptszListHdr, nHDRCount);
 					//释放内存
 					BaseLib_Memory_FreeCStyle((XPPMEM)&ptszMsgBuffer);
 					BaseLib_Memory_Free((XPPPMEM)&pptszListHdr, nHDRCount);
@@ -55,16 +55,13 @@ XHTHREAD XCALLBACK HTTPTask_TastPost_Thread(XPVOID lParam)
 	}
 	return 0;
 }
-bool HTTPTask_TastPost_Handle(RFCCOMPONENTS_HTTP_REQPARAM* pSt_HTTPParam, LPCXSTR lpszClientAddr, LPCXSTR lpszRVBuffer, int nRVLen, XCHAR*** ppptszHDRList, int nHDRCount)
+bool HTTPTask_TastPost_Handle(RFCCOMPONENTS_HTTP_REQPARAM* pSt_HTTPParam, LPCXSTR lpszClientAddr, LPCXSTR lpszRVBuffer, int nRVLen, XCHAR** pptszHDRList, int nHDRCount)
 {
 	int nMsgLen = 4096;
 	LPCXSTR lpszMethodPost = _X("POST");
 	LPCXSTR lpszMethodGet = _X("GET");
-	XCHAR tszMsgBuffer[4096];
-	RFCCOMPONENTS_HTTP_HDRPARAM st_HDRParam;    //发送给客户端的参数
-
-	memset(tszMsgBuffer, '\0', sizeof(tszMsgBuffer));
-	memset(&st_HDRParam, '\0', sizeof(RFCCOMPONENTS_HTTP_HDRPARAM));
+	XCHAR tszMsgBuffer[4096] = {};
+	RFCCOMPONENTS_HTTP_HDRPARAM st_HDRParam = {};
 
 	st_HDRParam.nHttpCode = 200; //HTTP CODE码
 	st_HDRParam.bIsClose = true; //收到回复后就关闭
@@ -89,7 +86,7 @@ bool HTTPTask_TastPost_Handle(RFCCOMPONENTS_HTTP_REQPARAM* pSt_HTTPParam, LPCXST
 	if (nListCount < 1)
 	{
 		//是不是代理转发
-		if (HTTPTask_TaskPost_SLProxy(lpszClientAddr, tszGBKBuffer, ppptszHDRList, nHDRCount))
+		if (HTTPTask_TaskPost_SLProxy(lpszClientAddr, tszGBKBuffer, &pptszHDRList, nHDRCount))
 		{
 			return true;
 		}
@@ -100,6 +97,111 @@ bool HTTPTask_TastPost_Handle(RFCCOMPONENTS_HTTP_REQPARAM* pSt_HTTPParam, LPCXST
 		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("HTTP客户端:%s,发送的URL请求参数不正确:%s"), lpszClientAddr, tszGBKBuffer);
 		return false;
 	}
+	//http验证
+	if (st_ServiceConfig.st_XVerifcation.bEnable)
+	{
+		int nVType = 0;
+		RFCCOMPONENTS_HTTP_HDRPARAM st_HDRParam = {};
+
+		st_HDRParam.nHttpCode = 401;
+		st_HDRParam.bIsClose = true;
+		st_HDRParam.bAuth = true;
+		//打包验证信息
+		int nHDRLen = 0;
+		XCHAR tszHDRBuffer[XPATH_MAX] = {};
+		if (1 == st_ServiceConfig.st_XVerifcation.nVType)
+		{
+			Verification_HTTP_BasicServerPacket(tszHDRBuffer, &nHDRLen);
+		}
+		else
+		{
+			XCHAR tszNonceStr[64] = {};
+			XCHAR tszOpaqueStr[64] = {};
+			Verification_HTTP_DigestServerPacket(tszHDRBuffer, &nHDRLen, tszNonceStr, tszOpaqueStr);
+		}
+		//后去验证方法
+		if (!Verification_HTTP_GetType(pptszHDRList, nHDRCount, &nVType))
+		{
+			HttpProtocol_Server_SendMsgEx(xhHTTPPacket, tszMsgBuffer, &nMsgLen, &st_HDRParam, NULL, 0, tszHDRBuffer);
+			XEngine_Network_Send(lpszClientAddr, tszMsgBuffer, nMsgLen);
+			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("HTTP客户端:%s,用户验证失败,验证方式:%d,错误:%lX"), lpszClientAddr, st_ServiceConfig.st_XVerifcation.nVType, Verification_GetLastError());
+			return false;
+		}
+		//验证方式是否一致
+		if (st_ServiceConfig.st_XVerifcation.nVType != nVType)
+		{
+			HttpProtocol_Server_SendMsgEx(xhHTTPPacket, tszMsgBuffer, &nMsgLen, &st_HDRParam, NULL, 0, tszHDRBuffer);
+			XEngine_Network_Send(lpszClientAddr, tszMsgBuffer, nMsgLen);
+			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("HTTP客户端:%s,用户验证失败,验证方式错误,请求:%d,需求:%d"), lpszClientAddr, nVType, st_ServiceConfig.st_XVerifcation.nVType);
+			return false;
+		}
+		bool bRet = false;
+
+		if (_tcsxlen(st_ServiceConfig.st_XVerifcation.tszAPIAuth) > 0)
+		{
+			int nHTTPCode = 0;
+			int nMSGLen = 0;
+			XCLIENT_APIHTTP st_APIHttp = {};
+			XCHAR* ptszMSGBuffer = NULL;
+			if (!APIClient_Http_Request(_X("GET"), st_ServiceConfig.st_XVerifcation.tszAPIAuth, NULL, &nHTTPCode, &ptszMSGBuffer, &nMSGLen, NULL, NULL, &st_APIHttp))
+			{
+				st_HDRParam.nHttpCode = 500;
+				HttpProtocol_Server_SendMsgEx(xhHTTPPacket, tszMsgBuffer, &nMsgLen, &st_HDRParam, NULL, 0, tszHDRBuffer);
+				XEngine_Network_Send(lpszClientAddr, tszMsgBuffer, nMsgLen);
+				XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("HTTP客户端:%s,用户验证失败,GET请求验证服务:%s 失败,错误码:%lX"), lpszClientAddr, st_ServiceConfig.st_XVerifcation.tszAPIAuth, APIClient_GetLastError());
+				return false;
+			}
+			if (200 != nHTTPCode)
+			{
+				st_HDRParam.nHttpCode = 500;
+				HttpProtocol_Server_SendMsgEx(xhHTTPPacket, tszMsgBuffer, &nMsgLen, &st_HDRParam, NULL, 0, tszHDRBuffer);
+				XEngine_Network_Send(lpszClientAddr, tszMsgBuffer, nMsgLen);
+				XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("HTTP客户端:%s,用户验证失败,GET请求验证服务:%s 失败,错误:%d"), lpszClientAddr, st_ServiceConfig.st_XVerifcation.tszAPIAuth, nHTTPCode);
+				return false;
+			}
+			XENGINE_PROTOCOL_USERAUTH st_UserAuth = {};
+			if (!ModuleProtocol_Parse_Verifcation(ptszMSGBuffer, nMsgLen, st_UserAuth.tszUserName, st_UserAuth.tszUserPass))
+			{
+				st_HDRParam.nHttpCode = 500;
+				HttpProtocol_Server_SendMsgEx(xhHTTPPacket, tszMsgBuffer, &nMsgLen, &st_HDRParam, NULL, 0, tszHDRBuffer);
+				XEngine_Network_Send(lpszClientAddr, tszMsgBuffer, nMsgLen);
+				XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("HTTP客户端:%s,用户验证失败,返回内容:%s 错误,无法继续"), lpszClientAddr, ptszMSGBuffer);
+				BaseLib_Memory_FreeCStyle((XPPMEM)&ptszMSGBuffer);
+				return false;
+			}
+			BaseLib_Memory_FreeCStyle((XPPMEM)&ptszMSGBuffer);
+
+			if (1 == nVType)
+			{
+				bRet = Verification_HTTP_Basic(st_UserAuth.tszUserName, st_UserAuth.tszUserPass, pptszHDRList, nHDRCount);
+			}
+			else if (2 == nVType)
+			{
+				bRet = Verification_HTTP_Digest(st_UserAuth.tszUserName, st_UserAuth.tszUserPass, pSt_HTTPParam->tszHttpMethod, pptszHDRList, nHDRCount);
+			}
+		}
+		else
+		{
+			if (1 == nVType)
+			{
+				bRet = Verification_HTTP_Basic(st_ServiceConfig.st_XVerifcation.tszUserName, st_ServiceConfig.st_XVerifcation.tszUserPass, pptszHDRList, nHDRCount);
+			}
+			else if (2 == nVType)
+			{
+				bRet = Verification_HTTP_Digest(st_ServiceConfig.st_XVerifcation.tszUserName, st_ServiceConfig.st_XVerifcation.tszUserPass, pSt_HTTPParam->tszHttpMethod, pptszHDRList, nHDRCount);
+			}
+		}
+		
+		if (!bRet)
+		{
+			HttpProtocol_Server_SendMsgEx(xhHTTPPacket, tszMsgBuffer, &nMsgLen, &st_HDRParam, NULL, 0, tszHDRBuffer);
+			XEngine_Network_Send(lpszClientAddr, tszMsgBuffer, nMsgLen);
+			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("HTTP客户端:%s,用户验证失败,验证处理错误,可能用户密码登信息不匹配,类型:%d"), lpszClientAddr, nVType);
+			return false;
+		}
+		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("HTTP客户端:%s,HTTP验证类型:%d 通过"), lpszClientAddr, nVType);
+	}
+
 	XCHAR tszKey[XPATH_MAX];
 	XCHAR tszValue[XPATH_MAX];
 	LPCXSTR lpszFuncName = _X("api");

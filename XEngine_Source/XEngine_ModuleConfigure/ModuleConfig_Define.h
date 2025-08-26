@@ -106,6 +106,9 @@ typedef struct
 	{
 		XCHAR tszUserName[XPATH_MAX];
 		XCHAR tszUserPass[XPATH_MAX];
+		XCHAR tszAPIAuth[XPATH_MAX];
+		int nVType;
+		bool bEnable;
 		struct  
 		{
 			bool bBackService;

@@ -67,6 +67,8 @@ using namespace std;
 #include <XEngine_Include/XEngine_AVCodec/AVHelp_Error.h>
 #include "../../XEngine_DependLibrary/XEngine_OPenSource/XEngine_Module/XEngine_InfoReport/InfoReport_Define.h"
 #include "../../XEngine_DependLibrary/XEngine_OPenSource/XEngine_Module/XEngine_InfoReport/InfoReport_Error.h"
+#include "../../XEngine_DependLibrary/XEngine_OPenSource/XEngine_Module/XEngine_Verification/Verification_Define.h"
+#include "../../XEngine_DependLibrary/XEngine_OPenSource/XEngine_Module/XEngine_Verification/Verification_Error.h"
 #include "../../XEngine_DependLibrary/XEngine_IPMacData/XEngine_Source/XIPMac_CommHdr.h"
 #include "../../XEngine_DependLibrary/XEngine_IPMacData/XEngine_Source/XEngine_APIModuleIPMac/APIIPMac_Define.h"
 #include "../../XEngine_DependLibrary/XEngine_IPMacData/XEngine_Source/XEngine_APIModuleIPMac/APIIPMac_Error.h"
@@ -178,6 +180,7 @@ extern XENGINE_DEAMONAPPLIST st_DeamonAppConfig;
 #ifdef _DEBUG
 #ifdef _M_X64
 #pragma comment(lib,"../../x64/Debug/XEngine_InfoReport.lib")
+#pragma comment(lib,"../../x64/Debug/XEngine_Verification.lib")
 #pragma comment(lib,"../../x64/Debug/XEngine_APIModuleIPMac.lib")
 #pragma comment(lib,"../../x64/Debug/XEngine_APIModulePhone.lib")
 #pragma comment(lib,"../../x64/Debug/XEngine_ModuleConfigure.lib")
@@ -188,6 +191,7 @@ extern XENGINE_DEAMONAPPLIST st_DeamonAppConfig;
 #pragma comment(lib,"../../x64/Debug/XEngine_ModulePlugin.lib")
 #elif _M_ARM64
 #pragma comment(lib,"../../ARM64/Debug/XEngine_InfoReport.lib")
+#pragma comment(lib,"../../ARM64/Debug/XEngine_Verification.lib")
 #pragma comment(lib,"../../ARM64/Debug/XEngine_APIModuleIPMac.lib")
 #pragma comment(lib,"../../ARM64/Debug/XEngine_APIModulePhone.lib")
 #pragma comment(lib,"../../ARM64/Debug/XEngine_ModuleConfigure.lib")
@@ -198,6 +202,7 @@ extern XENGINE_DEAMONAPPLIST st_DeamonAppConfig;
 #pragma comment(lib,"../../ARM64/Debug/XEngine_ModulePlugin.lib")
 #elif _M_IX86
 #pragma comment(lib,"../../Debug/XEngine_InfoReport.lib")
+#pragma comment(lib,"../../Debug/XEngine_Verification.lib")
 #pragma comment(lib,"../../Debug/XEngine_APIModuleIPMac.lib")
 #pragma comment(lib,"../../Debug/XEngine_APIModulePhone.lib")
 #pragma comment(lib,"../../Debug/XEngine_ModuleConfigure.lib")
@@ -210,6 +215,7 @@ extern XENGINE_DEAMONAPPLIST st_DeamonAppConfig;
 #else
 #ifdef _M_X64
 #pragma comment(lib,"../../x64/Release/XEngine_InfoReport.lib")
+#pragma comment(lib,"../../x64/Release/XEngine_Verification.lib")
 #pragma comment(lib,"../../x64/Release/XEngine_APIModuleIPMac.lib")
 #pragma comment(lib,"../../x64/Release/XEngine_APIModulePhone.lib")
 #pragma comment(lib,"../../x64/Release/XEngine_ModuleConfigure.lib")
@@ -220,6 +226,7 @@ extern XENGINE_DEAMONAPPLIST st_DeamonAppConfig;
 #pragma comment(lib,"../../x64/Release/XEngine_ModulePlugin.lib")
 #elif _M_ARM64
 #pragma comment(lib,"../../ARM64/Release/XEngine_InfoReport.lib")
+#pragma comment(lib,"../../ARM64/Release/XEngine_Verification.lib")
 #pragma comment(lib,"../../ARM64/Release/XEngine_APIModuleIPMac.lib")
 #pragma comment(lib,"../../ARM64/Release/XEngine_APIModulePhone.lib")
 #pragma comment(lib,"../../ARM64/Release/XEngine_ModuleConfigure.lib")
@@ -230,6 +237,7 @@ extern XENGINE_DEAMONAPPLIST st_DeamonAppConfig;
 #pragma comment(lib,"../../ARM64/Release/XEngine_ModulePlugin.lib")
 #elif _M_IX86
 #pragma comment(lib,"../../Release/XEngine_InfoReport.lib")
+#pragma comment(lib,"../../Release/XEngine_Verification.lib")
 #pragma comment(lib,"../../Release/XEngine_APIModuleIPMac.lib")
 #pragma comment(lib,"../../Release/XEngine_APIModulePhone.lib")
 #pragma comment(lib,"../../Release/XEngine_ModuleConfigure.lib")

@@ -197,13 +197,17 @@ bool CModuleConfigure_Json::ModuleConfigure_Json_File(LPCXSTR lpszConfigFile, XE
 	_tcsxcpy(pSt_ServerConfig->st_XImageText.tszImagePath, st_JsonXImageText["tszImagePath"].asCString());
 	_tcsxcpy(pSt_ServerConfig->st_XImageText.tszImageLanguage, st_JsonXImageText["tszImageLanguage"].asCString());
 
-	if (st_JsonRoot["XVerification"].empty() || (3 != st_JsonRoot["XVerification"].size()))
+	if (st_JsonRoot["XVerification"].empty() || (6 != st_JsonRoot["XVerification"].size()))
 	{
 		Config_IsErrorOccur = true;
 		Config_dwErrorCode = ERROR_MODULE_CONFIGURE_JSON_XVERICATION;
 		return false;
 	}
 	Json::Value st_JsonXVerifcation = st_JsonRoot["XVerification"];
+
+	pSt_ServerConfig->st_XVerifcation.bEnable = st_JsonXVerifcation["bEnable"].asBool();
+	pSt_ServerConfig->st_XVerifcation.nVType = st_JsonXVerifcation["nVType"].asInt();
+	_tcsxcpy(pSt_ServerConfig->st_XVerifcation.tszAPIAuth, st_JsonXVerifcation["tszAPIAuth"].asCString());
 	_tcsxcpy(pSt_ServerConfig->st_XVerifcation.tszUserName, st_JsonXVerifcation["tszUserName"].asCString());
 	_tcsxcpy(pSt_ServerConfig->st_XVerifcation.tszUserPass, st_JsonXVerifcation["tszUserPass"].asCString());
 	
