@@ -109,10 +109,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "XEngine_APIModuleIPMac", "X
 		{F1736B3F-03A2-4FC7-B045-A12BA8D724FB} = {F1736B3F-03A2-4FC7-B045-A12BA8D724FB}
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "XEngine_APIModulePhone", "XEngine_DependLibrary\XEngine_PhoneData\Source\C\XEngine_APIModulePhone\XEngine_APIModulePhone.vcxproj", "{A13B72E7-FC40-4A27-81C3-26DF3C8F4C0A}"
-	ProjectSection(ProjectDependencies) = postProject
-		{F1736B3F-03A2-4FC7-B045-A12BA8D724FB} = {F1736B3F-03A2-4FC7-B045-A12BA8D724FB}
-	EndProjectSection
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "XEngine_APIModulePhone", "XEngine_DependLibrary\XEngine_PhoneData\XEngine_Source\XEngine_APIModulePhone\XEngine_APIModulePhone.vcxproj", "{A13B72E7-FC40-4A27-81C3-26DF3C8F4C0A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

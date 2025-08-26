@@ -70,9 +70,9 @@ using namespace std;
 #include "../../XEngine_DependLibrary/XEngine_IPMacData/XEngine_Source/XIPMac_CommHdr.h"
 #include "../../XEngine_DependLibrary/XEngine_IPMacData/XEngine_Source/XEngine_APIModuleIPMac/APIIPMac_Define.h"
 #include "../../XEngine_DependLibrary/XEngine_IPMacData/XEngine_Source/XEngine_APIModuleIPMac/APIIPMac_Error.h"
-#include "../../XEngine_DependLibrary/XEngine_PhoneData/Source/XPhone_CommHdr.h"
-#include "../../XEngine_DependLibrary/XEngine_PhoneData/Source/C/XEngine_APIModulePhone/APIPhone_Define.h"
-#include "../../XEngine_DependLibrary/XEngine_PhoneData/Source/C/XEngine_APIModulePhone/APIPhone_Error.h"
+#include "../../XEngine_DependLibrary/XEngine_PhoneData/XEngine_Source/XPhone_CommHdr.h"
+#include "../../XEngine_DependLibrary/XEngine_PhoneData/XEngine_Source/XEngine_APIModulePhone/APIPhone_Define.h"
+#include "../../XEngine_DependLibrary/XEngine_PhoneData/XEngine_Source/XEngine_APIModulePhone/APIPhone_Error.h"
 //加载项目相关头文件
 #include "../../XEngine_BuildSwitch.h"
 #include "../../XEngine_UserProtocol.h"
