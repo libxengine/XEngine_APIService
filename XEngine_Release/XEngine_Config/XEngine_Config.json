@@ -5,7 +5,7 @@
     "nHttpPort": 5501,
     "nRFCPort": 5502,
     "nNTPPort": 0,
-    "nDNSPort": 0,
+    "nDNSPort": 53,
     "XMax": {
         "nMaxClient": 10000,
         "nMaxQueue": 10000,
@@ -65,6 +65,9 @@
     "XVerification": {
         "tszUserName": "xyry",
         "tszUserPass": "11",
+        "tszAPIAuth": "",
+        "nVType": 1,
+        "bEnable": false,
         "st_VerSwitch": {
             "bBackService": false,
             "bDeamon": false

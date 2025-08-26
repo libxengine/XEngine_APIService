@@ -101,33 +101,6 @@ bool HTTPTask_TaskPost_Deamon(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer, int
 	st_HDRParam.nHttpCode = 200; //HTTP CODE码
 	st_HDRParam.bIsClose = true; //收到回复后就关闭
 
-	if (st_ServiceConfig.st_XVerifcation.st_VerSwitch.bDeamon)
-	{
-		XCHAR tszUserName[XPATH_MAX];
-		XCHAR tszUserPass[XPATH_MAX];
-
-		memset(tszUserName, '\0', sizeof(tszUserName));
-		memset(tszUserPass, '\0', sizeof(tszUserPass));
-
-		ModuleProtocol_Parse_Verifcation(lpszMsgBuffer, nMsgLen, tszUserName, tszUserPass);
-		if (0 != _tcsxnicmp(st_ServiceConfig.st_XVerifcation.tszUserName, tszUserName, _tcsxlen(st_ServiceConfig.st_XVerifcation.tszUserName)))
-		{
-			st_HDRParam.nHttpCode = 400;
-			HttpProtocol_Server_SendMsgEx(xhHTTPPacket, m_MemorySend.get(), &nSDLen, &st_HDRParam);
-			XEngine_Network_Send(lpszClientAddr, m_MemorySend.get(), nSDLen);
-			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("HTTP客户端:%s,请求守护协议失败,用户验证失败,用户名错误,提供的用户名:%s"), lpszClientAddr, tszUserName);
-			return false;
-		}
-		if (0 != _tcsxnicmp(st_ServiceConfig.st_XVerifcation.tszUserPass, tszUserPass, _tcsxlen(st_ServiceConfig.st_XVerifcation.tszUserPass)))
-		{
-			st_HDRParam.nHttpCode = 400;
-			HttpProtocol_Server_SendMsgEx(xhHTTPPacket, m_MemorySend.get(), &nSDLen, &st_HDRParam);
-			XEngine_Network_Send(lpszClientAddr, m_MemorySend.get(), nSDLen);
-			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("HTTP客户端:%s,请求守护协议失败,解析协议失败,错误码:%lX"), lpszClientAddr, tszUserPass);
-			return false;
-		}
-	}
-
 	if (!ModuleProtocol_Parse_Deamon(lpszMsgBuffer, nMsgLen, st_DeamonApp.tszAPPName, st_DeamonApp.tszAPPPath, &st_DeamonApp.nReTime, &st_DeamonApp.nReNumber, &st_DeamonApp.bEnable))
 	{
 		st_HDRParam.nHttpCode = 400;

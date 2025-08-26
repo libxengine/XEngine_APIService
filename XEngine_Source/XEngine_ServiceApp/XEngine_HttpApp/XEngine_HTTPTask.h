@@ -13,4 +13,4 @@
 //任务处理池,用来获取一个完整包
 XHTHREAD XCALLBACK HTTPTask_TastPost_Thread(XPVOID lParam);
 //任务处理相关函数,处理包的内容
-bool HTTPTask_TastPost_Handle(RFCCOMPONENTS_HTTP_REQPARAM* pSt_HTTPParam, LPCXSTR lpszClientAddr, LPCXSTR lpszRVBuffer, int nRVLen, XCHAR** pptszHDRList, int nHDRCount);
+bool HTTPTask_TastPost_Handle(RFCCOMPONENTS_HTTP_REQPARAM* pSt_HTTPParam, LPCXSTR lpszClientAddr, LPCXSTR lpszMSGBuffer, int nMSGLen, XCHAR** pptszHDRList, int nHDRCount);
