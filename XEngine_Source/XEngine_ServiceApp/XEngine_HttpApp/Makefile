@@ -4,11 +4,11 @@ FILEEXT =
 LIBFLAG = 
 LOADHDR = -I ./ 
 LOADSO = -L ../../XEngine_ModuleConfigure -L ../../XEngine_ModuleDatabase -L ../../XEngine_ModuleProtocol -L ../../XEngine_ModuleSystem -L ../../XEngine_ModuleHelp -L ../../XEngine_ModulePlugin   \
-		 -L ../../XEngine_DependLibrary/XEngine_OPenSource/XEngine_Module/jsoncpp -L ../../XEngine_DependLibrary/XEngine_OPenSource/XEngine_Module/XEngine_InfoReport -L ../../XEngine_DependLibrary/XEngine_OPenSource/XEngine_Module/XEngine_Verfication  \
+		 -L ../../XEngine_DependLibrary/XEngine_OPenSource/XEngine_Module/jsoncpp -L ../../XEngine_DependLibrary/XEngine_OPenSource/XEngine_Module/XEngine_InfoReport -L ../../XEngine_DependLibrary/XEngine_OPenSource/XEngine_Module/XEngine_Verification  \
 		 -L ../../XEngine_DependLibrary/XEngine_IPMacData/XEngine_Source/XEngine_APIModuleIPMac -L ../../XEngine_DependLibrary/XEngine_PhoneData/XEngine_Source/XEngine_APIModulePhone
 LIB = -lXEngine_BaseSafe -lXEngine_BaseLib -lXEngine_Algorithm -lXEngine_Core -lXEngine_ManagePool -lXEngine_Cryption -lXClient_Stream -lXClient_APIHelp -lXClient_Socket -lNetHelp_APIAddr -lNetHelp_XSocket -lHelpComponents_XLog -lRfcComponents_HttpProtocol -lRfcComponents_NatProtocol -lRfcComponents_NTPProtocol -lRfcComponents_DNSProtocol -lXEngine_ProcFile -lXEngine_SystemApi -lXEngine_AVHelp -lXEngine_VideoCodec -lXEngine_AudioCodec -lXEngine_AVCollect \
 	  -lXEngine_ModuleConfigure -lXEngine_ModuleDatabase -lXEngine_ModuleProtocol -lXEngine_ModuleSystem -lXEngine_ModuleHelp -lXEngine_ModulePlugin                          \
-	  -ljsoncpp -lXEngine_InfoReport -lXEngine_Verfication  \
+	  -ljsoncpp -lXEngine_InfoReport -lXEngine_Verification  \
 	  -lXEngine_APIModuleIPMac -lXEngine_APIModulePhone
 LIBEX = 
 OBJECTS = XEngine_Configure.o XEngine_Network.o XEngine_HTTPTask.o XEngine_PluginTask.o XEngine_HttpApp.o        \
