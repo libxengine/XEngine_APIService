@@ -5,7 +5,7 @@
     "nHttpPort": 5501,
     "nRFCPort": 5502,
     "nNTPPort": 0,
-    "nDNSPort": 53,
+    "nDNSPort": 0,
     "XMax": {
         "nMaxClient": 10000,
         "nMaxQueue": 10000,
