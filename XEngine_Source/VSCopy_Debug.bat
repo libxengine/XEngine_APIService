@@ -6,7 +6,6 @@ copy /y "D:\XEngine\XEngine_SourceCode\Debug\XEngine_ManagePool.dll" "./"
 copy /y "D:\XEngine\XEngine_SourceCode\Debug\XEngine_Cryption.dll" "./"
 
 copy /y "D:\XEngine\XEngine_SourceCode\Debug\XClient_APIHelp.dll" "./"
-copy /y "D:\XEngine\XEngine_SourceCode\Debug\XClient_Stream.dll" "./"
 copy /y "D:\XEngine\XEngine_SourceCode\Debug\XClient_Socket.dll" "./"
 
 copy /y "D:\XEngine\XEngine_SourceCode\Debug\NetHelp_XSocket.dll" "./"

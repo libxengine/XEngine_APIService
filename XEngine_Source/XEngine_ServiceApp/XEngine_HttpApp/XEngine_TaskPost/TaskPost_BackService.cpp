@@ -3,15 +3,11 @@
 static bool bRecord = false;
 static XHANDLE xhSound = NULL;
 static XHANDLE xhScreen = NULL;
-static XHANDLE xhStream = NULL;
+static XHANDLE xhPacket = NULL;
 static XHANDLE xhAudioFifo = NULL;
 
 void XCALLBACK HTTPTask_TaskPost_CBVideo(uint8_t* ptszAVBuffer, int nAVLen, AVCOLLECT_TIMEINFO* pSt_TimeInfo, XPVOID lParam)
 {
-	if (!XClient_StreamPush_LiveVideo(xhStream, ptszAVBuffer, nAVLen))
-	{
-		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("屏幕采集器,推流编码失败,需要关闭推流服务,错误码:%lX"), StreamClient_GetLastError());
-	}
 }
 void XCALLBACK HTTPTask_TaskPost_CBAudio(uint8_t* ptszAVBuffer, int nAVLen, AVCOLLECT_TIMEINFO* pSt_TimeInfo, XPVOID lParam)
 {
@@ -23,10 +19,6 @@ void XCALLBACK HTTPTask_TaskPost_CBAudio(uint8_t* ptszAVBuffer, int nAVLen, AVCO
 			if (!AudioCodec_Help_FifoRecv(xhAudioFifo, tszAVBuffer, &nAVLen))
 			{
 				break;
-			}
-			if (!XClient_StreamPush_LiveAudio(xhStream, tszAVBuffer, nAVLen))
-			{
-				XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("音频采集器,推流编码失败,需要关闭推流服务,错误码:%lX"), StreamClient_GetLastError());
 			}
 		}
 	}
@@ -298,40 +290,16 @@ bool HTTPTask_TaskPost_BackService(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer
 			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("HTTP客户端:%s,请求屏幕录制失败,因为已经在录制中了"), lpszClientAddr);
 			return false;
 		}
-		XENGINE_PROTOCOL_AVINFO st_AVInfo;
-		memset(&st_AVInfo, '\0', sizeof(XENGINE_PROTOCOL_AVINFO));
-		//启用音频
-		if (1 == nBSType)
+		AVCODEC_TIMEBASE st_VideoTime = {};
+		AVCODEC_TIMEBASE st_AudioTime = {};
+		xhPacket = AVFormat_Packet_Init();
+		if (!AVFormat_Packet_Output(xhPacket, tszAPIBuffer, _X("flv")))
 		{
-#ifdef _MSC_BUILD
-			xhSound = AVCollect_Audio_Init("dshow", tszSrcBuffer, HTTPTask_TaskPost_CBAudio);
-#elif __linux__
-			xhSound = AVCollect_Audio_Init("alsa", tszSrcBuffer, HTTPTask_TaskPost_CBAudio);
-#else
-			xhSound = AVCollect_Audio_Init("avfoundation", tszSrcBuffer, HTTPTask_TaskPost_CBAudio);
-#endif
-			if (NULL == xhSound)
-			{
-				st_HDRParam.nHttpCode = 400;
-				HttpProtocol_Server_SendMsgEx(xhHTTPPacket, m_MemorySend.get(), &nSDLen, &st_HDRParam);
-				XEngine_Network_Send(lpszClientAddr, m_MemorySend.get(), nSDLen);
-				XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("HTTP客户端:%s,初始化音频采集器请求失败,错误码:%lX"), lpszClientAddr, AVCollect_GetLastError());
-				return false;
-			}
-			xhAudioFifo = AudioCodec_Help_FifoInit(ENUM_AVCODEC_AUDIO_SAMPLEFMT_S16, 2);
-			if (NULL == xhAudioFifo)
-			{
-				st_HDRParam.nHttpCode = 400;
-				HttpProtocol_Server_SendMsgEx(xhHTTPPacket, m_MemorySend.get(), &nSDLen, &st_HDRParam);
-				XEngine_Network_Send(lpszClientAddr, m_MemorySend.get(), nSDLen);
-				XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("HTTP客户端:%s,初始化音频采集器请求失败,错误码:%lX"), lpszClientAddr, AudioCodec_GetLastError());
-				return false;
-			}
-			st_AVInfo.st_AudioInfo.bEnable = true;
-			AVCollect_Audio_GetInfo(xhSound, &st_AVInfo);
-			//音频编码参数
-			st_AVInfo.st_AudioInfo.enAVCodec = ENUM_XENGINE_AVCODEC_AUDIO_TYPE_AAC;
-			st_AVInfo.st_AudioInfo.nSampleFmt = ENUM_AVCODEC_AUDIO_SAMPLEFMT_S16;
+			st_HDRParam.nHttpCode = 400;
+			HttpProtocol_Server_SendMsgEx(xhHTTPPacket, m_MemorySend.get(), &nSDLen, &st_HDRParam);
+			XEngine_Network_Send(lpszClientAddr, m_MemorySend.get(), nSDLen);
+			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("HTTP客户端:%s,请求屏幕录制失败,推流服务端:%s 连接失败,错误码:%lX"), lpszClientAddr, tszAPIBuffer, AVFormat_GetLastError());
+			return false;
 		}
 		//屏幕采集
 		AVCOLLECT_SCREENINFO st_AVScreen;
@@ -356,30 +324,53 @@ bool HTTPTask_TaskPost_BackService(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer
 			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("HTTP客户端:%s,屏幕采集器请求失败,错误码:%lX"), lpszClientAddr, AVCollect_GetLastError());
 			return false;
 		}
-		AVCollect_Video_GetInfo(xhScreen, &st_AVInfo);
-		st_AVInfo.st_VideoInfo.enAVCodec = ENUM_XENGINE_AVCODEC_VIDEO_TYPE_H264;
-		xhStream = XClient_StreamPush_LiveInit();
-		if (NULL == xhStream)
+		XHANDLE xhVideoCodec = NULL;
+		AVCollect_Video_GetAVCodec(xhScreen, &xhVideoCodec);
+		AVCollect_Video_GetTimeBase(xhScreen, &st_VideoTime);
+		AVFormat_Packet_StreamCreate(xhPacket, xhVideoCodec);
+		AVFormat_Packet_TimeBase(xhPacket, 0, &st_VideoTime);
+		//启用音频
+		if (1 == nBSType)
 		{
-			st_HDRParam.nHttpCode = 400;
-			HttpProtocol_Server_SendMsgEx(xhHTTPPacket, m_MemorySend.get(), &nSDLen, &st_HDRParam);
-			XEngine_Network_Send(lpszClientAddr, m_MemorySend.get(), nSDLen);
-			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("HTTP客户端:%s,推流:%s 请求失败,错误码:%lX"), lpszClientAddr, tszDstBuffer, StreamClient_GetLastError());
-			return false;
+#ifdef _MSC_BUILD
+			xhSound = AVCollect_Audio_Init("dshow", tszSrcBuffer, HTTPTask_TaskPost_CBAudio);
+#elif __linux__
+			xhSound = AVCollect_Audio_Init("alsa", tszSrcBuffer, HTTPTask_TaskPost_CBAudio);
+#else
+			xhSound = AVCollect_Audio_Init("avfoundation", tszSrcBuffer, HTTPTask_TaskPost_CBAudio);
+#endif
+			if (NULL == xhSound)
+			{
+				st_HDRParam.nHttpCode = 400;
+				HttpProtocol_Server_SendMsgEx(xhHTTPPacket, m_MemorySend.get(), &nSDLen, &st_HDRParam);
+				XEngine_Network_Send(lpszClientAddr, m_MemorySend.get(), nSDLen);
+				XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("HTTP客户端:%s,初始化音频采集器请求失败,错误码:%lX"), lpszClientAddr, AVCollect_GetLastError());
+				return false;
+			}
+#ifdef _MSC_BUILD
+			xhAudioFifo = AudioCodec_Help_FifoInit(ENUM_AVCODEC_AUDIO_SAMPLEFMT_S16, 2);
+#else
+			xhAudioFifo = AudioCodec_Help_FifoInit(ENUM_AVCODEC_AUDIO_SAMPLEFMT_S16, 2);
+#endif
+			if (NULL == xhAudioFifo)
+			{
+				st_HDRParam.nHttpCode = 400;
+				HttpProtocol_Server_SendMsgEx(xhHTTPPacket, m_MemorySend.get(), &nSDLen, &st_HDRParam);
+				XEngine_Network_Send(lpszClientAddr, m_MemorySend.get(), nSDLen);
+				XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("HTTP客户端:%s,初始化音频采集器请求失败,错误码:%lX"), lpszClientAddr, AudioCodec_GetLastError());
+				return false;
+			}
+			XHANDLE xhAudioCodec = NULL;
+			AVCollect_Audio_GetAVCodec(xhSound, &xhAudioCodec);
+			AVCollect_Audio_GetTimeBase(xhSound, &st_AudioTime);
+			AVFormat_Packet_StreamCreate(xhPacket, xhAudioCodec);
+			AVFormat_Packet_TimeBase(xhPacket, 1, &st_AudioTime);
 		}
 		bRecord = true;
-		XClient_StreamPush_LiveOutput(xhStream, tszAPIBuffer, _X("flv"));
-		XClient_StreamPush_LiveCreate(xhStream, &st_AVInfo);
 
-		AVCODEC_TIMEBASE st_VideoTime = {};
-		AVCODEC_TIMEBASE st_AudioTime = {};
-		AVCollect_Audio_GetTimeBase(xhSound, &st_AudioTime);
-		AVCollect_Video_GetTimeBase(xhScreen, &st_VideoTime);
-		XClient_StreamPush_LiveTime(xhStream, &st_VideoTime, &st_AudioTime);
-
+		AVFormat_Packet_Start(xhPacket);
 		AVCollect_Audio_Start(xhSound);
 		AVCollect_Video_Start(xhScreen);
-		XClient_StreamPush_LiveWriteHdr(xhStream);
 		HttpProtocol_Server_SendMsgEx(xhHTTPPacket, m_MemorySend.get(), &nSDLen, &st_HDRParam);
 		XEngine_Network_Send(lpszClientAddr, m_MemorySend.get(), nSDLen);
 		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("HTTP客户端:%s,开始屏幕录制,音频:%s,视频:%s 推流:%s 请求成功"), lpszClientAddr, tszSrcBuffer, tszDstBuffer, tszAPIBuffer);
@@ -391,10 +382,10 @@ bool HTTPTask_TaskPost_BackService(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer
 		{
 			AVCollect_Video_Destory(xhScreen);
 			AVCollect_Audio_Destory(xhSound);
-			XClient_StreamPush_LiveClose(xhStream);
+			AVFormat_Packet_Stop(xhPacket);
 			xhScreen = NULL;
 			xhSound = NULL;
-			xhStream = NULL;
+			xhPacket = NULL;
 			bRecord = false;
 		}
 		HttpProtocol_Server_SendMsgEx(xhHTTPPacket, m_MemorySend.get(), &nSDLen, &st_HDRParam);
