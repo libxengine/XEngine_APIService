@@ -89,6 +89,11 @@ jobs:
             
             chmod 777 *
             ./XEngine_LINEnv.sh -i 3
+            
+      - name: install build package
+        run: |
+            dnf install lua-devel opencv-devel qrencode-devel leptonica-devel tesseract-devel -y
+
       - name: make
         run: |
             cd XEngine_Source
