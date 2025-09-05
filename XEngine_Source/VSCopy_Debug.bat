@@ -25,6 +25,7 @@ copy /y "D:\XEngine\XEngine_SourceCode\Debug\XEngine_AVHelp.dll" "./"
 copy /y "D:\XEngine\XEngine_SourceCode\Debug\XEngine_VideoCodec.dll" "./"
 copy /y "D:\XEngine\XEngine_SourceCode\Debug\XEngine_AudioCodec.dll" "./"
 copy /y "D:\XEngine\XEngine_SourceCode\Debug\XEngine_AVCollect.dll" "./"
+copy /y "D:\XEngine\XEngine_SourceCode\Debug\XEngine_AVFormat.dll" "./"
 
 copy /y "%XEngine_Lib32%\XEngine_AVCodec\avcodec-61.dll" "./"
 copy /y "%XEngine_Lib32%\XEngine_AVCodec\avdevice-61.dll" "./"
