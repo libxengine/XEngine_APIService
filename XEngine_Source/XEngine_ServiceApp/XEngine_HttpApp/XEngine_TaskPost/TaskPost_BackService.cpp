@@ -6,10 +6,10 @@ static XHANDLE xhScreen = NULL;
 static XHANDLE xhPacket = NULL;
 static XHANDLE xhAudioFifo = NULL;
 
-void XCALLBACK HTTPTask_TaskPost_CBVideo(uint8_t* ptszAVBuffer, int nAVLen, AVCOLLECT_TIMEINFO* pSt_TimeInfo, XPVOID lParam)
+void XCALLBACK HTTPTask_TaskPost_CBVideo(uint8_t* ptszAVBuffer, int nAVLen, AVCODEC_TIMESTAMP* pSt_TimeInfo, XPVOID lParam)
 {
 }
-void XCALLBACK HTTPTask_TaskPost_CBAudio(uint8_t* ptszAVBuffer, int nAVLen, AVCOLLECT_TIMEINFO* pSt_TimeInfo, XPVOID lParam)
+void XCALLBACK HTTPTask_TaskPost_CBAudio(uint8_t* ptszAVBuffer, int nAVLen, AVCODEC_TIMESTAMP* pSt_TimeInfo, XPVOID lParam)
 {
 	if (AudioCodec_Help_FifoSend(xhAudioFifo, (LPCXSTR)ptszAVBuffer, nAVLen))
 	{
