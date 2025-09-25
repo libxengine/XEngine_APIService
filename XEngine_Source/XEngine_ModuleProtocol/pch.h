@@ -30,7 +30,6 @@
 #include <XEngine_Include/XEngine_NetHelp/APIAddr_Define.h>
 #include <XEngine_Include/XEngine_NetHelp/APIAddr_Error.h>
 #include <XEngine_Include/XEngine_SystemSdk/ProcFile_Define.h>
-#include <XEngine_Include/XEngine_AVCodec/AVCollect_Define.h>
 #include <XEngine_Include/XEngine_AVCodec/VideoCodec_Define.h>
 #include <XEngine_Include/XEngine_AVCodec/AVHelp_Define.h>
 #include "../XEngine_DependLibrary/XEngine_IPMacData/XEngine_Source/XIPMac_CommHdr.h"
