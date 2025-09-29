@@ -9,15 +9,16 @@ static XHANDLE xhPacket = NULL;
 static XHANDLE xhAudioFifo = NULL;
 static XNETHANDLE xhFilter = 0;
 
-void XCALLBACK HTTPTask_TaskPost_CBVideo(uint8_t* ptszAVBuffer, int nAVLen, AVCODEC_TIMESTAMP* pSt_TimeInfo, XPVOID lParam)
+void XCALLBACK HTTPTask_TaskPost_CBVideo(AVCODEC_VIDEO_MSGBUFFER* pSt_MSGBuffer, XPVOID lParam)
 {
 	int nListCount = 0;
 	AVCODEC_VIDEO_MSGBUFFER** ppSt_MSGBuffer;
-	VideoCodec_Stream_EnCodec(xhVideo, ptszAVBuffer, nAVLen, &ppSt_MSGBuffer, &nListCount);
+	pSt_MSGBuffer->st_TimeStamp = {};
+	VideoCodec_Stream_EnCodec(xhVideo, pSt_MSGBuffer, &ppSt_MSGBuffer, &nListCount);
 	for (int i = 0; i < nListCount; i++)
 	{
-		AVFormat_Packet_StreamWrite(xhPacket, 0, ppSt_MSGBuffer[i]->ptszAVBuffer, ppSt_MSGBuffer[i]->nAVLen, &ppSt_MSGBuffer[i]->st_TimeStamp);
-		BaseLib_Memory_FreeCStyle((XPPMEM)&ppSt_MSGBuffer[i]->ptszAVBuffer);
+		AVFormat_Packet_StreamWrite(xhPacket, 0, ppSt_MSGBuffer[i]->st_MSGBuffer.unData.ptszMSGBuffer, ppSt_MSGBuffer[i]->st_MSGBuffer.nMSGLen[0], &ppSt_MSGBuffer[i]->st_TimeStamp);
+		BaseLib_Memory_MSGFree(&ppSt_MSGBuffer[i]->st_MSGBuffer);
 	}
 	BaseLib_Memory_Free((XPPPMEM)&ppSt_MSGBuffer, nListCount);
 }
@@ -41,14 +42,14 @@ void XCALLBACK HTTPTask_TaskPost_CBAudio(AVCODEC_AUDIO_MSGBUFFER* pSt_MSGBuffer,
 			AudioCodec_Stream_EnCodec(xhAudio, &st_MSGBuffer, &ppSt_AudioBuffer, &nAudioCount);
 			for (int j = 0; j < nAudioCount; j++)
 			{
-				AVFormat_Packet_StreamWrite(xhPacket, 1, ppSt_AudioBuffer[j]->ptszMSGBuffer[0], ppSt_AudioBuffer[j]->nMSGLen[0], &ppSt_AudioBuffer[j]->st_TimeStamp);
+				AVFormat_Packet_StreamWrite(xhPacket, 1, ppSt_AudioBuffer[j]->st_MSGBuffer.unData.ptszMSGArray[0], ppSt_AudioBuffer[j]->st_MSGBuffer.nMSGLen[0], &ppSt_AudioBuffer[j]->st_TimeStamp);
+				BaseLib_Memory_MSGFree(&ppSt_AudioBuffer[j]->st_MSGBuffer);
 			}
-			AudioCodec_Stream_Free(&ppSt_AudioBuffer, nAudioCount);
-			AudioCodec_Stream_FreeBuffer(&st_MSGBuffer);
+			BaseLib_Memory_Free((XPPPMEM)&ppSt_AudioBuffer, nAudioCount);
 		}
+		BaseLib_Memory_MSGFree(&ppSt_MSGBuffer[i]->st_MSGBuffer);
 	}
-	AudioCodec_Stream_Free(&ppSt_MSGBuffer, nListCount);
-	AudioCodec_Stream_FreeBuffer(pSt_MSGBuffer);
+	BaseLib_Memory_Free((XPPPMEM)&ppSt_MSGBuffer, nListCount);
 }
 
 bool HTTPTask_TaskPost_BackService(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer, int nMsgLen, int nType)

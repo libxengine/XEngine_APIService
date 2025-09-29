@@ -95,7 +95,7 @@ git clone https://gitee.com/xengine/XEngine_IPMacData.git XEngine_Source/XEngine
 git clone https://gitee.com/xengine/XEngine_PhoneData.git XEngine_Source/XEngine_DependLibrary/XEngine_PhoneData  
 
 #### Windows
-需要vcpkg配置第三方环境,具体参考vcpkg安装方式,安装好后执行:vcpkg.exe install lua:x86-windows opencv[contrib]:x86-windows libqrencode:x86-windows lua:x64-windows opencv[contrib]:x64-windows libqrencode:x64-windows  
+需要vcpkg配置第三方环境,具体参考vcpkg安装方式,安装好后执行:vcpkg.exe install lua:x86-windows opencv[contrib,freetype]:x86-windows libqrencode:x86-windows lua:x64-windows opencv[contrib,freetype]:x64-windows libqrencode:x64-windows  
 使用VS打开并且编译,支持WINDOWS 7SP1以上系统  
 直接运行即可
 
