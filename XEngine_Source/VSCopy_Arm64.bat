@@ -26,6 +26,7 @@ copy /y "%XEngine_LibArm64%\XEngine_AVCodec\XEngine_VideoCodec.dll" "./"
 copy /y "%XEngine_LibArm64%\XEngine_AVCodec\XEngine_AudioCodec.dll" "./"
 copy /y "%XEngine_LibArm64%\XEngine_AVCodec\XEngine_AVCollect.dll" "./"
 copy /y "%XEngine_LibArm64%\XEngine_AVCodec\XEngine_AVFormat.dll" "./"
+copy /y "%XEngine_LibArm64%\XEngine_AVCodec\XEngine_AVFilter.dll" "./"
 
 copy /y "%XEngine_LibArm64%\XEngine_AVCodec\avcodec-61.dll" "./"
 copy /y "%XEngine_LibArm64%\XEngine_AVCodec\avdevice-61.dll" "./"
