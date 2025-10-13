@@ -79,7 +79,7 @@ int test_imgzoom()
 		}
 		memset(ptszFileBuffer, '\0', XENGINE_MEMORY_SIZE_MAX);
 
-		FILE* pSt_File = _xfopen(pptszListFile[i], _X("rb"));
+		FILE* pSt_File = fopen(pptszListFile[i], _X("rb"));
 		if (NULL == pSt_File)
 		{
 			continue;
