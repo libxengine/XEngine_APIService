@@ -7,7 +7,7 @@ static XHANDLE xhSound = NULL;
 static XHANDLE xhScreen = NULL;
 static XHANDLE xhPacket = NULL;
 static XHANDLE xhAudioFifo = NULL;
-static XNETHANDLE xhFilter = 0;
+static XHANDLE xhFilter = 0;
 
 void XCALLBACK HTTPTask_TaskPost_CBVideo(AVCODEC_VIDEO_MSGBUFFER* pSt_MSGBuffer, XPVOID lParam)
 {
@@ -390,7 +390,8 @@ bool HTTPTask_TaskPost_BackService(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer
 			st_AudioFilter.nIndex = 0;
 			st_AudioFilter.st_AudioInfo = st_AVInfo.st_AudioInfo;
 			AVCollect_Audio_GetTimeBase(xhSound, &st_AudioFilter.st_AudioTime);
-			if (!AVFilter_Audio_Init(&xhFilter, _X("aresample=44100,aformat=sample_fmts=fltp:channel_layouts=stereo"), &st_AudioFilter))
+			xhFilter = AVFilter_Audio_Init(_X("aresample=44100,aformat=sample_fmts=fltp:channel_layouts=stereo"), &st_AudioFilter);
+			if (NULL == xhFilter)
 			{
 				st_HDRParam.nHttpCode = 400;
 				HttpProtocol_Server_SendMsgEx(xhHTTPPacket, m_MemorySend.get(), &nSDLen, &st_HDRParam);
