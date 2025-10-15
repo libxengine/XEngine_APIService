@@ -59,6 +59,7 @@ It allows you to save 90% of information service costs in a year.
 36. mac address vendor query
 37. ORC Get TEXT With image
 38. P2P
+39. DNS protocol support
 
 ## install
 
@@ -83,12 +84,12 @@ Modify the database configuration in XSQL in the configuration file to your
 The default configuration does not enable database support. If the database interface is required, you need to enable the database yourself
 
 #### Windows
-need to vcpkg configure third-part env.refer vcpkg install guide.after installed and execution:vcpkg.exe install lua:x86-windows opencv[contrib]:x86-windows libqrencode:x86-windows lua:x64-windows opencv[contrib]:x64-windows libqrencode:x64-windows  
+need to vcpkg configure third-part env.refer vcpkg install guide.after installed and execution:vcpkg.exe install lua:x86-windows opencv[contrib,freetype]:x86-windows libqrencode:x86-windows lua:x64-windows opencv[contrib,freetype]:x64-windows libqrencode:x64-windows  
 use vs open and compile,suport windows 7sp1 and above  
 Just Run it
 
 #### sub module
-Due to the dependent sub-modules, after you checkout the warehouse, execute the following command in the warehouse directory to pull the sub-modules  
+Due to the dependent sub-modules, after you checkout the resprepository, execute the following command in the resprepository directory to pull the sub-modules  
 git submodule init  
 git submodule update  
 

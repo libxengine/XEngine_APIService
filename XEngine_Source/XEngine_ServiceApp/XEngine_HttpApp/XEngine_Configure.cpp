@@ -13,6 +13,7 @@
 bool XEngine_Configure_Parament(int argc, char** argv)
 {
 	LPCXSTR lpszConfigFile = _X("./XEngine_Config/XEngine_Config.json");
+	LPCXSTR lpszDNSConfig = _X("./XEngine_Config/XEngine_DNSConfig.json");
 	LPCXSTR lpszVersionFile = _X("./XEngine_Config/XEngine_VersionConfig.json");
 
 	if (NULL != st_ServiceConfig.st_XVer.pStl_ListVer)
@@ -26,50 +27,53 @@ bool XEngine_Configure_Parament(int argc, char** argv)
 		printf("解析配置文件失败,ModuleConfigure_Json_File:%lX\n", ModuleConfigure_GetLastError());
 		return false;
 	}
+	if (!ModuleConfigure_Json_DNSFile(lpszDNSConfig, &st_DNSConfig))
+	{
+		printf("解析配置文件失败,ModuleConfigure_Json_DNSFile:%lX\n", ModuleConfigure_GetLastError());
+		return false;
+	}
 	if (!ModuleConfigure_Json_VersionFile(lpszVersionFile, &st_ServiceConfig))
 	{
 		printf("解析配置文件失败,ModuleConfigure_Json_VersionFile:%lX\n", ModuleConfigure_GetLastError());
 		return false;
 	}
-
 	for (int i = 0; i < argc; i++)
 	{
-		if ((0 == _tcsxcmp("-h", argv[i])) || (0 == _tcsxcmp("-H", argv[i])))
+		if ((0 == _tcsxicmp("-h", argv[i])) || (0 == _tcsxicmp("-H", argv[i])))
 		{
 			XEngine_Configure_Help();
 			return false;
 		}
-		else if (0 == _tcsxcmp("-d", argv[i]))
+		else if (0 == _tcsxicmp("-d", argv[i]))
 		{
 			st_ServiceConfig.bDeamon = _ttxoi(argv[++i]);
 		}
-		else if (0 == _tcsxcmp("-w", argv[i]))
+		else if (0 == _tcsxicmp("-w", argv[i]))
 		{
 			st_ServiceConfig.bShowWnd = _ttxoi(argv[++i]);
 		}
-		else if (0 == _tcsxcmp("-hp", argv[i]))
+		else if (0 == _tcsxicmp("-hp", argv[i]))
 		{
 			st_ServiceConfig.nHttpPort = _ttxoi(argv[++i]);
 		}
-		else if (0 == _tcsxcmp("-rp", argv[i]))
+		else if (0 == _tcsxicmp("-rp", argv[i]))
 		{
 			st_ServiceConfig.nRFCPort = _ttxoi(argv[++i]);
 		}
-		else if (0 == _tcsxcmp("-r", argv[i]))
+		else if (0 == _tcsxicmp("-r", argv[i]))
 		{
 			st_ServiceConfig.st_XReload.bReload = true;
 			st_ServiceConfig.st_XReload.byCode = _ttxoi(argv[++i]);
 		}
-		else if (0 == _tcsxcmp("-db", argv[i]))
+		else if (0 == _tcsxicmp("-db", argv[i]))
 		{
 			st_ServiceConfig.st_XSql.bEnable = _ttxoi(argv[++i]);
 		}
-		else if (0 == _tcsxcmp("-t", argv[i]))
+		else if (0 == _tcsxicmp("-t", argv[i]))
 		{
 			bIsTest = true;
 		}
 	}
-
 	return true;
 }
 

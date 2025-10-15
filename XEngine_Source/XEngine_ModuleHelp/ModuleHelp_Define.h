@@ -1212,3 +1212,86 @@ extern "C" bool ModuleHelp_ImageSet_Ligth(LPCXSTR lpszSrcBuffer, int nSLen, LPCX
 备注：
 *********************************************************************/
 extern "C" bool ModuleHelp_ImageSet_Level(LPCXSTR lpszSrcBuffer, int nSLen, LPCXSTR lpszExtFile, XCHAR* ptszDstBuffer, int* pInt_DLen, int nLevel);
+/************************************************************************/
+/*                      DNS处理导出函数                                 */
+/************************************************************************/
+/********************************************************************
+函数名称：ModuleHelp_DNSAddr_Init
+函数功能：初始化DNS数据表
+ 参数.一：pSt_DNSInfo
+  In/Out：In
+  类型：数据结构指针
+  可空：N
+  意思：输入要转换的列表
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+extern "C" bool ModuleHelp_DNSAddr_Init(XENGINE_DNSINFO* pSt_DNSInfo);
+/********************************************************************
+函数名称：ModuleHelp_DNSAddr_Destroy
+函数功能：销毁DNS帮助函数库
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+extern "C" bool ModuleHelp_DNSAddr_Destroy();
+/********************************************************************
+函数名称：ModuleHelp_DNSAddr_FindA
+函数功能：A记录查找
+ 参数.一：lpszDNSAddr
+  In/Out：In
+  类型：常量字符指针
+  可空：N
+  意思：输入要查找的DNS地址
+ 参数.二：pppSt_DNSList
+  In/Out：Out
+  类型：三级指针
+  可空：N
+  意思：输出查找到的列表
+ 参数.三：pInt_ListCount
+  In/Out：Out
+  类型：整数型指针
+  可空：N
+  意思：输出列表个数
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+extern "C" bool ModuleHelp_DNSAddr_FindA(LPCXSTR lpszDNSAddr, XENGINE_DNSADDRINFO*** pppSt_DNSList, int* pInt_ListCount);
+/********************************************************************
+函数名称：ModuleHelp_DNSAddr_FindPtr
+函数功能：输出IP对应的域名
+ 参数.一：lpszDNSAddr
+  In/Out：In
+  类型：常量字符指针
+  可空：N
+  意思：输入要查找的IP地址
+ 参数.二：pSt_DNSAddr
+  In/Out：Out
+  类型：数据结构指针
+  可空：N
+  意思：输出查找到的数据
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+extern "C" bool ModuleHelp_DNSAddr_FindPtr(LPCXSTR lpszDNSAddr, XENGINE_DNSADDRINFO* pSt_DNSAddr);
+/********************************************************************
+函数名称：ModuleHelp_DNSAddr_Select
+函数功能：备选地址
+ 参数.一：ptszDNSServer
+  In/Out：Out
+  类型：字符指针
+  可空：N
+  意思：输出选择的DNS服务器
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+extern "C" bool ModuleHelp_DNSAddr_Select(XCHAR* ptszDNSServer);

@@ -7,6 +7,7 @@
 #include "ModuleHelp_SocketTest/ModuleHelp_SocketTest.h"
 #include "ModuleHelp_Image/ModuleHelp_ImageGet.h"
 #include "ModuleHelp_Image/ModuleHelp_ImageSet.h"
+#include "ModuleHelp_DNSAddr/ModuleHelp_DNSAddr.h"
 /********************************************************************
 //    Created:     2022/03/04  13:37:38
 //    File Name:   D:\XEngine_APIService\XEngine_Source\XEngine_ModuleHelp\pch.cpp
@@ -29,6 +30,7 @@ CModuleHelp_QRCode m_QRCode;
 CModuleHelp_SocketTest m_SocketTest;
 CModuleHelp_ImageGet m_ImageGet;
 CModuleHelp_ImageSet m_ImageSet;
+CModuleHelp_DNSAddr m_DNSAddr;
 //////////////////////////////////////////////////////////////////////////
 ///                        导出的函数
 //////////////////////////////////////////////////////////////////////////
@@ -212,4 +214,27 @@ extern "C" bool ModuleHelp_ImageSet_Ligth(LPCXSTR lpszSrcBuffer, int nSLen, LPCX
 extern "C" bool ModuleHelp_ImageSet_Level(LPCXSTR lpszSrcBuffer, int nSLen, LPCXSTR lpszExtFile, XCHAR * ptszDstBuffer, int* pInt_DLen, int nLevel)
 {
 	return m_ImageSet.ModuleHelp_ImageSet_Level(lpszSrcBuffer, nSLen, lpszExtFile, ptszDstBuffer, pInt_DLen, nLevel);
+}
+/************************************************************************/
+/*                      DNS处理导出函数                                 */
+/************************************************************************/
+extern "C" bool ModuleHelp_DNSAddr_Init(XENGINE_DNSINFO* pSt_DNSInfo)
+{
+	return m_DNSAddr.ModuleHelp_DNSAddr_Init(pSt_DNSInfo);
+}
+extern "C" bool ModuleHelp_DNSAddr_Destroy()
+{
+	return m_DNSAddr.ModuleHelp_DNSAddr_Destroy();
+}
+extern "C" bool ModuleHelp_DNSAddr_FindA(LPCXSTR lpszDNSAddr, XENGINE_DNSADDRINFO*** pppSt_DNSList, int* pInt_ListCount)
+{
+	return m_DNSAddr.ModuleHelp_DNSAddr_FindA(lpszDNSAddr, pppSt_DNSList, pInt_ListCount);
+}
+extern "C" bool ModuleHelp_DNSAddr_FindPtr(LPCXSTR lpszDNSAddr, XENGINE_DNSADDRINFO* pSt_DNSAddr)
+{
+	return m_DNSAddr.ModuleHelp_DNSAddr_FindPtr(lpszDNSAddr, pSt_DNSAddr);
+}
+extern "C" bool ModuleHelp_DNSAddr_Select(XCHAR* ptszDNSServer)
+{
+	return m_DNSAddr.ModuleHelp_DNSAddr_Select(ptszDNSServer);
 }

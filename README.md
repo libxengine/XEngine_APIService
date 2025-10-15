@@ -62,6 +62,7 @@ c c++ interface api service
 36. 支持MAC地址厂商查询
 37. ORC图像文本提取
 38. P2P
+39. DNS协议支持
 
 ## 安装教程
 
@@ -86,16 +87,16 @@ macos执行:./XEngine_LINEnv.sh -i 3
 默认配置没有开启数据库支持,如果需要数据库接口支持,需要自己开启数据库  
 
 #### sub module
-由于依赖的子模块,在你checkout仓库后,在仓库目录下执行下面的命令拉取子模块  
+由于依赖的子模块,在你clone仓库后,在仓库目录下执行下面的命令拉取子模块  
 git submodule init  
 git submodule update  
 如果github访问失败,你也可以clone该项目,在主目录下使用命令:  
-git clone https://gitee.com/xengine/XEngine_OPenSource.git XEngine_Source/XEngine_Depend  
-git clone https://gitee.com/xengine/XEngine_IPMacData.git XEngine_Source/XEngine_DBDepend/XEngine_IPMacData  
-git clone https://gitee.com/xengine/XEngine_PhoneData.git XEngine_Source/XEngine_DBDepend/XEngine_PhoneData  
+git clone https://gitee.com/xengine/XEngine_OPenSource.git XEngine_Source/XEngine_DependLibrary/XEngine_OPenSource
+git clone https://gitee.com/xengine/XEngine_IPMacData.git XEngine_Source/XEngine_DependLibrary/XEngine_IPMacData  
+git clone https://gitee.com/xengine/XEngine_PhoneData.git XEngine_Source/XEngine_DependLibrary/XEngine_PhoneData  
 
 #### Windows
-需要vcpkg配置第三方环境,具体参考vcpkg安装方式,安装好后执行:vcpkg.exe install lua:x86-windows opencv[contrib]:x86-windows libqrencode:x86-windows lua:x64-windows opencv[contrib]:x64-windows libqrencode:x64-windows  
+需要vcpkg配置第三方环境,具体参考vcpkg安装方式,安装好后执行:vcpkg.exe install lua:x86-windows opencv[contrib,freetype]:x86-windows libqrencode:x86-windows lua:x64-windows opencv[contrib,freetype]:x64-windows libqrencode:x64-windows  
 使用VS打开并且编译,支持WINDOWS 7SP1以上系统  
 直接运行即可
 

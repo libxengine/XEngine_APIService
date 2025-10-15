@@ -20,6 +20,8 @@ typedef struct
 	bool bShowWnd;                            //是否显示窗口启动
 	int nHttpPort;                            //HTTP服务端口
 	int nRFCPort;                             //RFC标准服务端口
+	int nNTPPort;  						      //NTP服务端口
+	int nDNSPort;							  //DNS服务端口
 	struct
 	{
 		int nMaxClient;                       //最大客户端个数
@@ -104,6 +106,9 @@ typedef struct
 	{
 		XCHAR tszUserName[XPATH_MAX];
 		XCHAR tszUserPass[XPATH_MAX];
+		XCHAR tszAPIAuth[XPATH_MAX];
+		int nVType;
+		bool bEnable;
 		struct  
 		{
 			bool bBackService;
@@ -158,6 +163,26 @@ typedef struct
 {
 	list<XENGINE_DEAMONAPPINFO> stl_ListDeamonApp;
 }XENGINE_DEAMONAPPLIST;
+//////////////////////////////////////////////////////////////////////////
+//DNS
+typedef struct  
+{
+	XCHAR tszDNSName[256];                       //域名名称
+	XCHAR tszDNSAddr[256];                       //域名地址
+	int nType;                                   //DNS地址类型,域名,IP
+	int nTTL;                                    //服务器的TTL
+}XENGINE_DNSADDRINFO;
+typedef struct  
+{
+	bool bEnable;
+	XCHAR tszDNSName[256];
+	list<XENGINE_DNSADDRINFO> stl_ListDNSAddr;
+}XENGINE_DNSDOMAIN;
+typedef struct  
+{
+	list<xstring> stl_ListDNSServer;
+	list<XENGINE_DNSDOMAIN> stl_ListDNSList;
+}XENGINE_DNSINFO;
 //////////////////////////////////////////////////////////////////////////
 //                        导出函数定义
 //////////////////////////////////////////////////////////////////////////
@@ -222,3 +247,22 @@ extern "C" bool ModuleConfigure_Json_VersionFile(LPCXSTR lpszConfigFile, XENGINE
 备注：
 *********************************************************************/
 extern "C" bool ModuleConfigure_Json_DeamonList(LPCXSTR lpszConfigFile, XENGINE_DEAMONAPPLIST* pSt_AppConfig);
+/********************************************************************
+函数名称：ModuleConfigure_Json_DNSFile
+函数功能：读取JSON配置文件
+ 参数.一：lpszConfigFile
+  In/Out：In
+  类型：常量字符指针
+  可空：N
+  意思：输入要读取的配置文件
+ 参数.二：pSt_DNSList
+  In/Out：Out
+  类型：数据结构指针
+  可空：N
+  意思：输出DNS服务器列表
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+extern "C" bool ModuleConfigure_Json_DNSFile(LPCXSTR lpszConfigFile, XENGINE_DNSINFO* pSt_DNSList);

@@ -35,10 +35,10 @@ using namespace std;
 #include <XEngine_Include/XEngine_Core/ManagePool_Error.h>
 #include <XEngine_Include/XEngine_Core/Cryption_Define.h>
 #include <XEngine_Include/XEngine_Core/Cryption_Error.h>
+#include <XEngine_Include/XEngine_Client/XClient_Define.h>
+#include <XEngine_Include/XEngine_Client/XClient_Error.h>
 #include <XEngine_Include/XEngine_Client/APIClient_Define.h>
 #include <XEngine_Include/XEngine_Client/APIClient_Error.h>
-#include <XEngine_Include/XEngine_Client/StreamClient_Define.h>
-#include <XEngine_Include/XEngine_Client/StreamClient_Error.h>
 #include <XEngine_Include/XEngine_NetHelp/APIAddr_Define.h>
 #include <XEngine_Include/XEngine_NetHelp/APIAddr_Error.h>
 #include <XEngine_Include/XEngine_HelpComponents/XLog_Define.h>
@@ -51,24 +51,32 @@ using namespace std;
 #include <XEngine_Include/XEngine_RfcComponents/NatProtocol_Error.h>
 #include <XEngine_Include/XEngine_RfcComponents/NTPProtocol_Define.h>
 #include <XEngine_Include/XEngine_RfcComponents/NTPProtocol_Error.h>
+#include <XEngine_Include/XEngine_RfcComponents/DNSProtocol_Define.h>
+#include <XEngine_Include/XEngine_RfcComponents/DNSProtocol_Error.h>
 #include <XEngine_Include/XEngine_SystemSdk/SystemApi_Define.h>
 #include <XEngine_Include/XEngine_SystemSdk/SystemApi_Error.h>
-#include <XEngine_Include/XEngine_AVCodec/AVCollect_Define.h>
-#include <XEngine_Include/XEngine_AVCodec/AVCollect_Error.h>
 #include <XEngine_Include/XEngine_AVCodec/VideoCodec_Define.h>
 #include <XEngine_Include/XEngine_AVCodec/VideoCodec_Error.h>
 #include <XEngine_Include/XEngine_AVCodec/AudioCodec_Define.h>
 #include <XEngine_Include/XEngine_AVCodec/AudioCodec_Error.h>
+#include <XEngine_Include/XEngine_AVCodec/AVCollect_Define.h>
+#include <XEngine_Include/XEngine_AVCodec/AVCollect_Error.h>
 #include <XEngine_Include/XEngine_AVCodec/AVHelp_Define.h>
 #include <XEngine_Include/XEngine_AVCodec/AVHelp_Error.h>
+#include <XEngine_Include/XEngine_AVCodec/AVFormat_Define.h>
+#include <XEngine_Include/XEngine_AVCodec/AVFormat_Error.h>
+#include <XEngine_Include/XEngine_AVCodec/AVFilter_Define.h>
+#include <XEngine_Include/XEngine_AVCodec/AVFilter_Error.h>
 #include "../../XEngine_DependLibrary/XEngine_OPenSource/XEngine_Module/XEngine_InfoReport/InfoReport_Define.h"
 #include "../../XEngine_DependLibrary/XEngine_OPenSource/XEngine_Module/XEngine_InfoReport/InfoReport_Error.h"
+#include "../../XEngine_DependLibrary/XEngine_OPenSource/XEngine_Module/XEngine_Verification/Verification_Define.h"
+#include "../../XEngine_DependLibrary/XEngine_OPenSource/XEngine_Module/XEngine_Verification/Verification_Error.h"
 #include "../../XEngine_DependLibrary/XEngine_IPMacData/XEngine_Source/XIPMac_CommHdr.h"
 #include "../../XEngine_DependLibrary/XEngine_IPMacData/XEngine_Source/XEngine_APIModuleIPMac/APIIPMac_Define.h"
 #include "../../XEngine_DependLibrary/XEngine_IPMacData/XEngine_Source/XEngine_APIModuleIPMac/APIIPMac_Error.h"
-#include "../../XEngine_DependLibrary/XEngine_PhoneData/Source/XPhone_CommHdr.h"
-#include "../../XEngine_DependLibrary/XEngine_PhoneData/Source/C/XEngine_APIModulePhone/APIPhone_Define.h"
-#include "../../XEngine_DependLibrary/XEngine_PhoneData/Source/C/XEngine_APIModulePhone/APIPhone_Error.h"
+#include "../../XEngine_DependLibrary/XEngine_PhoneData/XEngine_Source/XPhone_CommHdr.h"
+#include "../../XEngine_DependLibrary/XEngine_PhoneData/XEngine_Source/XEngine_APIModulePhone/APIPhone_Define.h"
+#include "../../XEngine_DependLibrary/XEngine_PhoneData/XEngine_Source/XEngine_APIModulePhone/APIPhone_Error.h"
 //加载项目相关头文件
 #include "../../XEngine_BuildSwitch.h"
 #include "../../XEngine_UserProtocol.h"
@@ -115,6 +123,7 @@ using namespace std;
 //rfc
 #include "XEngine_TaskRfc/RFCTask_Stun.h"
 #include "XEngine_TaskRfc/RFCTask_Ntp.h"
+#include "XEngine_TaskRfc/RFCTask_Dns.h"
 /********************************************************************
 //    Created:     2022/01/20  14:42:06
 //    File Name:   D:\XEngine_ServiceApp\XEngine_Source\XEngine_ServiceApp\XEngine_HttpApp\XEngine_Hdr.h
@@ -132,6 +141,8 @@ extern XHANDLE xhLog;
 //HTTP服务器
 extern XHANDLE xhHTTPSocket;
 extern XHANDLE xhRFCSocket;
+extern XHANDLE xhNTPSocket;
+extern XHANDLE xhDNSSocket;
 extern XHANDLE xhHTTPHeart;
 extern XHANDLE xhHTTPPacket;
 extern XHANDLE xhHTTPPool;
@@ -140,6 +151,7 @@ extern XHANDLE xhMemPool;
 extern unique_ptr<thread> pSTDThread_Deamon;
 //配置文件
 extern XENGINE_SERVICECONFIG st_ServiceConfig;
+extern XENGINE_DNSINFO st_DNSConfig;
 extern XENGINE_DEAMONAPPLIST st_DeamonAppConfig;
 
 #include "XEngine_MemoryPool.h"
@@ -151,23 +163,27 @@ extern XENGINE_DEAMONAPPLIST st_DeamonAppConfig;
 #pragma comment(lib,"XEngine_Core/XEngine_Core.lib")
 #pragma comment(lib,"XEngine_Core/XEngine_ManagePool.lib")
 #pragma comment(lib,"XEngine_Core/XEngine_Cryption.lib")
-#pragma comment(lib,"XEngine_Client/XClient_Stream.lib")
+#pragma comment(lib,"XEngine_Client/XClient_Socket.lib")
 #pragma comment(lib,"XEngine_Client/XClient_APIHelp.lib")
 #pragma comment(lib,"XEngine_NetHelp/NetHelp_APIAddr")
 #pragma comment(lib,"XEngine_HelpComponents/HelpComponents_XLog.lib")
 #pragma comment(lib,"XEngine_RfcComponents/RfcComponents_HttpProtocol.lib")
 #pragma comment(lib,"XEngine_RfcComponents/RfcComponents_NatProtocol.lib")
 #pragma comment(lib,"XEngine_RfcComponents/RfcComponents_NTPProtocol.lib")
+#pragma comment(lib,"XEngine_RfcComponents/RfcComponents_DNSProtocol.lib")
 #pragma comment(lib,"XEngine_SystemSdk/XEngine_SystemApi")
 #pragma comment(lib,"XEngine_AVCodec/XEngine_AVCollect.lib")
 #pragma comment(lib,"XEngine_AVCodec/XEngine_VideoCodec.lib")
 #pragma comment(lib,"XEngine_AVCodec/XEngine_AudioCodec.lib")
 #pragma comment(lib,"XEngine_AVCodec/XEngine_AVHelp.lib")
+#pragma comment(lib,"XEngine_AVCodec/XEngine_AVFormat.lib")
+#pragma comment(lib,"XEngine_AVCodec/XEngine_AVFilter.lib")
 #pragma comment(lib,"Ws2_32.lib")
 #pragma comment(lib,"Dbghelp.lib")
 #ifdef _DEBUG
 #ifdef _M_X64
 #pragma comment(lib,"../../x64/Debug/XEngine_InfoReport.lib")
+#pragma comment(lib,"../../x64/Debug/XEngine_Verification.lib")
 #pragma comment(lib,"../../x64/Debug/XEngine_APIModuleIPMac.lib")
 #pragma comment(lib,"../../x64/Debug/XEngine_APIModulePhone.lib")
 #pragma comment(lib,"../../x64/Debug/XEngine_ModuleConfigure.lib")
@@ -178,6 +194,7 @@ extern XENGINE_DEAMONAPPLIST st_DeamonAppConfig;
 #pragma comment(lib,"../../x64/Debug/XEngine_ModulePlugin.lib")
 #elif _M_ARM64
 #pragma comment(lib,"../../ARM64/Debug/XEngine_InfoReport.lib")
+#pragma comment(lib,"../../ARM64/Debug/XEngine_Verification.lib")
 #pragma comment(lib,"../../ARM64/Debug/XEngine_APIModuleIPMac.lib")
 #pragma comment(lib,"../../ARM64/Debug/XEngine_APIModulePhone.lib")
 #pragma comment(lib,"../../ARM64/Debug/XEngine_ModuleConfigure.lib")
@@ -188,6 +205,7 @@ extern XENGINE_DEAMONAPPLIST st_DeamonAppConfig;
 #pragma comment(lib,"../../ARM64/Debug/XEngine_ModulePlugin.lib")
 #elif _M_IX86
 #pragma comment(lib,"../../Debug/XEngine_InfoReport.lib")
+#pragma comment(lib,"../../Debug/XEngine_Verification.lib")
 #pragma comment(lib,"../../Debug/XEngine_APIModuleIPMac.lib")
 #pragma comment(lib,"../../Debug/XEngine_APIModulePhone.lib")
 #pragma comment(lib,"../../Debug/XEngine_ModuleConfigure.lib")
@@ -200,6 +218,7 @@ extern XENGINE_DEAMONAPPLIST st_DeamonAppConfig;
 #else
 #ifdef _M_X64
 #pragma comment(lib,"../../x64/Release/XEngine_InfoReport.lib")
+#pragma comment(lib,"../../x64/Release/XEngine_Verification.lib")
 #pragma comment(lib,"../../x64/Release/XEngine_APIModuleIPMac.lib")
 #pragma comment(lib,"../../x64/Release/XEngine_APIModulePhone.lib")
 #pragma comment(lib,"../../x64/Release/XEngine_ModuleConfigure.lib")
@@ -210,6 +229,7 @@ extern XENGINE_DEAMONAPPLIST st_DeamonAppConfig;
 #pragma comment(lib,"../../x64/Release/XEngine_ModulePlugin.lib")
 #elif _M_ARM64
 #pragma comment(lib,"../../ARM64/Release/XEngine_InfoReport.lib")
+#pragma comment(lib,"../../ARM64/Release/XEngine_Verification.lib")
 #pragma comment(lib,"../../ARM64/Release/XEngine_APIModuleIPMac.lib")
 #pragma comment(lib,"../../ARM64/Release/XEngine_APIModulePhone.lib")
 #pragma comment(lib,"../../ARM64/Release/XEngine_ModuleConfigure.lib")
@@ -220,6 +240,7 @@ extern XENGINE_DEAMONAPPLIST st_DeamonAppConfig;
 #pragma comment(lib,"../../ARM64/Release/XEngine_ModulePlugin.lib")
 #elif _M_IX86
 #pragma comment(lib,"../../Release/XEngine_InfoReport.lib")
+#pragma comment(lib,"../../Release/XEngine_Verification.lib")
 #pragma comment(lib,"../../Release/XEngine_APIModuleIPMac.lib")
 #pragma comment(lib,"../../Release/XEngine_APIModulePhone.lib")
 #pragma comment(lib,"../../Release/XEngine_ModuleConfigure.lib")

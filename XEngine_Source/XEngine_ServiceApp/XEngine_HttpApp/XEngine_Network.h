@@ -17,6 +17,8 @@ void XCALLBACK Network_Callback_HTTPLeave(LPCXSTR lpszClientAddr, XSOCKET hSocke
 void XCALLBACK Network_Callback_HTTPHeart(LPCXSTR lpszClientAddr, XSOCKET hSocket, int nStatus, XPVOID lParam);
 //RFC相关
 void XCALLBACK Network_Callback_RFCRecv(LPCXSTR lpszClientAddr, XSOCKET hSocket, LPCXSTR lpszMSGBuffer, int nMSGLen, XPVOID lParam);
+void XCALLBACK Network_Callback_NTPRecv(LPCXSTR lpszClientAddr, XSOCKET hSocket, LPCXSTR lpszMSGBuffer, int nMSGLen, XPVOID lParam);
+void XCALLBACK Network_Callback_DNSRecv(LPCXSTR lpszClientAddr, XSOCKET hSocket, LPCXSTR lpszMSGBuffer, int nMSGLen, XPVOID lParam);
 //关闭与发送
 void XEngine_Network_Close(LPCXSTR lpszClientAddr, bool bHeart);
 bool XEngine_Network_Send(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer, int nMsgLen);

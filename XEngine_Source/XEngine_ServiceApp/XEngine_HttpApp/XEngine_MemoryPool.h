@@ -19,7 +19,6 @@ public:
 		if (NULL == lPtr)
 		{
 			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ALERT, _X("内存池分配失败，系统面临崩溃!"));
-			return;
 		}
 	}
 	~CXEngine_MemoryPoolEx()

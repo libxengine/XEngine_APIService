@@ -16,6 +16,8 @@ XHANDLE xhLog = NULL;
 //HTTP服务器
 XHANDLE xhHTTPSocket = NULL;
 XHANDLE xhRFCSocket = NULL;
+XHANDLE xhNTPSocket = NULL;
+XHANDLE xhDNSSocket = NULL;
 XHANDLE xhHTTPHeart = NULL;
 XHANDLE xhHTTPPacket = NULL;
 XHANDLE xhHTTPPool = NULL;
@@ -24,6 +26,7 @@ XHANDLE xhMemPool = NULL;
 unique_ptr<thread> pSTDThread_Deamon = NULL;
 //配置文件
 XENGINE_SERVICECONFIG st_ServiceConfig;
+XENGINE_DNSINFO st_DNSConfig;
 XENGINE_DEAMONAPPLIST st_DeamonAppConfig;
 
 void ServiceApp_Stop(int signo)
@@ -35,6 +38,8 @@ void ServiceApp_Stop(int signo)
 		//销毁HTTP资源
 		NetCore_TCPXCore_DestroyEx(xhHTTPSocket);
 		NetCore_UDPXCore_DestroyEx(xhRFCSocket);
+		NetCore_UDPXCore_DestroyEx(xhNTPSocket);
+		NetCore_UDPXCore_DestroyEx(xhDNSSocket);
 		SocketOpt_HeartBeat_DestoryEx(xhHTTPHeart);
 		HttpProtocol_Server_DestroyEx(xhHTTPPacket);
 		ManagePool_Thread_NQDestroy(xhHTTPPool);
@@ -55,6 +60,7 @@ void ServiceApp_Stop(int signo)
 		ModulePlugin_Loader_Destory();
 		ModuleHelp_P2PClient_Destory();
 		ModuleHelp_ImageGet_TextDestory();
+		ModuleHelp_DNSAddr_Destroy();
 		//销毁日志资源
 		HelpComponents_XLog_Destroy(xhLog);
 		//销毁线程
@@ -147,7 +153,6 @@ int main(int argc, char** argv)
 	THREADPOOL_PARAMENT** ppSt_ListHTTPParam;
 
 	memset(&st_ServiceConfig, '\0', sizeof(XENGINE_SERVICECONFIG));
-
 	//初始化参数
 	if (!XEngine_Configure_Parament(argc, argv))
 	{
@@ -216,10 +221,10 @@ int main(int argc, char** argv)
 	xhMemPool = ManagePool_Memory_Create();
 	if (NULL == xhMemPool)
 	{
-		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("启动服务中，初始化内存池失败，错误：%lX"), ManagePool_GetLastError());
+		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("启动服务中,初始化内存池失败，错误：%lX"), ManagePool_GetLastError());
 		goto XENGINE_SERVICEAPP_EXIT;
 	}
-	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("启动服务中，初始化内存池成功"));
+	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("启动服务中,初始化内存池成功"));
 
 	if (st_ServiceConfig.st_XImageText.bEnable)
 	{
@@ -365,6 +370,47 @@ int main(int argc, char** argv)
 	{
 		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_WARN, _X("启动服务中,RFC服务没有被启用"));
 	}
+	if (st_ServiceConfig.nNTPPort > 0)
+	{
+		//网络
+		xhNTPSocket = NetCore_UDPXCore_StartEx(st_ServiceConfig.nNTPPort, st_ServiceConfig.st_XMax.nIOThread);
+		if (NULL == xhNTPSocket)
+		{
+			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("启动服务中,启动NTP网络服务器失败,端口:%d,错误：%lX"), st_ServiceConfig.nNTPPort, NetCore_GetLastError());
+			goto XENGINE_SERVICEAPP_EXIT;
+		}
+		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("启动服务中,启动NTP网络服务器成功,NTP端口:%d,IO:%d"), st_ServiceConfig.nNTPPort, st_ServiceConfig.st_XMax.nIOThread);
+		NetCore_UDPXCore_RegisterCallBackEx(xhNTPSocket, Network_Callback_NTPRecv);
+		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("启动服务中,注册NTP网络事件成功"));
+	}
+	else
+	{
+		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_WARN, _X("启动服务中,NTP服务没有被启用"));
+	}
+	if (st_ServiceConfig.nDNSPort > 0)
+	{
+		//网络
+		xhDNSSocket = NetCore_UDPXCore_StartEx(st_ServiceConfig.nDNSPort, st_ServiceConfig.st_XMax.nIOThread);
+		if (NULL == xhDNSSocket)
+		{
+			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("启动服务中,启动DNS网络服务器失败,端口:%d,错误：%lX"), st_ServiceConfig.nDNSPort, NetCore_GetLastError());
+			goto XENGINE_SERVICEAPP_EXIT;
+		}
+		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("启动服务中,启动DNS网络服务器成功,DNS端口:%d,IO:%d"), st_ServiceConfig.nDNSPort, st_ServiceConfig.st_XMax.nIOThread);
+		NetCore_UDPXCore_RegisterCallBackEx(xhDNSSocket, Network_Callback_DNSRecv);
+		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("启动服务中,注册DNS网络事件成功"));
+
+		if (!ModuleHelp_DNSAddr_Init(&st_DNSConfig))
+		{
+			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("启动服务中,初始化DNS配置帮助函数库失败,错误：%lX"), ModuleHelp_GetLastError());
+			goto XENGINE_SERVICEAPP_EXIT;
+		}
+		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("启动服务中,初始化DNS配置帮助函数库成功,备用DNS服务个数:%d,配置DNS地址:%d"), st_DNSConfig.stl_ListDNSList.size(), st_DNSConfig.stl_ListDNSServer.size());
+	}
+	else
+	{
+		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_WARN, _X("启动服务中,DNS服务没有被启用"));
+	}
 	//初始化P2P
 	if (st_ServiceConfig.st_XTime.nP2PTimeOut > 0)
 	{
@@ -420,15 +466,17 @@ int main(int argc, char** argv)
 		}
 		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("启动服务中,初始化插件系统成功,开始加载插件"));
 		//枚举插件
+		int nListCount = 0;
 		int nLibCount = 0;
 		XCHAR** pptszListFile;
-		SystemApi_File_EnumFileA(st_ServiceConfig.st_XPlugin.tszLibPlugin, &pptszListFile, &nLibCount, false, 1);
-		for (int i = 0; i < nLibCount; i++)
+		SystemApi_File_EnumFileA(st_ServiceConfig.st_XPlugin.tszLibPlugin, &pptszListFile, &nListCount, false, 1);
+		for (int i = 0; i < nListCount; i++)
 		{
 			XCHAR tszFileExt[64] = {};
 			BaseLib_String_GetFileAndPath(pptszListFile[i], NULL, NULL, NULL, tszFileExt);
 			if (0 == _tcsxnicmp(tszFileExt, _X("dll"), 3) || 0 == _tcsxnicmp(tszFileExt, _X("so"), 2) || 0 == _tcsxnicmp(tszFileExt, _X("dylib"), 5))
 			{
+				nLibCount++;
 				//加载插件
 				if (ModulePlugin_Loader_Insert(pptszListFile[i], 0, &st_PluginParam))
 				{
@@ -436,36 +484,38 @@ int main(int argc, char** argv)
 					XCHAR tszModuleAuthor[64] = {};
 					XCHAR tszModuleVer[64] = {};
 					ModulePlugin_Loader_GetForModule(pptszListFile[i], tszModuleName, tszModuleVer, tszModuleAuthor);
-					XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("启动服务中,加载Lib模块插件中,当前第:%d 个加载成功,路径:%s,方法名:%s,作者:%s,版本:V%s"), i, pptszListFile[i], tszModuleName, tszModuleAuthor, tszModuleVer);
+					XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("启动服务中,加载Lib模块插件中,当前第:%d 个加载成功,路径:%s,方法名:%s,作者:%s,版本:V%s"), nLibCount, pptszListFile[i], tszModuleName, tszModuleAuthor, tszModuleVer);
 				}
 				else
 				{
-					XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("启动服务中,加载Lib模块插件中,当前第:%d 个加载失败,路径:%s,错误:%lX"), i, pptszListFile[i], ModulePlugin_GetLastError());
+					XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("启动服务中,加载Lib模块插件中,当前第:%d 个加载失败,路径:%s,错误:%lX"), nLibCount, pptszListFile[i], ModulePlugin_GetLastError());
 				}
 			}
 		}
-		BaseLib_Memory_Free((XPPPMEM)&pptszListFile, nLibCount);
+		BaseLib_Memory_Free((XPPPMEM)&pptszListFile, nListCount);
 
 #if (1 == _XENGINE_BUILD_SWITCH_LUA)
+		nListCount = 0;
 		int nLuaCount = 0;
 		XCHAR tszFileExt[64] = {};
-		SystemApi_File_EnumFileA(st_ServiceConfig.st_XPlugin.tszLuaPlugin, &pptszListFile, &nLuaCount, false, 1);
-		for (int i = 0; i < nLuaCount; i++)
+		SystemApi_File_EnumFileA(st_ServiceConfig.st_XPlugin.tszLuaPlugin, &pptszListFile, &nListCount, false, 1);
+		for (int i = 0; i < nListCount; i++)
 		{
 			BaseLib_String_GetFileAndPath(pptszListFile[i], NULL, NULL, NULL, tszFileExt);
 			if (0 == _tcsxnicmp(tszFileExt, _X("lua"), 3))
 			{
+				nLuaCount++;
 				if (ModulePlugin_Loader_Insert(pptszListFile[i], 1, &st_PluginParam))
 				{
 					XCHAR tszModuleName[128] = {};
 					XCHAR tszModuleAuthor[64] = {};
 					XCHAR tszModuleVer[64] = {};
 					ModulePlugin_Loader_GetForModule(pptszListFile[i], tszModuleName, tszModuleVer, tszModuleAuthor);
-					XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("启动服务中,加载Lua模块插件中,当前第:%d 个加载成功,路径:%s,方法名:%s,作者:%s,版本:V%s"), i, pptszListFile[i], tszModuleName, tszModuleAuthor, tszModuleVer);
+					XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("启动服务中,加载Lua模块插件中,当前第:%d 个加载成功,路径:%s,方法名:%s,作者:%s,版本:V%s"), nLuaCount, pptszListFile[i], tszModuleName, tszModuleAuthor, tszModuleVer);
 				}
 				else
 				{
-					XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("启动服务中,加载Lua模块插件中,当前第:%d 个加载失败,路径:%s,错误:%lX"), i, pptszListFile[i], ModulePlugin_GetLastError());
+					XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("启动服务中,加载Lua模块插件中,当前第:%d 个加载失败,路径:%s,错误:%lX"), nLuaCount, pptszListFile[i], ModulePlugin_GetLastError());
 				}
 			}
 		}
@@ -502,6 +552,15 @@ int main(int argc, char** argv)
 			goto XENGINE_SERVICEAPP_EXIT;
 		}
 		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("启动服务中,启动电话号码数据查询服务:%s 成功"), st_ServiceConfig.st_XAPIModule.tszDBPhone);
+	}
+	else
+	{
+		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_WARN, _X("启动服务中,数据查询服务没有启用"));
+	}
+
+	if (st_ServiceConfig.st_XVerifcation.bEnable)
+	{
+		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("启动服务中,启用HTTP验证,验证模式为:%d"), st_ServiceConfig.st_XVerifcation.nVType);
 	}
 	else
 	{
@@ -552,6 +611,8 @@ XENGINE_SERVICEAPP_EXIT:
 		//销毁HTTP资源
 		NetCore_TCPXCore_DestroyEx(xhHTTPSocket);
 		NetCore_UDPXCore_DestroyEx(xhRFCSocket);
+		NetCore_UDPXCore_DestroyEx(xhNTPSocket);
+		NetCore_UDPXCore_DestroyEx(xhDNSSocket);
 		SocketOpt_HeartBeat_DestoryEx(xhHTTPHeart);
 		HttpProtocol_Server_DestroyEx(xhHTTPPacket);
 		ManagePool_Thread_NQDestroy(xhHTTPPool);
@@ -572,6 +633,7 @@ XENGINE_SERVICEAPP_EXIT:
 		ModulePlugin_Loader_Destory();
 		ModuleHelp_P2PClient_Destory();
 		ModuleHelp_ImageGet_TextDestory();
+		ModuleHelp_DNSAddr_Destroy();
 		//销毁日志资源
 		HelpComponents_XLog_Destroy(xhLog);
 		//销毁线程

@@ -19,8 +19,8 @@ PLUGIN_MODULE_METER = ./XEngine_PluginModule/ModulePlugin_Meter
 
 THIRDPART_MODULE_JSONCPP = ./XEngine_DependLibrary/XEngine_OPenSource/XEngine_Module/jsoncpp
 THIRDPART_MODULE_REPORT = ./XEngine_DependLibrary/XEngine_OPenSource/XEngine_Module/XEngine_InfoReport
-
-APIMODULE_PHONE_PATH = ./XEngine_DependLibrary/XEngine_PhoneData/Source/C/XEngine_APIModulePhone
+THIRDPART_MODULE_VERIFICATION = ./XEngine_DependLibrary/XEngine_OPenSource/XEngine_Module/XEngine_Verification
+APIMODULE_PHONE_PATH = ./XEngine_DependLibrary/XEngine_PhoneData/XEngine_Source/XEngine_APIModulePhone
 APIMODULE_IPMAC_PATH = ./XEngine_DependLibrary/XEngine_IPMacData/XEngine_Source/XEngine_APIModuleIPMac
 
 APP_HTTP_PATH = ./XEngine_ServiceApp/XEngine_HttpApp
@@ -31,7 +31,7 @@ else ifeq ($(PLATFORM),mac)
 	FILEEXT = dylib
 endif
 
-XENGINE_MODULES = libjsoncpp.so libXEngine_InfoReport.so          \
+XENGINE_MODULES = libjsoncpp.so libXEngine_InfoReport.so libXEngine_Verification.so   \
 				  libXEngine_ModuleConfigure.so libXEngine_ModuleDatabase.so libXEngine_ModuleProtocol.so libXEngine_ModuleSystem.so libXEngine_ModuleHelp.so libXEngine_ModulePlugin.so  \
 				  libModulePlugin_Zodiac.so libModulePlugin_Password.so libModulePlugin_Timezone.so libModulePlugin_BMIndex.so  libModulePlugin_Meter.so \
 				  libXEngine_APIModulePhone.so libXEngine_APIModuleIPMac.so \
@@ -51,6 +51,12 @@ ifeq ($(FLAGS), InstallAll)
 	cp $(THIRDPART_MODULE_REPORT)/libXEngine_InfoReport.$(FILEEXT) ../XEngine_Release/
 else
 	make -C $(THIRDPART_MODULE_REPORT) PLATFORM=$(PLATFORM) UNICODE=$(UNICODE) RELEASE=$(RELEASE) $(FLAGS)
+endif
+libXEngine_Verification.so:
+ifeq ($(FLAGS), InstallAll)
+	cp $(THIRDPART_MODULE_VERIFICATION)/libXEngine_Verification.$(FILEEXT) ../XEngine_Release/
+else
+	make -C $(THIRDPART_MODULE_VERIFICATION) PLATFORM=$(PLATFORM) UNICODE=$(UNICODE) RELEASE=$(RELEASE) $(FLAGS)
 endif
 libXEngine_APIModulePhone.so:
 ifeq ($(FLAGS), InstallAll)

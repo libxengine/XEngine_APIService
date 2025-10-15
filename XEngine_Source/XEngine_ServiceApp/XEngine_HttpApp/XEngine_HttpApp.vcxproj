@@ -250,6 +250,7 @@
     <ClCompile Include="XEngine_TaskPost\TaskPost_ShortLink.cpp" />
     <ClCompile Include="XEngine_TaskPost\TaskPost_SocketTest.cpp" />
     <ClCompile Include="XEngine_TaskPost\TaskPost_WordFilter.cpp" />
+    <ClCompile Include="XEngine_TaskRfc\RFCTask_Dns.cpp" />
     <ClCompile Include="XEngine_TaskRfc\RFCTask_Ntp.cpp" />
     <ClCompile Include="XEngine_TaskRfc\RFCTask_Stun.cpp" />
   </ItemGroup>
@@ -281,6 +282,7 @@
     <ClInclude Include="XEngine_TaskPost\TaskPost_QRCode.h" />
     <ClInclude Include="XEngine_TaskPost\TaskPost_SocketTest.h" />
     <ClInclude Include="XEngine_TaskPost\TaskPost_WordFilter.h" />
+    <ClInclude Include="XEngine_TaskRfc\RFCTask_Dns.h" />
     <ClInclude Include="XEngine_TaskRfc\RFCTask_Ntp.h" />
     <ClInclude Include="XEngine_TaskRfc\RFCTask_Stun.h" />
   </ItemGroup>

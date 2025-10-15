@@ -44,10 +44,14 @@ void XCALLBACK Network_Callback_RFCRecv(LPCXSTR lpszClientAddr, XSOCKET hSocket,
 		//STUN消息的类型字段（前两位为00）以及魔术cookie字段
 		RFCTask_Stun_Parse(lpszClientAddr, lpszMSGBuffer, nMSGLen);
 	}
-	else if (nMSGLen == 48)
-	{
-		RFCTask_NTP_Parse(lpszClientAddr, lpszMSGBuffer, nMSGLen);
-	}
+}
+void XCALLBACK Network_Callback_NTPRecv(LPCXSTR lpszClientAddr, XSOCKET hSocket, LPCXSTR lpszMSGBuffer, int nMSGLen, XPVOID lParam)
+{
+	RFCTask_NTP_Parse(lpszClientAddr, lpszMSGBuffer, nMSGLen);
+}
+void XCALLBACK Network_Callback_DNSRecv(LPCXSTR lpszClientAddr, XSOCKET hSocket, LPCXSTR lpszMSGBuffer, int nMSGLen, XPVOID lParam)
+{
+	RFCTask_DNS_Parse(lpszClientAddr, lpszMSGBuffer, nMSGLen);
 }
 //////////////////////////////////////////////////////////////////////////网络IO关闭操作
 void XEngine_Network_Close(LPCXSTR lpszClientAddr, bool bHeart)

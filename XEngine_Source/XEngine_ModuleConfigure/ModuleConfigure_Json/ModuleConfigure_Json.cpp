@@ -77,6 +77,8 @@ bool CModuleConfigure_Json::ModuleConfigure_Json_File(LPCXSTR lpszConfigFile, XE
 	pSt_ServerConfig->bShowWnd = st_JsonRoot["bShowWnd"].asBool();
 	pSt_ServerConfig->nHttpPort = st_JsonRoot["nHttpPort"].asInt();
 	pSt_ServerConfig->nRFCPort = st_JsonRoot["nRFCPort"].asInt();
+	pSt_ServerConfig->nNTPPort = st_JsonRoot["nNTPPort"].asInt();
+	pSt_ServerConfig->nDNSPort = st_JsonRoot["nDNSPort"].asInt();
 
 	if (st_JsonRoot["XMax"].empty() || (4 != st_JsonRoot["XMax"].size()))
 	{
@@ -195,13 +197,17 @@ bool CModuleConfigure_Json::ModuleConfigure_Json_File(LPCXSTR lpszConfigFile, XE
 	_tcsxcpy(pSt_ServerConfig->st_XImageText.tszImagePath, st_JsonXImageText["tszImagePath"].asCString());
 	_tcsxcpy(pSt_ServerConfig->st_XImageText.tszImageLanguage, st_JsonXImageText["tszImageLanguage"].asCString());
 
-	if (st_JsonRoot["XVerification"].empty() || (3 != st_JsonRoot["XVerification"].size()))
+	if (st_JsonRoot["XVerification"].empty() || (6 != st_JsonRoot["XVerification"].size()))
 	{
 		Config_IsErrorOccur = true;
 		Config_dwErrorCode = ERROR_MODULE_CONFIGURE_JSON_XVERICATION;
 		return false;
 	}
 	Json::Value st_JsonXVerifcation = st_JsonRoot["XVerification"];
+
+	pSt_ServerConfig->st_XVerifcation.bEnable = st_JsonXVerifcation["bEnable"].asBool();
+	pSt_ServerConfig->st_XVerifcation.nVType = st_JsonXVerifcation["nVType"].asInt();
+	_tcsxcpy(pSt_ServerConfig->st_XVerifcation.tszAPIAuth, st_JsonXVerifcation["tszAPIAuth"].asCString());
 	_tcsxcpy(pSt_ServerConfig->st_XVerifcation.tszUserName, st_JsonXVerifcation["tszUserName"].asCString());
 	_tcsxcpy(pSt_ServerConfig->st_XVerifcation.tszUserPass, st_JsonXVerifcation["tszUserPass"].asCString());
 	
@@ -370,6 +376,82 @@ bool CModuleConfigure_Json::ModuleConfigure_Json_DeamonList(LPCXSTR lpszConfigFi
 		st_APPInfo.nReNumber = st_JsonArray[i]["nAPPReNumber"].asInt();
 
 		pSt_AppConfig->stl_ListDeamonApp.push_back(st_APPInfo);
+	}
+	return true;
+}
+/********************************************************************
+函数名称：ModuleConfigure_Json_DNSFile
+函数功能：读取JSON配置文件
+ 参数.一：lpszConfigFile
+  In/Out：In
+  类型：常量字符指针
+  可空：N
+  意思：输入要读取的配置文件
+ 参数.二：pSt_DNSList
+  In/Out：Out
+  类型：数据结构指针
+  可空：N
+  意思：输出DNS服务器列表
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+bool CModuleConfigure_Json::ModuleConfigure_Json_DNSFile(LPCXSTR lpszConfigFile, XENGINE_DNSINFO* pSt_DNSList)
+{
+	Config_IsErrorOccur = false;
+
+	if ((NULL == lpszConfigFile) || (NULL == pSt_DNSList))
+	{
+		Config_IsErrorOccur = true;
+		Config_dwErrorCode = ERROR_MODULE_CONFIGURE_JSON_PARAMENT;
+		return false;
+	}
+	JSONCPP_STRING st_JsonError;
+	Json::Value st_JsonRoot;
+	Json::CharReaderBuilder st_JsonBuilder;
+	FILE* pSt_File = fopen(lpszConfigFile, "rb");
+	if (NULL == pSt_File)
+	{
+		Config_IsErrorOccur = true;
+		Config_dwErrorCode = ERROR_MODULE_CONFIGURE_JSON_OPENFILE;
+		return false;
+	}
+	XCHAR tszMsgBuffer[8192] = {};
+	size_t nRet = fread(tszMsgBuffer, 1, sizeof(tszMsgBuffer), pSt_File);
+	fclose(pSt_File);
+	std::unique_ptr<Json::CharReader> const pSt_JsonReader(st_JsonBuilder.newCharReader());
+	if (!pSt_JsonReader->parse(tszMsgBuffer, tszMsgBuffer + nRet, &st_JsonRoot, &st_JsonError))
+	{
+		Config_IsErrorOccur = true;
+		Config_dwErrorCode = ERROR_MODULE_CONFIGURE_JSON_PARSE;
+		return false;
+	}
+	Json::Value st_JsonServer = st_JsonRoot["DNSServer"];
+	for (unsigned int i = 0; i < st_JsonRoot["DNSServer"].size(); i++)
+	{
+		pSt_DNSList->stl_ListDNSServer.push_back(st_JsonServer[i].asCString());
+	}
+	Json::Value st_JsonList = st_JsonRoot["DNSList"];
+	for (unsigned int i = 0; i < st_JsonRoot["DNSList"].size(); i++)
+	{
+		XENGINE_DNSDOMAIN st_DNSDomain = {};
+
+		st_DNSDomain.bEnable = st_JsonList[i]["bEnable"].asBool();
+		_tcsxcpy(st_DNSDomain.tszDNSName, st_JsonList[i]["DNSName"].asCString());
+
+		Json::Value st_JsonAddr = st_JsonList[i]["DNSAddr"];
+		for (unsigned int j = 0; j < st_JsonList[i]["DNSAddr"].size(); j++)
+		{
+			XENGINE_DNSADDRINFO st_DNSAddr = {};
+			st_DNSAddr.nType = st_JsonAddr[j]["Type"].asInt();
+			st_DNSAddr.nTTL = st_JsonAddr[j]["TTL"].asInt();
+			_tcsxcpy(st_DNSAddr.tszDNSName, st_JsonAddr[j]["Name"].asCString());
+			_tcsxcpy(st_DNSAddr.tszDNSAddr, st_JsonAddr[j]["Addr"].asCString());
+
+			st_DNSDomain.stl_ListDNSAddr.push_back(st_DNSAddr);
+		}
+		pSt_DNSList->stl_ListDNSList.push_back(st_DNSDomain);
 	}
 	return true;
 }

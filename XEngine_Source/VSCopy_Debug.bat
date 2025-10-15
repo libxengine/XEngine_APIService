@@ -6,7 +6,6 @@ copy /y "D:\XEngine\XEngine_SourceCode\Debug\XEngine_ManagePool.dll" "./"
 copy /y "D:\XEngine\XEngine_SourceCode\Debug\XEngine_Cryption.dll" "./"
 
 copy /y "D:\XEngine\XEngine_SourceCode\Debug\XClient_APIHelp.dll" "./"
-copy /y "D:\XEngine\XEngine_SourceCode\Debug\XClient_Stream.dll" "./"
 copy /y "D:\XEngine\XEngine_SourceCode\Debug\XClient_Socket.dll" "./"
 
 copy /y "D:\XEngine\XEngine_SourceCode\Debug\NetHelp_XSocket.dll" "./"
@@ -20,11 +19,14 @@ copy /y "D:\XEngine\XEngine_SourceCode\Debug\HelpComponents_XLog.dll" "./"
 copy /y "D:\XEngine\XEngine_SourceCode\Debug\RfcComponents_HttpProtocol.dll" "./"
 copy /y "D:\XEngine\XEngine_SourceCode\Debug\RfcComponents_NatProtocol.dll" "./"
 copy /y "D:\XEngine\XEngine_SourceCode\Debug\RfcComponents_NTPProtocol.dll" "./"
+copy /y "D:\XEngine\XEngine_SourceCode\Debug\RfcComponents_DNSProtocol.dll" "./"
 
 copy /y "D:\XEngine\XEngine_SourceCode\Debug\XEngine_AVHelp.dll" "./"
 copy /y "D:\XEngine\XEngine_SourceCode\Debug\XEngine_VideoCodec.dll" "./"
 copy /y "D:\XEngine\XEngine_SourceCode\Debug\XEngine_AudioCodec.dll" "./"
 copy /y "D:\XEngine\XEngine_SourceCode\Debug\XEngine_AVCollect.dll" "./"
+copy /y "D:\XEngine\XEngine_SourceCode\Debug\XEngine_AVFormat.dll" "./"
+copy /y "D:\XEngine\XEngine_SourceCode\Debug\XEngine_AVFilter.dll" "./"
 
 copy /y "%XEngine_Lib32%\XEngine_AVCodec\avcodec-61.dll" "./"
 copy /y "%XEngine_Lib32%\XEngine_AVCodec\avdevice-61.dll" "./"
