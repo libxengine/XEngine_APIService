@@ -62,6 +62,7 @@ c c++ interface api service
 36. 支持MAC地址厂商查询
 37. ORC图像文本提取
 38. P2P
+39. DNS协议支持
 
 ## 安装教程
 
