@@ -69,8 +69,8 @@
         "nVType": 1,
         "bEnable": false,
         "st_VerSwitch": {
-            "bBackService": false,
-            "bDeamon": false
+            "bBackService": true,
+            "bDeamon": true
         }
     },
     "XReport": {

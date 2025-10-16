@@ -342,6 +342,9 @@ bool HTTPTask_TastPost_Handle(RFCCOMPONENTS_HTTP_REQPARAM* pSt_HTTPParam, LPCXST
 
 			if (st_ServiceConfig.st_XVerifcation.st_VerSwitch.bBackService && !bVerification)
 			{
+				st_HDRParam.nHttpCode = 401;
+				st_HDRParam.bAuth = true;
+				st_HDRParam.bIsClose = true;
 				ModuleProtocol_Packet_Common(tszRVBuffer, &nSDLen, 403, _X("User verification required"));
 				HttpProtocol_Server_SendMsgEx(xhHTTPPacket, tszSDBuffer, &nSDLen, &st_HDRParam, tszRVBuffer, nRVLen);
 				XEngine_Network_Send(lpszClientAddr, tszSDBuffer, nSDLen);
@@ -361,6 +364,9 @@ bool HTTPTask_TastPost_Handle(RFCCOMPONENTS_HTTP_REQPARAM* pSt_HTTPParam, LPCXST
 			//守护进程接口:http://app.xyry.org:5501/api?function=deamon&params1=0
 			if (st_ServiceConfig.st_XVerifcation.st_VerSwitch.bDeamon && !bVerification)
 			{
+				st_HDRParam.nHttpCode = 401;
+				st_HDRParam.bAuth = true;
+				st_HDRParam.bIsClose = true;
 				ModuleProtocol_Packet_Common(tszRVBuffer, &nSDLen, 403, _X("User verification required"));
 				HttpProtocol_Server_SendMsgEx(xhHTTPPacket, tszSDBuffer, &nSDLen, &st_HDRParam, tszRVBuffer, nRVLen);
 				XEngine_Network_Send(lpszClientAddr, tszSDBuffer, nSDLen);
