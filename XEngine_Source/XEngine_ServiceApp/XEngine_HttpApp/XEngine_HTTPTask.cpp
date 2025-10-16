@@ -55,6 +55,114 @@ XHTHREAD XCALLBACK HTTPTask_TastPost_Thread(XPVOID lParam)
 	}
 	return 0;
 }
+bool HTTPTask_TastPost_Verification(RFCCOMPONENTS_HTTP_REQPARAM* pSt_HTTPParam, LPCXSTR lpszClientAddr, XCHAR** pptszHDRList, int nHDRCount)
+{
+	//http验证
+	int nVType = 0;
+	int nSDLen = 0;
+	XCHAR tszSDBuffer[XPATH_MAX] = {};
+	RFCCOMPONENTS_HTTP_HDRPARAM st_HDRParam = {};
+
+	st_HDRParam.nHttpCode = 401;
+	st_HDRParam.bIsClose = true;
+	st_HDRParam.bAuth = true;
+	//打包验证信息
+	int nHDRLen = 0;
+	XCHAR tszHDRBuffer[XPATH_MAX] = {};
+	if (1 == st_ServiceConfig.st_XVerifcation.nVType)
+	{
+		Verification_HTTP_BasicServerPacket(tszHDRBuffer, &nHDRLen);
+	}
+	else
+	{
+		XCHAR tszNonceStr[64] = {};
+		XCHAR tszOpaqueStr[64] = {};
+		Verification_HTTP_DigestServerPacket(tszHDRBuffer, &nHDRLen, tszNonceStr, tszOpaqueStr);
+	}
+	//后去验证方法
+	if (!Verification_HTTP_GetType(pptszHDRList, nHDRCount, &nVType))
+	{
+		HttpProtocol_Server_SendMsgEx(xhHTTPPacket, tszSDBuffer, &nSDLen, &st_HDRParam, NULL, 0, tszHDRBuffer);
+		XEngine_Network_Send(lpszClientAddr, tszSDBuffer, nSDLen);
+		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("HTTP客户端:%s,用户验证失败,验证方式:%d,错误:%lX"), lpszClientAddr, st_ServiceConfig.st_XVerifcation.nVType, Verification_GetLastError());
+		return false;
+	}
+	//验证方式是否一致
+	if (st_ServiceConfig.st_XVerifcation.nVType != nVType)
+	{
+		HttpProtocol_Server_SendMsgEx(xhHTTPPacket, tszSDBuffer, &nSDLen, &st_HDRParam, NULL, 0, tszHDRBuffer);
+		XEngine_Network_Send(lpszClientAddr, tszSDBuffer, nSDLen);
+		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("HTTP客户端:%s,用户验证失败,验证方式错误,请求:%d,需求:%d"), lpszClientAddr, nVType, st_ServiceConfig.st_XVerifcation.nVType);
+		return false;
+	}
+	bool bRet = false;
+
+	if (_tcsxlen(st_ServiceConfig.st_XVerifcation.tszAPIAuth) > 0)
+	{
+		int nHTTPCode = 0;
+		int nMSGLen = 0;
+		XCLIENT_APIHTTP st_APIHttp = {};
+		XCHAR* ptszMSGBuffer = NULL;
+		if (!APIClient_Http_Request(_X("GET"), st_ServiceConfig.st_XVerifcation.tszAPIAuth, NULL, &nHTTPCode, &ptszMSGBuffer, &nMSGLen, NULL, NULL, &st_APIHttp))
+		{
+			st_HDRParam.nHttpCode = 500;
+			HttpProtocol_Server_SendMsgEx(xhHTTPPacket, tszSDBuffer, &nSDLen, &st_HDRParam, NULL, 0, tszHDRBuffer);
+			XEngine_Network_Send(lpszClientAddr, tszSDBuffer, nSDLen);
+			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("HTTP客户端:%s,用户验证失败,GET请求验证服务:%s 失败,错误码:%lX"), lpszClientAddr, st_ServiceConfig.st_XVerifcation.tszAPIAuth, APIClient_GetLastError());
+			return false;
+		}
+		if (200 != nHTTPCode)
+		{
+			st_HDRParam.nHttpCode = 500;
+			HttpProtocol_Server_SendMsgEx(xhHTTPPacket, tszSDBuffer, &nSDLen, &st_HDRParam, NULL, 0, tszHDRBuffer);
+			XEngine_Network_Send(lpszClientAddr, tszSDBuffer, nSDLen);
+			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("HTTP客户端:%s,用户验证失败,GET请求验证服务:%s 失败,错误:%d"), lpszClientAddr, st_ServiceConfig.st_XVerifcation.tszAPIAuth, nHTTPCode);
+			return false;
+		}
+		XENGINE_PROTOCOL_USERAUTH st_UserAuth = {};
+		if (!ModuleProtocol_Parse_Verifcation(ptszMSGBuffer, nSDLen, st_UserAuth.tszUserName, st_UserAuth.tszUserPass))
+		{
+			st_HDRParam.nHttpCode = 500;
+			HttpProtocol_Server_SendMsgEx(xhHTTPPacket, tszSDBuffer, &nSDLen, &st_HDRParam, NULL, 0, tszHDRBuffer);
+			XEngine_Network_Send(lpszClientAddr, tszSDBuffer, nSDLen);
+			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("HTTP客户端:%s,用户验证失败,返回内容:%s 错误,无法继续"), lpszClientAddr, ptszMSGBuffer);
+			BaseLib_Memory_FreeCStyle((XPPMEM)&ptszMSGBuffer);
+			return false;
+		}
+		BaseLib_Memory_FreeCStyle((XPPMEM)&ptszMSGBuffer);
+
+		if (1 == nVType)
+		{
+			bRet = Verification_HTTP_Basic(st_UserAuth.tszUserName, st_UserAuth.tszUserPass, pptszHDRList, nHDRCount);
+		}
+		else if (2 == nVType)
+		{
+			bRet = Verification_HTTP_Digest(st_UserAuth.tszUserName, st_UserAuth.tszUserPass, pSt_HTTPParam->tszHttpMethod, pptszHDRList, nHDRCount);
+		}
+	}
+	else
+	{
+		if (1 == nVType)
+		{
+			bRet = Verification_HTTP_Basic(st_ServiceConfig.st_XVerifcation.tszUserName, st_ServiceConfig.st_XVerifcation.tszUserPass, pptszHDRList, nHDRCount);
+		}
+		else if (2 == nVType)
+		{
+			bRet = Verification_HTTP_Digest(st_ServiceConfig.st_XVerifcation.tszUserName, st_ServiceConfig.st_XVerifcation.tszUserPass, pSt_HTTPParam->tszHttpMethod, pptszHDRList, nHDRCount);
+		}
+	}
+
+	if (!bRet)
+	{
+		HttpProtocol_Server_SendMsgEx(xhHTTPPacket, tszSDBuffer, &nSDLen, &st_HDRParam, NULL, 0, tszHDRBuffer);
+		XEngine_Network_Send(lpszClientAddr, tszSDBuffer, nSDLen);
+		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("HTTP客户端:%s,用户验证失败,验证处理错误,可能用户密码登信息不匹配,类型:%d"), lpszClientAddr, nVType);
+		return false;
+	}
+	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("HTTP客户端:%s,HTTP验证类型:%d 通过"), lpszClientAddr, nVType);
+	return true;
+}
+
 bool HTTPTask_TastPost_Handle(RFCCOMPONENTS_HTTP_REQPARAM* pSt_HTTPParam, LPCXSTR lpszClientAddr, LPCXSTR lpszMSGBuffer, int nMSGLen, XCHAR** pptszHDRList, int nHDRCount)
 {
 	bool bVerification = false;
@@ -103,107 +211,12 @@ bool HTTPTask_TastPost_Handle(RFCCOMPONENTS_HTTP_REQPARAM* pSt_HTTPParam, LPCXST
 	//http验证
 	if (st_ServiceConfig.st_XVerifcation.bEnable)
 	{
-		int nVType = 0;
-		RFCCOMPONENTS_HTTP_HDRPARAM st_HDRParam = {};
-
-		st_HDRParam.nHttpCode = 401;
-		st_HDRParam.bIsClose = true;
-		st_HDRParam.bAuth = true;
-		//打包验证信息
-		int nHDRLen = 0;
-		XCHAR tszHDRBuffer[XPATH_MAX] = {};
-		if (1 == st_ServiceConfig.st_XVerifcation.nVType)
+		//全面验证
+		if (!HTTPTask_TastPost_Verification(pSt_HTTPParam, lpszClientAddr, pptszHDRList, nHDRCount))
 		{
-			Verification_HTTP_BasicServerPacket(tszHDRBuffer, &nHDRLen);
-		}
-		else
-		{
-			XCHAR tszNonceStr[64] = {};
-			XCHAR tszOpaqueStr[64] = {};
-			Verification_HTTP_DigestServerPacket(tszHDRBuffer, &nHDRLen, tszNonceStr, tszOpaqueStr);
-		}
-		//后去验证方法
-		if (!Verification_HTTP_GetType(pptszHDRList, nHDRCount, &nVType))
-		{
-			HttpProtocol_Server_SendMsgEx(xhHTTPPacket, tszSDBuffer, &nSDLen, &st_HDRParam, NULL, 0, tszHDRBuffer);
-			XEngine_Network_Send(lpszClientAddr, tszSDBuffer, nSDLen);
-			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("HTTP客户端:%s,用户验证失败,验证方式:%d,错误:%lX"), lpszClientAddr, st_ServiceConfig.st_XVerifcation.nVType, Verification_GetLastError());
-			return false;
-		}
-		//验证方式是否一致
-		if (st_ServiceConfig.st_XVerifcation.nVType != nVType)
-		{
-			HttpProtocol_Server_SendMsgEx(xhHTTPPacket, tszSDBuffer, &nSDLen, &st_HDRParam, NULL, 0, tszHDRBuffer);
-			XEngine_Network_Send(lpszClientAddr, tszSDBuffer, nSDLen);
-			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("HTTP客户端:%s,用户验证失败,验证方式错误,请求:%d,需求:%d"), lpszClientAddr, nVType, st_ServiceConfig.st_XVerifcation.nVType);
-			return false;
-		}
-		bool bRet = false;
-
-		if (_tcsxlen(st_ServiceConfig.st_XVerifcation.tszAPIAuth) > 0)
-		{
-			int nHTTPCode = 0;
-			int nMSGLen = 0;
-			XCLIENT_APIHTTP st_APIHttp = {};
-			XCHAR* ptszMSGBuffer = NULL;
-			if (!APIClient_Http_Request(_X("GET"), st_ServiceConfig.st_XVerifcation.tszAPIAuth, NULL, &nHTTPCode, &ptszMSGBuffer, &nMSGLen, NULL, NULL, &st_APIHttp))
-			{
-				st_HDRParam.nHttpCode = 500;
-				HttpProtocol_Server_SendMsgEx(xhHTTPPacket, tszSDBuffer, &nSDLen, &st_HDRParam, NULL, 0, tszHDRBuffer);
-				XEngine_Network_Send(lpszClientAddr, tszSDBuffer, nSDLen);
-				XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("HTTP客户端:%s,用户验证失败,GET请求验证服务:%s 失败,错误码:%lX"), lpszClientAddr, st_ServiceConfig.st_XVerifcation.tszAPIAuth, APIClient_GetLastError());
-				return false;
-			}
-			if (200 != nHTTPCode)
-			{
-				st_HDRParam.nHttpCode = 500;
-				HttpProtocol_Server_SendMsgEx(xhHTTPPacket, tszSDBuffer, &nSDLen, &st_HDRParam, NULL, 0, tszHDRBuffer);
-				XEngine_Network_Send(lpszClientAddr, tszSDBuffer, nSDLen);
-				XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("HTTP客户端:%s,用户验证失败,GET请求验证服务:%s 失败,错误:%d"), lpszClientAddr, st_ServiceConfig.st_XVerifcation.tszAPIAuth, nHTTPCode);
-				return false;
-			}
-			XENGINE_PROTOCOL_USERAUTH st_UserAuth = {};
-			if (!ModuleProtocol_Parse_Verifcation(ptszMSGBuffer, nSDLen, st_UserAuth.tszUserName, st_UserAuth.tszUserPass))
-			{
-				st_HDRParam.nHttpCode = 500;
-				HttpProtocol_Server_SendMsgEx(xhHTTPPacket, tszSDBuffer, &nSDLen, &st_HDRParam, NULL, 0, tszHDRBuffer);
-				XEngine_Network_Send(lpszClientAddr, tszSDBuffer, nSDLen);
-				XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("HTTP客户端:%s,用户验证失败,返回内容:%s 错误,无法继续"), lpszClientAddr, ptszMSGBuffer);
-				BaseLib_Memory_FreeCStyle((XPPMEM)&ptszMSGBuffer);
-				return false;
-			}
-			BaseLib_Memory_FreeCStyle((XPPMEM)&ptszMSGBuffer);
-
-			if (1 == nVType)
-			{
-				bRet = Verification_HTTP_Basic(st_UserAuth.tszUserName, st_UserAuth.tszUserPass, pptszHDRList, nHDRCount);
-			}
-			else if (2 == nVType)
-			{
-				bRet = Verification_HTTP_Digest(st_UserAuth.tszUserName, st_UserAuth.tszUserPass, pSt_HTTPParam->tszHttpMethod, pptszHDRList, nHDRCount);
-			}
-		}
-		else
-		{
-			if (1 == nVType)
-			{
-				bRet = Verification_HTTP_Basic(st_ServiceConfig.st_XVerifcation.tszUserName, st_ServiceConfig.st_XVerifcation.tszUserPass, pptszHDRList, nHDRCount);
-			}
-			else if (2 == nVType)
-			{
-				bRet = Verification_HTTP_Digest(st_ServiceConfig.st_XVerifcation.tszUserName, st_ServiceConfig.st_XVerifcation.tszUserPass, pSt_HTTPParam->tszHttpMethod, pptszHDRList, nHDRCount);
-			}
-		}
-		
-		if (!bRet)
-		{
-			HttpProtocol_Server_SendMsgEx(xhHTTPPacket, tszSDBuffer, &nSDLen, &st_HDRParam, NULL, 0, tszHDRBuffer);
-			XEngine_Network_Send(lpszClientAddr, tszSDBuffer, nSDLen);
-			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("HTTP客户端:%s,用户验证失败,验证处理错误,可能用户密码登信息不匹配,类型:%d"), lpszClientAddr, nVType);
 			return false;
 		}
 		bVerification = true;
-		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("HTTP客户端:%s,HTTP验证类型:%d 通过"), lpszClientAddr, nVType);
 	}
 
 	XCHAR tszKey[XPATH_MAX];
@@ -339,17 +352,13 @@ bool HTTPTask_TastPost_Handle(RFCCOMPONENTS_HTTP_REQPARAM* pSt_HTTPParam, LPCXST
 			//后台管理接口:http://app.xyry.org:5501/api?function=back&params1=0
 			XCHAR tszType[64];
 			memset(tszType, '\0', sizeof(tszType));
-
+			//单独验证
 			if (st_ServiceConfig.st_XVerifcation.st_VerSwitch.bBackService && !bVerification)
 			{
-				st_HDRParam.nHttpCode = 401;
-				st_HDRParam.bAuth = true;
-				st_HDRParam.bIsClose = true;
-				ModuleProtocol_Packet_Common(tszRVBuffer, &nSDLen, 403, _X("User verification required"));
-				HttpProtocol_Server_SendMsgEx(xhHTTPPacket, tszSDBuffer, &nSDLen, &st_HDRParam, tszRVBuffer, nRVLen);
-				XEngine_Network_Send(lpszClientAddr, tszSDBuffer, nSDLen);
-				XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("HTTP客户端:%s,请求后台协议失败,此模式需要进行验证,但是请求未验证"), lpszClientAddr);
-				return false;
+				if (!HTTPTask_TastPost_Verification(pSt_HTTPParam, lpszClientAddr, pptszHDRList, nHDRCount))
+				{
+					return false;
+				}
 			}
 			BaseLib_String_GetKeyValue(pptszList[1], "=", tszKey, tszType);
 			HTTPTask_TaskPost_BackService(lpszClientAddr, lpszMSGBuffer, nMSGLen, _ttxoi(tszType));
@@ -364,14 +373,10 @@ bool HTTPTask_TastPost_Handle(RFCCOMPONENTS_HTTP_REQPARAM* pSt_HTTPParam, LPCXST
 			//守护进程接口:http://app.xyry.org:5501/api?function=deamon&params1=0
 			if (st_ServiceConfig.st_XVerifcation.st_VerSwitch.bDeamon && !bVerification)
 			{
-				st_HDRParam.nHttpCode = 401;
-				st_HDRParam.bAuth = true;
-				st_HDRParam.bIsClose = true;
-				ModuleProtocol_Packet_Common(tszRVBuffer, &nSDLen, 403, _X("User verification required"));
-				HttpProtocol_Server_SendMsgEx(xhHTTPPacket, tszSDBuffer, &nSDLen, &st_HDRParam, tszRVBuffer, nRVLen);
-				XEngine_Network_Send(lpszClientAddr, tszSDBuffer, nSDLen);
-				XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("HTTP客户端:%s,请求守护进程协议失败,此模式需要进行验证,但是请求未验证"), lpszClientAddr);
-				return false;
+				if (!HTTPTask_TastPost_Verification(pSt_HTTPParam, lpszClientAddr, pptszHDRList, nHDRCount))
+				{
+					return false;
+				}
 			}
 			HTTPTask_TaskPost_Deamon(lpszClientAddr, lpszMSGBuffer, nMSGLen);
 		}
