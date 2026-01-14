@@ -6,50 +6,36 @@ static XHANDLE xhAudio = NULL;
 static XHANDLE xhSound = NULL;
 static XHANDLE xhScreen = NULL;
 static XHANDLE xhPacket = NULL;
-static XHANDLE xhAudioFifo = NULL;
 static XHANDLE xhFilter = 0;
 
-void XCALLBACK HTTPTask_TaskPost_CBVideo(AVCODEC_VIDEO_MSGBUFFER* pSt_MSGBuffer, XPVOID lParam)
+void XCALLBACK HTTPTask_TaskPost_CBVideo(XHANDLE*** pppSt_AVBuffer, XPVOID lParam)
 {
 	int nListCount = 0;
-	AVCODEC_VIDEO_MSGBUFFER** ppSt_MSGBuffer;
-	pSt_MSGBuffer->st_TimeStamp = {};
-	VideoCodec_Stream_EnCodec(xhVideo, pSt_MSGBuffer, &ppSt_MSGBuffer, &nListCount);
+	XHANDLE** ppSt_AVPacket;
+	VideoCodec_Stream_EnCodec(xhVideo, pppSt_AVBuffer, &ppSt_AVPacket, &nListCount);
 	for (int i = 0; i < nListCount; i++)
 	{
-		AVFormat_Packet_StreamWrite(xhPacket, 0, ppSt_MSGBuffer[i]->st_MSGBuffer.unData.ptszMSGBuffer, ppSt_MSGBuffer[i]->st_MSGBuffer.nMSGLen[0], &ppSt_MSGBuffer[i]->st_TimeStamp);
-		BaseLib_Memory_MSGFree(&ppSt_MSGBuffer[i]->st_MSGBuffer);
+		AVFormat_Packet_StreamWrite(xhPacket, 0, ppSt_AVPacket[i]);
 	}
-	BaseLib_Memory_Free((XPPPMEM)&ppSt_MSGBuffer, nListCount);
+	AVHelp_Memory_FreeAVList(&ppSt_AVPacket, nListCount);
 }
-void XCALLBACK HTTPTask_TaskPost_CBAudio(AVCODEC_AUDIO_MSGBUFFER* pSt_MSGBuffer, XPVOID lParam)
+void XCALLBACK HTTPTask_TaskPost_CBAudio(XHANDLE*** pppSt_AVBuffer, XPVOID lParam)
 {
 	int nListCount = 0;
-	AVCODEC_AUDIO_MSGBUFFER** ppSt_MSGBuffer;
-	AVFilter_Audio_Cvt(xhFilter, pSt_MSGBuffer, &ppSt_MSGBuffer, &nListCount);
+	XHANDLE** ppSt_MSGBuffer;
+	AVFilter_Audio_Cvt(xhFilter, pppSt_AVBuffer, &ppSt_MSGBuffer, &nListCount);
 	for (int i = 0; i < nListCount; i++)
 	{
-		AudioCodec_Help_FifoSend(xhAudioFifo, ppSt_MSGBuffer[i]);
-		while (true)
+		int nAudioCount = 0;
+		XHANDLE** ppSt_AVPacket;
+		AudioCodec_Stream_EnCodec(xhAudio, ppSt_MSGBuffer[i], &ppSt_AVPacket, &nAudioCount);
+		for (int j = 0; j < nAudioCount; j++)
 		{
-			AVCODEC_AUDIO_MSGBUFFER st_MSGBuffer = {};
-			if (!AudioCodec_Help_FifoRecv(xhAudioFifo, &st_MSGBuffer))
-			{
-				break;
-			}
-			int nAudioCount = 0;
-			AVCODEC_AUDIO_MSGBUFFER** ppSt_AudioBuffer;
-			AudioCodec_Stream_EnCodec(xhAudio, &st_MSGBuffer, &ppSt_AudioBuffer, &nAudioCount);
-			for (int j = 0; j < nAudioCount; j++)
-			{
-				AVFormat_Packet_StreamWrite(xhPacket, 1, ppSt_AudioBuffer[j]->st_MSGBuffer.unData.ptszMSGArray[0], ppSt_AudioBuffer[j]->st_MSGBuffer.nMSGLen[0], &ppSt_AudioBuffer[j]->st_TimeStamp);
-				BaseLib_Memory_MSGFree(&ppSt_AudioBuffer[j]->st_MSGBuffer);
-			}
-			BaseLib_Memory_Free((XPPPMEM)&ppSt_AudioBuffer, nAudioCount);
+			AVFormat_Packet_StreamWrite(xhPacket, 1, ppSt_AVPacket[j]);
 		}
-		BaseLib_Memory_MSGFree(&ppSt_MSGBuffer[i]->st_MSGBuffer);
+		AVHelp_Memory_FreeAVList(&ppSt_AVPacket, nAudioCount);
 	}
-	BaseLib_Memory_Free((XPPPMEM)&ppSt_MSGBuffer, nListCount);
+	AVHelp_Memory_FreeAVList(&ppSt_MSGBuffer, nListCount, false);
 }
 
 bool HTTPTask_TaskPost_BackService(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer, int nMsgLen, int nType)
@@ -411,15 +397,6 @@ bool HTTPTask_TaskPost_BackService(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer
 				XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("HTTP客户端:%s,初始化音频采集器请求失败,错误码:%lX"), lpszClientAddr, AudioCodec_GetLastError());
 				return false;
 			}
-			xhAudioFifo = AudioCodec_Help_FifoInit(ENUM_AVCODEC_AUDIO_SAMPLEFMT_FLTP, 2);
-			if (NULL == xhAudioFifo)
-			{
-				st_HDRParam.nHttpCode = 400;
-				HttpProtocol_Server_SendMsgEx(xhHTTPPacket, m_MemorySend.get(), &nSDLen, &st_HDRParam);
-				XEngine_Network_Send(lpszClientAddr, m_MemorySend.get(), nSDLen);
-				XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("HTTP客户端:%s,初始化音频采集器请求失败,错误码:%lX"), lpszClientAddr, AudioCodec_GetLastError());
-				return false;
-			}
 			XHANDLE xhAudioCodec = NULL;
 			AudioCodec_Stream_GetAVCodec(xhAudio, &xhAudioCodec);
 			AVFormat_Packet_StreamCreate(xhPacket, xhAudioCodec);
@@ -448,7 +425,6 @@ bool HTTPTask_TaskPost_BackService(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer
 
 		VideoCodec_Stream_Destroy(xhVideo);
 		AudioCodec_Stream_Destroy(xhAudio);
-		AudioCodec_Help_FifoClose(xhAudioFifo);
 
 		AVFilter_Audio_Destroy(xhFilter);
 
