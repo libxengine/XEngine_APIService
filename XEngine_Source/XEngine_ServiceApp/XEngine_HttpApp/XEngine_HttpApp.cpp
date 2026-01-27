@@ -57,7 +57,7 @@ void ServiceApp_Stop(int signo)
 		APIModule_IPAddr_UnInit();
 		APIModule_MACInfo_UnInit();
 		APIModule_PhoneNumber_UnInit();
-		ModulePlugin_Loader_Destory();
+		PluginExtension_Loader_Destory();
 		ModuleHelp_P2PClient_Destory();
 		ModuleHelp_ImageGet_TextDestory();
 		ModuleHelp_DNSAddr_Destroy();
@@ -459,9 +459,9 @@ int main(int argc, char** argv)
 	{
 		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("启动服务中,初始化插件配置文件成功"));
 		//启动插件
-		if (!ModulePlugin_Loader_Init())
+		if (!PluginExtension_Loader_Init())
 		{
-			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("启动服务中,初始化插件系统失败,错误：%lX"), ModulePlugin_GetLastError());
+			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("启动服务中,初始化插件系统失败,错误：%lX"), PluginExtension_GetLastError());
 			goto XENGINE_SERVICEAPP_EXIT;
 		}
 		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("启动服务中,初始化插件系统成功,开始加载插件"));
@@ -478,17 +478,17 @@ int main(int argc, char** argv)
 			{
 				nLibCount++;
 				//加载插件
-				if (ModulePlugin_Loader_Insert(pptszListFile[i], 0, &st_PluginParam))
+				if (PluginExtension_Loader_Insert(pptszListFile[i], 0, &st_PluginParam))
 				{
 					XCHAR tszModuleName[128] = {};
 					XCHAR tszModuleAuthor[64] = {};
 					XCHAR tszModuleVer[64] = {};
-					ModulePlugin_Loader_GetForModule(pptszListFile[i], tszModuleName, tszModuleVer, tszModuleAuthor);
+					PluginExtension_Loader_GetForModule(pptszListFile[i], tszModuleName, tszModuleVer, tszModuleAuthor);
 					XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("启动服务中,加载Lib模块插件中,当前第:%d 个加载成功,路径:%s,方法名:%s,作者:%s,版本:V%s"), nLibCount, pptszListFile[i], tszModuleName, tszModuleAuthor, tszModuleVer);
 				}
 				else
 				{
-					XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("启动服务中,加载Lib模块插件中,当前第:%d 个加载失败,路径:%s,错误:%lX"), nLibCount, pptszListFile[i], ModulePlugin_GetLastError());
+					XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("启动服务中,加载Lib模块插件中,当前第:%d 个加载失败,路径:%s,错误:%lX"), nLibCount, pptszListFile[i], PluginExtension_GetLastError());
 				}
 			}
 		}
@@ -505,17 +505,17 @@ int main(int argc, char** argv)
 			if (0 == _tcsxnicmp(tszFileExt, _X("lua"), 3))
 			{
 				nLuaCount++;
-				if (ModulePlugin_Loader_Insert(pptszListFile[i], 1, &st_PluginParam))
+				if (PluginExtension_Loader_Insert(pptszListFile[i], 1, &st_PluginParam))
 				{
 					XCHAR tszModuleName[128] = {};
 					XCHAR tszModuleAuthor[64] = {};
 					XCHAR tszModuleVer[64] = {};
-					ModulePlugin_Loader_GetForModule(pptszListFile[i], tszModuleName, tszModuleVer, tszModuleAuthor);
+					PluginExtension_Loader_GetForModule(pptszListFile[i], tszModuleName, tszModuleVer, tszModuleAuthor);
 					XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("启动服务中,加载Lua模块插件中,当前第:%d 个加载成功,路径:%s,方法名:%s,作者:%s,版本:V%s"), nLuaCount, pptszListFile[i], tszModuleName, tszModuleAuthor, tszModuleVer);
 				}
 				else
 				{
-					XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("启动服务中,加载Lua模块插件中,当前第:%d 个加载失败,路径:%s,错误:%lX"), nLuaCount, pptszListFile[i], ModulePlugin_GetLastError());
+					XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("启动服务中,加载Lua模块插件中,当前第:%d 个加载失败,路径:%s,错误:%lX"), nLuaCount, pptszListFile[i], PluginExtension_GetLastError());
 				}
 			}
 		}
@@ -630,7 +630,7 @@ XENGINE_SERVICEAPP_EXIT:
 		APIModule_IPAddr_UnInit();
 		APIModule_MACInfo_UnInit();
 		APIModule_PhoneNumber_UnInit();
-		ModulePlugin_Loader_Destory();
+		PluginExtension_Loader_Destory();
 		ModuleHelp_P2PClient_Destory();
 		ModuleHelp_ImageGet_TextDestory();
 		ModuleHelp_DNSAddr_Destroy();

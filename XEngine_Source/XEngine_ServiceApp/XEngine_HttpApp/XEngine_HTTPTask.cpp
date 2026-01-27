@@ -274,7 +274,7 @@ bool HTTPTask_TastPost_Handle(RFCCOMPONENTS_HTTP_REQPARAM* pSt_HTTPParam, LPCXST
 	}
 	//首先处理插件
 	int nPluginType = 0;
-	if (ModulePlugin_Loader_Find(tszValue, &nPluginType))
+	if (PluginExtension_Loader_Find(tszValue, &nPluginType))
 	{
 		XEngine_PluginTask_Handle(tszValue, lpszClientAddr, lpszMSGBuffer, nMSGLen, &pptszList, nListCount, nPluginType);
 		return true;

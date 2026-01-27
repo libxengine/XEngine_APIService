@@ -9,7 +9,6 @@ MODULE_DATABASE_PATH = ./XEngine_ModuleDatabase
 MODULE_PROTOCOL_PATH = ./XEngine_ModuleProtocol
 MODULE_SYSTEM_PATH = ./XEngine_ModuleSystem
 MODULE_HELP_PATH = ./XEngine_ModuleHelp
-MODULE_PLUGIN_PATH = ./XEngine_ModulePlugin
 
 PLUGIN_MODULE_ZODIAC = ./XEngine_PluginModule/ModulePlugin_Zodiac
 PLUGIN_MODULE_PASSWORD = ./XEngine_PluginModule/ModulePlugin_Password
@@ -20,6 +19,7 @@ PLUGIN_MODULE_METER = ./XEngine_PluginModule/ModulePlugin_Meter
 THIRDPART_MODULE_JSONCPP = ./XEngine_DependLibrary/XEngine_OPenSource/XEngine_Module/jsoncpp
 THIRDPART_MODULE_REPORT = ./XEngine_DependLibrary/XEngine_OPenSource/XEngine_Module/XEngine_InfoReport
 THIRDPART_MODULE_VERIFICATION = ./XEngine_DependLibrary/XEngine_OPenSource/XEngine_Module/XEngine_Verification
+THIRDPART_MODULE_PLUGIN = ./XEngine_DependLibrary/XEngine_OPenSource/XEngine_Module/XEngine_PluginExtension
 APIMODULE_PHONE_PATH = ./XEngine_DependLibrary/XEngine_PhoneData/XEngine_Source/XEngine_APIModulePhone
 APIMODULE_IPMAC_PATH = ./XEngine_DependLibrary/XEngine_IPMacData/XEngine_Source/XEngine_APIModuleIPMac
 
@@ -31,8 +31,8 @@ else ifeq ($(PLATFORM),mac)
 	FILEEXT = dylib
 endif
 
-XENGINE_MODULES = libjsoncpp.so libXEngine_InfoReport.so libXEngine_Verification.so   \
-				  libXEngine_ModuleConfigure.so libXEngine_ModuleDatabase.so libXEngine_ModuleProtocol.so libXEngine_ModuleSystem.so libXEngine_ModuleHelp.so libXEngine_ModulePlugin.so  \
+XENGINE_MODULES = libjsoncpp.so libXEngine_InfoReport.so libXEngine_Verification.so libXEngine_PluginExtension.so  \
+				  libXEngine_ModuleConfigure.so libXEngine_ModuleDatabase.so libXEngine_ModuleProtocol.so libXEngine_ModuleSystem.so libXEngine_ModuleHelp.so  \
 				  libModulePlugin_Zodiac.so libModulePlugin_Password.so libModulePlugin_Timezone.so libModulePlugin_BMIndex.so  libModulePlugin_Meter.so \
 				  libXEngine_APIModulePhone.so libXEngine_APIModuleIPMac.so \
 		   		  XEngine_HttpApp.exe
@@ -58,6 +58,12 @@ ifeq ($(FLAGS), InstallAll)
 else
 	make -C $(THIRDPART_MODULE_VERIFICATION) PLATFORM=$(PLATFORM) UNICODE=$(UNICODE) RELEASE=$(RELEASE) $(FLAGS)
 endif
+libXEngine_PluginExtension.so:
+ifeq ($(FLAGS), InstallAll)
+	cp $(THIRDPART_MODULE_PLUGIN)/libXEngine_PluginExtension.$(FILEEXT) ../XEngine_Release/
+else
+	make -C $(THIRDPART_MODULE_PLUGIN) PLATFORM=$(PLATFORM) UNICODE=$(UNICODE) RELEASE=$(RELEASE) $(FLAGS)
+endif
 libXEngine_APIModulePhone.so:
 ifeq ($(FLAGS), InstallAll)
 	cp $(APIMODULE_PHONE_PATH)/libXEngine_APIModulePhone.$(FILEEXT) ../XEngine_Release/
@@ -81,8 +87,6 @@ libXEngine_ModuleSystem.so:
 	make -C $(MODULE_SYSTEM_PATH) PLATFORM=$(PLATFORM) UNICODE=$(UNICODE) RELEASE=$(RELEASE) $(FLAGS)
 libXEngine_ModuleHelp.so:
 	make -C $(MODULE_HELP_PATH) PLATFORM=$(PLATFORM) UNICODE=$(UNICODE) RELEASE=$(RELEASE) $(FLAGS)
-libXEngine_ModulePlugin.so:
-	make -C $(MODULE_PLUGIN_PATH) PLATFORM=$(PLATFORM) UNICODE=$(UNICODE) RELEASE=$(RELEASE) $(FLAGS)
 
 libModulePlugin_Zodiac.so:
 	make -C $(PLUGIN_MODULE_ZODIAC) PLATFORM=$(PLATFORM) UNICODE=$(UNICODE) RELEASE=$(RELEASE) $(FLAGS)

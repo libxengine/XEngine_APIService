@@ -283,10 +283,4 @@ typedef struct
 	XCHAR tszUPTime[64];       //更新时间
 	XCHAR tszNextTime[64];       //更新时间
 }XENGINE_OILINFO;
-//插件参数
-typedef struct
-{
-	XCHAR tszAPIVersion[64];                                              //API服务版本
-	XCHAR tszXEngineVer[64];                                              //XEngine版本
-}XENGINE_PLUGINPARAM;
 #pragma pack(pop)

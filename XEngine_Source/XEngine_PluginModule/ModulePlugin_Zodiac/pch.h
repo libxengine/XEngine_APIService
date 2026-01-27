@@ -22,7 +22,7 @@
 #include <XEngine_Include/XEngine_BaseLib/BaseLib_Error.h>
 #include <XEngine_Include/XEngine_BaseLib/Algorithm_Define.h>
 #include <XEngine_Include/XEngine_BaseLib/Algorithm_Error.h>
-#include "../../XEngine_UserProtocol.h"
+#include "../../XEngine_DependLibrary/XEngine_OPenSource/XEngine_Module/XEngine_PluginExtension/PluginExtension_Define.h"
 #include "PluginZodiac_Define.h"
 #include "PluginZodiac_Error.h"
 using namespace std;
