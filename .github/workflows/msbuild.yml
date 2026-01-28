@@ -118,7 +118,7 @@ jobs:
 
       #编译
       - name: Build Solution
-        run: msbuild XEngine_Source/XEngine.sln /p:Configuration=${{ matrix.configuration }} /p:Platform=${{ matrix.platform }}
+        run: msbuild XEngine_Source/XEngine.sln /p:Configuration=${{ matrix.configuration }} /p:Platform=${{ matrix.platform }} /p:ExtraDefines="_XENGINE_BUILD_SWITCH_LUA"
 
       #测试
       - name: Conditional Step for x86 Release
