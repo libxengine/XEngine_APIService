@@ -77,4 +77,4 @@ extern "C" void PluginCore_GetInfo(XCHAR* ptszPluginName, XCHAR* ptszPluginVersi
   意思：是否成功
 备注：
 *********************************************************************/
-extern "C" bool PluginCore_Call(XCHAR * **pppHDRList, int nListCount, int* pInt_HTTPCode, XCHAR * ptszMsgBuffer, int* pInt_MsgLen, LPCXSTR lpszMsgBuffer = NULL, int nMsgLen = 0);
+extern "C" bool PluginCore_Call(XCHAR * **pppHDRList, int nListCount, XCHAR * ptszMsgBuffer, int* pInt_MsgLen, LPCXSTR lpszMsgBuffer = NULL, int nMsgLen = 0, int* pInt_HTTPCode = NULL);

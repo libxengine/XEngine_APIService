@@ -96,11 +96,11 @@ void CPlugin_Password::PluginCore_GetInfo(XCHAR* ptszPluginName, XCHAR* ptszPlug
   意思：是否成功
 备注：
 *********************************************************************/
-bool CPlugin_Password::PluginCore_Call(XCHAR*** pppHDRList, int nListCount, int* pInt_HTTPCode, XCHAR* ptszMsgBuffer, int* pInt_MsgLen, LPCXSTR lpszMsgBuffer, int nMsgLen)
+bool CPlugin_Password::PluginCore_Call(XCHAR*** pppHDRList, int nListCount, XCHAR* ptszMsgBuffer, int* pInt_MsgLen, LPCXSTR lpszMsgBuffer, int nMsgLen, int* pInt_HTTPCode)
 {
 	Pass_IsErrorOccur = false;
 
-	if ((NULL == pInt_HTTPCode) || (NULL == ptszMsgBuffer) || (NULL == pInt_MsgLen))
+	if ((NULL == ptszMsgBuffer) || (NULL == pInt_MsgLen))
 	{
 		Pass_IsErrorOccur = true;
 		Pass_dwErrorCode = ERROR_XENGINE_APISERVICE_PLUGIN_MODULE_PASS_PARAMENT;

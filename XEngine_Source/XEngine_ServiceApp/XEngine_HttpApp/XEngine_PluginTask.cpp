@@ -26,7 +26,7 @@ bool XEngine_PluginTask_Handle(LPCXSTR lpszMethodName, LPCXSTR lpszClientAddr, L
 	st_HDRParament.nHttpCode = 200;
 	_tcsxcpy(st_HDRParament.tszMimeType, "json");
 
-	if (PluginExtension_Loader_Exec(lpszMethodName, ppptszList, nListCount, &st_HDRParament.nHttpCode, tszPktBuffer, &nPktLen))
+	if (PluginExtension_Loader_Exec(lpszMethodName, ppptszList, nListCount, tszPktBuffer, &nPktLen, lpszRVBuffer, nRVLen, &st_HDRParament.nHttpCode))
 	{
 		HttpProtocol_Server_SendMsgEx(xhHTTPPacket, tszMsgBuffer, &nMsgLen, &st_HDRParament, tszPktBuffer, nPktLen);
 		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("HTTP客户端:%s,请求的方法:%s,由%s插件模块处理成功"), lpszClientAddr, lpszMethodName, 0 == nPluginType ? "Lib" : "Lua");
