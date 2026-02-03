@@ -110,6 +110,7 @@ using namespace std;
 #include "XEngine_TaskPost/TaskPost_Image.h"
 #include "XEngine_TaskPost/TaskPost_Deamon.h"
 #include "XEngine_TaskPost/TaskPost_Machine.h"
+#include "XEngine_TaskPost/TaskPost_AVRecord.h"
 //get
 #include "XEngine_TaskGet/TaskGet_IDCard.h"
 #include "XEngine_TaskGet/TaskGet_Bank.h"

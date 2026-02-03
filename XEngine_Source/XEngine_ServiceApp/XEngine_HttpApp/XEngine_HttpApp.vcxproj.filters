@@ -120,6 +120,9 @@
     <ClCompile Include="XEngine_TaskRfc\RFCTask_Dns.cpp">
       <Filter>源文件\XEngine_TaskRfc</Filter>
     </ClCompile>
+    <ClCompile Include="XEngine_TaskPost\TaskPost_AVRecord.cpp">
+      <Filter>源文件\XEngine_TaskPost</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="XEngine_Configure.h">
@@ -211,6 +214,9 @@
     </ClInclude>
     <ClInclude Include="XEngine_TaskRfc\RFCTask_Dns.h">
       <Filter>头文件\XEngine_TaskRfc</Filter>
+    </ClInclude>
+    <ClInclude Include="XEngine_TaskPost\TaskPost_AVRecord.h">
+      <Filter>头文件\XEngine_TaskPost</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
