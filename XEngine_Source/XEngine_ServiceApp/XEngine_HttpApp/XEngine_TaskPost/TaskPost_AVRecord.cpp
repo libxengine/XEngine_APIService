@@ -38,7 +38,7 @@ void XCALLBACK HTTPTask_TaskPost_CBAudio(XHANDLE*** pppSt_AVBuffer, XPVOID lPara
 	AVHelp_Memory_FreeAVList(&ppSt_MSGBuffer, nListCount, false);
 }
 
-bool HTTPTask_TaskPost_AVRecordStart(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer, int nMsgLen, int nType)
+bool HTTPTask_TaskPost_AVRecordStart(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer, int nMsgLen)
 {
 	int nSDLen = 0;
 	int nRVLen = 0;
