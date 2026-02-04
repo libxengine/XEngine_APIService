@@ -8,6 +8,8 @@ static XHANDLE xhScreen = NULL;
 static XHANDLE xhPacket = NULL;
 static XHANDLE xhFilter = NULL;
 static XHANDLE xhScale = NULL;
+static int nVideoIndex = -1;
+static int nAudioIndex = -1;
 
 void XCALLBACK HTTPTask_TaskPost_CBVideo(XHANDLE*** pppSt_AVBuffer, XPVOID lParam)
 {
@@ -19,7 +21,7 @@ void XCALLBACK HTTPTask_TaskPost_CBVideo(XHANDLE*** pppSt_AVBuffer, XPVOID lPara
 		VideoCodec_Stream_EnCodec(xhVideo, ppSt_AVFrame[0], &ppSt_AVPacket, &nListCount);
 		for (int j = 0; j < nListCount; j++)
 		{
-			AVFormat_Packet_StreamWrite(xhPacket, 0, ppSt_AVPacket[j]);
+			AVFormat_Packet_StreamWrite(xhPacket, nVideoIndex, ppSt_AVPacket[j]);
 		}
 		AVHelp_Memory_FreeAVList(&ppSt_AVPacket, nListCount);
 	}
@@ -37,7 +39,7 @@ void XCALLBACK HTTPTask_TaskPost_CBAudio(XHANDLE*** pppSt_AVBuffer, XPVOID lPara
 		AudioCodec_Stream_EnCodec(xhAudio, ppSt_MSGBuffer[i], &ppSt_AVPacket, &nAudioCount);
 		for (int j = 0; j < nAudioCount; j++)
 		{
-			AVFormat_Packet_StreamWrite(xhPacket, 1, ppSt_AVPacket[j]);
+			AVFormat_Packet_StreamWrite(xhPacket, nAudioIndex, ppSt_AVPacket[j]);
 		}
 		AVHelp_Memory_FreeAVList(&ppSt_AVPacket, nAudioCount);
 	}
@@ -127,6 +129,7 @@ bool HTTPTask_TaskPost_AVRecordStart(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuff
 		VideoCodec_Stream_GetAVCodec(xhVideo, &xhVideoCodec);
 		AVFormat_Packet_StreamCreate(xhPacket, xhVideoCodec);
 		BaseLib_Memory_FreeCStyle((XPPMEM)&xhVideoCodec);
+		nVideoIndex = 0;
 	}
 	//启用音频
 	if (_tcsxlen(st_AVRecord.tszAudioDevice) > 0)
@@ -181,6 +184,15 @@ bool HTTPTask_TaskPost_AVRecordStart(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuff
 		st_TimeBase.nNum = 1;
 		AVFormat_Packet_TimeBase(xhPacket, 1, &st_TimeBase);
 		BaseLib_Memory_FreeCStyle((XPPMEM)&xhAudioCodec);
+
+		if (-1 == nVideoIndex)
+		{
+			nAudioIndex = 0;
+		}
+		else
+		{
+			nAudioIndex = 1;
+		}
 	}
 	bRecord = true;
 	AVFormat_Packet_Start(xhPacket);
