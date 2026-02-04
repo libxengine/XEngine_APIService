@@ -6,18 +6,24 @@ static XHANDLE xhAudio = NULL;
 static XHANDLE xhSound = NULL;
 static XHANDLE xhScreen = NULL;
 static XHANDLE xhPacket = NULL;
-static XHANDLE xhFilter = 0;
+static XHANDLE xhFilter = NULL;
+static XHANDLE xhScale = NULL;
 
 void XCALLBACK HTTPTask_TaskPost_CBVideo(XHANDLE*** pppSt_AVBuffer, XPVOID lParam)
 {
-	int nListCount = 0;
-	XHANDLE** ppSt_AVPacket;
-	VideoCodec_Stream_EnCodec(xhVideo, pppSt_AVBuffer, &ppSt_AVPacket, &nListCount);
-	for (int i = 0; i < nListCount; i++)
+	XHANDLE** ppSt_AVFrame;
+	if (VideoCodec_Help_ScaleConvert(xhScale, (*pppSt_AVBuffer)[0], &ppSt_AVFrame))
 	{
-		AVFormat_Packet_StreamWrite(xhPacket, 0, ppSt_AVPacket[i]);
+		int nListCount = 0;
+		XHANDLE** ppSt_AVPacket;
+		VideoCodec_Stream_EnCodec(xhVideo, ppSt_AVFrame[0], &ppSt_AVPacket, &nListCount);
+		for (int j = 0; j < nListCount; j++)
+		{
+			AVFormat_Packet_StreamWrite(xhPacket, 0, ppSt_AVPacket[j]);
+		}
+		AVHelp_Memory_FreeAVList(&ppSt_AVPacket, nListCount);
 	}
-	AVHelp_Memory_FreeAVList(&ppSt_AVPacket, nListCount);
+	AVHelp_Memory_FreeAVList(&ppSt_AVFrame, 1, false);
 }
 void XCALLBACK HTTPTask_TaskPost_CBAudio(XHANDLE*** pppSt_AVBuffer, XPVOID lParam)
 {
@@ -61,6 +67,10 @@ bool HTTPTask_TaskPost_AVRecordStart(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuff
 	XENGINE_AVRECORD st_AVRecord = {};
 	if (!ModuleProtocol_Parse_AVRecord(lpszMsgBuffer, nMsgLen, &st_AVRecord))
 	{
+		st_HDRParam.nHttpCode = 400;
+		HttpProtocol_Server_SendMsgEx(xhHTTPPacket, m_MemorySend.get(), &nSDLen, &st_HDRParam);
+		XEngine_Network_Send(lpszClientAddr, m_MemorySend.get(), nSDLen);
+		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("HTTP客户端:%s,请求屏幕录制失败,解析协议失败,错误码:%lX"), lpszClientAddr, ModuleProtocol_GetLastError());
 		return false;
 	}
 	//屏幕采集
@@ -98,6 +108,10 @@ bool HTTPTask_TaskPost_AVRecordStart(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuff
 	//初始化屏幕编码器
 	XENGINE_PROTOCOL_AVINFO st_AVInfo = {};
 	AVCollect_Video_GetInfo(xhScreen, &st_AVInfo);
+
+	xhScale = VideoCodec_Help_ScaleInit(st_AVInfo.st_VideoInfo.nWidth, st_AVInfo.st_VideoInfo.nHeight, st_AVInfo.st_VideoInfo.nFormat, st_AVInfo.st_VideoInfo.nWidth, st_AVInfo.st_VideoInfo.nHeight, ENUM_AVCODEC_VIDEO_SAMPLEFMT_YUV420P);
+
+	st_AVInfo.st_VideoInfo.nFormat = 0;
 	st_AVInfo.st_VideoInfo.enAVCodec = ENUM_XENGINE_AVCODEC_VIDEO_TYPE_H264;
 	xhVideo = VideoCodec_Stream_EnInit(&st_AVInfo.st_VideoInfo);
 	if (NULL == xhVideo)
@@ -111,6 +125,8 @@ bool HTTPTask_TaskPost_AVRecordStart(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuff
 	VideoCodec_Stream_GetAVCodec(xhVideo, &xhVideoCodec);
 	AVFormat_Packet_StreamCreate(xhPacket, xhVideoCodec);
 	BaseLib_Memory_FreeCStyle((XPPMEM)&xhVideoCodec);
+	//转换
+	
 	//启用音频
 	if (_tcsxlen(st_AVRecord.tszAudioDevice) > 0)
 	{
@@ -187,6 +203,7 @@ bool HTTPTask_TaskPost_AVRecordStop(LPCXSTR lpszClientAddr)
 	AVFilter_Audio_Destroy(xhFilter);
 
 	AVFormat_Packet_Stop(xhPacket);
+	VideoCodec_Help_ScaleUninit(xhScale);
 	xhScreen = NULL;
 	xhSound = NULL;
 	xhVideo = NULL;
