@@ -1,3 +1,29 @@
+XEngine_APIService V3.14.0.1001
+
+更新:依赖库
+修改:屏幕录像从后台服务中独立
+修改:不在区分http请求url函数的大小写
+修改:屏幕录像支持scale
+修改:屏幕录像支持仅音频或者视频
+修改:调整插件参数顺序
+修正:插件没有加载http消息的问题
+修正:构建问题并且移除audio队列
+修正:验证响应状态不正确
+修正:http验证开关不支持
+删除:plugin模块使用submodule的依赖库替代
+
+update:depend library
+modify:Separated screen recording from the background service
+modify:does not are case-insensitive for http function name
+modify:screen capture format support scale
+modify:support only audio or video for av record
+modify:adjust plugin parameter order
+fixed:plugin not load http message buffer
+fixed:build error and remove audio fifo
+fixed:verification reply status is incorrect
+fixed:HTTP authentication switch does not support individual verification
+delete:plugin module and use depend library plugin module instead
+======================================================================================
 XEngine_APIService V3.13.0.1001
 
 ci:增加centos和rockylinux以及debian13支持
