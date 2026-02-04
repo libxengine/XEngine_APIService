@@ -63,36 +63,15 @@ bool HTTPTask_TaskPost_AVRecordStart(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuff
 		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("HTTP客户端:%s,请求屏幕录制失败,因为已经在录制中了"), lpszClientAddr);
 		return false;
 	}
-
 	XENGINE_AVRECORD st_AVRecord = {};
+	XENGINE_PROTOCOL_AVINFO st_AVInfo = {};
+
 	if (!ModuleProtocol_Parse_AVRecord(lpszMsgBuffer, nMsgLen, &st_AVRecord))
 	{
 		st_HDRParam.nHttpCode = 400;
 		HttpProtocol_Server_SendMsgEx(xhHTTPPacket, m_MemorySend.get(), &nSDLen, &st_HDRParam);
 		XEngine_Network_Send(lpszClientAddr, m_MemorySend.get(), nSDLen);
 		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("HTTP客户端:%s,请求屏幕录制失败,解析协议失败,错误码:%lX"), lpszClientAddr, ModuleProtocol_GetLastError());
-		return false;
-	}
-	//屏幕采集
-	AVCOLLECT_SCREENINFO st_AVScreen = {};
-
-	st_AVScreen.nFrameRate = 24;
-	st_AVScreen.nPosX = 0;
-	st_AVScreen.nPosY = 0;
-	_xstprintf(st_AVScreen.tszVideoSize, _X("%s"), st_AVRecord.tszRsolution);
-#ifdef _MSC_BUILD
-	xhScreen = AVCollect_Video_Init("gdigrab", st_AVRecord.tszVideoDevice, &st_AVScreen, HTTPTask_TaskPost_CBVideo);
-#elif __linux__
-	xhScreen = AVCollect_Video_Init("x11grab", st_AVRecord.tszVideoDevice, &st_AVScreen, HTTPTask_TaskPost_CBVideo);
-#else
-	xhScreen = AVCollect_Video_Init("avfoundation", st_AVRecord.tszVideoDevice, &st_AVScreen, HTTPTask_TaskPost_CBVideo);
-#endif
-	if (NULL == xhScreen)
-	{
-		st_HDRParam.nHttpCode = 400;
-		HttpProtocol_Server_SendMsgEx(xhHTTPPacket, m_MemorySend.get(), &nSDLen, &st_HDRParam);
-		XEngine_Network_Send(lpszClientAddr, m_MemorySend.get(), nSDLen);
-		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("HTTP客户端:%s,屏幕采集器请求失败,错误码:%lX"), lpszClientAddr, AVCollect_GetLastError());
 		return false;
 	}
 	xhPacket = AVFormat_Packet_Init();
@@ -104,29 +83,51 @@ bool HTTPTask_TaskPost_AVRecordStart(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuff
 		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("HTTP客户端:%s,请求屏幕录制失败,推流服务端:%s 连接失败,错误码:%lX"), lpszClientAddr, st_AVRecord.tszFilePath, AVFormat_GetLastError());
 		return false;
 	}
-	XHANDLE xhVideoCodec = NULL;
-	//初始化屏幕编码器
-	XENGINE_PROTOCOL_AVINFO st_AVInfo = {};
-	AVCollect_Video_GetInfo(xhScreen, &st_AVInfo);
-
-	xhScale = VideoCodec_Help_ScaleInit(st_AVInfo.st_VideoInfo.nWidth, st_AVInfo.st_VideoInfo.nHeight, st_AVInfo.st_VideoInfo.nFormat, st_AVInfo.st_VideoInfo.nWidth, st_AVInfo.st_VideoInfo.nHeight, ENUM_AVCODEC_VIDEO_SAMPLEFMT_YUV420P);
-
-	st_AVInfo.st_VideoInfo.nFormat = 0;
-	st_AVInfo.st_VideoInfo.enAVCodec = ENUM_XENGINE_AVCODEC_VIDEO_TYPE_H264;
-	xhVideo = VideoCodec_Stream_EnInit(&st_AVInfo.st_VideoInfo);
-	if (NULL == xhVideo)
+	//屏幕采集
+	if (_tcsxlen(st_AVRecord.tszVideoDevice) > 0)
 	{
-		st_HDRParam.nHttpCode = 500;
-		HttpProtocol_Server_SendMsgEx(xhHTTPPacket, m_MemorySend.get(), &nSDLen, &st_HDRParam);
-		XEngine_Network_Send(lpszClientAddr, m_MemorySend.get(), nSDLen);
-		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("HTTP客户端:%s,请求屏幕录制失败,打开编码器视频编码器失败,错误码:%lX"), lpszClientAddr, VideoCodec_GetLastError());
-		return false;
+		AVCOLLECT_SCREENINFO st_AVScreen = {};
+
+		st_AVScreen.nFrameRate = 24;
+		st_AVScreen.nPosX = 0;
+		st_AVScreen.nPosY = 0;
+		_xstprintf(st_AVScreen.tszVideoSize, _X("%s"), st_AVRecord.tszRsolution);
+#ifdef _MSC_BUILD
+		xhScreen = AVCollect_Video_Init("gdigrab", st_AVRecord.tszVideoDevice, &st_AVScreen, HTTPTask_TaskPost_CBVideo);
+#elif __linux__
+		xhScreen = AVCollect_Video_Init("x11grab", st_AVRecord.tszVideoDevice, &st_AVScreen, HTTPTask_TaskPost_CBVideo);
+#else
+		xhScreen = AVCollect_Video_Init("avfoundation", st_AVRecord.tszVideoDevice, &st_AVScreen, HTTPTask_TaskPost_CBVideo);
+#endif
+		if (NULL == xhScreen)
+		{
+			st_HDRParam.nHttpCode = 400;
+			HttpProtocol_Server_SendMsgEx(xhHTTPPacket, m_MemorySend.get(), &nSDLen, &st_HDRParam);
+			XEngine_Network_Send(lpszClientAddr, m_MemorySend.get(), nSDLen);
+			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("HTTP客户端:%s,屏幕采集器请求失败,错误码:%lX"), lpszClientAddr, AVCollect_GetLastError());
+			return false;
+		}
+		XHANDLE xhVideoCodec = NULL;
+		//初始化屏幕编码器
+		AVCollect_Video_GetInfo(xhScreen, &st_AVInfo);
+
+		xhScale = VideoCodec_Help_ScaleInit(st_AVInfo.st_VideoInfo.nWidth, st_AVInfo.st_VideoInfo.nHeight, st_AVInfo.st_VideoInfo.nFormat, st_AVInfo.st_VideoInfo.nWidth, st_AVInfo.st_VideoInfo.nHeight, ENUM_AVCODEC_VIDEO_SAMPLEFMT_YUV420P);
+
+		st_AVInfo.st_VideoInfo.nFormat = 0;
+		st_AVInfo.st_VideoInfo.enAVCodec = ENUM_XENGINE_AVCODEC_VIDEO_TYPE_H264;
+		xhVideo = VideoCodec_Stream_EnInit(&st_AVInfo.st_VideoInfo);
+		if (NULL == xhVideo)
+		{
+			st_HDRParam.nHttpCode = 500;
+			HttpProtocol_Server_SendMsgEx(xhHTTPPacket, m_MemorySend.get(), &nSDLen, &st_HDRParam);
+			XEngine_Network_Send(lpszClientAddr, m_MemorySend.get(), nSDLen);
+			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("HTTP客户端:%s,请求屏幕录制失败,打开编码器视频编码器失败,错误码:%lX"), lpszClientAddr, VideoCodec_GetLastError());
+			return false;
+		}
+		VideoCodec_Stream_GetAVCodec(xhVideo, &xhVideoCodec);
+		AVFormat_Packet_StreamCreate(xhPacket, xhVideoCodec);
+		BaseLib_Memory_FreeCStyle((XPPMEM)&xhVideoCodec);
 	}
-	VideoCodec_Stream_GetAVCodec(xhVideo, &xhVideoCodec);
-	AVFormat_Packet_StreamCreate(xhPacket, xhVideoCodec);
-	BaseLib_Memory_FreeCStyle((XPPMEM)&xhVideoCodec);
-	//转换
-	
 	//启用音频
 	if (_tcsxlen(st_AVRecord.tszAudioDevice) > 0)
 	{
