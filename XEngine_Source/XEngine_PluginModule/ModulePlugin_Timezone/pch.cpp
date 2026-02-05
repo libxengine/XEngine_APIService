@@ -37,7 +37,7 @@ extern "C" void PluginCore_GetInfo(XCHAR* ptszPluginName, XCHAR* ptszPluginVersi
 {
 	return m_PluginTimes.PluginCore_GetInfo(ptszPluginName, ptszPluginVersion, ptszPluginAuthor, ptszPluginDesc);
 }
-extern "C" bool PluginCore_Call(XCHAR * **pppHDRList, int nListCount, int* pInt_HTTPCode, XCHAR * ptszMsgBuffer, int* pInt_MsgLen, LPCXSTR lpszMsgBuffer, int nMsgLen)
+extern "C" bool PluginCore_Call(XCHAR * **pppHDRList, int nListCount, XCHAR * ptszMsgBuffer, int* pInt_MsgLen, LPCXSTR lpszMsgBuffer, int nMsgLen, int* pInt_HTTPCode)
 {
-	return m_PluginTimes.PluginCore_Call(pppHDRList, nListCount, pInt_HTTPCode, ptszMsgBuffer, pInt_MsgLen, lpszMsgBuffer, nMsgLen);
+	return m_PluginTimes.PluginCore_Call(pppHDRList, nListCount, ptszMsgBuffer, pInt_MsgLen, lpszMsgBuffer, nMsgLen, pInt_HTTPCode);
 }

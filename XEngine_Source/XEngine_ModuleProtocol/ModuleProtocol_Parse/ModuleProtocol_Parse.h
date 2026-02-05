@@ -34,5 +34,6 @@ public:
 	bool ModuleProtocol_Parse_Weather(LPCXSTR lpszMsgBuffer, int nMsgLen, XENGINE_WEATHERINFO* pSt_WeatherInfo);
 	bool ModuleProtocol_Parse_Machine(LPCXSTR lpszMsgBuffer, int nMsgLen, XENGINE_MACHINEINFO* pSt_MachineInfo);
 	bool ModuleProtocol_Parse_Oil(LPCXSTR lpszMsgBuffer, int nMsgLen, XENGINE_OILINFO* pSt_OilInfo);
+	bool ModuleProtocol_Parse_AVRecord(LPCXSTR lpszMsgBuffer, int nMsgLen, XENGINE_AVRECORD* pSt_AVRecord);
 private:
 };

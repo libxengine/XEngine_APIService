@@ -84,8 +84,6 @@ typedef enum
 #define XENGINE_COMMUNICATION_PROTOCOL_OPERATOR_CODE_BS_SHUTDOWN 0x5008          //远程关闭计算机
 #define XENGINE_COMMUNICATION_PROTOCOL_OPERATOR_CODE_BS_ECMD 0x5009              //执行命令
 #define XENGINE_COMMUNICATION_PROTOCOL_OPERATOR_CODE_BS_REPORT 0x5010            //报告信息
-#define XENGINE_COMMUNICATION_PROTOCOL_OPERATOR_CODE_BS_RECORDSTART 0x5011       //开始视频录制
-#define XENGINE_COMMUNICATION_PROTOCOL_OPERATOR_CODE_BS_RECORDSTOP 0x5012        //停止视频录制
 //P2XP协议
 #define XENGINE_COMMUNICATION_PROTOCOL_OPERATOR_CODE_P2XP_REQLOGIN 0x6001        //登录
 #define XENGINE_COMMUNICATION_PROTOCOL_OPERATOR_CODE_P2XP_REPLOGIN 0x6002
@@ -283,10 +281,11 @@ typedef struct
 	XCHAR tszUPTime[64];       //更新时间
 	XCHAR tszNextTime[64];       //更新时间
 }XENGINE_OILINFO;
-//插件参数
 typedef struct
 {
-	XCHAR tszAPIVersion[64];                                              //API服务版本
-	XCHAR tszXEngineVer[64];                                              //XEngine版本
-}XENGINE_PLUGINPARAM;
+	XCHAR tszFilePath[XPATH_MID];                 //文件路径
+	XCHAR tszVideoDevice[XPATH_MIN];              //视频设备
+	XCHAR tszAudioDevice[XPATH_MIN];              //音频设备
+	XCHAR tszRsolution[64];                       //分辨率
+}XENGINE_AVRECORD;
 #pragma pack(pop)

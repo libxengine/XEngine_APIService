@@ -95,11 +95,11 @@ void CPlugin_BMIndex::PluginCore_GetInfo(XCHAR* ptszPluginName, XCHAR* ptszPlugi
   意思：是否成功
 备注：
 *********************************************************************/
-bool CPlugin_BMIndex::PluginCore_Call(XCHAR*** pppHDRList, int nListCount, int* pInt_HTTPCode, XCHAR* ptszMsgBuffer, int* pInt_MsgLen, LPCXSTR lpszMsgBuffer, int nMsgLen)
+bool CPlugin_BMIndex::PluginCore_Call(XCHAR*** pppHDRList, int nListCount, XCHAR* ptszMsgBuffer, int* pInt_MsgLen, LPCXSTR lpszMsgBuffer, int nMsgLen, int* pInt_HTTPCode)
 {
 	BMIndex_IsErrorOccur = false;
 
-	if ((NULL == pInt_HTTPCode) || (NULL == ptszMsgBuffer) || (NULL == pInt_MsgLen))
+	if ((NULL == ptszMsgBuffer) || (NULL == pInt_MsgLen))
 	{
 		BMIndex_IsErrorOccur = true;
 		BMIndex_dwErrorCode = ERROR_XENGINE_APISERVICE_PLUGIN_MODULE_BMINDEX_PARAMENT;

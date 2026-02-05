@@ -3,18 +3,18 @@ PLATVER =
 FILEEXT = 
 LIBFLAG = 
 LOADHDR = -I ./ 
-LOADSO = -L ../../XEngine_ModuleConfigure -L ../../XEngine_ModuleDatabase -L ../../XEngine_ModuleProtocol -L ../../XEngine_ModuleSystem -L ../../XEngine_ModuleHelp -L ../../XEngine_ModulePlugin   \
-		 -L ../../XEngine_DependLibrary/XEngine_OPenSource/XEngine_Module/jsoncpp -L ../../XEngine_DependLibrary/XEngine_OPenSource/XEngine_Module/XEngine_InfoReport -L ../../XEngine_DependLibrary/XEngine_OPenSource/XEngine_Module/XEngine_Verification  \
+LOADSO = -L ../../XEngine_ModuleConfigure -L ../../XEngine_ModuleDatabase -L ../../XEngine_ModuleProtocol -L ../../XEngine_ModuleSystem -L ../../XEngine_ModuleHelp   \
+		 -L ../../XEngine_DependLibrary/XEngine_OPenSource/XEngine_Module/jsoncpp -L ../../XEngine_DependLibrary/XEngine_OPenSource/XEngine_Module/XEngine_InfoReport -L ../../XEngine_DependLibrary/XEngine_OPenSource/XEngine_Module/XEngine_Verification -L ../../XEngine_DependLibrary/XEngine_OPenSource/XEngine_Module/XEngine_PluginExtension  \
 		 -L ../../XEngine_DependLibrary/XEngine_IPMacData/XEngine_Source/XEngine_APIModuleIPMac -L ../../XEngine_DependLibrary/XEngine_PhoneData/XEngine_Source/XEngine_APIModulePhone
-LIB = -lXEngine_BaseSafe -lXEngine_BaseLib -lXEngine_Algorithm -lXEngine_Core -lXEngine_ManagePool -lXEngine_Cryption -lXClient_APIHelp -lXClient_Socket -lNetHelp_APIAddr -lNetHelp_XSocket -lHelpComponents_XLog -lRfcComponents_HttpProtocol -lRfcComponents_NatProtocol -lRfcComponents_NTPProtocol -lRfcComponents_DNSProtocol -lXEngine_ProcFile -lXEngine_SystemApi -lXEngine_AVHelp -lXEngine_VideoCodec -lXEngine_AudioCodec -lXEngine_AVFilter -lXEngine_AVCollect -lXEngine_AVFormat \
-	  -lXEngine_ModuleConfigure -lXEngine_ModuleDatabase -lXEngine_ModuleProtocol -lXEngine_ModuleSystem -lXEngine_ModuleHelp -lXEngine_ModulePlugin                          \
-	  -ljsoncpp -lXEngine_InfoReport -lXEngine_Verification  \
+LIB = -lXEngine_BaseSafe -lXEngine_BaseLib -lXEngine_Algorithm -lXEngine_Core -lXEngine_ManagePool -lXEngine_Cryption -lXClient_APIHelp -lXClient_Socket -lNetHelp_APIAddr -lNetHelp_XSocket -lHelpComponents_XLog -lRfcComponents_HttpProtocol -lRfcComponents_NatProtocol -lRfcComponents_NTPProtocol -lRfcComponents_DNSProtocol -lXEngine_SystemApi -lXEngine_AVHelp -lXEngine_VideoCodec -lXEngine_AudioCodec -lXEngine_AVFilter -lXEngine_AVCollect -lXEngine_AVFormat \
+	  -lXEngine_ModuleConfigure -lXEngine_ModuleDatabase -lXEngine_ModuleProtocol -lXEngine_ModuleSystem -lXEngine_ModuleHelp                          \
+	  -ljsoncpp -lXEngine_InfoReport -lXEngine_Verification -lXEngine_PluginExtension  \
 	  -lXEngine_APIModuleIPMac -lXEngine_APIModulePhone
 LIBEX = 
 OBJECTS = XEngine_Configure.o XEngine_Network.o XEngine_HTTPTask.o XEngine_PluginTask.o XEngine_HttpApp.o        \
 		  RFCTask_Ntp.o RFCTask_Stun.o RFCTask_Dns.o \
           TaskGet_Bank.o TaskGet_IDCard.o TaskGet_Locker.o TaskGet_Translation.o TaskGet_Reload.o TaskGet_Weather.o TaskGet_IDRegion.o TaskGet_Oil.o TaskGet_APIModule.o \
-		  TaskPost_DTest.o TaskPost_Log.o TaskPost_P2PClient.o TaskPost_PostCode.o TaskPost_QRCode.o TaskPost_ShortLink.o TaskPost_SocketTest.o TaskPost_WordFilter.o TaskPost_Image.o TaskPost_BackService.o TaskPost_Deamon.o TaskPost_Machine.o
+		  TaskPost_DTest.o TaskPost_Log.o TaskPost_P2PClient.o TaskPost_PostCode.o TaskPost_QRCode.o TaskPost_ShortLink.o TaskPost_SocketTest.o TaskPost_WordFilter.o TaskPost_Image.o TaskPost_BackService.o TaskPost_Deamon.o TaskPost_Machine.o TaskPost_AVRecord.o
 
 ifeq ($(RELEASE),1)
 FLAGS = -c -D _RELEASE
@@ -117,6 +117,8 @@ TaskPost_Deamon.o:./XEngine_TaskPost/TaskPost_Deamon.cpp
 	$(CC) $(DEBUG) $(FLAGS) $(UNICODE) $(PLATVER) $(LOADHDR) ./XEngine_TaskPost/TaskPost_Deamon.cpp
 TaskPost_Machine.o:./XEngine_TaskPost/TaskPost_Machine.cpp
 	$(CC) $(DEBUG) $(FLAGS) $(UNICODE) $(PLATVER) $(LOADHDR) ./XEngine_TaskPost/TaskPost_Machine.cpp
+TaskPost_AVRecord.o:./XEngine_TaskPost/TaskPost_AVRecord.cpp
+	$(CC) $(DEBUG) $(FLAGS) $(UNICODE) $(PLATVER) $(LOADHDR) ./XEngine_TaskPost/TaskPost_AVRecord.cpp
 
 XEngine_HttpApp.o:./XEngine_HttpApp.cpp             
 	$(CC) $(DEBUG) $(FLAGS) $(UNICODE) $(PLATVER) $(LOADHDR) ./XEngine_HttpApp.cpp   

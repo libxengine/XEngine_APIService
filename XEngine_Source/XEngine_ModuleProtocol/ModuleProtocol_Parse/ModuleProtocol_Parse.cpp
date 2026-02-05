@@ -1278,3 +1278,68 @@ bool CModuleProtocol_Parse::ModuleProtocol_Parse_Oil(LPCXSTR lpszMsgBuffer, int 
 	}
 	return true;
 }
+/********************************************************************
+函数名称：ModuleProtocol_Parse_AVRecord
+函数功能：解析屏幕录制协议
+ 参数.一：lpszMsgBuffer
+  In/Out：In
+  类型：常量字符指针
+  可空：N
+  意思：输入要解析的缓冲区
+ 参数.二：nMsgLen
+  In/Out：In
+  类型：整数型
+  可空：N
+  意思：输入缓冲区大小
+ 参数.三：pSt_AVRecord
+  In/Out：Out
+  类型：数据结构指针
+  可空：N
+  意思：输出解析后的信息
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+bool CModuleProtocol_Parse::ModuleProtocol_Parse_AVRecord(LPCXSTR lpszMsgBuffer, int nMsgLen, XENGINE_AVRECORD* pSt_AVRecord)
+{
+	ModuleProtocol_IsErrorOccur = false;
+
+	if ((NULL == lpszMsgBuffer) || (0 == nMsgLen))
+	{
+		ModuleProtocol_IsErrorOccur = true;
+		ModuleProtocol_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PROTOCOL_PARSE_PARAMENT;
+		return false;
+	}
+	Json::Value st_JsonRoot;
+	JSONCPP_STRING st_JsonError;
+	Json::CharReaderBuilder st_JsonBuilder;
+
+	std::unique_ptr<Json::CharReader> const pSt_JsonReader(st_JsonBuilder.newCharReader());
+	if (!pSt_JsonReader->parse(lpszMsgBuffer, lpszMsgBuffer + nMsgLen, &st_JsonRoot, &st_JsonError))
+	{
+		ModuleProtocol_IsErrorOccur = true;
+		ModuleProtocol_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_PROTOCOL_PARSE_PARAMENT;
+		return false;
+	}
+
+	Json::Value st_JsonObject = st_JsonRoot["data"];
+
+	if (!st_JsonObject["tszVideoDevice"].isNull())
+	{
+		_tcsxcpy(pSt_AVRecord->tszVideoDevice, st_JsonObject["tszVideoDevice"].asCString());
+	}
+	if (!st_JsonObject["tszAudioDevice"].isNull())
+	{
+		_tcsxcpy(pSt_AVRecord->tszAudioDevice, st_JsonObject["tszAudioDevice"].asCString());
+	}
+	if (!st_JsonObject["tszFilePath"].isNull())
+	{
+		_tcsxcpy(pSt_AVRecord->tszFilePath, st_JsonObject["tszFilePath"].asCString());
+	}
+	if (!st_JsonObject["tszRsolution"].isNull())
+	{
+		_tcsxcpy(pSt_AVRecord->tszRsolution, st_JsonObject["tszRsolution"].asCString());
+	}
+	return true;
+}

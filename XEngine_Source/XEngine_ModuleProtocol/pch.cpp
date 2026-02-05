@@ -214,3 +214,7 @@ extern "C" bool ModuleProtocol_Parse_Oil(LPCXSTR lpszMsgBuffer, int nMsgLen, XEN
 {
 	return m_ProtocolParse.ModuleProtocol_Parse_Oil(lpszMsgBuffer, nMsgLen, pSt_OilInfo);
 }
+extern "C" bool ModuleProtocol_Parse_AVRecord(LPCXSTR lpszMsgBuffer, int nMsgLen, XENGINE_AVRECORD* pSt_AVRecord)
+{
+	return m_ProtocolParse.ModuleProtocol_Parse_AVRecord(lpszMsgBuffer, nMsgLen, pSt_AVRecord);
+}

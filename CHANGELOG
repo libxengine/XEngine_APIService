@@ -1,3 +1,67 @@
+XEngine_APIService V3.14.0.1001
+
+更新:依赖库
+修改:屏幕录像从后台服务中独立
+修改:不在区分http请求url函数的大小写
+修改:屏幕录像支持scale
+修改:屏幕录像支持仅音频或者视频
+修改:调整插件参数顺序
+修正:插件没有加载http消息的问题
+修正:构建问题并且移除audio队列
+修正:验证响应状态不正确
+修正:http验证开关不支持
+删除:plugin模块使用submodule的依赖库替代
+
+update:depend library
+modify:Separated screen recording from the background service
+modify:does not are case-insensitive for http function name
+modify:screen capture format support scale
+modify:support only audio or video for av record
+modify:adjust plugin parameter order
+fixed:plugin not load http message buffer
+fixed:build error and remove audio fifo
+fixed:verification reply status is incorrect
+fixed:HTTP authentication switch does not support individual verification
+delete:plugin module and use depend library plugin module instead
+======================================================================================
+XEngine_APIService V3.13.0.1001
+
+ci:增加centos和rockylinux以及debian13支持
+ci:MACOS仅支持arm64
+增加:http验证启动日志
+增加:dns协议服务支持
+增加:http验证的基本和摘要支持
+修改:ntp 协议服务单独提取
+修改:测试api消息输出
+修改:不在限制api请求的key名称
+修改:守护进程和后台管理验证方法
+修改:avformat模块替换了xstream模块
+修改:屏幕推流方法
+修改:系统声音推流方法
+更新:依赖库
+更新:启动参数不区分大小写
+修正:ntp宏错误
+修正:启动日志插件索引错误
+删除:不使用的代码
+
+ci:added Centos_build.yml and improved Rocky_build.yml and debian 13
+ci:only support arm64 macos build
+added:http verification start log
+added:dns protocol service support
+added:http basic and digest authorize support
+modify:ntp protocol service extract individually 
+modify:print message for d-test api
+modify:dont limit api key name
+modify:deamon and back verification method
+modify:avformat instead xstream
+modify:screen stream push support
+modify:system sound capture support for back service
+update:depend library
+update:start parameter are not case sensitive
+fixed:ntp macro error
+fixed:start log plugin index
+delete:not use return
+======================================================================================
 XEngine_APIService V3.12.0.1001
 
 增加:rockylinux 10 支持

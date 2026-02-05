@@ -71,6 +71,8 @@ using namespace std;
 #include "../../XEngine_DependLibrary/XEngine_OPenSource/XEngine_Module/XEngine_InfoReport/InfoReport_Error.h"
 #include "../../XEngine_DependLibrary/XEngine_OPenSource/XEngine_Module/XEngine_Verification/Verification_Define.h"
 #include "../../XEngine_DependLibrary/XEngine_OPenSource/XEngine_Module/XEngine_Verification/Verification_Error.h"
+#include "../../XEngine_DependLibrary/XEngine_OPenSource/XEngine_Module/XEngine_PluginExtension/PluginExtension_Define.h"
+#include "../../XEngine_DependLibrary/XEngine_OPenSource/XEngine_Module/XEngine_PluginExtension/PluginExtension_Error.h"
 #include "../../XEngine_DependLibrary/XEngine_IPMacData/XEngine_Source/XIPMac_CommHdr.h"
 #include "../../XEngine_DependLibrary/XEngine_IPMacData/XEngine_Source/XEngine_APIModuleIPMac/APIIPMac_Define.h"
 #include "../../XEngine_DependLibrary/XEngine_IPMacData/XEngine_Source/XEngine_APIModuleIPMac/APIIPMac_Error.h"
@@ -90,8 +92,6 @@ using namespace std;
 #include "../../XEngine_ModuleSystem/ModuleSystem_Error.h"
 #include "../../XEngine_ModuleHelp/ModuleHelp_Define.h"
 #include "../../XEngine_ModuleHelp/ModuleHelp_Error.h"
-#include "../../XEngine_ModulePlugin/ModulePlugin_Define.h"
-#include "../../XEngine_ModulePlugin/ModulePlugin_Error.h"
 //加载自己的头文件
 #include "XEngine_Configure.h"
 #include "XEngine_Network.h"
@@ -110,6 +110,7 @@ using namespace std;
 #include "XEngine_TaskPost/TaskPost_Image.h"
 #include "XEngine_TaskPost/TaskPost_Deamon.h"
 #include "XEngine_TaskPost/TaskPost_Machine.h"
+#include "XEngine_TaskPost/TaskPost_AVRecord.h"
 //get
 #include "XEngine_TaskGet/TaskGet_IDCard.h"
 #include "XEngine_TaskGet/TaskGet_Bank.h"
@@ -184,6 +185,7 @@ extern XENGINE_DEAMONAPPLIST st_DeamonAppConfig;
 #ifdef _M_X64
 #pragma comment(lib,"../../x64/Debug/XEngine_InfoReport.lib")
 #pragma comment(lib,"../../x64/Debug/XEngine_Verification.lib")
+#pragma comment(lib,"../../x64/Debug/XEngine_PluginExtension.lib")
 #pragma comment(lib,"../../x64/Debug/XEngine_APIModuleIPMac.lib")
 #pragma comment(lib,"../../x64/Debug/XEngine_APIModulePhone.lib")
 #pragma comment(lib,"../../x64/Debug/XEngine_ModuleConfigure.lib")
@@ -191,10 +193,10 @@ extern XENGINE_DEAMONAPPLIST st_DeamonAppConfig;
 #pragma comment(lib,"../../x64/Debug/XEngine_ModuleProtocol.lib")
 #pragma comment(lib,"../../x64/Debug/XEngine_ModuleSystem.lib")
 #pragma comment(lib,"../../x64/Debug/XEngine_ModuleHelp.lib")
-#pragma comment(lib,"../../x64/Debug/XEngine_ModulePlugin.lib")
 #elif _M_ARM64
 #pragma comment(lib,"../../ARM64/Debug/XEngine_InfoReport.lib")
 #pragma comment(lib,"../../ARM64/Debug/XEngine_Verification.lib")
+#pragma comment(lib,"../../ARM64/Debug/XEngine_PluginExtension.lib")
 #pragma comment(lib,"../../ARM64/Debug/XEngine_APIModuleIPMac.lib")
 #pragma comment(lib,"../../ARM64/Debug/XEngine_APIModulePhone.lib")
 #pragma comment(lib,"../../ARM64/Debug/XEngine_ModuleConfigure.lib")
@@ -202,10 +204,10 @@ extern XENGINE_DEAMONAPPLIST st_DeamonAppConfig;
 #pragma comment(lib,"../../ARM64/Debug/XEngine_ModuleProtocol.lib")
 #pragma comment(lib,"../../ARM64/Debug/XEngine_ModuleSystem.lib")
 #pragma comment(lib,"../../ARM64/Debug/XEngine_ModuleHelp.lib")
-#pragma comment(lib,"../../ARM64/Debug/XEngine_ModulePlugin.lib")
 #elif _M_IX86
 #pragma comment(lib,"../../Debug/XEngine_InfoReport.lib")
 #pragma comment(lib,"../../Debug/XEngine_Verification.lib")
+#pragma comment(lib,"../../Debug/XEngine_PluginExtension.lib")
 #pragma comment(lib,"../../Debug/XEngine_APIModuleIPMac.lib")
 #pragma comment(lib,"../../Debug/XEngine_APIModulePhone.lib")
 #pragma comment(lib,"../../Debug/XEngine_ModuleConfigure.lib")
@@ -213,12 +215,12 @@ extern XENGINE_DEAMONAPPLIST st_DeamonAppConfig;
 #pragma comment(lib,"../../Debug/XEngine_ModuleProtocol.lib")
 #pragma comment(lib,"../../Debug/XEngine_ModuleSystem.lib")
 #pragma comment(lib,"../../Debug/XEngine_ModuleHelp.lib")
-#pragma comment(lib,"../../Debug/XEngine_ModulePlugin.lib")
 #endif
 #else
 #ifdef _M_X64
 #pragma comment(lib,"../../x64/Release/XEngine_InfoReport.lib")
 #pragma comment(lib,"../../x64/Release/XEngine_Verification.lib")
+#pragma comment(lib,"../../x64/Release/XEngine_PluginExtension.lib")
 #pragma comment(lib,"../../x64/Release/XEngine_APIModuleIPMac.lib")
 #pragma comment(lib,"../../x64/Release/XEngine_APIModulePhone.lib")
 #pragma comment(lib,"../../x64/Release/XEngine_ModuleConfigure.lib")
@@ -226,10 +228,10 @@ extern XENGINE_DEAMONAPPLIST st_DeamonAppConfig;
 #pragma comment(lib,"../../x64/Release/XEngine_ModuleProtocol.lib")
 #pragma comment(lib,"../../x64/Release/XEngine_ModuleSystem.lib")
 #pragma comment(lib,"../../x64/Release/XEngine_ModuleHelp.lib")
-#pragma comment(lib,"../../x64/Release/XEngine_ModulePlugin.lib")
 #elif _M_ARM64
 #pragma comment(lib,"../../ARM64/Release/XEngine_InfoReport.lib")
 #pragma comment(lib,"../../ARM64/Release/XEngine_Verification.lib")
+#pragma comment(lib,"../../ARM64/Release/XEngine_PluginExtension.lib")
 #pragma comment(lib,"../../ARM64/Release/XEngine_APIModuleIPMac.lib")
 #pragma comment(lib,"../../ARM64/Release/XEngine_APIModulePhone.lib")
 #pragma comment(lib,"../../ARM64/Release/XEngine_ModuleConfigure.lib")
@@ -237,10 +239,10 @@ extern XENGINE_DEAMONAPPLIST st_DeamonAppConfig;
 #pragma comment(lib,"../../ARM64/Release/XEngine_ModuleProtocol.lib")
 #pragma comment(lib,"../../ARM64/Release/XEngine_ModuleSystem.lib")
 #pragma comment(lib,"../../ARM64/Release/XEngine_ModuleHelp.lib")
-#pragma comment(lib,"../../ARM64/Release/XEngine_ModulePlugin.lib")
 #elif _M_IX86
 #pragma comment(lib,"../../Release/XEngine_InfoReport.lib")
 #pragma comment(lib,"../../Release/XEngine_Verification.lib")
+#pragma comment(lib,"../../Release/XEngine_PluginExtension.lib")
 #pragma comment(lib,"../../Release/XEngine_APIModuleIPMac.lib")
 #pragma comment(lib,"../../Release/XEngine_APIModulePhone.lib")
 #pragma comment(lib,"../../Release/XEngine_ModuleConfigure.lib")
@@ -248,7 +250,6 @@ extern XENGINE_DEAMONAPPLIST st_DeamonAppConfig;
 #pragma comment(lib,"../../Release/XEngine_ModuleProtocol.lib")
 #pragma comment(lib,"../../Release/XEngine_ModuleSystem.lib")
 #pragma comment(lib,"../../Release/XEngine_ModuleHelp.lib")
-#pragma comment(lib,"../../Release/XEngine_ModulePlugin.lib")
 #endif
 #endif
 #endif

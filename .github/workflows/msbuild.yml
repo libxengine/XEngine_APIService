@@ -51,7 +51,7 @@ jobs:
         run: |
             cd vcpkg
             ./bootstrap-vcpkg.bat
-            ./vcpkg.exe install lua:x86-windows opencv[contrib]:x86-windows libqrencode:x86-windows
+            ./vcpkg.exe install lua:x86-windows opencv[contrib,freetype]:x86-windows libqrencode:x86-windows leptonica:x86-windows tesseract:x86-windows
             ./vcpkg.exe integrate install
         shell: pwsh
       - name: vcpkg install (x64)
@@ -59,7 +59,7 @@ jobs:
         run: |
             cd vcpkg
             ./bootstrap-vcpkg.bat
-            ./vcpkg.exe install lua:x64-windows opencv[contrib]:x64-windows libqrencode:x64-windows
+            ./vcpkg.exe install lua:x64-windows opencv[contrib,freetype]:x64-windows libqrencode:x64-windows leptonica:x64-windows tesseract:x64-windows
             ./vcpkg.exe integrate install
         shell: pwsh
       - name: vcpkg install (ARM64)
@@ -69,7 +69,7 @@ jobs:
             ./bootstrap-vcpkg.bat
             ./vcpkg.exe install lua:Arm64-windows
             ./vcpkg.exe integrate install
-            # ./vcpkg.exe install lua:Arm64-windows opencv[contrib]:Arm64-windows libqrencode:Arm64-windows Windows的opencv 有问题 
+            # ./vcpkg.exe install lua:Arm64-windows opencv[contrib,freetype]:Arm64-windows libqrencode:Arm64-windows Windows的opencv 有问题 
 
             cd ..
             $filePath = "XEngine_Source/XEngine_BuildSwitch.h"
@@ -118,7 +118,7 @@ jobs:
 
       #编译
       - name: Build Solution
-        run: msbuild XEngine_Source/XEngine.sln /p:Configuration=${{ matrix.configuration }} /p:Platform=${{ matrix.platform }}
+        run: msbuild XEngine_Source/XEngine.sln /p:Configuration=${{ matrix.configuration }} /p:Platform=${{ matrix.platform }} /p:ExtraDefines="_XENGINE_BUILD_SWITCH_LUA"
 
       #测试
       - name: Conditional Step for x86 Release

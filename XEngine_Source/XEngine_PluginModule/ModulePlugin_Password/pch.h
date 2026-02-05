@@ -20,7 +20,7 @@
 #include <XEngine_Include/XEngine_ProtocolHdr.h>
 #include <XEngine_Include/XEngine_BaseLib/BaseLib_Define.h>
 #include <XEngine_Include/XEngine_BaseLib/BaseLib_Error.h>
-#include "../../XEngine_UserProtocol.h"
+#include "../../XEngine_DependLibrary/XEngine_OPenSource/XEngine_Module/XEngine_PluginExtension/PluginExtension_Define.h"
 #include "PluginPass_Define.h"
 #include "PluginPass_Error.h"
 using namespace std;
