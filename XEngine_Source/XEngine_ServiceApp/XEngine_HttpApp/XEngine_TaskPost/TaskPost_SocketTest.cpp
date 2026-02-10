@@ -3,7 +3,7 @@
 void XCALLBACK HTTPTask_TastPost_CBSocketTest(XNETHANDLE xhToken, LPCXSTR lpszAddr, int nPort, __int64x nNumber, __int64x nFailed, __int64x nSuccess, int nStatus, XPVOID lParam)
 {
 	XENGINE_SOCKETTEST* pSt_SocketTest = (XENGINE_SOCKETTEST*)lParam;
-	int nMsgLen = 0;
+	int nMsgLen = 4096;
 	XCHAR tszMsgBuffer[4096] = {};
 
 	if (0 == pSt_SocketTest->nType)
