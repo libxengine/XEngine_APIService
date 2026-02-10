@@ -3,19 +3,12 @@
 bool HTTPTask_TaskGet_Reload(LPCXSTR lpszClientAddr, LPCXSTR lpszOPCode)
 {
 	int nMsgLen = 4096;
-	XCHAR tszMsgBuffer[4096];
-	RFCCOMPONENTS_HTTP_HDRPARAM st_HDRParam;    //发送给客户端的参数
-
-	memset(tszMsgBuffer, '\0', sizeof(tszMsgBuffer));
-	memset(&st_HDRParam, '\0', sizeof(RFCCOMPONENTS_HTTP_HDRPARAM));
-
-	st_HDRParam.nHttpCode = 200; //HTTP CODE码
-	st_HDRParam.bIsClose = true; //收到回复后就关闭
+	XCHAR tszMsgBuffer[4096] = {};
 
 	if (0 == _ttxoi(lpszOPCode))
 	{
 		XEngine_Configure_Parament(0, NULL);
-		HttpProtocol_Server_SendMsgEx(xhHTTPPacket, tszMsgBuffer, &nMsgLen, &st_HDRParam);
+		ModuleProtocol_Packet_Common(tszMsgBuffer, &nMsgLen);
 		XEngine_Network_Send(lpszClientAddr, tszMsgBuffer, nMsgLen);
 		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("HTTP客户端:%s,请求操作配置重载成功,操作的配置:%s"), lpszClientAddr, lpszOPCode);
 	}
@@ -47,7 +40,7 @@ bool HTTPTask_TaskGet_Reload(LPCXSTR lpszClientAddr, LPCXSTR lpszOPCode)
 				PluginExtension_Loader_Insert(pptszListFile[i], 1, &st_PluginParam);
 			}
 		}
-		HttpProtocol_Server_SendMsgEx(xhHTTPPacket, tszMsgBuffer, &nMsgLen, &st_HDRParam);
+		ModuleProtocol_Packet_Common(tszMsgBuffer, &nMsgLen);
 		XEngine_Network_Send(lpszClientAddr, tszMsgBuffer, nMsgLen);
 		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("HTTP客户端:%s,请求重载插件成功,Lib插件:%d 个,Lua插件:%d 个"), lpszClientAddr, nLibCount, nLuaCount);
 	}
@@ -56,13 +49,12 @@ bool HTTPTask_TaskGet_Reload(LPCXSTR lpszClientAddr, LPCXSTR lpszOPCode)
 		st_DeamonAppConfig.stl_ListDeamonApp.clear();
 		if (!ModuleConfigure_Json_DeamonList(st_ServiceConfig.st_XConfig.tszConfigDeamon, &st_DeamonAppConfig))
 		{
-			st_HDRParam.nHttpCode = 500;
-			HttpProtocol_Server_SendMsgEx(xhHTTPPacket, tszMsgBuffer, &nMsgLen, &st_HDRParam);
+			ModuleProtocol_Packet_Common(tszMsgBuffer, &nMsgLen, ERROR_XENGINE_PROTOCL_HTTP_RELOAD,_X("reload configure failure"));
 			XEngine_Network_Send(lpszClientAddr, tszMsgBuffer, nMsgLen);
 			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("HTTP客户端:%s,请求重载进程守护配置文件失败,错误：%lX"), lpszClientAddr, ModuleConfigure_GetLastError());
 			return false;
 		}
-		HttpProtocol_Server_SendMsgEx(xhHTTPPacket, tszMsgBuffer, &nMsgLen, &st_HDRParam);
+		ModuleProtocol_Packet_Common(tszMsgBuffer, &nMsgLen);
 		XEngine_Network_Send(lpszClientAddr, tszMsgBuffer, nMsgLen);
 		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("HTTP客户端:%s,请求重载进程守护配置文件成功"));
 	}

@@ -49,19 +49,11 @@ void XCALLBACK HTTPTask_TaskPost_CBAudio(XHANDLE*** pppSt_AVBuffer, XPVOID lPara
 bool HTTPTask_TaskPost_AVRecordStart(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer, int nMsgLen)
 {
 	int nSDLen = 0;
-	int nRVLen = 0;
-	CXEngine_MemoryPoolEx m_MemorySend(XENGINE_MEMORY_SIZE_MAX);
-	CXEngine_MemoryPoolEx m_MemoryRecv(XENGINE_MEMORY_SIZE_MAX);
-
-	RFCCOMPONENTS_HTTP_HDRPARAM st_HDRParam = {};    //发送给客户端的参数
-
-	st_HDRParam.nHttpCode = 200; //HTTP CODE码
-	st_HDRParam.bIsClose = true; //收到回复后就关闭
+	XCHAR tszSDBuffer[XPATH_2MAX] = {};
 	if (bRecord)
 	{
-		st_HDRParam.nHttpCode = 400;
-		HttpProtocol_Server_SendMsgEx(xhHTTPPacket, m_MemorySend.get(), &nSDLen, &st_HDRParam);
-		XEngine_Network_Send(lpszClientAddr, m_MemorySend.get(), nSDLen);
+		ModuleProtocol_Packet_Common(tszSDBuffer, &nSDLen, ERROR_XENGINE_PROTOCL_HTTP_STARTED, _X("record is started"));
+		XEngine_Network_Send(lpszClientAddr, tszSDBuffer, nSDLen);
 		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("HTTP客户端:%s,请求屏幕录制失败,因为已经在录制中了"), lpszClientAddr);
 		return false;
 	}
@@ -70,18 +62,16 @@ bool HTTPTask_TaskPost_AVRecordStart(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuff
 
 	if (!ModuleProtocol_Parse_AVRecord(lpszMsgBuffer, nMsgLen, &st_AVRecord))
 	{
-		st_HDRParam.nHttpCode = 400;
-		HttpProtocol_Server_SendMsgEx(xhHTTPPacket, m_MemorySend.get(), &nSDLen, &st_HDRParam);
-		XEngine_Network_Send(lpszClientAddr, m_MemorySend.get(), nSDLen);
+		ModuleProtocol_Packet_Common(tszSDBuffer, &nSDLen, ERROR_XENGINE_PROTOCL_HTTP_JSON, _X("json is incorrect"));
+		XEngine_Network_Send(lpszClientAddr, tszSDBuffer, nSDLen);
 		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("HTTP客户端:%s,请求屏幕录制失败,解析协议失败,错误码:%lX"), lpszClientAddr, ModuleProtocol_GetLastError());
 		return false;
 	}
 	xhPacket = AVFormat_Packet_Init();
 	if (!AVFormat_Packet_Output(xhPacket, st_AVRecord.tszFilePath, _X("flv")))
 	{
-		st_HDRParam.nHttpCode = 400;
-		HttpProtocol_Server_SendMsgEx(xhHTTPPacket, m_MemorySend.get(), &nSDLen, &st_HDRParam);
-		XEngine_Network_Send(lpszClientAddr, m_MemorySend.get(), nSDLen);
+		ModuleProtocol_Packet_Common(tszSDBuffer, &nSDLen, ERROR_XENGINE_PROTOCL_HTTP_OPEN, _X("open stream server is failed"));
+		XEngine_Network_Send(lpszClientAddr, tszSDBuffer, nSDLen);
 		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("HTTP客户端:%s,请求屏幕录制失败,推流服务端:%s 连接失败,错误码:%lX"), lpszClientAddr, st_AVRecord.tszFilePath, AVFormat_GetLastError());
 		return false;
 	}
@@ -103,9 +93,8 @@ bool HTTPTask_TaskPost_AVRecordStart(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuff
 #endif
 		if (NULL == xhScreen)
 		{
-			st_HDRParam.nHttpCode = 400;
-			HttpProtocol_Server_SendMsgEx(xhHTTPPacket, m_MemorySend.get(), &nSDLen, &st_HDRParam);
-			XEngine_Network_Send(lpszClientAddr, m_MemorySend.get(), nSDLen);
+			ModuleProtocol_Packet_Common(tszSDBuffer, &nSDLen, ERROR_XENGINE_PROTOCL_HTTP_DEVICE, _X("open video device is failed"));
+			XEngine_Network_Send(lpszClientAddr, tszSDBuffer, nSDLen);
 			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("HTTP客户端:%s,屏幕采集器请求失败,错误码:%lX"), lpszClientAddr, AVCollect_GetLastError());
 			return false;
 		}
@@ -120,9 +109,8 @@ bool HTTPTask_TaskPost_AVRecordStart(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuff
 		xhVideo = VideoCodec_Stream_EnInit(&st_AVInfo.st_VideoInfo);
 		if (NULL == xhVideo)
 		{
-			st_HDRParam.nHttpCode = 500;
-			HttpProtocol_Server_SendMsgEx(xhHTTPPacket, m_MemorySend.get(), &nSDLen, &st_HDRParam);
-			XEngine_Network_Send(lpszClientAddr, m_MemorySend.get(), nSDLen);
+			ModuleProtocol_Packet_Common(tszSDBuffer, &nSDLen, ERROR_XENGINE_PROTOCL_HTTP_INIT, _X("init video codec is failed"));
+			XEngine_Network_Send(lpszClientAddr, tszSDBuffer, nSDLen);
 			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("HTTP客户端:%s,请求屏幕录制失败,打开编码器视频编码器失败,错误码:%lX"), lpszClientAddr, VideoCodec_GetLastError());
 			return false;
 		}
@@ -143,9 +131,8 @@ bool HTTPTask_TaskPost_AVRecordStart(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuff
 #endif
 		if (NULL == xhSound)
 		{
-			st_HDRParam.nHttpCode = 400;
-			HttpProtocol_Server_SendMsgEx(xhHTTPPacket, m_MemorySend.get(), &nSDLen, &st_HDRParam);
-			XEngine_Network_Send(lpszClientAddr, m_MemorySend.get(), nSDLen);
+			ModuleProtocol_Packet_Common(tszSDBuffer, &nSDLen, ERROR_XENGINE_PROTOCL_HTTP_INIT, _X("init audio collect is failed"));
+			XEngine_Network_Send(lpszClientAddr, tszSDBuffer, nSDLen);
 			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("HTTP客户端:%s,初始化音频采集器请求失败,错误码:%lX"), lpszClientAddr, AVCollect_GetLastError());
 			return false;
 		}
@@ -157,9 +144,8 @@ bool HTTPTask_TaskPost_AVRecordStart(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuff
 		xhFilter = AVFilter_Audio_Init(_X("aresample=44100,aformat=sample_fmts=fltp:channel_layouts=stereo"), &st_AudioFilter);
 		if (NULL == xhFilter)
 		{
-			st_HDRParam.nHttpCode = 400;
-			HttpProtocol_Server_SendMsgEx(xhHTTPPacket, m_MemorySend.get(), &nSDLen, &st_HDRParam);
-			XEngine_Network_Send(lpszClientAddr, m_MemorySend.get(), nSDLen);
+			ModuleProtocol_Packet_Common(tszSDBuffer, &nSDLen, ERROR_XENGINE_PROTOCL_HTTP_INIT, _X("init audio filter is failed"));
+			XEngine_Network_Send(lpszClientAddr, tszSDBuffer, nSDLen);
 			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("HTTP客户端:%s,初始化音频滤镜失败,错误码:%lX"), lpszClientAddr, AVFilter_GetLastError());
 			return false;
 		}
@@ -169,9 +155,8 @@ bool HTTPTask_TaskPost_AVRecordStart(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuff
 		xhAudio = AudioCodec_Stream_EnInit(&st_AVInfo.st_AudioInfo);
 		if (NULL == xhAudio)
 		{
-			st_HDRParam.nHttpCode = 400;
-			HttpProtocol_Server_SendMsgEx(xhHTTPPacket, m_MemorySend.get(), &nSDLen, &st_HDRParam);
-			XEngine_Network_Send(lpszClientAddr, m_MemorySend.get(), nSDLen);
+			ModuleProtocol_Packet_Common(tszSDBuffer, &nSDLen, ERROR_XENGINE_PROTOCL_HTTP_INIT, _X("init audio codec is failed"));
+			XEngine_Network_Send(lpszClientAddr, tszSDBuffer, nSDLen);
 			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("HTTP客户端:%s,初始化音频采集器请求失败,错误码:%lX"), lpszClientAddr, AudioCodec_GetLastError());
 			return false;
 		}
@@ -198,8 +183,8 @@ bool HTTPTask_TaskPost_AVRecordStart(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuff
 	AVFormat_Packet_Start(xhPacket);
 	AVCollect_Audio_Start(xhSound);
 	AVCollect_Video_Start(xhScreen);
-	HttpProtocol_Server_SendMsgEx(xhHTTPPacket, m_MemorySend.get(), &nSDLen, &st_HDRParam);
-	XEngine_Network_Send(lpszClientAddr, m_MemorySend.get(), nSDLen);
+	ModuleProtocol_Packet_Common(tszSDBuffer, &nSDLen);
+	XEngine_Network_Send(lpszClientAddr, tszSDBuffer, nSDLen);
 	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("HTTP客户端:%s,开始屏幕录制,音频:%s,视频:%s 推流:%s 请求成功"), lpszClientAddr, st_AVRecord.tszAudioDevice, st_AVRecord.tszVideoDevice, st_AVRecord.tszFilePath);
 	return true;
 }
@@ -223,15 +208,10 @@ bool HTTPTask_TaskPost_AVRecordStop(LPCXSTR lpszClientAddr)
 	xhAudio = NULL;
 	xhPacket = NULL;
 
-	int nMSGLen = 0;
-	XCHAR tszMSGBuffer[XPATH_MAX] = {};
-	RFCCOMPONENTS_HTTP_HDRPARAM st_HDRParam = {};    //发送给客户端的参数
-
-	st_HDRParam.nHttpCode = 200; //HTTP CODE码
-	st_HDRParam.bIsClose = true; //收到回复后就关闭
-
-	HttpProtocol_Server_SendMsgEx(xhHTTPPacket, tszMSGBuffer, &nMSGLen, &st_HDRParam);
-	XEngine_Network_Send(lpszClientAddr, tszMSGBuffer, nMSGLen);
+	int nSDLen = 0;
+	XCHAR tszSDBuffer[XPATH_MAX] = {};
+	ModuleProtocol_Packet_Common(tszSDBuffer, &nSDLen);
+	XEngine_Network_Send(lpszClientAddr, tszSDBuffer, nSDLen);
 	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("HTTP客户端:%s,停止屏幕录制推流请求成功"), lpszClientAddr);
 
 	return true;

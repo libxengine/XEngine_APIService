@@ -70,8 +70,16 @@ void XEngine_Network_Close(LPCXSTR lpszClientAddr, bool bHeart)
 //////////////////////////////////////////////////////////////////////////
 bool XEngine_Network_Send(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer, int nMsgLen)
 {
+	int nSDLen = 0;
+	CXEngine_MemoryPoolEx m_MSGMemory(XENGINE_MEMORY_SIZE_MAX);
+	RFCCOMPONENTS_HTTP_HDRPARAM st_HDRParam = {};    //发送给客户端的参数
+
+	st_HDRParam.nHttpCode = 200; //HTTP CODE码
+	st_HDRParam.bIsClose = true; //收到回复后就关闭
+
+	HttpProtocol_Server_SendMsgEx(xhHTTPPacket, m_MSGMemory.get(), &nSDLen, &st_HDRParam, lpszMsgBuffer, nMsgLen);
 	//发送数据给指定客户端
-	if (!NetCore_TCPXCore_SendEx(xhHTTPSocket, lpszClientAddr, lpszMsgBuffer, nMsgLen))
+	if (!NetCore_TCPXCore_SendEx(xhHTTPSocket, lpszClientAddr, m_MSGMemory.get(), nSDLen))
 	{
 		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("HTTP客户端:%s,发送数据失败，错误:%lX"), lpszClientAddr, NetCore_GetLastError());
 		return false;

@@ -564,7 +564,7 @@ int main(int argc, char** argv)
 	}
 	else
 	{
-		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_WARN, _X("启动服务中,数据查询服务没有启用"));
+		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_WARN, _X("启动服务中,HTTP验证服务没有启用"));
 	}
 #ifndef _DEBUG
 	//发送信息报告

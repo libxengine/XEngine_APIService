@@ -27,7 +27,7 @@ bool HTTPTask_TaskPost_SLProxy(LPCXSTR lpszClientAddr, LPCXSTR lpszUriStr, XCHAR
 	XCHAR tszSDBuffer[4096];
 	XCHAR tszRVBuffer[4096];
 	XENGINE_SHORTLINK st_ShortLink;
-	RFCCOMPONENTS_HTTP_HDRPARAM st_HDRParam; 
+	RFCCOMPONENTS_HTTP_HDRPARAM st_HDRParam;
 
 	memset(tszSDBuffer, '\0', sizeof(tszSDBuffer));
 	memset(tszRVBuffer, '\0', sizeof(tszRVBuffer));

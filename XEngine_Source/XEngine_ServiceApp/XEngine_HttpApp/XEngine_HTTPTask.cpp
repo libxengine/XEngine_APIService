@@ -83,7 +83,7 @@ bool HTTPTask_TastPost_Verification(RFCCOMPONENTS_HTTP_REQPARAM* pSt_HTTPParam, 
 	if (!Verification_HTTP_GetType(pptszHDRList, nHDRCount, &nVType))
 	{
 		HttpProtocol_Server_SendMsgEx(xhHTTPPacket, tszSDBuffer, &nSDLen, &st_HDRParam, NULL, 0, tszHDRBuffer);
-		XEngine_Network_Send(lpszClientAddr, tszSDBuffer, nSDLen);
+		NetCore_TCPXCore_SendEx(xhHTTPSocket, lpszClientAddr, tszSDBuffer, nSDLen);
 		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("HTTP客户端:%s,用户验证失败,验证方式:%d,错误:%lX"), lpszClientAddr, st_ServiceConfig.st_XVerifcation.nVType, Verification_GetLastError());
 		return false;
 	}
@@ -91,7 +91,7 @@ bool HTTPTask_TastPost_Verification(RFCCOMPONENTS_HTTP_REQPARAM* pSt_HTTPParam, 
 	if (st_ServiceConfig.st_XVerifcation.nVType != nVType)
 	{
 		HttpProtocol_Server_SendMsgEx(xhHTTPPacket, tszSDBuffer, &nSDLen, &st_HDRParam, NULL, 0, tszHDRBuffer);
-		XEngine_Network_Send(lpszClientAddr, tszSDBuffer, nSDLen);
+		NetCore_TCPXCore_SendEx(xhHTTPSocket, lpszClientAddr, tszSDBuffer, nSDLen);
 		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("HTTP客户端:%s,用户验证失败,验证方式错误,请求:%d,需求:%d"), lpszClientAddr, nVType, st_ServiceConfig.st_XVerifcation.nVType);
 		return false;
 	}
@@ -107,7 +107,7 @@ bool HTTPTask_TastPost_Verification(RFCCOMPONENTS_HTTP_REQPARAM* pSt_HTTPParam, 
 		{
 			st_HDRParam.nHttpCode = 500;
 			HttpProtocol_Server_SendMsgEx(xhHTTPPacket, tszSDBuffer, &nSDLen, &st_HDRParam, NULL, 0, tszHDRBuffer);
-			XEngine_Network_Send(lpszClientAddr, tszSDBuffer, nSDLen);
+			NetCore_TCPXCore_SendEx(xhHTTPSocket, lpszClientAddr, tszSDBuffer, nSDLen);
 			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("HTTP客户端:%s,用户验证失败,GET请求验证服务:%s 失败,错误码:%lX"), lpszClientAddr, st_ServiceConfig.st_XVerifcation.tszAPIAuth, APIClient_GetLastError());
 			return false;
 		}
@@ -115,7 +115,7 @@ bool HTTPTask_TastPost_Verification(RFCCOMPONENTS_HTTP_REQPARAM* pSt_HTTPParam, 
 		{
 			st_HDRParam.nHttpCode = 500;
 			HttpProtocol_Server_SendMsgEx(xhHTTPPacket, tszSDBuffer, &nSDLen, &st_HDRParam, NULL, 0, tszHDRBuffer);
-			XEngine_Network_Send(lpszClientAddr, tszSDBuffer, nSDLen);
+			NetCore_TCPXCore_SendEx(xhHTTPSocket, lpszClientAddr, tszSDBuffer, nSDLen);
 			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("HTTP客户端:%s,用户验证失败,GET请求验证服务:%s 失败,错误:%d"), lpszClientAddr, st_ServiceConfig.st_XVerifcation.tszAPIAuth, nHTTPCode);
 			return false;
 		}
@@ -124,7 +124,7 @@ bool HTTPTask_TastPost_Verification(RFCCOMPONENTS_HTTP_REQPARAM* pSt_HTTPParam, 
 		{
 			st_HDRParam.nHttpCode = 500;
 			HttpProtocol_Server_SendMsgEx(xhHTTPPacket, tszSDBuffer, &nSDLen, &st_HDRParam, NULL, 0, tszHDRBuffer);
-			XEngine_Network_Send(lpszClientAddr, tszSDBuffer, nSDLen);
+			NetCore_TCPXCore_SendEx(xhHTTPSocket, lpszClientAddr, tszSDBuffer, nSDLen);
 			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("HTTP客户端:%s,用户验证失败,返回内容:%s 错误,无法继续"), lpszClientAddr, ptszMSGBuffer);
 			BaseLib_Memory_FreeCStyle((XPPMEM)&ptszMSGBuffer);
 			return false;
@@ -155,7 +155,7 @@ bool HTTPTask_TastPost_Verification(RFCCOMPONENTS_HTTP_REQPARAM* pSt_HTTPParam, 
 	if (!bRet)
 	{
 		HttpProtocol_Server_SendMsgEx(xhHTTPPacket, tszSDBuffer, &nSDLen, &st_HDRParam, NULL, 0, tszHDRBuffer);
-		XEngine_Network_Send(lpszClientAddr, tszSDBuffer, nSDLen);
+		NetCore_TCPXCore_SendEx(xhHTTPSocket, lpszClientAddr, tszSDBuffer, nSDLen);
 		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("HTTP客户端:%s,用户验证失败,验证处理错误,可能用户密码登信息不匹配,类型:%d"), lpszClientAddr, nVType);
 		return false;
 	}
@@ -167,15 +167,9 @@ bool HTTPTask_TastPost_Handle(RFCCOMPONENTS_HTTP_REQPARAM* pSt_HTTPParam, LPCXST
 {
 	bool bVerification = false;
 	int nSDLen = 4096;
-	int nRVLen = 4096;
 	LPCXSTR lpszMethodPost = _X("POST");
 	LPCXSTR lpszMethodGet = _X("GET");
 	XCHAR tszSDBuffer[4096] = {};
-	XCHAR tszRVBuffer[4096] = {};
-	RFCCOMPONENTS_HTTP_HDRPARAM st_HDRParam = {};
-
-	st_HDRParam.nHttpCode = 200; //HTTP CODE码
-	st_HDRParam.bIsClose = true; //收到回复后就关闭
 
 	XCHAR** pptszList;
 	XCHAR tszUrlName[128];
@@ -201,8 +195,7 @@ bool HTTPTask_TastPost_Handle(RFCCOMPONENTS_HTTP_REQPARAM* pSt_HTTPParam, LPCXST
 		{
 			return true;
 		}
-		st_HDRParam.nHttpCode = 404;
-		HttpProtocol_Server_SendMsgEx(xhHTTPPacket, tszSDBuffer, &nSDLen, &st_HDRParam);
+		ModuleProtocol_Packet_Common(tszSDBuffer, &nSDLen, ERROR_XENGINE_PROTOCL_HTTP_FAILURE, _X("request url is incorrect"));
 		XEngine_Network_Send(lpszClientAddr, tszSDBuffer, nSDLen);
 		BaseLib_Memory_Free((XPPPMEM)&pptszList, nListCount);
 		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("HTTP客户端:%s,发送的URL请求参数不正确:%s"), lpszClientAddr, tszGBKBuffer);
@@ -255,8 +248,7 @@ bool HTTPTask_TastPost_Handle(RFCCOMPONENTS_HTTP_REQPARAM* pSt_HTTPParam, LPCXST
 
 	if (0 != _tcsxncmp(lpszFuncName, tszUrlName, _tcsxlen(lpszFuncName)))
 	{
-		st_HDRParam.nHttpCode = 404;
-		HttpProtocol_Server_SendMsgEx(xhHTTPPacket, tszSDBuffer, &nSDLen, &st_HDRParam);
+		ModuleProtocol_Packet_Common(tszSDBuffer, &nSDLen, ERROR_XENGINE_PROTOCL_HTTP_FAILURE, _X("request url is incorrect"));
 		XEngine_Network_Send(lpszClientAddr, tszSDBuffer, nSDLen);
 		BaseLib_Memory_Free((XPPPMEM)&pptszList, nListCount);
 		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("HTTP客户端:%s,发送的URL请求参数不正确:%s"), lpszClientAddr, tszGBKBuffer);
@@ -266,8 +258,7 @@ bool HTTPTask_TastPost_Handle(RFCCOMPONENTS_HTTP_REQPARAM* pSt_HTTPParam, LPCXST
 	BaseLib_String_GetKeyValue(pptszList[0], "=", tszKey, tszValue);
 	if (0 != _tcsxncmp(lpszParamFuncKey, tszKey, _tcsxlen(lpszParamFuncKey)))
 	{
-		st_HDRParam.nHttpCode = 404;
-		HttpProtocol_Server_SendMsgEx(xhHTTPPacket, tszSDBuffer, &nSDLen, &st_HDRParam);
+		ModuleProtocol_Packet_Common(tszSDBuffer, &nSDLen, ERROR_XENGINE_PROTOCL_HTTP_FAILURE, _X("request url is incorrect"));
 		XEngine_Network_Send(lpszClientAddr, tszSDBuffer, nSDLen);
 		BaseLib_Memory_Free((XPPPMEM)&pptszList, nListCount);
 		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("HTTP客户端:%s,发送的URL请求参数不正确:%s"), lpszClientAddr, tszGBKBuffer);
@@ -408,8 +399,7 @@ bool HTTPTask_TastPost_Handle(RFCCOMPONENTS_HTTP_REQPARAM* pSt_HTTPParam, LPCXST
 		}
 		else
 		{
-			st_HDRParam.nHttpCode = 404;
-			HttpProtocol_Server_SendMsgEx(xhHTTPPacket, tszSDBuffer, &nSDLen, &st_HDRParam);
+			ModuleProtocol_Packet_Common(tszSDBuffer, &nSDLen, ERROR_XENGINE_PROTOCL_HTTP_FAILURE, _X("request url is incorrect"));
 			XEngine_Network_Send(lpszClientAddr, tszSDBuffer, nSDLen);
 			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("HTTP客户端:%s,发送的请求不支持:%s，内容:\r\n%s"), lpszClientAddr, tszGBKBuffer, lpszMSGBuffer);
 		}
@@ -546,8 +536,7 @@ bool HTTPTask_TastPost_Handle(RFCCOMPONENTS_HTTP_REQPARAM* pSt_HTTPParam, LPCXST
 		}
 		else
 		{
-			st_HDRParam.nHttpCode = 404;
-			HttpProtocol_Server_SendMsgEx(xhHTTPPacket, tszSDBuffer, &nSDLen, &st_HDRParam);
+			ModuleProtocol_Packet_Common(tszSDBuffer, &nSDLen, ERROR_XENGINE_PROTOCL_HTTP_FAILURE, _X("request url is incorrect"));
 			XEngine_Network_Send(lpszClientAddr, tszSDBuffer, nSDLen);
 			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("HTTP客户端:%s,发送的请求不支持:%s，内容:\r\n%s"), lpszClientAddr, tszGBKBuffer, lpszMSGBuffer);
 		}
