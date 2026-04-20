@@ -246,7 +246,7 @@ bool HTTPTask_TastPost_Handle(RFCCOMPONENTS_HTTP_REQPARAM* pSt_HTTPParam, LPCXST
 	memset(tszKey, '\0', XPATH_MAX);
 	memset(tszValue, '\0', XPATH_MAX);
 
-	if (0 != _tcsxncmp(lpszFuncName, tszUrlName, _tcsxlen(lpszFuncName)))
+	if (0 != _tcsxnicmp(lpszFuncName, tszUrlName, _tcsxlen(lpszFuncName)))
 	{
 		ModuleProtocol_Packet_Common(tszSDBuffer, &nSDLen, ERROR_XENGINE_PROTOCL_HTTP_FAILURE, _X("request url is incorrect"));
 		XEngine_Network_Send(lpszClientAddr, tszSDBuffer, nSDLen);
@@ -256,7 +256,7 @@ bool HTTPTask_TastPost_Handle(RFCCOMPONENTS_HTTP_REQPARAM* pSt_HTTPParam, LPCXST
 	}
 	//获得函数名
 	BaseLib_String_GetKeyValue(pptszList[0], "=", tszKey, tszValue);
-	if (0 != _tcsxncmp(lpszParamFuncKey, tszKey, _tcsxlen(lpszParamFuncKey)))
+	if (0 != _tcsxnicmp(lpszParamFuncKey, tszKey, _tcsxlen(lpszParamFuncKey)))
 	{
 		ModuleProtocol_Packet_Common(tszSDBuffer, &nSDLen, ERROR_XENGINE_PROTOCL_HTTP_FAILURE, _X("request url is incorrect"));
 		XEngine_Network_Send(lpszClientAddr, tszSDBuffer, nSDLen);
@@ -271,9 +271,9 @@ bool HTTPTask_TastPost_Handle(RFCCOMPONENTS_HTTP_REQPARAM* pSt_HTTPParam, LPCXST
 		XEngine_PluginTask_Handle(tszValue, lpszClientAddr, lpszMSGBuffer, nMSGLen, &pptszList, nListCount, nPluginType);
 		return true;
 	}
-	if (0 == _tcsxncmp(lpszMethodPost, pSt_HTTPParam->tszHttpMethod, _tcsxlen(lpszMethodPost)))
+	if (0 == _tcsxnicmp(lpszMethodPost, pSt_HTTPParam->tszHttpMethod, _tcsxlen(lpszMethodPost)))
 	{
-		if (0 == _tcsxncmp(lpszParamP2PClient, tszValue, _tcsxlen(lpszParamP2PClient)))
+		if (0 == _tcsxnicmp(lpszParamP2PClient, tszValue, _tcsxlen(lpszParamP2PClient)))
 		{
 			//是不是P2P
 			memset(tszKey, '\0', sizeof(tszKey));
@@ -281,7 +281,7 @@ bool HTTPTask_TastPost_Handle(RFCCOMPONENTS_HTTP_REQPARAM* pSt_HTTPParam, LPCXST
 			BaseLib_String_GetKeyValue(pptszList[1], "=", tszKey, tszValue);
 			HTTPTask_TastPost_P2PClient(lpszClientAddr, lpszMSGBuffer, nMSGLen, _ttxoi(tszValue));
 		}
-		else if (0 == _tcsxncmp(lpszParamZIPCode, tszValue, _tcsxlen(lpszParamZIPCode)))
+		else if (0 == _tcsxnicmp(lpszParamZIPCode, tszValue, _tcsxlen(lpszParamZIPCode)))
 		{
 			//邮政信息:http://app.xyry.org:5501/api?function=zipcode&params1=0
 			memset(tszKey, '\0', sizeof(tszKey));
@@ -289,7 +289,7 @@ bool HTTPTask_TastPost_Handle(RFCCOMPONENTS_HTTP_REQPARAM* pSt_HTTPParam, LPCXST
 			BaseLib_String_GetKeyValue(pptszList[1], "=", tszKey, tszValue);
 			HTTPTask_TastPost_PostCode(lpszClientAddr, lpszMSGBuffer, nMSGLen, _ttxoi(tszValue));
 		}
-		else if (0 == _tcsxncmp(lpszParamXLog, tszValue, _tcsxlen(lpszParamXLog)))
+		else if (0 == _tcsxnicmp(lpszParamXLog, tszValue, _tcsxlen(lpszParamXLog)))
 		{
 			//日志信息:http://app.xyry.org:5501/api?function=log&params1=0
 			memset(tszKey, '\0', sizeof(tszKey));
@@ -297,7 +297,7 @@ bool HTTPTask_TastPost_Handle(RFCCOMPONENTS_HTTP_REQPARAM* pSt_HTTPParam, LPCXST
 			BaseLib_String_GetKeyValue(pptszList[1], "=", tszKey, tszValue);
 			HTTPTask_TastPost_LogInfo(lpszClientAddr, lpszMSGBuffer, nMSGLen, _ttxoi(tszValue));
 		}
-		else if (0 == _tcsxncmp(lpszParamQRCode, tszValue, _tcsxlen(lpszParamQRCode)))
+		else if (0 == _tcsxnicmp(lpszParamQRCode, tszValue, _tcsxlen(lpszParamQRCode)))
 		{
 			//二维码生成:http://app.xyry.org:5501/api?function=qrcode&params1=0 或者 1
 			memset(tszKey, '\0', sizeof(tszKey));
@@ -305,7 +305,7 @@ bool HTTPTask_TastPost_Handle(RFCCOMPONENTS_HTTP_REQPARAM* pSt_HTTPParam, LPCXST
 			BaseLib_String_GetKeyValue(pptszList[1], "=", tszKey, tszValue);
 			HTTPTask_TaskPost_QRCode(lpszClientAddr, lpszMSGBuffer, nMSGLen, _ttxoi(tszValue));
 		}
-		else if (0 == _tcsxncmp(lpszParamSocket, tszValue, _tcsxlen(lpszParamSocket)))
+		else if (0 == _tcsxnicmp(lpszParamSocket, tszValue, _tcsxlen(lpszParamSocket)))
 		{
 			//网络测试:http://app.xyry.org:5501/api?function=socket&params1=0 或者 1
 			memset(tszKey, '\0', sizeof(tszKey));
@@ -313,7 +313,7 @@ bool HTTPTask_TastPost_Handle(RFCCOMPONENTS_HTTP_REQPARAM* pSt_HTTPParam, LPCXST
 			BaseLib_String_GetKeyValue(pptszList[1], "=", tszKey, tszValue);
 			HTTPTask_TastPost_SocketTest(lpszClientAddr, lpszMSGBuffer, nMSGLen, _ttxoi(tszValue));
 		}
-		else if (0 == _tcsxncmp(lpszParamDTest, tszValue, _tcsxlen(lpszParamDTest)))
+		else if (0 == _tcsxnicmp(lpszParamDTest, tszValue, _tcsxlen(lpszParamDTest)))
 		{
 			//数据测试:http://app.xyry.org:5501/api?function=dtest&params1=0 或者 1
 			memset(tszKey, '\0', sizeof(tszKey));
@@ -321,7 +321,7 @@ bool HTTPTask_TastPost_Handle(RFCCOMPONENTS_HTTP_REQPARAM* pSt_HTTPParam, LPCXST
 			BaseLib_String_GetKeyValue(pptszList[1], "=", tszKey, tszValue);
 			HTTPTask_TastPost_DTest(lpszClientAddr, lpszMSGBuffer, nMSGLen, _ttxoi(tszValue));
 		}
-		else if (0 == _tcsxncmp(lpszParamShortLink, tszValue, _tcsxlen(lpszParamShortLink)))
+		else if (0 == _tcsxnicmp(lpszParamShortLink, tszValue, _tcsxlen(lpszParamShortLink)))
 		{
 			//短连接:http://app.xyry.org:5501/api?function=slink&params1=0 
 			XCHAR tszType[64];
@@ -330,7 +330,7 @@ bool HTTPTask_TastPost_Handle(RFCCOMPONENTS_HTTP_REQPARAM* pSt_HTTPParam, LPCXST
 			BaseLib_String_GetKeyValue(pptszList[1], "=", tszKey, tszType);
 			HTTPTask_TaskPost_ShortLink(lpszClientAddr, lpszMSGBuffer, nMSGLen, _ttxoi(tszType));
 		}
-		else if (0 == _tcsxncmp(lpszParamWordFilter, tszValue, _tcsxlen(lpszParamWordFilter)))
+		else if (0 == _tcsxnicmp(lpszParamWordFilter, tszValue, _tcsxlen(lpszParamWordFilter)))
 		{
 			//敏感词:http://app.xyry.org:5501/api?function=wordfilter&params1=0 
 			XCHAR tszType[64];
@@ -339,7 +339,7 @@ bool HTTPTask_TastPost_Handle(RFCCOMPONENTS_HTTP_REQPARAM* pSt_HTTPParam, LPCXST
 			BaseLib_String_GetKeyValue(pptszList[1], "=", tszKey, tszType);
 			HTTPTask_TastPost_WordFilter(lpszClientAddr, lpszMSGBuffer, nMSGLen, _ttxoi(tszType));
 		}
-		else if (0 == _tcsxncmp(lpszParamBack, tszValue, _tcsxlen(lpszParamBack)))
+		else if (0 == _tcsxnicmp(lpszParamBack, tszValue, _tcsxlen(lpszParamBack)))
 		{
 			//后台管理接口:http://app.xyry.org:5501/api?function=back&params1=0
 			XCHAR tszType[64];
@@ -355,12 +355,12 @@ bool HTTPTask_TastPost_Handle(RFCCOMPONENTS_HTTP_REQPARAM* pSt_HTTPParam, LPCXST
 			BaseLib_String_GetKeyValue(pptszList[1], "=", tszKey, tszType);
 			HTTPTask_TaskPost_BackService(lpszClientAddr, lpszMSGBuffer, nMSGLen, _ttxoi(tszType));
 		}
-		else if (0 == _tcsxncmp(lpszParamImage, tszValue, _tcsxlen(lpszParamImage)))
+		else if (0 == _tcsxnicmp(lpszParamImage, tszValue, _tcsxlen(lpszParamImage)))
 		{
 			//图像处理接口:http://app.xyry.org:5501/api?function=image&params1=0
 			HTTPTask_TaskPost_Image(lpszClientAddr, lpszMSGBuffer, nMSGLen, &pptszList, nListCount);
 		}
-		else if (0 == _tcsxncmp(lpszParamDeamon, tszValue, _tcsxlen(lpszParamDeamon)))
+		else if (0 == _tcsxnicmp(lpszParamDeamon, tszValue, _tcsxlen(lpszParamDeamon)))
 		{
 			//守护进程接口:http://app.xyry.org:5501/api?function=deamon&params1=0
 			if (st_ServiceConfig.st_XVerifcation.st_VerSwitch.bDeamon && !bVerification)
@@ -372,7 +372,7 @@ bool HTTPTask_TastPost_Handle(RFCCOMPONENTS_HTTP_REQPARAM* pSt_HTTPParam, LPCXST
 			}
 			HTTPTask_TaskPost_Deamon(lpszClientAddr, lpszMSGBuffer, nMSGLen);
 		}
-		else if (0 == _tcsxncmp(lpszParamMachine, tszValue, _tcsxlen(lpszParamMachine)))
+		else if (0 == _tcsxnicmp(lpszParamMachine, tszValue, _tcsxlen(lpszParamMachine)))
 		{
 			//信息收集接口:http://app.xyry.org:5501/api?function=machine&params1=0
 			XCHAR tszType[64];
@@ -381,14 +381,14 @@ bool HTTPTask_TastPost_Handle(RFCCOMPONENTS_HTTP_REQPARAM* pSt_HTTPParam, LPCXST
 			BaseLib_String_GetKeyValue(pptszList[1], "=", tszKey, tszType);
 			HTTPTask_TastPost_Machine(lpszClientAddr, lpszMSGBuffer, nMSGLen, _ttxoi(tszType));
 		}
-		else if (0 == _tcsxncmp(lpszParamAVRecord, tszValue, _tcsxlen(lpszParamAVRecord)))
+		else if (0 == _tcsxnicmp(lpszParamAVRecord, tszValue, _tcsxlen(lpszParamAVRecord)))
 		{
 			//信息收集接口:http://app.xyry.org:5501/api?function=avrecord&params1=start 或者 stop
 			XCHAR tszType[64];
 			memset(tszType, '\0', sizeof(tszType));
 
 			BaseLib_String_GetKeyValue(pptszList[1], "=", tszKey, tszType);
-			if (0 == _tcsxncmp(_X("start"), tszType, 5))
+			if (0 == _tcsxnicmp(_X("start"), tszType, 5))
 			{
 				HTTPTask_TaskPost_AVRecordStart(lpszClientAddr, lpszMSGBuffer, nMSGLen);
 			}
@@ -404,16 +404,16 @@ bool HTTPTask_TastPost_Handle(RFCCOMPONENTS_HTTP_REQPARAM* pSt_HTTPParam, LPCXST
 			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("HTTP客户端:%s,发送的请求不支持:%s，内容:\r\n%s"), lpszClientAddr, tszGBKBuffer, lpszMSGBuffer);
 		}
 	}
-	else if (0 == _tcsxncmp(lpszMethodGet, pSt_HTTPParam->tszHttpMethod, _tcsxlen(lpszMethodGet)))
+	else if (0 == _tcsxnicmp(lpszMethodGet, pSt_HTTPParam->tszHttpMethod, _tcsxlen(lpszMethodGet)))
 	{
-		if (0 == _tcsxncmp(lpszParamReload, tszValue, _tcsxlen(lpszParamReload)))
+		if (0 == _tcsxnicmp(lpszParamReload, tszValue, _tcsxlen(lpszParamReload)))
 		{
 			//是不是配置重载
 			memset(tszKey, '\0', sizeof(tszKey));
 			BaseLib_String_GetKeyValue(pptszList[1], "=", tszKey, tszValue);
 			HTTPTask_TaskGet_Reload(lpszClientAddr, tszValue);
 		}
-		else if (0 == _tcsxncmp(lpszParamIDCard, tszValue, _tcsxlen(lpszParamIDCard)))
+		else if (0 == _tcsxnicmp(lpszParamIDCard, tszValue, _tcsxlen(lpszParamIDCard)))
 		{
 			//是不是身份证查询
 			memset(tszKey, '\0', sizeof(tszKey));
@@ -421,7 +421,7 @@ bool HTTPTask_TastPost_Handle(RFCCOMPONENTS_HTTP_REQPARAM* pSt_HTTPParam, LPCXST
 			BaseLib_String_GetKeyValue(pptszList[1], "=", tszKey, tszValue);
 			HTTPTask_TaskGet_IDCard(lpszClientAddr, tszValue);
 		}
-		else if (0 == _tcsxncmp(lpszParamBank, tszValue, _tcsxlen(lpszParamBank)))
+		else if (0 == _tcsxnicmp(lpszParamBank, tszValue, _tcsxlen(lpszParamBank)))
 		{
 			//是不是银行卡信息
 			memset(tszKey, '\0', sizeof(tszKey));
@@ -429,7 +429,7 @@ bool HTTPTask_TastPost_Handle(RFCCOMPONENTS_HTTP_REQPARAM* pSt_HTTPParam, LPCXST
 			BaseLib_String_GetKeyValue(pptszList[1], "=", tszKey, tszValue);
 			HTTPTask_TaskGet_BankInfo(lpszClientAddr, tszValue);
 		}
-		else if (0 == _tcsxncmp(lpszParamTranslation, tszValue, _tcsxlen(lpszParamTranslation)))
+		else if (0 == _tcsxnicmp(lpszParamTranslation, tszValue, _tcsxlen(lpszParamTranslation)))
 		{
 			//是不是翻译
 			XCHAR tszMSGBuffer[2048] = {};
@@ -441,7 +441,7 @@ bool HTTPTask_TastPost_Handle(RFCCOMPONENTS_HTTP_REQPARAM* pSt_HTTPParam, LPCXST
 			BaseLib_String_GetKeyValue(pptszList[3], "=", tszKey, tszDstBuffer);
 			HTTPTask_TaskGet_Translation(lpszClientAddr, tszMSGBuffer, tszSrcBuffer, tszDstBuffer);
 		}
-		else if (0 == _tcsxncmp(lpszParamLocker, tszValue, _tcsxlen(lpszParamLocker)))
+		else if (0 == _tcsxnicmp(lpszParamLocker, tszValue, _tcsxlen(lpszParamLocker)))
 		{
 			//是不是分布式锁
 			XCHAR tszLockToken[128];
@@ -455,7 +455,7 @@ bool HTTPTask_TastPost_Handle(RFCCOMPONENTS_HTTP_REQPARAM* pSt_HTTPParam, LPCXST
 			BaseLib_String_GetKeyValue(pptszList[2], "=", tszKey, tszLockType);
 			HTTPTask_TaskGet_Locker(lpszClientAddr, _ttxoll(tszLockToken), (ENUM_XENGINE_APISERVICE_LOCKER_TYPE)_ttxoi(tszLockType));
 		}
-		else if (0 == _tcsxncmp(lpszParamWeather, tszValue, _tcsxlen(lpszParamWeather)))
+		else if (0 == _tcsxnicmp(lpszParamWeather, tszValue, _tcsxlen(lpszParamWeather)))
 		{
 			//天气:http://127.0.0.1:5501/api?function=weather&params1=110101
 			XCHAR tszIDAddr[128] = {};
@@ -463,7 +463,7 @@ bool HTTPTask_TastPost_Handle(RFCCOMPONENTS_HTTP_REQPARAM* pSt_HTTPParam, LPCXST
 			BaseLib_String_GetKeyValue(pptszList[1], "=", tszKey, tszIDAddr);
 			HTTPTask_TaskGet_WeatherInfo(lpszClientAddr, tszIDAddr);
 		}
-		else if (0 == _tcsxncmp(lpszParamRegion, tszValue, _tcsxlen(lpszParamRegion)))
+		else if (0 == _tcsxnicmp(lpszParamRegion, tszValue, _tcsxlen(lpszParamRegion)))
 		{
 			//地区ID:http://127.0.0.1:5501/api?function=region&type=1&params=省份&params=市区&params=县级
 			int nType = 0;
@@ -507,7 +507,7 @@ bool HTTPTask_TastPost_Handle(RFCCOMPONENTS_HTTP_REQPARAM* pSt_HTTPParam, LPCXST
 				}
 			}
 		}
-		else if (0 == _tcsxncmp(lpszParamOil, tszValue, _tcsxlen(lpszParamOil)))
+		else if (0 == _tcsxnicmp(lpszParamOil, tszValue, _tcsxlen(lpszParamOil)))
 		{
 			//油价:http://127.0.0.1:5501/api?function=oil&param=地区
 			memset(tszValue, '\0', sizeof(tszValue));
@@ -515,7 +515,7 @@ bool HTTPTask_TastPost_Handle(RFCCOMPONENTS_HTTP_REQPARAM* pSt_HTTPParam, LPCXST
 			BaseLib_String_GetKeyValue(pptszList[1], "=", tszKey, tszValue);
 			HTTPTask_TaskGet_Oil(lpszClientAddr, tszValue);
 		}
-		else if ((0 == _tcsxncmp(lpszParamPhone, tszValue, _tcsxlen(lpszParamPhone))) || (0 == _tcsxncmp(lpszParamIPAddr, tszValue, _tcsxlen(lpszParamIPAddr))) || (0 == _tcsxncmp(lpszParamMacInfo, tszValue, _tcsxlen(lpszParamMacInfo))))
+		else if ((0 == _tcsxnicmp(lpszParamPhone, tszValue, _tcsxlen(lpszParamPhone))) || (0 == _tcsxnicmp(lpszParamIPAddr, tszValue, _tcsxlen(lpszParamIPAddr))) || (0 == _tcsxnicmp(lpszParamMacInfo, tszValue, _tcsxlen(lpszParamMacInfo))))
 		{
 			//phone:http://127.0.0.1:5501/api?function=phone&param=1369943
 			//ip:http://127.0.0.1:5501/api?function=ip&param=117.172.221.14&language=en
