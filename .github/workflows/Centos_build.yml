@@ -48,26 +48,26 @@ jobs:
 
     steps:
       - name: Checkout main repository code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Checkout dependency repository (xengine)
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           repository: libxengine/libxengine
           path: libxengine
 
       - name: sub module checkout (XEngine_OPenSource)
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           repository: libxengine/XEngine_OPenSource
           path: XEngine_Source/XEngine_DependLibrary/XEngine_OPenSource
       - name: sub module checkout (XEngine_PhoneData)
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           repository: libxengine/XEngine_PhoneData
           path: XEngine_Source/XEngine_DependLibrary/XEngine_PhoneData
       - name: sub module checkout (XEngine_IPMacData)
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           repository: libxengine/XEngine_IPMacData
           path: XEngine_Source/XEngine_DependLibrary/XEngine_IPMacData
@@ -112,7 +112,7 @@ jobs:
             ./XEngine_APIServiceApp -t
 
       - name: Upload folder as artifact with CentOS
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: XEngine_MQServiceApp-CentOS_${{ matrix.version }}_${{ matrix.artifact }}
           path: XEngine_Release/

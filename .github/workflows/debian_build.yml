@@ -36,12 +36,12 @@ jobs:
 
     steps:
       - name: Checkout main repository code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           ref: 'develop'
 
       - name: Checkout dependency repository (xengine)
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           repository: libxengine/libxengine
           path: libxengine
@@ -50,17 +50,17 @@ jobs:
         run: echo "TERM=xterm" >> $GITHUB_ENV
 
       - name: sub module checkout (XEngine_OPenSource)
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           repository: libxengine/XEngine_OPenSource
           path: XEngine_Source/XEngine_DependLibrary/XEngine_OPenSource
       - name: sub module checkout (XEngine_PhoneData)
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           repository: libxengine/XEngine_PhoneData
           path: XEngine_Source/XEngine_DependLibrary/XEngine_PhoneData
       - name: sub module checkout (XEngine_IPMacData)
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           repository: libxengine/XEngine_IPMacData
           path: XEngine_Source/XEngine_DependLibrary/XEngine_IPMacData
@@ -99,7 +99,7 @@ jobs:
             ./XEngine_APIServiceApp -t
 
       - name: Upload folder as artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: XEngine_APIServiceApp-Debian_${{ matrix.version }}_x86-64
           path: XEngine_Release/
