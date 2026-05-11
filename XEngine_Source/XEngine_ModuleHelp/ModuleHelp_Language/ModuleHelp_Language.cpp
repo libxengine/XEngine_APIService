@@ -41,15 +41,22 @@ CModuleHelp_Language::~CModuleHelp_Language()
 *********************************************************************/
 bool CModuleHelp_Language::ModuleHelp_Translation_Convert(ENUM_XENGINE_APISERVICE_TRANSLATION_TYPE enTranslationType, XCHAR* ptszTranslationType)
 {
+	/*
+	* 功能说明：
+	* 1. 将内部翻译语言枚举值转换为外部翻译服务所需的短码字符串（如 zh/en/jp 等）。
+	* 2. 转换结果写入 ptszTranslationType。
+	* 3. 发生参数错误或不支持的类型时，统一设置模块错误标记与错误码并返回 false。
+	*/
 	ModuleHelp_IsErrorOccur = false;
 
+	// 参数合法性检查：输出缓冲区不能为空。
 	if (NULL == ptszTranslationType)
 	{
 		ModuleHelp_IsErrorOccur = true;
 		ModuleHelp_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_HELP_LANGUAGE_PARAMENT;
 		return false;
 	}
-	//转换为服务需要的类型
+	// 枚举值到服务端语言短码的映射。
 	if (ENUM_XENGINE_APISERVICE_TRANSLATION_TYPE_AUTO == enTranslationType)
 	{
 		_tcsxcpy(ptszTranslationType, _X("auto"));
