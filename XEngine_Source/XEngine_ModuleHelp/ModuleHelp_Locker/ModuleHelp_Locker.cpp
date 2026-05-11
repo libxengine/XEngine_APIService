@@ -1,5 +1,6 @@
 ﻿#include "pch.h"
 #include "ModuleHelp_Locker.h"
+#include <new>
 /********************************************************************
 //    Created:     2022/08/15  16:11:12
 //    File Name:   D:\XEngine_APIService\XEngine_Source\XEngine_ModuleHelp\ModuleHelp_Locker\ModuleHelp_Locker.cpp
@@ -44,7 +45,7 @@ bool CModuleHelp_Locker::ModuleHelp_Locker_Create(XNETHANDLE* pxhToken)
 		ModuleHelp_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_HELP_LOCK_PARAMENT;
 		return false;
 	}
-	MODULEHELP_LOCKINFO *pSt_LockInfo = new MODULEHELP_LOCKINFO;
+	MODULEHELP_LOCKINFO *pSt_LockInfo = new (std::nothrow) MODULEHELP_LOCKINFO;
 	if (NULL == pSt_LockInfo)
 	{
 		ModuleHelp_IsErrorOccur = true;
@@ -89,7 +90,7 @@ bool CModuleHelp_Locker::ModuleHelp_Locker_OPen(XNETHANDLE xhToken)
 	}
 	st_Locker.unlock_shared();
 	//不存在插入
-	MODULEHELP_LOCKINFO* pSt_LockInfo = new MODULEHELP_LOCKINFO;
+	MODULEHELP_LOCKINFO* pSt_LockInfo = new (std::nothrow) MODULEHELP_LOCKINFO;
 	if (NULL == pSt_LockInfo)
 	{
 		ModuleHelp_IsErrorOccur = true;
