@@ -1,15 +1,26 @@
 ﻿#include "../XEngine_Hdr.h"
 
+// 处理后台任务接口请求。
+// 主要流程：
+// 1) 解析客户端提交的后台任务协议(JSON)；
+// 2) 按 nType 分发到具体任务（下载/删除/上传/列表等）；
+// 3) 每个分支统一进行应答封包、网络发送与日志记录；
+// 4) 出错时立即返回 false，成功完成对应分支后返回 true。
 bool HTTPTask_TaskPost_BackService(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer, int nMsgLen, int nType)
 {
 	int nSDLen = 0;
 	int nBSType = 0;
 	CXEngine_MemoryPoolEx m_MemorySend(XENGINE_MEMORY_SIZE_MAX);
 
+	// 协议字段：
+	// tszSrcBuffer: 源路径/URL
+	// tszDstBuffer: 目标路径
+	// tszAPIBuffer: 附加参数(API相关)
 	XCHAR tszSrcBuffer[XPATH_MAX] = {};
 	XCHAR tszDstBuffer[XPATH_MAX] = {};
 	XCHAR tszAPIBuffer[XPATH_MAX] = {};
 
+	// 第一步：解析后台服务协议；解析失败直接回复 JSON 错误并结束。
 	if (!ModuleProtocol_Parse_BackService(lpszMsgBuffer, nMsgLen, tszSrcBuffer, tszDstBuffer, tszAPIBuffer, &nBSType))
 	{
 		ModuleProtocol_Packet_Common(m_MemorySend.get(), &nSDLen, ERROR_XENGINE_PROTOCL_HTTP_JSON, _X("back service payload json failure"));
@@ -17,11 +28,12 @@ bool HTTPTask_TaskPost_BackService(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer
 		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("HTTP客户端:%s,请求后台协议失败,解析协议失败,错误码:%lX"), lpszClientAddr, ModuleProtocol_GetLastError());
 		return false;
 	}
-	//执行任务
+	// 第二步：根据操作码执行具体后台任务。
 	switch (nType)
 	{
 	case XENGINE_COMMUNICATION_PROTOCOL_OPERATOR_CODE_BS_DOWNFILE:
 	{
+		// 下载任务：创建下载任务句柄并执行后续状态处理。
 		XHANDLE xhTask = APIClient_File_Create(tszSrcBuffer, tszDstBuffer);
 		if (NULL == xhTask)
 		{
@@ -68,6 +80,7 @@ bool HTTPTask_TaskPost_BackService(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer
 	}
 	break;
 	case XENGINE_COMMUNICATION_PROTOCOL_OPERATOR_CODE_BS_DELETEFILE:
+		// 删除文件任务：删除失败返回错误应答，成功返回通用成功应答。
 		if (-1 == _xtremove(tszSrcBuffer))
 		{
 			ModuleProtocol_Packet_Common(m_MemorySend.get(), &nSDLen, ERROR_XENGINE_PROTOCL_HTTP_FAILURE, _X("delete file failure"));
@@ -80,6 +93,7 @@ bool HTTPTask_TaskPost_BackService(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer
 		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("HTTP客户端:%s:删除文件处理成功,删除的文件:%s"), lpszClientAddr, tszSrcBuffer);
 		break;
 	case XENGINE_COMMUNICATION_PROTOCOL_OPERATOR_CODE_BS_DELETEDIR:
+		// 删除目录任务：递归删除目录，失败时带系统错误码日志。
 		if (!SystemApi_File_DeleteMutilFolder(tszSrcBuffer))
 		{
 			ModuleProtocol_Packet_Common(m_MemorySend.get(), &nSDLen, ERROR_XENGINE_PROTOCL_HTTP_FAILURE, _X("delete dir failure"));
@@ -93,6 +107,7 @@ bool HTTPTask_TaskPost_BackService(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer
 		break;
 	case XENGINE_COMMUNICATION_PROTOCOL_OPERATOR_CODE_BS_UPFILE:
 	{
+		// 上传任务：根据业务参数执行上传流程并返回处理结果。
 		XHANDLE xhTask = APIClient_File_Create(tszSrcBuffer, tszDstBuffer, false);
 		if (NULL == xhTask)
 		{
