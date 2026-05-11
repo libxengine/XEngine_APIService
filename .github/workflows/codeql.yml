@@ -59,11 +59,13 @@ jobs:
       uses: github/codeql-action/init@v4
       with:
         languages: ${{ matrix.language }}
+        build-mode: manual 
+        queries: security-and-quality
         
-    - name: make
+    - name: make check
       run: | 
           cd XEngine_Source
-          make
+          make BUILDTYPE=2
 
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v4
