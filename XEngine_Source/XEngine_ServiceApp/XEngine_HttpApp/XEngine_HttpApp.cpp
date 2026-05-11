@@ -519,11 +519,11 @@ int main(int argc, char** argv)
 				}
 			}
 		}
+		//展示能力
+		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("启动服务中,加载的Lib插件:%d 个,Lua插件:%d 个"), nLibCount, nLuaCount);
 #else
 		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_WARN, _X("启动服务中,加载Lua模块插件失败,因为LUA编译被关闭"));
 #endif
-		//展示能力
-		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("启动服务中,加载的Lib插件:%d 个,Lua插件:%d 个"), nLibCount, nLuaCount);
 	}
 	else
 	{
