@@ -118,13 +118,15 @@ bool CModuleDatabase_IDCard::ModuleDatabase_IDCard_QueryByAddr(XENGINE_IDREGION*
 {
 	DBModule_IsErrorOccur = false;
 
+	// 参数检查：区域信息与输出ID指针都必须有效。
 	if ((NULL == pSt_IDRegion) || (NULL == pInt_IDNumber))
 	{
 		DBModule_IsErrorOccur = true;
 		DBModule_dwErrorCode = ERROR_APISERVICE_MODULE_DATABASE_PARAMENT;
 		return false;
 	}
-	//查询
+	// 查询过程中的通用变量：
+	// nLine/nRow 为结果集规模，nProvincer/nCity/nCounty 用于拼装最终行政区划ID。
 	__int64u nLine = 0;
 	__int64u nRow = 0;
 	int nProvincer = 0;
@@ -133,6 +135,7 @@ bool CModuleDatabase_IDCard::ModuleDatabase_IDCard_QueryByAddr(XENGINE_IDREGION*
 	XNETHANDLE xhTable = 0;
 	XCHAR tszSQLStatement[1024];
 
+	// 第一步：根据省级名称查询对应编码。
 	memset(tszSQLStatement, '\0', sizeof(tszSQLStatement));
 	_xstprintf(tszSQLStatement, _X("SELECT * FROM `RegionID` WHERE name = '%s'"), pSt_IDRegion->tszProvincer);
 
