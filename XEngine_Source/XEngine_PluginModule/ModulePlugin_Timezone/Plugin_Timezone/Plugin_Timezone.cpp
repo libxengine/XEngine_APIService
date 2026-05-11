@@ -37,9 +37,21 @@ bool CPlugin_Timezone::PluginCore_Init(XENGINE_PLUGINPARAM *pSt_PluginParameter)
 {
 	Timezone_IsErrorOccur = false;
 
-	MODULEPLUGIN_TIMEZONE st_TimeZone;
-	memset(&st_TimeZone, '\0', sizeof(MODULEPLUGIN_TIMEZONE));
+	/*
+	* 初始化时区映射表（缩写 -> 时区信息）。
+	*
+	* 维护说明：
+	* 1) 每个条目均通过同一流程写入：清零结构 -> 设置 UTC 小时偏移 -> 设置说明文字 -> 插入 map。
+	* 2) map 的 key 为时区缩写，必须保持唯一；若重复，后续 insert 不会覆盖已有值。
+	* 3) wHour 为相对 UTC 的小时偏移（负数为西区，正数为东区）。
+	* 4) 不同缩写可能共享同一偏移，这是正常现象（历史命名/地区命名差异）。
+	* 5) 如需新增时区，请按现有格式追加，确保缩写、偏移与描述文字一致。
+	*/
 
+	MODULEPLUGIN_TIMEZONE st_TimeZone;
+
+	// UTC-12 ~ UTC-10：国际日期变更线、美洲及太平洋部分地区
+	memset(&st_TimeZone, '\0', sizeof(MODULEPLUGIN_TIMEZONE));
 	st_TimeZone.st_TimeZone.wHour = -12;
 	_tcsxcpy(st_TimeZone.tszTimeCountry, _X("国际日期变更线，西边"));
 	stl_MapTimezone.insert(make_pair(_X("IDLE"), st_TimeZone));
