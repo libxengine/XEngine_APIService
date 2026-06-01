@@ -95,7 +95,7 @@ void CPlugin_BMIndex::PluginCore_GetInfo(XCHAR* ptszPluginName, XCHAR* ptszPlugi
   意思：是否成功
 备注：
 *********************************************************************/
-bool CPlugin_BMIndex::PluginCore_Call(XCHAR*** pppHDRList, int nListCount, XCHAR* ptszMsgBuffer, int* pInt_MsgLen, LPCXSTR lpszMsgBuffer, int nMsgLen, int* pInt_HTTPCode)
+bool CPlugin_BMIndex::PluginCore_Call(XCHAR* ptszMsgBuffer, int* pInt_MsgLen, LPCXSTR lpszMsgBufer, int nMsgLen, XCHAR*** pppInputParameters, int nInputPCount, XCHAR*** pppOutputParameters, int* pInt_OutputPCount)
 {
 	BMIndex_IsErrorOccur = false;
 
@@ -105,18 +105,14 @@ bool CPlugin_BMIndex::PluginCore_Call(XCHAR*** pppHDRList, int nListCount, XCHAR
 		BMIndex_dwErrorCode = ERROR_XENGINE_APISERVICE_PLUGIN_MODULE_BMINDEX_PARAMENT;
 		return false;
 	}
-	XCHAR tszKeyName[128];
-	XCHAR tszParamHigh[128];
-	XCHAR tszParamWeight[128];
+	XCHAR tszKeyName[128] = {};
+	XCHAR tszParam1[128] = {};
+	XCHAR tszParam2[128] = {};
 
-	memset(tszKeyName, '\0', sizeof(tszKeyName));
-	memset(tszParamHigh, '\0', sizeof(tszParamHigh));
-	memset(tszParamWeight, '\0', sizeof(tszParamWeight));
+	BaseLib_String_GetKeyValue((*pppInputParameters)[1], "=", tszKeyName, tszParam1);
+	BaseLib_String_GetKeyValue((*pppInputParameters)[2], "=", tszKeyName, tszParam2);
 
-	BaseLib_String_GetKeyValue((*pppHDRList)[1], "=", tszKeyName, tszParamHigh);
-	BaseLib_String_GetKeyValue((*pppHDRList)[2], "=", tszKeyName, tszParamWeight);
-	Plugin_Timezone_BMIndex(tszParamHigh, tszParamWeight, ptszMsgBuffer, pInt_MsgLen);
-	*pInt_HTTPCode = 200;
+	Plugin_Timezone_BMIndex(tszParam1, tszParam2, ptszMsgBuffer, pInt_MsgLen);
 	
 	return true;
 }
@@ -136,27 +132,27 @@ bool CPlugin_BMIndex::Plugin_Timezone_BMIndex(LPCXSTR lpszHigh, LPCXSTR lpszWeig
 	double dlValue = dlWeight / (dlHigh * dlHigh);
 	if (dlValue < 18.5)
 	{
-		st_JsonObject["Result"] = "偏瘦";
+		st_JsonObject["Result"] = "Underweight";	
 	}
 	else if ((dlValue >= 18.5) && (dlValue <= 23.9))
 	{
-		st_JsonObject["Result"] = "正常";
+		st_JsonObject["Result"] = "Normal";
 	}
 	else if ((dlValue >= 24) && (dlValue <= 27.9))
 	{
-		st_JsonObject["Result"] = "超重";
+		st_JsonObject["Result"] = "Overweight";
 	}
 	else if ((dlValue >= 28) && (dlValue < 30))
 	{
-		st_JsonObject["Result"] = "肥胖";
+		st_JsonObject["Result"] = "Obese";
 	}
 	else if ((dlValue >= 30) && (dlValue < 40))
 	{
-		st_JsonObject["Result"] = "重度肥胖";
+		st_JsonObject["Result"] = "Severely obese";
 	}
 	else if (dlValue >= 40)
 	{
-		st_JsonObject["Result"] = "极重度肥胖";
+		st_JsonObject["Result"] = "Morbidly obese";
 	}
 	st_JsonObject["flValue"] = dlValue;
 	st_JsonObject["flWeight"] = dlWeight;

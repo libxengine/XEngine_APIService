@@ -96,7 +96,7 @@ void CPlugin_Meter::PluginCore_GetInfo(XCHAR* ptszPluginName, XCHAR* ptszPluginV
   意思：是否成功
 备注：
 *********************************************************************/
-bool CPlugin_Meter::PluginCore_Call(XCHAR*** pppHDRList, int nListCount, XCHAR* ptszMsgBuffer, int* pInt_MsgLen, LPCXSTR lpszMsgBuffer, int nMsgLen, int* pInt_HTTPCode)
+bool CPlugin_Meter::PluginCore_Call(XCHAR* ptszMsgBuffer, int* pInt_MsgLen, LPCXSTR lpszMsgBufer, int nMsgLen, XCHAR*** pppInputParameters, int nInputPCount, XCHAR*** pppOutputParameters, int* pInt_OutputPCount)
 {
 	Meter_IsErrorOccur = false;
 
@@ -121,9 +121,9 @@ bool CPlugin_Meter::PluginCore_Call(XCHAR*** pppHDRList, int nListCount, XCHAR* 
 	memset(tszParamValue, '\0', sizeof(tszParamValue));
 
 	//http://192.168.1.8:5501/api?function=meter&type=0&source=0&value=10
-	BaseLib_String_GetKeyValue((*pppHDRList)[1], "=", tszKeyName, tszParamType);
-	BaseLib_String_GetKeyValue((*pppHDRList)[2], "=", tszKeyName, tszParamSource);
-	BaseLib_String_GetKeyValue((*pppHDRList)[3], "=", tszKeyName, tszParamValue);
+	BaseLib_String_GetKeyValue((*pppInputParameters)[1], "=", tszKeyName, tszParamType);
+	BaseLib_String_GetKeyValue((*pppInputParameters)[2], "=", tszKeyName, tszParamSource);
+	BaseLib_String_GetKeyValue((*pppInputParameters)[3], "=", tszKeyName, tszParamValue);
 
 	if (0 == _ttxoi(tszParamType))
 	{
@@ -151,7 +151,6 @@ bool CPlugin_Meter::PluginCore_Call(XCHAR*** pppHDRList, int nListCount, XCHAR* 
 	st_JsonRoot["msg"] = "success";
 	st_JsonBuilder["emitUTF8"] = true;
 
-	*pInt_HTTPCode = 200;
 	*pInt_MsgLen = Json::writeString(st_JsonBuilder, st_JsonRoot).length();
 	memcpy(ptszMsgBuffer, Json::writeString(st_JsonBuilder, st_JsonRoot).c_str(), *pInt_MsgLen);
 	return true;

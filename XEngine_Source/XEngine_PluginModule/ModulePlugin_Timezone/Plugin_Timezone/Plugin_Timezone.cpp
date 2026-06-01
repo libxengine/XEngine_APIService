@@ -558,7 +558,7 @@ void CPlugin_Timezone::PluginCore_GetInfo(XCHAR* ptszPluginName, XCHAR* ptszPlug
   意思：是否成功
 备注：
 *********************************************************************/
-bool CPlugin_Timezone::PluginCore_Call(XCHAR*** pppHDRList, int nListCount, XCHAR* ptszMsgBuffer, int* pInt_MsgLen, LPCXSTR lpszMsgBuffer, int nMsgLen, int* pInt_HTTPCode)
+bool CPlugin_Timezone::PluginCore_Call(XCHAR* ptszMsgBuffer, int* pInt_MsgLen, LPCXSTR lpszMsgBufer, int nMsgLen, XCHAR*** pppInputParameters, int nInputPCount, XCHAR*** pppOutputParameters, int* pInt_OutputPCount)
 {
 	Timezone_IsErrorOccur = false;
 
@@ -568,17 +568,12 @@ bool CPlugin_Timezone::PluginCore_Call(XCHAR*** pppHDRList, int nListCount, XCHA
 		Timezone_dwErrorCode = ERROR_XENGINE_APISERVICE_PLUGIN_MODULE_TIMEZONE_PARAMENT;
 		return false;
 	}
-	XCHAR tszKeyName[128];
-	XCHAR tszParamType[128];
-	XCHAR tszParamCvt[128];
-	XCHAR tszParamTime[128];
+	XCHAR tszKeyName[128] = {};
+	XCHAR tszParamType[128] = {};
+	XCHAR tszParamCvt[128] = {};
+	XCHAR tszParamTime[128] = {};
 
-	memset(tszKeyName, '\0', sizeof(tszKeyName));
-	memset(tszParamType, '\0', sizeof(tszParamType));
-	memset(tszParamCvt, '\0', sizeof(tszParamCvt));
-	memset(tszParamTime, '\0', sizeof(tszParamTime));
-
-	BaseLib_String_GetKeyValue((*pppHDRList)[1], "=", tszKeyName, tszParamType);
+	BaseLib_String_GetKeyValue((*pppInputParameters)[1], "=", tszKeyName, tszParamType);
 	if (0 == _ttxoi(tszParamType))
 	{
 		//如果是统计
@@ -587,21 +582,19 @@ bool CPlugin_Timezone::PluginCore_Call(XCHAR*** pppHDRList, int nListCount, XCHA
 	else if (1 == _ttxoi(tszParamType))
 	{
 		//如果是列举
-		BaseLib_String_GetKeyValue((*pppHDRList)[2], "=", tszKeyName, tszParamCvt);
+		BaseLib_String_GetKeyValue((*pppInputParameters)[2], "=", tszKeyName, tszParamCvt);
 		Plugin_Timezone_List(tszParamCvt, ptszMsgBuffer, pInt_MsgLen);
 	}
 	else if (2 == _ttxoi(tszParamType))
 	{
 		//如果是转换
-		BaseLib_String_GetKeyValue((*pppHDRList)[2], "=", tszKeyName, tszParamCvt);
-		BaseLib_String_GetKeyValue((*pppHDRList)[3], "=", tszKeyName, tszParamTime);
+		BaseLib_String_GetKeyValue((*pppInputParameters)[2], "=", tszKeyName, tszParamCvt);
+		BaseLib_String_GetKeyValue((*pppInputParameters)[3], "=", tszKeyName, tszParamTime);
 		if (!Plugin_Timezone_Convert(tszParamCvt, tszParamTime, ptszMsgBuffer, pInt_MsgLen))
 		{
-			*pInt_HTTPCode = 404;
 			return false;
 		}
 	}
-	*pInt_HTTPCode = 200;
 	
 	return true;
 }

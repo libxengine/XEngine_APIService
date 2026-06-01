@@ -96,7 +96,7 @@ void CPlugin_Password::PluginCore_GetInfo(XCHAR* ptszPluginName, XCHAR* ptszPlug
   意思：是否成功
 备注：
 *********************************************************************/
-bool CPlugin_Password::PluginCore_Call(XCHAR*** pppHDRList, int nListCount, XCHAR* ptszMsgBuffer, int* pInt_MsgLen, LPCXSTR lpszMsgBuffer, int nMsgLen, int* pInt_HTTPCode)
+bool CPlugin_Password::PluginCore_Call(XCHAR* ptszMsgBuffer, int* pInt_MsgLen, LPCXSTR lpszMsgBufer, int nMsgLen, XCHAR*** pppInputParameters, int nInputPCount, XCHAR*** pppOutputParameters, int* pInt_OutputPCount)
 {
 	Pass_IsErrorOccur = false;
 
@@ -106,21 +106,16 @@ bool CPlugin_Password::PluginCore_Call(XCHAR*** pppHDRList, int nListCount, XCHA
 		Pass_dwErrorCode = ERROR_XENGINE_APISERVICE_PLUGIN_MODULE_PASS_PARAMENT;
 		return false;
 	}
-	XCHAR tszKeyName[128];
-	XCHAR tszParamType[128];
-	XCHAR tszParamLength[128];
-	XCHAR tszPassword[XPATH_MAX];
+	XCHAR tszKeyName[128] = {};
+	XCHAR tszParamType[128] = {};
+	XCHAR tszParamLength[128] = {};
+	XCHAR tszPassword[XPATH_MAX] = {};
 	Json::Value st_JsonRoot;
 	Json::Value st_JsonObject;
 	Json::StreamWriterBuilder st_JsonBuilder;
 
-	memset(tszKeyName, '\0', sizeof(tszKeyName));
-	memset(tszParamType, '\0', sizeof(tszParamType));
-	memset(tszParamLength, '\0', sizeof(tszParamLength));
-	memset(tszPassword, '\0', sizeof(tszPassword));
-
-	BaseLib_String_GetKeyValue((*pppHDRList)[1], "=", tszKeyName, tszParamType);
-	BaseLib_String_GetKeyValue((*pppHDRList)[2], "=", tszKeyName, tszParamLength);
+	BaseLib_String_GetKeyValue((*pppInputParameters)[1], "=", tszKeyName, tszParamType);
+	BaseLib_String_GetKeyValue((*pppInputParameters)[2], "=", tszKeyName, tszParamLength);
 	Plugin_Password_Creator(tszParamType, tszParamLength, tszPassword);
 
 	st_JsonObject["tszParamType"] = tszParamType;
@@ -131,7 +126,6 @@ bool CPlugin_Password::PluginCore_Call(XCHAR*** pppHDRList, int nListCount, XCHA
 	st_JsonRoot["msg"] = "success";
 	st_JsonBuilder["emitUTF8"] = true;
 
-	*pInt_HTTPCode = 200;
 	*pInt_MsgLen = Json::writeString(st_JsonBuilder, st_JsonRoot).length();
 	memcpy(ptszMsgBuffer, Json::writeString(st_JsonBuilder, st_JsonRoot).c_str(), *pInt_MsgLen);
 	return true;
