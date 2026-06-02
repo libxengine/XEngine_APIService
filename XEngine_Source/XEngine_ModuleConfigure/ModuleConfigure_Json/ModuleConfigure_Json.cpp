@@ -306,7 +306,7 @@ bool CModuleConfigure_Json::ModuleConfigure_Json_VersionFile(LPCXSTR lpszConfigF
 		Config_dwErrorCode = ERROR_MODULE_CONFIGURE_JSON_XVER;
 		return false;
 	}
-	pSt_ServerConfig->st_XVer.pStl_ListVer = new list<string>;
+	pSt_ServerConfig->st_XVer.pStl_ListVer = new(std::nothrow) list<string>;
 	if (NULL == pSt_ServerConfig->st_XVer.pStl_ListVer)
 	{
 		Config_IsErrorOccur = true;
