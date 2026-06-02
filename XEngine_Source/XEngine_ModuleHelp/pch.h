@@ -20,6 +20,7 @@
 #include <errno.h>
 #include <thread>
 #include <list>
+#include <new>
 #include <vector>
 #include <atomic>
 #include <memory>

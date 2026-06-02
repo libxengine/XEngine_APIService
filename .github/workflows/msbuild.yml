@@ -16,7 +16,7 @@ jobs:
       # Set fail-fast to false to ensure that feedback is delivered for all matrix combinations. Consider changing this to true when your workflow is stable.
       fail-fast: false
       matrix:
-        configuration: [Debug ,Release]
+        configuration: [Release]
         platform: [x86 ,x64 ,ARM64]
 
     runs-on: windows-latest # 最新的 Windows 环境
