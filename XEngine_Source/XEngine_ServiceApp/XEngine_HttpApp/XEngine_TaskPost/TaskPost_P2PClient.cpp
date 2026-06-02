@@ -4,11 +4,17 @@ void XCALLBACK HTTPTask_TastPost_P2PCallback(XENGINE_P2XPPEER_PROTOCOL* pSt_P2PP
 {
 	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_WARN, _X("HTTP客户端,公网:%s,私网:%s,连接:%s,P2XP心跳离开"), pSt_P2PProtocol->tszPublicAddr, pSt_P2PProtocol->tszPrivateAddr, pSt_P2PProtocol->tszConnectAddr);
 }
+// 处理P2P客户端HTTP请求的统一入口：
+// 1) 根据unOperatorCode分发到具体业务流程(登录/登出/列表/打洞等)；
+// 2) 解析请求协议并更新P2P客户端状态；
+// 3) 通过统一协议回包告知调用方成功或失败；
+// 返回值：true表示对应操作处理成功并已回包；false表示处理失败(通常已回错误包并记录日志)。
 bool HTTPTask_TastPost_P2PClient(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer, int nMsgLen, int unOperatorCode)
 {
 	int nSDLen = 4096;
 	XCHAR tszSDBuffer[4096] = {};
 
+	// 登录请求：解析客户端地址信息，补齐公网地址，写入在线表并回复结果。
 	if (XENGINE_COMMUNICATION_PROTOCOL_OPERATOR_CODE_P2XP_REQLOGIN == unOperatorCode)
 	{
 		XENGINE_P2XP_PEERINFO st_ClientPeer;
@@ -42,6 +48,7 @@ bool HTTPTask_TastPost_P2PClient(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer, 
 		XEngine_Network_Send(lpszClientAddr, tszSDBuffer, nSDLen);
 		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("HTTP客户端:%s,P2P处理用户登录请求成功,用户名:%s"), lpszClientAddr, st_ClientPeer.st_PeerAddr.tszUserName);
 	}
+	// 登出请求：删除指定客户端在线状态并返回处理结果。
 	else if (XENGINE_COMMUNICATION_PROTOCOL_OPERATOR_CODE_P2XP_REQLOGOUT == unOperatorCode)
 	{
 		XENGINE_P2XPPEER_PROTOCOL st_P2PProtocol;
@@ -59,6 +66,7 @@ bool HTTPTask_TastPost_P2PClient(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer, 
 		XEngine_Network_Send(lpszClientAddr, tszSDBuffer, nSDLen);
 		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("HTTP客户端:%s,P2P请求删除列表成功,删除地址:%s"), lpszClientAddr, st_P2PProtocol.tszPrivateAddr);
 	}
+	// 局域网列表请求：查询并返回当前可见的P2P节点列表信息。
 	else if (XENGINE_COMMUNICATION_PROTOCOL_OPERATOR_CODE_P2XP_REQLANLIST == unOperatorCode)
 	{
 		XENGINE_P2XPPEER_PROTOCOL st_P2PProtocol;
@@ -120,6 +128,7 @@ bool HTTPTask_TastPost_P2PClient(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer, 
 			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("HTTP客户端:%s,P2P请求同步公有局域网列表成功,公有地址:%s"), lpszClientAddr, st_P2PProtocol.tszPublicAddr);
 		}
 	}
+	// 外网打洞/互联请求：根据目标信息执行配对与回包通知。
 	else if (XENGINE_COMMUNICATION_PROTOCOL_OPERATOR_CODE_P2XP_REQWLAN == unOperatorCode)
 	{
 		int nListCount = 0;
