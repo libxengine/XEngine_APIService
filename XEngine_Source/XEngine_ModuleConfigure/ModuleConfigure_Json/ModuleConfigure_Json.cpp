@@ -42,18 +42,23 @@ CModuleConfigure_Json::~CModuleConfigure_Json()
 *********************************************************************/
 bool CModuleConfigure_Json::ModuleConfigure_Json_File(LPCXSTR lpszConfigFile, XENGINE_SERVICECONFIG* pSt_ServerConfig)
 {
+	// 每次读取前先重置错误状态，确保调用方获得的是本次调用结果。
 	Config_IsErrorOccur = false;
 
+	// 参数校验：配置文件路径和输出结构体都必须有效。
 	if ((NULL == lpszConfigFile) || (NULL == pSt_ServerConfig))
 	{
 		Config_IsErrorOccur = true;
 		Config_dwErrorCode = ERROR_MODULE_CONFIGURE_JSON_PARAMENT;
 		return false;
 	}
+
+	// JSON 解析上下文：根节点、错误信息和 Reader 构造器。
 	Json::Value st_JsonRoot;
 	JSONCPP_STRING st_JsonError;
 	Json::CharReaderBuilder st_JsonBuilder;
-	//读取配置文件所有内容到缓冲区
+
+	// 读取配置文件内容到缓冲区；当前实现按固定 8KB 缓冲区读取。
 	FILE* pSt_File = _xtfopen(lpszConfigFile, _X("rb"));
 	if (NULL == pSt_File)
 	{
@@ -64,7 +69,8 @@ bool CModuleConfigure_Json::ModuleConfigure_Json_File(LPCXSTR lpszConfigFile, XE
 	XCHAR tszMsgBuffer[8192] = {};
 	size_t nRet = fread(tszMsgBuffer, 1, sizeof(tszMsgBuffer), pSt_File);
 	fclose(pSt_File);
-	//开始解析配置文件
+
+	// 解析 JSON 文本；失败时记录统一解析错误码并返回。
 	std::unique_ptr<Json::CharReader> const pSt_JsonReader(st_JsonBuilder.newCharReader());
 	if (!pSt_JsonReader->parse(tszMsgBuffer, tszMsgBuffer + nRet, &st_JsonRoot, &st_JsonError))
 	{
@@ -72,6 +78,8 @@ bool CModuleConfigure_Json::ModuleConfigure_Json_File(LPCXSTR lpszConfigFile, XE
 		Config_dwErrorCode = ERROR_MODULE_CONFIGURE_JSON_PARSE;
 		return false;
 	}
+
+	// 将 JSON 字段逐项映射到服务配置结构体，供后续模块统一使用。
 	_tcsxcpy(pSt_ServerConfig->tszIPAddr, st_JsonRoot["tszIPAddr"].asCString());
 	pSt_ServerConfig->bDeamon = st_JsonRoot["bDeamon"].asBool();
 	pSt_ServerConfig->bShowWnd = st_JsonRoot["bShowWnd"].asBool();
