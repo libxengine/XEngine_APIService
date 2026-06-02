@@ -1,5 +1,6 @@
 ﻿#include "pch.h"
 #include "ModuleHelp_SocketTest.h"
+#include <new>
 /********************************************************************
 //    Created:     2023/02/06  11:26:27
 //    File Name:   D:\XEngine_APIService\XEngine_Source\XEngine_ModuleHelp\ModuleHelp_SocketTest\ModuleHelp_SocketTest.cpp
@@ -197,7 +198,7 @@ bool CModuleHelp_SocketTest::ModuleHelp_SocketTest_StartDatas(XNETHANDLE* pxhTok
         ModuleHelp_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_HELP_SOCKETTEST_PARAMRT;
         return false;
     }
-    MODULEHELP_SOCKETTEST_DATAINFO *pSt_DataSocket = new MODULEHELP_SOCKETTEST_DATAINFO;
+    MODULEHELP_SOCKETTEST_DATAINFO *pSt_DataSocket = new(std::nothrow) MODULEHELP_SOCKETTEST_DATAINFO;
     if (NULL == pSt_DataSocket)
     {
 		ModuleHelp_IsErrorOccur = true;
