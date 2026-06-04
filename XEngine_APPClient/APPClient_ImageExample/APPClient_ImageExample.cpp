@@ -65,7 +65,7 @@ int test_imgzoom()
 	int nListCount = 0;
 	XCHAR** pptszListFile;
 
-	SystemApi_File_EnumFile(lpszFileDir, &pptszListFile, &nListCount, false, 1);
+	SystemApi_File_EnumFile(lpszFileDir, &pptszListFile, &nListCount, false, 1, true);
 	for (int i = 0; i < nListCount; i++)
 	{
 		int nCode = 0;
