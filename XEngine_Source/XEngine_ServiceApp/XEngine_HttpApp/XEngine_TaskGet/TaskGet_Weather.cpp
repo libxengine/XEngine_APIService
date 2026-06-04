@@ -12,7 +12,8 @@ bool HTTPTask_TaskGet_WeatherInfo(LPCXSTR lpszClientAddr, LPCXSTR lpszAddrCode)
 	XENGINE_WEATHERINFO st_WeatherInfo = {};
 	RFCCOMPONENTS_HTTP_HDRPARAM st_HDRParam = {};    //发送给客户端的参数
 
-	_xstprintf(tszUrlBuffer, st_ServiceConfig.st_XApi.tszWeatherUrl, lpszAddrCode);
+	_tcsxcpy(tszUrlBuffer, st_ServiceConfig.st_XApi.tszWeatherUrl);
+	_tcsxcat(tszUrlBuffer, lpszAddrCode);
 	APIClient_Http_Request(_X("GET"), tszUrlBuffer, NULL, NULL, &ptszBodyBuffer, &nBLen);
 
 	XCHAR tszGBKStr[1024] = {};
