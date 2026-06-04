@@ -52,6 +52,19 @@ void CPlugin_Meter::PluginCore_UnInit()
 	Meter_IsErrorOccur = false;
 }
 /********************************************************************
+函数名称：PluginCore_RegisterType
+函数功能：注册类型
+返回值
+  类型：整数型
+  意思：返回注册类型
+备注：
+*********************************************************************/
+int CPlugin_Meter::PluginCore_RegisterType()
+{
+	Meter_IsErrorOccur = false;
+	return 0;
+}
+/********************************************************************
 函数名称：PluginCore_GetInfo
 函数功能：获取插件基础信息函数
  参数.一：ptszPluginName

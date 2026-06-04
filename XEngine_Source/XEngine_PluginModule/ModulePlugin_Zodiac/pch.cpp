@@ -33,6 +33,10 @@ extern "C" void PluginCore_UnInit()
 {
 	m_PluginZodiac.PluginCore_UnInit();
 }
+extern "C" int PluginCore_RegisterType()
+{
+	return m_PluginZodiac.PluginCore_RegisterType();
+}
 extern "C" void PluginCore_GetInfo(XCHAR* ptszPluginName, XCHAR* ptszPluginVersion, XCHAR* ptszPluginAuthor, XCHAR* ptszPluginDesc)
 {
 	return m_PluginZodiac.PluginCore_GetInfo(ptszPluginName, ptszPluginVersion, ptszPluginAuthor, ptszPluginDesc);

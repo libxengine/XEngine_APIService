@@ -41,6 +41,15 @@ extern "C" bool PluginCore_Init(XENGINE_PLUGINPARAM *pSt_PluginParameter);
 *********************************************************************/
 extern "C" void PluginCore_UnInit();
 /********************************************************************
+函数名称：PluginCore_RegisterType
+函数功能：注册类型
+返回值
+  类型：整数型
+  意思：返回注册类型
+备注：
+*********************************************************************/
+extern "C" int PluginCore_RegisterType();
+/********************************************************************
 函数名称：PluginCore_GetInfo
 函数功能：获取插件基础信息函数
  参数.一：ptszPluginName
