@@ -19,7 +19,7 @@ jobs:
         configuration: [Release]
         platform: [x86 ,x64 ,ARM64]
 
-    runs-on: windows-latest # 最新的 Windows 环境
+    runs-on: windows-2025-vs2026
     steps:
        # 检出您的主仓库代码
       - name: Checkout main repository code
