@@ -704,7 +704,7 @@ bool CPlugin_Timezone::Plugin_Timezone_Convert(LPCXSTR lpszConvert, LPCXSTR lpsz
 
 	_stxscanf(lpszTimeStr, _X("%04d-%02d-%02d_%02d:%02d:%02d"), &st_TimeStart.wYear, &st_TimeStart.wMonth, &st_TimeStart.wDay, &st_TimeStart.wHour, &st_TimeStart.wMinute, &st_TimeStart.wSecond);
 	BaseLib_TimeSpan_CalForStu(&st_TimeStart, &st_TimeEnd);
-	_xstprintf(tszTimeStr, _X("%04d-%02d-%02d %02d:%02d:%02d"), st_TimeEnd.wYear, st_TimeEnd.wMonth, st_TimeEnd.wDay, st_TimeEnd.wHour, st_TimeEnd.wMinute, st_TimeEnd.wSecond);
+	_xstprintf_s(tszTimeStr, sizeof(tszTimeStr) / sizeof(tszTimeStr[0]), _X("%04d-%02d-%02d %02d:%02d:%02d"), st_TimeEnd.wYear, st_TimeEnd.wMonth, st_TimeEnd.wDay, st_TimeEnd.wHour, st_TimeEnd.wMinute, st_TimeEnd.wSecond);
 
 	st_JsonObject["tszTimeStr"] = tszTimeStr;
 	st_JsonObject["tszTimeZone"] = stl_MapIterator->first.c_str();
