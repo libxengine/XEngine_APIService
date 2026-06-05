@@ -26,6 +26,8 @@ APIMODULE_IPMAC_PATH = ./XEngine_DependLibrary/XEngine_IPMacData/XEngine_Source/
 
 APP_HTTP_PATH = ./XEngine_ServiceApp/XEngine_HttpApp
 
+LUA_SWITCH_VAL := $(shell grep -w "_XENGINE_BUILD_SWITCH_LUA" XEngine_BuildSwitch.h | awk '{print $$3}')
+
 ifeq ($(PLATFORM),linux)
 	FILEEXT = so
 else ifeq ($(PLATFORM),mac)
@@ -73,7 +75,11 @@ libXEngine_PluginExtension.so:
 ifeq ($(FLAGS), InstallAll)
 	cp $(THIRDPART_MODULE_PLUGIN)/libXEngine_PluginExtension.$(FILEEXT) ../XEngine_Release/
 else
+ifeq ($(LUA_SWITCH_VAL), 1)
+	make -C $(THIRDPART_MODULE_PLUGIN) PLATFORM=$(PLATFORM) UNICODE=$(UNICODE) RELEASE=$(RELEASE) $(FLAGS) _XENGINE_BUILD_SWITCH_LUA=1
+else
 	make -C $(THIRDPART_MODULE_PLUGIN) PLATFORM=$(PLATFORM) UNICODE=$(UNICODE) RELEASE=$(RELEASE) $(FLAGS)
+endif
 endif
 libXEngine_APIModulePhone.so:
 ifeq ($(FLAGS), InstallAll)
