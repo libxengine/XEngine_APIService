@@ -1,3 +1,25 @@
+XEngine_APIService V3.15.0.1001
+
+ci:更新了工作流
+更新:依赖库
+更新:插件新版本
+更新:vs版本到2026
+优化:http响应发送内存
+修改：HTTP 响应封装现在统一在 send 函数中处理；所有 HTTP 响应均返回 200 状态码，其正确性需通过 payload JSON 来判断
+修改:http函数名不区分大小写
+修改:code scan的报告代码
+修正:linux lua插件加载问题
+
+ci:improved ci workflow
+update:depend library
+update:plugin match
+update:vs to 2006 version
+improved:http reply send memory
+modify:HTTP response encapsulation is now unified in the send function; HTTP responses all return 200, and whether they are correct or incorrect needs to be determined by the payload JSON
+modify:case-insensitive for function name of http
+modify:code for report code scanning 
+fixed:lua load failure for linux
+======================================================================================
 XEngine_APIService V3.14.0.1001
 
 更新:依赖库

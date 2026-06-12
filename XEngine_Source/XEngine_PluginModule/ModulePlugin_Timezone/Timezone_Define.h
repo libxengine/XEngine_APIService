@@ -32,6 +32,15 @@ extern "C" XLONG PluginCore_GetLastError();
 *********************************************************************/
 extern "C" bool PluginCore_Init(XENGINE_PLUGINPARAM* pSt_PluginParameter = NULL);
 /********************************************************************
+函数名称：PluginCore_RegisterType
+函数功能：注册类型
+返回值
+  类型：整数型
+  意思：返回注册类型
+备注：
+*********************************************************************/
+extern "C" int PluginCore_RegisterType();
+/********************************************************************
 函数名称：PluginCore_UnInit
 函数功能：卸载插件
 返回值
@@ -77,4 +86,4 @@ extern "C" void PluginCore_GetInfo(XCHAR* ptszPluginName, XCHAR* ptszPluginVersi
   意思：是否成功
 备注：
 *********************************************************************/
-extern "C" bool PluginCore_Call(XCHAR * **pppHDRList, int nListCount, XCHAR * ptszMsgBuffer, int* pInt_MsgLen, LPCXSTR lpszMsgBuffer = NULL, int nMsgLen = 0, int* pInt_HTTPCode = NULL);
+extern "C" bool PluginCore_Call(XCHAR* ptszMsgBuffer, int* pInt_MsgLen, LPCXSTR lpszMsgBufer = NULL, int nMsgLen = 0, XCHAR*** pppInputParameters = NULL, int nInputPCount = 0, XCHAR*** pppOutputParameters = NULL, int* pInt_OutputPCount = NULL);

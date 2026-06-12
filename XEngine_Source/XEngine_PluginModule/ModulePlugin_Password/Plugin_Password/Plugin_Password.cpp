@@ -52,6 +52,19 @@ void CPlugin_Password::PluginCore_UnInit()
 	Pass_IsErrorOccur = false;
 }
 /********************************************************************
+函数名称：PluginCore_RegisterType
+函数功能：注册类型
+返回值
+  类型：整数型
+  意思：返回注册类型
+备注：
+*********************************************************************/
+int CPlugin_Password::PluginCore_RegisterType()
+{
+	Pass_IsErrorOccur = false;
+	return 0;
+}
+/********************************************************************
 函数名称：PluginCore_GetInfo
 函数功能：获取插件基础信息函数
  参数.一：ptszPluginName
@@ -96,7 +109,7 @@ void CPlugin_Password::PluginCore_GetInfo(XCHAR* ptszPluginName, XCHAR* ptszPlug
   意思：是否成功
 备注：
 *********************************************************************/
-bool CPlugin_Password::PluginCore_Call(XCHAR*** pppHDRList, int nListCount, XCHAR* ptszMsgBuffer, int* pInt_MsgLen, LPCXSTR lpszMsgBuffer, int nMsgLen, int* pInt_HTTPCode)
+bool CPlugin_Password::PluginCore_Call(XCHAR* ptszMsgBuffer, int* pInt_MsgLen, LPCXSTR lpszMsgBufer, int nMsgLen, XCHAR*** pppInputParameters, int nInputPCount, XCHAR*** pppOutputParameters, int* pInt_OutputPCount)
 {
 	Pass_IsErrorOccur = false;
 
@@ -106,21 +119,16 @@ bool CPlugin_Password::PluginCore_Call(XCHAR*** pppHDRList, int nListCount, XCHA
 		Pass_dwErrorCode = ERROR_XENGINE_APISERVICE_PLUGIN_MODULE_PASS_PARAMENT;
 		return false;
 	}
-	XCHAR tszKeyName[128];
-	XCHAR tszParamType[128];
-	XCHAR tszParamLength[128];
-	XCHAR tszPassword[XPATH_MAX];
+	XCHAR tszKeyName[128] = {};
+	XCHAR tszParamType[128] = {};
+	XCHAR tszParamLength[128] = {};
+	XCHAR tszPassword[XPATH_MAX] = {};
 	Json::Value st_JsonRoot;
 	Json::Value st_JsonObject;
 	Json::StreamWriterBuilder st_JsonBuilder;
 
-	memset(tszKeyName, '\0', sizeof(tszKeyName));
-	memset(tszParamType, '\0', sizeof(tszParamType));
-	memset(tszParamLength, '\0', sizeof(tszParamLength));
-	memset(tszPassword, '\0', sizeof(tszPassword));
-
-	BaseLib_String_GetKeyValue((*pppHDRList)[1], "=", tszKeyName, tszParamType);
-	BaseLib_String_GetKeyValue((*pppHDRList)[2], "=", tszKeyName, tszParamLength);
+	BaseLib_String_GetKeyValue((*pppInputParameters)[1], "=", tszKeyName, tszParamType);
+	BaseLib_String_GetKeyValue((*pppInputParameters)[2], "=", tszKeyName, tszParamLength);
 	Plugin_Password_Creator(tszParamType, tszParamLength, tszPassword);
 
 	st_JsonObject["tszParamType"] = tszParamType;
@@ -131,7 +139,6 @@ bool CPlugin_Password::PluginCore_Call(XCHAR*** pppHDRList, int nListCount, XCHA
 	st_JsonRoot["msg"] = "success";
 	st_JsonBuilder["emitUTF8"] = true;
 
-	*pInt_HTTPCode = 200;
 	*pInt_MsgLen = Json::writeString(st_JsonBuilder, st_JsonRoot).length();
 	memcpy(ptszMsgBuffer, Json::writeString(st_JsonBuilder, st_JsonRoot).c_str(), *pInt_MsgLen);
 	return true;

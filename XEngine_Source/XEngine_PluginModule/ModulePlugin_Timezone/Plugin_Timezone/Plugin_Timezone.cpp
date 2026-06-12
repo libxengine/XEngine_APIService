@@ -37,9 +37,21 @@ bool CPlugin_Timezone::PluginCore_Init(XENGINE_PLUGINPARAM *pSt_PluginParameter)
 {
 	Timezone_IsErrorOccur = false;
 
-	MODULEPLUGIN_TIMEZONE st_TimeZone;
-	memset(&st_TimeZone, '\0', sizeof(MODULEPLUGIN_TIMEZONE));
+	/*
+	* 初始化时区映射表（缩写 -> 时区信息）。
+	*
+	* 维护说明：
+	* 1) 每个条目均通过同一流程写入：清零结构 -> 设置 UTC 小时偏移 -> 设置说明文字 -> 插入 map。
+	* 2) map 的 key 为时区缩写，必须保持唯一；若重复，后续 insert 不会覆盖已有值。
+	* 3) wHour 为相对 UTC 的小时偏移（负数为西区，正数为东区）。
+	* 4) 不同缩写可能共享同一偏移，这是正常现象（历史命名/地区命名差异）。
+	* 5) 如需新增时区，请按现有格式追加，确保缩写、偏移与描述文字一致。
+	*/
 
+	MODULEPLUGIN_TIMEZONE st_TimeZone;
+
+	// UTC-12 ~ UTC-10：国际日期变更线、美洲及太平洋部分地区
+	memset(&st_TimeZone, '\0', sizeof(MODULEPLUGIN_TIMEZONE));
 	st_TimeZone.st_TimeZone.wHour = -12;
 	_tcsxcpy(st_TimeZone.tszTimeCountry, _X("国际日期变更线，西边"));
 	stl_MapTimezone.insert(make_pair(_X("IDLE"), st_TimeZone));
@@ -514,6 +526,19 @@ void CPlugin_Timezone::PluginCore_UnInit()
 	stl_MapTimezone.clear();
 }
 /********************************************************************
+函数名称：PluginCore_RegisterType
+函数功能：注册类型
+返回值
+  类型：整数型
+  意思：返回注册类型
+备注：
+*********************************************************************/
+int CPlugin_Timezone::PluginCore_RegisterType()
+{
+	Timezone_IsErrorOccur = false;
+	return 0;
+}
+/********************************************************************
 函数名称：PluginCore_GetInfo
 函数功能：获取插件基础信息函数
  参数.一：ptszPluginName
@@ -558,7 +583,7 @@ void CPlugin_Timezone::PluginCore_GetInfo(XCHAR* ptszPluginName, XCHAR* ptszPlug
   意思：是否成功
 备注：
 *********************************************************************/
-bool CPlugin_Timezone::PluginCore_Call(XCHAR*** pppHDRList, int nListCount, XCHAR* ptszMsgBuffer, int* pInt_MsgLen, LPCXSTR lpszMsgBuffer, int nMsgLen, int* pInt_HTTPCode)
+bool CPlugin_Timezone::PluginCore_Call(XCHAR* ptszMsgBuffer, int* pInt_MsgLen, LPCXSTR lpszMsgBufer, int nMsgLen, XCHAR*** pppInputParameters, int nInputPCount, XCHAR*** pppOutputParameters, int* pInt_OutputPCount)
 {
 	Timezone_IsErrorOccur = false;
 
@@ -568,17 +593,12 @@ bool CPlugin_Timezone::PluginCore_Call(XCHAR*** pppHDRList, int nListCount, XCHA
 		Timezone_dwErrorCode = ERROR_XENGINE_APISERVICE_PLUGIN_MODULE_TIMEZONE_PARAMENT;
 		return false;
 	}
-	XCHAR tszKeyName[128];
-	XCHAR tszParamType[128];
-	XCHAR tszParamCvt[128];
-	XCHAR tszParamTime[128];
+	XCHAR tszKeyName[128] = {};
+	XCHAR tszParamType[128] = {};
+	XCHAR tszParamCvt[128] = {};
+	XCHAR tszParamTime[128] = {};
 
-	memset(tszKeyName, '\0', sizeof(tszKeyName));
-	memset(tszParamType, '\0', sizeof(tszParamType));
-	memset(tszParamCvt, '\0', sizeof(tszParamCvt));
-	memset(tszParamTime, '\0', sizeof(tszParamTime));
-
-	BaseLib_String_GetKeyValue((*pppHDRList)[1], "=", tszKeyName, tszParamType);
+	BaseLib_String_GetKeyValue((*pppInputParameters)[1], "=", tszKeyName, tszParamType);
 	if (0 == _ttxoi(tszParamType))
 	{
 		//如果是统计
@@ -587,21 +607,19 @@ bool CPlugin_Timezone::PluginCore_Call(XCHAR*** pppHDRList, int nListCount, XCHA
 	else if (1 == _ttxoi(tszParamType))
 	{
 		//如果是列举
-		BaseLib_String_GetKeyValue((*pppHDRList)[2], "=", tszKeyName, tszParamCvt);
+		BaseLib_String_GetKeyValue((*pppInputParameters)[2], "=", tszKeyName, tszParamCvt);
 		Plugin_Timezone_List(tszParamCvt, ptszMsgBuffer, pInt_MsgLen);
 	}
 	else if (2 == _ttxoi(tszParamType))
 	{
 		//如果是转换
-		BaseLib_String_GetKeyValue((*pppHDRList)[2], "=", tszKeyName, tszParamCvt);
-		BaseLib_String_GetKeyValue((*pppHDRList)[3], "=", tszKeyName, tszParamTime);
+		BaseLib_String_GetKeyValue((*pppInputParameters)[2], "=", tszKeyName, tszParamCvt);
+		BaseLib_String_GetKeyValue((*pppInputParameters)[3], "=", tszKeyName, tszParamTime);
 		if (!Plugin_Timezone_Convert(tszParamCvt, tszParamTime, ptszMsgBuffer, pInt_MsgLen))
 		{
-			*pInt_HTTPCode = 404;
 			return false;
 		}
 	}
-	*pInt_HTTPCode = 200;
 	
 	return true;
 }

@@ -98,6 +98,20 @@ typedef enum
 ///////////////////////////////////////////////////////////////////////////
 //                          导出的数据结构
 ///////////////////////////////////////////////////////////////////////////
+#define ERROR_XENGINE_PROTOCL_HTTP_SUCCESS 0x0000                          //成功
+#define ERROR_XENGINE_PROTOCL_HTTP_JSON 0x0001                             //JSON错误
+#define ERROR_XENGINE_PROTOCL_HTTP_OPEN 0x0002                             //打开失败
+#define ERROR_XENGINE_PROTOCL_HTTP_DEVICE 0x0003                           //打开设备失败
+#define ERROR_XENGINE_PROTOCL_HTTP_INIT 0x0004                             //初始化失败
+#define ERROR_XENGINE_PROTOCL_HTTP_STARTED 0x0005                          //已经在录制中了
+#define ERROR_XENGINE_PROTOCL_HTTP_DISABLE 0x0006                          //服务不可用
+#define ERROR_XENGINE_PROTOCL_HTTP_NOTFOUND 0x0007                         //资源没有找到
+#define ERROR_XENGINE_PROTOCL_HTTP_NOTSUPPORT 0x0008                       //不支持的操作
+#define ERROR_XENGINE_PROTOCL_HTTP_RELOAD 0x0009                           //重载问题
+#define ERROR_XENGINE_PROTOCL_HTTP_FAILURE 0x000A                          //操作失败
+///////////////////////////////////////////////////////////////////////////
+//                          导出的数据结构
+///////////////////////////////////////////////////////////////////////////
 #pragma pack(push)
 #pragma pack(1)
 //身份证校验

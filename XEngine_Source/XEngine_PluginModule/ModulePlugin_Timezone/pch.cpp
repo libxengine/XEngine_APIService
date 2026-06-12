@@ -33,11 +33,15 @@ extern "C" void PluginCore_UnInit()
 {
 	m_PluginTimes.PluginCore_UnInit();
 }
+extern "C" int PluginCore_RegisterType()
+{
+	return m_PluginTimes.PluginCore_RegisterType();
+}
 extern "C" void PluginCore_GetInfo(XCHAR* ptszPluginName, XCHAR* ptszPluginVersion, XCHAR* ptszPluginAuthor, XCHAR* ptszPluginDesc)
 {
 	return m_PluginTimes.PluginCore_GetInfo(ptszPluginName, ptszPluginVersion, ptszPluginAuthor, ptszPluginDesc);
 }
-extern "C" bool PluginCore_Call(XCHAR * **pppHDRList, int nListCount, XCHAR * ptszMsgBuffer, int* pInt_MsgLen, LPCXSTR lpszMsgBuffer, int nMsgLen, int* pInt_HTTPCode)
+extern "C" bool PluginCore_Call(XCHAR* ptszMsgBuffer, int* pInt_MsgLen, LPCXSTR lpszMsgBuffer, int nMsgLen, XCHAR*** pppInputParameters, int nInputPCount, XCHAR*** pppOutputParameters, int* pInt_OutputPCount)
 {
-	return m_PluginTimes.PluginCore_Call(pppHDRList, nListCount, ptszMsgBuffer, pInt_MsgLen, lpszMsgBuffer, nMsgLen, pInt_HTTPCode);
+	return m_PluginTimes.PluginCore_Call(ptszMsgBuffer, pInt_MsgLen, lpszMsgBuffer, nMsgLen, pppInputParameters, nInputPCount, pppOutputParameters, pInt_OutputPCount);
 }

@@ -92,19 +92,11 @@ bool HTTPTask_TaskPost_Deamon(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer, int
 {
 	int nSDLen = 0;
 	CXEngine_MemoryPoolEx m_MemorySend(XENGINE_MEMORY_SIZE_MAX);
-	RFCCOMPONENTS_HTTP_HDRPARAM st_HDRParam;    //发送给客户端的参数
-	XENGINE_DEAMONAPPINFO st_DeamonApp;
-	
-	memset(&st_HDRParam, '\0', sizeof(RFCCOMPONENTS_HTTP_HDRPARAM));
-	memset(&st_DeamonApp, '\0', sizeof(XENGINE_DEAMONAPPINFO));
-
-	st_HDRParam.nHttpCode = 200; //HTTP CODE码
-	st_HDRParam.bIsClose = true; //收到回复后就关闭
+	XENGINE_DEAMONAPPINFO st_DeamonApp = {};
 
 	if (!ModuleProtocol_Parse_Deamon(lpszMsgBuffer, nMsgLen, st_DeamonApp.tszAPPName, st_DeamonApp.tszAPPPath, &st_DeamonApp.nReTime, &st_DeamonApp.nReNumber, &st_DeamonApp.bEnable))
 	{
-		st_HDRParam.nHttpCode = 400;
-		HttpProtocol_Server_SendMsgEx(xhHTTPPacket, m_MemorySend.get(), &nSDLen, &st_HDRParam);
+		ModuleProtocol_Packet_Common(m_MemorySend.get(), &nSDLen, ERROR_XENGINE_PROTOCL_HTTP_JSON, _X("parse json is failure"));
 		XEngine_Network_Send(lpszClientAddr, m_MemorySend.get(), nSDLen);
 		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("HTTP客户端:%s,请求解析守护协议失败,解析协议失败,错误码:%lX"), lpszClientAddr, ModuleProtocol_GetLastError());
 		return false;
@@ -126,7 +118,7 @@ bool HTTPTask_TaskPost_Deamon(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer, int
 			}
 		}
 	}
-	HttpProtocol_Server_SendMsgEx(xhHTTPPacket, m_MemorySend.get(), &nSDLen, &st_HDRParam);
+	ModuleProtocol_Packet_Common(m_MemorySend.get(), &nSDLen);
 	XEngine_Network_Send(lpszClientAddr, m_MemorySend.get(), nSDLen);
 	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("HTTP客户端:%s,请求解析守护协议成功,协议类型:%d,进程名称:%s"), lpszClientAddr, st_DeamonApp.bEnable, st_DeamonApp.tszAPPName);
 	return true;

@@ -58,7 +58,7 @@ bool CModuleHelp_SocketTest::ModuleHelp_SocketTest_StartConnect(XNETHANDLE* pxhT
         ModuleHelp_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_HELP_SOCKETTEST_PARAMRT;
         return false;
     }
-    MODULEHELP_SOCKETTEST_CONNINFO* pSt_ConnSocket = new MODULEHELP_SOCKETTEST_CONNINFO;
+    MODULEHELP_SOCKETTEST_CONNINFO* pSt_ConnSocket = new(std::nothrow) MODULEHELP_SOCKETTEST_CONNINFO;
     if (NULL == pSt_ConnSocket)
     {
         ModuleHelp_IsErrorOccur = true;
@@ -197,7 +197,7 @@ bool CModuleHelp_SocketTest::ModuleHelp_SocketTest_StartDatas(XNETHANDLE* pxhTok
         ModuleHelp_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_HELP_SOCKETTEST_PARAMRT;
         return false;
     }
-    MODULEHELP_SOCKETTEST_DATAINFO *pSt_DataSocket = new MODULEHELP_SOCKETTEST_DATAINFO;
+    MODULEHELP_SOCKETTEST_DATAINFO *pSt_DataSocket = new(std::nothrow) MODULEHELP_SOCKETTEST_DATAINFO;
     if (NULL == pSt_DataSocket)
     {
 		ModuleHelp_IsErrorOccur = true;

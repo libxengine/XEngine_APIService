@@ -16,20 +16,20 @@ jobs:
       # Set fail-fast to false to ensure that feedback is delivered for all matrix combinations. Consider changing this to true when your workflow is stable.
       fail-fast: false
       matrix:
-        configuration: [Debug ,Release]
+        configuration: [Release]
         platform: [x86 ,x64 ,ARM64]
 
-    runs-on: windows-latest # 最新的 Windows 环境
+    runs-on: windows-2025-vs2026
     steps:
        # 检出您的主仓库代码
       - name: Checkout main repository code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           ref: 'develop'
         
        # 检出依赖的xengine仓库到指定的xengine目录
       - name: Checkout dependency repository (xengine)
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           repository: libxengine/libxengine
           path: libxengine
@@ -41,7 +41,7 @@ jobs:
         shell: pwsh
 
       - name: vcpkg dependency repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           repository: microsoft/vcpkg
           path: vcpkg     
@@ -114,7 +114,7 @@ jobs:
 
       # 配置 MSBuild 的路径，准备构建 VC++ 项目
       - name: Setup MSBuild
-        uses: microsoft/setup-msbuild@v2
+        uses: microsoft/setup-msbuild@v3
 
       #编译
       - name: Build Solution
@@ -155,7 +155,7 @@ jobs:
 
       - name: Upload folder as artifact with x86
         if: matrix.configuration == 'Release' && matrix.platform == 'x64'
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: XEngine_APIServiceApp-Windows_x86_32
           path: XEngine_Release/
@@ -163,14 +163,14 @@ jobs:
  
       - name: Upload folder as artifact with x64
         if: matrix.configuration == 'Release' && matrix.platform == 'x64'
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: XEngine_APIServiceApp-Windows_x86_64
           path: XEngine_Release/
           retention-days: 1
       - name: Upload folder as artifact with ARM64
         if: matrix.configuration == 'Release' && matrix.platform == 'ARM64'
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: XEngine_APIServiceApp-Windows_Arm64
           path: XEngine_Release/

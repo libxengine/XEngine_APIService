@@ -34,8 +34,8 @@ CModuleHelp_Locker::~CModuleHelp_Locker()
   意思：是否成功
 备注：
 *********************************************************************/
-bool CModuleHelp_Locker::ModuleHelp_Locker_Create(XNETHANDLE* pxhToken)
-{
+	bool CModuleHelp_Locker::ModuleHelp_Locker_Create(XNETHANDLE* pxhToken)
+	{
 	ModuleHelp_IsErrorOccur = false;
 
 	if (NULL == pxhToken)
@@ -44,7 +44,7 @@ bool CModuleHelp_Locker::ModuleHelp_Locker_Create(XNETHANDLE* pxhToken)
 		ModuleHelp_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_HELP_LOCK_PARAMENT;
 		return false;
 	}
-	MODULEHELP_LOCKINFO *pSt_LockInfo = new MODULEHELP_LOCKINFO;
+	MODULEHELP_LOCKINFO *pSt_LockInfo = new(std::nothrow) MODULEHELP_LOCKINFO;
 	if (NULL == pSt_LockInfo)
 	{
 		ModuleHelp_IsErrorOccur = true;
@@ -73,8 +73,8 @@ bool CModuleHelp_Locker::ModuleHelp_Locker_Create(XNETHANDLE* pxhToken)
   意思：是否成功
 备注：
 *********************************************************************/
-bool CModuleHelp_Locker::ModuleHelp_Locker_OPen(XNETHANDLE xhToken)
-{
+	bool CModuleHelp_Locker::ModuleHelp_Locker_OPen(XNETHANDLE xhToken)
+	{
 	ModuleHelp_IsErrorOccur = false;
 
 	//看看存在不存在
@@ -89,7 +89,7 @@ bool CModuleHelp_Locker::ModuleHelp_Locker_OPen(XNETHANDLE xhToken)
 	}
 	st_Locker.unlock_shared();
 	//不存在插入
-	MODULEHELP_LOCKINFO* pSt_LockInfo = new MODULEHELP_LOCKINFO;
+	MODULEHELP_LOCKINFO* pSt_LockInfo = new(std::nothrow) MODULEHELP_LOCKINFO;
 	if (NULL == pSt_LockInfo)
 	{
 		ModuleHelp_IsErrorOccur = true;

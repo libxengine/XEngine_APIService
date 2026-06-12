@@ -64,6 +64,19 @@ void CPlugin_Zodiac::PluginCore_UnInit()
 	Zodiac_IsErrorOccur = false;
 }
 /********************************************************************
+函数名称：PluginCore_RegisterType
+函数功能：注册类型
+返回值
+  类型：整数型
+  意思：返回注册类型
+备注：
+*********************************************************************/
+int CPlugin_Zodiac::PluginCore_RegisterType()
+{
+	Zodiac_IsErrorOccur = false;
+	return 0;
+}
+/********************************************************************
 函数名称：PluginCore_GetInfo
 函数功能：获取插件基础信息函数
  参数.一：ptszPluginName
@@ -108,7 +121,7 @@ void CPlugin_Zodiac::PluginCore_GetInfo(XCHAR* ptszPluginName, XCHAR* ptszPlugin
   意思：是否成功
 备注：
 *********************************************************************/
-bool CPlugin_Zodiac::PluginCore_Call(XCHAR*** pppHDRList, int nListCount, XCHAR* ptszMsgBuffer, int* pInt_MsgLen, LPCXSTR lpszMsgBuffer, int nMsgLen, int* pInt_HTTPCode)
+bool CPlugin_Zodiac::PluginCore_Call(XCHAR* ptszMsgBuffer, int* pInt_MsgLen, LPCXSTR lpszMsgBuffer, int nMsgLen, XCHAR*** pppInputParameters, int nInputPCount, XCHAR*** pppOutputParameters, int* pInt_OutputPCount)
 {
 	Zodiac_IsErrorOccur = false;
 
@@ -118,20 +131,15 @@ bool CPlugin_Zodiac::PluginCore_Call(XCHAR*** pppHDRList, int nListCount, XCHAR*
 		Zodiac_dwErrorCode = ERROR_XENGINE_APISERVICE_PLUGIN_MODULE_ZODIAC_PARAMENT;
 		return false;
 	}
-	XCHAR tszKeyName[128];
-	XCHAR tszValueName[128];
-	XCHAR tszChineseZodiac[64];
-	XCHAR tszEnglishZodiac[64];
+	XCHAR tszKeyName[128] = {};
+	XCHAR tszValueName[128] = {};
+	XCHAR tszChineseZodiac[64] = {};
+	XCHAR tszEnglishZodiac[64] = {};
 	Json::Value st_JsonRoot;
 	Json::Value st_JsonObject;
 	Json::StreamWriterBuilder st_JsonBuilder;
 
-	memset(tszKeyName, '\0', sizeof(tszKeyName));
-	memset(tszValueName, '\0', sizeof(tszValueName));
-	memset(tszChineseZodiac, '\0', sizeof(tszChineseZodiac));
-	memset(tszEnglishZodiac, '\0', sizeof(tszEnglishZodiac));
-
-	BaseLib_String_GetKeyValue((*pppHDRList)[1], "=", tszKeyName, tszValueName);
+	BaseLib_String_GetKeyValue((*pppInputParameters)[1], "=", tszKeyName, tszValueName);
 	Plugin_Zodiac_Chinese(tszValueName, tszChineseZodiac);
 	Plugin_Zodiac_English(tszValueName, tszEnglishZodiac);
 
@@ -143,7 +151,6 @@ bool CPlugin_Zodiac::PluginCore_Call(XCHAR*** pppHDRList, int nListCount, XCHAR*
 	st_JsonRoot["msg"] = "success";
 	st_JsonBuilder["emitUTF8"] = true;
 
-	*pInt_HTTPCode = 200;
 	*pInt_MsgLen = Json::writeString(st_JsonBuilder, st_JsonRoot).length();
 	memcpy(ptszMsgBuffer, Json::writeString(st_JsonBuilder, st_JsonRoot).c_str(), *pInt_MsgLen);
 	return true;
