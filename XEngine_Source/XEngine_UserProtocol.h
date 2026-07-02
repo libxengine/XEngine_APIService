@@ -109,6 +109,8 @@ typedef enum
 #define ERROR_XENGINE_PROTOCL_HTTP_NOTSUPPORT 0x0008                       //不支持的操作
 #define ERROR_XENGINE_PROTOCL_HTTP_RELOAD 0x0009                           //重载问题
 #define ERROR_XENGINE_PROTOCL_HTTP_FAILURE 0x000A                          //操作失败
+#define ERROR_XENGINE_PROTOCL_HTTP_CREATE 0x000B                           //创建失败
+#define ERROR_XENGINE_PROTOCL_HTTP_PARSE 0x000C                            //解析失败
 ///////////////////////////////////////////////////////////////////////////
 //                          导出的数据结构
 ///////////////////////////////////////////////////////////////////////////

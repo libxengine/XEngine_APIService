@@ -12,31 +12,19 @@
 *********************************************************************/
 bool XEngine_PluginTask_Handle(LPCXSTR lpszMethodName, LPCXSTR lpszClientAddr, LPCXSTR lpszRVBuffer, int nRVLen, XCHAR*** ppptszList, int nListCount, int nPluginType)
 {
-	int nMsgLen = 0;
 	int nPktLen = 0;
-	XCHAR tszMsgBuffer[2048];
-	XCHAR tszPktBuffer[2048];
-	RFCCOMPONENTS_HTTP_HDRPARAM st_HDRParament;
-
-	memset(tszMsgBuffer, '\0', sizeof(tszMsgBuffer));
-	memset(tszPktBuffer, '\0', sizeof(tszPktBuffer));
-	memset(&st_HDRParament, '\0', sizeof(RFCCOMPONENTS_HTTP_HDRPARAM));
-
-	st_HDRParament.bIsClose = true;
-	st_HDRParament.nHttpCode = 200;
-	_tcsxcpy(st_HDRParament.tszMimeType, "json");
+	XCHAR tszPktBuffer[2048] = {};
 
 	if (PluginExtension_Loader_Exec(lpszMethodName, tszPktBuffer, &nPktLen, lpszRVBuffer, nRVLen, ppptszList, nListCount))
 	{
-		HttpProtocol_Server_SendMsgEx(xhHTTPPacket, tszMsgBuffer, &nMsgLen, &st_HDRParament, tszPktBuffer, nPktLen);
+		XEngine_Network_Send(lpszClientAddr, tszPktBuffer, nPktLen);
 		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("HTTP客户端:%s,请求的方法:%s,由%s插件模块处理成功"), lpszClientAddr, lpszMethodName, 0 == nPluginType ? "Lib" : "Lua");
 	}
 	else
 	{
-		st_HDRParament.nHttpCode = 400;
-		HttpProtocol_Server_SendMsgEx(xhHTTPPacket, tszMsgBuffer, &nMsgLen, &st_HDRParament);
+		ModuleProtocol_Packet_Common(tszPktBuffer, &nPktLen, 500, _X("plugin process failure"));
+		XEngine_Network_Send(lpszClientAddr, tszPktBuffer, nPktLen);
 		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("HTTP客户端:%s,请求的方法:%s,由%s插件模块处理失败,错误:%lX"), lpszClientAddr, lpszMethodName, 0 == nPluginType ? "Lib" : "Lua", PluginExtension_GetLastError());
 	}
-	XEngine_Network_Send(lpszClientAddr, tszMsgBuffer, nMsgLen);
 	return true;
 }

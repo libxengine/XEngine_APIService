@@ -70,7 +70,7 @@ void XEngine_Network_Close(LPCXSTR lpszClientAddr, bool bHeart)
 //////////////////////////////////////////////////////////////////////////
 bool XEngine_Network_Send(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer, int nMsgLen)
 {
-	int nSDLen = 0;
+	int nSDLen = XENGINE_MEMORY_SIZE_MAX;
 	CXEngine_MemoryPoolEx m_MSGMemory(XENGINE_MEMORY_SIZE_MAX);
 	RFCCOMPONENTS_HTTP_HDRPARAM st_HDRParam = {};    //发送给客户端的参数
 
