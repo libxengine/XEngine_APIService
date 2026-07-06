@@ -68,7 +68,7 @@ void XEngine_Network_Close(LPCXSTR lpszClientAddr, bool bHeart)
 	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("HTTP客户端:%s,离开服务器"), lpszClientAddr);
 }
 //////////////////////////////////////////////////////////////////////////
-bool XEngine_Network_Send(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer, int nMsgLen)
+bool XEngine_Network_Send(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer, int nMsgLen, LPCXSTR lpszHTTPFmt)
 {
 	int nSDLen = XENGINE_MEMORY_SIZE_MAX;
 	CXEngine_MemoryPoolEx m_MSGMemory(XENGINE_MEMORY_SIZE_MAX);
@@ -76,6 +76,7 @@ bool XEngine_Network_Send(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer, int nMs
 
 	st_HDRParam.nHttpCode = 200; //HTTP CODE码
 	st_HDRParam.bIsClose = true; //收到回复后就关闭
+	_tcsxcpy(st_HDRParam.tszMimeType, lpszHTTPFmt);
 
 	HttpProtocol_Server_SendMsgEx(xhHTTPPacket, m_MSGMemory.get(), &nSDLen, &st_HDRParam, lpszMsgBuffer, nMsgLen);
 	//发送数据给指定客户端

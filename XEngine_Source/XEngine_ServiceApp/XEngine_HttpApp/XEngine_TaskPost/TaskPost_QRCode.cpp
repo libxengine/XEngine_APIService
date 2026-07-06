@@ -23,13 +23,13 @@ bool HTTPTask_TaskPost_QRCode(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer, int
 
 		if (ModuleHelp_QRCode_QREncodecMemory(st_QRCode.tszMsgBuffer, m_MemoryRecv.get(), &nRVLen, st_QRCode.tszFmtBuffer))
 		{
-			XEngine_Network_Send(lpszClientAddr, m_MemoryRecv.get(), nRVLen);
+			XEngine_Network_Send(lpszClientAddr, m_MemoryRecv.get(), nRVLen, st_QRCode.tszFmtBuffer);
 			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("HTTP客户端:%s,请求创建二维码成功,创建的二维码数据:%s"), lpszClientAddr, st_QRCode.tszMsgBuffer);
 		}
 		else
 		{
 			ModuleProtocol_Packet_Common(m_MemoryRecv.get(), &nRVLen, ERROR_XENGINE_PROTOCL_HTTP_CREATE, _X("create qrcode failed"));
-			XEngine_Network_Send(lpszClientAddr, m_MemoryRecv.get(), nRVLen);
+			XEngine_Network_Send(lpszClientAddr, m_MemoryRecv.get(), nRVLen, st_QRCode.tszFmtBuffer);
 			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("HTTP客户端:%s,请求创建二维码失败,错误:%lX"), lpszClientAddr, ModuleHelp_GetLastError());
 		}
 	}

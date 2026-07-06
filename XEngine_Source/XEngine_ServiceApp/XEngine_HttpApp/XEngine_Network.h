@@ -21,4 +21,4 @@ void XCALLBACK Network_Callback_NTPRecv(LPCXSTR lpszClientAddr, XSOCKET hSocket,
 void XCALLBACK Network_Callback_DNSRecv(LPCXSTR lpszClientAddr, XSOCKET hSocket, LPCXSTR lpszMSGBuffer, int nMSGLen, XPVOID lParam);
 //关闭与发送
 void XEngine_Network_Close(LPCXSTR lpszClientAddr, bool bHeart);
-bool XEngine_Network_Send(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer, int nMsgLen);
+bool XEngine_Network_Send(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer, int nMsgLen, LPCXSTR lpszHTTPFmt = _X("json"));
