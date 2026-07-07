@@ -2,11 +2,9 @@
 
 bool HTTPTask_TaskGet_WeatherInfo(LPCXSTR lpszClientAddr, LPCXSTR lpszAddrCode)
 {
-	int nMsgLen = 4096;
 	int nPktLen = 4096;
 	int nBLen = 0;
 	XCHAR* ptszBodyBuffer = NULL;
-	XCHAR tszMsgBuffer[4096] = {};
 	XCHAR tszPktBuffer[4096] = {};
 	XCHAR tszUrlBuffer[XPATH_MAX] = {};
 	XENGINE_WEATHERINFO st_WeatherInfo = {};
@@ -36,7 +34,7 @@ bool HTTPTask_TaskGet_WeatherInfo(LPCXSTR lpszClientAddr, LPCXSTR lpszAddrCode)
 	BaseLib_Charset_AnsiToUTF(tszPktBuffer, tszUTFStr, &nPktLen);
 	XEngine_Network_Send(lpszClientAddr, tszUTFStr, nPktLen);
 #else
-	XEngine_Network_Send(lpszClientAddr, tszPktBuffer, &nPktLen);
+	XEngine_Network_Send(lpszClientAddr, tszPktBuffer, nPktLen);
 #endif
 	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("HTTP客户端:%s,请求的实时天气信息成功,查询ID:%s"), lpszClientAddr, lpszAddrCode);
 	return true;
