@@ -16,7 +16,7 @@ bool HTTPTask_TaskPost_Image(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer, int 
 	int nSDLen = 0;
 	XCHAR tszHTTPKey[64] = {};
 	XCHAR tszHTTPVlu[64] = {};
-	CXEngine_MemoryPoolEx m_MemorySend(XENGINE_MEMORY_SIZE_MAX);
+	CXEngine_MemoryPoolEx m_MemorySend(XENGINE_MEMORY_SIZE_LARGE);
 
 #if (0 == _XENGINE_BUILD_SWITCH_OPENCV)
 	// 编译时未启用OpenCV能力：直接返回“不支持”错误。
@@ -99,7 +99,6 @@ bool HTTPTask_TaskPost_Image(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer, int 
 		{
 			BaseLib_String_GetKeyValue((*ppptszList)[4], "=", tszHTTPKey, tszHTTPVlu);
 			int nHeight = _ttxoi(tszHTTPVlu);
-
 			if (ModuleHelp_ImageSet_Resolution(lpszMsgBuffer, nMsgLen, tszFileExt, m_MemorySend.get(), &nSDLen, nWidth, nHeight))
 			{
 				XEngine_Network_Send(lpszClientAddr, m_MemorySend.get(), nSDLen);

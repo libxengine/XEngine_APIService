@@ -1,6 +1,7 @@
 ﻿#ifdef _MSC_BUILD
 #include <Windows.h>
 #include <tchar.h>
+#include <io.h>
 #pragma comment(lib,"Ws2_32")
 #pragma comment(lib,"jsoncpp")
 #pragma comment(lib,"XEngine_BaseLib/XEngine_BaseLib")
@@ -68,28 +69,35 @@ int test_imgzoom()
 	SystemApi_File_EnumFile(lpszFileDir, &pptszListFile, &nListCount, false, 1, true);
 	for (int i = 0; i < nListCount; i++)
 	{
+		XCHAR tszFileExt[XPATH_MIN] = {};
+		BaseLib_String_GetFileAndPath(pptszListFile[i], NULL, NULL, NULL, tszFileExt);
+		if (_tcsxcmp(tszFileExt, _X("jpg")) != 0 && _tcsxcmp(tszFileExt, _X("png")) != 0)
+		{
+			continue;
+		}
+
 		int nCode = 0;
 		int nWidth = 0;
 		int nHeight = 0;
-		XCHAR* ptszFileBuffer = (XCHAR*)malloc(XENGINE_MEMORY_SIZE_MAX);
+		XCHAR* ptszFileBuffer = (XCHAR*)malloc(XENGINE_MEMORY_SIZE_LARGE);
 		if (NULL == ptszFileBuffer)
 		{
 			return -1;
 		}
-		memset(ptszFileBuffer, '\0', XENGINE_MEMORY_SIZE_MAX);
+		memset(ptszFileBuffer, '\0', XENGINE_MEMORY_SIZE_LARGE);
 
 		FILE* pSt_File = fopen(pptszListFile[i], _X("rb"));
 		if (NULL == pSt_File)
 		{
 			continue;
 		}
-		int nRet = fread(ptszFileBuffer, 1, XENGINE_MEMORY_SIZE_MAX, pSt_File);
+		int nRet = fread(ptszFileBuffer, 1, XENGINE_MEMORY_SIZE_LARGE, pSt_File);
 		fclose(pSt_File);
 		
 		APPClient_ImageExample_GetAttr(ptszFileBuffer, nRet, &nWidth, &nHeight);
 
 		XCHAR tszAPIUrl[MAX_PATH] = {};
-		XCHAR tszFileExt[64] = {};
+		memset(tszFileExt, '\0', sizeof(tszFileExt));
 
 		BaseLib_String_GetFileAndPath(pptszListFile[i], NULL, NULL, NULL, tszFileExt);
 		_xstprintf(tszAPIUrl, _X("http://127.0.0.1:5501/api?function=image&type=2&ext=%s&width=%d&height=%d"), tszFileExt, nWidth / 2, nHeight / 2);
@@ -102,12 +110,20 @@ int test_imgzoom()
 		}
 		free(ptszFileBuffer);
 		
+		_chmod(pptszListFile[i], _S_IREAD | _S_IWRITE);
 		pSt_File = _xtfopen(pptszListFile[i], _X("wb"));
+		if (NULL == pSt_File)
+		{
+			printf("创建文件失败！%s, errno: %d\n", pptszListFile[i], errno);
+			BaseLib_Memory_FreeCStyle((XPPMEM)&ptszMsgBuffer);
+			break;
+		}
 		fwrite(ptszMsgBuffer, 1, nRet, pSt_File);
 		fclose(pSt_File);
-
+		printf("Convert File: %s\n", pptszListFile[i]);
 		BaseLib_Memory_FreeCStyle((XPPMEM)&ptszMsgBuffer);
 	}
+	BaseLib_Memory_Free((XPPPMEM)&pptszListFile, nListCount);
 	return 0;
 }
 

@@ -70,8 +70,8 @@ void XEngine_Network_Close(LPCXSTR lpszClientAddr, bool bHeart)
 //////////////////////////////////////////////////////////////////////////
 bool XEngine_Network_Send(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer, int nMsgLen, LPCXSTR lpszHTTPFmt)
 {
-	int nSDLen = XENGINE_MEMORY_SIZE_MAX;
-	CXEngine_MemoryPoolEx m_MSGMemory(XENGINE_MEMORY_SIZE_MAX);
+	int nSDLen = XENGINE_MEMORY_SIZE_LARGE;
+	CXEngine_MemoryPoolEx m_MSGMemory(XENGINE_MEMORY_SIZE_LARGE);
 	RFCCOMPONENTS_HTTP_HDRPARAM st_HDRParam = {};    //发送给客户端的参数
 
 	st_HDRParam.nHttpCode = 200; //HTTP CODE码

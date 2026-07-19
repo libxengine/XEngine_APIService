@@ -144,6 +144,7 @@ int main(int argc, char** argv)
 		printf("Error setting locale.\n");
 		return -1;
 	}
+	printf("你好，世界！\n");
 #endif
 #endif
 	bIsRun = true;
