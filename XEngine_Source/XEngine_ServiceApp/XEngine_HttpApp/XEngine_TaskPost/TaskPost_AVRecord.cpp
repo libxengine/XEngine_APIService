@@ -13,19 +13,17 @@ static int nAudioIndex = -1;
 
 void XCALLBACK HTTPTask_TaskPost_CBVideo(XHANDLE*** pppSt_AVBuffer, XPVOID lParam)
 {
-	XHANDLE** ppSt_AVFrame;
-	if (VideoCodec_Help_ScaleConvert(xhScale, (*pppSt_AVBuffer)[0], &ppSt_AVFrame))
+	if (VideoCodec_Help_ScaleConvert(xhScale, (*pppSt_AVBuffer)[0]))
 	{
 		int nListCount = 0;
 		XHANDLE** ppSt_AVPacket;
-		VideoCodec_Stream_EnCodec(xhVideo, ppSt_AVFrame[0], &ppSt_AVPacket, &nListCount);
+		VideoCodec_Stream_EnCodec(xhVideo, (*pppSt_AVBuffer)[0], &ppSt_AVPacket, &nListCount);
 		for (int j = 0; j < nListCount; j++)
 		{
 			AVFormat_Packet_StreamWrite(xhPacket, nVideoIndex, ppSt_AVPacket[j]);
 		}
 		AVHelp_Memory_FreeAVList(&ppSt_AVPacket, nListCount);
 	}
-	AVHelp_Memory_FreeAVList(&ppSt_AVFrame, 1, false);
 }
 void XCALLBACK HTTPTask_TaskPost_CBAudio(XHANDLE*** pppSt_AVBuffer, XPVOID lParam)
 {
