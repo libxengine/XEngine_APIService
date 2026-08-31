@@ -59,8 +59,6 @@ using namespace std;
 #include <XEngine_Include/XEngine_AVCodec/VideoCodec_Error.h>
 #include <XEngine_Include/XEngine_AVCodec/AudioCodec_Define.h>
 #include <XEngine_Include/XEngine_AVCodec/AudioCodec_Error.h>
-#include <XEngine_Include/XEngine_AVCodec/AVCollect_Define.h>
-#include <XEngine_Include/XEngine_AVCodec/AVCollect_Error.h>
 #include <XEngine_Include/XEngine_AVCodec/AVHelp_Define.h>
 #include <XEngine_Include/XEngine_AVCodec/AVHelp_Error.h>
 #include <XEngine_Include/XEngine_AVCodec/AVFormat_Define.h>
@@ -173,7 +171,6 @@ extern XENGINE_DEAMONAPPLIST st_DeamonAppConfig;
 #pragma comment(lib,"XEngine_RfcComponents/RfcComponents_NTPProtocol.lib")
 #pragma comment(lib,"XEngine_RfcComponents/RfcComponents_DNSProtocol.lib")
 #pragma comment(lib,"XEngine_SystemSdk/XEngine_SystemApi")
-#pragma comment(lib,"XEngine_AVCodec/XEngine_AVCollect.lib")
 #pragma comment(lib,"XEngine_AVCodec/XEngine_VideoCodec.lib")
 #pragma comment(lib,"XEngine_AVCodec/XEngine_AudioCodec.lib")
 #pragma comment(lib,"XEngine_AVCodec/XEngine_AVHelp.lib")
