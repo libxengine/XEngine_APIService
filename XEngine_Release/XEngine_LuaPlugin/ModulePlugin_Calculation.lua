@@ -18,18 +18,17 @@ end
 
 
 function PluginCore_Call(lpszStrUrl, nListCount, lpszMsgBuffer, nMsgLen)
+    local OutputTable = {}
+
     if nListCount < 3 then
-        PInt_HTTPCode = 200
         PtszMsgBuffer = "{\"code\":1001,\"msg\":\"request parament is incorrent\"}"
-        PInt_MsgLen = #PtszMsgBuffer
-        return true
+        return OutputTable, PtszMsgBuffer, #PtszMsgBuffer, true
     end
 
     local nValue = 0
-    local HDRArray = PluginCore_URLSqlit(lpszStrUrl,'&')
-    local HDRObjectValue1 = PluginCore_URLSqlit(HDRArray[1],'=')
-    local HDRObjectValue2 = PluginCore_URLSqlit(HDRArray[2],'=')
-    local HDRObjectType = PluginCore_URLSqlit(HDRArray[3],'=')
+    local HDRObjectValue1 = PluginCore_URLSqlit(lpszStrUrl[1],'=')
+    local HDRObjectValue2 = PluginCore_URLSqlit(lpszStrUrl[2],'=')
+    local HDRObjectType = PluginCore_URLSqlit(lpszStrUrl[3],'=')
 
     if '0' == HDRObjectType[2] then
         nValue = HDRObjectValue1[2] + HDRObjectValue2[2]
@@ -40,17 +39,12 @@ function PluginCore_Call(lpszStrUrl, nListCount, lpszMsgBuffer, nMsgLen)
     elseif '3' == HDRObjectType[2] then
         nValue = HDRObjectValue1[2] / HDRObjectValue2[2]
     else
-        PInt_HTTPCode = 200
         PtszMsgBuffer = "{\"code\":1002,\"msg\":\"type does not support\"}"
-        PInt_MsgLen = #PtszMsgBuffer
-        return true
+        return OutputTable, PtszMsgBuffer, #PtszMsgBuffer, true
     end
 
-    PInt_HTTPCode = 200
     PtszMsgBuffer = "{\"code\":0,\"msg\":\"success\",\"data\":{\"nType\":" .. HDRObjectType[2] .. ",\"nValue1\":" .. HDRObjectValue1[2] .. ",\"nValue2\":" .. HDRObjectValue2[2] .. ",\"nCal\":" .. nValue .. "}}"
-    PInt_MsgLen = #PtszMsgBuffer
-
-    return true
+    return OutputTable, PtszMsgBuffer, #PtszMsgBuffer, true
 end
 
 function PluginCore_GetInfo()
