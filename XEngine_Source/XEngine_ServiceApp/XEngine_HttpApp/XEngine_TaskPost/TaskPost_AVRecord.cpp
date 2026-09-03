@@ -129,9 +129,9 @@ bool HTTPTask_TaskPost_AVRecordStart(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuff
 #ifdef _MSC_BUILD
 		bRet = AVFormat_UNPack_Input(xhScreen, st_AVRecord.tszVideoDevice, "gdigrab", false, &ppSt_KEYValue, nListCount);
 #elif __linux__
-		bRet = AVFormat_UNPack_Input(xhScreen, st_AVRecord.tszVideoDevice, "x11grab", &ppSt_KEYValue, nListCount);
+		bRet = AVFormat_UNPack_Input(xhScreen, st_AVRecord.tszVideoDevice, "x11grab", false, &ppSt_KEYValue, nListCount);
 #else
-		bRet = AVFormat_UNPack_Input(xhScreen, st_AVRecord.tszVideoDevice, "avfoundation", &ppSt_KEYValue, nListCount);
+		bRet = AVFormat_UNPack_Input(xhScreen, st_AVRecord.tszVideoDevice, "avfoundation", false, &ppSt_KEYValue, nListCount);
 #endif
 		BaseLib_Memory_Free((XPPPMEM)&ppSt_KEYValue, nListCount);
 		if (!bRet)

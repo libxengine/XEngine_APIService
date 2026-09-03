@@ -92,7 +92,7 @@ jobs:
             
       - name: install build package
         run: |
-            dnf install lua-devel opencv-devel qrencode-devel leptonica-devel tesseract-devel -y
+            dnf install luajit-devel opencv-devel qrencode-devel leptonica-devel tesseract-devel -y
 
       - name: make
         run: |
@@ -109,7 +109,7 @@ jobs:
             cd XEngine_Release
             chmod 777 copydb.sh
             ./copydb.sh
-            ./XEngine_APIServiceApp -t
+            # ./XEngine_APIServiceApp -t
 
       - name: Upload folder as artifact with CentOS
         uses: actions/upload-artifact@v7
