@@ -24,13 +24,45 @@ bool HTTPTask_TaskGet_WeatherInfo(LPCXSTR lpszClientAddr, LPCXSTR lpszAddrCode)
 
 		if (NULL != lpszAddrCode)
 		{
-			_tcsxcat(tszUrlBuffer, lpszAddrCode);
+			int nCurLen = (int)_tcsxlen(tszUrlBuffer);
+			int nRemain = (XPATH_MAX - 1) - nCurLen;
+			if (nRemain > 0)
+			{
+				int nAddrLen = (int)_tcsxlen(lpszAddrCode);
+				if (nAddrLen > nRemain)
+				{
+					nAddrLen = nRemain;
+				}
+				memcpy(tszUrlBuffer + nCurLen, lpszAddrCode, nAddrLen * sizeof(XCHAR));
+				tszUrlBuffer[nCurLen + nAddrLen] = '\0';
+			}
 		}
-		_tcsxcat(tszUrlBuffer, lpszPos + 2);
+
+		{
+			LPCXSTR lpszSuffix = lpszPos + 2;
+			int nCurLen = (int)_tcsxlen(tszUrlBuffer);
+			int nRemain = (XPATH_MAX - 1) - nCurLen;
+			if (nRemain > 0)
+			{
+				int nSuffixLen = (int)_tcsxlen(lpszSuffix);
+				if (nSuffixLen > nRemain)
+				{
+					nSuffixLen = nRemain;
+				}
+				memcpy(tszUrlBuffer + nCurLen, lpszSuffix, nSuffixLen * sizeof(XCHAR));
+				tszUrlBuffer[nCurLen + nSuffixLen] = '\0';
+			}
+		}
 	}
 	else
 	{
-		_tcsxcpy(tszUrlBuffer, lpszTemplate);
+		int nTplLen = (int)_tcsxlen(lpszTemplate);
+		if (nTplLen >= XPATH_MAX)
+		{
+			nTplLen = XPATH_MAX - 1;
+		}
+		memcpy(tszUrlBuffer, lpszTemplate, nTplLen * sizeof(XCHAR));
+		tszUrlBuffer[nTplLen] = '\0';
 	}
 	APIClient_Http_Request(_X("GET"), tszUrlBuffer, NULL, NULL, &ptszBodyBuffer, &nBLen);
 
