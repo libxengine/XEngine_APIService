@@ -18,7 +18,16 @@ bool HTTPTask_TaskGet_BankInfo(LPCXSTR lpszClientAddr, LPCXSTR lpszBankNumber)
 		return false;
 	}
 	_tcsxcpy(st_BankInfo.tszBankNumber, lpszBankNumber);
-	_xstprintf(tszUrlBuffer, st_ServiceConfig.st_XApi.tszBankUrl, lpszBankNumber);
+	_tcsxcpy(tszUrlBuffer, st_ServiceConfig.st_XApi.tszBankUrl);
+	XCHAR* ptszFormat = _tcsxstr(tszUrlBuffer, _X("%s"));
+	if (NULL != ptszFormat)
+	{
+		XCHAR tszUrlTail[XPATH_MAX] = {};
+		_tcsxcpy(tszUrlTail, ptszFormat + 2);
+		*ptszFormat = '\0';
+		_tcsxcat(tszUrlBuffer, lpszBankNumber);
+		_tcsxcat(tszUrlBuffer, tszUrlTail);
+	}
 	APIClient_Http_Request(_X("GET"), tszUrlBuffer, NULL, NULL, &ptszBodyBuffer, &nBLen);
 	//解析JSON信息
 	if (!ModuleProtocol_Parse_Bank(ptszBodyBuffer, nBLen, &st_BankInfo))
