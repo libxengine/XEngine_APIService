@@ -9,7 +9,29 @@ bool HTTPTask_TaskGet_WeatherInfo(LPCXSTR lpszClientAddr, LPCXSTR lpszAddrCode)
 	XCHAR tszUrlBuffer[XPATH_MAX] = {};
 	XENGINE_WEATHERINFO st_WeatherInfo = {};
 
-	_xstprintf(tszUrlBuffer, st_ServiceConfig.st_XApi.tszWeatherUrl, lpszAddrCode);
+	// 安全构造URL：不将配置字符串作为格式串解释，仅替换第一个"%s"占位符
+	LPCXSTR lpszTemplate = st_ServiceConfig.st_XApi.tszWeatherUrl;
+	LPCXSTR lpszPos = _tcsxstr(lpszTemplate, _X("%s"));
+	if (NULL != lpszPos)
+	{
+		int nPrefixLen = (int)(lpszPos - lpszTemplate);
+		if (nPrefixLen >= (XPATH_MAX - 1))
+		{
+			nPrefixLen = XPATH_MAX - 1;
+		}
+		memcpy(tszUrlBuffer, lpszTemplate, nPrefixLen * sizeof(XCHAR));
+		tszUrlBuffer[nPrefixLen] = '\0';
+
+		if (NULL != lpszAddrCode)
+		{
+			_tcsxcat(tszUrlBuffer, lpszAddrCode);
+		}
+		_tcsxcat(tszUrlBuffer, lpszPos + 2);
+	}
+	else
+	{
+		_tcsxcpy(tszUrlBuffer, lpszTemplate);
+	}
 	APIClient_Http_Request(_X("GET"), tszUrlBuffer, NULL, NULL, &ptszBodyBuffer, &nBLen);
 
 	XCHAR tszGBKStr[1024] = {};
