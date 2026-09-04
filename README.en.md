@@ -84,7 +84,7 @@ Modify the database configuration in XSQL in the configuration file to your
 The default configuration does not enable database support. If the database interface is required, you need to enable the database yourself
 
 #### Windows
-need to vcpkg configure third-part env.refer vcpkg install guide.after installed and execution:vcpkg.exe install lua:x86-windows opencv[contrib,freetype]:x86-windows libqrencode:x86-windows leptonica:x86-windows tesseract:x86-windows lua:x64-windows opencv[contrib,freetype]:x64-windows libqrencode:x64-windows leptonica:x64-windows tesseract:x64-windows  
+need to vcpkg configure third-part env.refer vcpkg install guide.after installed and execution:vcpkg.exe install luajit:x86-windows opencv[contrib,freetype]:x86-windows libqrencode:x86-windows leptonica:x86-windows tesseract:x86-windows luajit:x64-windows opencv[contrib,freetype]:x64-windows libqrencode:x64-windows leptonica:x64-windows tesseract:x64-windows  
 use vs open and compile,suport windows 7sp1 and above  
 Just Run it
 
@@ -94,13 +94,13 @@ git submodule init
 git submodule update  
 
 #### Linux
-ubuntu:sudo apt install sudo apt install liblua5.4-dev libopencv-dev libopencv-contrib-dev libqrencode-dev libleptonica-dev libtesseract-dev -y  
-centos:sudo dnf install lua-devel opencv-devel qrencode-devel leptonica-devel tesseract-devel -y  
+ubuntu:sudo apt install sudo apt install libluajit-5.1-dev libopencv-dev libopencv-contrib-dev libqrencode-dev libleptonica-dev libtesseract-dev -y  
+rockylinux:sudo dnf install luajit-devel opencv-devel qrencode-devel leptonica-devel tesseract-devel -y  
 use makefile compile,UBUNTU24.04 x64 or RockyLinux 9 x64  
 Run it on the terminal
 
 #### Macos
-install environment:brew install lua opencv qrencode leptonica tesseract  
+install environment:brew install luajit opencv qrencode leptonica tesseract  
 use makefile compile,mac 13 and above  
 Run it on the terminal
 

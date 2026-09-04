@@ -96,18 +96,18 @@ git clone https://gitee.com/xengine/XEngine_IPMacData.git XEngine_Source/XEngine
 git clone https://gitee.com/xengine/XEngine_PhoneData.git XEngine_Source/XEngine_DependLibrary/XEngine_PhoneData  
 
 #### Windows
-需要vcpkg配置第三方环境,具体参考vcpkg安装方式,安装好后执行:vcpkg.exe install lua:x86-windows opencv[contrib,freetype]:x86-windows libqrencode:x86-windows leptonica:x86-windows tesseract:x86-windows lua:x64-windows opencv[contrib,freetype]:x64-windows libqrencode:x64-windows leptonica:x64-windows tesseract:x64-windows  
+需要vcpkg配置第三方环境,具体参考vcpkg安装方式,安装好后执行:vcpkg.exe install luajit:x86-windows opencv[contrib,freetype]:x86-windows libqrencode:x86-windows leptonica:x86-windows tesseract:x86-windows luajit:x64-windows opencv[contrib,freetype]:x64-windows libqrencode:x64-windows leptonica:x64-windows tesseract:x64-windows  
 使用VS打开并且编译,支持WINDOWS 7SP1以上系统  
 直接运行即可
 
 #### Linux
-ubuntu:sudo apt install liblua5.4-dev libopencv-dev libopencv-contrib-dev libqrencode-dev libleptonica-dev libtesseract-dev -y  
-centos:sudo dnf install lua-devel opencv-devel qrencode-devel leptonica-devel tesseract-devel -y  
+ubuntu:sudo apt install libluajit-5.1-dev libopencv-dev libopencv-contrib-dev libqrencode-dev libleptonica-dev libtesseract-dev -y  
+rockylinux:sudo dnf install luajit-devel opencv-devel qrencode-devel leptonica-devel tesseract-devel -y  
 Linux使用Makefile编译,UBUNTU24.04 x64或者RockyLinux 9 x64  
 在控制台运行
 
 #### Macos
-安装环境,执行命令:brew install lua opencv qrencode leptonica tesseract  
+安装环境,执行命令:brew install luajit opencv qrencode leptonica tesseract  
 使用makefile编译,控制台运行,需要mac 13以及以上版本  
 在控制台运行
 
