@@ -41,13 +41,13 @@ bool HTTPTask_TaskPost_Image(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer, int 
 			return false;
 		}
 		XCHAR** pptszListStr;
-		int nListCount = 0;
-		if (ModuleHelp_ImageGet_TextGet(lpszMsgBuffer, nMsgLen, &pptszListStr, &nListCount))
+		int nStrCount = 0;
+		if (ModuleHelp_ImageGet_TextGet(lpszMsgBuffer, nMsgLen, &pptszListStr, &nStrCount))
 		{
-			ModuleProtocol_Packet_ImageText(m_MemorySend.get(), &nSDLen, &pptszListStr, nListCount);
+			ModuleProtocol_Packet_ImageText(m_MemorySend.get(), &nSDLen, &pptszListStr, nStrCount);
 			XEngine_Network_Send(lpszClientAddr, m_MemorySend.get(), nSDLen);
-			BaseLib_Memory_Free((XPPPMEM)&pptszListStr, nListCount);
-			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("HTTP客户端:%s,请求获取识别图片文字成功,获取个数:%d"), lpszClientAddr, nListCount);
+			BaseLib_Memory_Free((XPPPMEM)&pptszListStr, nStrCount);
+			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("HTTP客户端:%s,请求获取识别图片文字成功,获取个数:%d"), lpszClientAddr, nStrCount);
 		}
 		else
 		{

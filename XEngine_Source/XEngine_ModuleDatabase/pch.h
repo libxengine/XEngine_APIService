@@ -15,7 +15,6 @@
 #else
 #include <arpa/inet.h>
 #endif
-#endif //PCH_H
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -51,3 +50,5 @@ extern XLONG DBModule_dwErrorCode;
 #pragma comment(lib,"XEngine_BaseLib/XEngine_BaseLib")
 #pragma comment(lib,"XEngine_HelpComponents/HelpComponents_DataBase")
 #endif
+
+#endif //PCH_H

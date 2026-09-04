@@ -13,7 +13,6 @@
 #include "framework.h"
 #include <tchar.h>
 #endif // _MSC_BUILD
-#endif //PCH_H
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -61,3 +60,5 @@ extern XLONG Meter_dwErrorCode;
 #endif
 #endif
 #endif
+
+#endif //PCH_H

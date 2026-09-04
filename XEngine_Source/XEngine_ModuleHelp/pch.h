@@ -16,7 +16,6 @@
 #else
 #include <sys/socket.h>
 #endif
-#endif //PCH_H
 #include "../XEngine_BuildSwitch.h"
 #include <string.h>
 #include <errno.h>
@@ -73,3 +72,5 @@ extern XLONG ModuleHelp_dwErrorCode;
 #pragma GCC diagnostic ignored "-Wclass-memaccess"
 #endif
 #endif
+
+#endif //PCH_H

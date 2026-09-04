@@ -12,7 +12,6 @@
 #include "framework.h"
 #include <tchar.h>
 #endif
-#endif //PCH_H
 #include <string>
 #include <json/json.h>
 #include <XEngine_Include/XEngine_CommHdr.h>
@@ -59,3 +58,5 @@ extern XLONG Pass_dwErrorCode;
 #endif
 #endif
 #endif
+
+#endif //PCH_H

@@ -11,7 +11,8 @@ bool HTTPTask_TaskGet_Oil(LPCXSTR lpszClientAddr, LPCXSTR lpszCityStr)
 	XENGINE_OILINFO st_OilInfo = {};
 
 	XCHAR tszURLEncoder[XPATH_MAX] = {};
-	_xstprintf(tszUrlBuffer, st_ServiceConfig.st_XApi.tszOilUrl, lpszCityStr);
+	_tcsxcat(tszUrlBuffer, st_ServiceConfig.st_XApi.tszOilUrl);
+	_tcsxcat(tszUrlBuffer, lpszCityStr);
 
 #ifdef _MSC_BUILD
 	XCHAR tszUTFEncoder[XPATH_MAX] = {};
