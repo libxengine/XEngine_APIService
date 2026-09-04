@@ -108,9 +108,10 @@ typedef enum
 #define ERROR_XENGINE_PROTOCL_HTTP_NOTFOUND 0x0007                         //资源没有找到
 #define ERROR_XENGINE_PROTOCL_HTTP_NOTSUPPORT 0x0008                       //不支持的操作
 #define ERROR_XENGINE_PROTOCL_HTTP_RELOAD 0x0009                           //重载问题
-#define ERROR_XENGINE_PROTOCL_HTTP_FAILURE 0x000A                          //操作失败
-#define ERROR_XENGINE_PROTOCL_HTTP_CREATE 0x000B                           //创建失败
-#define ERROR_XENGINE_PROTOCL_HTTP_PARSE 0x000C                            //解析失败
+#define ERROR_XENGINE_PROTOCL_HTTP_FAILURE 0x0010                          //操作失败
+#define ERROR_XENGINE_PROTOCL_HTTP_CREATE 0x0011                           //创建失败
+#define ERROR_XENGINE_PROTOCL_HTTP_PARSE 0x0012                            //解析失败
+#define ERROR_XENGINE_PROTOCL_HTTP_PARAMENT 0x0013                         //参数错误
 ///////////////////////////////////////////////////////////////////////////
 //                          导出的数据结构
 ///////////////////////////////////////////////////////////////////////////
