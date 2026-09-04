@@ -2,13 +2,10 @@
 
 bool HTTPTask_TastPost_DTest(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer, int nMsgLen, int nType)
 {
-	int nSDLen = 0;
-	XCHAR tszSDBuffer[4096] = {};
-
 	//0发什么返回什么,1 仅仅返回确认
 	if (0 == nType)
 	{
-		XEngine_Network_Send(lpszClientAddr, lpszMsgBuffer, nSDLen);
+		XEngine_Network_Send(lpszClientAddr, lpszMsgBuffer, nMsgLen);
 	}
 	else
 	{
