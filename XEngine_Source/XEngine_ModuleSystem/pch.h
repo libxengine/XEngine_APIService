@@ -16,7 +16,6 @@
 #include <unistd.h>
 #include <pthread.h>
 #endif
-#endif //PCH_H
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -49,3 +48,5 @@ extern XLONG ModuleSystem_dwErrorCode;
 #pragma comment(lib,"XEngine_BaseLib/XEngine_BaseLib")
 #pragma comment(lib,"XEngine_SystemSdk/XEngine_SystemApi")
 #endif
+
+#endif //PCH_H

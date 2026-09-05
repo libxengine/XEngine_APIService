@@ -8,11 +8,11 @@ bool HTTPTask_TaskGet_Locker(LPCXSTR lpszClientAddr, __int64x xhToken, ENUM_XENG
 	if (ENUM_XENGINE_APISERVICE_LOCKER_TYPE_CREATE == enLockType)
 	{
 		//创建
-		XNETHANDLE xhToken = 0;
-		ModuleHelp_Locker_Create(&xhToken);
-		ModuleProtocol_Packet_Locker(tszSDBuffer, &nSDLen, xhToken);
+		XNETHANDLE xhLocker = 0;
+		ModuleHelp_Locker_Create(&xhLocker);
+		ModuleProtocol_Packet_Locker(tszSDBuffer, &nSDLen, xhLocker);
 		XEngine_Network_Send(lpszClientAddr, tszSDBuffer, nSDLen);
-		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_WARN, _X("客户端:%s,请求创建锁成功,锁句柄:%lld"), lpszClientAddr, xhToken);
+		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_WARN, _X("客户端:%s,请求创建锁成功,锁句柄:%lld"), lpszClientAddr, xhLocker);
 	}
 	else if (ENUM_XENGINE_APISERVICE_LOCKER_TYPE_OPEN == enLockType)
 	{

@@ -59,7 +59,7 @@ bool HTTPTask_TastPost_Verification(RFCCOMPONENTS_HTTP_REQPARAM* pSt_HTTPParam, 
 {
 	//http验证
 	int nVType = 0;
-	int nSDLen = 0;
+	int nSDLen = XPATH_MAX;
 	XCHAR tszSDBuffer[XPATH_MAX] = {};
 	RFCCOMPONENTS_HTTP_HDRPARAM st_HDRParam = {};
 

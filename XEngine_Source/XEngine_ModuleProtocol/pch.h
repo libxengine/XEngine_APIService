@@ -16,7 +16,6 @@
 #include <unistd.h>
 #include <sys/types.h>
 #endif
-#endif //PCH_H
 #include <stdio.h>
 #include <errno.h>
 #include <list>
@@ -73,3 +72,5 @@ extern XLONG ModuleProtocol_dwErrorCode;
 #endif
 #endif
 #endif
+
+#endif //PCH_H

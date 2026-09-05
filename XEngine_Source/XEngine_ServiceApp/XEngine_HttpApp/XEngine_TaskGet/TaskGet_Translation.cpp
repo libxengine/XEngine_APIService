@@ -6,7 +6,6 @@ bool HTTPTask_TaskGet_Translation(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer,
 	int nBLen = 0;
 	XCHAR* ptszBodyBuffer = NULL;
 	XCHAR tszMsgBuffer[4096] = {};
-	XCHAR tszTypeBuffer[64] = {};
 	XENGINE_LANGUAGEINFO st_LanguageInfo = {};
 
 	XCHAR tszSignStr[XPATH_MAX] = {};

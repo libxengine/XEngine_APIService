@@ -15,17 +15,17 @@ function PluginCore_URLSqlit(str,reps)
     return resultStrList
 end
 
-function PluginCore_Call(lpszStrUrl, nListCount, lpszMsgBuffer, nMsgLen)
+function PluginCore_Call(ParamsTable, nListCount, lpszMsgBuffer, nMsgLen)
+    local OutputTable = {}
+
     if nListCount < 1 then
-        PInt_HTTPCode = 200
-        PtszMsgBuffer = "{\"code\":1001,\"msg\":\"request parament is incorrent\"}"
-        PInt_MsgLen = #PtszMsgBuffer
-        return true
+        local PInt_HTTPCode = 200
+        local PtszMsgBuffer = "{\"code\":1001,\"msg\":\"request parament is incorrent\"}"
+        return OutputTable, PtszMsgBuffer, #PtszMsgBuffer, true
     end
 
     local tszValue = 0
-    local HDRArray = PluginCore_URLSqlit(lpszStrUrl,'&')
-    local HDRObjectType = PluginCore_URLSqlit(HDRArray[1],'=')
+    local HDRObjectType = PluginCore_URLSqlit(ParamsTable[1], '=')
 
     if '0' == HDRObjectType[2] then
         tszValue = os.date("%Y-%m-%d %H:%M:%S")
@@ -36,15 +36,13 @@ function PluginCore_Call(lpszStrUrl, nListCount, lpszMsgBuffer, nMsgLen)
     else
         PInt_HTTPCode = 200
         PtszMsgBuffer = "{\"code\":1002,\"msg\":\"type does not support\"}"
-        PInt_MsgLen = #PtszMsgBuffer
-        return true
+        return OutputTable, PtszMsgBuffer, #PtszMsgBuffe, true
     end
 
-    PInt_HTTPCode = 200
-    PtszMsgBuffer = "{\"code\":0,\"msg\":\"success\",\"data\":{\"Time\":\"" .. tszValue .. "\"}}"
-    PInt_MsgLen = #PtszMsgBuffer
+    local PInt_HTTPCode = 200
+    local PtszMsgBuffer = "{\"code\":0,\"msg\":\"success\",\"data\":{\"Time\":\"" .. tszValue .. "\"}}"
 
-    return true
+    return OutputTable, PtszMsgBuffer, #PtszMsgBuffer, true
 end
 
 function PluginCore_GetInfo()

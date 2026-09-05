@@ -6,7 +6,6 @@ bool HTTPTask_TaskGet_IDRegion(LPCXSTR lpszClientAddr, int nType, LPCXSTR lpszPr
 	XCHAR tszMsgBuffer[4096] = {};
 	
 	XENGINE_IDREGION st_IDRegion = {};
-	RFCCOMPONENTS_HTTP_HDRPARAM st_HDRParam = {};    //发送给客户端的参数
 
 	if (0 == nType)
 	{

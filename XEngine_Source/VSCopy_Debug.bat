@@ -24,7 +24,6 @@ copy /y "D:\XEngine\XEngine_SourceCode\Debug\RfcComponents_DNSProtocol.dll" "./"
 copy /y "D:\XEngine\XEngine_SourceCode\Debug\XEngine_AVHelp.dll" "./"
 copy /y "D:\XEngine\XEngine_SourceCode\Debug\XEngine_VideoCodec.dll" "./"
 copy /y "D:\XEngine\XEngine_SourceCode\Debug\XEngine_AudioCodec.dll" "./"
-copy /y "D:\XEngine\XEngine_SourceCode\Debug\XEngine_AVCollect.dll" "./"
 copy /y "D:\XEngine\XEngine_SourceCode\Debug\XEngine_AVFormat.dll" "./"
 copy /y "D:\XEngine\XEngine_SourceCode\Debug\XEngine_AVFilter.dll" "./"
 

@@ -20,7 +20,7 @@ bool XCALLBACK Network_Callback_HTTPLogin(LPCXSTR lpszClientAddr, XSOCKET hSocke
 }
 void XCALLBACK Network_Callback_HTTPRecv(LPCXSTR lpszClientAddr, XSOCKET hSocket, LPCXSTR lpszRecvMsg, int nMsgLen, XPVOID lParam)
 {
-	if (!HttpProtocol_Server_InserQueueEx(xhHTTPPacket, lpszClientAddr, lpszRecvMsg, nMsgLen))
+	if (!HttpProtocol_Server_InsertQueueEx(xhHTTPPacket, lpszClientAddr, lpszRecvMsg, nMsgLen))
 	{
 		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("HTTP客户端:%s,投递HTTP数据包到消息队列失败，错误:%lX"), lpszClientAddr, HttpProtocol_GetLastError());
 		return;
@@ -68,14 +68,15 @@ void XEngine_Network_Close(LPCXSTR lpszClientAddr, bool bHeart)
 	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("HTTP客户端:%s,离开服务器"), lpszClientAddr);
 }
 //////////////////////////////////////////////////////////////////////////
-bool XEngine_Network_Send(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer, int nMsgLen)
+bool XEngine_Network_Send(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer, int nMsgLen, LPCXSTR lpszHTTPFmt)
 {
-	int nSDLen = 0;
-	CXEngine_MemoryPoolEx m_MSGMemory(XENGINE_MEMORY_SIZE_MAX);
+	int nSDLen = XENGINE_MEMORY_SIZE_LARGE;
+	CXEngine_MemoryPoolEx m_MSGMemory(XENGINE_MEMORY_SIZE_LARGE);
 	RFCCOMPONENTS_HTTP_HDRPARAM st_HDRParam = {};    //发送给客户端的参数
 
 	st_HDRParam.nHttpCode = 200; //HTTP CODE码
 	st_HDRParam.bIsClose = true; //收到回复后就关闭
+	_tcsxcpy(st_HDRParam.tszMimeType, lpszHTTPFmt);
 
 	HttpProtocol_Server_SendMsgEx(xhHTTPPacket, m_MSGMemory.get(), &nSDLen, &st_HDRParam, lpszMsgBuffer, nMsgLen);
 	//发送数据给指定客户端

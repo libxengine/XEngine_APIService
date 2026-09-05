@@ -69,7 +69,7 @@ jobs:
         run: |
             apt update -y
             apt install gcc g++ make git jq unzip curl wget -y
-            apt install liblua5.4-dev libopencv-dev libopencv-contrib-dev libqrencode-dev libleptonica-dev libtesseract-dev -y
+            apt install libluajit-5.1-dev libopencv-dev libopencv-contrib-dev libqrencode-dev libleptonica-dev libtesseract-dev -y
 
       - name: install xengine library
         run: |

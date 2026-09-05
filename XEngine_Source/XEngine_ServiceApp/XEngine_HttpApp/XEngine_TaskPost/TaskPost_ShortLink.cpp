@@ -23,16 +23,11 @@ bool HTTPTask_TaskPost_SLProxy(LPCXSTR lpszClientAddr, LPCXSTR lpszUriStr, XCHAR
 	{
 		return false;
 	}
-	int nSDLen = 0;
-	XCHAR tszSDBuffer[4096];
-	XCHAR tszRVBuffer[4096];
-	XENGINE_SHORTLINK st_ShortLink;
-	RFCCOMPONENTS_HTTP_HDRPARAM st_HDRParam;
-
-	memset(tszSDBuffer, '\0', sizeof(tszSDBuffer));
-	memset(tszRVBuffer, '\0', sizeof(tszRVBuffer));
-	memset(&st_ShortLink, '\0', sizeof(XENGINE_SHORTLINK));
-	memset(&st_HDRParam, '\0', sizeof(RFCCOMPONENTS_HTTP_HDRPARAM));
+	int nSDLen = XPATH_4MAX;
+	XCHAR tszSDBuffer[XPATH_4MAX] = {};
+	XCHAR tszRVBuffer[XPATH_4MAX] = {};
+	XENGINE_SHORTLINK st_ShortLink = {};
+	RFCCOMPONENTS_HTTP_HDRPARAM st_HDRParam = {};
 
 	_xstprintf(st_ShortLink.tszMapUrl, _X("http://%s%s"), st_ServiceConfig.st_XShortLink.tszHostUrl, lpszUriStr);
 	if (!ModuleDatabase_ShortLink_Query(&st_ShortLink))

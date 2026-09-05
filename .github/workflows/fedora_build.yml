@@ -24,6 +24,11 @@ jobs:
           - arch: amd64
             runner: ubuntu-24.04
             platform: linux/amd64
+            fedora-version: 44
+            artifact: x86-64
+          - arch: amd64
+            runner: ubuntu-24.04
+            platform: linux/amd64
             fedora-version: 43
             artifact: x86-64
           - arch: amd64
@@ -69,7 +74,7 @@ jobs:
         run: |
             dnf update -y
             dnf install gcc g++ make git jq unzip wget -y
-            dnf install lua-devel opencv-devel qrencode-devel leptonica-devel tesseract-devel -y
+            dnf install luajit-devel opencv-devel qrencode-devel leptonica-devel tesseract-devel -y
 
       - name: Set TERM variable
         run: echo "TERM=xterm" >> $GITHUB_ENV

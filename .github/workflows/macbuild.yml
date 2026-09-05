@@ -38,7 +38,7 @@ jobs:
             
       - name: install library
         run: |
-          brew install lua opencv qrencode
+          brew install luajit opencv@4 qrencode
 
       - name: Set TERM variable
         run: echo "TERM=xterm" >> $GITHUB_ENV

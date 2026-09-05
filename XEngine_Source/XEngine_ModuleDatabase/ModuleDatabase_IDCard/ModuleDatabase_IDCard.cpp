@@ -186,8 +186,8 @@ bool CModuleDatabase_IDCard::ModuleDatabase_IDCard_QueryByAddr(XENGINE_IDREGION*
 			DBModule_dwErrorCode = ERROR_APISERVICE_MODULE_DATABASE_NOTFOUND;
 			return false;
 		}
-		XCHAR** pptszResult = DataBase_MySQL_GetResult(xhDBSQL, xhTable);
-		nCity = _ttxoi(pptszResult[0]);
+		XCHAR** pptszTmpResult = DataBase_MySQL_GetResult(xhDBSQL, xhTable);
+		nCity = _ttxoi(pptszTmpResult[0]);
 		DataBase_MySQL_FreeResult(xhDBSQL, xhTable);
 	}
 	
@@ -215,8 +215,8 @@ bool CModuleDatabase_IDCard::ModuleDatabase_IDCard_QueryByAddr(XENGINE_IDREGION*
 			DBModule_dwErrorCode = ERROR_APISERVICE_MODULE_DATABASE_NOTFOUND;
 			return false;
 		}
-		XCHAR** pptszResult = DataBase_MySQL_GetResult(xhDBSQL, xhTable);
-		nCounty = _ttxoi(pptszResult[0]);
+		XCHAR** pptszTmpResult = DataBase_MySQL_GetResult(xhDBSQL, xhTable);
+		nCounty = _ttxoi(pptszTmpResult[0]);
 		DataBase_MySQL_FreeResult(xhDBSQL, xhTable);
 	}
 

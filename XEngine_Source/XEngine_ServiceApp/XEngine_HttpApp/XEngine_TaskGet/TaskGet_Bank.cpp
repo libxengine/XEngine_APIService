@@ -18,7 +18,28 @@ bool HTTPTask_TaskGet_BankInfo(LPCXSTR lpszClientAddr, LPCXSTR lpszBankNumber)
 		return false;
 	}
 	_tcsxcpy(st_BankInfo.tszBankNumber, lpszBankNumber);
-	_xstprintf(tszUrlBuffer, st_ServiceConfig.st_XApi.tszBankUrl, lpszBankNumber);
+	_tcsxcpy(tszUrlBuffer, st_ServiceConfig.st_XApi.tszBankUrl);
+	XCHAR* ptszFormat = _tcsxstr(tszUrlBuffer, _X("%s"));
+	if (NULL != ptszFormat)
+	{
+		XCHAR tszUrlTail[XPATH_MAX] = {};
+		_tcsxcpy(tszUrlTail, ptszFormat + 2);
+		*ptszFormat = '\0';
+
+		int nPrefixLen = (int)_tcsxlen(tszUrlBuffer);
+		int nBankLen = (int)_tcsxlen(lpszBankNumber);
+		int nTailLen = (int)_tcsxlen(tszUrlTail);
+		if ((nPrefixLen + nBankLen + nTailLen) >= XPATH_MAX)
+		{
+			ModuleProtocol_Packet_Common(tszMsgBuffer, &nMsgLen, ERROR_XENGINE_PROTOCL_HTTP_PARAMENT, _X("request url is too long"));
+			XEngine_Network_Send(lpszClientAddr, tszMsgBuffer, nMsgLen);
+			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("HTTP客户端:%s,请求的银行卡查询URL过长,查询号码:%s"), lpszClientAddr, lpszBankNumber);
+			return false;
+		}
+
+		_tcsxcat(tszUrlBuffer, lpszBankNumber);
+		_tcsxcat(tszUrlBuffer, tszUrlTail);
+	}
 	APIClient_Http_Request(_X("GET"), tszUrlBuffer, NULL, NULL, &ptszBodyBuffer, &nBLen);
 	//解析JSON信息
 	if (!ModuleProtocol_Parse_Bank(ptszBodyBuffer, nBLen, &st_BankInfo))
