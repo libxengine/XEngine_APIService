@@ -1,3 +1,35 @@
+XEngine_APIService V3.16.0.1001
+
+ci:增加fedora 44系统版本支持
+ci:增加AI代理问题自动响应
+增加:自定义默认http 回复类型
+更新:新的lua脚本方法支持
+更新:依赖库
+更新:匹配最新xengine框架api
+修改:vs的runtime 运行库统一
+修改:图像内存扩展
+修改:lua脚本系统改为Luajit
+修改:统一http发送操作
+修改:屏幕录制系统函数
+修正:dtest响应大小问题
+修正:code ql 扫描出来的问题
+修正:http发送大小没有初始化的问题
+
+ci:add fedora 44 support
+ci:add agentic workflows for issue triage and auto fix
+added:custom and default http minitype for http send message
+update:new lua script support
+update:depend library
+update:match xengine api
+modify:vs runtime crt unified
+modify:image memory size extend
+modify:lua to luajit
+modify:Unified HTTP sending operation
+modify:av record match last version for  api name of xengine
+fixed:dtest reply msg size incorrect
+fixed:code ql scan problem
+fixed:http send size not init
+======================================================================================
 XEngine_APIService V3.15.0.1001
 
 ci:更新了工作流
