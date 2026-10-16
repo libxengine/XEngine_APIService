@@ -93,10 +93,9 @@ bool CModuleDatabase_OilInfo::ModuleDatabase_OilInfo_Query(XENGINE_OILINFO* pSt_
 		return false;
 	}
 	//查询
-	XNETHANDLE xhTable = 0;
-	__int64u nllLine = 0;
-	__int64u nllRow = 0;
-
+	int nllLine = 0;
+	int nllRow = 0;
+	XCHAR** pptszResult;
 	XCHAR tszSQLStatement[1024];
 	memset(tszSQLStatement, '\0', sizeof(tszSQLStatement));
 
@@ -105,9 +104,9 @@ bool CModuleDatabase_OilInfo::ModuleDatabase_OilInfo_Query(XENGINE_OILINFO* pSt_
 	XCHAR tszUTFStr[1024] = {};
 	int nSLen = _tcsxlen(tszSQLStatement);
 	BaseLib_Charset_AnsiToUTF(tszSQLStatement, tszUTFStr, &nSLen);
-	if (!DataBase_MySQL_ExecuteQuery(xhDBSQL, &xhTable, tszUTFStr, &nllLine, &nllRow))
+	if (!DataBase_MySQL_ExecQuery(xhDBSQL, tszUTFStr, &pptszResult, &nllLine, &nllRow))
 #else
-	if (!DataBase_MySQL_ExecuteQuery(xhDBSQL, &xhTable, tszSQLStatement, &nllLine, &nllRow))
+	if (!DataBase_MySQL_ExecQuery(xhDBSQL, tszSQLStatement, &pptszResult, &nllLine, &nllRow))
 #endif
 	{
 		DBModule_IsErrorOccur = true;
@@ -120,48 +119,57 @@ bool CModuleDatabase_OilInfo::ModuleDatabase_OilInfo_Query(XENGINE_OILINFO* pSt_
 		DBModule_dwErrorCode = ERROR_APISERVICE_MODULE_DATABASE_NOTFOUND;
 		return false;
 	}
-	for (__int64u i = 0; i < nllLine; i++)
-	{
-		XCHAR** pptszResult = DataBase_MySQL_GetResult(xhDBSQL, xhTable);
 
-		if (NULL != pptszResult[0])
+	int nFieldNumber = nllRow;
+	for (int i = 0; i < nllLine; i++)
+	{
+		if (NULL != pptszResult[nFieldNumber])
 		{
-			_tcsxcpy(pSt_OilInfo->tszCityStr, pptszResult[0]);
+			_tcsxcpy(pSt_OilInfo->tszCityStr, pptszResult[nFieldNumber]);
 		}
-		if (NULL != pptszResult[1])
+		nFieldNumber++;
+		if (NULL != pptszResult[nFieldNumber])
 		{
-			pSt_OilInfo->dlValue98 = _ttxof(pptszResult[1]);
+			pSt_OilInfo->dlValue98 = _ttxof(pptszResult[nFieldNumber]);
 		}
-		if (NULL != pptszResult[2])
+		nFieldNumber++;
+		if (NULL != pptszResult[nFieldNumber])
 		{
-			pSt_OilInfo->dlValue95 = _ttxof(pptszResult[2]);
+			pSt_OilInfo->dlValue95 = _ttxof(pptszResult[nFieldNumber]);
 		}
-		if (NULL != pptszResult[3])
+		nFieldNumber++;
+		if (NULL != pptszResult[nFieldNumber])
 		{
-			pSt_OilInfo->dlValue92 = _ttxof(pptszResult[3]);
+			pSt_OilInfo->dlValue92 = _ttxof(pptszResult[nFieldNumber]);
 		}
-		if (NULL != pptszResult[4])
+		nFieldNumber++;
+		if (NULL != pptszResult[nFieldNumber])
 		{
-			pSt_OilInfo->dlValue0 = _ttxof(pptszResult[4]);
+			pSt_OilInfo->dlValue0 = _ttxof(pptszResult[nFieldNumber]);
 		}
-		if (NULL != pptszResult[5])
+		nFieldNumber++;
+		if (NULL != pptszResult[nFieldNumber])
 		{
-			pSt_OilInfo->dlValue10 = _ttxof(pptszResult[5]);
+			pSt_OilInfo->dlValue10 = _ttxof(pptszResult[nFieldNumber]);
 		}
-		if (NULL != pptszResult[6])
+		nFieldNumber++;
+		if (NULL != pptszResult[nFieldNumber])
 		{
-			pSt_OilInfo->dlValue20 = _ttxof(pptszResult[6]);
+			pSt_OilInfo->dlValue20 = _ttxof(pptszResult[nFieldNumber]);
 		}
-		if (NULL != pptszResult[7])
+		nFieldNumber++;
+		if (NULL != pptszResult[nFieldNumber])
 		{
-			pSt_OilInfo->dlValue35 = _ttxof(pptszResult[7]);
+			pSt_OilInfo->dlValue35 = _ttxof(pptszResult[nFieldNumber]);
 		}
-		if (NULL != pptszResult[8])
+		nFieldNumber++;
+		if (NULL != pptszResult[nFieldNumber])
 		{
-			_tcsxcpy(pSt_OilInfo->tszUPTime, pptszResult[8]);
+			_tcsxcpy(pSt_OilInfo->tszUPTime, pptszResult[nFieldNumber]);
 		}
+		nFieldNumber++;
 	}
-	DataBase_MySQL_FreeResult(xhDBSQL, xhTable);
+	DataBase_MySQL_FreeResult(pptszResult, nllLine * nllRow);
 	return true;
 }
 /********************************************************************

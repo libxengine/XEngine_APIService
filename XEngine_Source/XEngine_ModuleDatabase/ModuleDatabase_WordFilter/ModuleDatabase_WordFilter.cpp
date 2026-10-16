@@ -93,20 +93,20 @@ bool CModuleDatabase_WordFilter::ModuleDatabase_WordFilter_Query(XENGINE_WORDFIL
         return false;
     }
     //查询
-	__int64u nLine = 0;
-	__int64u nRow = 0;
+	int nLine = 0;
+	int nRow = 0;
 	XNETHANDLE xhTable = 0;
     XCHAR tszSQLStatement[1024];
-
+	XCHAR** pptszResult;
     memset(tszSQLStatement, '\0', sizeof(tszSQLStatement));
 	_xstprintf(tszSQLStatement, _X("SELECT * FROM `WordFilter` WHERE tszWordsFrom LIKE '%s'"), pSt_WordFilter->tszWordsFrom);
 #ifdef _MSC_BUILD
 	XCHAR tszUTFStr[1024] = {};
 	int nSLen = _tcsxlen(tszSQLStatement);
 	BaseLib_Charset_AnsiToUTF(tszSQLStatement, tszUTFStr, &nSLen);
-	if (!DataBase_MySQL_ExecuteQuery(xhDBSQL, &xhTable, tszUTFStr, &nLine, &nRow))
+	if (!DataBase_MySQL_ExecQuery(xhDBSQL,tszUTFStr, &pptszResult, &nLine, &nRow))
 #else
-	if (!DataBase_MySQL_ExecuteQuery(xhDBSQL, &xhTable, tszSQLStatement, &nLine, &nRow))
+	if (!DataBase_MySQL_ExecQuery(xhDBSQL, tszSQLStatement, &pptszResult, &nLine, &nRow))
 #endif
 	{
 		DBModule_IsErrorOccur = true;
@@ -119,12 +119,10 @@ bool CModuleDatabase_WordFilter::ModuleDatabase_WordFilter_Query(XENGINE_WORDFIL
 		DBModule_dwErrorCode = ERROR_APISERVICE_MODULE_DATABASE_NOTFOUND;
 		return false;
 	}
-	XCHAR** pptszResult = DataBase_MySQL_GetResult(xhDBSQL, xhTable);
-	
 	_tcsxcpy(pSt_WordFilter->tszWordsTo, pptszResult[1]);
 	pSt_WordFilter->nLevel = _ttxoi(pptszResult[2]);
 
-	DataBase_MySQL_FreeResult(xhDBSQL, xhTable);
+	DataBase_MySQL_FreeResult(pptszResult, nLine * nRow);
 	return true;
 }
 /********************************************************************
@@ -235,15 +233,14 @@ bool CModuleDatabase_WordFilter::ModuleDatabase_WordFilter_List(XENGINE_WORDFILT
 	DBModule_IsErrorOccur = false;
 
 	//查询
-	__int64u nLine = 0;
-	__int64u nRow = 0;
-	XNETHANDLE xhTable = 0;
+	int nLine = 0;
+	int nRow = 0;
 	XCHAR tszSQLStatement[1024];
-
+	XCHAR** pptszResult;
 	memset(tszSQLStatement, '\0', sizeof(tszSQLStatement));
 	_xstprintf(tszSQLStatement, _X("SELECT * FROM `WordFilter`"));
 
-	if (!DataBase_MySQL_ExecuteQuery(xhDBSQL, &xhTable, tszSQLStatement, &nLine, &nRow))
+	if (!DataBase_MySQL_ExecQuery(xhDBSQL, tszSQLStatement, &pptszResult, &nLine, &nRow))
 	{
 		DBModule_IsErrorOccur = true;
 		DBModule_dwErrorCode = DataBase_GetLastError();
@@ -258,23 +255,25 @@ bool CModuleDatabase_WordFilter::ModuleDatabase_WordFilter_List(XENGINE_WORDFILT
 	*pInt_ListCount = (int)nLine;
 	BaseLib_Memory_Malloc((XPPPMEM)pppSt_WordFilter, *pInt_ListCount, sizeof(XENGINE_WORDFILTER));
 
-	for (__int64u i = 0; i < nLine; i++)
+	int nFieldNumber = nRow;
+	for (int i = 0; i < nLine; i++)
 	{
-		XCHAR** pptszResult = DataBase_MySQL_GetResult(xhDBSQL, xhTable);
-
-		if (NULL != pptszResult[0])
+		if (NULL != pptszResult[nFieldNumber])
 		{
-			_tcsxcpy((*pppSt_WordFilter)[i]->tszWordsFrom, pptszResult[0]);
+			_tcsxcpy((*pppSt_WordFilter)[i]->tszWordsFrom, pptszResult[nFieldNumber]);
 		}
-		if (NULL != pptszResult[1])
+		nFieldNumber++;
+		if (NULL != pptszResult[nFieldNumber])
 		{
-			_tcsxcpy((*pppSt_WordFilter)[i]->tszWordsTo, pptszResult[1]);
+			_tcsxcpy((*pppSt_WordFilter)[i]->tszWordsTo, pptszResult[nFieldNumber]);
 		}
-		if (NULL != pptszResult[2])
+		nFieldNumber++;
+		if (NULL != pptszResult[nFieldNumber])
 		{
-			(*pppSt_WordFilter)[i]->nLevel = _ttxoi(pptszResult[2]);
+			(*pppSt_WordFilter)[i]->nLevel = _ttxoi(pptszResult[nFieldNumber]);
 		}
+		nFieldNumber++;
 	}
-	DataBase_MySQL_FreeResult(xhDBSQL, xhTable);
+	DataBase_MySQL_FreeResult(pptszResult, nLine * nRow);
 	return true;
 }

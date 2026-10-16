@@ -93,14 +93,13 @@ bool CModuleDatabase_Bank::ModuleDatabase_Bank_Query(XENGINE_BANKINFO* pSt_BankI
         return false;
     }
     //查询
-	__int64u nLine = 0;
-	__int64u nRow = 0;
-	XNETHANDLE xhTable = 0;
-    XCHAR tszSQLStatement[1024];
+	int nLine = 0;
+	int nRow = 0;
+	XCHAR** pptszResult;
+	XCHAR tszSQLStatement[1024] = {};
 
-    memset(tszSQLStatement, '\0', sizeof(tszSQLStatement));
 	_xstprintf(tszSQLStatement, _X("SELECT * FROM `BankList` WHERE tszBankAbridge = '%s'"), pSt_BankInfo->tszBankAbridge);
-	if (!DataBase_MySQL_ExecuteQuery(xhDBSQL, &xhTable, tszSQLStatement, &nLine, &nRow))
+	if (!DataBase_MySQL_ExecQuery(xhDBSQL, tszSQLStatement, &pptszResult, &nLine, &nRow))
 	{
 		DBModule_IsErrorOccur = true;
 		DBModule_dwErrorCode = DataBase_GetLastError();
@@ -112,9 +111,9 @@ bool CModuleDatabase_Bank::ModuleDatabase_Bank_Query(XENGINE_BANKINFO* pSt_BankI
 		DBModule_dwErrorCode = ERROR_APISERVICE_MODULE_DATABASE_NOTFOUND;
 		return false;
 	}
-	XCHAR** pptszResult = DataBase_MySQL_GetResult(xhDBSQL, xhTable);
+	
 	_tcsxcpy(pSt_BankInfo->tszBankName, pptszResult[2]);
 
-	DataBase_MySQL_FreeResult(xhDBSQL, xhTable);
+	DataBase_MySQL_FreeResult(pptszResult, (nLine * nRow));
 	return true;
 }

@@ -208,10 +208,9 @@ bool CModuleDatabase_XLog::ModuleDatabase_XLog_Query(XENGINE_XLOGINFO*** pppSt_X
 		return false;
 	}
 	//查询
-	XNETHANDLE xhTable = 0;
-	__int64u nllLine = 0;
-	__int64u nllRow = 0;
-
+	int nllLine = 0;
+	int nllRow = 0;
+	XCHAR** pptszResult;
 	XCHAR tszSQLStatement[1024];
 	memset(tszSQLStatement, '\0', sizeof(tszSQLStatement));
 	//名称为,消息名为必填
@@ -221,9 +220,9 @@ bool CModuleDatabase_XLog::ModuleDatabase_XLog_Query(XENGINE_XLOGINFO*** pppSt_X
 	XCHAR tszUTFStr[1024] = {};
 	int nSLen = _tcsxlen(tszSQLStatement);
 	BaseLib_Charset_AnsiToUTF(tszSQLStatement, tszUTFStr, &nSLen);
-	if (!DataBase_MySQL_ExecuteQuery(xhDBSQL, &xhTable, tszUTFStr, &nllLine, &nllRow))
+	if (!DataBase_MySQL_ExecQuery(xhDBSQL, tszUTFStr, &pptszResult, &nllLine, &nllRow))
 #else
-	if (!DataBase_MySQL_ExecuteQuery(xhDBSQL, &xhTable, tszSQLStatement, &nllLine, &nllRow))
+	if (!DataBase_MySQL_ExecQuery(xhDBSQL, tszSQLStatement, &pptszResult, &nllLine, &nllRow))
 #endif
 	{
 		DBModule_IsErrorOccur = true;
@@ -238,37 +237,43 @@ bool CModuleDatabase_XLog::ModuleDatabase_XLog_Query(XENGINE_XLOGINFO*** pppSt_X
 	}
 	*pInt_ListCount = (int)nllLine;
 	BaseLib_Memory_Malloc((XPPPMEM)pppSt_XLogInfo, (int)nllLine, sizeof(XENGINE_XLOGINFO));
-	for (__int64u i = 0; i < nllLine; i++)
-	{
-		XCHAR** pptszResult = DataBase_MySQL_GetResult(xhDBSQL, xhTable);
 
+	int nFieldNumber = nllRow;
+	for (int i = 0; i < nllLine; i++)
+	{
 		_tcsxcpy((*pppSt_XLogInfo)[i]->tszTableName, lpszTableName);
-		if (NULL != pptszResult[1])
+		if (NULL != pptszResult[nFieldNumber])
 		{
-			_tcsxcpy((*pppSt_XLogInfo)[i]->st_ProtocolLog.tszFileName, pptszResult[1]);
+			_tcsxcpy((*pppSt_XLogInfo)[i]->st_ProtocolLog.tszFileName, pptszResult[nFieldNumber]);
 		}
-		if (NULL != pptszResult[2])
+		nFieldNumber++;
+		if (NULL != pptszResult[nFieldNumber])
 		{
-			_tcsxcpy((*pppSt_XLogInfo)[i]->st_ProtocolLog.tszFuncName, pptszResult[2]);
+			_tcsxcpy((*pppSt_XLogInfo)[i]->st_ProtocolLog.tszFuncName, pptszResult[nFieldNumber]);
 		}
-		if (NULL != pptszResult[3])
+		nFieldNumber++;
+		if (NULL != pptszResult[nFieldNumber])
 		{
-			(*pppSt_XLogInfo)[i]->st_ProtocolLog.nLogLine = _ttxoi(pptszResult[3]);
+			(*pppSt_XLogInfo)[i]->st_ProtocolLog.nLogLine = _ttxoi(pptszResult[nFieldNumber]);
 		}
-		if (NULL != pptszResult[4])
+		nFieldNumber++;
+		if (NULL != pptszResult[nFieldNumber])
 		{
-			(*pppSt_XLogInfo)[i]->st_ProtocolLog.nLogLevel = _ttxoi(pptszResult[4]);
+			(*pppSt_XLogInfo)[i]->st_ProtocolLog.nLogLevel = _ttxoi(pptszResult[nFieldNumber]);
 		}
-		if (NULL != pptszResult[5])
+		nFieldNumber++;
+		if (NULL != pptszResult[nFieldNumber])
 		{
-			_tcsxcpy((*pppSt_XLogInfo)[i]->tszLogBuffer, pptszResult[5]);
+			_tcsxcpy((*pppSt_XLogInfo)[i]->tszLogBuffer, pptszResult[nFieldNumber]);
 		}
-		if (NULL != pptszResult[6])
+		nFieldNumber++;
+		if (NULL != pptszResult[nFieldNumber])
 		{
-			_tcsxcpy((*pppSt_XLogInfo)[i]->st_ProtocolLog.tszLogTimer, pptszResult[6]);
+			_tcsxcpy((*pppSt_XLogInfo)[i]->st_ProtocolLog.tszLogTimer, pptszResult[nFieldNumber]);
 		}
+		nFieldNumber++;
 	}
-	DataBase_MySQL_FreeResult(xhDBSQL, xhTable);
+	DataBase_MySQL_FreeResult(pptszResult, nllLine * nllRow);
 	return true;
 }
 /********************************************************************
@@ -329,15 +334,14 @@ bool CModuleDatabase_XLog::ModuleDatabase_XLog_Show(XCHAR*** ppptszList, int* pI
 	DBModule_IsErrorOccur = false;
 
 	//查询
-	XNETHANDLE xhTable = 0;
-	__int64u nllLine = 0;
-	__int64u nllRow = 0;
-
+	int nllLine = 0;
+	int nllRow = 0;
+	XCHAR** pptszResult;
 	XCHAR tszSQLStatement[1024];
 	memset(tszSQLStatement, '\0', sizeof(tszSQLStatement));
 	//名称为,消息名为必填
 	_xstprintf(tszSQLStatement, _X("SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'XEngine_APILog'"));
-	if (!DataBase_MySQL_ExecuteQuery(xhDBSQL, &xhTable, tszSQLStatement, &nllLine, &nllRow))
+	if (!DataBase_MySQL_ExecQuery(xhDBSQL, tszSQLStatement, &pptszResult, &nllLine, &nllRow))
 	{
 		DBModule_IsErrorOccur = true;
 		DBModule_dwErrorCode = DataBase_GetLastError();
@@ -351,11 +355,13 @@ bool CModuleDatabase_XLog::ModuleDatabase_XLog_Show(XCHAR*** ppptszList, int* pI
 	}
 	*pInt_ListCount = (int)nllLine;
 	BaseLib_Memory_Malloc((XPPPMEM)ppptszList, (int)nllLine, XPATH_MAX);
-	for (__int64u i = 0; i < nllLine; i++)
+
+	int nFieldNumber = nllRow;
+	for (int i = 0; i < nllLine; i++)
 	{
-		XCHAR** pptszResult = DataBase_MySQL_GetResult(xhDBSQL, xhTable);
-		_tcsxcpy((*ppptszList)[i], pptszResult[0]);
+		_tcsxcpy((*ppptszList)[i], pptszResult[nFieldNumber]);
+		nFieldNumber++;
 	}
-	DataBase_MySQL_FreeResult(xhDBSQL, xhTable);
+	DataBase_MySQL_FreeResult(pptszResult, nllLine * nllRow);
 	return true;
 }

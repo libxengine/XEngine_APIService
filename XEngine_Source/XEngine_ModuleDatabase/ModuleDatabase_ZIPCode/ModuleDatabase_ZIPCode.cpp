@@ -87,14 +87,14 @@ bool CModuleDatabase_ZIPCode::ModuleDatabase_ZIPCode_QueryZIPCode(XENGINE_ZIPINF
 	DBModule_IsErrorOccur = false;
 
 	//查询
-	__int64u nLine = 0;
-	__int64u nRow = 0;
+	int nLine = 0;
+	int nRow = 0;
 	XNETHANDLE xhTable = 0;
 	XCHAR tszSQLStatement[1024];
-
+	XCHAR** pptszResult;
 	memset(tszSQLStatement, '\0', sizeof(tszSQLStatement));
 	_xstprintf(tszSQLStatement, _X("SELECT * FROM `AdministrativeArea` WHERE zip_code = %d"), pSt_ZIPInfo->nZipCode);
-	if (!DataBase_MySQL_ExecuteQuery(xhDBSQL, &xhTable, tszSQLStatement, &nLine, &nRow))
+	if (!DataBase_MySQL_ExecQuery(xhDBSQL, tszSQLStatement, &pptszResult, &nLine, &nRow))
 	{
 		DBModule_IsErrorOccur = true;
 		DBModule_dwErrorCode = DataBase_GetLastError();
@@ -106,7 +106,6 @@ bool CModuleDatabase_ZIPCode::ModuleDatabase_ZIPCode_QueryZIPCode(XENGINE_ZIPINF
 		DBModule_dwErrorCode = ERROR_APISERVICE_MODULE_DATABASE_NOTFOUND;
 		return false;
 	}
-	XCHAR** pptszResult = DataBase_MySQL_GetResult(xhDBSQL, xhTable);
 	//三个级别 省->市->区/县
 	_tcsxcpy(pSt_ZIPInfo->tszPinYin, pptszResult[6]);
 	pSt_ZIPInfo->nLevel = _ttxoi(pptszResult[5]);
@@ -131,7 +130,7 @@ bool CModuleDatabase_ZIPCode::ModuleDatabase_ZIPCode_QueryZIPCode(XENGINE_ZIPINF
 		_tcsxcpy(pSt_ZIPInfo->tszProvincer, pptszResult[2]);
 	}
 
-	DataBase_MySQL_FreeResult(xhDBSQL, xhTable);
+	DataBase_MySQL_FreeResult(pptszResult, nLine * nRow);
 	return true;
 }
 /********************************************************************
@@ -158,11 +157,10 @@ bool CModuleDatabase_ZIPCode::ModuleDatabase_ZIPCode_QueryName(XENGINE_ZIPINFO* 
 		return false;
 	}
 	//查询
-	__int64u nLine = 0;
-	__int64u nRow = 0;
-	XNETHANDLE xhTable = 0;
+	int nLine = 0;
+	int nRow = 0;
 	XCHAR tszSQLStatement[1024];
-
+	XCHAR** pptszResult;
 	memset(tszSQLStatement, '\0', sizeof(tszSQLStatement));
 
 	if ((_tcsxlen(pSt_ZIPInfo->tszCounty) > 0) && (_tcsxlen(pSt_ZIPInfo->tszCity) == 0))
@@ -193,9 +191,9 @@ bool CModuleDatabase_ZIPCode::ModuleDatabase_ZIPCode_QueryName(XENGINE_ZIPINFO* 
 	XCHAR tszUTFStr[1024] = {};
 	int nSLen = _tcsxlen(tszSQLStatement);
 	BaseLib_Charset_AnsiToUTF(tszSQLStatement, tszUTFStr, &nSLen);
-	if (!DataBase_MySQL_ExecuteQuery(xhDBSQL, &xhTable, tszUTFStr, &nLine, &nRow))
+	if (!DataBase_MySQL_ExecQuery(xhDBSQL, tszUTFStr, &pptszResult, &nLine, &nRow))
 #else
-	if (!DataBase_MySQL_ExecuteQuery(xhDBSQL, &xhTable, tszSQLStatement, &nLine, &nRow))
+	if (!DataBase_MySQL_ExecQuery(xhDBSQL, tszSQLStatement, &nLine, &nRow))
 #endif
 	{
 		DBModule_IsErrorOccur = true;
@@ -208,7 +206,6 @@ bool CModuleDatabase_ZIPCode::ModuleDatabase_ZIPCode_QueryName(XENGINE_ZIPINFO* 
 		DBModule_dwErrorCode = ERROR_APISERVICE_MODULE_DATABASE_NOTFOUND;
 		return false;
 	}
-	XCHAR** pptszResult = DataBase_MySQL_GetResult(xhDBSQL, xhTable);
 	pSt_ZIPInfo->nLevel = _ttxoi(pptszResult[5]);
 	pSt_ZIPInfo->nAreaCode = _ttxoi(pptszResult[7]);
 	pSt_ZIPInfo->nZipCode = _ttxoi(pptszResult[8]);
@@ -216,7 +213,7 @@ bool CModuleDatabase_ZIPCode::ModuleDatabase_ZIPCode_QueryName(XENGINE_ZIPINFO* 
 	pSt_ZIPInfo->dlLat = _ttxof(pptszResult[11]);
 	_tcsxcpy(pSt_ZIPInfo->tszPinYin, pptszResult[6]);
 
-	DataBase_MySQL_FreeResult(xhDBSQL, xhTable);
+	DataBase_MySQL_FreeResult(pptszResult, nLine * nRow);
 	return true;
 }
 //////////////////////////////////////////////////////////////////////////
@@ -256,14 +253,13 @@ bool CModuleDatabase_ZIPCode::ModuleDatabase_ZIPCode_QueryParentByID(int nParent
 		return false;
 	}
 	//查询
-	__int64u nLine = 0;
-	__int64u nRow = 0;
-	XNETHANDLE xhTable = 0;
+	int nLine = 0;
+	int nRow = 0;
 	XCHAR tszSQLStatement[1024];
-
+	XCHAR** pptszResult;
 	memset(tszSQLStatement, '\0', sizeof(tszSQLStatement));
 	_xstprintf(tszSQLStatement, _X("SELECT * FROM `AdministrativeArea` WHERE id = %d"), nParentID);
-	if (!DataBase_MySQL_ExecuteQuery(xhDBSQL, &xhTable, tszSQLStatement, &nLine, &nRow))
+	if (!DataBase_MySQL_ExecQuery(xhDBSQL, tszSQLStatement, &pptszResult, &nLine, &nRow))
 	{
 		DBModule_IsErrorOccur = true;
 		DBModule_dwErrorCode = DataBase_GetLastError();
@@ -275,15 +271,13 @@ bool CModuleDatabase_ZIPCode::ModuleDatabase_ZIPCode_QueryParentByID(int nParent
 		DBModule_dwErrorCode = ERROR_APISERVICE_MODULE_DATABASE_NOTFOUND;
 		return false;
 	}
-	XCHAR** pptszResult = DataBase_MySQL_GetResult(xhDBSQL, xhTable);
-	
 	if (NULL != pInt_ParentID)
 	{
 		*pInt_ParentID = _ttxoi(pptszResult[1]);
 	}
 	_tcsxcpy(ptszParentStr, pptszResult[3]);
 
-	DataBase_MySQL_FreeResult(xhDBSQL, xhTable);
+	DataBase_MySQL_FreeResult(pptszResult, nLine * nRow);
 	return true;
 }
 /********************************************************************
@@ -315,11 +309,10 @@ bool CModuleDatabase_ZIPCode::ModuleDatabase_ZIPCode_QueryParentByName(LPCXSTR l
 		return false;
 	}
 	//查询
-	__int64u nLine = 0;
-	__int64u nRow = 0;
-	XNETHANDLE xhTable = 0;
+	int nLine = 0;
+	int nRow = 0;
 	XCHAR tszSQLStatement[1024];
-
+	XCHAR** pptszResult;
 	memset(tszSQLStatement, '\0', sizeof(tszSQLStatement));
 	_xstprintf(tszSQLStatement, _X("SELECT * FROM `AdministrativeArea` WHERE name = '%s'"), lpszName);
 
@@ -327,9 +320,9 @@ bool CModuleDatabase_ZIPCode::ModuleDatabase_ZIPCode_QueryParentByName(LPCXSTR l
 	XCHAR tszUTFStr[1024] = {};
 	int nSLen = _tcsxlen(tszSQLStatement);
 	BaseLib_Charset_AnsiToUTF(tszSQLStatement, tszUTFStr, &nSLen);
-	if (!DataBase_MySQL_ExecuteQuery(xhDBSQL, &xhTable, tszSQLStatement, &nLine, &nRow))
+	if (!DataBase_MySQL_ExecQuery(xhDBSQL, tszSQLStatement, &pptszResult, &nLine, &nRow))
 #else
-	if (!DataBase_MySQL_ExecuteQuery(xhDBSQL, &xhTable, tszSQLStatement, &nLine, &nRow))
+	if (!DataBase_MySQL_ExecQuery(xhDBSQL, tszSQLStatement, &pptszResult, &nLine, &nRow))
 #endif
 	{
 		DBModule_IsErrorOccur = true;
@@ -342,11 +335,10 @@ bool CModuleDatabase_ZIPCode::ModuleDatabase_ZIPCode_QueryParentByName(LPCXSTR l
 		DBModule_dwErrorCode = ERROR_APISERVICE_MODULE_DATABASE_NOTFOUND;
 		return false;
 	}
-	XCHAR** pptszResult = DataBase_MySQL_GetResult(xhDBSQL, xhTable);
 	if (NULL != pInt_ParentID)
 	{
 		*pInt_ParentID = _ttxoi(pptszResult[1]);
 	}
-	DataBase_MySQL_FreeResult(xhDBSQL, xhTable);
+	DataBase_MySQL_FreeResult(pptszResult, nLine * nRow);
 	return true;
 }
