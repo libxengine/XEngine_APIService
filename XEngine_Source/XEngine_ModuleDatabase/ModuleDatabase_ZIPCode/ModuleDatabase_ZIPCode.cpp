@@ -89,7 +89,6 @@ bool CModuleDatabase_ZIPCode::ModuleDatabase_ZIPCode_QueryZIPCode(XENGINE_ZIPINF
 	//查询
 	int nLine = 0;
 	int nRow = 0;
-	XNETHANDLE xhTable = 0;
 	XCHAR tszSQLStatement[1024];
 	XCHAR** pptszResult;
 	memset(tszSQLStatement, '\0', sizeof(tszSQLStatement));
@@ -193,7 +192,7 @@ bool CModuleDatabase_ZIPCode::ModuleDatabase_ZIPCode_QueryName(XENGINE_ZIPINFO* 
 	BaseLib_Charset_AnsiToUTF(tszSQLStatement, tszUTFStr, &nSLen);
 	if (!DataBase_MySQL_ExecQuery(xhDBSQL, tszUTFStr, &pptszResult, &nLine, &nRow))
 #else
-	if (!DataBase_MySQL_ExecQuery(xhDBSQL, tszSQLStatement, &nLine, &nRow))
+	if (!DataBase_MySQL_ExecQuery(xhDBSQL, tszSQLStatement, &pptszResult, &nLine, &nRow))
 #endif
 	{
 		DBModule_IsErrorOccur = true;
