@@ -200,7 +200,7 @@ bool CModuleDatabase_IDCard::ModuleDatabase_IDCard_QueryByAddr(XENGINE_IDREGION*
 		BaseLib_Charset_AnsiToUTF(tszSQLStatement, tszUTFBuffer, &nULen);
 		if (!DataBase_MySQL_ExecQuery(xhDBSQL, tszUTFBuffer, &pptszResult, &nLine, &nRow))
 #else
-		if (!DataBase_MySQL_ExecQuery(xhDBSQL, xtszSQLStatement, &pptszResult, &nLine, &nRow))
+		if (!DataBase_MySQL_ExecQuery(xhDBSQL, tszSQLStatement, &pptszResult, &nLine, &nRow))
 #endif
 		{
 			DBModule_IsErrorOccur = true;
