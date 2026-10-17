@@ -37,17 +37,17 @@ jobs:
             fedora-version: 42
             artifact: x86-64
           - arch: arm64
-            runner: ubuntu-24.04
+            runner: ubuntu-24.04-arm
             platform: linux/arm64
             fedora-version: 44
             artifact: Arm64
           - arch: arm64
-            runner: ubuntu-24.04
+            runner: ubuntu-24.04-arm
             platform: linux/arm64
             fedora-version: 43
             artifact: Arm64
           - arch: arm64
-            runner: ubuntu-24.04
+            runner: ubuntu-24.04-arm
             platform: linux/arm64
             fedora-version: 42
             artifact: Arm64

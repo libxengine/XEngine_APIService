@@ -31,11 +31,21 @@ jobs:
       - name: Checkout main repository code
         uses: actions/checkout@v7
         
-      - name: sub module checkout (opensource)
+      - name: sub module checkout (XEngine_OPenSource)
         uses: actions/checkout@v7
         with:
           repository: libxengine/XEngine_OPenSource
-          path: XEngine_Source/XEngine_DependLibrary
+          path: XEngine_Source/XEngine_DependLibrary/XEngine_OPenSource
+      - name: sub module checkout (XEngine_PhoneData)
+        uses: actions/checkout@v7
+        with:
+          repository: libxengine/XEngine_PhoneData
+          path: XEngine_Source/XEngine_DependLibrary/XEngine_PhoneData
+      - name: sub module checkout (XEngine_IPMacData)
+        uses: actions/checkout@v7
+        with:
+          repository: libxengine/XEngine_IPMacData
+          path: XEngine_Source/XEngine_DependLibrary/XEngine_IPMacData
 
       - name: Set TERM variable
         run: echo "TERM=xterm" >> $GITHUB_ENV
