@@ -23,6 +23,9 @@ else
 	ifeq ($(PLATFORM),mac)
 		FLAGS = -c
 		DEBUG = -g -D _DEBUG
+	else ifeq ($(PLATFORM),freebsd)
+		FLAGS = -c
+		DEBUG = -g -D _DEBUG
 	else
 		FLAGS = -c -lc_p
 		DEBUG = -g -pg -D _DEBUG
@@ -53,6 +56,12 @@ else ifeq ($(PLATFORM),mac)
 	LIBFLAG = -dynamiclib
 	LIBEX = -lpthread -ldl
 	LOADBIN = -Wl,-rpath,@loader_path/./
+else ifeq ($(PLATFORM),freebsd)
+	PLATVER = -D __FREEBSD__
+	FILEEXT = so
+	LIBFLAG = -shared
+	LIBEX += -lrt -ldl -lpthread
+	LOADBIN = -Wl,-rpath=./,--disable-new-dtags
 endif
 
 all:$(OBJECTS)
