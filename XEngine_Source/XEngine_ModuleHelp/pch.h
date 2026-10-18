@@ -19,6 +19,8 @@
 #include "../XEngine_BuildSwitch.h"
 #include <string.h>
 #include <errno.h>
+#include <time.h>
+#include <stdint.h>
 #include <thread>
 #include <list>
 #include <new>

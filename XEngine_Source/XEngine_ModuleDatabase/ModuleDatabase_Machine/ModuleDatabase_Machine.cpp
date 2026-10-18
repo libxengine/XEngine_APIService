@@ -155,7 +155,7 @@ bool CModuleDatabase_Machine::ModuleDatabase_Machine_Query(XENGINE_MACHINEINFO* 
 		return false;
 	}
 	int nFieldNumber = nllRow;
-	for (__int64u i = 0; i < nllLine; i++)
+	for (int i = 0; i < nllLine; i++)
 	{
 		if (NULL != pptszResult[nFieldNumber])
 		{
