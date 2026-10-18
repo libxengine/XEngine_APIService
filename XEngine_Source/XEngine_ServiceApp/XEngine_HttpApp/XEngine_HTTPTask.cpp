@@ -392,6 +392,10 @@ bool HTTPTask_TastPost_Handle(RFCCOMPONENTS_HTTP_REQPARAM* pSt_HTTPParam, LPCXST
 			{
 				HTTPTask_TaskPost_AVRecordStart(lpszClientAddr, lpszMSGBuffer, nMSGLen);
 			}
+			else if (0 == _tcsxnicmp(_X("list"), tszType, 5))
+			{
+				HTTPTask_TaskPost_AVRecordList(lpszClientAddr);
+			}
 			else
 			{
 				HTTPTask_TaskPost_AVRecordStop(lpszClientAddr);

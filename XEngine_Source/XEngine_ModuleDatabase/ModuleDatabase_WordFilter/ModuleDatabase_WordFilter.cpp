@@ -95,10 +95,8 @@ bool CModuleDatabase_WordFilter::ModuleDatabase_WordFilter_Query(XENGINE_WORDFIL
     //查询
 	int nLine = 0;
 	int nRow = 0;
-	XNETHANDLE xhTable = 0;
-    XCHAR tszSQLStatement[1024];
+	XCHAR tszSQLStatement[1024] = {};
 	XCHAR** pptszResult;
-    memset(tszSQLStatement, '\0', sizeof(tszSQLStatement));
 	_xstprintf(tszSQLStatement, _X("SELECT * FROM `WordFilter` WHERE tszWordsFrom LIKE '%s'"), pSt_WordFilter->tszWordsFrom);
 #ifdef _MSC_BUILD
 	XCHAR tszUTFStr[1024] = {};

@@ -1211,6 +1211,7 @@ bool CModuleProtocol_Packet::ModuleProtocol_Packet_EnumDevice(XCHAR* ptszMsgBuff
 		st_JsonObject["nDeviceInout"] = (*pppSt_AudioList)[i]->nDeviceInout;
 		st_JsonObject["nDeviceType"] = (*pppSt_AudioList)[i]->nDeviceType;
 		st_JsonObject["tszName"] = (*pppSt_AudioList)[i]->st_MetaInfo.tszStrKey;
+		st_JsonObject["tszStrVlu"] = (*pppSt_AudioList)[i]->st_MetaInfo.tszStrVlu;
 		st_JsonAudio.append(st_JsonObject);
 	}
 	for (int i = 0; i < nVCount; i++)
@@ -1219,6 +1220,7 @@ bool CModuleProtocol_Packet::ModuleProtocol_Packet_EnumDevice(XCHAR* ptszMsgBuff
 		st_JsonObject["nDeviceInout"] = (*pppSt_VideoList)[i]->nDeviceInout;
 		st_JsonObject["nDeviceType"] = (*pppSt_VideoList)[i]->nDeviceType;
 		st_JsonObject["tszName"] = (*pppSt_VideoList)[i]->st_MetaInfo.tszStrKey;
+		st_JsonObject["tszStrVlu"] = (*pppSt_VideoList)[i]->st_MetaInfo.tszStrVlu;
 		st_JsonVideo.append(st_JsonObject);
 	}
 	st_JsonArray["AArray"] = st_JsonAudio;
