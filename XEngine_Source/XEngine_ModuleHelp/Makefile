@@ -2,7 +2,7 @@ CC = g++ -Wall -std=c++20 -fPIC
 PLATVER = 
 FILEEXT = 
 LIBFLAG = 
-LOADHDR = -I ./ -I /usr/include/opencv4 -I /usr/local/include/opencv4 -I /usr/local/include -I /usr/local/include/lua
+LOADHDR = -I ./ -I /usr/include/opencv4 -I /usr/local/include/opencv4 -I /usr/local/include/lua
 LOADSO = 
 LIB = -lXEngine_BaseLib -lXClient_Socket -lNetHelp_APIAddr
 LIBEX = 
@@ -61,11 +61,13 @@ else ifeq ($(PLATFORM),mac)
 	LOADHDR += -I /opt/homebrew/opt/leptonica/include -I /opt/homebrew/opt/opencv@4/include -I /opt/homebrew/opt/opencv@4/include/opencv4 -I /opt/homebrew/opt/tesseract/include -I /opt/homebrew/opt/qrencode/include
 	LOADSO += -L /opt/homebrew/opt/leptonica/lib -L /opt/homebrew/opt/opencv@4/lib -L /opt/homebrew/opt/tesseract/lib -L /opt/homebrew/opt/qrencode/lib
 	LIBFLAG = -dynamiclib
+	LIB +=  -lopencv_wechat_qrcode
 	LIBEX = -lpthread -ldl
 	LOADBIN = -Wl,-rpath,@loader_path/./
 else ifeq ($(PLATFORM),freebsd)
 	PLATVER = -D __FREEBSD__
 	FILEEXT = so
+	LIB +=  -lopencv_wechat_qrcode
 	LIBFLAG = -shared
 	LIBEX += -lrt -ldl -lpthread
 	LOADBIN = -Wl,-rpath=./,--disable-new-dtags

@@ -69,8 +69,6 @@ jobs:
             cd ..
 
             pkg install -y luajit opencv libqrencode leptonica tesseract
-            pkg info -l opencv
-            cat /usr/local/include/opencv4/opencv2/opencv.hpp
 
             cd XEngine_Source
             gmake PLATFORM=freebsd RELEASE=1
