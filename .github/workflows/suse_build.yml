@@ -57,7 +57,7 @@ jobs:
       - name: install system package
         run: |
             zypper --non-interactive update -y
-            zypper install -y gcc gcc-c++ make git jq unzip luajit-devel wget
+            zypper install -y gcc gcc-c++ make git jq unzip wget
 
       - name: Set TERM variable
         run: echo "TERM=xterm" >> $GITHUB_ENV
@@ -73,6 +73,11 @@ jobs:
             
             chmod 777 *
             ./XEngine_LINEnv.sh -i 3
+
+      - name: install build package
+        run: |
+            zypper install -y luajit-devel opencv-devel qrencode-devel leptonica-devel tesseract-ocr-devel
+
       - name: make
         run: | 
             cd XEngine_Source
