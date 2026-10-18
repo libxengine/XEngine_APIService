@@ -2,7 +2,7 @@ CC = g++ -Wall -std=c++20 -fPIC
 PLATVER = 
 FILEEXT = 
 LIBFLAG = 
-LOADHDR = -I ./ -I /usr/include/opencv4 -I /usr/local/include/opencv4 -I /usr/local/include/lua
+LOADHDR = -I ./ -I /usr/include/opencv4 -I /usr/local/include/opencv4 -I /usr/local/include -I /usr/local/include/lua
 LOADSO = 
 LIB = -lXEngine_BaseLib -lXClient_Socket -lNetHelp_APIAddr
 LIBEX = 
@@ -15,7 +15,7 @@ ifeq ($(MACRO_QR_SUPPORT),1)
 	LIB += -lqrencode
 endif
 ifeq ($(MACRO_OPENCV_SUPPORT),1)
-	LIB += -lopencv_core -lopencv_imgcodecs -lopencv_imgproc -lopencv_wechat_qrcode -ltesseract -lleptonica
+	LIB += -lopencv_core -lopencv_imgcodecs -lopencv_imgproc -ltesseract -lleptonica
 endif
 
 ifeq ($(RELEASE),1)
@@ -45,8 +45,10 @@ ifeq ($(PLATFORM),linux)
     	PLATVER = -D __OPENSUSE__
 	else ifeq (/etc/redhat-release,$(wildcard /etc/redhat-release))
     	PLATVER = -D __CENTOS__
+		LIB +=  -lopencv_wechat_qrcode
 	else
     	PLATVER = -D __UBUNTU__
+		LIB +=  -lopencv_wechat_qrcode
 	endif
 	FILEEXT = so
 	LIBFLAG = -shared
