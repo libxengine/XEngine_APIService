@@ -40,9 +40,9 @@ jobs:
         if: matrix.os == 'macos-26-intel'
         run: |
             latest_tag=$(git ls-remote --tags --sort="v:refname" https://github.com/libxengine/libxengine.git | awk '{print $2}' | sed 's/refs\/tags\///' | tail -n 1)
-            wget https://github.com/libxengine/libxengine/releases/download/$latest_tag/XEngine_Mac_x86.zip
-            unzip ./XEngine_Mac_x86.zip -d ./XEngine_Mac_x86
-            cd XEngine_Mac_x86
+            wget https://github.com/libxengine/libxengine/releases/download/$latest_tag/XEngine_Mac_x86_64.zip
+            unzip ./XEngine_Mac_x86_64.zip -d ./XEngine_Mac_x86_64
+            cd XEngine_Mac_x86_64
 
             chmod 777 *
             ./XEngine_LINEnv.sh -i 3
