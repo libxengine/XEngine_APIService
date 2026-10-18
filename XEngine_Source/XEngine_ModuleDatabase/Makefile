@@ -31,12 +31,10 @@ override UNICODE := -D __ANSI__
 endif
 
 ifeq ($(PLATFORM),linux)
-	ifneq ($(shell grep -Ei '^ID=.*opensuse' /etc/os-release 2>/dev/null),)
-    	PLATVER = -D __OPENSUSE__
-	else ifeq (/etc/redhat-release,$(wildcard /etc/redhat-release))
-    	PLATVER = -D __CENTOS__
+	ifeq (/etc/redhat-release,$(wildcard /etc/redhat-release))
+		PLATVER = -D __CENTOS__
 	else
-    	PLATVER = -D __UBUNTU__
+		PLATVER = -D __UBUNTU__
 	endif
 	FILEEXT = so
 	LIBFLAG = -shared

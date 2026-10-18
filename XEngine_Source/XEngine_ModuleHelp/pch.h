@@ -32,11 +32,9 @@
 #if _XENGINE_BUILD_SWITCH_OPENCV == 1
 #ifdef __OPENSUSE__
 #include <opencv2/opencv.hpp>
-#include <opencv2/core/utils/logger.hpp>
 #include <opencv2/wechat_qrcode.hpp>
 #else
 #include <opencv4/opencv2/opencv.hpp>
-#include <opencv4/opencv2/core/utils/logger.hpp>
 #include <opencv4/opencv2/wechat_qrcode.hpp>
 #endif
 #include <leptonica/allheaders.h>
