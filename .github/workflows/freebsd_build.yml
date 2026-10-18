@@ -68,6 +68,7 @@ jobs:
             bash ./XEngine_LINEnv.sh -i 3
             cd ..
 
+            pkg info -l opencv
             cat /usr/local/include/opencv4/opencv2/opencv.hpp
 
             cd XEngine_Source
