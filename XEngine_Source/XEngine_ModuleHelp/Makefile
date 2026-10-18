@@ -15,7 +15,7 @@ ifeq ($(MACRO_QR_SUPPORT),1)
 	LIB += -lqrencode
 endif
 ifeq ($(MACRO_OPENCV_SUPPORT),1)
-	LIB += -lopencv_core -lopencv_imgcodecs -lopencv_imgproc -ltesseract -lleptonica
+	LIB += -lopencv_core -lopencv_imgcodecs -lopencv_imgproc -lopencv_objdetect -ltesseract -lleptonica
 endif
 
 ifeq ($(RELEASE),1)

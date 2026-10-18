@@ -68,6 +68,8 @@ jobs:
             bash ./XEngine_LINEnv.sh -i 3
             cd ..
 
+            cat /usr/local/include/opencv4/opencv2/opencv.hpp
+
             cd XEngine_Source
             gmake PLATFORM=freebsd RELEASE=1
             gmake PLATFORM=freebsd FLAGS=InstallAll
