@@ -22,7 +22,7 @@ bool HTTPTask_TaskGet_Translation(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer,
 #endif
 
 	int nRandomNumber = rand();
-	int nLen = _xstprintf(tszSignStr, _X("%s%s%d%s"), st_ServiceConfig.st_XApi.st_TranslationInfo.tszAPPID, tszUTFBuffer, nRandomNumber, st_ServiceConfig.st_XApi.st_TranslationInfo.tszAPPKey);
+	int nLen = _xsntprintf(tszSignStr, XPATH_MAX, _X("%s%s%d%s"), st_ServiceConfig.st_XApi.st_TranslationInfo.tszAPPID, tszUTFBuffer, nRandomNumber, st_ServiceConfig.st_XApi.st_TranslationInfo.tszAPPKey);
 
 	Cryption_Api_Digest(tszSignStr, (XBYTE*)tszMD5Codec, &nLen);
 	for (int i = 0; i < 16; i++)

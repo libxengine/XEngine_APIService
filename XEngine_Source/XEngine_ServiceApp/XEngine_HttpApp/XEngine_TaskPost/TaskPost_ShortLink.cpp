@@ -29,7 +29,7 @@ bool HTTPTask_TaskPost_SLProxy(LPCXSTR lpszClientAddr, LPCXSTR lpszUriStr, XCHAR
 	XENGINE_SHORTLINK st_ShortLink = {};
 	RFCCOMPONENTS_HTTP_HDRPARAM st_HDRParam = {};
 
-	_xstprintf(st_ShortLink.tszMapUrl, _X("http://%s%s"), st_ServiceConfig.st_XShortLink.tszHostUrl, lpszUriStr);
+	_xsntprintf(st_ShortLink.tszMapUrl, XPATH_4MAX, _X("http://%s%s"), st_ServiceConfig.st_XShortLink.tszHostUrl, lpszUriStr);
 	if (!ModuleDatabase_ShortLink_Query(&st_ShortLink))
 	{
 		return false;
@@ -37,7 +37,7 @@ bool HTTPTask_TaskPost_SLProxy(LPCXSTR lpszClientAddr, LPCXSTR lpszUriStr, XCHAR
 	st_HDRParam.nHttpCode = st_ServiceConfig.st_XShortLink.nHTTPCode; 
 	st_HDRParam.bIsClose = true; 
 
-	_xstprintf(tszRVBuffer, _X("Location: %s\r\n"), st_ShortLink.tszFullUrl);
+	_xsntprintf(tszRVBuffer, XPATH_4MAX, _X("Location: %s\r\n"), st_ShortLink.tszFullUrl);
 	HttpProtocol_Server_SendMsgEx(xhHTTPPacket, tszSDBuffer, &nSDLen, &st_HDRParam, NULL, 0, tszRVBuffer);
 	NetCore_TCPXCore_SendEx(xhHTTPSocket, lpszClientAddr, tszSDBuffer, nSDLen);
 	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("HTTP客户端:%s,请求的短连接地址重定向成功,短连接:%s,长连接:%s"), lpszClientAddr, st_ShortLink.tszMapUrl, st_ShortLink.tszFullUrl);
@@ -68,7 +68,7 @@ bool HTTPTask_TaskPost_ShortLink(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer, 
 			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, _X("HTTP客户端:%s,请求生成短连接生成错误,生成的连接:%s,替换的连接:%s,错误码:%lX"), lpszClientAddr, st_ShortLink.tszFullUrl, st_ShortLink.tszCvtUrl, HttpProtocol_GetLastError());
 			return false;
 		}
-		_xstprintf(st_ShortLink.tszMapUrl, _X("%s/%s"), st_ShortLink.tszShotUrl, st_ShortLink.tszKeyUrl);
+		_xsntprintf(st_ShortLink.tszMapUrl, sizeof(st_ShortLink.tszMapUrl), _X("%s/%s"), st_ShortLink.tszShotUrl, st_ShortLink.tszKeyUrl);
 		if (!ModuleDatabase_ShortLink_Insert(&st_ShortLink))
 		{
 			ModuleProtocol_Packet_Common(tszSDBuffer, &nSDLen, ERROR_XENGINE_PROTOCL_HTTP_FAILURE, _X("insert shortlink is failure"));
