@@ -2,7 +2,7 @@ CC = g++ -Wall -std=c++20 -fPIC
 PLATVER = 
 FILEEXT = 
 LIBFLAG = 
-LOADHDR = -I ./ -I /usr/include/opencv4 -I /usr/local/include/opencv4 -I /usr/local/include/lua
+LOADHDR = -I ./ -I /usr/local/include/lua -I /usr/local/include
 LOADSO = 
 LIB = -lXEngine_BaseLib -lXClient_Socket -lNetHelp_APIAddr
 LIBEX = 
@@ -15,7 +15,9 @@ ifeq ($(MACRO_QR_SUPPORT),1)
 	LIB += -lqrencode
 endif
 ifeq ($(MACRO_OPENCV_SUPPORT),1)
-	LIB += -lopencv_core -lopencv_imgcodecs -lopencv_imgproc -lopencv_objdetect -ltesseract -lleptonica
+	LIB += -ltesseract -lleptonica
+	LOADHDR +=  $(shell pkg-config --cflags opencv4)
+	LIB += $(shell pkg-config --libs opencv4)
 endif
 
 ifeq ($(RELEASE),1)
@@ -45,10 +47,8 @@ ifeq ($(PLATFORM),linux)
     	PLATVER = -D __OPENSUSE__
 	else ifeq (/etc/redhat-release,$(wildcard /etc/redhat-release))
     	PLATVER = -D __CENTOS__
-		LIB +=  -lopencv_wechat_qrcode
 	else
     	PLATVER = -D __UBUNTU__
-		LIB +=  -lopencv_wechat_qrcode
 	endif
 	FILEEXT = so
 	LIBFLAG = -shared
@@ -61,16 +61,15 @@ else ifeq ($(PLATFORM),mac)
 	LOADHDR += -I /opt/homebrew/opt/leptonica/include -I /opt/homebrew/opt/opencv@4/include -I /opt/homebrew/opt/opencv@4/include/opencv4 -I /opt/homebrew/opt/tesseract/include -I /opt/homebrew/opt/qrencode/include
 	LOADSO += -L /opt/homebrew/opt/leptonica/lib -L /opt/homebrew/opt/opencv@4/lib -L /opt/homebrew/opt/tesseract/lib -L /opt/homebrew/opt/qrencode/lib
 	LIBFLAG = -dynamiclib
-	LIB +=  -lopencv_wechat_qrcode
 	LIBEX = -lpthread -ldl
 	LOADBIN = -Wl,-rpath,@loader_path/./
 else ifeq ($(PLATFORM),freebsd)
 	PLATVER = -D __FREEBSD__
 	FILEEXT = so
-	LIB +=  -lopencv_wechat_qrcode
 	LIBFLAG = -shared
 	LIBEX += -lrt -ldl -lpthread
 	LOADBIN = -Wl,-rpath=./,--disable-new-dtags
+	CC = clang++ -Wall -std=c++20 -fPIC
 endif
 
 
