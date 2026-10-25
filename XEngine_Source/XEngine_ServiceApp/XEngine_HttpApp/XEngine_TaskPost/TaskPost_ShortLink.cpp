@@ -29,7 +29,7 @@ bool HTTPTask_TaskPost_SLProxy(LPCXSTR lpszClientAddr, LPCXSTR lpszUriStr, XCHAR
 	XENGINE_SHORTLINK st_ShortLink = {};
 	RFCCOMPONENTS_HTTP_HDRPARAM st_HDRParam = {};
 
-	_xsntprintf(st_ShortLink.tszMapUrl, XPATH_4MAX, _X("http://%s%s"), st_ServiceConfig.st_XShortLink.tszHostUrl, lpszUriStr);
+	_xsntprintf(st_ShortLink.tszMapUrl, sizeof(st_ShortLink.tszMapUrl), _X("http://%s%s"), st_ServiceConfig.st_XShortLink.tszHostUrl, lpszUriStr);
 	if (!ModuleDatabase_ShortLink_Query(&st_ShortLink))
 	{
 		return false;
