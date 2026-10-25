@@ -78,12 +78,9 @@ jobs:
 
             cd XEngine_Release
             chmod 777 copydb.sh
-            ./copydb.sh
+            bash ./copydb.sh
 
-            ARCH=$(uname -m)
-            if [ "$ARCH" != "arm64" ]; then
-              ./XEngine_APIServiceApp -t
-            fi
+            ./XEngine_APIServiceApp -t
 
       - name: Upload folder as artifact
         uses: actions/upload-artifact@v7
