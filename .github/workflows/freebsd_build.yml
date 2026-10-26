@@ -17,12 +17,12 @@ jobs:
       matrix:
         include:
           - arch: amd64
-            runner: ubuntu-24.04
+            runner: ubuntu-26.04
             freebsd-arch: x86_64
             artifact: x86-64
             version: 15.1
           - arch: arm64
-            runner: ubuntu-24.04-arm
+            runner: ubuntu-26.04-arm
             freebsd-arch: aarch64
             artifact: Arm64
             version: 15.1
