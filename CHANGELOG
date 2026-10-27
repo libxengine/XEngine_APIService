@@ -1,3 +1,29 @@
+XEngine_APIService V3.17.0.1001
+
+ci:增加opensuse 和 freebsd和ubuntu26.04支持
+ci:删除centos和无用的clone代码
+ci:更新最新版本
+更新:依赖库
+更新:msvc的c++版本到20
+修改:数据库API名称修改
+修改:启动参数问题
+修改:调整音视频设备列举方法
+修改:当二维码解析不支持wechat的时候调整为opencv自身解析
+修正:初始化socket测试内存问题
+修正:翻译和短连接输出内存溢出问题
+
+ci:added opensuse and freebsd and ubuntu 26.04 build support 
+ci:delete centos build and unused clone
+ci:update last version
+update:depend library
+update:msvc c++ version to c++20
+modify:sql function name to new names
+modify:For loop variable changed in body
+modify:adjust av device list post method
+modify:use self qr Decode when not support wechat Decode
+fixed:init memory incorrect for socket test
+fixed:translation and short link sprint memory leak
+======================================================================================
 XEngine_APIService V3.16.0.1001
 
 ci:增加fedora 44系统版本支持

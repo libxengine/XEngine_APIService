@@ -31,7 +31,7 @@ jobs:
             
       - name: install library
         run: |
-          brew install luajit opencv@4 qrencode
+          brew install mysql-client@9.7 luajit opencv@4 qrencode
 
       - name: Set TERM variable
         run: echo "TERM=xterm" >> $GITHUB_ENV

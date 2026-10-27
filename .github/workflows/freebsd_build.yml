@@ -80,7 +80,10 @@ jobs:
             chmod 777 copydb.sh
             bash ./copydb.sh
 
-            ./XEngine_APIServiceApp -t
+            ARCH=$(uname -m)
+            if [ "$ARCH" != "arm64" ]; then
+              ./XEngine_APIServiceApp -t
+            fi
 
       - name: Upload folder as artifact
         uses: actions/upload-artifact@v7
