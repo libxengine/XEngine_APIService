@@ -36,36 +36,40 @@ jobs:
             platform: linux/amd64
             fedora-version: 42
             artifact: x86-64
-          - arch: amd64
-            runner: ubuntu-24.04
-            platform: linux/amd64
-            fedora-version: 41
-            artifact: x86-64
+          - arch: arm64
+            runner: ubuntu-24.04-arm
+            platform: linux/arm64
+            fedora-version: 44
+            artifact: Arm64
+          - arch: arm64
+            runner: ubuntu-24.04-arm
+            platform: linux/arm64
+            fedora-version: 43
+            artifact: Arm64
+          - arch: arm64
+            runner: ubuntu-24.04-arm
+            platform: linux/arm64
+            fedora-version: 42
+            artifact: Arm64
 
     steps:
       - name: Checkout main repository code
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           ref: 'develop'
 
-      - name: Checkout dependency repository (xengine)
-        uses: actions/checkout@v6
-        with:
-          repository: libxengine/libxengine
-          path: libxengine
-
       - name: sub module checkout (XEngine_OPenSource)
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           repository: libxengine/XEngine_OPenSource
           path: XEngine_Source/XEngine_DependLibrary/XEngine_OPenSource
       - name: sub module checkout (XEngine_PhoneData)
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           repository: libxengine/XEngine_PhoneData
           path: XEngine_Source/XEngine_DependLibrary/XEngine_PhoneData
       - name: sub module checkout (XEngine_IPMacData)
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           repository: libxengine/XEngine_IPMacData
           path: XEngine_Source/XEngine_DependLibrary/XEngine_IPMacData

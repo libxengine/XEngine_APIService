@@ -217,10 +217,10 @@ bool CModuleHelp_QRCode::ModuleHelp_QRCode_QRDecodecFile(LPCXSTR lpszFileName, X
 		return false;
 	}
 #if _XENGINE_BUILD_SWITCH_QRDECODEC == 1
-	cv::Mat m_Frame;
+	cv::Mat m_Frame = cv::imread(lpszFileName);
+#ifdef __OPENCV_WECHAT_QRCODE_HPP__
 	vector<cv::Mat> m_MatPoint;
 	cv::Ptr<cv::wechat_qrcode::WeChatQRCode> m_QRDetector;
-	m_Frame = cv::imread(lpszFileName);
 	//是否成功
 	if (m_Frame.empty())
 	{
@@ -238,6 +238,11 @@ bool CModuleHelp_QRCode::ModuleHelp_QRCode_QRDecodecFile(LPCXSTR lpszFileName, X
 		return false;
 	}
 	strcpy(ptszMsgBuffer, stl_VectorQRList[0].c_str());
+#else
+	cv::QRCodeDetector st_QRDetector;
+	std::string m_StrQRString = st_QRDetector.detectAndDecode(m_Frame);
+	strcpy(ptszMsgBuffer, m_StrQRString.c_str());
+#endif
 #else 
 	ModuleHelp_IsErrorOccur = true;
 	ModuleHelp_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_HELP_QRCODE_NOTSUPPORT;
@@ -299,12 +304,11 @@ bool CModuleHelp_QRCode::ModuleHelp_QRCode_QRDecodecMemory(LPCXSTR lpszMsgBuffer
 		return false;
 	}
 #if _XENGINE_BUILD_SWITCH_QRDECODEC == 1
-	cv::Mat m_Frame;
+	cv::_InputArray m_InputArray(lpszMsgBuffer, nMsgLen);
+	cv::Mat m_Frame = cv::imdecode(m_InputArray, cv::IMREAD_UNCHANGED);
+#ifdef __OPENCV_WECHAT_QRCODE_HPP__
 	vector<cv::Mat> m_MatPoint;
 	cv::Ptr<cv::wechat_qrcode::WeChatQRCode> m_QRDetector;
-
-	cv::_InputArray m_InputArray(lpszMsgBuffer, nMsgLen);
-	m_Frame = cv::imdecode(m_InputArray, cv::IMREAD_UNCHANGED);
 	//是否成功
 	if (m_Frame.empty())
 	{
@@ -322,6 +326,11 @@ bool CModuleHelp_QRCode::ModuleHelp_QRCode_QRDecodecMemory(LPCXSTR lpszMsgBuffer
 		return false;
 	}
 	strcpy(ptszMsgBuffer, stl_VectorQRList[0].c_str());
+#else
+	cv::QRCodeDetector st_QRDetector;
+	std::string m_StrQRString = st_QRDetector.detectAndDecode(m_Frame);
+	strcpy(ptszMsgBuffer, m_StrQRString.c_str());
+#endif
 #else 
 	ModuleHelp_IsErrorOccur = true;
 	ModuleHelp_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_HELP_QRCODE_NOTSUPPORT;

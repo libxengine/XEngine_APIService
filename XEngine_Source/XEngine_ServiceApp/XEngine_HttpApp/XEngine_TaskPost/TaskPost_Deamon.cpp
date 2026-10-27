@@ -26,10 +26,10 @@ void XCALLBACK HTTPTask_TaskPost_Thread()
 				if ((nNowTime - stl_ListIterator->nStartTime) > stl_ListIterator->nReTime)
 				{
 					XLONG dwProcessId = 0;
-					XCHAR tszCmdExe[1024];
+					XCHAR tszCmdExe[XPATH_MAX];
 
 					memset(tszCmdExe, '\0', sizeof(tszCmdExe));
-					sprintf(tszCmdExe, "%s%s", stl_ListIterator->tszAPPPath, stl_ListIterator->tszAPPName);
+					_xsntprintf(tszCmdExe, XPATH_MAX, "%s%s", stl_ListIterator->tszAPPPath, stl_ListIterator->tszAPPName);
 
 					SystemApi_Process_Stop(stl_ListIterator->tszAPPName);
 					if (SystemApi_Process_CreateProcess(&dwProcessId, tszCmdExe))
@@ -67,10 +67,10 @@ void XCALLBACK HTTPTask_TaskPost_Thread()
 				}
 
 				XLONG dwProcessId = 0;
-				XCHAR tszCmdExe[1024];
+				XCHAR tszCmdExe[XPATH_MAX];
 
 				memset(tszCmdExe, '\0', sizeof(tszCmdExe));
-				sprintf(tszCmdExe, "%s%s", stl_ListIterator->tszAPPPath, stl_ListIterator->tszAPPName);
+				_xsntprintf(tszCmdExe, XPATH_MAX, "%s%s", stl_ListIterator->tszAPPPath, stl_ListIterator->tszAPPName);
 
 				if (SystemApi_Process_CreateProcess(&dwProcessId, tszCmdExe))
 				{

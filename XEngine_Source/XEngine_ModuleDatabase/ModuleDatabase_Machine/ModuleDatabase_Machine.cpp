@@ -135,15 +135,14 @@ bool CModuleDatabase_Machine::ModuleDatabase_Machine_Query(XENGINE_MACHINEINFO* 
 		return false;
 	}
 	//查询
-	XNETHANDLE xhTable = 0;
-	__int64u nllLine = 0;
-	__int64u nllRow = 0;
-
+	int nllLine = 0;
+	int nllRow = 0;
+	XCHAR** pptszResult;
 	XCHAR tszSQLStatement[1024];
 	memset(tszSQLStatement, '\0', sizeof(tszSQLStatement));
 
 	_xstprintf(tszSQLStatement, _X("SELECT * FROM `XEngine_MachineList` WHERE tszMachineSystem = '%s' AND tszServiceName = '%s'"), pSt_MachineInfo->tszMachineSystem, pSt_MachineInfo->tszServiceName);
-	if (!DataBase_MySQL_ExecuteQuery(xhDBSQL, &xhTable, tszSQLStatement, &nllLine, &nllRow))
+	if (!DataBase_MySQL_ExecQuery(xhDBSQL, tszSQLStatement, &pptszResult, &nllLine, &nllRow))
 	{
 		DBModule_IsErrorOccur = true;
 		DBModule_dwErrorCode = DataBase_GetLastError();
@@ -155,52 +154,61 @@ bool CModuleDatabase_Machine::ModuleDatabase_Machine_Query(XENGINE_MACHINEINFO* 
 		DBModule_dwErrorCode = ERROR_APISERVICE_MODULE_DATABASE_NOTFOUND;
 		return false;
 	}
-	for (__int64u i = 0; i < nllLine; i++)
+	int nFieldNumber = nllRow;
+	for (int i = 0; i < nllLine; i++)
 	{
-		XCHAR** pptszResult = DataBase_MySQL_GetResult(xhDBSQL, xhTable);
-
-		if (NULL != pptszResult[0])
+		if (NULL != pptszResult[nFieldNumber])
 		{
-			pSt_MachineInfo->nID = _ttxoi(pptszResult[0]);
+			pSt_MachineInfo->nID = _ttxoi(pptszResult[nFieldNumber]);
 		}
-		if (NULL != pptszResult[1])
+		nFieldNumber++;
+		if (NULL != pptszResult[nFieldNumber])
 		{
-			_tcsxcpy(pSt_MachineInfo->tszServiceName, pptszResult[1]);
+			_tcsxcpy(pSt_MachineInfo->tszServiceName, pptszResult[nFieldNumber]);
 		}
-		if (NULL != pptszResult[2])
+		nFieldNumber++;
+		if (NULL != pptszResult[nFieldNumber])
 		{
-			_tcsxcpy(pSt_MachineInfo->tszMachineName, pptszResult[2]);
+			_tcsxcpy(pSt_MachineInfo->tszMachineName, pptszResult[nFieldNumber]);
 		}
-		if (NULL != pptszResult[3])
+		nFieldNumber++;
+		if (NULL != pptszResult[nFieldNumber])
 		{
-			_tcsxcpy(pSt_MachineInfo->tszMachineUser, pptszResult[3]);
+			_tcsxcpy(pSt_MachineInfo->tszMachineUser, pptszResult[nFieldNumber]);
 		}
-		if (NULL != pptszResult[4])
+		nFieldNumber++;
+		if (NULL != pptszResult[nFieldNumber])
 		{
-			_tcsxcpy(pSt_MachineInfo->tszMachineSystem, pptszResult[4]);
+			_tcsxcpy(pSt_MachineInfo->tszMachineSystem, pptszResult[nFieldNumber]);
 		}
-		if (NULL != pptszResult[5])
+		nFieldNumber++;
+		if (NULL != pptszResult[nFieldNumber])
 		{
-			_tcsxcpy(pSt_MachineInfo->tszMachineSoftware, pptszResult[5]);
+			_tcsxcpy(pSt_MachineInfo->tszMachineSoftware, pptszResult[nFieldNumber]);
 		}
-		if (NULL != pptszResult[6])
+		nFieldNumber++;
+		if (NULL != pptszResult[nFieldNumber])
 		{
-			_tcsxcpy(pSt_MachineInfo->tszMachineHardware, pptszResult[6]);
+			_tcsxcpy(pSt_MachineInfo->tszMachineHardware, pptszResult[nFieldNumber]);
 		}
-		if (NULL != pptszResult[7])
+		nFieldNumber++;
+		if (NULL != pptszResult[nFieldNumber])
 		{
-			pSt_MachineInfo->nTimeNumber = _ttxoll(pptszResult[7]);
+			pSt_MachineInfo->nTimeNumber = _ttxoll(pptszResult[nFieldNumber]);
 		}
-		if (NULL != pptszResult[8])
+		nFieldNumber++;
+		if (NULL != pptszResult[nFieldNumber])
 		{
-			_tcsxcpy(pSt_MachineInfo->tszLastTime, pptszResult[8]);
+			_tcsxcpy(pSt_MachineInfo->tszLastTime, pptszResult[nFieldNumber]);
 		}
-		if (NULL != pptszResult[9])
+		nFieldNumber++;
+		if (NULL != pptszResult[nFieldNumber])
 		{
-			_tcsxcpy(pSt_MachineInfo->tszCreateTime, pptszResult[9]);
+			_tcsxcpy(pSt_MachineInfo->tszCreateTime, pptszResult[nFieldNumber]);
 		}
+		nFieldNumber++;
 	}
-	DataBase_MySQL_FreeResult(xhDBSQL, xhTable);
+	DataBase_MySQL_FreeResult(pptszResult, nllLine * nllRow);
 	return true;
 }
 /********************************************************************
@@ -298,15 +306,14 @@ bool CModuleDatabase_Machine::ModuleDatabase_Machine_List(XENGINE_MACHINEINFO***
 	DBModule_IsErrorOccur = false;
 
 	//查询
-	XNETHANDLE xhTable = 0;
-	__int64u nllLine = 0;
-	__int64u nllRow = 0;
-
+	int nllLine = 0;
+	int nllRow = 0;
+	XCHAR** pptszResult;
 	XCHAR tszSQLStatement[1024];
 	memset(tszSQLStatement, '\0', sizeof(tszSQLStatement));
 
 	_xstprintf(tszSQLStatement, _X("SELECT * FROM `XEngine_MachineList`"));
-	if (!DataBase_MySQL_ExecuteQuery(xhDBSQL, &xhTable, tszSQLStatement, &nllLine, &nllRow))
+	if (!DataBase_MySQL_ExecQuery(xhDBSQL, tszSQLStatement, &pptszResult, &nllLine, &nllRow))
 	{
 		DBModule_IsErrorOccur = true;
 		DBModule_dwErrorCode = DataBase_GetLastError();
@@ -320,51 +327,61 @@ bool CModuleDatabase_Machine::ModuleDatabase_Machine_List(XENGINE_MACHINEINFO***
 	}
 	*pInt_ListCount = (int)nllLine;
 	BaseLib_Memory_Malloc((XPPPMEM)pppSt_MachineInfo, *pInt_ListCount, sizeof(XENGINE_MACHINEINFO));
-	for (__int64u i = 0; i < nllLine; i++)
-	{
-		XCHAR** pptszResult = DataBase_MySQL_GetResult(xhDBSQL, xhTable);
 
-		if (NULL != pptszResult[0])
+	int nFieldNumber = nllRow;
+	for (int i = 0; i < nllLine; i++)
+	{
+		if (NULL != pptszResult[nFieldNumber])
 		{
-			(*pppSt_MachineInfo)[i]->nID = _ttxoi(pptszResult[0]);
+			(*pppSt_MachineInfo)[i]->nID = _ttxoi(pptszResult[nFieldNumber]);
 		}
-		if (NULL != pptszResult[1])
+		nFieldNumber++;
+		if (NULL != pptszResult[nFieldNumber])
 		{
-			_tcsxcpy((*pppSt_MachineInfo)[i]->tszServiceName, pptszResult[1]);
+			_tcsxcpy((*pppSt_MachineInfo)[i]->tszServiceName, pptszResult[nFieldNumber]);
 		}
-		if (NULL != pptszResult[2])
+		nFieldNumber++;
+		if (NULL != pptszResult[nFieldNumber])
 		{
-			_tcsxcpy((*pppSt_MachineInfo)[i]->tszMachineName, pptszResult[2]);
+			_tcsxcpy((*pppSt_MachineInfo)[i]->tszMachineName, pptszResult[nFieldNumber]);
 		}
-		if (NULL != pptszResult[3])
+		nFieldNumber++;
+		if (NULL != pptszResult[nFieldNumber])
 		{
-			_tcsxcpy((*pppSt_MachineInfo)[i]->tszMachineUser, pptszResult[3]);
+			_tcsxcpy((*pppSt_MachineInfo)[i]->tszMachineUser, pptszResult[nFieldNumber]);
 		}
-		if (NULL != pptszResult[4])
+		nFieldNumber++;
+		if (NULL != pptszResult[nFieldNumber])
 		{
-			_tcsxcpy((*pppSt_MachineInfo)[i]->tszMachineSystem, pptszResult[4]);
+			_tcsxcpy((*pppSt_MachineInfo)[i]->tszMachineSystem, pptszResult[nFieldNumber]);
 		}
-		if (NULL != pptszResult[5])
+		nFieldNumber++;
+		if (NULL != pptszResult[nFieldNumber])
 		{
-			_tcsxcpy((*pppSt_MachineInfo)[i]->tszMachineSoftware, pptszResult[5]);
+			_tcsxcpy((*pppSt_MachineInfo)[i]->tszMachineSoftware, pptszResult[nFieldNumber]);
 		}
-		if (NULL != pptszResult[6])
+		nFieldNumber++;
+		if (NULL != pptszResult[nFieldNumber])
 		{
-			_tcsxcpy((*pppSt_MachineInfo)[i]->tszMachineHardware, pptszResult[6]);
+			_tcsxcpy((*pppSt_MachineInfo)[i]->tszMachineHardware, pptszResult[nFieldNumber]);
 		}
-		if (NULL != pptszResult[7])
+		nFieldNumber++;
+		if (NULL != pptszResult[nFieldNumber])
 		{
-			(*pppSt_MachineInfo)[i]->nTimeNumber = _ttxoll(pptszResult[7]);
+			(*pppSt_MachineInfo)[i]->nTimeNumber = _ttxoll(pptszResult[nFieldNumber]);
 		}
-		if (NULL != pptszResult[8])
+		nFieldNumber++;
+		if (NULL != pptszResult[nFieldNumber])
 		{
-			_tcsxcpy((*pppSt_MachineInfo)[i]->tszLastTime, pptszResult[8]);
+			_tcsxcpy((*pppSt_MachineInfo)[i]->tszLastTime, pptszResult[nFieldNumber]);
 		}
-		if (NULL != pptszResult[9])
+		nFieldNumber++;
+		if (NULL != pptszResult[nFieldNumber])
 		{
-			_tcsxcpy((*pppSt_MachineInfo)[i]->tszCreateTime, pptszResult[9]);
+			_tcsxcpy((*pppSt_MachineInfo)[i]->tszCreateTime, pptszResult[nFieldNumber]);
 		}
+		nFieldNumber++;
 	}
-	DataBase_MySQL_FreeResult(xhDBSQL, xhTable);
+	DataBase_MySQL_FreeResult(pptszResult, nllLine * nllRow);
 	return true;
 }

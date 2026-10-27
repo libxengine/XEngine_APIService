@@ -2,7 +2,7 @@ CC = g++ -Wall -std=c++20 -fPIC
 PLATVER = 
 FILEEXT = 
 LIBFLAG = 
-LOADHDR = -I ./ -I /usr/include/opencv4 -I /usr/local/include/opencv4 -I /usr/local/include/lua
+LOADHDR = -I ./ -I /usr/local/include/lua -I /usr/local/include
 LOADSO = 
 LIB = -lXEngine_BaseLib -lXClient_Socket -lNetHelp_APIAddr
 LIBEX = 
@@ -15,7 +15,9 @@ ifeq ($(MACRO_QR_SUPPORT),1)
 	LIB += -lqrencode
 endif
 ifeq ($(MACRO_OPENCV_SUPPORT),1)
-	LIB += -lopencv_core -lopencv_imgcodecs -lopencv_imgproc -lopencv_wechat_qrcode -ltesseract -lleptonica
+	LIB += -ltesseract -lleptonica
+	LOADHDR +=  $(shell pkg-config --cflags opencv4)
+	LIB += $(shell pkg-config --libs opencv4)
 endif
 
 ifeq ($(RELEASE),1)
@@ -23,6 +25,9 @@ FLAGS = -c -D _RELEASE
 DEBUG = -O2
 else
 	ifeq ($(PLATFORM),mac)
+		FLAGS = -c
+		DEBUG = -g -D _DEBUG
+	else ifeq ($(PLATFORM),freebsd)
 		FLAGS = -c
 		DEBUG = -g -D _DEBUG
 	else
@@ -38,10 +43,12 @@ override UNICODE := -D __ANSI__
 endif
 
 ifeq ($(PLATFORM),linux)
-	ifeq (/etc/redhat-release,$(wildcard /etc/redhat-release))
-		PLATVER = -D __CENTOS__
+	ifneq ($(shell grep -Ei '^ID=.*opensuse' /etc/os-release 2>/dev/null),)
+    	PLATVER = -D __OPENSUSE__
+	else ifeq (/etc/redhat-release,$(wildcard /etc/redhat-release))
+    	PLATVER = -D __CENTOS__
 	else
-		PLATVER = -D __UBUNTU__
+    	PLATVER = -D __UBUNTU__
 	endif
 	FILEEXT = so
 	LIBFLAG = -shared
@@ -56,6 +63,13 @@ else ifeq ($(PLATFORM),mac)
 	LIBFLAG = -dynamiclib
 	LIBEX = -lpthread -ldl
 	LOADBIN = -Wl,-rpath,@loader_path/./
+else ifeq ($(PLATFORM),freebsd)
+	PLATVER = -D __FREEBSD__
+	FILEEXT = so
+	LIBFLAG = -shared
+	LIBEX += -lrt -ldl -lpthread
+	LOADBIN = -Wl,-rpath=./,--disable-new-dtags
+	CC = clang++ -Wall -std=c++20 -fPIC
 endif
 
 

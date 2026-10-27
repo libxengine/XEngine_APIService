@@ -6,16 +6,17 @@ on:
 engine:
   id: copilot
   env:
-    COPILOT_PROVIDER_BASE_URL: "https://ark.cn-beijing.volces.com/api/v3"
+    COPILOT_PROVIDER_BASE_URL: ${{ vars.MODEL_AI_AGENT_ADDR }}
     COPILOT_PROVIDER_BEARER_TOKEN: ${{ secrets.OPENAI_API_KEY }}
-    COPILOT_MODEL: doubao-seed-2-0-code-preview-260215
-    COPILOT_PROVIDER_TYPE: openai
-    COPILOT_PROVIDER_WIRE_API: responses
+    COPILOT_MODEL: ${{ vars.MODEL_AI_AGENT_NAME }}
+    COPILOT_PROVIDER_TYPE: ${{ vars.MODEL_AI_AGENT_TYPE }}
+    COPILOT_PROVIDER_WIRE_API: ${{ vars.MODEL_AI_AGENT_API }}
 
 features:
-  dangerously-disable-sandbox-agent: "controlled environment for issue triage automation"
+  dangerously-disable-sandbox-agent: true
 sandbox:
   agent: false
+  
 strict: false
 
 network:
@@ -25,7 +26,7 @@ network:
 
 tools:
   github:
-    min-integrity: none
+    min-integrity: approved
 
 permissions:
   contents: read
@@ -37,28 +38,35 @@ safe-outputs:
   threat-detection: false
   create-pull-request:
     base-branch: develop
+    protected-files: allowed
   add-comment:
     max: 1
 ---
 
 # 自动处理 Issue
 
-当 Issue 被打上 `bug` 或 `enhancement` 或 `feature` 标签时触发。其他标签直接退出，不做任何操作。
+当 Issue type 被打上 `bug` 或 `feature` 或 `task` 标签时触发。其他标签直接退出，不做任何操作。
 
 ## 判断任务类型
 
 读取 Issue #${{ github.event.issue.number }} 当前的标签：
 - 如果包含 `bug` 标签 → 执行【Bug 修复流程】
 - 如果包含 `feature` 标签 → 执行【新功能开发流程】
-- 如果包含 `enhancement` 标签 → 执行【功能改进开发流程】
+- 如果包含 `task` 标签 → 执行【功能改进开发流程】
 - 其他情况 → 直接退出
 
+## 任务执行限制
+- 根据需求查找相对应的可能关联的代码文件
+- 尽量只读取相关代码文件和文档,不去操作无关代码和文件
+- 尽量减少操作时间和步骤,减少TOKEN和时间消耗
+
 ---
+
 
 ## Bug 修复流程
 
 1. 阅读 Issue 的完整标题和正文，理解问题现象
-2. 浏览仓库代码和文档，定位问题所在的文件和函数
+2. 浏览仓库相关代码和文档，定位问题所在的文件和函数
 3. 分析根本原因
 4. 实现修复方案，注意：
    - 保持与现有代码风格一致
@@ -76,7 +84,7 @@ safe-outputs:
 ## 新功能开发流程
 
 1. 阅读 Issue 的完整标题和正文，理解需求目标
-2. 浏览仓库现有代码结构和文档，找到最相关的模块和文件
+2. 浏览仓库相关代码结构和文档，找到最相关的模块和文件
 3. 制定实现方案：
    - 需要新增哪些文件或函数
    - 需要修改哪些现有文件
@@ -97,7 +105,7 @@ safe-outputs:
 ## 功能改进开发流程
 
 1. 阅读 Issue 的完整标题和正文，明确功能改进与优化的具体目标（如性能提升、代码结构重构、用户体验优化等）。
-2. 浏览仓库现有代码，评估受影响的范围，定位需要进行优化或重构的核心文件及函数。
+2. 浏览仓库相关代码，评估受影响的范围，定位需要进行优化或重构的核心文件及函数。
 3. 制定改进方案，需特别注意：
    - **向下兼容性**：确保本次改进不会破坏现有的公开接口（API）和已有功能。
    - **防御性编程**：优化逻辑的同时，不能降低代码的健壮性。

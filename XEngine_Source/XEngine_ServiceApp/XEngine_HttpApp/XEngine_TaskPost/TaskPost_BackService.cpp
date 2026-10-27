@@ -236,18 +236,6 @@ bool HTTPTask_TaskPost_BackService(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer
 		{
 			InfoReport_APIMachine_Software(m_MemorySend.get(), &nSDLen);
 		}
-		else if (2 == nBSType)
-		{
-			int nACount = 0;
-			int nVCount = 0;
-			AVHELP_DEVICEINFO** ppSt_AudioList;
-			AVHELP_DEVICEINFO** ppSt_VideoList;
-
-			AVHelp_Device_EnumDevice(&ppSt_AudioList, &ppSt_VideoList, &nACount, &nVCount);
-			ModuleProtocol_Packet_EnumDevice(m_MemorySend.get(), &nSDLen, &ppSt_AudioList, &ppSt_VideoList, nACount, nVCount);
-			BaseLib_Memory_Free((void***)&ppSt_AudioList, nACount);
-			BaseLib_Memory_Free((void***)&ppSt_VideoList, nVCount);
-		}
 		XEngine_Network_Send(lpszClientAddr, m_MemorySend.get(), nSDLen);
 		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("HTTP客户端:%s:请求上报信息成功,上报类型:%d"), lpszClientAddr, nBSType);
 	}

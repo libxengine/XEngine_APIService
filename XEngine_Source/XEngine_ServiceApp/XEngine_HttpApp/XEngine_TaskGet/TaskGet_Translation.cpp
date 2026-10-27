@@ -22,7 +22,7 @@ bool HTTPTask_TaskGet_Translation(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer,
 #endif
 
 	int nRandomNumber = rand();
-	int nLen = _xstprintf(tszSignStr, _X("%s%s%d%s"), st_ServiceConfig.st_XApi.st_TranslationInfo.tszAPPID, tszUTFBuffer, nRandomNumber, st_ServiceConfig.st_XApi.st_TranslationInfo.tszAPPKey);
+	int nLen = _xsntprintf(tszSignStr, XPATH_MAX, _X("%s%s%d%s"), st_ServiceConfig.st_XApi.st_TranslationInfo.tszAPPID, tszUTFBuffer, nRandomNumber, st_ServiceConfig.st_XApi.st_TranslationInfo.tszAPPKey);
 
 	Cryption_Api_Digest(tszSignStr, (XBYTE*)tszMD5Codec, &nLen);
 	for (int i = 0; i < 16; i++)
@@ -37,7 +37,7 @@ bool HTTPTask_TaskGet_Translation(LPCXSTR lpszClientAddr, LPCXSTR lpszMsgBuffer,
 	ModuleHelp_Translation_Convert((ENUM_XENGINE_APISERVICE_TRANSLATION_TYPE)_ttxoi(lpszSrcStr), tszLanguageSrc);
 	ModuleHelp_Translation_Convert((ENUM_XENGINE_APISERVICE_TRANSLATION_TYPE)_ttxoi(lpszDstStr), tszLanauageDst);
 
-	_xstprintf(tszURLStr, _X("%s?appid=%s&q=%s&from=%s&to=%s&salt=%d&sign=%s"), st_ServiceConfig.st_XApi.st_TranslationInfo.tszAPPUrl, st_ServiceConfig.st_XApi.st_TranslationInfo.tszAPPID, tszUTFBuffer, tszLanguageSrc, tszLanauageDst, nRandomNumber, tszMD5Str);
+	_xsntprintf(tszURLStr, sizeof(tszURLStr), _X("%s?appid=%s&q=%s&from=%s&to=%s&salt=%d&sign=%s"), st_ServiceConfig.st_XApi.st_TranslationInfo.tszAPPUrl, st_ServiceConfig.st_XApi.st_TranslationInfo.tszAPPID, tszUTFBuffer, tszLanguageSrc, tszLanauageDst, nRandomNumber, tszMD5Str);
 	APIClient_Http_Request(_X("GET"), tszURLStr, NULL, NULL, &ptszBodyBuffer, &nBLen);
 
 	//解析数据

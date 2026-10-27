@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.1.32210.238
+# Visual Studio Version 18
+VisualStudioVersion = 18.11.12315.225 stable
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "XEngine_ModuleConfigure", "XEngine_ModuleConfigure\XEngine_ModuleConfigure.vcxproj", "{F54F152C-594F-4465-A44E-2DB915B39760}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -110,6 +110,9 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "XEngine_APIModulePhone", "XEngine_DependLibrary\XEngine_PhoneData\XEngine_Source\XEngine_APIModulePhone\XEngine_APIModulePhone.vcxproj", "{A13B72E7-FC40-4A27-81C3-26DF3C8F4C0A}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "XEngine_Verification", "XEngine_DependLibrary\XEngine_OPenSource\XEngine_Module\XEngine_Verification\XEngine_Verification.vcxproj", "{A8E43EC0-698A-4807-8A61-B2BE5FAB7256}"
+	ProjectSection(ProjectDependencies) = postProject
+		{F1736B3F-03A2-4FC7-B045-A12BA8D724FB} = {F1736B3F-03A2-4FC7-B045-A12BA8D724FB}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "XEngine_PluginExtension", "XEngine_DependLibrary\XEngine_OPenSource\XEngine_Module\XEngine_PluginExtension\XEngine_PluginExtension.vcxproj", "{D76B9C99-D002-4770-BB33-C24A91ED97E9}"
 EndProject

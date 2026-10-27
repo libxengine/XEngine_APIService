@@ -128,15 +128,14 @@ bool CModuleDatabase_ShortLink::ModuleDatabase_ShortLink_Query(XENGINE_SHORTLINK
 		return false;
 	}
 	//查询
-	XNETHANDLE xhTable = 0;
-	__int64u nllLine = 0;
-	__int64u nllRow = 0;
-
+	int nllLine = 0;
+	int nllRow = 0;
+	XCHAR** pptszResult;
 	XCHAR tszSQLStatement[1024];
 	memset(tszSQLStatement, '\0', sizeof(tszSQLStatement));
 	//名称为,消息名为必填
 	_xsntprintf(tszSQLStatement, sizeof(tszSQLStatement), _X("SELECT * FROM `XEngine_ShortLink` WHERE tszMapUrl = '%s'"), pSt_SLinkInfo->tszMapUrl);
-	if (!DataBase_MySQL_ExecuteQuery(xhDBSQL, &xhTable, tszSQLStatement, &nllLine, &nllRow))
+	if (!DataBase_MySQL_ExecQuery(xhDBSQL, tszSQLStatement, &pptszResult, &nllLine, &nllRow))
 	{
 		DBModule_IsErrorOccur = true;
 		DBModule_dwErrorCode = DataBase_GetLastError();
@@ -148,36 +147,41 @@ bool CModuleDatabase_ShortLink::ModuleDatabase_ShortLink_Query(XENGINE_SHORTLINK
 		DBModule_dwErrorCode = ERROR_APISERVICE_MODULE_DATABASE_NOTFOUND;
 		return false;
 	}
-	for (__int64u i = 0; i < nllLine; i++)
+	int nFieldNumber = nllRow;
+	for (int i = 0; i < nllLine; i++)
 	{
-		XCHAR** pptszResult = DataBase_MySQL_GetResult(xhDBSQL, xhTable);
-
-		if (NULL != pptszResult[0])
+		if (NULL != pptszResult[nFieldNumber])
 		{
-			pSt_SLinkInfo->nID = _ttxoi(pptszResult[0]);
+			pSt_SLinkInfo->nID = _ttxoi(pptszResult[nFieldNumber]);
 		}
-		if (NULL != pptszResult[1])
+		nFieldNumber++;
+		if (NULL != pptszResult[nFieldNumber])
 		{
-			_tcsxcpy(pSt_SLinkInfo->tszFullUrl, pptszResult[1]);
+			_tcsxcpy(pSt_SLinkInfo->tszFullUrl, pptszResult[nFieldNumber]);
 		}
-		if (NULL != pptszResult[2])
+		nFieldNumber++;
+		if (NULL != pptszResult[nFieldNumber])
 		{
-			_tcsxcpy(pSt_SLinkInfo->tszShotUrl, pptszResult[2]);
+			_tcsxcpy(pSt_SLinkInfo->tszShotUrl, pptszResult[nFieldNumber]);
 		}
-		if (NULL != pptszResult[3])
+		nFieldNumber++;
+		if (NULL != pptszResult[nFieldNumber])
 		{
-			_tcsxcpy(pSt_SLinkInfo->tszKeyUrl, pptszResult[3]);
+			_tcsxcpy(pSt_SLinkInfo->tszKeyUrl, pptszResult[nFieldNumber]);
 		}
-		if (NULL != pptszResult[4])
+		nFieldNumber++;
+		if (NULL != pptszResult[nFieldNumber])
 		{
-			_tcsxcpy(pSt_SLinkInfo->tszMapUrl, pptszResult[4]);
+			_tcsxcpy(pSt_SLinkInfo->tszMapUrl, pptszResult[nFieldNumber]);
 		}
-		if (NULL != pptszResult[5])
+		nFieldNumber++;
+		if (NULL != pptszResult[nFieldNumber])
 		{
-			_tcsxcpy(pSt_SLinkInfo->tszCreateTime, pptszResult[5]);
+			_tcsxcpy(pSt_SLinkInfo->tszCreateTime, pptszResult[nFieldNumber]);
 		}
+		nFieldNumber++;
 	}
-	DataBase_MySQL_FreeResult(xhDBSQL, xhTable);
+	DataBase_MySQL_FreeResult(pptszResult, nllLine * nllRow);
 	return true;
 }
 /********************************************************************
@@ -246,15 +250,14 @@ bool CModuleDatabase_ShortLink::ModuleDatabase_ShortLink_List(XENGINE_SHORTLINK*
 	DBModule_IsErrorOccur = false;
 
 	//查询
-	XNETHANDLE xhTable = 0;
-	__int64u nllLine = 0;
-	__int64u nllRow = 0;
-
+	int nllLine = 0;
+	int nllRow = 0;
+	XCHAR** pptszResult;
 	XCHAR tszSQLStatement[1024];
 	memset(tszSQLStatement, '\0', sizeof(tszSQLStatement));
 	//名称为,消息名为必填
 	_xstprintf(tszSQLStatement, _X("SELECT * FROM `XEngine_ShortLink`"));
-	if (!DataBase_MySQL_ExecuteQuery(xhDBSQL, &xhTable, tszSQLStatement, &nllLine, &nllRow))
+	if (!DataBase_MySQL_ExecQuery(xhDBSQL, tszSQLStatement, &pptszResult, &nllLine, &nllRow))
 	{
 		DBModule_IsErrorOccur = true;
 		DBModule_dwErrorCode = DataBase_GetLastError();
@@ -269,35 +272,40 @@ bool CModuleDatabase_ShortLink::ModuleDatabase_ShortLink_List(XENGINE_SHORTLINK*
 	*pInt_ListCount = (int)nllLine;
 	BaseLib_Memory_Malloc((XPPPMEM)pppSt_SLinkInfo, *pInt_ListCount, sizeof(XENGINE_SHORTLINK));
 
-	for (__int64u i = 0; i < nllLine; i++)
+	int nFieldNumber = nllRow;
+	for (int i = 0; i < nllLine; i++)
 	{
-		XCHAR** pptszResult = DataBase_MySQL_GetResult(xhDBSQL, xhTable);
-
-		if (NULL != pptszResult[0])
+		if (NULL != pptszResult[nFieldNumber])
 		{
-			(*pppSt_SLinkInfo)[i]->nID = _ttxoi(pptszResult[0]);
+			(*pppSt_SLinkInfo)[i]->nID = _ttxoi(pptszResult[nFieldNumber]);
 		}
-		if (NULL != pptszResult[1])
+		nFieldNumber++;
+		if (NULL != pptszResult[nFieldNumber])
 		{
-			_tcsxcpy((*pppSt_SLinkInfo)[i]->tszFullUrl, pptszResult[1]);
+			_tcsxcpy((*pppSt_SLinkInfo)[i]->tszFullUrl, pptszResult[nFieldNumber]);
 		}
-		if (NULL != pptszResult[2])
+		nFieldNumber++;
+		if (NULL != pptszResult[nFieldNumber])
 		{
-			_tcsxcpy((*pppSt_SLinkInfo)[i]->tszShotUrl, pptszResult[2]);
+			_tcsxcpy((*pppSt_SLinkInfo)[i]->tszShotUrl, pptszResult[nFieldNumber]);
 		}
-		if (NULL != pptszResult[3])
+		nFieldNumber++;
+		if (NULL != pptszResult[nFieldNumber])
 		{
-			_tcsxcpy((*pppSt_SLinkInfo)[i]->tszKeyUrl, pptszResult[3]);
+			_tcsxcpy((*pppSt_SLinkInfo)[i]->tszKeyUrl, pptszResult[nFieldNumber]);
 		}
-		if (NULL != pptszResult[4])
+		nFieldNumber++;
+		if (NULL != pptszResult[nFieldNumber])
 		{
-			_tcsxcpy((*pppSt_SLinkInfo)[i]->tszMapUrl, pptszResult[4]);
+			_tcsxcpy((*pppSt_SLinkInfo)[i]->tszMapUrl, pptszResult[nFieldNumber]);
 		}
-		if (NULL != pptszResult[5])
+		nFieldNumber++;
+		if (NULL != pptszResult[nFieldNumber])
 		{
-			_tcsxcpy((*pppSt_SLinkInfo)[i]->tszCreateTime, pptszResult[5]);
+			_tcsxcpy((*pppSt_SLinkInfo)[i]->tszCreateTime, pptszResult[nFieldNumber]);
 		}
+		nFieldNumber++;
 	}
-	DataBase_MySQL_FreeResult(xhDBSQL, xhTable);
+	DataBase_MySQL_FreeResult(pptszResult, nllLine * nllRow);
 	return true;
 }

@@ -65,7 +65,7 @@ bool CModuleHelp_SocketTest::ModuleHelp_SocketTest_StartConnect(XNETHANDLE* pxhT
         ModuleHelp_dwErrorCode = ERROR_XENGINE_APISERVICE_MODULE_HELP_SOCKETTEST_MALLOC;
         return false;
     }
-    memset(pSt_ConnSocket, '\0', sizeof(MODULEHELP_SOCKETTEST_CONNINFO));
+	*pSt_ConnSocket = {};
     //结构体赋值
     pSt_ConnSocket->bIsRun = true;
     pSt_ConnSocket->lParam = lParam;

@@ -37,7 +37,8 @@ bool XEngine_Configure_Parament(int argc, char** argv)
 		printf("解析配置文件失败,ModuleConfigure_Json_VersionFile:%lX\n", ModuleConfigure_GetLastError());
 		return false;
 	}
-	for (int i = 0; i < argc; i++)
+	int i = 0;
+	while (i < argc)
 	{
 		if ((0 == _tcsxicmp("-h", argv[i])) || (0 == _tcsxicmp("-H", argv[i])))
 		{
@@ -46,33 +47,52 @@ bool XEngine_Configure_Parament(int argc, char** argv)
 		}
 		else if (0 == _tcsxicmp("-d", argv[i]))
 		{
-			st_ServiceConfig.bDeamon = _ttxoi(argv[++i]);
+			if ((i + 1) >= argc) return false;
+			st_ServiceConfig.bDeamon = _ttxoi(argv[i + 1]);
+			i += 2;
+			continue;
 		}
 		else if (0 == _tcsxicmp("-w", argv[i]))
 		{
-			st_ServiceConfig.bShowWnd = _ttxoi(argv[++i]);
+			if ((i + 1) >= argc) return false;
+			st_ServiceConfig.bShowWnd = _ttxoi(argv[i + 1]);
+			i += 2;
+			continue;
 		}
 		else if (0 == _tcsxicmp("-hp", argv[i]))
 		{
-			st_ServiceConfig.nHttpPort = _ttxoi(argv[++i]);
+			if ((i + 1) >= argc) return false;
+			st_ServiceConfig.nHttpPort = _ttxoi(argv[i + 1]);
+			i += 2;
+			continue;
 		}
 		else if (0 == _tcsxicmp("-rp", argv[i]))
 		{
-			st_ServiceConfig.nRFCPort = _ttxoi(argv[++i]);
+			if ((i + 1) >= argc) return false;
+			st_ServiceConfig.nRFCPort = _ttxoi(argv[i + 1]);
+			i += 2;
+			continue;
 		}
 		else if (0 == _tcsxicmp("-r", argv[i]))
 		{
+			if ((i + 1) >= argc) return false;
 			st_ServiceConfig.st_XReload.bReload = true;
-			st_ServiceConfig.st_XReload.byCode = _ttxoi(argv[++i]);
+			st_ServiceConfig.st_XReload.byCode = _ttxoi(argv[i + 1]);
+			i += 2;
+			continue;
 		}
 		else if (0 == _tcsxicmp("-db", argv[i]))
 		{
-			st_ServiceConfig.st_XSql.bEnable = _ttxoi(argv[++i]);
+			if ((i + 1) >= argc) return false;
+			st_ServiceConfig.st_XSql.bEnable = _ttxoi(argv[i + 1]);
+			i += 2;
+			continue;
 		}
 		else if (0 == _tcsxicmp("-t", argv[i]))
 		{
 			bIsTest = true;
 		}
+		i++;
 	}
 	return true;
 }

@@ -281,3 +281,21 @@ bool HTTPTask_TaskPost_AVRecordStop(LPCXSTR lpszClientAddr)
 
 	return true;
 }
+bool HTTPTask_TaskPost_AVRecordList(LPCXSTR lpszClientAddr)
+{
+	int nSDLen = 0;
+	int nACount = 0;
+	int nVCount = 0;
+	AVHELP_DEVICEINFO** ppSt_AudioList;
+	AVHELP_DEVICEINFO** ppSt_VideoList;
+	CXEngine_MemoryPoolEx m_MemorySend(XENGINE_MEMORY_SIZE_MAX);
+
+	AVHelp_Device_EnumDevice(&ppSt_AudioList, &ppSt_VideoList, &nACount, &nVCount);
+	ModuleProtocol_Packet_EnumDevice(m_MemorySend.get(), &nSDLen, &ppSt_AudioList, &ppSt_VideoList, nACount, nVCount);
+	XEngine_Network_Send(lpszClientAddr, m_MemorySend.get(), nSDLen);
+
+	BaseLib_Memory_Free((void***)&ppSt_AudioList, nACount);
+	BaseLib_Memory_Free((void***)&ppSt_VideoList, nVCount);
+	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("HTTP客户端:%s,列举媒体设备列表成功"), lpszClientAddr);
+	return true;
+}

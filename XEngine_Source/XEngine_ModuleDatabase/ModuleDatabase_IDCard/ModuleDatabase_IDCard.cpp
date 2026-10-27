@@ -127,12 +127,12 @@ bool CModuleDatabase_IDCard::ModuleDatabase_IDCard_QueryByAddr(XENGINE_IDREGION*
 	}
 	// 查询过程中的通用变量：
 	// nLine/nRow 为结果集规模，nProvincer/nCity/nCounty 用于拼装最终行政区划ID。
-	__int64u nLine = 0;
-	__int64u nRow = 0;
+	int nLine = 0;
+	int nRow = 0;
 	int nProvincer = 0;
 	int nCity = 0;
 	int nCounty = 0;
-	XNETHANDLE xhTable = 0;
+	XCHAR** pptszResult;
 	XCHAR tszSQLStatement[1024];
 
 	// 第一步：根据省级名称查询对应编码。
@@ -143,9 +143,9 @@ bool CModuleDatabase_IDCard::ModuleDatabase_IDCard_QueryByAddr(XENGINE_IDREGION*
 	XCHAR tszUTFBuffer[1024] = {};
 	int nULen = _tcsxlen(tszSQLStatement);
 	BaseLib_Charset_AnsiToUTF(tszSQLStatement, tszUTFBuffer, &nULen);
-	if (!DataBase_MySQL_ExecuteQuery(xhDBSQL, &xhTable, tszUTFBuffer, &nLine, &nRow))
+	if (!DataBase_MySQL_ExecQuery(xhDBSQL, tszUTFBuffer, &pptszResult, &nLine, &nRow))
 #else
-	if (!DataBase_MySQL_ExecuteQuery(xhDBSQL, &xhTable, tszSQLStatement, &nLine, &nRow))
+	if (!DataBase_MySQL_ExecQuery(xhDBSQL, tszSQLStatement, &pptszResult, &nLine, &nRow))
 #endif
 	{
 		DBModule_IsErrorOccur = true;
@@ -158,9 +158,8 @@ bool CModuleDatabase_IDCard::ModuleDatabase_IDCard_QueryByAddr(XENGINE_IDREGION*
 		DBModule_dwErrorCode = ERROR_APISERVICE_MODULE_DATABASE_NOTFOUND;
 		return false;
 	}
-	XCHAR** pptszResult = DataBase_MySQL_GetResult(xhDBSQL, xhTable);
 	nProvincer = _ttxoi(pptszResult[0]);
-	DataBase_MySQL_FreeResult(xhDBSQL, xhTable);
+	DataBase_MySQL_FreeResult(pptszResult, (nLine * nRow));
 
 	if (_tcsxlen(pSt_IDRegion->tszCity) > 0)
 	{
@@ -171,9 +170,9 @@ bool CModuleDatabase_IDCard::ModuleDatabase_IDCard_QueryByAddr(XENGINE_IDREGION*
 		XCHAR tszUTFBuffer[1024] = {};
 		int nULen = _tcsxlen(tszSQLStatement);
 		BaseLib_Charset_AnsiToUTF(tszSQLStatement, tszUTFBuffer, &nULen);
-		if (!DataBase_MySQL_ExecuteQuery(xhDBSQL, &xhTable, tszUTFBuffer, &nLine, &nRow))
+		if (!DataBase_MySQL_ExecQuery(xhDBSQL, tszUTFBuffer, &pptszResult, &nLine, &nRow))
 #else
-		if (!DataBase_MySQL_ExecuteQuery(xhDBSQL, &xhTable, tszSQLStatement, &nLine, &nRow))
+		if (!DataBase_MySQL_ExecQuery(xhDBSQL, tszSQLStatement, &pptszResult, &nLine, &nRow))
 #endif
 		{
 			DBModule_IsErrorOccur = true;
@@ -186,9 +185,8 @@ bool CModuleDatabase_IDCard::ModuleDatabase_IDCard_QueryByAddr(XENGINE_IDREGION*
 			DBModule_dwErrorCode = ERROR_APISERVICE_MODULE_DATABASE_NOTFOUND;
 			return false;
 		}
-		XCHAR** pptszTmpResult = DataBase_MySQL_GetResult(xhDBSQL, xhTable);
-		nCity = _ttxoi(pptszTmpResult[0]);
-		DataBase_MySQL_FreeResult(xhDBSQL, xhTable);
+		nCity = _ttxoi(pptszResult[0]);
+		DataBase_MySQL_FreeResult(pptszResult, (nLine * nRow));
 	}
 	
 	if (_tcsxlen(pSt_IDRegion->tszCounty) > 0)
@@ -200,9 +198,9 @@ bool CModuleDatabase_IDCard::ModuleDatabase_IDCard_QueryByAddr(XENGINE_IDREGION*
 		XCHAR tszUTFBuffer[1024] = {};
 		int nULen = _tcsxlen(tszSQLStatement);
 		BaseLib_Charset_AnsiToUTF(tszSQLStatement, tszUTFBuffer, &nULen);
-		if (!DataBase_MySQL_ExecuteQuery(xhDBSQL, &xhTable, tszUTFBuffer, &nLine, &nRow))
+		if (!DataBase_MySQL_ExecQuery(xhDBSQL, tszUTFBuffer, &pptszResult, &nLine, &nRow))
 #else
-		if (!DataBase_MySQL_ExecuteQuery(xhDBSQL, &xhTable, tszSQLStatement, &nLine, &nRow))
+		if (!DataBase_MySQL_ExecQuery(xhDBSQL, tszSQLStatement, &pptszResult, &nLine, &nRow))
 #endif
 		{
 			DBModule_IsErrorOccur = true;
@@ -215,9 +213,8 @@ bool CModuleDatabase_IDCard::ModuleDatabase_IDCard_QueryByAddr(XENGINE_IDREGION*
 			DBModule_dwErrorCode = ERROR_APISERVICE_MODULE_DATABASE_NOTFOUND;
 			return false;
 		}
-		XCHAR** pptszTmpResult = DataBase_MySQL_GetResult(xhDBSQL, xhTable);
-		nCounty = _ttxoi(pptszTmpResult[0]);
-		DataBase_MySQL_FreeResult(xhDBSQL, xhTable);
+		nCounty = _ttxoi(pptszResult[0]);
+		DataBase_MySQL_FreeResult(pptszResult, (nLine * nRow));
 	}
 
 	if (0 == nCounty && 0 == nCity)
@@ -264,14 +261,14 @@ bool CModuleDatabase_IDCard::ModuleDatabase_IDCard_QueryProvincer(XENGINE_IDREGI
         return false;
     }
     //查询
-	__int64u nLine = 0;
-	__int64u nRow = 0;
-	XNETHANDLE xhTable = 0;
+	int nLine = 0;
+	int nRow = 0;
+	XCHAR** pptszResult;
     XCHAR tszSQLStatement[1024];
 
     memset(tszSQLStatement, '\0', sizeof(tszSQLStatement));
 	_xstprintf(tszSQLStatement, _X("SELECT * FROM `RegionID` WHERE code = '%02d0000'"), pSt_IDInfo->nIDProvince);
-	if (!DataBase_MySQL_ExecuteQuery(xhDBSQL, &xhTable, tszSQLStatement, &nLine, &nRow))
+	if (!DataBase_MySQL_ExecQuery(xhDBSQL, tszSQLStatement, &pptszResult, &nLine, &nRow))
 	{
 		DBModule_IsErrorOccur = true;
 		DBModule_dwErrorCode = DataBase_GetLastError();
@@ -283,10 +280,9 @@ bool CModuleDatabase_IDCard::ModuleDatabase_IDCard_QueryProvincer(XENGINE_IDREGI
 		DBModule_dwErrorCode = ERROR_APISERVICE_MODULE_DATABASE_NOTFOUND;
 		return false;
 	}
-	XCHAR** pptszResult = DataBase_MySQL_GetResult(xhDBSQL, xhTable);
 	_tcsxcpy(pSt_IDRegion->tszProvincer, pptszResult[1]);
 
-	DataBase_MySQL_FreeResult(xhDBSQL, xhTable);
+	DataBase_MySQL_FreeResult(pptszResult, (nLine * nRow));
 	return true;
 }
 /********************************************************************
@@ -318,14 +314,14 @@ bool CModuleDatabase_IDCard::ModuleDatabase_IDCard_QueryCity(XENGINE_IDREGION* p
 		return false;
 	}
 	//查询
-	__int64u nLine = 0;
-	__int64u nRow = 0;
-	XNETHANDLE xhTable = 0;
+	int nLine = 0;
+	int nRow = 0;
+	XCHAR** pptszResult;
 	XCHAR tszSQLStatement[1024];
 
 	memset(tszSQLStatement, '\0', sizeof(tszSQLStatement));
 	_xstprintf(tszSQLStatement, _X("SELECT * FROM `RegionID` WHERE code = '%02d%02d00'"), pSt_IDInfo->nIDProvince, pSt_IDInfo->nIDCity);
-	if (!DataBase_MySQL_ExecuteQuery(xhDBSQL, &xhTable, tszSQLStatement, &nLine, &nRow))
+	if (!DataBase_MySQL_ExecQuery(xhDBSQL, tszSQLStatement, &pptszResult, &nLine, &nRow))
 	{
 		DBModule_IsErrorOccur = true;
 		DBModule_dwErrorCode = DataBase_GetLastError();
@@ -337,10 +333,9 @@ bool CModuleDatabase_IDCard::ModuleDatabase_IDCard_QueryCity(XENGINE_IDREGION* p
 		DBModule_dwErrorCode = ERROR_APISERVICE_MODULE_DATABASE_NOTFOUND;
 		return false;
 	}
-	XCHAR** pptszResult = DataBase_MySQL_GetResult(xhDBSQL, xhTable);
 	_tcsxcpy(pSt_IDRegion->tszCity, pptszResult[1]);
 
-	DataBase_MySQL_FreeResult(xhDBSQL, xhTable);
+	DataBase_MySQL_FreeResult(pptszResult, nLine * nRow);
 	return true;
 }
 /********************************************************************
@@ -372,14 +367,14 @@ bool CModuleDatabase_IDCard::ModuleDatabase_IDCard_QueryCounty(XENGINE_IDREGION*
 		return false;
 	}
 	//查询
-	__int64u nLine = 0;
-	__int64u nRow = 0;
-	XNETHANDLE xhTable = 0;
+	int nLine = 0;
+	int nRow = 0;
+	XCHAR** pptszResult;
 	XCHAR tszSQLStatement[1024];
 
 	memset(tszSQLStatement, '\0', sizeof(tszSQLStatement));
 	_xstprintf(tszSQLStatement, _X("SELECT * FROM `RegionID` WHERE code = '%02d%02d%02d'"), pSt_IDInfo->nIDProvince, pSt_IDInfo->nIDCity, pSt_IDInfo->nIDCounty);
-	if (!DataBase_MySQL_ExecuteQuery(xhDBSQL, &xhTable, tszSQLStatement, &nLine, &nRow))
+	if (!DataBase_MySQL_ExecQuery(xhDBSQL, tszSQLStatement, &pptszResult, &nLine, &nRow))
 	{
 		DBModule_IsErrorOccur = true;
 		DBModule_dwErrorCode = DataBase_GetLastError();
@@ -391,9 +386,8 @@ bool CModuleDatabase_IDCard::ModuleDatabase_IDCard_QueryCounty(XENGINE_IDREGION*
 		DBModule_dwErrorCode = ERROR_APISERVICE_MODULE_DATABASE_NOTFOUND;
 		return false;
 	}
-	XCHAR** pptszResult = DataBase_MySQL_GetResult(xhDBSQL, xhTable);
 	_tcsxcpy(pSt_IDRegion->tszCounty, pptszResult[1]);
 
-	DataBase_MySQL_FreeResult(xhDBSQL, xhTable);
+	DataBase_MySQL_FreeResult(pptszResult, nLine * nRow);
 	return true;
 }
